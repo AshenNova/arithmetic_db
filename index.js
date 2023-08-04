@@ -7,10 +7,11 @@ require("dotenv/config");
 const app = express();
 const port = process.env.PORT || 80;
 
-const DB = process.env.MONGOOSE_DATABASE.replace(
-  "<PASSWORD>",
-  process.env.MONGODB_PASSWORD
-);
+// const DB = process.env.MONGOOSE_DATABASE.replace(
+//   "<PASSWORD>",
+//   process.env.MONGODB_PASSWORD
+// );
+const DB = process.env.MONGOOSE_DATABASE;
 // mongoose
 //   .connect(DB)
 //   .then(() => {
