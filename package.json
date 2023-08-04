@@ -1,0 +1,23 @@
+{
+  "name": "arithmetic_db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AshenNova/arithmetic_db.git"
+  },
+  "author": "kenneth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AshenNova/arithmetic_db/issues"
+  },
+  "homepage": "https://github.com/AshenNova/arithmetic_db#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
