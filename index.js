@@ -5,7 +5,7 @@ const path = require("path");
 require("dotenv/config");
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 80;
 
 const DB = process.env.MONGOOSE_DATABASE.replace(
   "<PASSWORD>",
