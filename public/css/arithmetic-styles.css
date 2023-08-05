@@ -35,8 +35,8 @@ body {
 }
 .overlay {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 1;
+  /* left: 1; */
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
@@ -46,10 +46,11 @@ body {
 
 .level-setting {
   position: absolute;
-  margin: auto;
-  top: 2%;
+  /* margin: auto; */
+  /* padding-bottom: 1px; */
+  top: 8%;
   height: auto;
-  max-height: 95%;
+  max-height: 90%;
   width: auto;
   border-radius: 10px;
   background-color: white;

@@ -7,7 +7,7 @@
 
 
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/css/arithmetic-styles.css">
    <link rel="icon" href="/images/favicon.ico?v=1.1">
@@ -16,188 +16,209 @@
   <title>Arithmetic Game</title>
 </head>
 <body>
+  <div class="nav-bar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">EpicMind</a>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">List</a>
+            </li>
+           
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Results</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Login</a>
+            </li>
+          </ul>
+      </div>
+    </nav>
 
+  </div>
   <div class="main-container">
     <div class="level-setting container-fluid">
       <p class="btn btn-outline-success easy-mode tt" title="Make all the mistakes you need 🤩">Easy</p>
       <p class="btn btn-outline-danger hardcore-mode tt" title="No mistakes allowed 😱">Hardcore</p>
       <p class="mb-0">Double Click to Enter</p>
       <div class="row">
-        <div class="col ml-1 mr-1 level btn btn-success settingButton btn-level-one tt" title="Addition and Subtaction 1-10">Level 1.0</div>
-        <div class="col mr-1 btn btn-success settingButton tt" title="Multiplication and Division 1-5, 1-5">Level 1.01</div>
-        <div class="col mr-1 btn btn-success settingButton tt" title="Addition and Subtraction, transition above and below 10">Level 1.02</div>
-        <div class="col mr-1 btn btn-success settingButton tt" title="Level 1.01 and 1.02">Level 1.03</div>
-        <div class="col mr-1 btn btn-info settingButton tt" title="Identity of Addition and Subtraction in Number Statement">Level 1.04</div>
+        <div class="col ms-1 me-1 level btn btn-success settingButton btn-level-one tt" title="Addition and Subtaction 1-10">Level 1.0</div>
+        <div class="col ms-1 btn btn-success settingButton tt" title="Multiplication and Division 1-5, 1-5">Level 1.01</div>
+        <div class="col ms-1 btn btn-success settingButton tt" title="Addition and Subtraction, transition above and below 10">Level 1.02</div>
+        <div class="col ms-1 btn btn-success settingButton tt" title="Level 1.01 and 1.02">Level 1.03</div>
+        <div class="col ms-1 btn btn-info settingButton tt" title="Identity of Addition and Subtraction in Number Statement">Level 1.04</div>
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-info settingButton tt" title="Identity of Addition and Subtraction in Short Statement">Level 1.05</div>
-        <div class="col mr-1 btn btn-success settingButton tt" title="Left side right side 1-10">Level 1.06</div>
-        <div class="col mr-1 btn btn-success settingButton tt" title="Multiplication in sets">Level 1.07</div>
-        <div class="col mr-1 btn btn-success settingButton tt" title="Unitary">Level 1.08</div>
-        <div class="col mr-1"></div>
+        <div class="col ms-1 me-1 btn btn-info settingButton tt" title="Identity of Addition and Subtraction in Short Statement">Level 1.05</div>
+        <div class="col me-1 btn btn-success settingButton tt" title="Left side right side 1-10">Level 1.06</div>
+        <div class="col me-1 btn btn-success settingButton tt" title="Multiplication in sets">Level 1.07</div>
+        <div class="col me-1 btn btn-success settingButton tt" title="Unitary">Level 1.08</div>
+        <div class="col me-1"></div>
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-cal calButton tt" title="">Cal.1</div>
-        <div class="col ml-1 mr-1 btn btn-heu heuristics tt" title="">Heu.1</div>
+        <div class="col ms-1 me-1 btn btn-cal calButton tt" title="">Cal.1</div>
+        <div class="col ms-1 me-1 btn btn-heu heuristics tt" title="">Heu.1</div>
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-success settingButton tt" title="Addition and Subtraction 10-100">Level 2.0</div>
-        <div class="col mr-1 btn btn-success settingButton tt " title="Multiplication and Division 1-5, 6-10">Level 2.01</div>
-        <div class="col mr-1 btn btn-outline-success settingButton tt " title="Place Value">Level 2.02</div>
-        <div class="col mr-1 btn btn-success settingButton tt" title="Level 2.0 and 2.01">Level 2.03</div>
-        <div class="col mr-1 btn btn-success settingButton tt" title="Figures">Level 2.04</div>
+        <div class="col ms-1 me-1 btn btn-success settingButton tt" title="Addition and Subtraction 10-100">Level 2.0</div>
+        <div class="col me-1 btn btn-success settingButton tt " title="Multiplication and Division 1-5, 6-10">Level 2.01</div>
+        <div class="col me-1 btn btn-outline-success settingButton tt " title="Place Value">Level 2.02</div>
+        <div class="col me-1 btn btn-success settingButton tt" title="Level 2.0 and 2.01">Level 2.03</div>
+        <div class="col me-1 btn btn-success settingButton tt" title="Figures">Level 2.04</div>
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-outline-success settingButton tt" title="Forming Numbers">Level 2.05</div>
-        <div class="col mr-1 mr-1 btn btn-success settingButton tt" title="Simultaneuous Equation">Level 2.06</div>
-        <div class="col mr-1 btn btn-warning settingButton tt" title="Comparison of Fraction">Level 2.07</div>
-        <div class="col mr-1 btn btn-time settingButton tt" title="Time: Addition and Subtraction">Level 2.08</div>
-        <div class="col mr-1 btn btn-time settingButton tt" title="Range time (hours / minutes)">Level 2.09</div>
+        <div class="col ms-1 me-1 btn btn-outline-success settingButton tt" title="Forming Numbers">Level 2.05</div>
+        <div class="col me-1 me-1 btn btn-success settingButton tt" title="Simultaneuous Equation">Level 2.06</div>
+        <div class="col me-1 btn btn-warning settingButton tt" title="Comparison of Fraction">Level 2.07</div>
+        <div class="col me-1 btn btn-time settingButton tt" title="Time: Addition and Subtraction">Level 2.08</div>
+        <div class="col me-1 btn btn-time settingButton tt" title="Range time (hours / minutes)">Level 2.09</div>
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-cal calButton tt" title="">Cal.2</div>
-        <div class="col ml-1 mr-1 btn btn-heu heuristics tt" title="">Heu.2</div>
-        <div class="col ml-1 mr-1 btn btn-heu settingButton tt" title="">Heu.2b</div>
+        <div class="col ms-1 me-1 btn btn-cal calButton tt" title="">Cal.2</div>
+        <div class="col ms-1 me-1 btn btn-heu heuristics tt" title="">Heu.2</div>
+        <div class="col ms-1 me-1 btn btn-heu settingButton tt" title="">Heu.2b</div>
       </div>  
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-success settingButton tt" title="Addition and Subtraction 100-500">Level 3.0</div>
-        <div class="col mr-1 btn btn-success settingButton tt" title="Multiplication and Division 6-10, 6-10">Level 3.01</div>
-        <div class="col mr-1 btn btn-success settingButton tt" title="Multiplication and Division of Convenient Numbers">Level 3.02</div>
-        <div class="col mr-1 mr-1 btn btn-success settingButton tt" title="Level 3.0 and Level 3.1">Level 3.03</div>
-        <div class="col mr-1 btn btn-primary settingButton tt" title="Conversion 1 unit">Level 3.04</div>
+        <div class="col ms-1 me-1 btn btn-success settingButton tt" title="Addition and Subtraction 100-500">Level 3.0</div>
+        <div class="col me-1 btn btn-success settingButton tt" title="Multiplication and Division 6-10, 6-10">Level 3.01</div>
+        <div class="col me-1 btn btn-success settingButton tt" title="Multiplication and Division of Convenient Numbers">Level 3.02</div>
+        <div class="col me-1 me-1 btn btn-success settingButton tt" title="Level 3.0 and Level 3.1">Level 3.03</div>
+        <div class="col me-1 btn btn-primary settingButton tt" title="Conversion 1 unit">Level 3.04</div>
       </div>
      
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-primary settingButton tt" title="Conversion 2 units (Big to Small)">Level 3.05</div>
-        <div class="col mr-1 btn btn-outline-primary settingButton tt" title="Conversion 2 units (Small to Big)">Level 3.06</div>
-        <div class="col mr-1 btn btn-danger settingButton tt" title="Lowest Common Multiple">Level 3.07</div>
-        <div class="col mr-1 btn btn-time settingButton tt" title="Range time (hours and minutes)">Level 3.08</div>
-        <div class="col mr-1 btn btn-warning settingButton tt" title="Simplifying fraction">Level 3.09</div>
+        <div class="col ms-1 me-1 btn btn-primary settingButton tt" title="Conversion 2 units (Big to Small)">Level 3.05</div>
+        <div class="col me-1 btn btn-outline-primary settingButton tt" title="Conversion 2 units (Small to Big)">Level 3.06</div>
+        <div class="col me-1 btn btn-danger settingButton tt" title="Lowest Common Multiple">Level 3.07</div>
+        <div class="col me-1 btn btn-time settingButton tt" title="Range time (hours and minutes)">Level 3.08</div>
+        <div class="col me-1 btn btn-warning settingButton tt" title="Simplifying fraction">Level 3.09</div>
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-warning settingButton tt" title="Expanding fraction">Level 3.10</div>
-        <div class="col mr-1 btn btn-warning settingButton tt" title="Level 3.09 and 3.10">Level 3.11</div>
-        <div class="col mr-1 btn btn-geometry settingButton tt" title="Area">Level 3.12</div>
-        <div class="col mr-1 btn btn-success settingButton tt disabled" title="Continuous Pattern">Level 3.13</div>
-        <div class="col mr-1 btn btn-success settingButton tt disabled" title="Square Pattern">Level 3.14</div>
+        <div class="col ms-1 me-1 btn btn-warning settingButton tt" title="Expanding fraction">Level 3.10</div>
+        <div class="col me-1 btn btn-warning settingButton tt" title="Level 3.09 and 3.10">Level 3.11</div>
+        <div class="col me-1 btn btn-geometry settingButton tt" title="Area">Level 3.12</div>
+        <div class="col me-1 btn btn-success settingButton tt disabled" title="Continuous Pattern">Level 3.13</div>
+        <div class="col me-1 btn btn-success settingButton tt disabled" title="Square Pattern">Level 3.14</div>
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-success settingButton tt disabled" title="Position Pattern">Level 3.15</div>
-        <div class="col mr-1 btn btn-success settingButton tt" title="4 Patterns">Level 3.16</div>
-        <div class="col mr-1 btn btn-angle settingButton tt" title="Acute and Obtuse Angles">Level 3.17</div>
-        <div class="col mr-1 btn btn-geometry settingButton tt" title="Identification of Parallel and Perpendicular Lines">Level 3.18</div>
-        <div class="col mr-1 btn btn-geometry settingButton tt" title="Area and Perimeter">Level 3.19</div>
+        <div class="col ms-1 me-1 btn btn-success settingButton tt disabled" title="Position Pattern">Level 3.15</div>
+        <div class="col me-1 btn btn-success settingButton tt" title="4 Patterns">Level 3.16</div>
+        <div class="col me-1 btn btn-angle settingButton tt" title="Acute and Obtuse Angles">Level 3.17</div>
+        <div class="col me-1 btn btn-geometry settingButton tt" title="Identification of Parallel and Perpendicular Lines">Level 3.18</div>
+        <div class="col me-1 btn btn-geometry settingButton tt" title="Area and Perimeter">Level 3.19</div>
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-cal calButton tt" title="">Cal.3</div>
-        <div class="col ml-1 mr-1 btn btn-heu heuristics tt" title="">Heu.3</div>
-        <div class="col ml-1 mr-1 btn btn-heu settingButton tt" title="">Heu.3b</div>
+        <div class="col ms-1 me-1 btn btn-cal calButton tt" title="">Cal.3</div>
+        <div class="col ms-1 me-1 btn btn-heu heuristics tt" title="">Heu.3</div>
+        <div class="col ms-1 me-1 btn btn-heu settingButton tt" title="">Heu.3b</div>
       </div>  
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-success settingButton tt" title="Listing Factors">Level 4.0</div>
-        <div class="col mr-1 btn btn-success settingButton tt" title="Rounding off">Level 4.01</div>
-        <div class="col mr-1 btn btn-secondary settingButton tt" title="Decimals: Place Value">Level 4.02</div>
-        <div class="col mr-1 btn btn-secondary settingButton tt" title="Decimals: Rounding off">Level 4.03</div>
-        <div class="col mr-1 btn btn-secondary settingButton tt" title="Converting Decimals to Fractions">Level 4.04</div>
-        <!-- <div class="col mr-1 level4Dot3 btn btn-success settingButton">Level 4.3</div> -->
+        <div class="col ms-1 me-1 btn btn-success settingButton tt" title="Listing Factors">Level 4.0</div>
+        <div class="col me-1 btn btn-success settingButton tt" title="Rounding off">Level 4.01</div>
+        <div class="col me-1 btn btn-secondary settingButton tt" title="Decimals: Place Value">Level 4.02</div>
+        <div class="col me-1 btn btn-secondary settingButton tt" title="Decimals: Rounding off">Level 4.03</div>
+        <div class="col me-1 btn btn-secondary settingButton tt" title="Converting Decimals to Fractions">Level 4.04</div>
+        <!-- <div class="col me-1 level4Dot3 btn btn-success settingButton">Level 4.3</div> -->
       </div>
       <div class="row"> 
-        <div class="col ml-1 mr-1 btn btn-secondary settingButton tt" title="Decimals (Jumping Decimals)">Level 4.05</div>
-        <div class="col mr-1 btn btn-primary settingButton tt disabled" title="Conversion in Decimals (Big to Small)">Level 4.06</div>
-        <div class="col mr-1 btn btn-primary settingButton tt disabled" title="Conversion to Decimals (Small to Big)">Level 4.07</div>
-        <div class="col mr-1 btn btn-primary settingButton tt" title="Level 4.05 and 4.06">Level 4.08</div> 
-        <div class="col mr-1 btn btn-warning settingButton tt disabled" title="Mixed to improper fraction">Level 4.09</div>
+        <div class="col ms-1 me-1 btn btn-secondary settingButton tt" title="Decimals (Jumping Decimals)">Level 4.05</div>
+        <div class="col me-1 btn btn-primary settingButton tt disabled" title="Conversion in Decimals (Big to Small)">Level 4.06</div>
+        <div class="col me-1 btn btn-primary settingButton tt disabled" title="Conversion to Decimals (Small to Big)">Level 4.07</div>
+        <div class="col me-1 btn btn-primary settingButton tt" title="Level 4.05 and 4.06">Level 4.08</div> 
+        <div class="col me-1 btn btn-warning settingButton tt disabled" title="Mixed to improper fraction">Level 4.09</div>
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-warning settingButton tt" title="Comparison Fractions (Alternatives)">Level 4.10</div>
-        <div class="col mr-1 btn btn-warning settingButton tt" title="Mixed to improper fractions and vice versa">Level 4.11</div>
-        <div class="col mr-1 btn btn-warning settingButton tt" title="Numerator with a Value">Level 4.12</div>
-        <div class="col mr-1 btn btn-time settingButton tt" title="Conversion 24 hours clock">Level 4.13</div>
-        <div class="col mr-1 btn btn-warning settingButton tt" title="Identification 'Real' 'Fake' 'Quantity'">Level 4.14</div>
-        <!-- <div class="col mr-1 level5Dot3 btn btn-success settingButton">Level 5.3</div> -->
+        <div class="col ms-1 me-1 btn btn-warning settingButton tt" title="Comparison Fractions (Alternatives)">Level 4.10</div>
+        <div class="col me-1 btn btn-warning settingButton tt" title="Mixed to improper fractions and vice versa">Level 4.11</div>
+        <div class="col me-1 btn btn-warning settingButton tt" title="Numerator with a Value">Level 4.12</div>
+        <div class="col me-1 btn btn-time settingButton tt" title="Conversion 24 hours clock">Level 4.13</div>
+        <div class="col me-1 btn btn-warning settingButton tt" title="Identification 'Real' 'Fake' 'Quantity'">Level 4.14</div>
+        <!-- <div class="col me-1 level5Dot3 btn btn-success settingButton">Level 5.3</div> -->
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-warning settingButton tt disabled" title="Numerator and Denominator with a Value">Level 4.15</div>
-        <div class="col mr-1 btn btn-success settingButton tt" title="Rounding back">Level 4.16</div>
-        <div class="col mr-1 btn btn-angle settingButton tt" title="8-point Compass">Level 4.17</div> 
-        <div class="col mr-1 btn btn-angle settingButton tt" title="8-point Compass turning">Level 4.18</div> 
-        <div class="col mr-1 btn btn-angle settingButton tt" title="Angles: Rectangle, Squares, Straight Line, Full Circle">Level 4.19</div> 
+        <div class="col ms-1 me-1 btn btn-warning settingButton tt disabled" title="Numerator and Denominator with a Value">Level 4.15</div>
+        <div class="col me-1 btn btn-success settingButton tt" title="Rounding back">Level 4.16</div>
+        <div class="col me-1 btn btn-angle settingButton tt" title="8-point Compass">Level 4.17</div> 
+        <div class="col me-1 btn btn-angle settingButton tt" title="8-point Compass turning">Level 4.18</div> 
+        <div class="col me-1 btn btn-angle settingButton tt" title="Angles: Rectangle, Squares, Straight Line, Full Circle">Level 4.19</div> 
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-geometry settingButton tt" title="Shifting Perimeter">Level 4.20</div>
-        <div class="col mr-1 btn btn-geometry specialBorder settingButton tt" title="Cuttings">Level 4.21</div>
-        <div class="col mr-1 btn btn-geometry settingButton tt" title="Geometry: Glacial Overlapping">Level 4.22</div>
-        <div class="col mr-1 btn btn-geometry settingButton tt" title="Geometry: Parallel Overlapping">Level 4.23</div>
-        <div class="col mr-1 btn btn-warning settingButton tt" title="Fraction: Unit sentence">Level 4.24</div>
+        <div class="col ms-1 me-1 btn btn-geometry settingButton tt" title="Shifting Perimeter">Level 4.20</div>
+        <div class="col me-1 btn btn-geometry specialBorder settingButton tt" title="Cuttings">Level 4.21</div>
+        <div class="col me-1 btn btn-geometry settingButton tt" title="Geometry: Glacial Overlapping">Level 4.22</div>
+        <div class="col me-1 btn btn-geometry settingButton tt" title="Geometry: Parallel Overlapping">Level 4.23</div>
+        <div class="col me-1 btn btn-warning settingButton tt" title="Fraction: Unit sentence">Level 4.24</div>
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-geometry settingButton tt" title="Same for All ( Shapes )">Level 4.25</div>
-        <div class="col mr-1 btn btn-geometry settingButton tt" title="Shapes using Objects">Level 4.26</div>
-        <div class="col mr-1" title=""></div>
-        <div class="col mr-1" title=""></div>
-        <div class="col mr-1" title=""></div>
+        <div class="col ms-1 me-1 btn btn-geometry settingButton tt" title="Same for All ( Shapes )">Level 4.25</div>
+        <div class="col me-1 btn btn-geometry settingButton tt" title="Shapes using Objects">Level 4.26</div>
+        <div class="col me-1" title=""></div>
+        <div class="col me-1" title=""></div>
+        <div class="col me-1" title=""></div>
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-cal calButton tt" title="">Cal.4</div>
-        <div class="col ml-1 mr-1 btn btn-heu heuristics tt" title="">Heu.4</div>
-        <div class="col ml-1 mr-1 btn btn-heu settingButton tt" title="">Heu.4b</div>
+        <div class="col ms-1 me-1 btn btn-cal calButton tt" title="">Cal.4</div>
+        <div class="col ms-1 me-1 btn btn-heu heuristics tt" title="">Heu.4</div>
+        <div class="col ms-1 me-1 btn btn-heu settingButton tt" title="">Heu.4b</div>
       </div>  
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-warning settingButton tt" title="Identification of real and fake fractions">Level 5.0</div>
-        <div class="col mr-1 btn btn-warning settingButton tt" title="Fraction: Remainder Concept">Level 5.01</div>
-        <div class="col mr-1 mr-1 btn btn-warning settingButton tt" title="Fraction: Identical Numerator">Level 5.02</div>
-        <div class="col mr-1 mr-1 btn btn-percentage settingButton tt" title="Percentage: Conversion">Level 5.03</div>
-        <div class="col mr-1 btn btn-percentage settingButton tt" title="Percentage: Multiplication in Percentage`">Level 5.04</div> 
+        <div class="col ms-1 me-1 btn btn-warning settingButton tt" title="Identification of real and fake fractions">Level 5.0</div>
+        <div class="col me-1 btn btn-warning settingButton tt" title="Fraction: Remainder Concept">Level 5.01</div>
+        <div class="col me-1 me-1 btn btn-warning settingButton tt" title="Fraction: Identical Numerator">Level 5.02</div>
+        <div class="col me-1 me-1 btn btn-percentage settingButton tt" title="Percentage: Conversion">Level 5.03</div>
+        <div class="col me-1 btn btn-percentage settingButton tt" title="Percentage: Multiplication in Percentage`">Level 5.04</div> 
       </div>
       <div class="row">
-        <div class="col mr-1 ml-1 btn btn-percentage settingButton tt" title="Others: Multiplication in Percentage">Level 5.05</div>
-        <div class="col mr-1 btn btn-geometry settingButton tt" title="Obtuse Triangle">Level 5.06</div>
-        <div class="col mr-1 btn btn-angle settingButton tt" title="Angles: Triangles">Level 5.07</div>
-        <div class="col mr-1 btn btn-angle settingButton tt" title="Angles: Opposite, Alternate, Corresponding">Level 5.08</div>
-        <div class="col mr-1 btn btn-percentage settingButton tt" title="Percentage: Percentage Increase / Decrease / Discount">Level 5.09</div>
+        <div class="col me-1 ms-1 btn btn-percentage settingButton tt" title="Others: Multiplication in Percentage">Level 5.05</div>
+        <div class="col me-1 btn btn-geometry settingButton tt" title="Obtuse Triangle">Level 5.06</div>
+        <div class="col me-1 btn btn-angle settingButton tt" title="Angles: Triangles">Level 5.07</div>
+        <div class="col me-1 btn btn-angle settingButton tt" title="Angles: Opposite, Alternate, Corresponding">Level 5.08</div>
+        <div class="col me-1 btn btn-percentage settingButton tt" title="Percentage: Percentage Increase / Decrease / Discount">Level 5.09</div>
       </div>
       <div class="row">
-        <div class="col mr-1 ml-1 btn btn-angle settingButton tt" title="Angles: Parallelogram, Rhombusm and Trapezium">Level 5.10</div>
-        <div class="col mr-1 btn btn-percentage settingButton tt" title="Percentage: Calculating Value">Level 5.11</div>
-        <div class="col mr-1 btn btn-geometry settingButton tt" title="Volume">Level 5.12</div>
-        <div class="col mr-1 btn btn-geometry settingButton tt" title="Geometry: Overlapping Areas">Level 5.13</div>
-        <div class="col mr-1 btn btn-geometry settingButton tt" title="Geometry: Manipulation of Dimension">Level 5.14</div>
+        <div class="col me-1 ms-1 btn btn-angle settingButton tt" title="Angles: Parallelogram, Rhombusm and Trapezium">Level 5.10</div>
+        <div class="col me-1 btn btn-percentage settingButton tt" title="Percentage: Calculating Value">Level 5.11</div>
+        <div class="col me-1 btn btn-geometry settingButton tt" title="Volume">Level 5.12</div>
+        <div class="col me-1 btn btn-geometry settingButton tt" title="Geometry: Overlapping Areas">Level 5.13</div>
+        <div class="col me-1 btn btn-geometry settingButton tt" title="Geometry: Manipulation of Dimension">Level 5.14</div>
       </div>
       <div class="row">
-        <div class="col mr-1 ml-1 btn btn-percentage settingButton tt" title="Identical Numerators %">Level 5.15</div>
-        <div class="col mr-1 btn btn-warning settingButton tt" title="Division with Fractions">Level 5.16</div>
-        <div class="col mr-1 btn btn-average settingButton tt" title="Average: Simple">Level 5.17</div>
-        <div class="col mr-1"></div> 
-        <div class="col mr-1"></div> 
+        <div class="col me-1 ms-1 btn btn-percentage settingButton tt" title="Identical Numerators %">Level 5.15</div>
+        <div class="col me-1 btn btn-warning settingButton tt" title="Division with Fractions">Level 5.16</div>
+        <div class="col me-1 btn btn-average settingButton tt" title="Average: Simple">Level 5.17</div>
+        <div class="col me-1"></div> 
+        <div class="col me-1"></div> 
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-cal calButton tt" title="">Cal.5</div>
-        <div class="col ml-1 mr-1 btn btn-cal calButton tt" title="">Cal.5b</div>
-        <div class="col ml-1 mr-1 btn btn-heu heuristics tt" title="">Heu.5</div>
-        <div class="col ml-1 mr-1 btn btn-heu settingButton tt" title="">Heu.5b</div>
+        <div class="col ms-1 me-1 btn btn-cal calButton tt" title="">Cal.5</div>
+        <div class="col ms-1 me-1 btn btn-cal calButton tt" title="">Cal.5b</div>
+        <div class="col ms-1 me-1 btn btn-heu heuristics tt" title="">Heu.5</div>
+        <div class="col ms-1 me-1 btn btn-heu settingButton tt" title="">Heu.5b</div>
       </div>  
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-percentage settingButton tt" title="Backwards Calculation">Level 6.0</div>
-        <div class="col mr-1 btn btn-geometry settingButton tt" title="Circles">Level 6.01</div>
-        <div class="col mr-1 btn btn-geometry settingButton tt" title="Circles: Others">Level 6.02</div>
-        <div class="col mr-1 btn btn-algebra settingButton tt" title="Algebra">Level 6.03</div>  
-        <div class="col mr-1"></div>  
+        <div class="col ms-1 me-1 btn btn-percentage settingButton tt" title="Backwards Calculation">Level 6.0</div>
+        <div class="col me-1 btn btn-geometry settingButton tt" title="Circles">Level 6.01</div>
+        <div class="col me-1 btn btn-geometry settingButton tt" title="Circles: Others">Level 6.02</div>
+        <div class="col me-1 btn btn-algebra settingButton tt" title="Algebra">Level 6.03</div>  
+        <div class="col me-1"></div>  
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-speed settingButton tt" title="Basic Speed">Level 6.05</div>
-        <div class="col mr-1 btn btn-speed settingButton tt disabled" title="Average Speed of Whole Journey">Level 6.06</div>
-        <div class="col mr-1 btn btn-speed settingButton tt disabled" title="Meet up">Level 6.07</div>
-        <div class="col mr-1"></div>  
-        <div class="col mr-1"></div>  
+        <div class="col ms-1 me-1 btn btn-speed settingButton tt" title="Basic Speed">Level 6.05</div>
+        <div class="col me-1 btn btn-speed settingButton tt disabled" title="Average Speed of Whole Journey">Level 6.06</div>
+        <div class="col me-1 btn btn-speed settingButton tt disabled" title="Meet up">Level 6.07</div>
+        <div class="col me-1"></div>  
+        <div class="col me-1"></div>  
       </div>
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-cal calButton tt" title="">Cal.6</div>
-        <div class="col ml-1 mr-1 btn btn-cal calButton tt" title="">Cal.6b</div>
-        <div class="col ml-1 mr-1 btn btn-heu settingButton tt" title="">Heu.6</div>
-        <div class="col ml-1 mr-1 btn btn-heu settingButton tt" title="">Heu.6b</div>
+        <div class="col ms-1 me-1 btn btn-cal calButton tt" title="">Cal.6</div>
+        <div class="col ms-1 me-1 btn btn-cal calButton tt" title="">Cal.6b</div>
+        <div class="col ms-1 me-1 btn btn-heu settingButton tt" title="">Heu.6</div>
+        <div class="col ms-1 me-1 btn btn-heu settingButton tt" title="">Heu.6b</div>
       </div> 
       <div class="row">
-        <div class="col ml-1 mr-1 btn btn-success settingButton tt" title="Negative numbers">Level 7</div>
+        <div class="col ms-1 me-1 btn btn-success settingButton tt" title="Negative numbers">Level 7</div>
       </div>
       <p><button class="toMultiples btn btn-outline-info">Listing Multiples</button></p>
     </div>
@@ -407,9 +428,10 @@
   </div>
 
 </body>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
   <!-- <script type="module" src="./javascript/script.js"></script> -->
   <script type="module" src="/javascript/script.js"></script>
 <script>

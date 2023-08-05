@@ -32,6 +32,35 @@ mongoose
     console.log(err);
   });
 
+const attemptSchema = new mongoose.Schema({
+  user: String,
+  level: String,
+  time: Number,
+  mistake: Number,
+  score: Number,
+  setting: String,
+  date: {
+    type: Date,
+    default: Date.now(),
+  },
+});
+
+const attempt = mongoose.model("attempt", attemptSchema);
+
+const attemptNew = new attempt({
+  user: "Kenneth",
+  level: 1.07,
+  time: 300,
+  score: 10,
+  setting: "nil",
+});
+// attemptNew
+//   .save()
+//   .then((doc) => console.log(doc))
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
 const arithemeticJavascript = "./javascript/script.js";
 app.use("/", express.static(path.join(__dirname, "public")));
 
@@ -43,6 +72,7 @@ app.get("/", (req, res) => {
 app.get("/arithmetic", (req, res) => {
   // res.write(arithemeticJavascript.getMessage());
   res.send(fs.readFileSync("arithmetic.html", "utf8"));
+  // res.render(__dirname + "/arithmetic.html", function (req, res) {});
 });
 
 app.listen(port, () => {
