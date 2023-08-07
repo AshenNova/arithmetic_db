@@ -43,6 +43,13 @@ import { cutOffCheck } from "./cut_off.js";
 import { displayContent } from "./content.js";
 import { helpMeFunc } from "./helpMe.js";
 // cutOffCheck();
+let user = prompt("Please enter your name.\n 3 to 20 characters.");
+// console.log(typeof user);
+while (user == null || user.length > 2) {
+  user = prompt("Please enter your name.\n 3 to 20 characters.");
+}
+user = user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
+console.log(user);
 let buttonLevel = 0;
 let mulLevel = 0;
 let scoreNeeded = 0;
@@ -102,6 +109,18 @@ imageB.src = "images/endgame/bronze.jpeg";
 imageNMP.src = "images/endgame/needmorepractice.jpeg";
 imageFailed.src = "images/endgame/failed.jpeg";
 imageCompleted.src = "images/endgame/complete.jpeg";
+
+const attemptListen = document.querySelector(".attemptCreation");
+attemptListen.addEventListener("submit", () => {
+  console.log("A new attempt has been submitted");
+});
+
+const attemptUser = document.querySelector(".attempt-user");
+const attemptLevel = document.querySelector(".attempt-level");
+const attemptTime = document.querySelector(".attempt-time");
+const attemptMistake = document.querySelector(".attempt-mistake");
+const attemptScore = document.querySelector(".attempt-score");
+const attemptSetting = document.querySelector(".attempt-setting");
 
 //SUMMARY STUFF
 const summaryTextCl = document.querySelector(".summary-text");
@@ -525,9 +544,6 @@ let state = {
   global: 0,
 };
 
-// function adjustScore(arr){
-//   if (arr.length) < 10
-// }
 function normalDisplay() {
   wholeNumberContainer.classList.remove("hidden");
   firstCanvas.classList.add("hidden");
@@ -748,8 +764,17 @@ function timer2() {
 
         // summaryTextCl.insertAdjacentHTML("beforeend", html);
       });
+      attemptUser.value = user;
+      attemptLevel.value = level;
+      attemptTime.value = time;
+      attemptMistake.value = state.mistake;
+      attemptScore.value = state.score;
+      // attemptSetting.value = setting;
+      // attemptUser.value = level;
+      attemptListen.submit();
     }
   }, 1000);
+  // UPLOAD ATTEMPT
 }
 
 function resetStuff() {
@@ -26839,7 +26864,7 @@ function buttonLevelSetting() {
 
     case "Level 1.01":
       level = 1.01;
-      scoreNeeded = 30;
+      scoreNeeded = 50;
       gold = highScore1DotZero1.time;
       silver = highScore1DotZero1.time + (cutoff - highScore1DotZero1.time) / 3;
       bronze =
@@ -28204,6 +28229,7 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
+
       // if (
       //   ![Array.from(Array(19)).map((e, i) => i + 1), 99].includes(
       //     setting * 1
@@ -28620,7 +28646,7 @@ function buttonLevelSetting() {
     default:
       console.log(this.innerHTML);
   }
-
+  attemptSetting.value = setting;
   if (hardcore == 1) {
     scoreNeeded /= 2;
   }
