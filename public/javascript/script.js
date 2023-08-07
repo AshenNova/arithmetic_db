@@ -45,7 +45,7 @@ import { helpMeFunc } from "./helpMe.js";
 // cutOffCheck();
 let user = prompt("Please enter your name.\n 3 to 20 characters.");
 // console.log(typeof user);
-while (user == null || user.length > 2) {
+while (user == null || user.length < 2) {
   user = prompt("Please enter your name.\n 3 to 20 characters.");
 }
 user = user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
