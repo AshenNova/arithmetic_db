@@ -27,7 +27,7 @@ exports.newAttempt = (req, res) => {
     extra: req.body.extra,
     date: req.body.date,
   });
-  console.log(newAttempt);
+  // console.log(newAttempt);
   newAttempt
     .save()
     .then((doc) => {

@@ -7,12 +7,14 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
-    <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+    <link rel="stylesheet" href="/css/attempts-styles.css">
      <link rel="icon" href="/images/favicon.ico?v=1.1">
     <title>Document</title>
 </head>
 <body>
+  <!-- <div class="container"> -->
     <%- include("../partials/navbar") %>
+  <!-- </div> -->
 <div class="container">
 <table class="table text-center">
     <thead class="thead-dark">
@@ -29,14 +31,18 @@
       </tr>
     </thead>
     <tbody>
-      <% const today = new Date() %>
+      <% const today = new Date().getDay() %>
         <% attempts.forEach(item => { %>
           <!-- const date = `${item.date.getDay()}/${item.date.getMonth()} ` -->
             <tr>
                 <!-- <th scope="row">1</th> -->
                 <td><%= item.user %></td>
                 <td><%= item.level %></td>
-                <td><%= item.time %></td>
+                <% if ( item.time > 600) { %>
+                <td class="text-danger"><%=   item.time  %></td>
+                <% } else { %>
+                <td><%=   item.time %></td> 
+                <% } %>
                 <td><%= item.mistake %></td>
                 <td><%= item.score %></td>
                 <td><%= item.setting %></td>
@@ -44,7 +50,7 @@
                 <!-- <td><%= item.date.getFullYear() %></td> -->
                 <td><%= item.date.toLocaleTimeString('en-US') + " " + item.date.toLocaleDateString() %></td>
                 <!-- <td><%= item.date.getHours() %></td> -->
-                <td><%= Math.floor((today- item.date)/(1000*60*60*24)) %></td>
+                <td><%= today - item.date.getDay() %></td>
             </tr>
             <% });%>
     </tbody>
