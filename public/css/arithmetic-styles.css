@@ -48,7 +48,7 @@ body {
   position: absolute;
   margin: 0;
   top: 8%;
-  /* height: 90vh; */
+  height: 90vh;
   /* max-height: 100%; */
   width: auto;
   border-radius: 10px;
@@ -56,7 +56,7 @@ body {
   z-index: 9;
   text-align: center;
   border-style: solid;
-  overflow: scroll;
+  overflow: auto;
   /* display: inline-block; */
 }
 
