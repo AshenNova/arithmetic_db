@@ -5,21 +5,51 @@ const app = express();
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 
+function paginate(stuff, totalItems, perPage, currentPage) {
+  console.log(totalItems);
+  const totalPages = Math.ceil(totalItems / perPage);
+  const startItem = (currentPage - 1) * perPage;
+  const endItem = startItem + perPage;
+  const results = stuff.slice(startItem, endItem);
+  const pagination = {
+    totalPages: totalPages,
+    currentPage: currentPage,
+    previousPage: currentPage - 1,
+    nextPage: currentPage + 1,
+  };
+  return { pagination };
+}
+
 exports.getAllAttempts = async (req, res) => {
-  const page = req.params.page || 0;
+  const page = req.query.page * 1 || 1;
   const limit = 20;
   const attempts = await Attempt.find()
     .sort({ date: -1 })
-    .skip(page * limit)
+    .skip((page - 1) * limit)
     .limit(limit);
+  const attemptsTwo = await Attempt.find().sort({ date: -1 });
+  const paginatedAttempts = paginate(
+    attemptsTwo,
+    attemptsTwo.length,
+    limit,
+    page
+  );
+  // const attempts = paginate(
+  //   beforePaginationAttempts,
+  //   beforePaginationAttempts.length,
+  //   limit,
+  //   page
+  // );
+  // console.log(attempts);
+  console.log(paginatedAttempts);
   // res.status(200).render("pages/attempts", { attempts: attempts });
-  res.status(200).render("pages/attempts", { attempts });
+  res.status(200).render("pages/attempts", { attempts, paginatedAttempts });
 };
 
 exports.getFilteredAttempts = async (req, res) => {
   const queryObj = req.query;
   console.log(queryObj);
-  const page = req.params.page || 0;
+  const page = queryObj.page || 1;
   const limit = 20;
 
   const user = queryObj.user;
@@ -49,10 +79,20 @@ exports.getFilteredAttempts = async (req, res) => {
   console.log(filter);
   const attempts = await Attempt.find(filter)
     .sort({ date: -1 })
-    .skip(page * limit)
+    .skip((page - 1) * limit)
     .limit(limit);
+
+  const attemptsTwo = attempts;
+  // const attemptsTwo = await Attempt.find().sort({ date: -1 });
+  const paginatedAttempts = paginate(
+    attemptsTwo,
+    attemptsTwo.length,
+    limit,
+    page
+  );
+
   // res.status(200).render("pages/attempts", { attempts: attempts });
-  res.status(200).render("pages/attempts", { attempts });
+  res.status(200).render("pages/attempts", { attempts, paginatedAttempts });
 };
 
 exports.newAttempt = async (req, res) => {
