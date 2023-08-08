@@ -15,6 +15,19 @@
   <!-- <div class="container"> -->
     <%- include("../partials/navbar") %>
   <!-- </div> -->
+
+  <!-- FILTER -->
+  <div class="container my-4">
+<form action="attempts/filter" method="/GET">
+  <label for="user">User:</label>
+  <input type='text' name="user" class="filter-user"></input>
+  <label for="level">Level:</label>
+  <input type='text' name="level" class="filter-level"></input>
+  <label for="setting">Setting:</label>
+  <input type='text' name="setting" class="filter-setting"></input>
+  <button type="submit">Filter</button>
+</form>
+  </div>
 <div class="container">
 <table class="table text-center">
     <thead class="thead-dark">
@@ -60,5 +73,5 @@
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-<!-- <script type="module" src="/javascript/script.js"></script> -->
+<script type="module" src="/javascript/filter_attempt.js"></script>
 </html>

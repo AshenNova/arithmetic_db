@@ -21,4 +21,6 @@ router
   .get(attemptController.getAllAttempts)
   .post(attemptController.newAttempt);
 
+router.route("/filter").get(attemptController.getFilteredAttempts);
+
 module.exports = router;

@@ -104,11 +104,11 @@ const imageNMP = document.createElement("img");
 const imageFailed = document.createElement("img");
 const imageCompleted = document.createElement("img");
 imageG.src = "images/endgame/gold.jpeg";
-imageS.src = "images/endgame/silver.jpeg";
-imageB.src = "images/endgame/bronze.jpeg";
-imageNMP.src = "images/endgame/needmorepractice.jpeg";
-imageFailed.src = "images/endgame/failed.jpeg";
-imageCompleted.src = "images/endgame/complete.jpeg";
+imageS.src = "/images/endgame/silver.jpeg";
+imageB.src = "/images/endgame/bronze.jpeg";
+imageNMP.src = "/images/endgame/needmorepractice.jpeg";
+imageFailed.src = "/images/endgame/failed.jpeg";
+imageCompleted.src = "/images/endgame/complete.jpeg";
 
 const attemptListen = document.querySelector(".attemptCreation");
 attemptListen.addEventListener("submit", () => {
@@ -26868,7 +26868,7 @@ function buttonLevelSetting() {
 
     case "Level 1.01":
       level = 1.01;
-      scoreNeeded = 50;
+      scoreNeeded = 5;
       gold = highScore1DotZero1.time;
       silver = highScore1DotZero1.time + (cutoff - highScore1DotZero1.time) / 3;
       bronze =
