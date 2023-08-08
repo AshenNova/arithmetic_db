@@ -772,7 +772,7 @@ function timer2() {
       attemptMistake.value = state.mistake;
       attemptScore.value = state.score;
       attemptExtra.value = extraPracticeArr;
-      attemptDate.value = new Date();
+      attemptDate.value = new Date().toUTCString();
       // attemptSetting.value = setting;
       // attemptUser.value = level;
       attemptListen.submit();
