@@ -6,8 +6,12 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 
 exports.getAllAttempts = async (req, res) => {
-  console.log("Trying to get all attempts");
-  const attempts = await Attempt.find();
+  const page = req.params.page || 0;
+  const limit = 20;
+  const attempts = await Attempt.find()
+    .sort({ date: -1 })
+    .skip(page * limit)
+    .limit(limit);
   // res.status(200).render("pages/attempts", { attempts: attempts });
   res.status(200).render("pages/attempts", { attempts });
 };
@@ -20,6 +24,8 @@ exports.newAttempt = (req, res) => {
     mistake: req.body.mistake,
     score: req.body.score,
     setting: req.body.setting,
+    extra: req.body.extra,
+    date: req.body.date,
   });
   console.log(newAttempt);
   newAttempt

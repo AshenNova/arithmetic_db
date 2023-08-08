@@ -43,10 +43,10 @@ import { cutOffCheck } from "./cut_off.js";
 import { displayContent } from "./content.js";
 import { helpMeFunc } from "./helpMe.js";
 // cutOffCheck();
-let user = prompt("Please enter your name.\n 3 to 20 characters.");
+let user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
 // console.log(typeof user);
 while (user == null || user.length < 2) {
-  user = prompt("Please enter your name.\n 3 to 20 characters.");
+  user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
 }
 user = user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
 console.log(user);
@@ -121,6 +121,8 @@ const attemptTime = document.querySelector(".attempt-time");
 const attemptMistake = document.querySelector(".attempt-mistake");
 const attemptScore = document.querySelector(".attempt-score");
 const attemptSetting = document.querySelector(".attempt-setting");
+const attemptExtra = document.querySelector(".attempt-extra");
+const attemptDate = document.querySelector(".attempt-date");
 
 //SUMMARY STUFF
 const summaryTextCl = document.querySelector(".summary-text");
@@ -769,6 +771,8 @@ function timer2() {
       attemptTime.value = time;
       attemptMistake.value = state.mistake;
       attemptScore.value = state.score;
+      attemptExtra.value = extraPracticeArr;
+      attemptDate.value = new Date();
       // attemptSetting.value = setting;
       // attemptUser.value = level;
       attemptListen.submit();

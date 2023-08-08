@@ -14,7 +14,7 @@
 <body>
     <%- include("../partials/navbar") %>
 <div class="container">
-<table class="table">
+<table class="table text-center">
     <thead class="thead-dark">
       <tr>
         <th scope="col">Name</th>
@@ -23,10 +23,15 @@
         <th scope="col">Mistakes</th>
         <th scope="col">Score</th>
         <th scope="col">Setting</th>
+        <th scope="col">Extra</th>
+        <th scope="col">Date</th>
+        <th scope="col">Ago</th>
       </tr>
     </thead>
     <tbody>
+      <% const today = new Date() %>
         <% attempts.forEach(item => { %>
+          <!-- const date = `${item.date.getDay()}/${item.date.getMonth()} ` -->
             <tr>
                 <!-- <th scope="row">1</th> -->
                 <td><%= item.user %></td>
@@ -35,7 +40,10 @@
                 <td><%= item.mistake %></td>
                 <td><%= item.score %></td>
                 <td><%= item.setting %></td>
-                <!-- <td><%= item.level %></td> -->
+                <td><%= item.extra %></td>
+                <!-- <td><%= item.date.getFullYear() %></td> -->
+                <td><%= item.date.getHours() + ":" + item.date.getMinutes() + " " + item.date.toLocaleDateString() %></td>
+                <td><%= Math.floor((today- item.date)/(1000*60*60*24)) %></td>
             </tr>
             <% });%>
     </tbody>

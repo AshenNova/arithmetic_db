@@ -11,7 +11,7 @@ const userRoute = require("./routes/users");
 // require("mongoose-type-email");
 
 const app = express();
-const port = process.env.PORT || 80;
+// const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 // JAVASCRIPT
@@ -50,6 +50,6 @@ app.get("/login", (req, res) => {
   res.render("./pages/login");
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port: ${port}!`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`We are listening!`);
 });
