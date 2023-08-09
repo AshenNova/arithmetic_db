@@ -122,9 +122,9 @@ exports.newAttempt = async (req, res) => {
       // res.end();
       // res.end();
       // res.setHeader("Cache-control", "no-store");
+      res.status(204).end();
     });
   } catch (e) {
     console.log(e);
   }
-  res.status(204).end();
 };
