@@ -112,11 +112,11 @@ imageFailed.src = "/images/endgame/failed.jpeg";
 imageCompleted.src = "/images/endgame/complete.jpeg";
 
 const attemptListen = document.querySelector(".attemptCreation");
-attemptListen.addEventListener("submit", (e) => {
-  e.preventDefault();
-  attemptListen.submit();
-  console.log("A new attempt has been submitted");
-});
+// attemptListen.addEventListener("submit", (e) => {
+//   e.preventDefault();
+//   // attemptListen.submit();
+//   console.log("A new attempt has been submitted");
+// });
 
 const attemptUser = document.querySelector(".attempt-user");
 const attemptMode = document.querySelector(".attempt-mode");
@@ -791,15 +791,15 @@ function timer2() {
       attemptScore.value = state.score;
       attemptExtra.value = extraPracticeArr;
       attemptDate.value = new Date().toUTCString();
-      attemptSubmitBtn.click(() => {
-        console.log("Clicked!");
-      });
+      // attemptSubmitBtn.click(() => {
+      //   console.log("Clicked!");
+      // });
 
       // attemptListen.addEventListener("submit", (e) => {
       //   console.log("Submit");
       //   e.preventDefault();
       // });
-      // attemptListen.submit();
+      attemptListen.submit();
     }
   }, 1000);
   // UPLOAD ATTEMPT

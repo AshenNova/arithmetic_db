@@ -100,6 +100,7 @@ exports.getFilteredAttempts = async (req, res) => {
 };
 
 exports.newAttempt = async (req, res) => {
+  // console.log(req.body);
   try {
     const newAttempt = new Attempt({
       user: req.body.user,
@@ -117,16 +118,13 @@ exports.newAttempt = async (req, res) => {
 
     await newAttempt.save().then((doc) => {
       console.log(doc);
-      // res.writeHead(204, { "Content-Type": "text/plain" });
+      // res.setHeader("Content-Type", "text/plain");
+      // res.end();
       // res.end();
       // res.setHeader("Cache-control", "no-store");
     });
   } catch (e) {
     console.log(e);
   }
-
-  // res.status(204).send();
-  // res.redirect("");
-  // res.setHeader("Cache-control", "no-store");
-  res.status(204).send();
+  res.status(204).end();
 };
