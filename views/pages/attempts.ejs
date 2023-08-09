@@ -9,7 +9,7 @@
     <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/attempts-styles.css">
      <link rel="icon" href="/images/favicon.ico?v=1.1">
-    <title>Document</title>
+    <title>Results</title>
 </head>
 <body>
   <!-- <div class="container"> -->
@@ -19,15 +19,35 @@
   <!-- FILTER -->
   <div class="container my-4">
     <form action="/attempts/filter" method="/GET">
-      <label for="user">User:</label>
-      <input type='text' name="user"></input>
-      <label for="level">Level:</label>
-      <input type='text' name="level"></input>
-      <label for="setting">Setting:</label>
-      <input type='text' name="setting"></input>
-      <label for="mode">Mode:</label>
-      <input type='text' name="mode"></input>
-      <button type="submit">Filter</button>
+        <div class="row">
+          <div class="col-sm-2 my-2">
+            <label for="user">User:</label>
+            <input type='text' name="user"></input>
+          </div>
+          <div class="col-sm-2 my-2">
+           <label for="level">Level:</label>
+            <input type='text' name="level"></input>
+          </div>
+          <div class="col-sm-2 my-2">
+            <label for="setting">Setting:</label>
+            <input type='text' name="setting"></input>
+          </div>
+          <div class="col-sm-2 my-2">
+            <label for="mode">Mode:</label>
+            <input type='text' name="mode"></input>
+            <!-- <select class="form-select" data-bs-toggle="dropdown">
+              <options>Normal</options>
+              <options>Easy</options>
+              <options>Hardcore</options>
+            </select> -->
+           </div> 
+
+      </div>
+      <div class="row">
+      <div class="d-flex col align-items-center">
+        <button type="submit" class="btn btn-primary">Filter</button>
+      </div>
+     </div>
     </form>
   </div>
   <div class="container">
@@ -90,5 +110,6 @@
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<!-- <script src="~/lib/bootstrap-select/js/bootstrap-select.min.js"></script> -->
 <script type="module" src="/javascript/filter_attempt.js"></script>
 </html>
