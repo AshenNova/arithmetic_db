@@ -55,11 +55,13 @@ exports.getFilteredAttempts = async (req, res) => {
   const user = queryObj.user;
   const level = queryObj.level;
   const setting = queryObj.setting;
+  const mode = queryObj.mode;
 
   let filter = {
-    user: user,
-    level: level,
-    setting: setting,
+    user: user.charAt(0).toUpperCase() + user.slice(1, user.length),
+    level,
+    setting,
+    mode: mode.charAt(0).toUpperCase() + mode.slice(1, mode.length),
   };
 
   // if (filter.user == "") delete filter.user;
@@ -99,6 +101,7 @@ exports.newAttempt = async (req, res) => {
   try {
     const newAttempt = new Attempt({
       user: req.body.user,
+      mode: req.body.mode,
       level: req.body.level,
       time: req.body.time,
       mistake: req.body.mistake,

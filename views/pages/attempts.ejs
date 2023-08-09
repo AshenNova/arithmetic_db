@@ -20,11 +20,13 @@
   <div class="container my-4">
     <form action="/attempts/filter" method="/GET">
       <label for="user">User:</label>
-      <input type='text' name="user" class="filter-user"></input>
+      <input type='text' name="user"></input>
       <label for="level">Level:</label>
-      <input type='text' name="level" class="filter-level"></input>
+      <input type='text' name="level"></input>
       <label for="setting">Setting:</label>
-      <input type='text' name="setting" class="filter-setting"></input>
+      <input type='text' name="setting"></input>
+      <label for="mode">Mode:</label>
+      <input type='text' name="mode"></input>
       <button type="submit">Filter</button>
     </form>
   </div>
@@ -46,6 +48,7 @@
     <thead class="thead-dark">
       <tr>
         <th scope="col">Name</th>
+        <th scope="col">Mode</th>
         <th scope="col">Level</th>
         <th scope="col">Time</th>
         <th scope="col">Mistakes</th>
@@ -63,6 +66,7 @@
             <tr>
                 <!-- <th scope="row">1</th> -->
                 <td><%= item.user %></td>
+                <td><%= item.mode %></td>
                 <td><%= item.level %></td>
                 <% if ( item.time > 600) { %>
                 <td class="text-danger"><%=   item.time  %></td>

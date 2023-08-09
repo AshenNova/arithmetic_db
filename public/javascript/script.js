@@ -62,6 +62,7 @@ let choice = 0;
 let manipulation = 0;
 let attempt = 1;
 let startTime = undefined;
+let mode = "Normal";
 const displayProblem = document.querySelector(".display-problems");
 const helpMe = document.querySelector(".help-me-text");
 const ourForm = document.querySelector(".our-form");
@@ -116,6 +117,7 @@ attemptListen.addEventListener("submit", () => {
 });
 
 const attemptUser = document.querySelector(".attempt-user");
+const attemptMode = document.querySelector(".attempt-mode");
 const attemptLevel = document.querySelector(".attempt-level");
 const attemptTime = document.querySelector(".attempt-time");
 const attemptMistake = document.querySelector(".attempt-mistake");
@@ -766,7 +768,15 @@ function timer2() {
 
         // summaryTextCl.insertAdjacentHTML("beforeend", html);
       });
+      if (easy == 1) {
+        mode = "Easy";
+      } else if (hardcore == 1) {
+        mode = "Hardcore";
+      } else {
+        mode = "Normal";
+      }
       attemptUser.value = user;
+      attemptMode.value = mode;
       attemptLevel.value = level;
       attemptTime.value = time;
       attemptMistake.value = state.mistake;

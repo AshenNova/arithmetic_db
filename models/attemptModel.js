@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const attemptSchema = new mongoose.Schema({
   user: String,
+  mode: String,
   level: String,
   time: Number,
   mistake: Number,
