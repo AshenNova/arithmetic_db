@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const ip = require("ip");
+// const $ = require("jquery");
 app.use(bodyParser.urlencoded({ extended: false }));
 
 function paginate(stuff, totalItems, perPage, currentPage) {
@@ -123,9 +124,23 @@ exports.newAttempt = async (req, res) => {
       // res.end();
       // res.setHeader("Cache-control", "no-store");
       // res.status(204).end();
-      res.sendStatus(204);
+      // res.send("", { status: 204 });
+      // res.render("pages/arithmetic", { noCache: true });
+      res.status(204).send();
+      // res.clear();
     });
   } catch (e) {
     console.log(e);
   }
+
+  // $.ajax({
+  //   url: "/my-endpoint",
+  //   type: "GET",
+  //   success: function () {
+  //     //Do something here, but dont refresh the page
+  //   },
+  //   error: function () {
+  //     //handle error
+  //   },
+  // });
 };
