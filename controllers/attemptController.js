@@ -119,8 +119,7 @@ exports.newAttempt = async (req, res) => {
       console.log(doc);
       // res.writeHead(204, { "Content-Type": "text/plain" });
       // res.end();
-      res.setHeader("Cache-control", "no-store");
-      res.status(204).send();
+      // res.setHeader("Cache-control", "no-store");
     });
   } catch (e) {
     console.log(e);
@@ -128,4 +127,6 @@ exports.newAttempt = async (req, res) => {
 
   // res.status(204).send();
   // res.redirect("");
+  res.setHeader("Cache-control", "no-store");
+  res.status(204).send();
 };
