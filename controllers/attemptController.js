@@ -127,6 +127,6 @@ exports.newAttempt = async (req, res) => {
 
   // res.status(204).send();
   // res.redirect("");
-  res.setHeader("Cache-control", "no-store");
+  // res.setHeader("Cache-control", "no-store");
   res.status(204).send();
 };
