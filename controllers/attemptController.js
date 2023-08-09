@@ -117,9 +117,10 @@ exports.newAttempt = async (req, res) => {
 
     await newAttempt.save().then((doc) => {
       console.log(doc);
-      res.writeHead(204, { "Content-Type": "text/plain" });
-      // res.send();
-      res.end();
+      // res.writeHead(204, { "Content-Type": "text/plain" });
+      // res.end();
+      res.setHeader("Cache-control", "no-store");
+      res.status(204).send();
     });
   } catch (e) {
     console.log(e);
