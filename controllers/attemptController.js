@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const ip = require("ip");
 app.use(bodyParser.urlencoded({ extended: false }));
 
 function paginate(stuff, totalItems, perPage, currentPage) {
@@ -110,9 +111,10 @@ exports.newAttempt = async (req, res) => {
       setting: req.body.setting,
       extra: req.body.extra,
       date: req.body.date,
-      ip: req.socket.remoteAddress,
+      ip: req.ip,
     });
     // console.log(newAttempt);
+
     await newAttempt.save().then((doc) => {
       console.log(doc);
     });
