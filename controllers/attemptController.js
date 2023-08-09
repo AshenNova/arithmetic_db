@@ -117,10 +117,14 @@ exports.newAttempt = async (req, res) => {
 
     await newAttempt.save().then((doc) => {
       console.log(doc);
+      res.writeHead(204, { "Content-Type": "text/plain" });
+      // res.send();
+      res.end();
     });
-  } catch {
-    throw new Error();
+  } catch (e) {
+    console.log(e);
   }
-  res.status(204).send();
+
+  // res.status(204).send();
   // res.redirect("");
 };

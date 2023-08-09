@@ -112,7 +112,8 @@ imageFailed.src = "/images/endgame/failed.jpeg";
 imageCompleted.src = "/images/endgame/complete.jpeg";
 
 const attemptListen = document.querySelector(".attemptCreation");
-attemptListen.addEventListener("submit", () => {
+attemptListen.addEventListener("submit", (e) => {
+  e.preventDefault();
   console.log("A new attempt has been submitted");
 });
 
@@ -125,7 +126,8 @@ const attemptScore = document.querySelector(".attempt-score");
 const attemptSetting = document.querySelector(".attempt-setting");
 const attemptExtra = document.querySelector(".attempt-extra");
 const attemptDate = document.querySelector(".attempt-date");
-const attemptIp = document.querySelector(".attempt-ip");
+const attemptSubmitBtn = document.querySelector(".btn-attemptSubmit");
+// const attemptIp = document.querySelector(".attempt-ip");
 
 //SUMMARY STUFF
 const summaryTextCl = document.querySelector(".summary-text");
@@ -769,6 +771,9 @@ function timer2() {
 
         // summaryTextCl.insertAdjacentHTML("beforeend", html);
       });
+
+      // attemptSetting.value = setting;
+      // attemptUser.value = level;
       if (easy == 1) {
         mode = "Easy";
       } else if (hardcore == 1) {
@@ -776,6 +781,7 @@ function timer2() {
       } else {
         mode = "Normal";
       }
+
       attemptUser.value = user;
       attemptMode.value = mode;
       attemptLevel.value = level;
@@ -784,8 +790,7 @@ function timer2() {
       attemptScore.value = state.score;
       attemptExtra.value = extraPracticeArr;
       attemptDate.value = new Date().toUTCString();
-      // attemptSetting.value = setting;
-      // attemptUser.value = level;
+      // attemptSubmitBtn.submit();
       attemptListen.submit();
     }
   }, 1000);
