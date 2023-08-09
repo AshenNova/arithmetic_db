@@ -110,7 +110,7 @@ exports.newAttempt = async (req, res) => {
       setting: req.body.setting,
       extra: req.body.extra,
       date: req.body.date,
-      ip: req.ip,
+      ip: req.socket.remoteAddress,
     });
     // console.log(newAttempt);
     await newAttempt.save().then((doc) => {
