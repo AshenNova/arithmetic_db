@@ -21,6 +21,7 @@ function paginate(stuff, totalItems, perPage, currentPage) {
 }
 
 exports.getAllAttempts = async (req, res) => {
+  console.log(`IP address is: ${req.ip}`);
   const page = req.query.page * 1 || 1;
   const limit = 20;
   const attempts = await Attempt.find()
@@ -109,6 +110,7 @@ exports.newAttempt = async (req, res) => {
       setting: req.body.setting,
       extra: req.body.extra,
       date: req.body.date,
+      ip: req.ip,
     });
     // console.log(newAttempt);
     await newAttempt.save().then((doc) => {

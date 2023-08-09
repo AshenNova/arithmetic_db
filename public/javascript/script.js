@@ -125,6 +125,7 @@ const attemptScore = document.querySelector(".attempt-score");
 const attemptSetting = document.querySelector(".attempt-setting");
 const attemptExtra = document.querySelector(".attempt-extra");
 const attemptDate = document.querySelector(".attempt-date");
+const attemptIp = document.querySelector(".attempt-ip");
 
 //SUMMARY STUFF
 const summaryTextCl = document.querySelector(".summary-text");

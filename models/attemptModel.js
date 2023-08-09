@@ -13,6 +13,7 @@ const attemptSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  ip: String,
 });
 
 const Attempt = mongoose.model("attempts", attemptSchema);
