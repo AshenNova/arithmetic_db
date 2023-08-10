@@ -88,9 +88,9 @@
                 <td><%= item.user %></td>
                 <td><%= item.mode %></td>
                 <td><%= item.level %></td>
-                <% if (item.mode == "Normal" && item.time > 600) { %>
+                <% if (item.mode == "Normal" && item.time >= 600) { %>
                   <td>🚩</td>
-                <% } else if (item.mode == "Hardcore" && item.time > 600 ) { %> 
+                <% } else if (item.mode == "Hardcore" && item.time >= 600 ) { %> 
                   <td>🚩</td>
                 <% } else if ( item.time > 300) { %>
                 <td class="text-danger"><%= item.time  %></td>
