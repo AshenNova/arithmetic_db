@@ -112,12 +112,6 @@ imageFailed.src = "/images/endgame/failed.jpeg";
 imageCompleted.src = "/images/endgame/complete.jpeg";
 
 const attemptListen = document.querySelector(".attemptCreation");
-// attemptListen.addEventListener("submit", (e) => {
-//   e.preventDefault();
-//   // attemptListen.submit();
-//   console.log("A new attempt has been submitted");
-// });
-
 const attemptUser = document.querySelector(".attempt-user");
 const attemptMode = document.querySelector(".attempt-mode");
 const attemptLevel = document.querySelector(".attempt-level");
@@ -28762,7 +28756,6 @@ $("#attemptAjex").on("submit", function (event) {
     extra: extra,
     date: date,
   };
-  console.log(user);
   event.preventDefault();
   // data = JSON.stringify({ data });
   $.ajax({

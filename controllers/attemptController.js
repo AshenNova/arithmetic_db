@@ -101,9 +101,6 @@ exports.getFilteredAttempts = async (req, res) => {
 };
 
 exports.newAttempt = async (req, res) => {
-  console.log(req.body);
-  // try {
-  console.log("here i am!");
   const newAttempt = new Attempt({
     user: req.body.user,
     mode: req.body.mode,
@@ -116,18 +113,10 @@ exports.newAttempt = async (req, res) => {
     date: req.body.date,
     ip: req.ip,
   });
-  // console.log(data);
-  // console.log(newAttempt);
-  // const data = JSON.stringify(newAttempt);
-  // console.log(`From model: ${data}`);
-
-  // res.send({ response: req.body.quote });
-  // res.send();
 
   try {
     await newAttempt.save().then((doc) => {
       console.log(doc);
-      // res.status(204).send();
     });
   } catch (e) {
     console.log(e);
