@@ -31,6 +31,7 @@ exports.getAllAttempts = async (req, res) => {
     .skip((page - 1) * limit)
     .limit(limit);
   const attemptsTwo = await Attempt.find().sort({ date: -1 });
+  // console.log(`Attempts with filter: ${attemptsTwo}`);
   const paginatedAttempts = paginate(
     attemptsTwo,
     attemptsTwo.length,
@@ -80,13 +81,12 @@ exports.getFilteredAttempts = async (req, res) => {
       delete filter[key];
     }
   });
-
-  console.log(filter);
   const attempts = await Attempt.find(filter)
     .sort({ date: -1 })
     .skip((page - 1) * limit)
     .limit(limit);
 
+  console.log(`Filtered ${attempts}`);
   const attemptsTwo = attempts;
   // const attemptsTwo = await Attempt.find().sort({ date: -1 });
   const paginatedAttempts = paginate(

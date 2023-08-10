@@ -49,6 +49,7 @@ while (user == null || user.length < 2) {
   user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
 }
 user = user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
+user = user.trim();
 console.log(user);
 let buttonLevel = 0;
 let mulLevel = 0;
