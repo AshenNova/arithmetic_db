@@ -64,7 +64,7 @@
   </nav>
 </div>
 <div class="container">
-<table class="table text-center">
+<table class="table text-center table-hover">
     <thead class="thead-dark">
       <tr>
         <th scope="col">Name</th>
@@ -86,7 +86,16 @@
             <tr>
                 <!-- <th scope="row">1</th> -->
                 <td><%= item.user %></td>
-                <td><%= item.mode %></td>
+                <% if ( item.mode == "Easy") {%>
+                  <td class="btn btn-outline-success btn-sm"> <%= "Easy" %></td>
+                <% } %>
+                <% if ( item.mode == "Hardcore") { %>
+                  <td class="btn btn-outline-danger btn-sm"> <%= "Hardcore" %></td> 
+              <% } %>
+                <% if ( item.mode == "Normal") { %>
+                  <td class="btn btn-outline-dark btn-sm"> <%= "Normal" %></td>
+                  <% } %>
+                <!-- <td><%= item.mode %></td> -->
                 <td><%= item.level %></td>
                 <% if (item.mode == "Normal" && item.time >= 600) { %>
                   <td>🚩</td>

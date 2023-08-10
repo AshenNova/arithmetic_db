@@ -50,10 +50,8 @@ while (user == null || user.length < 2) {
 }
 user = user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
 user = user.trim();
-console.log(user);
 
 //NAVBAR//
-
 const userName = document.querySelector("#userName");
 userName.textContent = user;
 let buttonLevel = 0;
@@ -790,7 +788,7 @@ function timer2() {
       attemptMistake.value = state.mistake;
       attemptScore.value = state.score;
       attemptExtra.value = extraPracticeArr;
-      attemptDate.value = new Date().toUTCString();
+      // attemptDate.value = new Date().toUTCString();
       attemptSubmitBtn.click();
 
       // attemptListen.addEventListener("submit", (e) => {
