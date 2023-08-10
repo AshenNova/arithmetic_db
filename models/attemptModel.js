@@ -11,7 +11,7 @@ const attemptSchema = new mongoose.Schema({
   extra: String,
   date: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
   ip: String,
 });

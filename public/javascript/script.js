@@ -28747,7 +28747,7 @@ $("#attemptAjex").on("submit", function (event) {
   let score = $("#form-score").val();
   let setting = $("#form-setting").val();
   let extra = $("#form-extra").val();
-  let date = $("#form-fate").val();
+  // let date = $("#form-date").val();
 
   let attempt = {
     user: user,
@@ -28758,7 +28758,7 @@ $("#attemptAjex").on("submit", function (event) {
     score: score,
     setting: setting,
     extra: extra,
-    date: date,
+    // date: date,
   };
   event.preventDefault();
   // data = JSON.stringify({ data });

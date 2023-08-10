@@ -1,9 +1,11 @@
 const Attempt = require("../models/attemptModel");
+const Highscore = require("../models/highscoreModel");
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const ip = require("ip");
+const { exists } = require("../models/attemptModel");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -101,6 +103,7 @@ exports.getFilteredAttempts = async (req, res) => {
 };
 
 exports.newAttempt = async (req, res) => {
+  const level = req.body.level;
   const newAttempt = new Attempt({
     user: req.body.user,
     mode: req.body.mode,
@@ -110,16 +113,76 @@ exports.newAttempt = async (req, res) => {
     score: req.body.score,
     setting: req.body.setting,
     extra: req.body.extra,
-    date: req.body.date,
+    // date: req.body.date,
     ip: req.ip,
   });
 
+  const highScore = async (req, res) => {
+    console.log("Highscore check running");
+    const checkExist = await Highscore.findOne({ level });
+    console.log(checkExist);
+    if (checkExist == null) {
+      const newHighscore = new Highscore({
+        user: newAttempt.user,
+        mode: newAttempt.mode,
+        level: newAttempt.level,
+        time: newAttempt.time,
+        mistake: newAttempt.mistake,
+        score: newAttempt.score,
+        setting: newAttempt.setting,
+      });
+      await newHighscore.save().then((result) => console.log("New highscore!"));
+    } else {
+      console.log("Comparing");
+      if (checkExist.time > newAttempt.time) {
+        const newHighscore = new Highscore({
+          user: newAttempt.user,
+          mode: newAttempt.mode,
+          level: newAttempt.level,
+          time: newAttempt.time,
+          mistake: newAttempt.mistake,
+          score: newAttempt.score,
+          setting: newAttempt.setting,
+        });
+        await newHighscore
+          .save()
+          .then((result) => console.log("New highscore!"));
+      } else {
+        console.log("Too slow");
+      }
+    }
+  };
   try {
     await newAttempt.save().then((doc) => {
       console.log(doc);
     });
+    highScore();
   } catch (e) {
     console.log(e);
   }
   res.send();
+};
+
+exports.getHighscore = async (req, res) => {
+  try {
+    const highscoreLevels = await Highscore.distinct("level");
+    console.log(`Highscore level: ${highscoreLevels}`);
+    let highscoreHoldersArr = [];
+
+    for (let i = 0; i < highscoreLevels.length; i++) {
+      highscoreHolder = await Highscore.find({
+        level: highscoreLevels[i],
+      })
+        .sort({ date: -1 })
+        .limit(1);
+      console.log(`Here: ${highscoreHolder}`);
+      highscoreHoldersArr.push(highscoreHolder[0]);
+    }
+    // highscoreHoldersArr = await Highscore.find({ level: highscoreLevels });
+    console.log(`In the arr: ${highscoreHoldersArr}`);
+    // highscoreHolderArr = JSON.parse(highscoreHolderArr);
+    res.status(200).render("pages/highscore", { highscoreHoldersArr });
+  } catch (error) {
+    console.log(error);
+  }
 };

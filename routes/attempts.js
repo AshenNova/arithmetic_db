@@ -22,5 +22,6 @@ router
   .post(attemptController.newAttempt);
 
 router.route("/filter").get(attemptController.getFilteredAttempts);
+router.route("/highscore").get(attemptController.getHighscore);
 
 module.exports = router;
