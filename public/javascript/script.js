@@ -791,15 +791,13 @@ function timer2() {
       attemptScore.value = state.score;
       attemptExtra.value = extraPracticeArr;
       attemptDate.value = new Date().toUTCString();
-      // attemptSubmitBtn.click(() => {
-      //   console.log("Clicked!");
-      // });
+      attemptSubmitBtn.click();
 
       // attemptListen.addEventListener("submit", (e) => {
       //   console.log("Submit");
       //   e.preventDefault();
       // });
-      attemptListen.submit();
+      // attemptListen.submit();
     }
   }, 1000);
   // UPLOAD ATTEMPT
@@ -28738,5 +28736,47 @@ closeBtn.addEventListener("click", function () {
   summaryContainer.classList.add("hidden");
   optionsBox.classList.add("hidden");
 });
+
+//AJAX
+// $(document).ready(function () {
+$("#attemptAjex").on("submit", function (event) {
+  console.log("AJAXXX");
+  let user = $("#form-username").val();
+  let mode = $("#form-mode").val();
+  let level = $("#form-level").val();
+  let time = $("#form-time").val();
+  let mistake = $("#form-mistake").val();
+  let score = $("#form-score").val();
+  let setting = $("#form-setting").val();
+  let extra = $("#form-extra").val();
+  let date = $("#form-fate").val();
+
+  let attempt = {
+    user: user,
+    mode: mode,
+    level: level,
+    time: time,
+    mistake: mistake,
+    score: score,
+    setting: setting,
+    extra: extra,
+    date: date,
+  };
+  console.log(user);
+  event.preventDefault();
+  // data = JSON.stringify({ data });
+  $.ajax({
+    url: "/attempts",
+    method: "POST",
+    // data: JSON.stringify(attempt),
+    data: attempt,
+    // contentType: "application/json; charset=utf-8",
+    success: function (res) {
+      // console.log(attempt);
+      console.log("SUCCESS!");
+    },
+  });
+});
+// });
 
 export { updateProblems, genNumbers };

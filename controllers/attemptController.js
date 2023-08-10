@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const ip = require("ip");
-// const $ = require("jquery");
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
 function paginate(stuff, totalItems, perPage, currentPage) {
@@ -101,46 +101,36 @@ exports.getFilteredAttempts = async (req, res) => {
 };
 
 exports.newAttempt = async (req, res) => {
-  // console.log(req.body);
-  try {
-    const newAttempt = new Attempt({
-      user: req.body.user,
-      mode: req.body.mode,
-      level: req.body.level,
-      time: req.body.time,
-      mistake: req.body.mistake,
-      score: req.body.score,
-      setting: req.body.setting,
-      extra: req.body.extra,
-      date: req.body.date,
-      ip: req.ip,
-    });
-    // console.log(newAttempt);
+  console.log(req.body);
+  // try {
+  console.log("here i am!");
+  const newAttempt = new Attempt({
+    user: req.body.user,
+    mode: req.body.mode,
+    level: req.body.level,
+    time: req.body.time,
+    mistake: req.body.mistake,
+    score: req.body.score,
+    setting: req.body.setting,
+    extra: req.body.extra,
+    date: req.body.date,
+    ip: req.ip,
+  });
+  // console.log(data);
+  // console.log(newAttempt);
+  // const data = JSON.stringify(newAttempt);
+  // console.log(`From model: ${data}`);
 
+  // res.send({ response: req.body.quote });
+  // res.send();
+
+  try {
     await newAttempt.save().then((doc) => {
       console.log(doc);
-      // res.setHeader("Content-Type", "text/plain");
-      // res.end();
-      // res.end();
-      // res.setHeader("Cache-control", "no-store");
-      // res.status(204).end();
-      // res.send("", { status: 204 });
-      // res.render("pages/arithmetic", { noCache: true });
-      res.status(204).send();
-      // res.clear();
+      // res.status(204).send();
     });
   } catch (e) {
     console.log(e);
   }
-
-  // $.ajax({
-  //   url: "/my-endpoint",
-  //   type: "GET",
-  //   success: function () {
-  //     //Do something here, but dont refresh the page
-  //   },
-  //   error: function () {
-  //     //handle error
-  //   },
-  // });
+  res.send();
 };
