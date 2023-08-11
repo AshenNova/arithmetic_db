@@ -212,71 +212,69 @@ exports.getHighscore = async (req, res) => {
             !thisMonthAttempts[0].level.startsWith("heu")
           )
             thisMonthHigh.push(thisMonthAttempts[0]);
-          if (thisMonthAttempts.length > 1) {
-            for (let y = 1; y < thisMonthAttempts.length; y++) {
-              if (thisMonthAttempts[y].mode != "Hardcore") {
-                // IF NOT IN HARDCORE. CALCULATIONS HAS TO SCORE 10 AND SETTING AT 99
-                if (
-                  thisMonthAttempts[y].level.startsWith("cal") &&
-                  thisMonthAttempts[y].score == 10 &&
-                  thisMonthAttempts[y].setting == 99
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
-                // IF NOT IN HARDCORE. HEURISTICS HAS TO SCORE 10 AND SETTING AT 9
-                if (
-                  thisMonthAttempts[y].level.startsWith("heu") &&
-                  thisMonthAttempts[y].score == 10 &&
-                  thisMonthAttempts[y].setting == 9
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
-                // IF NOT IN HARDCORE. HEURISTICS IS 6 HAS TO SCORE 5 AND SETTING AT 9
-                if (
-                  thisMonthAttempts[y].level.startsWith("heuSix") &&
-                  thisMonthAttempts[y].score == 10 &&
-                  thisMonthAttempts[y].setting == 9
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
-                // IF NOT IN HARDCORE. CAL6B HAS TO SCORE 5 AND SETTING AT 99
-                if (
-                  thisMonthAttempts[y].level.startsWith("calSix") &&
-                  thisMonthAttempts[y].score == 5 &&
-                  thisMonthAttempts[y].setting == 99
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
+          for (let y = 0; y < thisMonthAttempts.length; y++) {
+            if (thisMonthAttempts[y].mode != "Hardcore") {
+              // IF NOT IN HARDCORE. CALCULATIONS HAS TO SCORE 10 AND SETTING AT 99
+              if (
+                thisMonthAttempts[y].level.startsWith("cal") &&
+                thisMonthAttempts[y].score == 10 &&
+                thisMonthAttempts[y].setting == 99
+              ) {
+                thisMonthHigh.push(thisMonthAttempts[y]);
               }
-              if (thisMonthAttempts[y].mode == "Hardcore") {
-                if (
-                  thisMonthAttempts[y].level.startsWith("heu") &&
-                  thisMonthAttempts[y].score == 5 &&
-                  thisMonthAttempts[y].setting == 9
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
-                if (
-                  thisMonthAttempts[y].level.startsWith("heuSix") &&
-                  thisMonthAttempts[y].score == 3 &&
-                  thisMonthAttempts[y].setting == 9
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
-                if (
-                  thisMonthAttempts[y].level.startsWith("cal") &&
-                  thisMonthAttempts[y].score == 10 &&
-                  thisMonthAttempts[y].setting == 99
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
-                if (
-                  thisMonthAttempts[y].level.startsWith("calSix") &&
-                  thisMonthAttempts[y].score == 3 &&
-                  thisMonthAttempts[y].setting == 99
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
+              // IF NOT IN HARDCORE. HEURISTICS HAS TO SCORE 10 AND SETTING AT 9
+              if (
+                thisMonthAttempts[y].level.startsWith("heu") &&
+                thisMonthAttempts[y].score == 10 &&
+                thisMonthAttempts[y].setting == 9
+              ) {
+                thisMonthHigh.push(thisMonthAttempts[y]);
+              }
+              // IF NOT IN HARDCORE. HEURISTICS IS 6 HAS TO SCORE 5 AND SETTING AT 9
+              if (
+                thisMonthAttempts[y].level.startsWith("heuSix") &&
+                thisMonthAttempts[y].score == 10 &&
+                thisMonthAttempts[y].setting == 9
+              ) {
+                thisMonthHigh.push(thisMonthAttempts[y]);
+              }
+              // IF NOT IN HARDCORE. CAL6B HAS TO SCORE 5 AND SETTING AT 99
+              if (
+                thisMonthAttempts[y].level.startsWith("calSix") &&
+                thisMonthAttempts[y].score == 5 &&
+                thisMonthAttempts[y].setting == 99
+              ) {
+                thisMonthHigh.push(thisMonthAttempts[y]);
+              }
+            }
+            if (thisMonthAttempts[y].mode == "Hardcore") {
+              if (
+                thisMonthAttempts[y].level.startsWith("heu") &&
+                thisMonthAttempts[y].score == 5 &&
+                thisMonthAttempts[y].setting == 9
+              ) {
+                thisMonthHigh.push(thisMonthAttempts[y]);
+              }
+              if (
+                thisMonthAttempts[y].level.startsWith("heuSix") &&
+                thisMonthAttempts[y].score == 3 &&
+                thisMonthAttempts[y].setting == 9
+              ) {
+                thisMonthHigh.push(thisMonthAttempts[y]);
+              }
+              if (
+                thisMonthAttempts[y].level.startsWith("cal") &&
+                thisMonthAttempts[y].score == 10 &&
+                thisMonthAttempts[y].setting == 99
+              ) {
+                thisMonthHigh.push(thisMonthAttempts[y]);
+              }
+              if (
+                thisMonthAttempts[y].level.startsWith("calSix") &&
+                thisMonthAttempts[y].score == 3 &&
+                thisMonthAttempts[y].setting == 99
+              ) {
+                thisMonthHigh.push(thisMonthAttempts[y]);
               }
             }
           }
