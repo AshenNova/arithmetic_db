@@ -786,17 +786,16 @@ function timer2() {
       attemptLevel.value = level;
       attemptTime.value = time;
       attemptMistake.value = state.mistake;
+      if (mode == "Hardcore" && time == 600) {
+        attemptScore.value = accumulatedScore;
+      } else {
+      }
       attemptScore.value = state.score;
+
       attemptExtra.value = extraPracticeArr;
       document.querySelector("#form-attempt").value = attempt;
       // attemptDate.value = new Date().toUTCString();
       attemptSubmitBtn.click();
-
-      // attemptListen.addEventListener("submit", (e) => {
-      //   console.log("Submit");
-      //   e.preventDefault();
-      // });
-      // attemptListen.submit();
     }
   }, 1000);
   // UPLOAD ATTEMPT

@@ -7,7 +7,7 @@ const highscoreSchema = new mongoose.Schema({
   time: Number,
   mistake: Number,
   score: Number,
-  setting: String,
+  setting: { type: String, default: 0 },
   date: { type: Date, default: Date.now },
 });
 
