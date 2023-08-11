@@ -788,6 +788,7 @@ function timer2() {
       attemptMistake.value = state.mistake;
       attemptScore.value = state.score;
       attemptExtra.value = extraPracticeArr;
+      document.querySelector("#form-attempt").value = attempt;
       // attemptDate.value = new Date().toUTCString();
       attemptSubmitBtn.click();
 
@@ -28739,27 +28740,19 @@ closeBtn.addEventListener("click", function () {
 // $(document).ready(function () {
 $("#attemptAjex").on("submit", function (event) {
   console.log("AJAXXX");
-  let user = $("#form-username").val();
-  let mode = $("#form-mode").val();
-  let level = $("#form-level").val();
-  let time = $("#form-time").val();
-  let mistake = $("#form-mistake").val();
-  let score = $("#form-score").val();
-  let setting = $("#form-setting").val();
-  let extra = $("#form-extra").val();
-  // let date = $("#form-date").val();
 
   let attempt = {
-    user: user,
-    mode: mode,
-    level: level,
-    time: time,
-    mistake: mistake,
-    score: score,
-    setting: setting,
-    extra: extra,
-    // date: date,
+    user: $("#form-username").val(),
+    mode: $("#form-mode").val(),
+    level: $("#form-level").val(),
+    time: $("#form-time").val(),
+    mistake: $("#form-mistake").val(),
+    score: $("#form-score").val(),
+    setting: $("#form-setting").val(),
+    extra: $("#form-extra").val(),
+    attemptNum: $("#form-attempt").val(),
   };
+  console.log(`Ajex data: ${attempt}`);
   event.preventDefault();
   // data = JSON.stringify({ data });
   $.ajax({
