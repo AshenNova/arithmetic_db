@@ -6683,6 +6683,7 @@ function updateProblems() {
   // }
   //AVERAGE: SIMPLE
   if (level == 5.17) {
+    calculatorSymbol.classList.remove("hidden");
     normalDisplay();
 
     const averageList = [];
@@ -28058,6 +28059,7 @@ function buttonLevelSetting() {
       level = 5.17;
       scoreNeeded = 10;
       displayProblem.style.fontSize = "1.5em";
+      document.querySelector("#user-input").setAttribute("type", "text");
       // wholeNumberContainer.classList.add("hidden");
       // firstCanvas.classList.remove("hidden");
       break;
