@@ -1,0 +1,7 @@
+.nav-link:hover {
+  /* text-decoration: underline; */
+  text-decoration: underline;
+  text-decoration-color: rgb(222, 250, 64);
+  -moz-text-decoration-color: rgb(250, 114, 64);
+  text-decoration-thickness: 5px;
+}

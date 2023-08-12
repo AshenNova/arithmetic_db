@@ -260,7 +260,6 @@ exports.getHighscore = async (req, res) => {
     const highscoreModes = await Highscore.distinct("mode");
     let highscoreHoldersArr = [];
 
-    // console.log(typeof highscoreHoldersArr);
     for (let i = 0; i < highscoreLevels.length; i++) {
       for (let x = 0; x < highscoreModes.length; x++) {
         const highscoreHolder = await Highscore.find({
@@ -273,7 +272,32 @@ exports.getHighscore = async (req, res) => {
         if (highscoreHolder[0]) highscoreHoldersArr.push(highscoreHolder[0]);
       }
     }
+    // let stageTwo = [];
+    // const attempts = await Highscore.find().sort({
+    //   level: 1,
+    //   time: 1,
+    // });
+    // console.log(`Length at first: ${attempts.length}`);
 
+    // for (let a = 0; a < attempts.length; a++) {
+    //   let count = 0;
+    //   console.log(attempts[a].level, attempts[a].mode);
+    //   for (let b = 0; b < highscoreLevels.length; b++) {
+    //     for (let c = 0; c < highscoreModes.length; c++) {
+    //       if (
+    //         attempts[a].level == highscoreLevels[b] &&
+    //         attempts[a].mode == highscoreModes[c]
+    //       ) {
+    //         if (count == 0) {
+    //           stageTwo.push(attempts[a]);
+    //           count += 1;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+    // console.log(`(${stageTwo.length})`);
+    // highscoreHoldersArr = stageTwo;
     res.status(200).render("pages/highscore", { highscoreHoldersArr });
   } catch (error) {
     console.log(error);
