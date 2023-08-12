@@ -14,6 +14,7 @@ const attemptSchema = new mongoose.Schema({
     default: Date.now,
   },
   ip: String,
+  tries: String,
 });
 
 const Attempt = mongoose.model("attempts", attemptSchema);

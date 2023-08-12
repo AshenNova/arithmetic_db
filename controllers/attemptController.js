@@ -117,6 +117,7 @@ exports.newAttempt = async (req, res) => {
     setting: req.body.setting,
     extra: req.body.extra,
     // date: req.body.date,
+    tries: req.body.attemptNum,
     ip: req.ip,
   });
   // console.log(`New Attempt Obj: ${newAttempt}`);
@@ -204,94 +205,60 @@ exports.getHighscore = async (req, res) => {
     //   level: allLevels[i],
     //   mode: allModes[x],
     // }).sort({ level: 1, time: 1 });
+    console.log(allLevels, allModes);
+    let count = 0;
     for (let i = 0; i < allLevels.length; i++) {
       for (let x = 0; x < allModes.length; x++) {
         const thisMonthAttempts = await Attempt.find({
           $expr: { $eq: [{ $month: "$date" }, thisMonth] },
           level: allLevels[i],
           mode: allModes[x],
+          tries: "1",
+          // $or: [{ setting: "99" }, { setting: "9" }],
         }).sort({ level: 1, time: 1 });
+        console.log(
+          `Everything!!! Level: ${allLevels[i]}, mode: ${allModes[x]} ${thisMonthAttempts.length}`
+        );
         // WE HAVE A TO USE SQUARE BRACKET AT THE BACK SINCE FIND SOMEHOW THINGS THAT THERE IS MORE THAN 1 ENTRY.
+        // console.log(
+        //   `Level: ${allLevels[i]}, mode: ${allModes[x]} ${thisMonthAttempts.length}`
+        // );
+        // for (let y = 0; y < 1; y++) {
         if (thisMonthAttempts[0]) {
+          //THIS SETTLES THE NORMAL LEVELS
           if (
-            !thisMonthAttempts[0].level.startsWith("cal") &&
-            !thisMonthAttempts[0].level.startsWith("heu")
-          )
+            !thisMonthAttempts[0].level.includes("cal") &&
+            !thisMonthAttempts[0].level.includes("heu")
+          ) {
             thisMonthHigh.push(thisMonthAttempts[0]);
-          for (let y = 0; y < 1; y++) {
-            // for (let y = 0; y < thisMonthAttempts.length; y++) {
-            console.log(thisMonthAttempts.length);
-            if (
-              thisMonthAttempts[y].setting == 99 ||
-              thisMonthAttempts[y].setting == 9
-            ) {
-              if (thisMonthAttempts[y].mode != "Hardcore") {
-                // IF NOT IN HARDCORE. CALCULATIONS HAS TO SCORE 10 AND SETTING AT 99
+          } else {
+            //NOW I NEED TO SETTLE THE CAL AND HEURISTICS
+            let genesis = 0;
+            for (let x = 0; x < thisMonthAttempts.length; x++) {
+              if (
+                thisMonthAttempts[x].setting == 99 ||
+                thisMonthAttempts[x].setting == 9
+              ) {
+                console.log("Stage 1");
+
                 if (
-                  thisMonthAttempts[y].level.startsWith("cal") &&
-                  thisMonthAttempts[y].score == 10 &&
-                  thisMonthAttempts[y].setting == 99
+                  thisMonthAttempts[x].score == 3 ||
+                  thisMonthAttempts[x].score == 5 ||
+                  thisMonthAttempts[x].score == 10
                 ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
-                // IF NOT IN HARDCORE. HEURISTICS HAS TO SCORE 10 AND SETTING AT 9
-                if (
-                  thisMonthAttempts[y].level.startsWith("heu") &&
-                  thisMonthAttempts[y].score == 10 &&
-                  thisMonthAttempts[y].setting == 9
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
-                // IF NOT IN HARDCORE. HEURISTICS IS 6 HAS TO SCORE 5 AND SETTING AT 9
-                if (
-                  thisMonthAttempts[y].level.startsWith("heuSix") &&
-                  thisMonthAttempts[y].score == 10 &&
-                  thisMonthAttempts[y].setting == 9
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
-                // IF NOT IN HARDCORE. CAL6B HAS TO SCORE 5 AND SETTING AT 99
-                if (
-                  thisMonthAttempts[y].level.startsWith("calSix") &&
-                  thisMonthAttempts[y].score == 5 &&
-                  thisMonthAttempts[y].setting == 99
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
-              }
-              if (thisMonthAttempts[y].mode == "Hardcore") {
-                if (
-                  thisMonthAttempts[y].level.startsWith("heu") &&
-                  thisMonthAttempts[y].score == 5 &&
-                  thisMonthAttempts[y].setting == 9
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
-                if (
-                  thisMonthAttempts[y].level.startsWith("heuSix") &&
-                  thisMonthAttempts[y].score == 3 &&
-                  thisMonthAttempts[y].setting == 9
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
-                if (
-                  thisMonthAttempts[y].level.startsWith("cal") &&
-                  thisMonthAttempts[y].score == 10 &&
-                  thisMonthAttempts[y].setting == 99
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
-                }
-                if (
-                  thisMonthAttempts[y].level.startsWith("calSix") &&
-                  thisMonthAttempts[y].score == 3 &&
-                  thisMonthAttempts[y].setting == 99
-                ) {
-                  thisMonthHigh.push(thisMonthAttempts[y]);
+                  console.log("Stage 2");
+                  count += 1;
+                  console.log(count);
+                  if (genesis == 0) {
+                    thisMonthHigh.push(thisMonthAttempts[0]);
+                    truth += 1;
+                  }
                 }
               }
             }
           }
         }
+        // }
       }
     }
     // console.log(thisMonthHigh);
@@ -324,3 +291,34 @@ exports.getHighscore = async (req, res) => {
     console.log(error);
   }
 };
+
+const update = async (req, res) => {
+  try {
+    // const updating = await Attempt.updateMany({}, { $set: { tries: 1 } });
+    // console.log(updating);
+    const updating = await Attempt.updateOne(
+      // { user: "Player", level: "3.17" },
+      { user: "CaiusChong" },
+      { $set: { user: "Caiuschong" } }
+    );
+    console.log(updating);
+  } catch (e) {
+    console.log(`Error ${e}`);
+  }
+};
+
+const updateMany = async (req, res) => {
+  try {
+    // const updating = await Attempt.updateMany({}, { $set: { tries: 1 } });
+    // console.log(updating);
+    const updating = await Attempt.updateMany(
+      { tries: { $exists: false } },
+      { $set: { tries: 1 } }
+    );
+    console.log(updating);
+  } catch (e) {
+    console.log(`Error ${e}`);
+  }
+};
+
+// update();
