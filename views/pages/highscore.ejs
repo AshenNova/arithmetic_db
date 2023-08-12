@@ -64,53 +64,6 @@
         </tbody>
       </table>
     </div>
-
-    <div class="container">
-      <% const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "November", "December"] %>
-      <h1>This month: <%= months[new Date().getMonth()] %></h1>
-      <table class="table text-center table-hover">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Mode</th>
-              <th scope="col">Level</th>
-              <th scope="col">Time</th>
-              <th scope="col">Mistakes</th>
-              <th scope="col">Score</th>
-              <th scope="col">Setting</th>
-              <th scope="col">Extra</th>
-              <th scope="col">Date</th>
-              <th scope="col">Ago</th>
-            </tr>
-          </thead>
-          <tbody>
-           
-              <% thisMonthHigh.forEach(item => { %>
-                      <td><%= item.user %></td>
-                      <% if ( item.mode == "Easy") {%>
-                        <td class="btn btn-outline-success btn-sm"> <%= "Easy" %></td>
-                      <% } %>
-                      <% if ( item.mode == "Hardcore") { %>
-                        <td class="btn btn-outline-danger btn-sm"> <%= "Hardcore" %></td> 
-                      <% } %>
-                      <% if ( item.mode == "Normal") { %>
-                        <td class="btn btn-outline-dark btn-sm"> <%= "Normal" %></td>
-                      <% } %>
-                      <td><%= item.level %></td>
-                      <td><%= item.time %></td>
-                      <td><%= item.mistake %></td>
-                      <td><%= item.score %></td>
-                      <td><%= item.setting %></td>
-                      <td><%= item.extra %></td>
-                      <!-- <td><%= item.date.getFullYear() %></td> -->
-                      <td><%= item.date.toLocaleTimeString('en-US') + " " + item.date.toLocaleDateString() %></td>
-                      <td><%= today - item.date.getDay() %></td>
-                  </tr>
-                  <% });%>
-          </tbody>
-        </table>
-      </div>
-  
   
   </body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>

@@ -193,20 +193,14 @@ exports.newAttempt = async (req, res) => {
   res.send();
 };
 
-exports.getHighscore = async (req, res) => {
+exports.monthlyHighscore = async (req, res) => {
   try {
     const allLevels = await Attempt.distinct("level");
     const allModes = await Attempt.distinct("mode");
     let thisMonthHigh = [];
     const thisMonth = new Date().getMonth() + 1;
-    // console.log(`This month is ${thisMonth}`);
-    // const thisMonthAttempts = await Attempt.find({
-    //   $expr: { $eq: [{ $month: "$date" }, thisMonth] },
-    //   level: allLevels[i],
-    //   mode: allModes[x],
-    // }).sort({ level: 1, time: 1 });
     console.log(allLevels, allModes);
-    let count = 0;
+
     for (let i = 0; i < allLevels.length; i++) {
       for (let x = 0; x < allModes.length; x++) {
         const thisMonthAttempts = await Attempt.find({
@@ -216,14 +210,7 @@ exports.getHighscore = async (req, res) => {
           tries: "1",
           // $or: [{ setting: "99" }, { setting: "9" }],
         }).sort({ level: 1, time: 1 });
-        console.log(
-          `Everything!!! Level: ${allLevels[i]}, mode: ${allModes[x]} ${thisMonthAttempts.length}`
-        );
-        // WE HAVE A TO USE SQUARE BRACKET AT THE BACK SINCE FIND SOMEHOW THINGS THAT THERE IS MORE THAN 1 ENTRY.
-        // console.log(
-        //   `Level: ${allLevels[i]}, mode: ${allModes[x]} ${thisMonthAttempts.length}`
-        // );
-        // for (let y = 0; y < 1; y++) {
+
         if (thisMonthAttempts[0]) {
           //THIS SETTLES THE NORMAL LEVELS
           if (
@@ -239,16 +226,15 @@ exports.getHighscore = async (req, res) => {
                 thisMonthAttempts[x].setting == 99 ||
                 thisMonthAttempts[x].setting == 9
               ) {
-                console.log("Stage 1");
+                // console.log("Stage 1");
 
                 if (
                   thisMonthAttempts[x].score == 3 ||
                   thisMonthAttempts[x].score == 5 ||
                   thisMonthAttempts[x].score == 10
                 ) {
-                  console.log("Stage 2");
-                  count += 1;
-                  console.log(count);
+                  // console.log("Stage 2");
+
                   if (genesis == 0) {
                     thisMonthHigh.push(thisMonthAttempts[0]);
                     genesis += 1;
@@ -261,8 +247,14 @@ exports.getHighscore = async (req, res) => {
         // }
       }
     }
-    // console.log(thisMonthHigh);
+    res.status(200).render("pages/monthly-highscore", { thisMonthHigh });
+  } catch (e) {
+    console.log(e);
+  }
+};
 
+exports.getHighscore = async (req, res) => {
+  try {
     //GETTING ALL UNIQUE LEVELS && MODES IN HIGHSCORE COLLECTION
     const highscoreLevels = await Highscore.distinct("level");
     const highscoreModes = await Highscore.distinct("mode");
@@ -281,12 +273,8 @@ exports.getHighscore = async (req, res) => {
         if (highscoreHolder[0]) highscoreHoldersArr.push(highscoreHolder[0]);
       }
     }
-    // highscoreHoldersArr = await Highscore.find({ level: highscoreLevels });
-    // console.log(`In the arr: ${highscoreHoldersArr}`);
-    // highscoreHolderArr = JSON.parse(highscoreHolderArr);
-    res
-      .status(200)
-      .render("pages/highscore", { thisMonthHigh, highscoreHoldersArr });
+
+    res.status(200).render("pages/highscore", { highscoreHoldersArr });
   } catch (error) {
     console.log(error);
   }

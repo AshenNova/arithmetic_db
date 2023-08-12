@@ -23,5 +23,6 @@ router
 
 router.route("/filter").get(attemptController.getFilteredAttempts);
 router.route("/highscore").get(attemptController.getHighscore);
+router.route("/monthly-highscore").get(attemptController.monthlyHighscore);
 
 module.exports = router;
