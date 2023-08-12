@@ -251,7 +251,7 @@ exports.getHighscore = async (req, res) => {
                   console.log(count);
                   if (genesis == 0) {
                     thisMonthHigh.push(thisMonthAttempts[0]);
-                    truth += 1;
+                    genesis += 1;
                   }
                 }
               }
