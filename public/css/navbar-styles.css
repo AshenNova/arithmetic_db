@@ -5,3 +5,18 @@
   -moz-text-decoration-color: rgb(250, 114, 64);
   text-decoration-thickness: 5px;
 }
+
+@media only screen and (max-width: 859px) {
+  .navbar {
+    width: 100%;
+  }
+  .container {
+    margin: 0;
+  }
+  /* td {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } */
+}
