@@ -33,16 +33,12 @@ mongoose
 
 //ROUTERS
 app.use("/attempts", attemptRoute);
-// attemptRoute.route("/");
 app.get("/", (req, res) => {
   res.send(fs.readFileSync("index.html", "utf8"));
 });
 
 // app.use("/arithmetic", express.static("./javascript/script.js"));
 app.get("/arithmetic", (req, res) => {
-  // res.write(arithemeticJavascript.getMessage());
-  // res.send(fs.readFileSync("arithmetic.html", "utf8"));
-  // res.render(__dirname + "/arithmetic.html", function (req, res) {});
   res.render("./pages/arithmetic");
 });
 
