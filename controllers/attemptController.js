@@ -75,6 +75,7 @@ exports.getFilteredAttempts = async (req, res) => {
   const page = queryObj.page || 1;
   const limit = 15;
 
+  console.log(queryObj);
   const user = queryObj.user;
   const level = queryObj.level;
   const setting = queryObj.setting;
@@ -120,10 +121,10 @@ exports.getFilteredAttempts = async (req, res) => {
   console.log(params);
   let latestAttemptObj = 0;
   if (params.hasOwnProperty("user")) {
-    const user = queryObj.user;
+    const user = filter.user;
     console.log(user);
     const latestAttempt = await Attempt.find({ user, tries: "1" }).sort({
-      level: 1,
+      level: -1,
       date: -1,
     });
 
@@ -139,37 +140,40 @@ exports.getFilteredAttempts = async (req, res) => {
     console.log(stageOne);
     let stageTwo = [];
     for (let i = 0; i < stageOne.length; i++) {
-      let count = 0;
+      let countEasy = 0;
+      let countNormal = 0;
+      let countHard = 0;
       for (let a = 0; a < latestAttempt.length; a++) {
         if (
           stageOne[i] == latestAttempt[a].level &&
-          latestAttempt[i].mode == "Easy"
+          latestAttempt[a].mode == "Easy"
         ) {
-          if (count == 0) {
+          if (countEasy == 0) {
             stageTwo.push(latestAttempt[a]);
-            count += 1;
+            countEasy += 1;
           }
         }
         if (
           stageOne[i] == latestAttempt[a].level &&
-          latestAttempt[i].mode == "Normal"
+          latestAttempt[a].mode == "Normal"
         ) {
-          if (count == 0) {
+          if (countNormal == 0) {
             stageTwo.push(latestAttempt[a]);
-            count += 1;
+            countNormal += 1;
           }
         }
         if (
           stageOne[i] == latestAttempt[a].level &&
-          latestAttempt[i].mode == "Hardcore"
+          latestAttempt[a].mode == "Hardcore"
         ) {
-          if (count == 0) {
+          if (countHard == 0) {
             stageTwo.push(latestAttempt[a]);
-            count += 1;
+            countHard += 1;
           }
+          // count += 1;
         }
       }
-      console.log(`Stage 2: ${stageTwo}`);
+      // console.log(`Stage 2: ${stageTwo}`);
       latestAttemptObj = stageTwo;
       // console.log(latestAttempt);
     }
@@ -353,32 +357,6 @@ exports.getHighscore = async (req, res) => {
         if (highscoreHolder[0]) highscoreHoldersArr.push(highscoreHolder[0]);
       }
     }
-    // let stageTwo = [];
-    // const attempts = await Highscore.find().sort({
-    //   level: 1,
-    //   time: 1,
-    // });
-    // console.log(`Length at first: ${attempts.length}`);
-
-    // for (let a = 0; a < attempts.length; a++) {
-    //   let count = 0;
-    //   console.log(attempts[a].level, attempts[a].mode);
-    //   for (let b = 0; b < highscoreLevels.length; b++) {
-    //     for (let c = 0; c < highscoreModes.length; c++) {
-    //       if (
-    //         attempts[a].level == highscoreLevels[b] &&
-    //         attempts[a].mode == highscoreModes[c]
-    //       ) {
-    //         if (count == 0) {
-    //           stageTwo.push(attempts[a]);
-    //           count += 1;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-    // console.log(`(${stageTwo.length})`);
-    // highscoreHoldersArr = stageTwo;
     res.status(200).render("pages/highscore", { highscoreHoldersArr });
   } catch (error) {
     console.log(error);

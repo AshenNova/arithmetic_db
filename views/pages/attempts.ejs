@@ -102,7 +102,7 @@
                   <% } %>
                 <!-- <td><%= item.mode %></td> -->
                 <td><%= item.level %></td>
-                <% if (item.setting == "0" || item.setting == " " || item.level == "calFive"){ %>
+                <% if (item.setting == "0" || item.setting == " "){ %>
                   <td><%= " " %></td>
                 <% }  else { %>
                   <td><%= item.setting %> </td>
@@ -132,7 +132,7 @@
 <% if (latestAttemptObj) { %>
   
 <div class="container">
-  <h1> Unique Attempts </h1>
+  <h1> Unique Latest Attempts </h1>
 <table class="table text-center table-hover">
     <thead class="thead-dark">
       <tr>
@@ -166,7 +166,7 @@
                   <% } %>
                 <!-- <td><%= item.mode %></td> -->
                 <td><%= item.level %></td>
-                <% if (item.setting == "0" || item.setting == " " || item.level == "calFive"){ %>
+                <% if (item.setting == "0" || item.setting == " "){ %>
                   <td><%= " " %></td>
                 <% }  else { %>
                   <td><%= item.setting %> </td>
