@@ -30,10 +30,10 @@
               <th scope="col">Name</th>
               <th scope="col">Mode</th>
               <th scope="col">Level</th>
+              <th scope="col">Setting</th>
               <th scope="col">Time</th>
               <th scope="col">Mistakes</th>
               <th scope="col">Score</th>
-              <th scope="col">Setting</th>
               <th scope="col">Extra</th>
               <th scope="col">Date</th>
               <th scope="col">Ago</th>
@@ -53,10 +53,10 @@
                         <td class="btn btn-outline-dark btn-sm"> <%= "Normal" %></td>
                       <% } %>
                       <td><%= item.level %></td>
+                      <td><%= item.setting %></td>
                       <td><%= item.time %></td>
                       <td><%= item.mistake %></td>
                       <td><%= item.score %></td>
-                      <td><%= item.setting %></td>
                       <td><%= item.extra %></td>
                       <!-- <td><%= item.date.getFullYear() %></td> -->
                       <td><%= item.date.toLocaleTimeString('en-US') + " " + item.date.toLocaleDateString() %></td>
