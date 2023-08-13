@@ -266,7 +266,7 @@ exports.getHighscore = async (req, res) => {
           level: highscoreLevels[i],
           mode: highscoreModes[x],
         })
-          .sort({ date: -1 })
+          .sort({ time: 1 })
           .limit(1);
         // console.log(highscoreHolder);
         if (highscoreHolder[0]) highscoreHoldersArr.push(highscoreHolder[0]);
@@ -324,8 +324,10 @@ const updateMany = async (req, res) => {
     // const updating = await Attempt.updateMany({}, { $set: { tries: 1 } });
     // console.log(updating);
     const updating = await Attempt.updateMany(
-      { tries: { $exists: false } },
-      { $set: { tries: 1 } }
+      // { tries: { $exists: false } },
+      // { $set: { tries: 1 } }
+      { user: "Yh" },
+      { $set: { user: "Youheng" } }
     );
     console.log(updating);
   } catch (e) {
@@ -333,4 +335,15 @@ const updateMany = async (req, res) => {
   }
 };
 
-// update();
+// updateMany();
+
+const deleteMany = async (req, res) => {
+  try {
+    const deleteNow = await Highscore.deleteMany({ user: "Player" });
+    console.log(deleteNow);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// deleteMany();
