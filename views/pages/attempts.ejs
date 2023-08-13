@@ -114,7 +114,7 @@
                 <!-- <td><%= item.date.getFullYear() %></td> -->
                 <td><%= item.date.toLocaleTimeString('en-US') + " " + item.date.toLocaleDateString() %></td>
                 <!-- <td><%= item.date.getHours() %></td> -->
-                <td><%= today - item.date.getDay() %></td>
+                <td><%= new Date().getDate() - item.date.getDate() %></td>
             </tr>
             <% });%>
     </tbody>
