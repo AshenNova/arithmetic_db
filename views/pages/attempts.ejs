@@ -67,6 +67,10 @@
 <div class="container">
 <table class="table text-center table-hover">
     <thead class="thead-dark">
+      <% if (todayCount) { %>
+        <h3>Today: <%= todayCount %></h3>
+      <% } %>
+     
       <tr>
         <th scope="col">Name</th>
         <th scope="col">Mode</th>
@@ -86,7 +90,7 @@
           <!-- const date = `${item.date.getDay()}/${item.date.getMonth()} ` -->
             <tr>
                 <!-- <th scope="row">1</th> -->
-                <td><%= item.user %></td>
+                <td><a href="/attempts/filter/?user=<%= item.user %>&level=&setting=&mode="><%= item.user %></a></td>
                 <% if ( item.mode == "Easy") {%>
                   <td class="btn btn-outline-success btn-sm"> <%= "Easy" %></td>
                 <% } %>

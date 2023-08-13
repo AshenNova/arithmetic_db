@@ -28,6 +28,16 @@ exports.getAllAttempts = async (req, res) => {
   // console.log(`IP address is: ${req.ip}`);
   const page = req.query.page * 1 || 1;
   const limit = 20;
+
+  let start = new Date();
+  start.setHours(0, 0, 0, 0);
+
+  let end = new Date();
+  end.setHours(23, 59, 59, 999);
+
+  const todayCount = (await Attempt.find({ date: { $gte: start, $lt: end } }))
+    .length;
+  // todayCount = todayCount.length;
   const attempts = await Attempt.find()
     .sort({ date: -1 })
     .skip((page - 1) * limit)
@@ -55,6 +65,7 @@ exports.getAllAttempts = async (req, res) => {
     attempts,
     paginatedAttempts,
     latestAttemptObj,
+    todayCount,
   });
 };
 
@@ -109,8 +120,6 @@ exports.getFilteredAttempts = async (req, res) => {
   console.log(params);
   let latestAttemptObj = 0;
   if (params.hasOwnProperty("user")) {
-    console.log("Hello User");
-
     const user = queryObj.user;
     console.log(user);
     const latestAttempt = await Attempt.find({ user, tries: "1" }).sort({
@@ -165,10 +174,12 @@ exports.getFilteredAttempts = async (req, res) => {
       // console.log(latestAttempt);
     }
   }
+  const todayCount = "";
   res.status(200).render("pages/attempts", {
     attempts,
     paginatedAttempts,
     latestAttemptObj,
+    todayCount,
   });
 };
 
