@@ -32,20 +32,24 @@ mongoose
   });
 
 //ROUTERS
-app.use("/attempts", attemptRoute);
+//
+
 app.get("/", (req, res) => {
   res.send(fs.readFileSync("index.html", "utf8"));
 });
-
 // app.use("/arithmetic", express.static("./javascript/script.js"));
 app.get("/arithmetic", (req, res) => {
   res.render("./pages/arithmetic");
 });
+app.use("/attempts", attemptRoute);
 
 app.get("/login", (req, res) => {
   res.render("./pages/login");
 });
 
+// app.get("*", function (req, res) {
+//   res.redirect("./pages/arithmetic");
+// });
 app.listen(process.env.PORT || 3000, () => {
   console.log(`We are listening!`);
 });

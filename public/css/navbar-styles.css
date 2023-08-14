@@ -1,9 +1,11 @@
+.nav-link {
+  transition: all 0.2s ease-in-out;
+}
+
 .nav-link:hover {
-  /* text-decoration: underline; */
-  text-decoration: underline;
-  text-decoration-color: rgb(222, 250, 64);
-  -moz-text-decoration-color: rgb(250, 114, 64);
-  text-decoration-thickness: 5px;
+  /* color: rgb(68, 0, 255); */
+  box-shadow: 0 5px 15px rgba(227, 252, 0, 0.4);
+  /* font-size: 1.1em; */
 }
 
 @media only screen and (max-width: 859px) {

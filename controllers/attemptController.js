@@ -70,127 +70,133 @@ exports.getAllAttempts = async (req, res) => {
 };
 
 exports.getFilteredAttempts = async (req, res) => {
-  const queryObj = req.query;
-  console.log(queryObj);
-  const page = queryObj.page || 1;
-  const limit = 15;
+  try {
+    const queryObj = req.query;
+    console.log(queryObj);
+    const page = queryObj.page || 1;
+    const limit = 15;
 
-  console.log(queryObj);
-  const user = queryObj.user;
-  const level = queryObj.level;
-  const setting = queryObj.setting;
-  const mode = queryObj.mode;
+    console.log(queryObj);
+    const user = queryObj.user;
+    const level = queryObj.level;
+    const setting = queryObj.setting;
+    const mode = queryObj.mode;
 
-  let filter = {
-    user: user.charAt(0).toUpperCase() + user.slice(1, user.length),
-    level,
-    setting,
-    mode: mode.charAt(0).toUpperCase() + mode.slice(1, mode.length),
-  };
+    let filter = {
+      user: user.charAt(0).toUpperCase() + user.slice(1, user.length),
+      level,
+      setting,
+      mode: mode.charAt(0).toUpperCase() + mode.slice(1, mode.length),
+    };
 
-  // if (filter.user == "") delete filter.user;
-  // if (filter.level == "") delete filter.level;
-  // if (filter.setting == "") delete filter.setting;
+    // if (filter.user == "") delete filter.user;
+    // if (filter.level == "") delete filter.level;
+    // if (filter.setting == "") delete filter.setting;
 
-  const keys = Object.keys(filter);
+    const keys = Object.keys(filter);
 
-  // console.log(keys);
-  keys.forEach((key) => {
-    // console.log(filter[key]);
-    if (filter[key] == "") {
-      delete filter[key];
-    }
-  });
-  const attempts = await Attempt.find(filter)
-    .sort({ date: -1 })
-    .skip((page - 1) * limit)
-    .limit(limit);
-
-  // console.log(`Filtered ${attempts}`);
-  const attemptsTwo = attempts;
-  // const attemptsTwo = await Attempt.find().sort({ date: -1 });
-  const paginatedAttempts = paginate(
-    attemptsTwo,
-    attemptsTwo.length,
-    limit,
-    page
-  );
-
-  // HISTORY
-  const params = queryObj;
-  console.log(params);
-  let latestAttemptObj = 0;
-  if (params.hasOwnProperty("user")) {
-    const user = filter.user;
-    console.log(user);
-    const latestAttempt = await Attempt.find({ user, tries: "1" }).sort({
-      level: -1,
-      date: -1,
+    // console.log(keys);
+    keys.forEach((key) => {
+      // console.log(filter[key]);
+      if (filter[key] == "") {
+        delete filter[key];
+      }
     });
+    const attempts = await Attempt.find(filter)
+      .sort({ date: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit);
 
-    let stageOne = [];
-    for (let i = 0; i < latestAttempt.length; i++) {
-      if (stageOne.includes(latestAttempt[i].level)) {
-        console.log("Already in");
-      } else {
-        console.log("Nope");
-        stageOne.push(latestAttempt[i].level);
-      }
-    }
-    console.log(stageOne);
-    let stageTwo = [];
-    for (let i = 0; i < stageOne.length; i++) {
-      let countEasy = 0;
-      let countNormal = 0;
-      let countHard = 0;
-      for (let a = 0; a < latestAttempt.length; a++) {
-        if (
-          stageOne[i] == latestAttempt[a].level &&
-          latestAttempt[a].mode == "Easy"
-        ) {
-          if (countEasy == 0) {
-            stageTwo.push(latestAttempt[a]);
-            countEasy += 1;
-          }
-        }
-        if (
-          stageOne[i] == latestAttempt[a].level &&
-          latestAttempt[a].mode == "Normal"
-        ) {
-          if (countNormal == 0) {
-            stageTwo.push(latestAttempt[a]);
-            countNormal += 1;
-          }
-        }
-        if (
-          stageOne[i] == latestAttempt[a].level &&
-          latestAttempt[a].mode == "Hardcore"
-        ) {
-          if (countHard == 0) {
-            stageTwo.push(latestAttempt[a]);
-            countHard += 1;
-          }
-          // count += 1;
+    // console.log(`Filtered ${attempts}`);
+    const attemptsTwo = attempts;
+    // const attemptsTwo = await Attempt.find().sort({ date: -1 });
+    const paginatedAttempts = paginate(
+      attemptsTwo,
+      attemptsTwo.length,
+      limit,
+      page
+    );
+
+    // HISTORY
+    const params = queryObj;
+    console.log(params);
+    let latestAttemptObj = 0;
+    if (params.hasOwnProperty("user")) {
+      const user = filter.user;
+      console.log(user);
+      const latestAttempt = await Attempt.find({ user, tries: "1" }).sort({
+        level: -1,
+        date: -1,
+      });
+
+      let stageOne = [];
+      for (let i = 0; i < latestAttempt.length; i++) {
+        if (stageOne.includes(latestAttempt[i].level)) {
+          console.log("Already in");
+        } else {
+          console.log("Nope");
+          stageOne.push(latestAttempt[i].level);
         }
       }
-      // console.log(`Stage 2: ${stageTwo}`);
-      latestAttemptObj = stageTwo;
-      // console.log(latestAttempt);
+      console.log(stageOne);
+      let stageTwo = [];
+      for (let i = 0; i < stageOne.length; i++) {
+        let countEasy = 0;
+        let countNormal = 0;
+        let countHard = 0;
+        for (let a = 0; a < latestAttempt.length; a++) {
+          if (
+            stageOne[i] == latestAttempt[a].level &&
+            latestAttempt[a].mode == "Easy"
+          ) {
+            if (countEasy == 0) {
+              stageTwo.push(latestAttempt[a]);
+              countEasy += 1;
+            }
+          }
+          if (
+            stageOne[i] == latestAttempt[a].level &&
+            latestAttempt[a].mode == "Normal"
+          ) {
+            if (countNormal == 0) {
+              stageTwo.push(latestAttempt[a]);
+              countNormal += 1;
+            }
+          }
+          if (
+            stageOne[i] == latestAttempt[a].level &&
+            latestAttempt[a].mode == "Hardcore"
+          ) {
+            if (countHard == 0) {
+              stageTwo.push(latestAttempt[a]);
+              countHard += 1;
+            }
+            // count += 1;
+          }
+        }
+        // console.log(`Stage 2: ${stageTwo}`);
+        latestAttemptObj = stageTwo;
+        // console.log(latestAttempt);
+      }
     }
+    const todayCount = "";
+    res.status(200).render("pages/attempts", {
+      attempts,
+      paginatedAttempts,
+      latestAttemptObj,
+      todayCount,
+    });
+  } catch (e) {
+    console.log(e);
+    res.redirect("/attempts");
   }
-  const todayCount = "";
-  res.status(200).render("pages/attempts", {
-    attempts,
-    paginatedAttempts,
-    latestAttemptObj,
-    todayCount,
-  });
 };
 
 exports.newAttempt = async (req, res) => {
   const level = req.body.level;
   const mode = req.body.mode;
   const attemptNum = req.body.attemptNum;
+  const ip = req.headers["x-forwarded-for"] || req.ip;
   console.log(`This is ${req.body.user}'s attempt number ${attemptNum}.`);
   const newAttempt = new Attempt({
     user: req.body.user,
@@ -203,7 +209,7 @@ exports.newAttempt = async (req, res) => {
     extra: req.body.extra,
     // date: req.body.date,
     tries: req.body.attemptNum,
-    ip: req.ip,
+    ip: ip,
   });
   // console.log(`New Attempt Obj: ${newAttempt}`);
   const highScore = async (req, res) => {

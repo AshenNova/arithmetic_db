@@ -560,8 +560,8 @@ function normalDisplay() {
   displayProblem.style.textAlign = "left";
 }
 function drawingDisplay() {
-  // ctx.setTransform(1, 0, 0, 1, 0, 0);
-  // ctx.clearRect(0, 0, 1000, 1000);
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, 1000, 1000);
   firstCanvas.classList.remove("hidden");
   wholeNumberContainer.classList.add("hidden");
   fractionsContainer.classList.add("hidden");
@@ -9616,7 +9616,9 @@ function updateProblems() {
       drawingDisplay();
       ctx.font = "1em serif";
       ctx.save();
-      const y = fillTextSplit("Find the area of the triangle.");
+      const y = fillTextSplit(
+        "Find the area of the triangle.\nUsing the dotted line as either the base or height."
+      );
       ctx.translate(0, y);
 
       const height = p.height * 20;
@@ -9680,6 +9682,9 @@ function updateProblems() {
         ctx.restore();
 
         ctx.fillText(`${-coordBy / 20} cm`, coordBx + 10, coordBy / 2 + 10);
+        if (-coordBy / 20 == distanceAB) {
+          return updateCalc();
+        }
       }
       //x1, y1, x2, y2
       function findPerpendicularIntersection(line, point) {
@@ -10711,7 +10716,9 @@ function updateProblems() {
       drawingDisplay();
       ctx.font = "1em serif";
       ctx.save();
-      const y = fillTextSplit("Find the area of the triangle.");
+      const y = fillTextSplit(
+        "Using the dotted line as a base or height.\nFind the area of the triangle."
+      );
       ctx.translate(0, y);
 
       const height = p.height * 20;
@@ -11032,7 +11039,7 @@ function updateProblems() {
       if (p.givenLabel == "C") p.findPart = "A";
       if (p.givenLabel == "D") p.findPart = "B";
       // }
-      const y = fillTextSplit(`Find the area of the ${p.findPart}.`);
+      const y = fillTextSplit(`Find the area of the ${p.findPart}`);
       ctx.save();
       ctx.font = "1em serif";
       // 1) DRAW RECTANGLE
