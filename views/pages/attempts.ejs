@@ -92,7 +92,15 @@
       <% const today = new Date().getDay() %>
         <% attempts.forEach(item => { %>
           <!-- const date = `${item.date.getDay()}/${item.date.getMonth()} ` -->
-            <tr>
+                <% if (item.extra == ""  && item.tries > 1 ) { %> 
+                  <tr class="table-success">
+                <% } else if (item.extra != "" && item.tries == 1) { %>
+                  <tr class="table-secondary">
+                <% } else if (item.tries > 1 ) { %>
+                  <tr class="table-warning">
+                <% } else { %>
+                  <tr>
+                <% } %>
                 <!-- <th scope="row">1</th> -->
                 <td><a href="/attempts/filter/?user=<%= item.user %>&level=&setting=&mode="><%= item.user %></a></td>
                 <% if ( item.mode == "Easy") {%>
