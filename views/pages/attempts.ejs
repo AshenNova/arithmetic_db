@@ -92,7 +92,7 @@
       <% const today = new Date().getDay() %>
         <% attempts.forEach(item => { %>
           <!-- const date = `${item.date.getDay()}/${item.date.getMonth()} ` -->
-                <% if (item.extra == ""  && item.tries > 1 ) { %> 
+                <!-- <% if (item.extra == ""  && item.tries > 1 ) { %> 
                   <tr class="table-success">
                 <% } else if (item.extra != "" && item.tries == 1) { %>
                   <tr class="table-secondary">
@@ -100,7 +100,8 @@
                   <tr class="table-warning">
                 <% } else { %>
                   <tr>
-                <% } %>
+                <% } %> -->
+                <tr>
                 <!-- <th scope="row">1</th> -->
                 <td><a href="/attempts/filter/?user=<%= item.user %>&level=&setting=&mode="><%= item.user %></a></td>
                 <% if ( item.mode == "Easy") {%>
@@ -130,7 +131,17 @@
                 <% } %>
                 <td><%= item.mistake %></td>
                 <td><%= item.score %></td>
-                <td><%= item.extra %></td>
+                <% if (item.extra == "" && item.tries > 1) { %>
+                  <td class='table-success'>
+                <% } else if (item.extra != "" && item.tries > 1 ) { %>
+                  <td class="table-warning">
+                <% } else if (item.extra != "" && item.tries == 1 ) { %>
+                  <td class="table-danger">
+                <% } else { %>
+                  <td>
+                <% } %>
+                
+                <%= item.extra %></td>
                 <!-- <td><%= item.date.getFullYear() %></td> -->
                 <td><%= item.date.toLocaleTimeString('en-US') + " " + item.date.toLocaleDateString() %></td>
                 <!-- <td><%= item.date.getHours() %></td> -->
