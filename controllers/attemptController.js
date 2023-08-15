@@ -432,4 +432,4 @@ const deleteMany = async (req, res) => {
   }
 };
 
-deleteMany();
+// deleteMany();
