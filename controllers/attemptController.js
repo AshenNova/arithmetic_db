@@ -187,6 +187,8 @@ exports.getFilteredAttempts = async (req, res) => {
 };
 
 exports.newAttempt = async (req, res) => {
+  let eligible = 0;
+  console.log(`Eligible: ${eligible}`);
   // let highscoreEligible = 0;
   const level = req.body.level;
   const mode = req.body.mode;
@@ -214,13 +216,13 @@ exports.newAttempt = async (req, res) => {
   } catch (e) {
     console.log(e);
   }
-  let eligible = 0;
+
   const highScore = async (req, res) => {
     try {
       console.log("Highscore check running");
       const checkExist = await Highscore.findOne({ level, mode });
-      console.log(checkExist);
       if (checkExist == null) {
+        eligible = 1;
         // highscoreEligible = 1;
         const newHighscore = new Highscore({
           user: newAttempt.user,
@@ -232,13 +234,13 @@ exports.newAttempt = async (req, res) => {
           setting: newAttempt.setting,
         });
         await newHighscore.save().then((res) => {
-          console.log("New highscore!");
-          eligible = 1;
+          console.log("New highscore! 1");
         });
       } else {
         console.log("Comparing");
         if (checkExist.time > newAttempt.time) {
-          // highscoreEligible = 1;
+          console.log(checkExist.time, newAttempt.time);
+          eligible = 1;
           const newHighscore = new Highscore({
             user: newAttempt.user,
             mode: newAttempt.mode,
@@ -249,8 +251,7 @@ exports.newAttempt = async (req, res) => {
             setting: newAttempt.setting,
           });
           await newHighscore.save().then((result) => {
-            console.log("New highscore!");
-            eligible = 1;
+            console.log("New highscore! 2");
           });
         } else {
           console.log("Too slow");
@@ -262,46 +263,39 @@ exports.newAttempt = async (req, res) => {
     }
   };
 
-  // DO NOT CHECK HIGHSCOREF IF
-  // 1) ATTEMPT ISNT NUMBER 1`
-  // 2) IF LEVEL IS CAL, SETTING HAS TO BE 99.
-  //3) IF LEVEL IS HEU SETTING NEEDS TO BE 9.
-
   //CHECK IF NEW HIGHSCORE HAS BEEN SET
-  const highScoreCheck = async (req, res) => {
-    try {
-      let result = 0;
-      if (
-        attemptNum == 1 &&
-        !newAttempt.level.startsWith("cal") &&
-        attemptNum == 1 &&
-        !newAttempt.level.startsWith("heu")
-      ) {
-        result = await highScore();
-      } else if (
-        newAttempt.level.startsWith("cal") &&
-        newAttempt.setting == "99" &&
-        attemptNum == 1
-      ) {
-        result = await highScore();
-      } else if (
-        newAttempt.level.startsWith("heu") &&
-        newAttempt.setting == "9" &&
-        attemptNum == 1
-      ) {
-        result = await highScore();
-      } else {
-        console.log("Not eligible for highscore.");
-        // res.send();
-      }
-      // await result.then(console.log(result));
-    } catch (e) {
-      console.log(e);
+  // const highScoreCheck = async (req, res) => {
+  try {
+    if (
+      attemptNum == 1 &&
+      !newAttempt.level.startsWith("cal") &&
+      attemptNum == 1 &&
+      !newAttempt.level.startsWith("heu")
+    ) {
+      await highScore();
+    } else if (
+      newAttempt.level.startsWith("cal") &&
+      newAttempt.setting == "99" &&
+      attemptNum == 1
+    ) {
+      await highScore();
+    } else if (
+      newAttempt.level.startsWith("heu") &&
+      newAttempt.setting == "9" &&
+      attemptNum == 1
+    ) {
+      await highScore();
+    } else {
+      console.log("Not eligible for highscore.");
+      // res.send();
     }
-  };
+    // await result.then(console.log(result));
+  } catch (e) {
+    console.log(e);
+  }
+  // };
 
-  const result = await highScoreCheck();
-  // result.then((res) => console.log(res));
+  // highScoreCheck();
   console.log(`Highscore?: ${eligible}`);
   res.send(eligible.toString());
 };

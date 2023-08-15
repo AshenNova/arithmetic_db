@@ -868,18 +868,19 @@ function resetStuff() {
   gold = 0;
   silver = 0;
   bronze = 0;
-  if (document.querySelector(".trophy").childNodes.length > 0) {
-    imageG.remove();
-    imageS.remove();
-    imageB.remove();
-    imageNMP.remove();
-    imageFailed.remove();
-    imageCompleted.remove();
-    arr.length = 0;
-    arr2.length = 0;
-    multiplesArr = [0];
-  }
+  // if (document.querySelector(".trophy").childNodes.length > 0) {
+  //   imageG.remove();
+  //   imageS.remove();
+  //   imageB.remove();
+  //   imageNMP.remove();
+  //   imageFailed.remove();
+  //   imageCompleted.remove();
 
+  // }
+  arr.length = 0;
+  arr2.length = 0;
+  multiplesArr = [0];
+  document.querySelector(".trophy").removeChild(document.querySelector("img"));
   ctx.clearRect(0, 0, 400, 275);
 
   console.log("reset button activated");
@@ -28760,7 +28761,6 @@ $("#attemptAjex").on("submit", function (event) {
     extra: $("#form-extra").val(),
     attemptNum: $("#form-attempt").val(),
   };
-  console.log(`Ajex data: ${attempt}`);
   event.preventDefault();
   // data = JSON.stringify({ data });
   $.ajax({
@@ -28770,6 +28770,7 @@ $("#attemptAjex").on("submit", function (event) {
     data: attempt,
     // contentType: "application/json; charset=utf-8",
     success: function (res) {
+      console.log(`Response from the control is ${res}`);
       // console.log(`Ajax: ${res}`);
       if (res == 1) {
         console.log("YESSSS");
@@ -28778,6 +28779,35 @@ $("#attemptAjex").on("submit", function (event) {
         $("img").addClass("constant-tilt-shake");
         $(".finalBox").css("height", "450px");
         $(".highscore").text("You have set a new highscore!");
+      }
+      if (res == 0) {
+        // $("img").removeAttr("src", "");
+        // $("img").removeAttr("src", "");
+
+        if (easy != 1) {
+          console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
+          if (gold == 0 && time == cutoff) {
+            $("img").attr("src", "/images/endgame/failed.jpeg");
+          } else if (gold == 0 && time < cutoff) {
+            $("img").attr("src", "/images/endgame/bronze.jpeg");
+          } else if (time < gold) {
+            $("img").attr("src", "/images/endgame/gold.jpeg");
+          } else if (time < silver) {
+            $("img").attr("src", "/images/endgame/silver.jpeg");
+          } else if (time < bronze) {
+            $("img").attr("src", "/images/endgame/bronze.jpeg");
+          } else if (time < cutoff) {
+            $("img").attr("src", "/images/endgame/needmorepractice.jpeg");
+          } else {
+            $("img").attr("src", "/images/endgame/failed.jpeg");
+          }
+        }
+        if (easy == 1) {
+          $("img").attr("src", "/images/endgame/complete.jpeg");
+        }
+        $(".highscore").text("");
+        $("img").removeClass("constant-tilt-shake");
+        $(".finalBox").css("height", "400px");
       }
       console.log("SUCCESS!");
     },
