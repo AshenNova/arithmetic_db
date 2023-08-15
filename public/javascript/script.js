@@ -28770,7 +28770,15 @@ $("#attemptAjex").on("submit", function (event) {
     data: attempt,
     // contentType: "application/json; charset=utf-8",
     success: function (res) {
-      // console.log(attempt);
+      // console.log(`Ajax: ${res}`);
+      if (res == 1) {
+        console.log("YESSSS");
+
+        $("img").attr("src", "/images/high-score.png");
+        $("img").addClass("constant-tilt-shake");
+        $(".finalBox").css("height", "450px");
+        $(".highscore").text("You have set a new highscore!");
+      }
       console.log("SUCCESS!");
     },
   });
