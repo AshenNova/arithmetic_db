@@ -233,6 +233,7 @@ exports.newAttempt = async (req, res) => {
         level: level,
         mode: mode,
         setting: setting,
+        tries: "1",
       })
         .sort({ date: -1 })
         .limit(2);
