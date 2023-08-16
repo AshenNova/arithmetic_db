@@ -28843,16 +28843,16 @@ $("#attemptAjex").on("submit", function (event) {
 
       //DISPLAY HIGHSCORE
 
-      if (data.highscore) {
+      // if (data.highscore) {
         document.getElementById("highscore-table-user").innerHTML =
-          data.highscore.user || 0;
+          data.highscore.user || "Nil";
         document.getElementById("highscore-table-time").innerHTML =
-          data.highscore.time || 0;
+          data.highscore.time || "Nil";
         document.getElementById("highscore-table-mistake").innerHTML =
-          data.highscore.mistake || 0;
+          data.highscore.mistake || "Nil";
         document.getElementById("highscore-table-score").innerHTML =
-          data.highscore.score || 0;
-      }
+          data.highscore.score || "Nil";
+      // }
     },
   });
 });
