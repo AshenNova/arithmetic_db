@@ -693,7 +693,7 @@ function timer2() {
       //   finalText.innerHTML = `You took ${time} seconds`;
       // }
 
-      finalBox.classList.remove("hidden");
+      // finalBox.classList.remove("hidden");
 
       if (easy != 1) {
         console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
@@ -28839,20 +28839,32 @@ $("#attemptAjex").on("submit", function (event) {
           data.previous.mistake || 0;
         document.getElementById("previous-table-score").innerHTML =
           data.previous.score || 0;
+      } else {
+        document.getElementById("previous-table-user").innerHTML = "Nil";
+        document.getElementById("previous-table-time").innerHTML = "Nil";
+        document.getElementById("previous-table-mistake").innerHTML = "Nil";
+        document.getElementById("previous-table-score").innerHTML = "Nil";
       }
 
       //DISPLAY HIGHSCORE
 
-      // if (data.highscore) {
+      if (data.highscore) {
         document.getElementById("highscore-table-user").innerHTML =
-          data.highscore.user || "Nil";
+          data.highscore.user;
         document.getElementById("highscore-table-time").innerHTML =
-          data.highscore.time || "Nil";
+          data.highscore.time;
         document.getElementById("highscore-table-mistake").innerHTML =
-          data.highscore.mistake || "Nil";
+          data.highscore.mistake;
         document.getElementById("highscore-table-score").innerHTML =
-          data.highscore.score || "Nil";
-      // }
+          data.highscore.score;
+      } else {
+        document.getElementById("highscore-table-user").innerHTML = "Nil";
+        document.getElementById("highscore-table-time").innerHTML = "Nil";
+        document.getElementById("highscore-table-mistake").innerHTML = "Nil";
+        document.getElementById("highscore-table-score").innerHTML = "Nil";
+      }
+
+      $(".finalBox").removeClass("hidden");
     },
   });
 });
