@@ -660,6 +660,7 @@ function timer2() {
       cutoff = 600;
     }
 
+    // 1. SCORE REACHED OR TIME CUT
     if (state.score >= scoreNeeded || time == cutoff) {
       if (time == cutoff) {
         summaryStatus.innerHTML = `<h3 class="summary-status" style="color:red">Failed... ${summarySettingDisplay}</h3>`;
@@ -668,14 +669,29 @@ function timer2() {
       clearInterval(countDownTwo);
       document.getElementById("timer").innerHTML = time;
       starto.classList.remove("hidden");
+
+      document.getElementById("current-table-user").innerHTML = user;
+      document.getElementById("current-table-time").innerHTML = time;
+      document.getElementById("current-table-mistake").innerHTML =
+        state.mistake;
+      document.getElementById("current-table-score").innerHTML = state.score;
+
       if (time == cutoff) {
-        finalText.innerHTML = `You scored ${state.score}`;
-        if (hardcore == 1) {
-          finalText.innerHTML = `You scored a total of ${accumulatedScore}`;
-        }
-      } else {
-        finalText.innerHTML = `You took ${time} seconds`;
+        // finalText.innerHTML = `You scored ${state.score}`;
+        // if (hardcore == 1) {
+        //   finalText.innerHTML = `You scored a total of ${accumulatedScore}`;
+        // }
+        document.getElementById("current-table-time").innerHTML = "Failed";
+        document.getElementById("current-table-time").style.color = "red";
+        document.getElementById("current-table-mistake").innerHTML =
+          state.mistake;
+        if (hardcore == 1)
+          document.getElementById("current-table-score").innerHTML =
+            accumulatedScore;
       }
+      // else {
+      //   finalText.innerHTML = `You took ${time} seconds`;
+      // }
 
       finalBox.classList.remove("hidden");
 
@@ -729,7 +745,7 @@ function timer2() {
           "0"
         )}</p> Elapsed Time: ${durationHours} hrs ${durationMins} mins ${durationRemainingSecs} secs`;
 
-      mistakesCountCl.innerHTML = state.mistake;
+      // mistakesCountCl.innerHTML = state.mistake;
       player = 0;
       if (extraPracticeArr.length != 0) {
         extraPracticeBtn.classList.remove("hidden");
@@ -781,6 +797,7 @@ function timer2() {
         mode = "Normal";
       }
 
+      // FOR AJEX
       attemptUser.value = user;
       attemptMode.value = mode;
       attemptLevel.value = level;
@@ -28772,18 +28789,19 @@ $("#attemptAjex").on("submit", function (event) {
     success: function (res) {
       console.log(`Response from the control is ${res}`);
       // console.log(`Ajax: ${res}`);
-      if (res == 1) {
+      const data = JSON.parse(res);
+      console.log(`highscore?: ${data.eligible} Ajax`);
+      console.log(`Previous: ${data.previous} Ajax`);
+      console.log(`Highscoreholder: ${data.highscore} Ajax`);
+      if (data.eligible == 1) {
         console.log("YESSSS");
 
         $("img").attr("src", "/images/high-score.png");
         $("img").addClass("constant-tilt-shake");
-        $(".finalBox").css("height", "450px");
+        $(".finalBox").css("height", "475px");
         $(".highscore").text("You have set a new highscore!");
       }
-      if (res == 0) {
-        // $("img").removeAttr("src", "");
-        // $("img").removeAttr("src", "");
-
+      if (data.eligible != 1) {
         if (easy != 1) {
           console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
           if (gold == 0 && time == cutoff) {
@@ -28807,9 +28825,34 @@ $("#attemptAjex").on("submit", function (event) {
         }
         $(".highscore").text("");
         $("img").removeClass("constant-tilt-shake");
-        $(".finalBox").css("height", "400px");
+        $(".finalBox").css("height", "425px");
       }
       console.log("SUCCESS!");
+
+      //DISPLAY PREVIOUS
+      if (data.previous) {
+        document.getElementById("previous-table-user").innerHTML =
+          data.previous.user || 0;
+        document.getElementById("previous-table-time").innerHTML =
+          data.previous.time || 0;
+        document.getElementById("previous-table-mistake").innerHTML =
+          data.previous.mistake || 0;
+        document.getElementById("previous-table-score").innerHTML =
+          data.previous.score || 0;
+      }
+
+      //DISPLAY HIGHSCORE
+
+      if (data.highscore) {
+        document.getElementById("highscore-table-user").innerHTML =
+          data.highscore.user || 0;
+        document.getElementById("highscore-table-time").innerHTML =
+          data.highscore.time || 0;
+        document.getElementById("highscore-table-mistake").innerHTML =
+          data.highscore.mistake || 0;
+        document.getElementById("highscore-table-score").innerHTML =
+          data.highscore.score || 0;
+      }
     },
   });
 });

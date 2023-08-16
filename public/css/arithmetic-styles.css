@@ -182,18 +182,24 @@ table {
   position: absolute;
   margin: auto;
   top: 31%;
-  height: 400px;
+  height: 425px;
   width: 400px;
   border-radius: 10px;
   background-color: white;
   z-index: 9;
   text-align: center;
   border-style: solid;
+  overflow: auto;
 }
-.finalTextBox {
+/* .finalTextBox {
   position: relative;
   top: 5%;
   font-size: 2em;
+} */
+.finalTextBox {
+  position: relative;
+  top: 5%;
+  font-size: 1em;
 }
 
 .main-container {

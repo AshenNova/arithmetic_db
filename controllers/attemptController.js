@@ -187,11 +187,18 @@ exports.getFilteredAttempts = async (req, res) => {
 };
 
 exports.newAttempt = async (req, res) => {
-  let eligible = 0;
-  console.log(`Eligible: ${eligible}`);
+  let data = {
+    eligible: 0,
+  };
+  console.log(`Data: ${data}`);
   // let highscoreEligible = 0;
-  const level = req.body.level;
+  const user = req.body.user;
   const mode = req.body.mode;
+  const level = req.body.level;
+  const time = req.body.time;
+  const mistake = req.body.mistake;
+  const setting = req.body.setting;
+  const score = req.body.score;
   const attemptNum = req.body.attemptNum;
   const ip = req.headers["x-forwarded-for"] || req.ip;
   console.log(`This is ${req.body.user}'s attempt number ${attemptNum}.`);
@@ -217,12 +224,56 @@ exports.newAttempt = async (req, res) => {
     console.log(e);
   }
 
+  // QUERY PREVIOUS ATTEMPT (USER, LEVEL, MODE, SETTING)
+  let previousAttempt;
+  const previous = async (req, res) => {
+    try {
+      previousAttempt = await Attempt.find({
+        user: user,
+        level: level,
+        mode: mode,
+        setting: setting,
+      })
+        .sort({ date: -1 })
+        .limit(2);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  await previous();
+  console.log(`Previous: ${previousAttempt[1]}`);
+  data.previous = previousAttempt[1];
+
+  // highScoreCheck();
+  //highscore holder 1. LEVEL 2.MODE. SETTING. ATTEMPT
+
+  let highscoreholder;
+  const highscoreAll = async (req, res) => {
+    try {
+      highscoreholder = await Highscore.findOne({
+        level: level,
+        mode: mode,
+        setting: setting,
+      }).sort({ time: 1 });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  await highscoreAll();
+  console.log(`Highscore: ${highscoreholder}`);
+  data.highscore = highscoreholder;
+
+  //highscore
   const highScore = async (req, res) => {
     try {
       console.log("Highscore check running");
-      const checkExist = await Highscore.findOne({ level, mode });
+      const checkExist = await Highscore.findOne({ level, mode }).sort({
+        time: 1,
+      });
       if (checkExist == null) {
-        eligible = 1;
+        data.eligible = 1;
         // highscoreEligible = 1;
         const newHighscore = new Highscore({
           user: newAttempt.user,
@@ -238,9 +289,9 @@ exports.newAttempt = async (req, res) => {
         });
       } else {
         console.log("Comparing");
+        console.log(checkExist.time, newAttempt.time);
         if (checkExist.time > newAttempt.time) {
-          console.log(checkExist.time, newAttempt.time);
-          eligible = 1;
+          data.eligible = 1;
           const newHighscore = new Highscore({
             user: newAttempt.user,
             mode: newAttempt.mode,
@@ -295,9 +346,8 @@ exports.newAttempt = async (req, res) => {
   }
   // };
 
-  // highScoreCheck();
-  console.log(`Highscore?: ${eligible}`);
-  res.send(eligible.toString());
+  console.log(`Highscore?: ${data.eligible}`);
+  res.send(JSON.stringify(data));
 };
 
 exports.monthlyHighscore = async (req, res) => {

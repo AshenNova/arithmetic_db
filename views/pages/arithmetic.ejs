@@ -286,12 +286,55 @@
       <p id="timerD"></p>
     </div>
 
-    <div class="finalBox hidden">
+    <!-- <div class="finalBox hidden">
       <div class="finalTextBox">
         <p class="trophy"></p>
         <p class="highscore"></p>
         <p id="finalText"></p>
         <p><span class="mistakesCount"></span> mistakes were made.</p>
+        <p><a href="https://www.epicmindarithmetic.com/attempts" target="_blank" id="epicmind" class="btn">Results</a><button id="summary" class="btn btn-summary">Summary</button></p>
+        <p><button class="btn btn-warning extra-practice hidden">Extra</button><button id="reset" class="btn btn-danger">Reset</button></p>
+      </div>
+    </div> -->
+
+    <div class="finalBox hidden">
+      <div class="finalTextBox">
+        <p class="trophy"></p>
+        <div class="container">
+        <table class="table">
+          <tr>
+            <th>Effort</th>
+            <th>Name</th>
+            <th>Timing</th>
+            <th>Mistake</th>
+            <th>Score</th>
+          </tr>
+          <tr class="table-secondary">
+            <td>Current</td>
+            <td id="current-table-user">?</td>
+            <td id="current-table-time">?</td>
+            <td id="current-table-mistake">?</td>
+            <td id="current-table-score">?</td>
+          </tr>
+          <tr>
+            <td>Previous</td>
+            <td id="previous-table-user">Nil</td>
+            <td id="previous-table-time">Nil</td>
+            <td id="previous-table-mistake">Nil</td>
+            <td id="previous-table-score">Nil</td>
+          </tr>
+          <tr>
+            <td>Highscore</td>
+            <td id="highscore-table-user">Nil</td>
+            <td id="highscore-table-time">Nil</td>
+            <td id="highscore-table-mistake">Nil</td>
+            <td id="highscore-table-score">Nil</td>
+          </tr>
+        </table>
+      </div>
+        <p class="highscore"></p>
+        <p id="finalText"></p>
+        <!-- <p><span class="mistakesCount"></span> mistakes were made.</p> -->
         <p><a href="https://www.epicmindarithmetic.com/attempts" target="_blank" id="epicmind" class="btn">Results</a><button id="summary" class="btn btn-summary">Summary</button></p>
         <p><button class="btn btn-warning extra-practice hidden">Extra</button><button id="reset" class="btn btn-danger">Reset</button></p>
       </div>
