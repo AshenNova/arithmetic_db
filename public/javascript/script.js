@@ -28866,6 +28866,9 @@ $("#attemptAjex").on("submit", function (event) {
 
       $(".finalBox").removeClass("hidden");
     },
+    error: function (res) {
+      console.log(`Some error. ${res}.`);
+    },
   });
 });
 // });

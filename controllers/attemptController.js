@@ -252,7 +252,7 @@ exports.newAttempt = async (req, res) => {
   let highscoreholder;
   const highscoreAll = async (req, res) => {
     try {
-      highscoreholder = await Highscore.findOne({
+      highscoreholder = await Highscore.find({
         level: level,
         mode: mode,
         setting: setting,
@@ -264,7 +264,7 @@ exports.newAttempt = async (req, res) => {
 
   await highscoreAll();
   console.log(`Highscore: ${highscoreholder}`);
-  data.highscore = highscoreholder;
+  data.highscore = highscoreholder[0];
 
   //highscore
   const highScore = async (req, res) => {
