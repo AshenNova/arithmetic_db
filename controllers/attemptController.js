@@ -256,7 +256,7 @@ exports.newAttempt = async (req, res) => {
         level: level,
         mode: mode,
         setting: setting,
-      }).sort({ time: 1 });
+      }).sort({ date: -1 });
     } catch (e) {
       console.log(e);
     }
