@@ -9,6 +9,7 @@ const attemptSchema = new mongoose.Schema({
   score: Number,
   setting: { type: String, default: 0 },
   extra: String,
+  skip: String,
   date: {
     type: Date,
     default: Date.now,

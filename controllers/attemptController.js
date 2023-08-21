@@ -196,6 +196,7 @@ exports.newAttempt = async (req, res) => {
   const mode = req.body.mode;
   const level = req.body.level;
   const time = req.body.time;
+  const skip = req.body.skip;
   const mistake = req.body.mistake;
   const setting = req.body.setting;
   const score = req.body.score;
@@ -210,6 +211,7 @@ exports.newAttempt = async (req, res) => {
     mistake: req.body.mistake,
     score: req.body.score,
     setting: req.body.setting,
+    skip: req.body.skip,
     extra: req.body.extra,
     // date: req.body.date,
     tries: req.body.attemptNum,
@@ -257,6 +259,7 @@ exports.newAttempt = async (req, res) => {
         mode: mode,
         setting: setting,
       }).sort({ date: -1 });
+      console.log(highscoreholder);
     } catch (e) {
       console.log(e);
     }
@@ -328,13 +331,15 @@ exports.newAttempt = async (req, res) => {
     } else if (
       newAttempt.level.startsWith("cal") &&
       newAttempt.setting == "99" &&
-      attemptNum == 1
+      attemptNum == 1 &&
+      skip == ""
     ) {
       await highScore();
     } else if (
       newAttempt.level.startsWith("heu") &&
       newAttempt.setting == "9" &&
-      attemptNum == 1
+      attemptNum == 1 &&
+      skip == ""
     ) {
       await highScore();
     } else {
@@ -456,6 +461,12 @@ const updateMany = async (req, res) => {
     // const updating = await Attempt.updateMany({}, { $set: { tries: 1 } });
     // console.log(updating);
     const updating = await Attempt.updateMany(
+      // { tries: { $exists: false } },
+      // { $set: { tries: 1 } }
+      { user: "Yh" },
+      { $set: { user: "Youheng" } }
+    );
+    const updatingPlayer = await Highscore.updateMany(
       // { tries: { $exists: false } },
       // { $set: { tries: 1 } }
       { user: "Yh" },

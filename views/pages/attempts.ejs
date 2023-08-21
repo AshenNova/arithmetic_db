@@ -80,6 +80,7 @@
         <th scope="col">Mode</th>
         <th scope="col">Level</th>
         <th scope="col">Setting</th>
+        <th scope="col">Skip</th>
         <th scope="col">Time</th>
         <th scope="col">Mistakes</th>
         <th scope="col">Score</th>
@@ -120,6 +121,7 @@
                 <% }  else { %>
                   <td><%= item.setting %> </td>
                 <% } %>
+                <td><%= item.skip %></td>
                 <% if (item.mode == "Normal" && item.time >= 600) { %>
                   <td>🚩</td>
                 <% } else if (item.mode == "Hardcore" && item.time >= 600 ) { %> 
@@ -163,6 +165,7 @@
         <th scope="col">Mode</th>
         <th scope="col">Level</th>
         <th scope="col">Setting</th>
+        <th scope="col">Skip</th>
         <th scope="col">Time</th>
         <th scope="col">Mistakes</th>
         <th scope="col">Score</th>
@@ -194,6 +197,7 @@
                 <% }  else { %>
                   <td><%= item.setting %> </td>
                 <% } %>
+                <td><%= item.skip %></td>
                 <% if (item.mode == "Normal" && item.time >= 600) { %>
                   <td>🚩</td>
                 <% } else if (item.mode == "Hardcore" && item.time >= 600 ) { %> 

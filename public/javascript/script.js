@@ -233,6 +233,7 @@ let questionTimeForSummary = undefined;
 let summary = [];
 let extraPracticeArr = [];
 let regen = 0;
+let skipArr = [];
 let boyNames = [
   "Liam",
   "Noah",
@@ -630,6 +631,14 @@ function clickStart() {
   buttonLevel = this.innerHTML;
   console.log("start button clicked");
   withinStart();
+
+  // SKIP BUTTON APPEARANCE
+  console.log(isNaN(level * 1));
+  if (isNaN(level * 1)) {
+    document.querySelector(".skipBtnCl").classList.remove("hidden");
+  } else {
+    document.querySelector(".skipBtnCl").classList.add("hidden");
+  }
 }
 
 let questionTime = undefined;
@@ -803,6 +812,7 @@ function timer2() {
       attemptLevel.value = level;
       attemptTime.value = time;
       attemptMistake.value = state.mistake;
+      document.querySelector(".attempt-skip").value = skipArr;
       if (mode == "Hardcore" && time == 600) {
         attemptScore.value = accumulatedScore;
       } else {
@@ -881,6 +891,7 @@ function resetStuff() {
   console.log(summary);
   summaryItemLeft.innerHTML = "";
   summaryItemRight.innerHTML = "";
+  skipArr = [];
 
   gold = 0;
   silver = 0;
@@ -967,7 +978,8 @@ function checkRange(setting, arr) {
         console.log("Arr is empty!");
         console.log("Updating / renewing set of questions");
         for (let i = state.min; i <= state.max; i++) {
-          arr.push(i);
+          // FOR SKIP
+          if (!skipArr.includes(i)) arr.push(i);
           console.log(`Loading: ${arr}`);
         }
         // scoreNeeded = arr.length;
@@ -986,6 +998,36 @@ function checkRange(setting, arr) {
 }
 
 buttonStart.addEventListener("click", clickStart);
+
+// SKIP BUTTON
+document.querySelector("#skipBtn").addEventListener("click", function (e) {
+  const isNotNumber = calRange[0] * 1;
+  // if (calArr.length == 0) {
+  if (skipArr.length == state.max - state.min) {
+    alert(
+      "You seem to have skipped every single setting, unable to skip anymore"
+    );
+  }
+  // IS NUMBER
+  else if (!isNaN(isNotNumber)) {
+    alert("There is only 1 setting, unable to skip.");
+  } else {
+    confirm("Have you at least given the question a try?");
+    if (calArr.length == 0) {
+      calArr.push(calRange[genNumbers(calRange.length)]);
+    }
+    skipArr.push(setting);
+    console.log(`Removing setting ${setting}`);
+    if (calArr.includes(setting)) {
+      const index = calArr.indexOf(setting);
+      calArr.splice(index, 1);
+    } else {
+      console.log("Nope");
+    }
+    setting = calArr[genNumbers(calArr.length)];
+    updateCalc();
+  }
+});
 
 toMultiplesBtn.addEventListener("click", function () {
   multiplesSettingCl.classList.remove("hidden");
@@ -28777,6 +28819,7 @@ $("#attemptAjex").on("submit", function (event) {
     setting: $("#form-setting").val(),
     extra: $("#form-extra").val(),
     attemptNum: $("#form-attempt").val(),
+    skip: $("#form-skip").val(),
   };
   event.preventDefault();
   // data = JSON.stringify({ data });

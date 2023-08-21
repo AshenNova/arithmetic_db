@@ -20,6 +20,9 @@ body {
 .hidden {
   display: none;
 }
+/* .our-form {
+  padding-bottom: 0;
+} */
 
 #calculator {
   /* margin-left: auto;
@@ -359,8 +362,12 @@ table {
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  /* padding-bottom: 0; */
 }
 
+#skipBtn {
+  margin-bottom: 2%;
+}
 .specialBorder {
   border-style: solid 1px;
   border-color: black;
@@ -478,6 +485,12 @@ button {
 .submit2 {
   display: flex;
   align-items: center;
+  margin-top: 2%;
+}
+
+.submitBoxone {
+  display: inline-block;
+  vertical-align: top;
 }
 
 .fa-reveal {

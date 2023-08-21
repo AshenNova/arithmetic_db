@@ -438,7 +438,9 @@
             <canvas id="canvas1" width="400px" height="275px"></canvas>
           </div>
           <div class="container firstInputBox">
-            <p><input type="number" class="input-box" id="user-input" autocomplete="off" step="1" max="99999" placeholder="here"></span></p>
+            <row>
+              <p><input type="number" class="input-box" id="user-input" autocomplete="off" step="1" max="99999" placeholder="here"></span></p>
+             </row>
           </div>
           <p class="secondUnitMeasurement text-center"></p>
         </form>
@@ -446,8 +448,10 @@
           <div class="row">
             <textarea id="user-input2" rows="4" col="3"></textarea>
             <button class="submit2 btn btn-primary">Submit</button>
+          
           </div>
         </form>
+        <button class="btn btn-secondary skipBtnCl" id="skipBtn">Skip</button>
     </div>
     <br>
     <i class="fa-brands fa-hire-a-helper fa-reveal hidden"></i>
@@ -463,6 +467,7 @@
     <input id="form-extra" type="text" name="extra", class="attempt-extra">
     <input id="form-date" type="text" name="date", class="attempt-date">
     <input id="form-attempt" type="number" name="attempt", class="attempt-attempt">
+    <input id="form-skip" type="text" name="skip", class="attempt-skip">
     <!-- <input type="text" name="ip", class="attempt-ip"> -->
     <button class="btn-attemptSubmit" type="submit"></button>
   </form>
