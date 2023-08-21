@@ -234,6 +234,7 @@ let summary = [];
 let extraPracticeArr = [];
 let regen = 0;
 let skipArr = [];
+let questionsCorrectArr = [];
 let boyNames = [
   "Liam",
   "Noah",
@@ -892,6 +893,7 @@ function resetStuff() {
   summaryItemLeft.innerHTML = "";
   summaryItemRight.innerHTML = "";
   skipArr = [];
+  questionsCorrectArr = [];
 
   gold = 0;
   silver = 0;
@@ -1008,20 +1010,19 @@ document.querySelector("#skipBtn").addEventListener("click", function (e) {
     alert(
       "You seem to have skipped every single setting, unable to skip anymore"
     );
-  }
-  else if (calRange.includes(setting)){
+  } else if (questionsCorrectArr.includes(setting)) {
+    console.log(calRange);
+    console.log(setting);
     alert("You have got it right before. Think harder.");
   }
   // IS NUMBER
-  else if ((!isNaN(isNotNumber) && calArr.length == 0)) {
+  else if (!isNaN(isNotNumber) && calArr.length == 0) {
     // else if ((!isNaN(isNotNumber) && calArr.length == 0) || (!isNaN(isNotNumber) && setting != 99) || (!isNaN(isNotNumber) && setting != 9)) {
     alert("There is only 1 setting, unable to skip.");
   } else {
     confirm("Have you at least given the question a try?");
     if (calArr.length == 0) {
-     
-        calArr.push(calRange[genNumbers(calRange.length)]);
-      
+      calArr.push([genNumbers(questionsCorrectArr)]);
     }
     skipArr.push(setting);
     console.log(`Removing setting ${setting}`);
@@ -21910,6 +21911,7 @@ function handleSubmit(e) {
       console.log("correct");
       // EXTRA PRACTICE CHECK
       regen = 0;
+      questionsCorrectArr.push(setting);
       const extra = cutOffCheck(level, setting, questionSecs);
       if (extra) {
         if (!extraPracticeArr.includes(extra)) {
