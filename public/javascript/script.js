@@ -663,6 +663,9 @@ function timer2() {
     time++;
     document.getElementById("timer").innerHTML = time;
     console.log(state.score);
+    skipArr.sort(function (a, b) {
+      return a - b;
+    });
 
     if (easy == 1) {
       cutoff = 99999;
@@ -959,7 +962,7 @@ const updateCalc = function () {
   // return skipGlobalUpdateProblem;
 };
 
-function checkRange(setting, arr) {
+function checkRange(setting, arr, skipArr) {
   console.log(`SkipGlobal: ${skipGlobalUpdateProblem}`);
   // skipGlobalUpdateProblem = updateCalc();
   // if (skipGlobalUpdateProblem != 1 || state.global == 1) {
@@ -984,11 +987,6 @@ function checkRange(setting, arr) {
           if (!skipArr.includes(i)) arr.push(i);
           console.log(`Loading: ${arr}`);
         }
-        // scoreNeeded = arr.length;
-        // if (arr.length < 10) {
-        //   scoreNeeded = 10;
-        // }
-        // console.log(`The score needed is : ${scoreNeeded}`);
       }
       setting = arr[genNumbers(arr.length)];
       const chosen = arr.splice(arr.indexOf(setting), 1);
@@ -1020,20 +1018,22 @@ document.querySelector("#skipBtn").addEventListener("click", function (e) {
     // else if ((!isNaN(isNotNumber) && calArr.length == 0) || (!isNaN(isNotNumber) && setting != 99) || (!isNaN(isNotNumber) && setting != 9)) {
     alert("There is only 1 setting, unable to skip.");
   } else {
-    confirm("Have you at least given the question a try?");
-    if (calArr.length == 0) {
-      calArr.push([genNumbers(questionsCorrectArr)]);
+    const answer = confirm("Have you at least given the question a try?");
+    console.log(answer)
+    if (answer == true){
+      if (calArr.length == 0) {
+        calArr.push([genNumbers(questionsCorrectArr)]);
+      }
+      if (!skipArr.includes(setting)) skipArr.push(setting);
+      console.log(`Removing setting ${setting}`);
+      while (calArr.includes(setting)) {
+        const index = calArr.indexOf(setting);
+        calArr.splice(index, 1);
+      }
+      setting = calArr[genNumbers(calArr.length)];
+      updateCalc();
     }
-    skipArr.push(setting);
-    console.log(`Removing setting ${setting}`);
-    if (calArr.includes(setting)) {
-      const index = calArr.indexOf(setting);
-      calArr.splice(index, 1);
-    } else {
-      console.log("Nope");
-    }
-    setting = calArr[genNumbers(calArr.length)];
-    updateCalc();
+
   }
 });
 
@@ -15521,6 +15521,7 @@ How many items are there in each bag?
       (setting == 9 && p.rollz == 1) ||
       (range == 1 && p.rollz == 1)
     ) {
+      normalDisplay();
       while (p.quantityOne == p.quantityTwo) {
         p.quantityOne = genNumbers(10) + 1;
       }
@@ -15558,6 +15559,7 @@ How many items are there in each bag?
       (setting == 9 && p.rollz == 2) ||
       (range == 1 && p.rollz == 2)
     ) {
+      normalDisplay();
       p.rightQ = genNumbers(p.questions) + 1;
       p.total = p.marks * p.rightQ - p.deduct * (p.questions - p.rightQ);
       p.allRight = p.questions * p.marks;
@@ -15590,6 +15592,7 @@ How many items are there in each bag?
       (setting == 9 && p.rollz == 3) ||
       (range == 1 && p.rollz == 3)
     ) {
+      normalDisplay();
       let chosenRoll = genNumbers(p.objects.length);
       p.chosenOne = p.objects[chosenRoll][0];
       p.chosenTwo = p.objects[chosenRoll][1];
@@ -15621,6 +15624,7 @@ How many items are there in each bag?
       (setting == 9 && p.rollz == 4) ||
       (range == 1 && p.rollz == 4)
     ) {
+      normalDisplay();
       while (p.objectOneV == p.objectTwoV) {
         p.objectOneV = genNumbers(10) + 2;
       }
@@ -15666,6 +15670,7 @@ How many items are there in each bag?
       (setting == 9 && p.rollz == 5) ||
       (range == 1 && p.rollz == 5)
     ) {
+      normalDisplay();
       console.log(p.position);
       while (p.objectOneM == p.objectTwoM) {
         p.objectOneM = genNumbers(4) + 2;
@@ -15704,6 +15709,7 @@ How many items are there in each bag?
       (setting == 9 && p.rollz == 6) ||
       (range == 1 && p.rollz == 6)
     ) {
+      normalDisplay();
       if (p.type == 0) {
         displayProblem.innerHTML = `
         There are ${p.people} people at a ${p.location}.<p>
@@ -15726,6 +15732,7 @@ How many items are there in each bag?
       (setting == 9 && p.rollz == 7) ||
       (range == 1 && p.rollz == 7)
     ) {
+      normalDisplay();
       if (p.version == 1) {
         if (p.bonus > p.set) {
           return updateProblems();
@@ -15756,6 +15763,7 @@ How many items are there in each bag?
     }
     // DIFFERENT QUANTITY WITH DIFFERENCE
     if (setting == 8) {
+      normalDisplay();
       while (p.varAQuan == p.varBQuan) {
         p.varAQuan = genNumbers(4) + 2;
         p.varBQuan = genNumbers(4) + 1;
@@ -22966,7 +22974,7 @@ function genProblems() {
     //   position: genNumbers(30) + 20,
     // };
     setting = calArrAll(4, calArr, setting, 9);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
     console.log(state.global);
     if (setting == 1 || setting == 5) {
       return {
@@ -23276,7 +23284,6 @@ function genProblems() {
   }
   if (level == 4.11) {
     setting = calArrAll(2, calArr, setting, 9);
-    // setting = checkRange(setting, calArr);
     if (setting == 1) {
       return {
         numOne: genNumbers(9) + 1,
@@ -23574,7 +23581,7 @@ function genProblems() {
 
   if (level == 5.01) {
     setting = calArrAll(3, calArr, setting, 9);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
     if (setting == 1) {
       const total = genNumbers(5) + 5;
       return {
@@ -24066,7 +24073,7 @@ function genProblems() {
     //   setting = calArrAll(8, calArr);
     // }
     setting = calArrAll(8, calArr, setting, 99, level);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
     console.log(setting);
     if (setting == 1) {
       let ones = genNumbers(10);
@@ -24166,7 +24173,7 @@ function genProblems() {
     //   setting = calArrAll(8, calArr);
     // }
     setting = calArrAll(13, calArr, setting, 99, level);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 1) {
       let hundreds = genNumbers(9) + 1;
@@ -24311,7 +24318,7 @@ function genProblems() {
     //   setting = calArrAll(6, calArr);
     // }
     setting = calArrAll(23, calArr, setting, 99, level);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
       let hundreds = genNumbers(9) + 1;
@@ -24554,7 +24561,7 @@ function genProblems() {
     //   setting = calArrAll(6, calArr);
     // }
     setting = calArrAll(18, calArr, setting, 99);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
       return {
@@ -24730,7 +24737,7 @@ function genProblems() {
   //SETTINGS
   if (level == "calFive") {
     setting = calArrAll(25, calArr, setting, 99);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 0) {
       return {
@@ -25103,7 +25110,7 @@ function genProblems() {
   //SETTINGS
   if (level == "calFiveb") {
     setting = calArrAll(21, calArr, setting, 99);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
 
     //REMAINDER CONCEPT: BEFORE AND AFTER
 
@@ -25403,7 +25410,7 @@ function genProblems() {
   //SETTINGS
   if (level == "calSix") {
     setting = calArrAll(9, calArr, setting, 99);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 1) {
       console.log("Finding Remainder");
@@ -25543,7 +25550,7 @@ function genProblems() {
   if (level == "calSixb") {
     normalDisplay();
     setting = calArrAll(6, calArr, setting, 99);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
 
     //MEET UP
     if (setting == 1) {
@@ -25783,7 +25790,7 @@ function genProblems() {
   // settings
   if (level == "heuTwob") {
     setting = calArrAll(7, calArr, setting, 9);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
     if (setting == 1) {
       return {
         rollx: [
@@ -25922,7 +25929,7 @@ function genProblems() {
     //   console.log("Current remaining arr is " + heuArr);
     // }
     setting = calArrAll(8, calArr, setting, 9);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 1) {
       return {
@@ -26041,7 +26048,7 @@ function genProblems() {
   // setting
   if (level == "heuThreeb") {
     setting = calArrAll(5, calArr, setting, 9);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
 
     if (
       setting == 1 ||
@@ -26144,7 +26151,7 @@ function genProblems() {
 
   if (level == "heuFour") {
     setting = calArrAll(7, calArr, setting, 9);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 1) {
       return {
@@ -26249,7 +26256,7 @@ function genProblems() {
   //SETTINGS
   if (level == "heuFourb") {
     setting = calArrAll(6, calArr, setting, 9);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 1) {
       const arrObj = ["sweets", "bags"];
@@ -26349,7 +26356,7 @@ function genProblems() {
   // Stats
   if (level == "heuFive") {
     setting = calArrAll(8, calArr, setting, 9);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 1) {
       return {
@@ -26497,7 +26504,7 @@ function genProblems() {
   // SETTINGS
   if (level == "heuFiveb") {
     setting = calArrAll(5, calArr, setting, 9);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 1) {
       const gen_denoOne = genNumbers(4) + 2;
@@ -26583,7 +26590,7 @@ function genProblems() {
   //SETTINGS
   if (level == "heuSix") {
     setting = calArrAll(4, calArr, setting, 9);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
     // LOWEST COMMON TIME
     if (setting == 1) {
       return {
@@ -26640,7 +26647,7 @@ function genProblems() {
 
   if (level == "heuSixb") {
     setting = calArrAll(6, calArr, setting, 9);
-    setting = checkRange(setting, calArr);
+    setting = checkRange(setting, calArr, skipArr);
     //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
     if (setting == 1) {
       const gen_large = genNumbers(20) + 30;
