@@ -1001,6 +1001,7 @@ buttonStart.addEventListener("click", clickStart);
 
 // SKIP BUTTON
 document.querySelector("#skipBtn").addEventListener("click", function (e) {
+  console.log(setting);
   const isNotNumber = calRange[0] * 1;
   // if (calArr.length == 0) {
   if (skipArr.length == state.max - state.min) {
@@ -1008,13 +1009,19 @@ document.querySelector("#skipBtn").addEventListener("click", function (e) {
       "You seem to have skipped every single setting, unable to skip anymore"
     );
   }
+  else if (calRange.includes(setting)){
+    alert("You have got it right before. Think harder.");
+  }
   // IS NUMBER
-  else if (!isNaN(isNotNumber)) {
+  else if ((!isNaN(isNotNumber) && calArr.length == 0)) {
+    // else if ((!isNaN(isNotNumber) && calArr.length == 0) || (!isNaN(isNotNumber) && setting != 99) || (!isNaN(isNotNumber) && setting != 9)) {
     alert("There is only 1 setting, unable to skip.");
   } else {
     confirm("Have you at least given the question a try?");
     if (calArr.length == 0) {
-      calArr.push(calRange[genNumbers(calRange.length)]);
+     
+        calArr.push(calRange[genNumbers(calRange.length)]);
+      
     }
     skipArr.push(setting);
     console.log(`Removing setting ${setting}`);
