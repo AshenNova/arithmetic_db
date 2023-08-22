@@ -376,9 +376,13 @@ exports.newAttempt = async (req, res) => {
       const percentile75 = allTheTiming[Math.ceil(allTheTiming.length * 0.75)];
       console.log(allTheTiming);
       console.log(`25% = ${percentile25}, 75%=${percentile75}`);
+      const interquartileRange = percentile75 - percentile25;
       let activeTimings = [];
       allTheTiming.forEach((item) => {
-        if (item < percentile25 || item > percentile75) {
+        if (
+          item < percentile25 - interquartileRange * 1.5 ||
+          item > percentile75 + 1.5 * interquartileRange
+        ) {
           console.log("Outlier");
         } else {
           sum += item;
