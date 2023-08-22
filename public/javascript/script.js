@@ -1004,36 +1004,42 @@ document.querySelector("#skipBtn").addEventListener("click", function (e) {
   console.log(setting);
   const isNotNumber = calRange[0] * 1;
   // if (calArr.length == 0) {
-  if (skipArr.length == state.max - state.min) {
-    alert(
-      "You seem to have skipped every single setting, unable to skip anymore"
-    );
-  } else if (questionsCorrectArr.includes(setting)) {
-    console.log(calRange);
-    console.log(setting);
-    alert("You have got it right before. Think harder.");
-  }
-  // IS NUMBER
-  else if (!isNaN(isNotNumber) && calArr.length == 0) {
-    // else if ((!isNaN(isNotNumber) && calArr.length == 0) || (!isNaN(isNotNumber) && setting != 99) || (!isNaN(isNotNumber) && setting != 9)) {
-    alert("There is only 1 setting, unable to skip.");
+  if (questionSecs < 300) {
+    alert("Keep trying for 5 mins...");
   } else {
-    const answer = confirm("Have you at least given the question a try?");
-    console.log(answer)
-    if (answer == true){
-      if (calArr.length == 0) {
-        calArr.push([genNumbers(questionsCorrectArr)]);
-      }
-      if (!skipArr.includes(setting)) skipArr.push(setting);
-      console.log(`Removing setting ${setting}`);
-      while (calArr.includes(setting)) {
-        const index = calArr.indexOf(setting);
-        calArr.splice(index, 1);
-      }
-      setting = calArr[genNumbers(calArr.length)];
-      updateCalc();
+    if (skipArr.length == state.max - state.min) {
+      alert(
+        "You seem to have skipped every single setting, unable to skip anymore"
+      );
+    } else if (questionsCorrectArr.includes(setting)) {
+      console.log(calRange);
+      console.log(setting);
+      alert("You have got it right before. Think harder.");
     }
+    // IS NUMBER
+    else if (!isNaN(isNotNumber) && calArr.length == 0) {
+      // else if ((!isNaN(isNotNumber) && calArr.length == 0) || (!isNaN(isNotNumber) && setting != 99) || (!isNaN(isNotNumber) && setting != 9)) {
+      alert("There is only 1 setting, unable to skip.");
+    } else {
+      const answer = confirm("Have you at least given the question a try?");
+      console.log(answer);
+      if (answer == true) {
+        if (calArr.length == 0) {
+          calArr.push([genNumbers(questionsCorrectArr)]);
+        }
+        if (!skipArr.includes(setting)) skipArr.push(setting);
+        console.log(`Removing setting ${setting}`);
+        while (calArr.includes(setting)) {
+          const index = calArr.indexOf(setting);
+          calArr.splice(index, 1);
+        }
+        setting = calArr[genNumbers(calArr.length)];
 
+        summaryPush("🏳️");
+        questionSecs = 0;
+        updateCalc();
+      }
+    }
   }
 });
 
