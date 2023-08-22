@@ -492,18 +492,41 @@ exports.getHighscore = async (req, res) => {
     const highscoreModes = await Highscore.distinct("mode");
     let highscoreHoldersArr = [];
 
-    for (let i = 0; i < highscoreLevels.length; i++) {
-      for (let x = 0; x < highscoreModes.length; x++) {
-        const highscoreHolder = await Highscore.find({
-          level: highscoreLevels[i],
-          mode: highscoreModes[x],
-        })
-          .sort({ time: 1 })
-          .limit(1);
-        // console.log(highscoreHolder);
-        if (highscoreHolder[0]) highscoreHoldersArr.push(highscoreHolder[0]);
+    // for (let i = 0; i < highscoreLevels.length; i++) {
+    //   for (let x = 0; x < highscoreModes.length; x++) {
+    //     const highscoreHolder = await Highscore.find({
+    //       level: highscoreLevels[i],
+    //       mode: highscoreModes[x],
+    //     })
+    //       .sort({ time: 1 })
+    //       .limit(1);
+    //     // console.log(highscoreHolder);
+    //     if (highscoreHolder[0]) highscoreHoldersArr.push(highscoreHolder[0]);
+    //   }
+    // }
+
+    const highscoreHolder = await Highscore.find().sort({ level: 1, time: 1 });
+
+    // let genesisTwo = 0;
+
+    for (let a = 0; a < highscoreLevels.length; a++) {
+      for (let m = 0; m < highscoreModes.length; m++) {
+        let genesis = 0;
+        for (let b = 0; b < highscoreHolder.length; b++) {
+          if (
+            highscoreHolder[b].mode == highscoreModes[m] &&
+            highscoreHolder[b].level == highscoreLevels[a]
+          ) {
+            if (genesis == 0) {
+              highscoreHoldersArr.push(highscoreHolder[b]);
+              genesis += 1;
+              // genesisTwo += 1;
+            }
+          }
+        }
       }
     }
+    console.log(highscoreHolder);
     res.status(200).render("pages/highscore", { highscoreHoldersArr });
   } catch (error) {
     console.log(error);
