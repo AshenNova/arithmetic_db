@@ -28868,18 +28868,16 @@ $("#attemptAjex").on("submit", function (event) {
       }
       if (data.eligible != 1) {
         if (easy != 1) {
-          console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
+          // console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
           if (gold == 0 && time == cutoff) {
             $("img").attr("src", "/images/endgame/failed.jpeg");
-          } else if (gold == 0 && time < cutoff) {
+          } else if (data.award == "Bronze") {
             $("img").attr("src", "/images/endgame/bronze.jpeg");
-          } else if (time < gold) {
+          } else if (data.award == "Gold") {
             $("img").attr("src", "/images/endgame/gold.jpeg");
-          } else if (time < silver) {
+          } else if (data.award == "Silver") {
             $("img").attr("src", "/images/endgame/silver.jpeg");
-          } else if (time < bronze) {
-            $("img").attr("src", "/images/endgame/bronze.jpeg");
-          } else if (time < cutoff) {
+          } else if (data.award == "Try harder") {
             $("img").attr("src", "/images/endgame/needmorepractice.jpeg");
           } else {
             $("img").attr("src", "/images/endgame/failed.jpeg");
@@ -28928,7 +28926,9 @@ $("#attemptAjex").on("submit", function (event) {
         document.getElementById("highscore-table-mistake").innerHTML = "Nil";
         document.getElementById("highscore-table-score").innerHTML = "Nil";
       }
-
+      $("#gold").html(`< ${data.medals.gold.lower.toFixed(0)}`);
+      $("#silver").html(`< ${data.medals.silver.lower.toFixed(0)}`);
+      $("#bronze").html(`< ${data.medals.bronze.lower.toFixed(0)}`);
       $(".finalBox").removeClass("hidden");
     },
     error: function (res) {

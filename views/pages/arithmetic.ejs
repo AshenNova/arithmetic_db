@@ -301,7 +301,20 @@
       <div class="finalTextBox">
         <p class="trophy"></p>
         <div class="container">
-        <table class="table">
+        <table class="table text-center d-flex flex-row">
+          <div class="row">
+            <div class="col">
+              Gold: <div id="gold"></div>
+            </div>
+            <div class="col">
+              Silver: <div id="silver"></div>
+            </div>
+            <div class="col">
+              Bronze: <div id="bronze"></div>
+            </div>
+          </row>
+        </table>
+         <table class="table">
           <tr>
             <th>Effort</th>
             <th>Name</th>
@@ -330,13 +343,14 @@
             <td id="highscore-table-mistake">Nil</td>
             <td id="highscore-table-score">Nil</td>
           </tr>
+
         </table>
       </div>
         <p class="highscore"></p>
         <p id="finalText"></p>
         <!-- <p><span class="mistakesCount"></span> mistakes were made.</p> -->
         <p><a href="https://www.epicmindarithmetic.com/attempts" target="_blank" id="epicmind" class="btn">Results</a><button id="summary" class="btn btn-summary">Summary</button></p>
-        <p><button class="btn btn-warning extra-practice hidden">Extra</button><button id="reset" class="btn btn-danger">Reset</button></p>
+        <p><button class="btn btn-warning extra-practice hidden">Extra</button><button id="reset" class="btn btn-danger mb-2">Reset</button></p>
       </div>
     </div>
 

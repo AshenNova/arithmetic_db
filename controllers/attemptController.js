@@ -351,6 +351,70 @@ exports.newAttempt = async (req, res) => {
     console.log(e);
   }
   // };
+  let award;
+  const standardDeviation = async (req, res) => {
+    try {
+      const queryMean = await Attempt.find({
+        level: level,
+        mode: mode,
+        tries: "1",
+        setting: setting,
+        skip: "",
+      });
+      let sum = 0;
+      queryMean.forEach((item) => (sum += item.time));
+      const mean = sum / queryMean.length;
+      console.log(`Sum: ${sum}, Length: ${queryMean.length} Mean: ${mean}, `);
+
+      let xSquare = 0;
+      queryMean.forEach((item) => {
+        xSquare += (item.time - mean) ** 2;
+      });
+      const variance = xSquare / queryMean.length;
+      const standardDev = Math.sqrt(variance);
+      console.log(`x2: ${xSquare}, Variance: ${variance}, Sd: ${standardDev}`);
+
+      const bronze = {
+        lower: mean + standardDev,
+        upper: mean - standardDev,
+      };
+      const silver = {
+        lower: mean - standardDev,
+        upper: mean - standardDev * 2,
+      };
+      const gold = {
+        lower: mean - standardDev * 2,
+        upper: mean - standardDev * 3,
+      };
+      const platinum = {
+        lower: mean - standardDev * 3,
+      };
+      if (time > bronze.lower) {
+        award = "Try harder";
+      } else if (time <= bronze.lower && time > bronze.upper) {
+        award = "Bronze";
+      } else if (time <= silver.lower && time > silver.upper) {
+        award = "Silver";
+      } else if (time <= gold.lower && time > gold.upper) {
+        award = "Gold";
+      } else {
+        award = "Platinum";
+      }
+      console.log(bronze, silver, gold, platinum);
+      console.log(`You got ${award}!`);
+      data.medals = {
+        bronze,
+        silver,
+        gold,
+      };
+      data.award = award;
+      data.standardDeviation = standardDev;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  await standardDeviation();
 
   console.log(`Highscore?: ${data.eligible}`);
   res.send(JSON.stringify(data));
