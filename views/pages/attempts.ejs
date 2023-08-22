@@ -87,23 +87,18 @@
         <th scope="col">Extra</th>
         <th scope="col">Date</th>
         <th scope="col">Ago</th>
+        <!-- <th scope="col">Summary</th> -->
       </tr>
     </thead>
     <tbody>
       <% const today = new Date().getDay() %>
-        <% attempts.forEach(item => { %>
-          <!-- const date = `${item.date.getDay()}/${item.date.getMonth()} ` -->
-                <!-- <% if (item.extra == ""  && item.tries > 1 ) { %> 
-                  <tr class="table-success">
-                <% } else if (item.extra != "" && item.tries == 1) { %>
-                  <tr class="table-secondary">
-                <% } else if (item.tries > 1 ) { %>
-                  <tr class="table-warning">
-                <% } else { %>
-                  <tr>
-                <% } %> -->
+        <% attempts.forEach((item, index) => { %>
+        
+          <div class="summary hidden">
+          <h1>Summary</h1>
+          <%= index %>
+          </div>
                 <tr>
-                <!-- <th scope="row">1</th> -->
                 <td><a href="/attempts/filter/?user=<%= item.user %>&level=&setting=&mode="><%= item.user %></a></td>
                 <% if ( item.mode == "Easy") {%>
                   <td class="btn btn-outline-success btn-sm"> <%= "Easy" %></td>
@@ -148,6 +143,7 @@
                 <td><%= item.date.toLocaleTimeString('en-US') + " " + item.date.toLocaleDateString() %></td>
                 <!-- <td><%= item.date.getHours() %></td> -->
                 <td><%= new Date().getDate() - item.date.getDate() %></td>
+                <!-- <td class="click-summary"><%= "📜" %></td> -->
             </tr>
             <% });%>
     </tbody>

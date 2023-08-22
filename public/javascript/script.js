@@ -796,12 +796,8 @@ function timer2() {
           html = `<p>▪️${item.attempt}) ${item.symbol} Setting: ${item.setting}, Time: ${item.time}s`;
           summaryItemRight.insertAdjacentHTML("beforeend", html);
         }
-
-        // summaryTextCl.insertAdjacentHTML("beforeend", html);
       });
 
-      // attemptSetting.value = setting;
-      // attemptUser.value = level;
       if (easy == 1) {
         mode = "Easy";
       } else if (hardcore == 1) {
@@ -817,6 +813,7 @@ function timer2() {
       attemptTime.value = time;
       attemptMistake.value = state.mistake;
       document.querySelector(".attempt-skip").value = skipArr;
+      document.querySelector(".attempt-summary").value = summary;
       if (mode == "Hardcore" && time == 600) {
         attemptScore.value = accumulatedScore;
       } else {
@@ -28842,6 +28839,7 @@ $("#attemptAjex").on("submit", function (event) {
     extra: $("#form-extra").val(),
     attemptNum: $("#form-attempt").val(),
     skip: $("#form-skip").val(),
+    summary: $("#form-summary").val(),
   };
   event.preventDefault();
   // data = JSON.stringify({ data });

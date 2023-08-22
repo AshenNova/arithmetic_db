@@ -50,6 +50,10 @@ exports.getAllAttempts = async (req, res) => {
     limit,
     page
   );
+
+  let summaryObj = [];
+  attemptsTwo.forEach((item) => summaryObj.push(item.summary));
+  console.log(summaryObj);
   const filteredUser = "";
   let latestAttemptObj;
   res.status(200).render("pages/attempts", {
@@ -58,6 +62,7 @@ exports.getAllAttempts = async (req, res) => {
     latestAttemptObj,
     todayCount,
     filteredUser,
+    // summaryObj,
   });
 };
 
@@ -190,8 +195,7 @@ exports.newAttempt = async (req, res) => {
   let data = {
     eligible: 0,
   };
-  console.log(`Data: ${data}`);
-  // let highscoreEligible = 0;
+  console.log(req.body.summary);
   const user = req.body.user;
   const mode = req.body.mode;
   const level = req.body.level;
@@ -201,6 +205,7 @@ exports.newAttempt = async (req, res) => {
   const setting = req.body.setting;
   const score = req.body.score;
   const attemptNum = req.body.attemptNum;
+  const summary = req.body.summary;
   const ip = req.headers["x-forwarded-for"] || req.ip;
   console.log(`This is ${req.body.user}'s attempt number ${attemptNum}.`);
   const newAttempt = new Attempt({
@@ -213,9 +218,9 @@ exports.newAttempt = async (req, res) => {
     setting: req.body.setting,
     skip: req.body.skip,
     extra: req.body.extra,
-    // date: req.body.date,
     tries: req.body.attemptNum,
     ip: ip,
+    summary: req.body.summary,
   });
 
   try {
@@ -398,7 +403,7 @@ exports.newAttempt = async (req, res) => {
       } else if (time <= gold.lower && time > gold.upper) {
         award = "Gold";
       } else {
-        award = "Platinum";
+        award = "Gold";
       }
       console.log(bronze, silver, gold, platinum);
       console.log(`You got ${award}!`);
@@ -525,16 +530,16 @@ const updateMany = async (req, res) => {
     // const updating = await Attempt.updateMany({}, { $set: { tries: 1 } });
     // console.log(updating);
     const updating = await Attempt.updateMany(
-      // { tries: { $exists: false } },
-      // { $set: { tries: 1 } }
-      { user: "Yh" },
-      { $set: { user: "Youheng" } }
+      { skip: { $exists: false } },
+      { $set: { skip: "" } }
+      // { user: "Yh" },
+      // { $set: { user: "Youheng" } }
     );
     const updatingPlayer = await Highscore.updateMany(
-      // { tries: { $exists: false } },
-      // { $set: { tries: 1 } }
-      { user: "Yh" },
-      { $set: { user: "Youheng" } }
+      { skip: { $exists: false } },
+      { $set: { skip: "" } }
+      // { user: "Yh" },
+      // { $set: { user: "Youheng" } }
     );
     console.log(updating);
   } catch (e) {
