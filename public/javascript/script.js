@@ -28878,7 +28878,7 @@ $("#attemptAjex").on("submit", function (event) {
           } else if (data.award == "Try harder") {
             $("img").attr("src", "/images/endgame/needmorepractice.jpeg");
           } else {
-            $("img").attr("src", "/images/endgame/failed.jpeg");
+            $("img").attr("src", "/images/endgame/platinum.jpeg");
           }
         }
         if (easy == 1) {
@@ -28924,9 +28924,9 @@ $("#attemptAjex").on("submit", function (event) {
         document.getElementById("highscore-table-mistake").innerHTML = "Nil";
         document.getElementById("highscore-table-score").innerHTML = "Nil";
       }
-      $("#gold").html(`< ${data.medals.gold.lower.toFixed(0)}`);
-      $("#silver").html(`< ${data.medals.silver.lower.toFixed(0)}`);
-      $("#bronze").html(`< ${data.medals.bronze.lower.toFixed(0)}`);
+      $("#gold").html(`< ${data.medals.gold.lower.toFixed(1)}`);
+      $("#silver").html(`< ${data.medals.silver.lower.toFixed(1)}`);
+      $("#bronze").html(`< ${data.medals.bronze.lower.toFixed(1)}`);
       $(".finalBox").removeClass("hidden");
     },
     error: function (res) {

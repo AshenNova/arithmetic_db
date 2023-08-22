@@ -367,15 +367,34 @@ exports.newAttempt = async (req, res) => {
         skip: "",
       });
       let sum = 0;
-      queryMean.forEach((item) => (sum += item.time));
-      const mean = sum / queryMean.length;
-      console.log(`Sum: ${sum}, Length: ${queryMean.length} Mean: ${mean}, `);
+      let allTheTiming = [];
+      queryMean.forEach((item) => allTheTiming.push(item.time));
+      allTheTiming = allTheTiming.sort(function (a, b) {
+        return a - b;
+      });
+      const percentile25 = allTheTiming[Math.ceil(allTheTiming.length * 0.25)];
+      const percentile75 = allTheTiming[Math.ceil(allTheTiming.length * 0.75)];
+      console.log(allTheTiming);
+      console.log(`25% = ${percentile25}, 75%=${percentile75}`);
+      let activeTimings = [];
+      allTheTiming.forEach((item) => {
+        if (item < percentile25 || item > percentile75) {
+          console.log("Outlier");
+        } else {
+          sum += item;
+          activeTimings.push(item);
+        }
+      });
+      const mean = sum / activeTimings.length;
+      console.log(
+        `Sum: ${sum}, Length: ${activeTimings.length} Mean: ${mean}, `
+      );
 
       let xSquare = 0;
-      queryMean.forEach((item) => {
-        xSquare += (item.time - mean) ** 2;
+      activeTimings.forEach((item) => {
+        xSquare += (item - mean) ** 2;
       });
-      const variance = xSquare / queryMean.length;
+      const variance = xSquare / activeTimings.length;
       const standardDev = Math.sqrt(variance);
       console.log(`x2: ${xSquare}, Variance: ${variance}, Sd: ${standardDev}`);
 
@@ -403,7 +422,7 @@ exports.newAttempt = async (req, res) => {
       } else if (time <= gold.lower && time > gold.upper) {
         award = "Gold";
       } else {
-        award = "Gold";
+        award = "Platinum";
       }
       console.log(bronze, silver, gold, platinum);
       console.log(`You got ${award}!`);
