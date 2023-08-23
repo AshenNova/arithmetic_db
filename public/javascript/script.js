@@ -28954,21 +28954,21 @@ $("#attemptAjex").on("submit", function (event) {
       }
       if (data.eligible != 1) {
         // if (easy != 1) {
-          // console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
-          if (time == cutoff) {
-            $("img").attr("src", "/images/endgame/failed.jpeg");
-          } else if (data.award == "Bronze") {
-            $("img").attr("src", "/images/endgame/bronze.jpeg");
-          } else if (data.award == "Gold") {
-            $("img").attr("src", "/images/endgame/gold.jpeg");
-          } else if (data.award == "Silver") {
-            $("img").attr("src", "/images/endgame/silver.jpeg");
-          } else if (data.award == "Try harder") {
-            $("img").attr("src", "/images/endgame/needmorepractice.jpeg");
-          } else {
-            $("img").attr("src", "/images/endgame/platinum.jpeg");
-          }
+        // console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
+        if (time == cutoff) {
+          $("img").attr("src", "/images/endgame/failed.jpeg");
+        } else if (data.award == "Bronze") {
+          $("img").attr("src", "/images/endgame/bronze.jpeg");
+        } else if (data.award == "Gold") {
+          $("img").attr("src", "/images/endgame/gold.jpeg");
+        } else if (data.award == "Silver") {
+          $("img").attr("src", "/images/endgame/silver.jpeg");
+        } else if (data.award == "Try harder") {
+          $("img").attr("src", "/images/endgame/needmorepractice.jpeg");
+        } else {
+          $("img").attr("src", "/images/endgame/platinum.jpeg");
         }
+        // }
         // if (easy == 1) {
         //   $("img").attr("src", "/images/endgame/complete.jpeg");
         // }
