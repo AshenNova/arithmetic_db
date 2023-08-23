@@ -113,6 +113,7 @@
               <!-- </thead> -->
               <div class="row">
                 <div class="col">Attempt</div>
+                <div class="col">Setting</div>
                 <div class="col">Status</div>
                 <div class="col">Time</div>
               </div>
@@ -121,12 +122,15 @@
                 <div class="col">
                 <%= item.attempt %>
               </div>
-                <div class="col">
-                  <%= item.symbol %>
-                  </div>
-                  <div class="col">
-                    <%= item.time %>
-                  </div>
+              <div class="col">
+                <%= item.setting %>
+              </div>
+              <div class="col">
+                <%= item.symbol %>
+              </div>
+              <div class="col">
+                <%= item.time %>
+              </div>
           </div>
            <% }) %>
            <% } %>
