@@ -28953,9 +28953,9 @@ $("#attemptAjex").on("submit", function (event) {
         $(".highscore").text("You have set a new highscore!");
       }
       if (data.eligible != 1) {
-        if (easy != 1) {
+        // if (easy != 1) {
           // console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
-          if (gold == 0 && time == cutoff) {
+          if (time == cutoff) {
             $("img").attr("src", "/images/endgame/failed.jpeg");
           } else if (data.award == "Bronze") {
             $("img").attr("src", "/images/endgame/bronze.jpeg");
@@ -28969,9 +28969,9 @@ $("#attemptAjex").on("submit", function (event) {
             $("img").attr("src", "/images/endgame/platinum.jpeg");
           }
         }
-        if (easy == 1) {
-          $("img").attr("src", "/images/endgame/complete.jpeg");
-        }
+        // if (easy == 1) {
+        //   $("img").attr("src", "/images/endgame/complete.jpeg");
+        // }
         $(".highscore").text("");
         $("img").removeClass("constant-tilt-shake");
         $(".finalBox").css("height", "425px");
