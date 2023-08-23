@@ -1,0 +1,29 @@
+<div class="container">
+  <% for(let i = 0; i < 2; i++){ %>
+    
+  <div class="summary hidden">
+    <h1>Summary</h1>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Attempt</th>
+            <th scope="col">Status</th>
+            <th scope="col">Setting</th>
+            <th scope="col">Time</th>
+          </tr>
+      </thead>
+      <tbody>
+        <% summaryObj[i].forEach((item, index) => { %>
+          <tr>
+            <td><%= item.attempt %></td>
+            <td><%= item.symbol %></td>
+            <td><%= item.setting %></td>
+            <td><%= item.time %></td>
+            <!-- <td>test</td> -->
+          </tr>
+       <% }); %> 
+     </tbody>
+    </table>
+  </div>
+<% } %>
+</div>

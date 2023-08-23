@@ -51,9 +51,20 @@ exports.getAllAttempts = async (req, res) => {
     page
   );
 
-  let summaryObj = [];
-  attemptsTwo.forEach((item) => summaryObj.push(item.summary));
-  console.log(summaryObj);
+  let summaryObj = attemptsTwo[0];
+  // attemptsTwo.forEach((item, index) => {
+  // const obj = JSON.parse(item.summary);
+  // if (index < 2) {
+  // console.log(typeof item.summary);
+  // const obj = JSON.parse(item.summary);
+  // obj = JSON.parse(obj);
+  // console.log(item.summary);
+  // obj.forEach((item) => {
+  // summaryObj.push(item.summary);
+  // console.log(summaryObj);
+  // }
+  // }?
+  // });
   const filteredUser = "";
   let latestAttemptObj;
   res.status(200).render("pages/attempts", {
@@ -62,7 +73,7 @@ exports.getAllAttempts = async (req, res) => {
     latestAttemptObj,
     todayCount,
     filteredUser,
-    // summaryObj,
+    summaryObj,
   });
 };
 
@@ -372,8 +383,10 @@ exports.newAttempt = async (req, res) => {
       allTheTiming = allTheTiming.sort(function (a, b) {
         return a - b;
       });
-      const percentile25 = allTheTiming[Math.ceil(allTheTiming.length * 0.25)];
-      const percentile75 = allTheTiming[Math.ceil(allTheTiming.length * 0.75)];
+      const percentile25 =
+        allTheTiming[Math.ceil(allTheTiming.length * 0.25) - 1];
+      const percentile75 =
+        allTheTiming[Math.ceil(allTheTiming.length * 0.75) - 1];
       console.log(allTheTiming);
       console.log(`25% = ${percentile25}, 75%=${percentile75}`);
       const interquartileRange = percentile75 - percentile25;
@@ -576,10 +589,10 @@ const updateMany = async (req, res) => {
     // const updating = await Attempt.updateMany({}, { $set: { tries: 1 } });
     // console.log(updating);
     const updating = await Attempt.updateMany(
-      { skip: { $exists: false } },
-      { $set: { skip: "" } }
-      // { user: "Yh" },
-      // { $set: { user: "Youheng" } }
+      // { summary: { $exists: false } },
+      // { $set: { summary: "test" } }
+      { summary: "[{ test:1}]" },
+      { $set: { summary: "" } }
     );
     const updatingPlayer = await Highscore.updateMany(
       { skip: { $exists: false } },

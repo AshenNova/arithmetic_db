@@ -779,7 +779,9 @@ function timer2() {
       if (time == cutoff) {
         summaryTextCl.innerHTML = `More practice required... 😞</p>`;
       }
+      // console.log(`Summary: ${summary[0]}`);
       summary.forEach((item, index) => {
+        console.log(`Index: ${index}, ${item.time}`);
         summaryScore.textContent = state.score;
         if (hardcore == 1) {
           summaryScore.textContent = accumulatedScore;
@@ -813,7 +815,8 @@ function timer2() {
       attemptTime.value = time;
       attemptMistake.value = state.mistake;
       document.querySelector(".attempt-skip").value = skipArr;
-      document.querySelector(".attempt-summary").value = summary;
+      document.querySelector(".attempt-summary").value =
+        JSON.stringify(summary);
       if (mode == "Hardcore" && time == 600) {
         attemptScore.value = accumulatedScore;
       } else {
