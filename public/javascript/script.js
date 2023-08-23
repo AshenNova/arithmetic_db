@@ -16320,8 +16320,70 @@ How many items are there in each bag?
 
   if (level == "heuSixb") {
     normalDisplay();
-    //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
+
+    // SIMULTANEOUS EQUATION (PARTS AND UNITS) TYPE 1
     if (setting == 1) {
+      const personA = boyNames[genNumbers(boyNames.length)];
+      const personB = girlNames[genNumbers(boyNames.length)];
+      [p.unitsA, p.unitsB] = simplify(p.unitsA, p.unitsB);
+      const valueAFirst = p.unitsA * p.multiplier;
+      const valueBFirst = p.unitsB * p.multiplier;
+      while (
+        p.situationA == 0 ||
+        p.situationB == 0 ||
+        Math.abs(p.situationA) == Math.abs(p.situationB)
+      ) {
+        p.situationA = genNumbers(10) - 5;
+        p.situationB = genNumbers(10) - 5;
+      }
+      let valueAEnd = valueAFirst + p.situationA * p.multiplier;
+      let valueBEnd = valueBFirst + p.situationB * p.multiplier;
+      // console.log(`Before: ${p.partsA} : ${p.partsB}`);
+      let partsA = valueAEnd;
+      let partsB = valueBEnd;
+      [partsA, partsB] = simplify(partsA, partsB);
+      console.log(`After: ${partsA} : ${partsB}`);
+
+      if (partsA > 10 || partsB > 10 || partsA <= 0 || partsB <= 0) {
+        console.log("Oops");
+        return updateCalc();
+      }
+      console.log(partsA, partsB);
+      displayProblem.innerHTML = `
+      The ratio of ${personA} to ${personB} at first is ${p.unitsA} : ${
+        p.unitsB
+      }.</br>
+      ${personA} ${p.situationA > 0 ? `spent` : "received another"} $${Math.abs(
+        p.situationA * p.multiplier
+      )}.</br> 
+      ${personB} ${p.situationB > 0 ? `spent` : "received another"} $${Math.abs(
+        p.situationB * p.multiplier
+      )}.</br>
+      Their ratio became ${partsA} : ${partsB} in the end.</br>
+      `;
+      if (p.question == "AF")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What does ${personA} have at first?`
+        );
+      if (p.question == "BF")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What does ${personB} have at first?`
+        );
+      if (p.question == "AE")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What does ${personA} have in the end?`
+        );
+      if (p.question == "BE")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What does ${personB} have in the end?`
+        );
+    }
+    //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
+    if (setting == 2) {
       if (p.personASmallSheets == p.personBSmallSheets) {
         console.log("Same number of sheets");
         return updateCalc();
@@ -16363,7 +16425,7 @@ How many items are there in each bag?
     }
 
     // MORE THAN / LESS THAN
-    if (setting == 2) {
+    if (setting == 3) {
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
       [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
       const commonDenominator = commonDeno(p.denoA, p.denoB);
@@ -16416,7 +16478,7 @@ How many items are there in each bag?
     }
 
     // USING IT ALL
-    if (setting == 3) {
+    if (setting == 4) {
       if (p.unitAF == p.unitBF || p.unitAS == p.unitBS) {
         console.log("Units identical");
         return updateCalc();
@@ -16561,7 +16623,7 @@ How many items are there in each bag?
       }
     }
     // IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 1 MULTIPLES
-    if (setting == 4) {
+    if (setting == 5) {
       //IDENTITIES
       const position = genNumbers(3);
       const itemA = ["pencils", "erasers", "apples"][position];
@@ -16629,7 +16691,7 @@ How many items are there in each bag?
       `;
     }
     // IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 1 DIFFERENCE
-    if (setting == 5) {
+    if (setting == 6) {
       if (p.priceA == p.priceB) {
         console.log("same coins");
         return updateCalc();
@@ -16683,7 +16745,7 @@ How many items are there in each bag?
       `;
     }
     // IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 2 SETS
-    if (setting == 6) {
+    if (setting == 7) {
       //IDENTITIES
       if (p.quantityA == p.quantityB) {
         p.quantityB -= 1;
@@ -21835,31 +21897,40 @@ function handleSubmit(e) {
 
     // ANSWERS
     if (level == "heuSixb") {
-      //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
+      //SIMULTANEOUS EQUATION ( PARTS AND UNITS) TYPE 1
       if (setting == 1) {
+        if (p.question == "AF") correctAnswer = p.unitsA * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.unitsB * p.multiplier;
+        if (p.question == "AE")
+          correctAnswer = p.unitsA * p.multiplier + p.situationA * p.multiplier;
+        if (p.question == "BE")
+          correctAnswer = p.unitsB * p.multiplier + p.situationB * p.multiplier;
+      }
+      //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
+      if (setting == 2) {
         correctAnswer = `${Math.abs(p.personATotal - p.personBTotal)}, ${
           p.packets
         }`;
       }
 
       // MORE THAN / LESS THAN
-      if (setting == 2) {
+      if (setting == 3) {
         if (p.question == "A") correctAnswer = p.varA;
         if (p.question == "B") correctAnswer = p.varB;
       }
 
       //USING IT ALL
-      if (setting == 3) {
+      if (setting == 4) {
         correctAnswer = p.answer;
       }
       //IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 1 MULTIPLES
-      if (setting == 4) {
+      if (setting == 5) {
         if (p.question == "VA") correctAnswer = p.priceA;
         if (p.question == "VB") correctAnswer = p.priceB;
         if (p.question == "QA") correctAnswer = p.quantityA * p.groups;
         if (p.question == "QB") correctAnswer = p.quantityB * p.groups;
       }
-      if (setting == 5) {
+      if (setting == 6) {
         const valueA = accDecimal((p.priceA * p.quantityA) / 100);
         const valueB = accDecimal((p.priceB * p.quantityB) / 100);
         if (p.question == "VA") correctAnswer = valueA;
@@ -21869,7 +21940,7 @@ function handleSubmit(e) {
         if (p.question == "T") correctAnswer = valueA + valueB;
       }
 
-      if (setting == 6) {
+      if (setting == 7) {
         if (p.version == "money") {
           const commonQuantity = commonDeno(p.quantityA, p.quantityB);
           if (p.question == "VA")
@@ -26652,10 +26723,24 @@ function genProblems() {
   }
 
   if (level == "heuSixb") {
-    setting = calArrAll(6, calArr, setting, 9);
+    setting = calArrAll(7, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
-    //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
+
+    // SIMULTANEOUS EQUATION (PARTS AND UNITS) TYPE 1
     if (setting == 1) {
+      return {
+        multiplier: genNumbers(10) + 5,
+        unitsA: genNumbers(10) + 1,
+        unitsB: genNumbers(10) + 1,
+        situationA: genNumbers(10) - 5,
+        situationB: genNumbers(10) - 5,
+        // partsA: 0,
+        // partsB: 0,
+        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
+      };
+    }
+    //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
+    if (setting == 2) {
       const gen_large = genNumbers(20) + 30;
       const gen_packets = genNumbers(40) + 10;
       return {
@@ -26672,7 +26757,7 @@ function genProblems() {
     }
 
     //MORE THAN / LESS THAN
-    if (setting == 2) {
+    if (setting == 3) {
       const gen_denoA = genNumbers(5) + 2;
       const gen_denoB = genNumbers(5) + 2;
       return {
@@ -26689,7 +26774,7 @@ function genProblems() {
       };
     }
     // USING IT ALL
-    if (setting == 3) {
+    if (setting == 4) {
       return {
         unitAF: genNumbers(5) + 1,
         unitBF: genNumbers(5) + 1,
@@ -26707,7 +26792,7 @@ function genProblems() {
     }
 
     // IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 1 MULTIPLES
-    if (setting == 4) {
+    if (setting == 5) {
       return {
         quantityA: [1, genNumbers(5) + 2][genNumbers(2)],
         quantityB: genNumbers(5) + 2,
@@ -26719,7 +26804,7 @@ function genProblems() {
     }
 
     // IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 1 DIFFERENCE
-    if (setting == 5) {
+    if (setting == 6) {
       return {
         quantityA: genNumbers(90) + 10,
         quantityB: genNumbers(90) + 10,
@@ -26731,7 +26816,7 @@ function genProblems() {
       };
     }
     // IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 2 SETS
-    if (setting == 6) {
+    if (setting == 7) {
       return {
         version: ["money", "distance"][genNumbers(2)],
         quantityA: genNumbers(5) + 2,
@@ -28673,7 +28758,7 @@ function buttonLevelSetting() {
       );
 
       if (
-        ![1, 2, 3, 4, 5, 6, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 7, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       ) {
         setting = 9;

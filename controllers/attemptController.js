@@ -558,10 +558,6 @@ exports.monthlyHighscore = async (req, res) => {
                 genesis += 1;
               }
             }
-            // if (genesis == 0) {
-            //   thisMonthHigh.push(monthly[s]);
-            //   genesis += 1;
-            // }
           }
         }
       }
