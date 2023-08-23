@@ -469,52 +469,104 @@ exports.monthlyHighscore = async (req, res) => {
     const thisMonth = new Date().getMonth() + 1;
     console.log(allLevels, allModes);
 
-    for (let i = 0; i < allLevels.length; i++) {
-      for (let x = 0; x < allModes.length; x++) {
-        const thisMonthAttempts = await Attempt.find({
-          $expr: { $eq: [{ $month: "$date" }, thisMonth] },
-          level: allLevels[i],
-          mode: allModes[x],
-          tries: "1",
-          // $or: [{ setting: "99" }, { setting: "9" }],
-        }).sort({ level: 1, time: 1 });
+    // for (let i = 0; i < allLevels.length; i++) {
+    //   for (let x = 0; x < allModes.length; x++) {
+    //     const thisMonthAttempts = await Attempt.find({
+    //       $expr: { $eq: [{ $month: "$date" }, thisMonth] },
+    //       level: allLevels[i],
+    //       mode: allModes[x],
+    //       tries: "1",
+    //       // $or: [{ setting: "99" }, { setting: "9" }],
+    //     }).sort({ level: 1, time: 1 });
 
-        if (thisMonthAttempts[0]) {
-          //THIS SETTLES THE NORMAL LEVELS
+    //     if (thisMonthAttempts[0]) {
+    //       //THIS SETTLES THE NORMAL LEVELS
+    //       if (
+    //         !thisMonthAttempts[0].level.includes("cal") &&
+    //         !thisMonthAttempts[0].level.includes("heu")
+    //       ) {
+    //         thisMonthHigh.push(thisMonthAttempts[0]);
+    //       } else {
+    //         //NOW I NEED TO SETTLE THE CAL AND HEURISTICS
+    //         let genesis = 0;
+    //         for (let x = 0; x < thisMonthAttempts.length; x++) {
+    //           if (
+    //             thisMonthAttempts[x].setting == 99 ||
+    //             thisMonthAttempts[x].setting == 9
+    //           ) {
+    //             // console.log("Stage 1");
+
+    //             if (
+    //               thisMonthAttempts[x].score == 3 ||
+    //               thisMonthAttempts[x].score == 5 ||
+    //               thisMonthAttempts[x].score == 10
+    //             ) {
+    //               // console.log("Stage 2");
+
+    //               if (genesis == 0) {
+    //                 thisMonthHigh.push(thisMonthAttempts[0]);
+    //                 genesis += 1;
+    //               }
+    //             }
+    //           }
+    //         }
+    //       }
+    //     }
+    //     // }
+    //   }
+    // }
+
+    //RETRY
+    const monthly = await Attempt.find({
+      $expr: { $eq: [{ $month: "$date" }, thisMonth] },
+      tries: "1",
+      skip: "",
+    }).sort({ level: 1, time: 1 });
+
+    for (let l = 0; l < allLevels.length; l++) {
+      let genesis = 0;
+      for (let m = 0; m < allModes.length; m++) {
+        for (let s = 0; s < monthly.length; s++) {
           if (
-            !thisMonthAttempts[0].level.includes("cal") &&
-            !thisMonthAttempts[0].level.includes("heu")
+            monthly[s].level == allLevels[l] &&
+            monthly[s].mode == allModes[m]
           ) {
-            thisMonthHigh.push(thisMonthAttempts[0]);
-          } else {
-            //NOW I NEED TO SETTLE THE CAL AND HEURISTICS
-            let genesis = 0;
-            for (let x = 0; x < thisMonthAttempts.length; x++) {
-              if (
-                thisMonthAttempts[x].setting == 99 ||
-                thisMonthAttempts[x].setting == 9
-              ) {
-                // console.log("Stage 1");
-
-                if (
-                  thisMonthAttempts[x].score == 3 ||
-                  thisMonthAttempts[x].score == 5 ||
-                  thisMonthAttempts[x].score == 10
-                ) {
-                  // console.log("Stage 2");
-
-                  if (genesis == 0) {
-                    thisMonthHigh.push(thisMonthAttempts[0]);
-                    genesis += 1;
-                  }
-                }
+            if (
+              monthly[s].level.startsWith("cal") &&
+              monthly[s].setting == "99"
+            ) {
+              if (genesis == 0) {
+                thisMonthHigh.push(monthly[s]);
+                genesis += 1;
               }
             }
+            if (
+              monthly[s].level.startsWith("heu") &&
+              monthly[s].setting == "9"
+            ) {
+              if (genesis == 0) {
+                thisMonthHigh.push(monthly[s]);
+                genesis += 1;
+              }
+            }
+            if (
+              !monthly[s].level.startsWith("cal") &&
+              !monthly[s].level.startsWith("heu")
+            ) {
+              if (genesis == 0) {
+                thisMonthHigh.push(monthly[s]);
+                genesis += 1;
+              }
+            }
+            // if (genesis == 0) {
+            //   thisMonthHigh.push(monthly[s]);
+            //   genesis += 1;
+            // }
           }
         }
-        // }
       }
     }
+    // thisMonthHigh = monthly;
     res.status(200).render("pages/monthly-highscore", { thisMonthHigh });
   } catch (e) {
     console.log(e);
