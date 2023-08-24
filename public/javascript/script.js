@@ -28946,14 +28946,15 @@ $("#attemptAjex").on("submit", function (event) {
         document.getElementById("highscore-table-mistake").innerHTML = "Nil";
         document.getElementById("highscore-table-score").innerHTML = "Nil";
       }
-      if (!data.medal == null) {
-        $("#gold").html(`< ${data.medals.gold.lower.toFixed(1)}`);
-        $("#silver").html(`< ${data.medals.silver.lower.toFixed(1)}`);
-        $("#bronze").html(`< ${data.medals.bronze.lower.toFixed(1)}`);
-      } else {
+
+      if (data.medals.gold.lower == null) {
         $("#gold").html(`Nil`);
         $("#silver").html(`Nil`);
         $("#bronze").html(`Nil`);
+      } else {
+        $("#gold").html(`< ${data.medals.gold.lower.toFixed(1)}`);
+        $("#silver").html(`< ${data.medals.silver.lower.toFixed(1)}`);
+        $("#bronze").html(`< ${data.medals.bronze.lower.toFixed(1)}`);
       }
 
       $(".finalBox").removeClass("hidden");

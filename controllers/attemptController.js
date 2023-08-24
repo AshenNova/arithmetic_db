@@ -276,30 +276,30 @@ exports.newAttempt = async (req, res) => {
         data.eligible = 1;
         // highscoreEligible = 1;
         const newHighscore = new Highscore({
-          user: newAttempt.user,
-          mode: newAttempt.mode,
-          level: newAttempt.level,
-          time: newAttempt.time,
-          mistake: newAttempt.mistake,
-          score: newAttempt.score,
-          setting: newAttempt.setting,
+          user: user,
+          mode: mode,
+          level: level,
+          time: time,
+          mistake: mistake,
+          score: score,
+          setting: setting,
         });
         await newHighscore.save().then((res) => {
           console.log("New highscore! 1");
         });
       } else {
         console.log("Comparing");
-        console.log(checkExist.time, newAttempt.time);
-        if (checkExist.time > newAttempt.time) {
+        // console.log(checkExist.time, newAttempt.time);
+        if (checkExist.time > time) {
           data.eligible = 1;
           const newHighscore = new Highscore({
-            user: newAttempt.user,
-            mode: newAttempt.mode,
-            level: newAttempt.level,
-            time: newAttempt.time,
-            mistake: newAttempt.mistake,
-            score: newAttempt.score,
-            setting: newAttempt.setting,
+            user: user,
+            mode: mode,
+            level: level,
+            time: time,
+            mistake: mistake,
+            score: score,
+            setting: setting,
           });
           await newHighscore.save().then((result) => {
             console.log("New highscore! 2");
@@ -356,13 +356,14 @@ exports.newAttempt = async (req, res) => {
         tries: "1",
         setting: setting,
         skip: "",
-      });
+      }).sort({ time: 1 });
       let sum = 0;
       let allTheTiming = [];
       queryMean.forEach((item) => allTheTiming.push(item.time));
-      allTheTiming = allTheTiming.sort(function (a, b) {
-        return a - b;
-      });
+      // allTheTiming = allTheTiming.sort(function (a, b) {
+      //   return a - b;
+      // });
+      console.log(`Timing: ${allTheTiming}`);
       const percentile25 =
         allTheTiming[Math.ceil(allTheTiming.length * 0.25) - 1];
       const percentile75 =
@@ -378,6 +379,7 @@ exports.newAttempt = async (req, res) => {
         ) {
           console.log("Outlier");
         } else {
+          console.log(item);
           sum += item;
           activeTimings.push(item);
         }
