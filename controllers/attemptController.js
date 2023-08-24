@@ -425,6 +425,7 @@ exports.newAttempt = async (req, res) => {
       }
 
       if (data.eligible == 1) award = "High";
+      if (skip != "") award = "Try harder";
       console.log(bronze, silver, gold, platinum);
       console.log(`You got ${award}!`);
       data.medals = {
