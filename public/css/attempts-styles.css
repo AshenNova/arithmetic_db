@@ -30,3 +30,7 @@
   transform: translate(-50%, -50%); */
   /* margin: auto; */
 }
+
+.award-size {
+  height: 30px;
+}

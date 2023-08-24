@@ -206,6 +206,8 @@ exports.newAttempt = async (req, res) => {
   let data = {
     eligible: 0,
   };
+
+  // RECEIVE DATA (MUST BE ON TOP)
   console.log(req.body.summary);
   const user = req.body.user;
   const mode = req.body.mode;
@@ -219,28 +221,6 @@ exports.newAttempt = async (req, res) => {
   const summary = req.body.summary;
   const ip = req.headers["x-forwarded-for"] || req.ip;
   console.log(`This is ${req.body.user}'s attempt number ${attemptNum}.`);
-  const newAttempt = new Attempt({
-    user: req.body.user,
-    mode: req.body.mode,
-    level: req.body.level,
-    time: req.body.time,
-    mistake: req.body.mistake,
-    score: req.body.score,
-    setting: req.body.setting,
-    skip: req.body.skip,
-    extra: req.body.extra,
-    tries: req.body.attemptNum,
-    ip: ip,
-    summary: req.body.summary,
-  });
-
-  try {
-    await newAttempt.save().then((doc) => {
-      console.log(doc);
-    });
-  } catch (e) {
-    console.log(e);
-  }
 
   // QUERY PREVIOUS ATTEMPT (USER, LEVEL, MODE, SETTING)
   let previousAttempt;
@@ -339,21 +319,21 @@ exports.newAttempt = async (req, res) => {
   try {
     if (
       attemptNum == 1 &&
-      !newAttempt.level.startsWith("cal") &&
+      !level.startsWith("cal") &&
       attemptNum == 1 &&
-      !newAttempt.level.startsWith("heu")
+      !level.startsWith("heu")
     ) {
       await highScore();
     } else if (
-      newAttempt.level.startsWith("cal") &&
-      newAttempt.setting == "99" &&
+      level.startsWith("cal") &&
+      setting == "99" &&
       attemptNum == 1 &&
       skip == ""
     ) {
       await highScore();
     } else if (
-      newAttempt.level.startsWith("heu") &&
-      newAttempt.setting == "9" &&
+      level.startsWith("heu") &&
+      setting == "9" &&
       attemptNum == 1 &&
       skip == ""
     ) {
@@ -441,6 +421,8 @@ exports.newAttempt = async (req, res) => {
       } else {
         award = "Platinum";
       }
+
+      if (data.eligible == 1) award = "High";
       console.log(bronze, silver, gold, platinum);
       console.log(`You got ${award}!`);
       data.medals = {
@@ -456,6 +438,31 @@ exports.newAttempt = async (req, res) => {
   };
 
   await standardDeviation();
+
+  // LAST: SAVE ATTEMPT
+  const newAttempt = new Attempt({
+    user: req.body.user,
+    mode: req.body.mode,
+    level: req.body.level,
+    time: req.body.time,
+    mistake: req.body.mistake,
+    score: req.body.score,
+    setting: req.body.setting,
+    skip: req.body.skip,
+    extra: req.body.extra,
+    tries: req.body.attemptNum,
+    ip: ip,
+    summary: req.body.summary,
+    award: data.award,
+  });
+
+  try {
+    await newAttempt.save().then((doc) => {
+      console.log(doc);
+    });
+  } catch (e) {
+    console.log(e);
+  }
 
   console.log(`Highscore?: ${data.eligible}`);
   res.send(JSON.stringify(data));
@@ -657,12 +664,13 @@ const updateMany = async (req, res) => {
 // updateMany();
 
 const deleteMany = async (req, res) => {
+  const deleteNow = { user: "Player" };
   try {
-    const deleteHigh = await Highscore.deleteMany({ user: "Player" });
+    const deleteHigh = await Highscore.deleteMany(deleteNow);
     const deleteAttempts = await Attempt.deleteMany(
-      { user: "Player" },
-      { sort: { date: -1 } },
-      { limit: 5 }
+      deleteNow
+      // { sort: { date: -1 } },
+      // { limit: 5 }
     );
     console.log(deleteHigh, deleteAttempts);
   } catch (e) {

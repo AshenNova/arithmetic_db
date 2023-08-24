@@ -79,6 +79,7 @@
       <% } %>
      <h1>Recent</h1>
       <tr>
+        <th scope="col">Award</th>
         <th scope="col">Name</th>
         <th scope="col">Mode</th>
         <th scope="col">Level</th>
@@ -141,6 +142,19 @@
 
           
                 <tr>
+                  <% if (item.award == "High") { %>
+                    <td><img src="/images/high-score.png" class="award-size"></td>
+                  <% } else if (item.award == "Platinum") { %>
+                    <td><img src="/images/endgame/platinum.jpeg" class="award-size"></td>
+                  <% } else if (item.award == "Gold") { %>
+                    <td><img src="/images/endgame/gold.jpeg" class="award-size"></td>
+                    <% } else if (item.award == "Silver") { %>
+                      <td><img src="/images/endgame/silver.jpeg" class="award-size"></td>
+                      <% } else if (item.award == "Bronze") { %>
+                        <td><img src="/images/endgame/bronze.jpeg" class="award-size"></td>
+                     <% } else { %>
+                        <td><%= "" %></td>
+                      <% } %>
                 <td><a href="/attempts/filter/?user=<%= item.user %>&level=&setting=&mode="><%= item.user %></a></td>
                 <% if ( item.mode == "Easy") {%>
                   <td class="btn btn-outline-success btn-sm"> <%= "Easy" %></td>

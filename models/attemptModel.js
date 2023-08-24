@@ -17,6 +17,7 @@ const attemptSchema = new mongoose.Schema({
   ip: String,
   tries: String,
   summary: { type: String },
+  award: String,
 });
 
 const Attempt = mongoose.model("attempts", attemptSchema);

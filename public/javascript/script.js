@@ -21994,6 +21994,9 @@ function handleSubmit(e) {
         "From permutation: Correct"
     ) {
       console.log("correct");
+      //RESTART QUESTION TIME
+      clearInterval(questionTime);
+      questionTimer();
       // EXTRA PRACTICE CHECK
       regen = 0;
       questionsCorrectArr.push(setting);
@@ -22006,10 +22009,6 @@ function handleSubmit(e) {
         }
       }
       console.log(`Extra Practice Needed: ${extraPracticeArr}`);
-
-      //RESTART QUESTION TIME
-      clearInterval(questionTime);
-      questionTimer();
 
       skipGlobalUpdateProblem = 0;
       state.score++;
@@ -22200,16 +22199,6 @@ function handleSubmit(e) {
 
       //  HELP!!!
       if (level == 1.01) {
-        // if (p.operator == "x") {
-        //   let repeatSum = " + " + p.numThree;
-        //   helpMe.innerHTML = `
-        //   ${p.numThree} ${p.operator} ${p.numFour} = ${
-        //     p.numThree
-        //   }${repeatSum.repeat(p.numFour - 1)}
-        //   `;
-        // }
-        // if (p.operator == "x") {
-        // helpMe.style.textAlign = "left";
         helpMe.style.lineHeight = "50%";
         helpMe.style.marginTop = "5%";
         helpMe.style.textAlign = "center";
@@ -23031,26 +23020,7 @@ function genProblems() {
   }
 
   if (level == 3.16) {
-    // return {
-    //   numOne: genNumbers(94) + 5,
-
-    //   numTwo: genNumbers(10) + 1,
-    //   numThree: genNumbers(5) + 2,
-
-    //   numFour: genNumbers(5) + 5,
-    //   numFive: genNumbers(8) + 5,
-    //   numSix: [-1, 1, 2][genNumbers(3)],
-
-    //   optionFinal: [1, 2, 3, 4, 5][genNumbers(5)],
-
-    //   // 3.15
-    //   rollType: ["A", "B"][genNumbers(2)],
-    //   rollA: undefined,
-    //   rollB: undefined,
-    //   rollTimes: genNumbers(3) + 3,
-    //   position: genNumbers(30) + 20,
-    // };
-    setting = calArrAll(4, calArr, setting, 9);
+    setting = calArrAll(5, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
     console.log(state.global);
     if (setting == 1 || setting == 5) {
@@ -25754,44 +25724,8 @@ function genProblems() {
     };
   }
   if (level == "heuTwo") {
-    let roll = undefined;
-    let settingText = setting.toString();
-
-    if (settingText.includes("-")) {
-      console.log("range detected");
-      range = 1;
-      settingText.split("-");
-      if (!heuArr.length) {
-        for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
-          heuArr.push(i);
-        }
-        console.log(heuArr);
-      }
-      roll = heuArr[genNumbers(heuArr.length)];
-      let index = heuArr.indexOf(roll);
-      heuArr.splice(index, 1);
-    } else {
-      console.log("not range");
-      setting = parseInt(setting);
-      if (isNaN(setting)) {
-        setting = 9;
-      }
-    }
-
-    // if (isNaN(setting)){
-    //   setting = 9
-    // }
-
-    if (setting == 9) {
-      if (!heuArr.length) {
-        heuArr = [1, 2, 3, 4];
-        console.log("Array renewed");
-      }
-      roll = heuArr[genNumbers(heuArr.length)];
-      console.log(heuArr.length);
-      let index = heuArr.indexOf(roll);
-      heuArr.splice(index, 1);
-    }
+    setting = calArrAll(4, calArr, setting, 9);
+    setting = checkRange(setting, calArr, skipArr);
 
     if (
       (setting == 1 && range == 0) ||
@@ -29012,9 +28946,16 @@ $("#attemptAjex").on("submit", function (event) {
         document.getElementById("highscore-table-mistake").innerHTML = "Nil";
         document.getElementById("highscore-table-score").innerHTML = "Nil";
       }
-      $("#gold").html(`< ${data.medals.gold.lower.toFixed(1)}`);
-      $("#silver").html(`< ${data.medals.silver.lower.toFixed(1)}`);
-      $("#bronze").html(`< ${data.medals.bronze.lower.toFixed(1)}`);
+      if (!data.medal == null) {
+        $("#gold").html(`< ${data.medals.gold.lower.toFixed(1)}`);
+        $("#silver").html(`< ${data.medals.silver.lower.toFixed(1)}`);
+        $("#bronze").html(`< ${data.medals.bronze.lower.toFixed(1)}`);
+      } else {
+        $("#gold").html(`Nil`);
+        $("#silver").html(`Nil`);
+        $("#bronze").html(`Nil`);
+      }
+
       $(".finalBox").removeClass("hidden");
     },
     error: function (res) {
