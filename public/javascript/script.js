@@ -1024,6 +1024,7 @@ document.querySelector("#skipBtn").addEventListener("click", function (e) {
       const answer = confirm("Have you at least given the question a try?");
       console.log(answer);
       if (answer == true) {
+        summaryPush("🏳️");
         if (calArr.length == 0) {
           calArr.push([genNumbers(questionsCorrectArr)]);
         }
@@ -1035,7 +1036,6 @@ document.querySelector("#skipBtn").addEventListener("click", function (e) {
         }
         setting = calArr[genNumbers(calArr.length)];
 
-        summaryPush("🏳️");
         questionSecs = 0;
         updateCalc();
       }

@@ -43,9 +43,11 @@ app.get("/arithmetic", (req, res) => {
 });
 app.use("/attempts", attemptRoute);
 
-app.get("/login", (req, res) => {
-  res.render("./pages/login");
-});
+// app.get("/login", (req, res) => {
+//   res.render("./pages/login");
+// });
+
+app.use("/user", userRoute);
 
 // app.get("*", function (req, res) {
 //   res.redirect("./pages/arithmetic");
