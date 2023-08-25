@@ -1030,9 +1030,15 @@ document.querySelector("#skipBtn").addEventListener("click", function (e) {
         }
         if (!skipArr.includes(setting)) skipArr.push(setting);
         console.log(`Removing setting ${setting}`);
+        // REMOVE FROM LIST OF POSSIBLE QUESTIONS
         while (calArr.includes(setting)) {
           const index = calArr.indexOf(setting);
           calArr.splice(index, 1);
+        }
+        // REMOVE FROM EXTRA
+        if (extraPracticeArr.includes(setting)) {
+          const index = calArr.indexOf(setting);
+          extraPracticeArr.splice(index, 1);
         }
         setting = calArr[genNumbers(calArr.length)];
 
