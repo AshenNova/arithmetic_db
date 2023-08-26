@@ -242,14 +242,13 @@ exports.newAttempt = async (req, res) => {
       })
         .sort({ date: -1 })
         .limit(2);
+      data.previous = previousAttempt[0];
     } catch (e) {
       console.log(e);
     }
   };
 
   await previous();
-  console.log(`Previous: ${previousAttempt[1]}`);
-  data.previous = previousAttempt[1];
 
   // highScoreCheck();
   //highscore holder 1. LEVEL 2.MODE. SETTING. ATTEMPT
@@ -257,20 +256,19 @@ exports.newAttempt = async (req, res) => {
   let highscoreholder;
   const highscoreAll = async (req, res) => {
     try {
-      highscoreholder = await Highscore.find({
+      highscoreholder = await Highscore.findOne({
         level: level,
         mode: mode,
         setting: setting,
       }).sort({ time: 1 });
-      console.log(highscoreholder);
+      console.log(`high score holder: ${highscoreholder}`);
+      data.highscore = highscoreholder;
     } catch (e) {
       console.log(e);
     }
   };
 
   await highscoreAll();
-  console.log(`Highscore: ${highscoreholder}`);
-  data.highscore = highscoreholder[0];
 
   //highscore
   const highScore = async (req, res) => {
@@ -419,7 +417,7 @@ exports.newAttempt = async (req, res) => {
       const platinum = {
         lower: mean - standardDev * 3,
       };
-      if (time > bronze.lower) {
+      if (time >= bronze.lower) {
         award = "Try harder";
       } else if (time <= bronze.lower && time > bronze.upper) {
         award = "Bronze";
