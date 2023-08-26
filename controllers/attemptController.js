@@ -223,6 +223,7 @@ exports.newAttempt = async (req, res) => {
   const mistake = req.body.mistake;
   const setting = req.body.setting;
   const score = req.body.score;
+  const tries = req.body.tries;
   const attemptNum = req.body.attemptNum;
   const summary = req.body.summary;
   const ip = req.headers["x-forwarded-for"] || req.ip;
