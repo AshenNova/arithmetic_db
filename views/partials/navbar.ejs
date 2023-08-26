@@ -2,7 +2,13 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">EpicMind</a>
-        <li class="text-white nav-link active" id="userName"></li>
+        <% if ( username ) { %>
+          <li class="text-white nav-link active" id="userName">
+            <%= username.charAt(0).toUpperCase() + username.slice(1, username.length).toLowerCase() %></li>
+        <% } else { %>
+          <li class="text-white nav-link active" id="userName"></li>
+        <% } %>
+       
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>

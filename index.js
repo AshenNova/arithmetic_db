@@ -10,6 +10,8 @@ const userRoute = require("./routes/users");
 
 // require("mongoose-type-email");
 
+let username;
+
 const app = express();
 // const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
@@ -39,7 +41,9 @@ app.get("/", (req, res) => {
 });
 // app.use("/arithmetic", express.static("./javascript/script.js"));
 app.get("/arithmetic", (req, res) => {
-  res.render("./pages/arithmetic");
+  console.log(req.headers);
+
+  res.render("./pages/arithmetic", { username });
 });
 app.use("/attempts", attemptRoute);
 

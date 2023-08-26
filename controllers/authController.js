@@ -52,6 +52,7 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
   // const email = req.body.email
   // const password = req.body.password
+  console.log(req.body);
   const { username, password } = req.body;
   try {
     // 1. CHECK IF USER AND PASSWORD EXIST
@@ -76,15 +77,17 @@ exports.login = async (req, res) => {
     }
     // 3. IF EVERYTHING IS OK, SEND TOKEN TO CLIENT
     const token = signToken(user._id);
-    res.status(200).json({
-      status: 200,
-      token,
-      message: "Successfully login",
-    });
+    res.setHeader("Authorization", "Bearer " + token);
+    res.render("pages/arithmetic", { username });
   } catch (e) {
     res.status(400).json({
       status: "Failed",
       message: e,
     });
   }
+};
+
+exports.protect = async (req, res, next) => {
+  console.log("Hello there!", req.header);
+  next();
 };

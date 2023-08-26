@@ -2,6 +2,7 @@ const express = require("express");
 // const mongoose = require("mongoose");
 // const Attempts = require("../models/attemptModel");
 const attemptController = require("../controllers/attemptController");
+const authController = require("../controllers/authController");
 
 // mongoose
 //   .connect(DB)
@@ -18,7 +19,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(attemptController.getAllAttempts)
+  .get(authController.protect, attemptController.getAllAttempts)
   .post(attemptController.newAttempt);
 
 router.route("/filter").get(attemptController.getFilteredAttempts);

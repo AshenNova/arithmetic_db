@@ -9,6 +9,8 @@ const { exists } = require("../models/attemptModel");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+let username;
+
 function paginate(stuff, totalItems, perPage, currentPage) {
   console.log(totalItems);
   const totalPages = Math.ceil(totalItems / perPage);
@@ -67,6 +69,7 @@ exports.getAllAttempts = async (req, res) => {
   // });
   const filteredUser = "";
   let latestAttemptObj;
+  // let username;
   res.status(200).render("pages/attempts", {
     attempts,
     paginatedAttempts,
@@ -74,6 +77,7 @@ exports.getAllAttempts = async (req, res) => {
     todayCount,
     filteredUser,
     summaryObj,
+    username,
   });
 };
 
@@ -189,12 +193,14 @@ exports.getFilteredAttempts = async (req, res) => {
     }
     const filteredUser = user;
     const todayCount = "";
+    // let username;
     res.status(200).render("pages/attempts", {
       attempts,
       paginatedAttempts,
       latestAttemptObj,
       todayCount,
       filteredUser,
+      username,
     });
   } catch (e) {
     console.log(e);
@@ -425,7 +431,7 @@ exports.newAttempt = async (req, res) => {
       }
 
       if (data.eligible == 1) award = "High";
-      if (skip != "") award = "Try harder";
+      if (skip != "" || tries > 1) award = "Try harder";
       console.log(bronze, silver, gold, platinum);
       console.log(`You got ${award}!`);
       data.medals = {
@@ -573,7 +579,10 @@ exports.monthlyHighscore = async (req, res) => {
       }
     }
     // thisMonthHigh = monthly;
-    res.status(200).render("pages/monthly-highscore", { thisMonthHigh });
+    // let username;
+    res
+      .status(200)
+      .render("pages/monthly-highscore", { thisMonthHigh, username });
   } catch (e) {
     console.log(e);
   }
@@ -621,7 +630,10 @@ exports.getHighscore = async (req, res) => {
       }
     }
     console.log(highscoreHolder);
-    res.status(200).render("pages/highscore", { highscoreHoldersArr });
+    // let username;
+    res
+      .status(200)
+      .render("pages/highscore", { highscoreHoldersArr, username });
   } catch (error) {
     console.log(error);
   }

@@ -43,17 +43,32 @@ import { cutOffCheck } from "./cut_off.js";
 import { displayContent } from "./content.js";
 import { helpMeFunc } from "./helpMe.js";
 // cutOffCheck();
-let user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
-// console.log(typeof user);
-while (user == null || user.length < 2) {
-  user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
-}
-user = user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
-user = user.trim();
+let user = document.querySelector("#userName").textContent || "";
+// let user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
+// // console.log(typeof user);
+// while (user == null || user.length < 2) {
+//   user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
+// }
+// user = user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
+// user = user.trim();
 
 //NAVBAR//
-const userName = document.querySelector("#userName");
-userName.textContent = user;
+// const tempName = document.querySelector("#tempUserName");
+// user = userName.value;
+console.log(user);
+if (user == "") {
+  let user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
+  // console.log(typeof user);
+  while (user == null || user.length < 2) {
+    user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
+    user =
+      user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
+    user = user.trim();
+  }
+  document.querySelector("#userName").textContent = user;
+}
+
+console.log(user);
 let buttonLevel = 0;
 let mulLevel = 0;
 let scoreNeeded = 0;
