@@ -7,7 +7,7 @@ const attemptSchema = new mongoose.Schema({
   time: Number,
   mistake: Number,
   score: Number,
-  setting: { type: String, default: "0" },
+  setting: { type: String, default: "" },
   extra: String,
   skip: String,
   date: {

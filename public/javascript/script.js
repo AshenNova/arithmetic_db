@@ -21869,6 +21869,7 @@ function handleSubmit(e) {
             );
 
             correctAnswer = `${quotient} ${remainder}/${quantityB}`;
+            if (remainder == 0) correctAnswer = `${quotient}`;
           }
         }
       }
