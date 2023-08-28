@@ -26,12 +26,12 @@ app.set("view engine", "ejs");
 //   })
 // );
 
-app.use(cors({ credentials: "include" }));
+// app.use(cors({ credentials: "include" }));
 
+app.use(
+  cors({ credentials: true, origin: true, exposedHeaders: ["set-cookie"] })
+);
 app.options("*", cors());
-// app.use(
-//   cors({ credentials: true, origin: true, exposedHeaders: ["set-cookie"] })
-// );
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
