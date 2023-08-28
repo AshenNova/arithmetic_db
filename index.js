@@ -25,6 +25,8 @@ app.use(
     // exposedHeaders: ["set-cookie"],
   })
 );
+
+app.options("*", cors());
 // app.use(
 //   cors({ credentials: true, origin: true, exposedHeaders: ["set-cookie"] })
 // );
