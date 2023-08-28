@@ -8,6 +8,7 @@ const attemptRoute = require("./routes/attempts");
 const userRoute = require("./routes/users");
 const cookieParser = require("cookie-parser");
 const authController = require("./controllers/authController");
+const cors = require("cors");
 
 let username;
 let currentUser;
@@ -18,6 +19,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors({ credentials: true, exposedHeaders: ["set-cookie"] }));
 // JAVASCRIPT
 const arithemeticJavascript = "./javascript/script.js";
 app.use("/", express.static(path.join(__dirname, "public")));
