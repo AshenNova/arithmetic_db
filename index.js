@@ -22,7 +22,7 @@ app.use(
   cors({
     credentials: true,
     origin: "https://www.epicmindarithmetic",
-    exposedHeaders: ["set-cookie"],
+    // exposedHeaders: ["set-cookie"],
   })
 );
 // app.use(
