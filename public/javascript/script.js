@@ -43,30 +43,25 @@ import { cutOffCheck } from "./cut_off.js";
 import { displayContent } from "./content.js";
 import { helpMeFunc } from "./helpMe.js";
 
-// let user = document.querySelector("#userName").textContent || "";
-
-let user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
-// console.log(typeof user);
-while (user == null || user.length < 2) {
-  user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
-}
-user = user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
-user = user.trim();
-document.querySelector("#userName").textContent = user;
-
-// console.log(user);
-// if (user == "") {
-//   let user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
-//   // console.log(typeof user);
-//   while (user == null || user.length < 2) {
-//     user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
-//     user =
-//       user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
-//     user = user.trim();
-//   }
-// document.querySelector("#userName").textContent = user;
+// let user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
+// while (user == null || user.length < 2) {
+//   user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
 // }
+// user = user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
+// user = user.trim();
+// document.querySelector("#userName").textContent = user;
 
+let user = document.querySelector("#userName").textContent || "";
+if (user == "") {
+  user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
+  // console.log(typeof user);
+  while (user == null || user.length < 2) {
+    user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
+  }
+  document.querySelector("#userName").textContent = user;
+}
+user = user.trim();
+user = user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
 console.log(user);
 let buttonLevel = 0;
 let mulLevel = 0;

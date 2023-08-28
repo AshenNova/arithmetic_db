@@ -10,6 +10,8 @@ const { exists } = require("../models/attemptModel");
 app.use(bodyParser.urlencoded({ extended: false }));
 
 let username;
+let authenticate;
+let currentUser;
 
 function paginate(stuff, totalItems, perPage, currentPage) {
   console.log(totalItems);
@@ -69,7 +71,8 @@ exports.getAllAttempts = async (req, res) => {
   // });
   const filteredUser = "";
   let latestAttemptObj;
-  // let username;
+  authenticate = req.auth;
+  currentUser = req.user;
   res.status(200).render("pages/attempts", {
     attempts,
     paginatedAttempts,
@@ -78,6 +81,8 @@ exports.getAllAttempts = async (req, res) => {
     filteredUser,
     summaryObj,
     username,
+    authenticate,
+    currentUser,
   });
 };
 
@@ -193,7 +198,8 @@ exports.getFilteredAttempts = async (req, res) => {
     }
     const filteredUser = user;
     const todayCount = "";
-    // let username;
+    username = req.user.username;
+    currentUser = req.user;
     res.status(200).render("pages/attempts", {
       attempts,
       paginatedAttempts,
@@ -201,6 +207,8 @@ exports.getFilteredAttempts = async (req, res) => {
       todayCount,
       filteredUser,
       username,
+      authenticate,
+      currentUser,
     });
   } catch (e) {
     console.log(e);
@@ -484,53 +492,6 @@ exports.monthlyHighscore = async (req, res) => {
     const thisMonth = new Date().getMonth() + 1;
     console.log(allLevels, allModes);
 
-    // for (let i = 0; i < allLevels.length; i++) {
-    //   for (let x = 0; x < allModes.length; x++) {
-    //     const thisMonthAttempts = await Attempt.find({
-    //       $expr: { $eq: [{ $month: "$date" }, thisMonth] },
-    //       level: allLevels[i],
-    //       mode: allModes[x],
-    //       tries: "1",
-    //       // $or: [{ setting: "99" }, { setting: "9" }],
-    //     }).sort({ level: 1, time: 1 });
-
-    //     if (thisMonthAttempts[0]) {
-    //       //THIS SETTLES THE NORMAL LEVELS
-    //       if (
-    //         !thisMonthAttempts[0].level.includes("cal") &&
-    //         !thisMonthAttempts[0].level.includes("heu")
-    //       ) {
-    //         thisMonthHigh.push(thisMonthAttempts[0]);
-    //       } else {
-    //         //NOW I NEED TO SETTLE THE CAL AND HEURISTICS
-    //         let genesis = 0;
-    //         for (let x = 0; x < thisMonthAttempts.length; x++) {
-    //           if (
-    //             thisMonthAttempts[x].setting == 99 ||
-    //             thisMonthAttempts[x].setting == 9
-    //           ) {
-    //             // console.log("Stage 1");
-
-    //             if (
-    //               thisMonthAttempts[x].score == 3 ||
-    //               thisMonthAttempts[x].score == 5 ||
-    //               thisMonthAttempts[x].score == 10
-    //             ) {
-    //               // console.log("Stage 2");
-
-    //               if (genesis == 0) {
-    //                 thisMonthHigh.push(thisMonthAttempts[0]);
-    //                 genesis += 1;
-    //               }
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //     // }
-    //   }
-    // }
-
     //RETRY
     const monthly = await Attempt.find({
       $expr: { $eq: [{ $month: "$date" }, thisMonth] },
@@ -579,9 +540,14 @@ exports.monthlyHighscore = async (req, res) => {
     }
     // thisMonthHigh = monthly;
     // let username;
-    res
-      .status(200)
-      .render("pages/monthly-highscore", { thisMonthHigh, username });
+    username = req.user.username;
+    currentUser = req.user;
+    res.status(200).render("pages/monthly-highscore", {
+      thisMonthHigh,
+      username,
+      authenticate,
+      currentUser,
+    });
   } catch (e) {
     console.log(e);
   }
@@ -629,10 +595,15 @@ exports.getHighscore = async (req, res) => {
       }
     }
     console.log(highscoreHolder);
-    // let username;
-    res
-      .status(200)
-      .render("pages/highscore", { highscoreHoldersArr, username });
+    username = req.user.username;
+    authenticate = req.auth;
+    currentUser = req.user;
+    res.render("pages/highscore", {
+      highscoreHoldersArr,
+      username,
+      authenticate,
+      currentUser,
+    });
   } catch (error) {
     console.log(error);
   }

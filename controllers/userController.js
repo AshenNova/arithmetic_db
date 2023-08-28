@@ -1,10 +1,20 @@
+let username;
+let authenticate;
+let currentUser;
+// let fields = {
+//   username,
+//   authenticate,
+// };
 exports.login = (req, res) => {
-  let username = "";
-  res.render("pages/login", { username });
+  console.log(req.auth);
+  authenticate = req.auth;
+  currentUser = req.user;
+  res.render("pages/login", { username, authenticate, currentUser });
   // res.send("This is the login page.");
 };
 
 exports.signup = (req, res) => {
-  res.render("pages/signup", { username });
-  // res.send("This is the signup page.");
+  authenticate = req.auth;
+  currentUser = req.user;
+  res.render("pages/signup", { username, authenticate, currentUser });
 };

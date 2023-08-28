@@ -8,6 +8,7 @@ const signToken = (id) => {
 };
 
 exports.signup = async (req, res) => {
+  console.log("Signing Up!");
   try {
     // const newUser = await User.create(req.body);
     // USE THE BELOW CODE INSTEAD SO THAT ONLY THE LISTED PARAMETERS AT THE BOTTOM ARE ACCEPTED. IF NOT, HACKERS CAN SET THEMSELVES AS ADMIN.
@@ -27,13 +28,8 @@ exports.signup = async (req, res) => {
     const token = signToken(newUser._id);
 
     console.log(newUser);
-    res.status(201).json({
-      status: 201,
-      token,
-      message: {
-        user: newUser,
-      },
-    });
+    newUser.password = undefined;
+    res.redirect("/user/login");
   } catch (e) {
     if (e.code == 11000) {
       res.status(400).json({
@@ -50,9 +46,7 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  // const email = req.body.email
-  // const password = req.body.password
-  console.log(req.body);
+  console.log("Log in");
   const { username, password } = req.body;
   try {
     // 1. CHECK IF USER AND PASSWORD EXIST
@@ -77,8 +71,9 @@ exports.login = async (req, res) => {
     }
     // 3. IF EVERYTHING IS OK, SEND TOKEN TO CLIENT
     const token = signToken(user._id);
-    res.setHeader("Authorization", "Bearer " + token);
-    res.render("pages/arithmetic", { username });
+    res.cookie("JWT", token, { maxAge: 1 * 24 * 60 * 60 * 1000 });
+    // res.render("pages/arithmetic", { username });
+    res.redirect("/arithmetic");
   } catch (e) {
     res.status(400).json({
       status: "Failed",
@@ -87,7 +82,41 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.logout = (req, res) => {
+  const token = "";
+  res.cookie("JWT", token, { maxAge: 1000 });
+  res.redirect("/attempts");
+};
+
 exports.protect = async (req, res, next) => {
   console.log("Hello there!", req.header);
+  next();
+};
+
+exports.authenticate = async (req, res, next) => {
+  console.log("Authenticating");
+  const accessToken = req.cookies["JWT"];
+  console.log(accessToken);
+  if (!accessToken) {
+    console.log("No token");
+    req.user = "";
+    req.auth = {
+      login: false,
+    };
+  }
+  if (accessToken) {
+    try {
+      const validToken = jwt.verify(accessToken, process.env.JWT_SECRET);
+      if (validToken) {
+        const user = await User.findById(validToken.id);
+        req.user = user;
+        req.auth = {
+          login: true,
+        };
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
   next();
 };

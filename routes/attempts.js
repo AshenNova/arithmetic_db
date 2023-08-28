@@ -19,7 +19,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(authController.protect, attemptController.getAllAttempts)
+  .get(attemptController.getAllAttempts)
   .post(attemptController.newAttempt);
 
 router.route("/filter").get(attemptController.getFilteredAttempts);

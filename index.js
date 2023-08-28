@@ -6,16 +6,18 @@ const path = require("path");
 require("dotenv/config");
 const attemptRoute = require("./routes/attempts");
 const userRoute = require("./routes/users");
-// const attemptRoute = express.Router();
-
-// require("mongoose-type-email");
+const cookieParser = require("cookie-parser");
+const authController = require("./controllers/authController");
 
 let username;
+let currentUser;
+// let authenticate;
 
 const app = express();
 // const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 // JAVASCRIPT
 const arithemeticJavascript = "./javascript/script.js";
 app.use("/", express.static(path.join(__dirname, "public")));
@@ -40,18 +42,26 @@ app.get("/", (req, res) => {
   res.send(fs.readFileSync("index.html", "utf8"));
 });
 // app.use("/arithmetic", express.static("./javascript/script.js"));
-app.get("/arithmetic", (req, res) => {
-  console.log(req.headers);
-
-  res.render("./pages/arithmetic", { username });
+app.get("/arithmetic", authController.authenticate, (req, res) => {
+  let authenticate = req.auth;
+  currentUser = req.user;
+  username = req.user.username;
+  // authenticate = req.auth;
+  // console.log(req.auth);
+  // if (req.user) {
+  //   currentUser = req.user;
+  //   username = req.user.username;
+  //   authenticate = req.auth;
+  // } else {
+  //   console.log("Login first");
+  //   // res.redirect("/user/login");
+  // }
+  console.log(authenticate);
+  res.render("./pages/arithmetic", { username, authenticate, currentUser });
 });
-app.use("/attempts", attemptRoute);
 
-// app.get("/login", (req, res) => {
-//   res.render("./pages/login");
-// });
-
-app.use("/user", userRoute);
+app.use("/attempts", authController.authenticate, attemptRoute);
+app.use("/user", authController.authenticate, userRoute);
 
 // app.get("*", function (req, res) {
 //   res.redirect("./pages/arithmetic");
