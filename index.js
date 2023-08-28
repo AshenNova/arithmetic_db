@@ -17,9 +17,9 @@ let currentUser;
 const app = express();
 // const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
-app.use(
-  cors({ credentials: true, origin: true, exposedHeaders: ["set-cookie"] })
-);
+// app.use(
+//   cors({ credentials: true, origin: true, exposedHeaders: ["set-cookie"] })
+// );
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
