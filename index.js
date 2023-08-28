@@ -17,11 +17,12 @@ let currentUser;
 const app = express();
 // const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 app.use(
   cors({ credentials: true, origin: true, exposedHeaders: ["set-cookie"] })
 );
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+
 // JAVASCRIPT
 const arithemeticJavascript = "./javascript/script.js";
 app.use("/", express.static(path.join(__dirname, "public")));
