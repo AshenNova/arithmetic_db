@@ -73,10 +73,9 @@ exports.login = async (req, res) => {
     const token = signToken(user._id);
     res.cookie("JWT", token, {
       maxAge: 1 * 24 * 60 * 60 * 1000,
-      secure: true,
+      // secure: true,
       httpOnly: true,
-      sameSite: "none",
-      proxy: true,
+      path: "/user/login",
     }); // Milliseconds
     // res.render("pages/arithmetic", { username });
     res.redirect("/arithmetic");
