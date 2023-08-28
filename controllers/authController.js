@@ -74,10 +74,6 @@ exports.login = async (req, res) => {
     res.cookie("JWT", token, {
       maxAge: 1 * 24 * 60 * 60 * 1000,
       secure: true,
-      // httpOnly: true,
-      // domain: ".epicmindarithmetic.com",
-      // path: "/",
-      // sameSite: "none",
     }); // Milliseconds
     // res.render("pages/arithmetic", { username });
     res.redirect("/arithmetic");

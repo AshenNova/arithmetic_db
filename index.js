@@ -26,7 +26,7 @@ app.set("view engine", "ejs");
 //   })
 // );
 
-app.use(cors());
+app.use(cors({ credentials: "include" }));
 
 app.options("*", cors());
 // app.use(
