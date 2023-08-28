@@ -76,7 +76,7 @@ exports.login = async (req, res) => {
       secure: true,
       httpOnly: true,
       domain: ".epicmindarithmetic.com",
-      path: "/arithmetic",
+      path: "/",
       // SameSite: "None",
     }); // Milliseconds
     // res.render("pages/arithmetic", { username });
