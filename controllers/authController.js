@@ -76,6 +76,7 @@ exports.login = async (req, res) => {
       secure: true,
       httpOnly: true,
       sameSite: "none",
+      proxy: true,
     }); // Milliseconds
     // res.render("pages/arithmetic", { username });
     res.redirect("/arithmetic");
