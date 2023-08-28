@@ -18,18 +18,18 @@ const app = express();
 // const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 // app.set("trust proxy", 1);
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: "https://www.epicmindarithmetic",
-//     // exposedHeaders: ["set-cookie"],
-//   })
-// );
+app.use(
+  cors({
+    credentials: true,
+    origin: "https://www.epicmindarithmetic",
+    //     // exposedHeaders: ["set-cookie"],
+  })
+);
 
 // app.use(cors({ credentials: "include" }));
 
-app.use(cors());
-app.options("*", cors());
+// app.use(cors());
+// app.options("*", cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
