@@ -19,7 +19,9 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({ credentials: true, exposedHeaders: ["set-cookie"] }));
+app.use(
+  cors({ credentials: true, origin: true, exposedHeaders: ["set-cookie"] })
+);
 // JAVASCRIPT
 const arithemeticJavascript = "./javascript/script.js";
 app.use("/", express.static(path.join(__dirname, "public")));
