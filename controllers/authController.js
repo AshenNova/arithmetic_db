@@ -75,20 +75,18 @@ exports.login = async (req, res) => {
       maxAge: 1 * 24 * 60 * 60 * 1000,
       secure: true,
       httpOnly: true,
+      path: "/",
     }); // Milliseconds
     // res.render("pages/arithmetic", { username });
     res.redirect("/arithmetic");
   } catch (e) {
-    res.status(400).json({
-      status: "Failed",
-      message: e,
-    });
+    alert("Failed to login");
   }
 };
 
 exports.logout = (req, res) => {
   const token = "";
-  res.cookie("JWT", token, { maxAge: 1000 });
+  res.cookie("JWT", token, { maxAge: 1000, secure: true, httpOnly: true });
   res.redirect("/attempts");
 };
 
