@@ -75,7 +75,7 @@ exports.login = async (req, res) => {
       maxAge: 1 * 24 * 60 * 60 * 1000,
       secure: true,
       httpOnly: true,
-      sameSite: "None",
+      sameSite: "none",
     }); // Milliseconds
     // res.render("pages/arithmetic", { username });
     res.redirect("/arithmetic");
