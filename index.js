@@ -17,6 +17,13 @@ let currentUser;
 const app = express();
 // const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
+app.use(
+  cors({
+    credentials: true,
+    origin: "https://www.epicmindarithmetic",
+    exposedHeaders: ["set-cookie"],
+  })
+);
 // app.use(
 //   cors({ credentials: true, origin: true, exposedHeaders: ["set-cookie"] })
 // );
