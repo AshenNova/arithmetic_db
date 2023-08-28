@@ -75,12 +75,15 @@ exports.login = async (req, res) => {
       maxAge: 1 * 24 * 60 * 60 * 1000,
       secure: true,
       httpOnly: true,
+      domain: "https://epicmindarithmetic.com",
+      path: "/arithmetic",
       // SameSite: "None",
     }); // Milliseconds
     // res.render("pages/arithmetic", { username });
     res.redirect("/arithmetic");
   } catch (e) {
-    res.status(400).json({ message: "ERROR!" });
+    // res.status(400).json({ message: "ERROR!" });
+    res.redirect("/arithmetic");
   }
 };
 
