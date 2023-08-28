@@ -71,7 +71,11 @@ exports.login = async (req, res) => {
     }
     // 3. IF EVERYTHING IS OK, SEND TOKEN TO CLIENT
     const token = signToken(user._id);
-    res.cookie("JWT", token, { maxAge: 1 * 24 * 60 * 60 * 1000 });
+    res.cookie("JWT", token, {
+      maxAge: 1 * 24 * 60 * 60 * 1000,
+      secure: true,
+      httpOnly: true,
+    }); // Milliseconds
     // res.render("pages/arithmetic", { username });
     res.redirect("/arithmetic");
   } catch (e) {
