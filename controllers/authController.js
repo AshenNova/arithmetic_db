@@ -81,9 +81,9 @@ exports.login = async (req, res) => {
     }); // Milliseconds
     // res.render("pages/arithmetic", { username });
     res.redirect("/arithmetic");
-  } catch (e) {
-    // res.status(400).json({ message: "ERROR!" });
-    res.redirect("/arithmetic");
+  } catch (err) {
+    res.status(400).json({ message: err });
+    // res.redirect("/arithmetic");
   }
 };
 
