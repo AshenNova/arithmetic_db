@@ -75,7 +75,7 @@ exports.login = async (req, res) => {
       maxAge: 1 * 24 * 60 * 60 * 1000,
       secure: true,
       httpOnly: true,
-      domain: "/",
+      domain: ".epicmindarithmetic",
       path: "/arithmetic",
       // SameSite: "None",
     }); // Milliseconds
