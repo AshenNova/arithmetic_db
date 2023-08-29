@@ -49,7 +49,6 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
   console.log("Log in");
-  console.log(req.body);
   const { username, password } = req.body;
   try {
     // 1. CHECK IF USER AND PASSWORD EXIST
@@ -62,7 +61,6 @@ exports.login = async (req, res) => {
     // 2. CHECK IF PASSWORD IS CORRECT
     //HAVE TO USE .SELECT HAS WE SET THE PASSWORD TO NOT SHOW UP IN THE MODELS, HENCE IT WILL NOT SHOW UP HERE TOO. SO WE HAVE TO EXPLICITLY SELECT IT.
     const user = await User.findOne({ username }).select("+password");
-    console.log(user);
     const passwordAuthentication = await user.correctPassword(
       password,
       user.password
@@ -94,7 +92,11 @@ exports.login = async (req, res) => {
       cookieSetting,
     }); // Milliseconds
     // res.render("pages/arithmetic", { username });
-    res.redirect("/arithmetic");
+    if (user.admin) {
+      res.redirect("/attempts");
+    } else {
+      res.redirect("/arithmetic");
+    }
   } catch (err) {
     res.status(400).json({ message: err });
     // res.redirect("/arithmetic");
