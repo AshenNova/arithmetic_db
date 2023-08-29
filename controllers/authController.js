@@ -115,7 +115,7 @@ exports.protect = async (req, res, next) => {
 exports.authenticate = async (req, res, next) => {
   console.log("Authenticating");
   const accessToken = req.cookies["JWT"];
-  console.log(accessToken);
+  // console.log(accessToken);
   if (!accessToken) {
     console.log("No token");
     req.user = "";

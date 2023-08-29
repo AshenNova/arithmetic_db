@@ -1,3 +1,5 @@
+const User = require("../models/userModel");
+
 let username;
 let authenticate;
 let currentUser;
@@ -5,6 +7,28 @@ let currentUser;
 //   username,
 //   authenticate,
 // };
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find();
+    currentUser = req.user;
+    authenticate = req.auth;
+
+    if (!currentUser.admin || !authenticate) {
+      res.redirect("user/login");
+    }
+
+    res.render("pages/all-user", {
+      authenticate,
+      username,
+      allUsers,
+      currentUser,
+    });
+  } catch (err) {
+    console.log(err);
+    res.redirect("user/login");
+  }
+};
 exports.login = (req, res) => {
   console.log(req.auth);
   authenticate = req.auth;
