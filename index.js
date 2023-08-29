@@ -61,16 +61,6 @@ app.get("/arithmetic", authController.authenticate, (req, res) => {
   let authenticate = req.auth;
   currentUser = req.user;
   username = req.user.username;
-  // authenticate = req.auth;
-  // console.log(req.auth);
-  // if (req.user) {
-  //   currentUser = req.user;
-  //   username = req.user.username;
-  //   authenticate = req.auth;
-  // } else {
-  //   console.log("Login first");
-  //   // res.redirect("/user/login");
-  // }
   console.log(authenticate);
   res.render("./pages/arithmetic", { username, authenticate, currentUser });
 });

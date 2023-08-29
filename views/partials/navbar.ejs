@@ -3,8 +3,9 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="/">EpicMind</a>
         <% if ( username ) { %>
+          <% username = username.split(" ") %>
           <li class="text-white nav-link active" id="userName">
-            <%= username.charAt(0).toUpperCase() + username.slice(1, username.length).toLowerCase() %></li>
+            <%= username[0].charAt(0).toUpperCase() + username[0].slice(1, username[0].length).toLowerCase() %> <%= username[1].charAt(0).toUpperCase() + username[1].slice(1, username[1].length).toLowerCase() %></li>
         <% } else { %>
           <li class="text-white nav-link active" id="userName"></li>
         <% } %>

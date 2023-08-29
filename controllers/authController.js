@@ -9,11 +9,13 @@ const signToken = (id) => {
 
 exports.signup = async (req, res) => {
   console.log("Signing Up!");
+  const combineName = `${req.body.givenName} ${req.body.surname}`;
+  // console.log(combineName);
   try {
     // const newUser = await User.create(req.body);
     // USE THE BELOW CODE INSTEAD SO THAT ONLY THE LISTED PARAMETERS AT THE BOTTOM ARE ACCEPTED. IF NOT, HACKERS CAN SET THEMSELVES AS ADMIN.
     const newUser = await User.create({
-      username: req.body.username,
+      username: combineName,
       DOB: req.body.DOB,
       email: req.body.email,
       password: req.body.password,
@@ -27,26 +29,27 @@ exports.signup = async (req, res) => {
 
     const token = signToken(newUser._id);
 
-    console.log(newUser);
+    console.log({ newUser });
     newUser.password = undefined;
     res.redirect("/user/login");
   } catch (e) {
-    if (e.code == 11000) {
-      res.status(400).json({
-        status: "Failed",
-        message: "The email you have entered has already being taken.",
-      });
-    } else {
-      res.status(400).json({
-        status: "Failed",
-        message: { e },
-      });
-    }
+    // if (e.code == 11000) {
+    //   res.status(400).json({
+    //     status: "Failed",
+    //     message: "The email you have entered has already being taken.",
+    //   });
+    // } else {
+    res.status(400).json({
+      status: "Failed",
+      message: { e },
+    });
+    // }
   }
 };
 
 exports.login = async (req, res) => {
   console.log("Log in");
+  console.log(req.body);
   const { username, password } = req.body;
   try {
     // 1. CHECK IF USER AND PASSWORD EXIST
@@ -59,6 +62,7 @@ exports.login = async (req, res) => {
     // 2. CHECK IF PASSWORD IS CORRECT
     //HAVE TO USE .SELECT HAS WE SET THE PASSWORD TO NOT SHOW UP IN THE MODELS, HENCE IT WILL NOT SHOW UP HERE TOO. SO WE HAVE TO EXPLICITLY SELECT IT.
     const user = await User.findOne({ username }).select("+password");
+    console.log(user);
     const passwordAuthentication = await user.correctPassword(
       password,
       user.password
@@ -70,14 +74,24 @@ exports.login = async (req, res) => {
       });
     }
     // 3. IF EVERYTHING IS OK, SEND TOKEN TO CLIENT
+
+    // let cookieSetting = {
+    //   maxAge: 1 * 24 * 60 * 60 * 1000,
+    //   secure: true,
+    //   httpOnly: true,
+    // };
+    // if (process.env.NODE.ENV == "DEVELOPMENT") {
+    const cookieSetting = {
+      maxAge: 1 * 24 * 60 * 60 * 1000,
+      httpOnly: true,
+    };
+    if (process.env.NODE.ENV == "PRODUCTION") {
+      cookieSetting.secure = true;
+    }
+    // }
     const token = signToken(user._id);
     res.cookie("JWT", token, {
-      maxAge: 1 * 24 * 60 * 60 * 1000,
-      // secure: true,
-      httpOnly: false,
-      // sameSite: "none",
-      // domain: "/user/login",
-      // path: "/",
+      cookieSetting,
     }); // Milliseconds
     // res.render("pages/arithmetic", { username });
     res.redirect("/arithmetic");

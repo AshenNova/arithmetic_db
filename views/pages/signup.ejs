@@ -23,11 +23,21 @@
                           <div class="col-md-5 mx-auto">
                               <div class="card card-body">
                                                           
-                                  <form id="submitForm" action="" method="POST" data-parsley-validate="" data-parsley-errors-messages-disabled="true" novalidate="" _lpchecked="1"><input type="hidden" name="_csrf">
-                                      <div class="form-group required">
-                                          <label for="username">Username (First Name + Surname )</label>
-                                          <input type="text" class="form-control text-lowercase" id="username" required="" name="username">
-                                      </div>   
+                                  <form id="submitForm" action="/user/signup" method="POST" data-parsley-validate="" data-parsley-errors-messages-disabled="true" novalidate="" _lpchecked="1"><input type="hidden" name="_csrf">
+                                      <!-- <div class="form-group required"> -->
+                                          <div class="row">
+                                              <p>Given Name + Surname = Username</p>
+                                              <p>zyon + lim = zyon lim</p>
+                                              <div class="col">
+                                                <label for="givenName">Given Name</label>
+                                                <input type="text" class="form-control text-lowercase" id="givenName" required="" name="givenName">
+                                              </div>
+                                              <div class="col">
+                                                <label for="surname">Surname</label>
+                                                <input type="text" class="form-control text-lowercase" id="surname" required="" name="surname">
+                                              </div>
+                                        </row>
+                                      <!-- </div>    -->
                                       <div class="form-group required">
                                         <label for="email">Email</label>
                                         <input type="email" class="form-control text-lowercase" id="email" required="" name="email">

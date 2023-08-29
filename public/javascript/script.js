@@ -61,7 +61,21 @@ if (user == "") {
   document.querySelector("#userName").textContent = user;
 }
 user = user.trim();
-user = user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
+if (user.split(" ").length > 1) {
+  console.log("Splitting user");
+  user = user.split(" ");
+  console.log({ user });
+  user =
+    user[0].charAt(0).toUpperCase() +
+    user[0].slice(1, user[0].length).toLowerCase() +
+    " " +
+    user[1].charAt(0).toUpperCase() +
+    user[1].slice(1, user[1].length).toLowerCase();
+} else {
+  user =
+    user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
+}
+
 console.log(user);
 let buttonLevel = 0;
 let mulLevel = 0;
