@@ -27,6 +27,7 @@
         <th scope="col">Username</th>
         <th scope="col">Email</th>
         <th scope="col">DOB</th>
+        <th scope="col">Last login</th>
       </tr>
     </thead>
     <tbody>
@@ -36,6 +37,12 @@
                 <td><%= item.username %></td>
                 <td><%= item.email %></td>
                 <td><%= item.DOB.toLocaleDateString() %></td>
+                <% if (item.loggedIn) { %>
+                  <td><%= item.loggedIn.toLocaleTimeString('en-US') + " " + item.loggedIn.toLocaleDateString() %> </td>
+               <%  } else { %>
+                  <td>Nil</td>
+                <% } %>
+               
             </tr>
         <% }) %>
 

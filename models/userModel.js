@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  loggedIn: { type: Date },
 });
 
 userSchema.pre("save", async function (next) {

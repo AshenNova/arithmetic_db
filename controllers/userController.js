@@ -10,7 +10,7 @@ let currentUser;
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const allUsers = await User.find();
+    const allUsers = await User.find().sort({ loggedIn: -1 });
     currentUser = req.user;
     authenticate = req.auth;
 

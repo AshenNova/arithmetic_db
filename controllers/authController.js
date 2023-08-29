@@ -72,13 +72,6 @@ exports.login = async (req, res) => {
       });
     }
     // 3. IF EVERYTHING IS OK, SEND TOKEN TO CLIENT
-
-    // let cookieSetting = {
-    //   maxAge: 1 * 24 * 60 * 60 * 1000,
-    //   secure: true,
-    //   httpOnly: true,
-    // };
-    // if (process.env.NODE.ENV == "DEVELOPMENT") {
     const cookieSetting = {
       maxAge: 1 * 24 * 60 * 60 * 1000,
       httpOnly: true,
@@ -91,7 +84,11 @@ exports.login = async (req, res) => {
     res.cookie("JWT", token, {
       cookieSetting,
     }); // Milliseconds
-    // res.render("pages/arithmetic", { username });
+    console.log({ user });
+    const updateLogin = await User.updateOne(
+      { username: user.username },
+      { $set: { loggedIn: new Date() } }
+    );
     if (user.admin) {
       res.redirect("/attempts");
     } else {
