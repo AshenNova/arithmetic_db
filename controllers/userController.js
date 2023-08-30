@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const bcrypt = require("bcryptjs");
 
 let username;
 let authenticate;
@@ -64,7 +65,19 @@ exports.saveEditUser = async (req, res) => {
     ) {
       res.status(403).json({ message: `You are not authorized to do this.` });
     }
-
+    console.log(req.body.password, req.body.confirmPassword);
+    if (req.body.password == "" || req.body.confirmPassword == "") {
+      delete req.body.password;
+      delete req.body.confirmPassword;
+    }
+    if (req.body.password == req.body.confirmPassword) {
+      req.body.password = await bcrypt.hash(req.body.password, 12);
+    } else {
+      return res
+        .status(403)
+        .json({ message: `Password and confirm password is not the same.` });
+    }
+    console.log(req.body);
     const update = await User.findByIdAndUpdate(editUser._id, req.body, {
       new: true,
     });

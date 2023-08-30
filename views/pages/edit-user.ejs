@@ -37,14 +37,14 @@
                             <label for="DOB">DOB (Date of Birth)</label>
                             <input type="date" class="form-control" id="email" required="" name="DOB" value="<%= editUser.DOB.getFullYear() %>-<%= (editUser.DOB.getMonth()+1).toString().padStart(2, 0) %>-<%= editUser.DOB.getDate().toString().padStart(2, 0) %>">
                         </div>                      
-                    <!-- <div class="form-group required">
+                    <div class="form-group required">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" required="" name="password">
                     </div>   
                     <div class="form-group required">
                         <label for="confirm-password">Confirm Password</label>
                         <input type="password" class="form-control" id="confirm-password" required="" name="confirmPassword">
-                    </div> -->
+                    </div>
                         <div class="form-group py-1">
                         <button class="btn btn-primary btn-block" type="submit">Save</button>
                     </div>
