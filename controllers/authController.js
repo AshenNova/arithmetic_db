@@ -9,6 +9,7 @@ const signToken = (id) => {
 
 exports.signup = async (req, res) => {
   console.log("Signing Up!");
+  console.log(req.body);
   const combineName = `${req.body.givenName} ${req.body.surname}`;
   // console.log(combineName);
   try {

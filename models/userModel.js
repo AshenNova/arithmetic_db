@@ -45,6 +45,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("save", async function (next) {
   //SKIP TO THE NEXT IF NOT CHANGING PASSWORD.
+  console.log("Checking password");
   if (!this.isModified("password")) return next();
 
   console.log("Encrypting...");

@@ -28,6 +28,8 @@
         <th scope="col">Email</th>
         <th scope="col">DOB</th>
         <th scope="col">Last login</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -42,7 +44,8 @@
                <%  } else { %>
                   <td>Nil</td>
                 <% } %>
-               
+                <td><a href="/user/edit/?username=<%= item.username %>">Edit</td>
+                <td>Delete</td>
             </tr>
         <% }) %>
 
