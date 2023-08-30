@@ -111,6 +111,7 @@ exports.getFilteredAttempts = async (req, res) => {
       setting,
       mode: mode.charAt(0).toUpperCase() + mode.slice(1, mode.length),
     };
+    const filteredUser = user.join(" ");
 
     // console.log(req.body);
 
@@ -210,7 +211,7 @@ exports.getFilteredAttempts = async (req, res) => {
         // console.log(latestAttempt);
       }
     }
-    const filteredUser = user;
+
     const todayCount = "";
     username = req.user.username;
     currentUser = req.user;
