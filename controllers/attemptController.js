@@ -94,17 +94,25 @@ exports.getFilteredAttempts = async (req, res) => {
     const limit = 15;
 
     console.log(queryObj);
-    const user = queryObj.user;
+    let user = queryObj.user;
     const level = queryObj.level;
     const setting = queryObj.setting;
     const mode = queryObj.mode;
-
+    user = user.split(" ");
     let filter = {
-      user: user.charAt(0).toUpperCase() + user.slice(1, user.length),
+      user:
+        user[0].charAt(0).toUpperCase() +
+        user[0].slice(1, user[0].length) +
+        " " +
+        user[1].charAt(0).toUpperCase() +
+        user[1].slice(1, user[1].length),
+      // user: { $regex: user, $options: "i" },
       level,
       setting,
       mode: mode.charAt(0).toUpperCase() + mode.slice(1, mode.length),
     };
+
+    // console.log(req.body);
 
     // if (filter.user == "") delete filter.user;
     // if (filter.level == "") delete filter.level;
@@ -136,16 +144,22 @@ exports.getFilteredAttempts = async (req, res) => {
 
     // HISTORY
     const params = queryObj;
-    console.log(params);
+    // console.log(params);
     let latestAttemptObj = 0;
     if (params.hasOwnProperty("user")) {
+      // const filterUserStr = filter.user.split(" ");
       const user = filter.user;
-      console.log(user);
-      const latestAttempt = await Attempt.find({ user, tries: "1" }).sort({
+      // console.log(user);
+      const latestAttempt = await Attempt.find({
+        user: { $regex: user, $options: "i" },
+        // user,
+        tries: "1",
+      }).sort({
         level: -1,
         date: -1,
       });
 
+      console.log(latestAttempt);
       let stageOne = [];
       for (let i = 0; i < latestAttempt.length; i++) {
         if (stageOne.includes(latestAttempt[i].level)) {
