@@ -100,35 +100,29 @@ exports.getFilteredAttempts = async (req, res) => {
     const mode = queryObj.mode;
 
     let filter = {};
-    // {
-    //   user:
-    //     user[0].charAt(0).toUpperCase() +
-    //     user[0].slice(1, user[0].length) +
-    //     " " +
-    //     user[1].charAt(0).toUpperCase() +
-    //     user[1].slice(1, user[1].length),
-    //   // user: { $regex: user, $options: "i" },
-    //   level,
-    //   setting,
-    //   mode: mode.charAt(0).toUpperCase() + mode.slice(1, mode.length),
-    // };
     console.log(user, level, setting, mode);
-    let filteredUser;
+    let tempName = [];
     if (user != "") {
       user = user.split(" ");
-      filter.user =
-        user[0].charAt(0).toUpperCase() +
-        user[0].slice(1, user[0].length) +
-        " " +
-        user[1].charAt(0).toUpperCase() +
-        user[1].slice(1, user[1].length);
-      filteredUser = user.join(" ");
+      user.forEach((name) => {
+        console.log(name);
+        tempName.push(
+          name.charAt(0).toUpperCase() + name.slice(1, name.length)
+        );
+      });
+      // filter.user =
+      //   user[0].charAt(0).toUpperCase() +
+      //   user[0].slice(1, user[0].length) +
+      //   " " +
+      //   user[1].charAt(0).toUpperCase() +
+      //   user[1].slice(1, user[1].length);
+      filter.user = tempName.join(" ");
     }
     if (level != "") filter.level = level;
     if (setting != "") filter.setting = setting;
     if (mode != "") filter.mode = mode;
-    console.log({ filter });
 
+    const filteredUser = filter.user;
     // const filteredUser = user.join(" ");
 
     // console.log(req.body);
