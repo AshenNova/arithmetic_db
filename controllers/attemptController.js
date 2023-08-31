@@ -113,6 +113,7 @@ exports.getFilteredAttempts = async (req, res) => {
     //   mode: mode.charAt(0).toUpperCase() + mode.slice(1, mode.length),
     // };
     console.log(user, level, setting, mode);
+    let filteredUser;
     if (user != "") {
       user = user.split(" ");
       filter.user =
@@ -121,13 +122,14 @@ exports.getFilteredAttempts = async (req, res) => {
         " " +
         user[1].charAt(0).toUpperCase() +
         user[1].slice(1, user[1].length);
+      filteredUser = user.join(" ");
     }
     if (level != "") filter.level = level;
     if (setting != "") filter.setting = setting;
     if (mode != "") filter.mode = mode;
     console.log({ filter });
 
-    const filteredUser = user.join(" ");
+    // const filteredUser = user.join(" ");
 
     // console.log(req.body);
 
