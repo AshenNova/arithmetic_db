@@ -127,7 +127,7 @@ exports.getFilteredAttempts = async (req, res) => {
     if (mode != "") filter.mode = mode;
     console.log({ filter });
 
-    const filteredUser = user;
+    const filteredUser = user.join(" ");
 
     // console.log(req.body);
 
