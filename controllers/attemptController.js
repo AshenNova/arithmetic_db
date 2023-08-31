@@ -98,20 +98,36 @@ exports.getFilteredAttempts = async (req, res) => {
     const level = queryObj.level;
     const setting = queryObj.setting;
     const mode = queryObj.mode;
-    user = user.split(" ");
-    let filter = {
-      user:
+
+    let filter = {};
+    // {
+    //   user:
+    //     user[0].charAt(0).toUpperCase() +
+    //     user[0].slice(1, user[0].length) +
+    //     " " +
+    //     user[1].charAt(0).toUpperCase() +
+    //     user[1].slice(1, user[1].length),
+    //   // user: { $regex: user, $options: "i" },
+    //   level,
+    //   setting,
+    //   mode: mode.charAt(0).toUpperCase() + mode.slice(1, mode.length),
+    // };
+    console.log(user, level, setting, mode);
+    if (user != "") {
+      user = user.split(" ");
+      filter.user =
         user[0].charAt(0).toUpperCase() +
         user[0].slice(1, user[0].length) +
         " " +
         user[1].charAt(0).toUpperCase() +
-        user[1].slice(1, user[1].length),
-      // user: { $regex: user, $options: "i" },
-      level,
-      setting,
-      mode: mode.charAt(0).toUpperCase() + mode.slice(1, mode.length),
-    };
-    const filteredUser = user.join(" ");
+        user[1].slice(1, user[1].length);
+    }
+    if (level != "") filter.level = level;
+    if (setting != "") filter.setting = setting;
+    if (mode != "") filter.mode = mode;
+    console.log({ filter });
+
+    const filteredUser = user;
 
     // console.log(req.body);
 
@@ -119,15 +135,13 @@ exports.getFilteredAttempts = async (req, res) => {
     // if (filter.level == "") delete filter.level;
     // if (filter.setting == "") delete filter.setting;
 
-    const keys = Object.keys(filter);
-
-    // console.log(keys);
-    keys.forEach((key) => {
-      // console.log(filter[key]);
-      if (filter[key] == "") {
-        delete filter[key];
-      }
-    });
+    // const keys = Object.keys(filter);
+    // keys.forEach((key) => {
+    //   // console.log(filter[key]);
+    //   if (filter[key] == "") {
+    //     delete filter[key];
+    //   }
+    // });
     const attempts = await Attempt.find(filter)
       .sort({ date: -1 })
       .skip((page - 1) * limit)
@@ -147,7 +161,7 @@ exports.getFilteredAttempts = async (req, res) => {
     const params = queryObj;
     // console.log(params);
     let latestAttemptObj = 0;
-    if (params.hasOwnProperty("user")) {
+    if (filter.hasOwnProperty("user")) {
       // const filterUserStr = filter.user.split(" ");
       const user = filter.user;
       // console.log(user);
