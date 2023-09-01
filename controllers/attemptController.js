@@ -656,14 +656,14 @@ const updateMany = async (req, res) => {
     const updating = await Attempt.updateMany(
       // { summary: { $exists: false } },
       // { $set: { summary: "test" } }
-      { user: "Charis" },
-      { $set: { user: "Charis Ong" } }
+      { user: "Vamika" },
+      { $set: { user: "Vamika Sahu" } }
     );
     const updatingPlayer = await Highscore.updateMany(
       // { skip: { $exists: false } },
       // { $set: { skip: "" } }
-      { user: "Charis" },
-      { $set: { user: "Charis Ong" } }
+      { user: "Vamika" },
+      { $set: { user: "Vamika Sahu" } }
     );
     console.log(updating);
   } catch (e) {
@@ -671,7 +671,7 @@ const updateMany = async (req, res) => {
   }
 };
 
-// updateMany();
+updateMany();
 
 const deleteMany = async (req, res) => {
   const deleteNow = { user: "Aixl lim" };
