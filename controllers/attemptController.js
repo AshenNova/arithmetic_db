@@ -110,12 +110,6 @@ exports.getFilteredAttempts = async (req, res) => {
           name.charAt(0).toUpperCase() + name.slice(1, name.length)
         );
       });
-      // filter.user =
-      //   user[0].charAt(0).toUpperCase() +
-      //   user[0].slice(1, user[0].length) +
-      //   " " +
-      //   user[1].charAt(0).toUpperCase() +
-      //   user[1].slice(1, user[1].length);
       filter.user = tempName.join(" ");
     }
     if (level != "") filter.level = level;
@@ -123,21 +117,6 @@ exports.getFilteredAttempts = async (req, res) => {
     if (mode != "") filter.mode = mode;
 
     const filteredUser = filter.user;
-    // const filteredUser = user.join(" ");
-
-    // console.log(req.body);
-
-    // if (filter.user == "") delete filter.user;
-    // if (filter.level == "") delete filter.level;
-    // if (filter.setting == "") delete filter.setting;
-
-    // const keys = Object.keys(filter);
-    // keys.forEach((key) => {
-    //   // console.log(filter[key]);
-    //   if (filter[key] == "") {
-    //     delete filter[key];
-    //   }
-    // });
     const attempts = await Attempt.find(filter)
       .sort({ date: -1 })
       .skip((page - 1) * limit)
@@ -671,7 +650,7 @@ const updateMany = async (req, res) => {
   }
 };
 
-updateMany();
+// updateMany();
 
 const deleteMany = async (req, res) => {
   const deleteNow = { user: "Aixl lim" };
