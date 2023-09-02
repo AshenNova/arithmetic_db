@@ -16381,18 +16381,18 @@ How many items are there in each bag?
         p.situationB == 0 ||
         Math.abs(p.situationA) == Math.abs(p.situationB)
       ) {
-        p.situationA = genNumbers(10) - 5;
-        p.situationB = genNumbers(10) - 5;
+        p.situationA = genNumbers(200) - 100;
+        p.situationB = genNumbers(200) - 100;
       }
-      let valueAEnd = valueAFirst + p.situationA * p.multiplier;
-      let valueBEnd = valueBFirst + p.situationB * p.multiplier;
+      let valueAEnd = valueAFirst + p.situationA;
+      let valueBEnd = valueBFirst + p.situationB;
       // console.log(`Before: ${p.partsA} : ${p.partsB}`);
       let partsA = valueAEnd;
       let partsB = valueBEnd;
       [partsA, partsB] = simplify(partsA, partsB);
       console.log(`After: ${partsA} : ${partsB}`);
 
-      if (partsA > 10 || partsB > 10 || partsA <= 0 || partsB <= 0) {
+      if (partsA > 15 || partsB > 15 || partsA <= 0 || partsB <= 0) {
         console.log("Oops");
         return updateCalc();
       }
@@ -16402,10 +16402,10 @@ How many items are there in each bag?
         p.unitsB
       }.</br>
       ${personA} ${p.situationA > 0 ? `spent` : "received another"} $${Math.abs(
-        p.situationA * p.multiplier
+        p.situationA
       )}.</br> 
       ${personB} ${p.situationB > 0 ? `spent` : "received another"} $${Math.abs(
-        p.situationB * p.multiplier
+        p.situationB
       )}.</br>
       Their ratio became ${partsA} : ${partsB} in the end.</br>
       `;
@@ -21982,9 +21982,9 @@ function handleSubmit(e) {
         if (p.question == "AF") correctAnswer = p.unitsA * p.multiplier;
         if (p.question == "BF") correctAnswer = p.unitsB * p.multiplier;
         if (p.question == "AE")
-          correctAnswer = p.unitsA * p.multiplier + p.situationA * p.multiplier;
+          correctAnswer = p.unitsA * p.multiplier + p.situationA;
         if (p.question == "BE")
-          correctAnswer = p.unitsB * p.multiplier + p.situationB * p.multiplier;
+          correctAnswer = p.unitsB * p.multiplier + p.situationB;
       }
       //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
       if (setting == 2) {
@@ -26756,8 +26756,8 @@ function genProblems() {
         multiplier: genNumbers(10) + 5,
         unitsA: genNumbers(10) + 1,
         unitsB: genNumbers(10) + 1,
-        situationA: genNumbers(10) - 5,
-        situationB: genNumbers(10) - 5,
+        situationA: genNumbers(200) - 100,
+        situationB: genNumbers(200) - 100,
         // partsA: 0,
         // partsB: 0,
         question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
