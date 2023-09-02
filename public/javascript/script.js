@@ -16364,6 +16364,32 @@ How many items are there in each bag?
         `;
       }
     }
+    //CAUSE AND EFFECT
+    if (setting == 5) {
+      normalDisplay();
+      const boy = boyNames[genNumbers(boyNames.length)];
+      if (p.walkFirstSet == p.walkSecondSet) {
+        console.log("Same steps");
+        return updateCalc();
+      }
+      const walk = p.ran + p.walk;
+      console.log(`Walk: ${walk}, ran: ${p.ran}`);
+      const ranFirstSet = p.flightTotal - p.walkFirstSet;
+      const durationFirstSet = p.walkFirstSet * walk + ranFirstSet * p.ran;
+      const ranSecondSet = p.flightTotal - p.walkSecondSet;
+      const durationSecondSet = p.walkSecondSet * walk + ranSecondSet * p.ran;
+      displayProblem.innerHTML = `
+      ${boy} took ${durationFirstSet} seconds to walk up ${
+        p.walkFirstSet
+      } steps and ran up the rest.</br>
+      At the next flight of stairs, he took ${durationSecondSet} seconds to walk up ${
+        p.walkSecondSet
+      } steps and ran up the rest.</br>
+      How long would he take if he ${
+        p.type == "ran" ? "ran" : "walked"
+      } up one entire flight of stairs?
+      `;
+    }
   }
 
   if (level == "heuSixb") {
@@ -21961,18 +21987,18 @@ function handleSubmit(e) {
           correctAnswer = p.sets * (p.pTime + p.nTime) + p.pTime;
         }
       }
-      // //SPEED: AVERAGE SPEED OF WHOLE JOURNEY
-      // if (setting == 5) {
-      //   if (p.roll == "A") {
-      //     correctAnswer =
-      //       (p.speedB * p.timeB + p.speedC * p.timeC) / (p.timeB + p.timeC);
-      //   }
-      //   if (p.roll == "B") {
-      //     const totalTime = p.timeB + p.timeC;
-      //     const totalDistance = totalTime * p.speedA;
-      //     correctAnswer = (totalDistance - p.speedB * p.timeB) / p.timeC;
-      //   }
-      // }
+
+      // CAUSE AND EFFECT
+      if (setting == 5) {
+        console.log("Here " + p.type);
+
+        if (p.type == "ran") {
+          correctAnswer = p.flightTotal * p.ran;
+        }
+        if (p.type == "walked") {
+          correctAnswer = p.flightTotal * (p.ran + p.walk);
+        }
+      }
     }
 
     // ANSWERS
@@ -26690,7 +26716,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "heuSix") {
-    setting = calArrAll(4, calArr, setting, 9);
+    setting = calArrAll(5, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
     // LOWEST COMMON TIME
     if (setting == 1) {
@@ -26742,6 +26768,19 @@ function genProblems() {
         nTime: genNumbers(5) + 2,
         sets: genNumbers(10) + 5,
         version: ["snail", "human"][genNumbers(2)],
+      };
+    }
+
+    // CAUSE AND EFFECT
+    if (setting == 5) {
+      const total = genNumbers(20) + 20;
+      return {
+        type: ["ran"][genNumbers(1)],
+        flightTotal: total,
+        ran: genNumbers(2) + 1,
+        walk: genNumbers(3) + 1,
+        walkFirstSet: genNumbers(total - 2) + 2,
+        walkSecondSet: genNumbers(total - 2) + 2,
       };
     }
   }
@@ -28758,7 +28797,7 @@ function buttonLevelSetting() {
       );
 
       if (
-        ![1, 2, 3, 4, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       ) {
         setting = 9;

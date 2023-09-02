@@ -4,12 +4,12 @@ export const displayContent = (level) => {
   if (level == "heuFourb") {
     return `
     </p>
-    1. Lowest Common Multiples ( Indirect )</p>
-    2. Highest Common Factor ( Indirect )</p>
-    3. Unchanged Difference</p>
-    4. Unchanged Total</p>
-    5. Simultaneous Equation</p>
-    6. Internal Transfer: Double Effect</p>
+    1. Lowest Common Multiples ( Indirect )</br>
+    2. Highest Common Factor ( Indirect )</br>
+    3. Unchanged Difference</br>
+    4. Unchanged Total</br>
+    5. Simultaneous Equation</br>
+    6. Internal Transfer: Double Effect</br>
     <hr>
     9. All`;
   }
@@ -28,10 +28,11 @@ export const displayContent = (level) => {
   if (level == "heuSix") {
     return `
     </p>
-    1. Lowest Common Time</p>
-    2. Cycle</p>
-    3. Repeated Identity Type 3</p>
-    4. Snake and Ladder</p>
+    1. Lowest Common Time</br>
+    2. Cycle</br>
+    3. Repeated Identity Type 3</br>
+    4. Snake and Ladder</br>
+    5. Cause and Effect</br>
     <hr>
     9. All
     `;
@@ -40,13 +41,13 @@ export const displayContent = (level) => {
   if (level == "heuSixb") {
     return `
     </p>
-    1. Simultaneous Equation ( Parts and Units ) Type 1</p>
-    2. Identical Quantity with difference (Type 3)</p>
-    3. More Than / Less Than</p>
-    4. Using it all</p>
-    5. Identical Quantity with difference (Level 2) Type 1 Multiples</p>
-    6. Identical Quantity with difference (Level 2) Type 1 Difference</p>
-    7. Identical Quantity with difference (Level 2) Type 2</p>
+    1. Simultaneous Equation ( Parts and Units ) Type 1</br>
+    2. Identical Quantity with difference (Type 3)</br>
+    3. More Than / Less Than</br>
+    4. Using it all</br>
+    5. Identical Quantity with difference (Level 2) Type 1 Multiples</br>
+    6. Identical Quantity with difference (Level 2) Type 1 Difference</br>
+    7. Identical Quantity with difference (Level 2) Type 2</br>
     <hr>
     9. All
     `;
