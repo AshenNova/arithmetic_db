@@ -8932,199 +8932,9 @@ function updateProblems() {
       threeDenominator.textContent = p.denoTwo;
       equalSymbol.textContent = "-";
     }
-    //DECIMALS
-    if (setting == 8) {
-      console.log("The current setting is: " + setting);
-      const oneDisplay = p.numOne / p.convenientNumOne;
-      const twoDisplay = p.numTwo / p.convenientNumTwo;
-      displayProblem.innerHTML = `
-      ${oneDisplay} + ${twoDisplay} = ?`;
-      decimalCheck(oneDisplay);
-      decimalCheck(twoDisplay);
-    }
 
-    if (setting == 9) {
-      console.log("The current setting is: " + setting);
-      p.numOne = p.numOne / p.convenientNumOne;
-      p.numTwo = p.numTwo / p.convenientNumTwo;
-      if (p.numTwo > p.numOne) [p.numOne, p.numTwo] = [p.numTwo, p.numOne];
-      displayProblem.innerHTML = `
-      ${p.numOne} - ${p.numTwo} = ?`;
-      decimalCheck(p.numOne);
-      decimalCheck(p.numTwo);
-    }
-
-    // DECIMALS: OVERLAPPING PLACE VALUE
-    if (setting == 10) {
-      normalDisplay();
-      let overlappingArr = [
-        `${p.hundreds} hundreds`,
-        `${p.tens} tens`,
-        `${p.ones} ones`,
-        `${p.tenth} tenth`,
-        `${p.hundredth} hundredth`,
-      ];
-      for (let i = 0; i < 5; i++) {
-        const include = genNumbers(2);
-        if (include == 1) {
-          p.sentenceArr.push(overlappingArr[i]);
-        }
-      }
-      if (p.sentenceArr.length < 3) {
-        console.log("Empty 🥲");
-        return updateCalc();
-      }
-      console.log(p.sentenceArr);
-      displayProblem.innerHTML = `
-      Find the value of:</p>
-      ${p.sentenceArr.join(", ")}.`;
-    }
-
-    if (setting == 11) {
-      p.numOne = p.numOne / p.convenientNumOne;
-      decimalCheck(p.numOne);
-      displayProblem.innerHTML = `
-      ${p.numOne} x ${p.numTwo} = ?`;
-      decimalCheck(p.numOne * p.numTwo);
-    }
-    if (setting == 12) {
-      p.numOne = p.numOne / p.convenientNumOne;
-      decimalCheck(p.numOne);
-      displayProblem.innerHTML = `
-      ${p.numOne} x ${p.numTwo} = ?`;
-    }
-    if (setting == 13) {
-      p.numTwo = p.numOne;
-      p.numOne = (p.numOne * p.multiplier) / p.divisor;
-      decimalCheck(p.numOne);
-      displayProblem.innerHTML = `
-      ${p.numOne} ÷ ${p.numTwo} = ?`;
-      decimalCheck(p.numOne / p.numTwo);
-    }
-    if (setting == 14) {
-      // START CHANGE DISPLAY
-      if (p.numOne == p.numTwo) {
-        return updateCalc();
-      }
-      [p.numOne, p.numTwo] = simplify(p.numOne, p.numTwo);
-      if (p.numTwo == 1) return updateCalc();
-      // END CHANGE DISPLAY
-      if (genNumbers(2) == 0) {
-        displayProblem.innerHTML = `
-      ${p.numOne}/${p.numTwo} ≈ ?</p>
-      Round off your answer to ${p.roundOff} decimal place.
-      `;
-      } else {
-        displayProblem.innerHTML = ` Divide
-            ${p.numOne} by ${p.numTwo}.</p>
-            Round off your answer to ${p.roundOff} decimal place.
-            `;
-      }
-    }
-    if (setting == 15) {
-      p.numOne = p.numTwo * (genNumbers(99) + 2);
-      if (p.operator == "x") {
-        p.comparison = p.numOne * p.multiOne;
-        let placeValue = p.multiTwo.toString().split().length;
-        p.divisor = p.numTwo / p.multiTwo.toFixed(placeValue);
-      }
-      if (p.operator == "÷") {
-        let placeValue = p.multiOne.toString().split().length;
-        p.comparison = p.numOne / p.multiOne.toFixed(placeValue);
-        p.divisor = p.numTwo * p.multiTwo;
-      }
-      displayProblem.innerHTML = `
-      ${p.comparison} ${p.operator} ${p.divisor} = ?
-      `;
-    }
-    if (setting == 16) {
-      normalDisplay();
-      let arrOne = [p.sets, "x", p.sums];
-      let arrTwo = [p.sets, "x", p.numOne];
-      let arrThree = [p.sets, "x", "?"];
-      genNumbers[2] == 0
-        ? ([arrOne[0], arrOne[2]] = [arrOne[2], arrOne[0]])
-        : null;
-      arrOne = arrOne.join(" ");
-      genNumbers[2] == 0
-        ? ([arrTwo[0], arrTwo[2]] = [arrTwo[2], arrTwo[0]])
-        : null;
-      arrTwo = arrTwo.join(" ");
-      genNumbers[2] == 0
-        ? ([arrThree[0], arrThree[2]] = [arrThree[2], arrThree[0]])
-        : null;
-      arrThree = arrThree.join(" ");
-      let arrDisplay = [arrOne];
-      const equalPosition = [0, 2][genNumbers(2)];
-      arrDisplay.splice(equalPosition, 0, "=");
-      if (equalPosition == 0) {
-        // console.log(p.sums, p.numOne);
-        let tempLeft = [];
-        if (genNumbers(2) == 0) {
-          tempLeft = [arrThree, arrTwo];
-          if (p.sums > p.numOne) {
-            tempLeft.splice(1, 0, "+");
-            p.version = 1;
-          }
-          if (p.sums <= p.numOne) {
-            tempLeft.splice(1, 0, "-");
-            p.version = 2;
-          }
-          if (p.blank == 1 || p.blank == 2) {
-            tempLeft[0] = "_____";
-          }
-          tempLeft = tempLeft.join(" ");
-        } else {
-          tempLeft = [arrTwo, arrThree];
-          if (p.sums > p.numOne) {
-            tempLeft.splice(1, 0, "+");
-            p.version = 3;
-          }
-          if (p.sums <= p.numOne) {
-            tempLeft.splice(1, 0, "-");
-            p.version = 4;
-          }
-          if (p.blank == 1 || p.blank == 2) {
-            tempLeft[2] = "_____";
-          }
-          tempLeft = tempLeft.join(" ");
-        }
-        arrDisplay.unshift(tempLeft);
-      }
-      if (equalPosition == 2) {
-        let tempRight = [];
-        if (genNumbers(2) == 0) {
-          tempRight = [arrThree, arrTwo];
-          if (p.sums > p.numOne) {
-            tempRight.splice(1, 0, "+");
-            p.version = 5;
-          }
-          if (p.sums <= p.numOne) {
-            tempRight.splice(1, 0, "-");
-            p.version = 6;
-          }
-          if (p.blank == 1 || p.blank == 2) tempRight[0] = "_____";
-          tempRight = tempRight.join(" ");
-        } else {
-          tempRight = [arrTwo, arrThree];
-          if (p.sums > p.numOne) {
-            tempRight.splice(1, 0, "+");
-            p.version = 7;
-          }
-          if (p.sums <= p.numOne) {
-            tempRight.splice(1, 0, "-");
-            p.version = 8;
-          }
-          if (p.blank == 1 || p.blank == 2) tempRight[2] = "_____";
-          tempRight = tempRight.join(" ");
-        }
-        arrDisplay.push(tempRight);
-      }
-      arrDisplay = arrDisplay.join(" ");
-      displayProblem.textContent = `${arrDisplay}`;
-    }
     // FRACTIONS: UNIT SENTENCE
-    if (setting == 17) {
+    if (setting == 8) {
       normalDisplay();
       // content
 
@@ -9230,7 +9040,7 @@ function updateProblems() {
     }
 
     //FORM FRACTIONS
-    if (setting == 18) {
+    if (setting == 9) {
       normalDisplay();
       if (p.version == 0) {
         displayProblem.innerHTML = `
@@ -9252,6 +9062,215 @@ function updateProblems() {
         What fraction of ${p.biggerValue} ${p.bigUnit} is ${p.smallerValue} ${p.smallUnit}?
         `;
       }
+    }
+    // FRACTIONS: CONVERSION
+    if (setting == 10) {
+      normalDisplay();
+      if ((p.unitB == "mins" || p.unitB == "hrs") && p.value % 60 == 0) {
+        return updateCalc();
+      }
+      if (p.unitB == "days" && p.value % 24 == 0) {
+        return updateCalc();
+      }
+      if (p.unitB == "years" && p.value % 12 == 0) {
+        return updateCalc();
+      }
+      displayProblem.innerHTML = `
+      Express ${p.value} ${p.unitA} in ${p.unitB} in the form of fraction.</br>
+      Give your answer it its simplest form. 
+      `;
+    }
+
+    //DECIMALS
+    if (setting == 8) {
+      console.log("The current setting is: " + setting);
+      const oneDisplay = p.numOne / p.convenientNumOne;
+      const twoDisplay = p.numTwo / p.convenientNumTwo;
+      displayProblem.innerHTML = `
+      ${oneDisplay} + ${twoDisplay} = ?`;
+      decimalCheck(oneDisplay);
+      decimalCheck(twoDisplay);
+    }
+
+    if (setting == 9) {
+      console.log("The current setting is: " + setting);
+      p.numOne = p.numOne / p.convenientNumOne;
+      p.numTwo = p.numTwo / p.convenientNumTwo;
+      if (p.numTwo > p.numOne) [p.numOne, p.numTwo] = [p.numTwo, p.numOne];
+      displayProblem.innerHTML = `
+      ${p.numOne} - ${p.numTwo} = ?`;
+      decimalCheck(p.numOne);
+      decimalCheck(p.numTwo);
+    }
+
+    // DECIMALS: OVERLAPPING PLACE VALUE
+    if (setting == 13) {
+      normalDisplay();
+      let overlappingArr = [
+        `${p.hundreds} hundreds`,
+        `${p.tens} tens`,
+        `${p.ones} ones`,
+        `${p.tenth} tenth`,
+        `${p.hundredth} hundredth`,
+      ];
+      for (let i = 0; i < 5; i++) {
+        const include = genNumbers(2);
+        if (include == 1) {
+          p.sentenceArr.push(overlappingArr[i]);
+        }
+      }
+      if (p.sentenceArr.length < 3) {
+        console.log("Empty 🥲");
+        return updateCalc();
+      }
+      console.log(p.sentenceArr);
+      displayProblem.innerHTML = `
+      Find the value of:</p>
+      ${p.sentenceArr.join(", ")}.`;
+    }
+
+    if (setting == 14) {
+      p.numOne = p.numOne / p.convenientNumOne;
+      decimalCheck(p.numOne);
+      displayProblem.innerHTML = `
+      ${p.numOne} x ${p.numTwo} = ?`;
+      decimalCheck(p.numOne * p.numTwo);
+    }
+    if (setting == 15) {
+      p.numOne = p.numOne / p.convenientNumOne;
+      decimalCheck(p.numOne);
+      displayProblem.innerHTML = `
+      ${p.numOne} x ${p.numTwo} = ?`;
+    }
+    if (setting == 16) {
+      p.numTwo = p.numOne;
+      p.numOne = (p.numOne * p.multiplier) / p.divisor;
+      decimalCheck(p.numOne);
+      displayProblem.innerHTML = `
+      ${p.numOne} ÷ ${p.numTwo} = ?`;
+      decimalCheck(p.numOne / p.numTwo);
+    }
+    if (setting == 17) {
+      // START CHANGE DISPLAY
+      if (p.numOne == p.numTwo) {
+        return updateCalc();
+      }
+      [p.numOne, p.numTwo] = simplify(p.numOne, p.numTwo);
+      if (p.numTwo == 1) return updateCalc();
+      // END CHANGE DISPLAY
+      if (genNumbers(2) == 0) {
+        displayProblem.innerHTML = `
+      ${p.numOne}/${p.numTwo} ≈ ?</p>
+      Round off your answer to ${p.roundOff} decimal place.
+      `;
+      } else {
+        displayProblem.innerHTML = ` Divide
+            ${p.numOne} by ${p.numTwo}.</p>
+            Round off your answer to ${p.roundOff} decimal place.
+            `;
+      }
+    }
+    if (setting == 18) {
+      p.numOne = p.numTwo * (genNumbers(99) + 2);
+      if (p.operator == "x") {
+        p.comparison = p.numOne * p.multiOne;
+        let placeValue = p.multiTwo.toString().split().length;
+        p.divisor = p.numTwo / p.multiTwo.toFixed(placeValue);
+      }
+      if (p.operator == "÷") {
+        let placeValue = p.multiOne.toString().split().length;
+        p.comparison = p.numOne / p.multiOne.toFixed(placeValue);
+        p.divisor = p.numTwo * p.multiTwo;
+      }
+      displayProblem.innerHTML = `
+      ${p.comparison} ${p.operator} ${p.divisor} = ?
+      `;
+    }
+    if (setting == 19) {
+      normalDisplay();
+      let arrOne = [p.sets, "x", p.sums];
+      let arrTwo = [p.sets, "x", p.numOne];
+      let arrThree = [p.sets, "x", "?"];
+      genNumbers[2] == 0
+        ? ([arrOne[0], arrOne[2]] = [arrOne[2], arrOne[0]])
+        : null;
+      arrOne = arrOne.join(" ");
+      genNumbers[2] == 0
+        ? ([arrTwo[0], arrTwo[2]] = [arrTwo[2], arrTwo[0]])
+        : null;
+      arrTwo = arrTwo.join(" ");
+      genNumbers[2] == 0
+        ? ([arrThree[0], arrThree[2]] = [arrThree[2], arrThree[0]])
+        : null;
+      arrThree = arrThree.join(" ");
+      let arrDisplay = [arrOne];
+      const equalPosition = [0, 2][genNumbers(2)];
+      arrDisplay.splice(equalPosition, 0, "=");
+      if (equalPosition == 0) {
+        // console.log(p.sums, p.numOne);
+        let tempLeft = [];
+        if (genNumbers(2) == 0) {
+          tempLeft = [arrThree, arrTwo];
+          if (p.sums > p.numOne) {
+            tempLeft.splice(1, 0, "+");
+            p.version = 1;
+          }
+          if (p.sums <= p.numOne) {
+            tempLeft.splice(1, 0, "-");
+            p.version = 2;
+          }
+          if (p.blank == 1 || p.blank == 2) {
+            tempLeft[0] = "_____";
+          }
+          tempLeft = tempLeft.join(" ");
+        } else {
+          tempLeft = [arrTwo, arrThree];
+          if (p.sums > p.numOne) {
+            tempLeft.splice(1, 0, "+");
+            p.version = 3;
+          }
+          if (p.sums <= p.numOne) {
+            tempLeft.splice(1, 0, "-");
+            p.version = 4;
+          }
+          if (p.blank == 1 || p.blank == 2) {
+            tempLeft[2] = "_____";
+          }
+          tempLeft = tempLeft.join(" ");
+        }
+        arrDisplay.unshift(tempLeft);
+      }
+      if (equalPosition == 2) {
+        let tempRight = [];
+        if (genNumbers(2) == 0) {
+          tempRight = [arrThree, arrTwo];
+          if (p.sums > p.numOne) {
+            tempRight.splice(1, 0, "+");
+            p.version = 5;
+          }
+          if (p.sums <= p.numOne) {
+            tempRight.splice(1, 0, "-");
+            p.version = 6;
+          }
+          if (p.blank == 1 || p.blank == 2) tempRight[0] = "_____";
+          tempRight = tempRight.join(" ");
+        } else {
+          tempRight = [arrTwo, arrThree];
+          if (p.sums > p.numOne) {
+            tempRight.splice(1, 0, "+");
+            p.version = 7;
+          }
+          if (p.sums <= p.numOne) {
+            tempRight.splice(1, 0, "-");
+            p.version = 8;
+          }
+          if (p.blank == 1 || p.blank == 2) tempRight[2] = "_____";
+          tempRight = tempRight.join(" ");
+        }
+        arrDisplay.push(tempRight);
+      }
+      arrDisplay = arrDisplay.join(" ");
+      displayProblem.textContent = `${arrDisplay}`;
     }
   }
   // DISPLAY
@@ -19433,6 +19452,75 @@ function handleSubmit(e) {
           correctAnswer = `${remainder}/${common}`;
         }
       }
+
+      // FRACTIONS: UNIT SENTENCE
+      if (setting == 8) {
+        let index = p.type[p.identity].indexOf(p.secondSelection);
+        let oneUnit = undefined;
+        if (index == 0) {
+          oneUnit = p.value / p.numerator;
+        }
+        if (index == 1) {
+          oneUnit = p.value / (p.denominator - p.numerator);
+        }
+        if (index == 2) {
+          oneUnit = p.value / p.denominator;
+        }
+        if (p.secondSelection == 3) {
+          oneUnit = p.value / p.differenceUnit;
+        }
+        console.log(oneUnit);
+        correctAnswer = oneUnit * p.lastUnits;
+      }
+
+      // FORM FRACTION
+
+      if (setting == 9) {
+        let big = p.biggerValue;
+        if (p.bigUnit == "km" || p.bigUnit == "kg" || p.bigUnit == "ℓ") {
+          big = p.biggerValue * 1000;
+        }
+        if (p.bigUnit == "m") {
+          big = p.biggerValue * 100;
+        }
+        if (p.bigUnit == "hrs" || p.bigUnit == "mins") {
+          big = p.biggerValue * 60;
+        }
+        let small = p.smallerValue;
+        [small, big] = simplify(p.smallerValue, big);
+        console.log(small, big);
+        if (p.version == 0 || p.version == 3) correctAnswer = `${small}/${big}`;
+        if (p.version == 1 || p.version == 2) correctAnswer = `${big}/${small}`;
+      }
+      // FRACTIONS: CONVERSION
+      if (setting == 10) {
+        let quotient;
+        let remainder;
+        let denominator;
+        if (p.unitB == "mins" || p.unitB == "hrs") {
+          quotient = Math.floor(p.value / 60);
+          remainder = p.value % 60;
+          denominator = 60;
+          [remainder, denominator] = simplify(remainder, denominator);
+          // correctAnswer = `${quotient} ${remainder}/${denominator}`;
+        }
+        if (p.unitB == "days") {
+          quotient = Math.floor(p.value / 24);
+          remainder = p.value % 24;
+          denominator = 24;
+          [remainder, denominator] = simplify(remainder, denominator);
+          // correctAnswer = `${quotient} ${remainder}/${denominator}`;
+        }
+        if (p.unitB == "years") {
+          quotient = Math.floor(p.value / 12);
+          remainder = p.value % 12;
+          denominator = 12;
+          [remainder, denominator] = simplify(remainder, denominator);
+          // correctAnswer = `${quotient} ${remainder}/${denominator}`;
+        }
+        correctAnswer = `${quotient} ${remainder}/${denominator}`;
+      }
+
       if (setting == 8) {
         // correctAnswer =
         //   p.numOne / p.convenientNumOne + p.numTwo / p.convenientNumTwo;
@@ -19448,7 +19536,7 @@ function handleSubmit(e) {
       }
 
       // DECIMALS: OVERLAPPING PLACE VALUE
-      if (setting == 10) {
+      if (setting == 13) {
         let sumArr = [];
         for (let i = 0; i < p.sentenceArr.length; i++) {
           console.log(p.sentenceArr[i]);
@@ -19489,22 +19577,22 @@ function handleSubmit(e) {
         // }
       }
 
-      if (setting == 11) {
+      if (setting == 14) {
         correctAnswer = p.numOne * p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
-      if (setting == 12) {
+      if (setting == 15) {
         correctAnswer = p.numOne * p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
-      if (setting == 13) {
+      if (setting == 16) {
         correctAnswer = p.numOne / p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
-      if (setting == 14) {
+      if (setting == 17) {
         correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
       }
-      if (setting == 15) {
+      if (setting == 18) {
         if (p.operator == "x") {
           correctAnswer = p.comparison * p.divisor;
           correctAnswer = accDecimal(correctAnswer);
@@ -19515,7 +19603,7 @@ function handleSubmit(e) {
         }
         decimalCheck(correctAnswer);
       }
-      if (setting == 16) {
+      if (setting == 19) {
         console.log(p.sums, p.numOne, p.version);
 
         if (p.version == 4 || p.version == 8) {
@@ -19539,45 +19627,6 @@ function handleSubmit(e) {
         if (p.blank == 1 || p.blank == 2) {
           correctAnswer = correctAnswer * p.sets;
         }
-      }
-      // FRACTIONS: UNIT SENTENCE
-      if (setting == 17) {
-        let index = p.type[p.identity].indexOf(p.secondSelection);
-        let oneUnit = undefined;
-        if (index == 0) {
-          oneUnit = p.value / p.numerator;
-        }
-        if (index == 1) {
-          oneUnit = p.value / (p.denominator - p.numerator);
-        }
-        if (index == 2) {
-          oneUnit = p.value / p.denominator;
-        }
-        if (p.secondSelection == 3) {
-          oneUnit = p.value / p.differenceUnit;
-        }
-        console.log(oneUnit);
-        correctAnswer = oneUnit * p.lastUnits;
-      }
-
-      // FORM FRACTION
-
-      if (setting == 18) {
-        let big = p.biggerValue;
-        if (p.bigUnit == "km" || p.bigUnit == "kg" || p.bigUnit == "ℓ") {
-          big = p.biggerValue * 1000;
-        }
-        if (p.bigUnit == "m") {
-          big = p.biggerValue * 100;
-        }
-        if (p.bigUnit == "hrs" || p.bigUnit == "mins") {
-          big = p.biggerValue * 60;
-        }
-        let small = p.smallerValue;
-        [small, big] = simplify(p.smallerValue, big);
-        console.log(small, big);
-        if (p.version == 0 || p.version == 3) correctAnswer = `${small}/${big}`;
-        if (p.version == 1 || p.version == 2) correctAnswer = `${big}/${small}`;
       }
     }
 
@@ -24638,7 +24687,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(18, calArr, setting, 99);
+    setting = calArrAll(19, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
@@ -24696,83 +24745,9 @@ function genProblems() {
         denoTwo: genNumbers(9) + 1,
       };
     }
-    //DECIMALS
-    if (setting == 8 || setting == 9) {
-      return {
-        numOne: genNumbers(999) + 1,
-        convenientNumOne: [1, 10, 100][genNumbers(3)],
-        numTwo: genNumbers(999) + 1,
-        convenientNumTwo: [10, 100][genNumbers(2)],
-      };
-    }
-
-    // DECIMALS: OVERLAPPING PLACE VALUE
-    if (setting == 10) {
-      return {
-        ones: genNumbers(99) + 1,
-        tens: genNumbers(99) + 1,
-        hundreds: genNumbers(99) + 1,
-        tenth: genNumbers(99) + 1,
-        hundredth: genNumbers(99) + 1,
-        sentenceArr: [],
-      };
-    }
-
-    if (setting == 11) {
-      return {
-        numOne: genNumbers(999) + 1,
-        convenientNumOne: [10, 100, 1000][genNumbers(3)],
-        numTwo: genNumbers(8) + 2,
-      };
-    }
-    if (setting == 12) {
-      return {
-        numOne: genNumbers(999) + 1,
-        convenientNumOne: [10, 100, 1000][genNumbers(3)],
-        numTwo: genNumbers(89) + 11,
-      };
-    }
-    if (setting == 13) {
-      return {
-        numOne: genNumbers(7) + 2,
-        multiplier: genNumbers(989) + 11,
-        divisor: [10, 100, 1000][genNumbers(3)],
-      };
-    }
-    if (setting == 14) {
-      return {
-        numOne: genNumbers(10) + 1,
-        numTwo: [3, 7, 9, 11][genNumbers(4)],
-        roundOff: genNumbers(3) + 1,
-      };
-    }
-    if (setting == 15) {
-      return {
-        operator: ["x", "÷"][genNumbers(2)],
-        numOne: undefined,
-        multiOne: [10, 100][genNumbers(2)],
-        numTwo: genNumbers(7) + 2,
-        multiTwo: [10, 100, 100][genNumbers(3)],
-        divisor: undefined,
-        comparison: undefined,
-      };
-    }
-    // Multiplication in sets
-    if (setting == 16) {
-      const sum = genNumbers(89) + 10;
-      const genNumOne = genNumbers(50) + 10;
-      return {
-        sums: sum,
-        sets: genNumbers(89) + 10,
-        numOne: genNumOne,
-        numTwo: sum - genNumOne,
-        version: undefined,
-        blank: genNumbers(3),
-      };
-    }
 
     // FRACTIONS: UNIT SENTENCE
-    if (setting == 17) {
+    if (setting == 8) {
       return {
         // numerator: genNumbers(9)+1,
         // denominator: genNumbers(9)+1,
@@ -24800,7 +24775,7 @@ function genProblems() {
     }
 
     // FORM FRACTIONS
-    if (setting == 18) {
+    if (setting == 9) {
       const position = genNumbers(6);
       return {
         smallUnit: ["cm", "m", "ml", "g", "mins", "secs"][position],
@@ -24808,6 +24783,90 @@ function genProblems() {
         smallerValue: genNumbers(10) + 1,
         biggerValue: genNumbers(10) + 10,
         version: [0, 3][genNumbers(2)],
+      };
+    }
+
+    // FRACTIONS: CONVERSION
+    if (setting == 10) {
+      const position = genNumbers(4);
+      return {
+        unitA: ["secs", "mins", "hrs", "month"][position],
+        unitB: ["mins", "hrs", "days", "years"][position],
+        value: genNumbers(24) + 60,
+      };
+    }
+    //DECIMALS
+    if (setting == 11 || setting == 12) {
+      return {
+        numOne: genNumbers(999) + 1,
+        convenientNumOne: [1, 10, 100][genNumbers(3)],
+        numTwo: genNumbers(999) + 1,
+        convenientNumTwo: [10, 100][genNumbers(2)],
+      };
+    }
+
+    // DECIMALS: OVERLAPPING PLACE VALUE
+    if (setting == 13) {
+      return {
+        ones: genNumbers(99) + 1,
+        tens: genNumbers(99) + 1,
+        hundreds: genNumbers(99) + 1,
+        tenth: genNumbers(99) + 1,
+        hundredth: genNumbers(99) + 1,
+        sentenceArr: [],
+      };
+    }
+
+    if (setting == 14) {
+      return {
+        numOne: genNumbers(999) + 1,
+        convenientNumOne: [10, 100, 1000][genNumbers(3)],
+        numTwo: genNumbers(8) + 2,
+      };
+    }
+    if (setting == 15) {
+      return {
+        numOne: genNumbers(999) + 1,
+        convenientNumOne: [10, 100, 1000][genNumbers(3)],
+        numTwo: genNumbers(89) + 11,
+      };
+    }
+    if (setting == 16) {
+      return {
+        numOne: genNumbers(7) + 2,
+        multiplier: genNumbers(989) + 11,
+        divisor: [10, 100, 1000][genNumbers(3)],
+      };
+    }
+    if (setting == 17) {
+      return {
+        numOne: genNumbers(10) + 1,
+        numTwo: [3, 7, 9, 11][genNumbers(4)],
+        roundOff: genNumbers(3) + 1,
+      };
+    }
+    if (setting == 18) {
+      return {
+        operator: ["x", "÷"][genNumbers(2)],
+        numOne: undefined,
+        multiOne: [10, 100][genNumbers(2)],
+        numTwo: genNumbers(7) + 2,
+        multiTwo: [10, 100, 100][genNumbers(3)],
+        divisor: undefined,
+        comparison: undefined,
+      };
+    }
+    // Multiplication in sets
+    if (setting == 19) {
+      const sum = genNumbers(89) + 10;
+      const genNumOne = genNumbers(50) + 10;
+      return {
+        sums: sum,
+        sets: genNumbers(89) + 10,
+        numOne: genNumOne,
+        numTwo: sum - genNumOne,
+        version: undefined,
+        blank: genNumbers(3),
       };
     }
   }
@@ -28407,7 +28466,7 @@ function buttonLevelSetting() {
       //   )
       // );
       if (
-        ![...Array.from({ length: 18 }, (_, i) => i + 1), 99].includes(
+        ![...Array.from({ length: 19 }, (_, i) => i + 1), 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")

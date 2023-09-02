@@ -92,20 +92,24 @@ export const displayContent = (level) => {
       3. Common Factors</br>
       4. Double Digit Multiplication</br>
       5. Left Side Right Side + - x /</br>
+      <hr>
       6. Fractions: Addition: Mixed Fractions</br>
       7. Fractions: Subtraction: Mixed Fractions</br>
-      8. Decimals: Addition</br>
-      9. Decimals: Subtraction</br>
-      10. Decimals: Overlapping Place Value</br>
-      11. Decimals: Multiplication (Single)</br>
-      12. Decimals: Multiplication (Double)</br>
-      13. Decimals: Division </br>
-      14. Fractions to Decimal (Limit)</br>
-      15. Decimals: Division and Multiplication with splitting</br>
-      16. Multiplication in Sets</br>
-      17. Fractions: Unit with a Value</br>
-      18. Fractions: Form</br>
-      <hr></hr>
+      8. Fractions: Unit with a Value</br>
+      9. Fractions: Form</br>
+      10. Fractions: Conversion</br>
+      <hr>
+      11. Decimals: Addition</br>
+      12. Decimals: Subtraction</br>
+      13. Decimals: Overlapping Place Value</br>
+      14. Decimals: Multiplication (Single)</br>
+      15. Decimals: Multiplication (Double)</br>
+      16. Decimals: Division </br>
+      17. Fractions to Decimal (Limit)</br>
+      18. Decimals: Division and Multiplication with splitting</br>
+      <hr>
+      19. Multiplication in Sets</br>
+      <hr>
       99. All
       `;
   }
