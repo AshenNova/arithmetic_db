@@ -16712,11 +16712,11 @@ How many items are there in each bag?
           : Math.abs(differenceValue).toFixed(2)
       } ${diffStatement} on ${itemA} than ${itemB}.</p>
       ${unitStatement}</p>
-      Each ${itemA} cost $${
+      Each ${itemA.slice(0, itemA.length - 1)} cost $${
         differenceValueB % 1 == 0
           ? Math.abs(differenceValueB)
           : Math.abs(differenceValueB).toFixed(2)
-      } ${diffStatementB} than ${itemB}.</p>
+      } ${diffStatementB} than each ${itemB.slice(0, itemB.length - 1)}.</p>
       ${questionStatement}
       `;
     }
