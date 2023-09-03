@@ -9082,7 +9082,7 @@ function updateProblems() {
     }
 
     //DECIMALS
-    if (setting == 8) {
+    if (setting == 11) {
       console.log("The current setting is: " + setting);
       const oneDisplay = p.numOne / p.convenientNumOne;
       const twoDisplay = p.numTwo / p.convenientNumTwo;
@@ -9092,7 +9092,7 @@ function updateProblems() {
       decimalCheck(twoDisplay);
     }
 
-    if (setting == 9) {
+    if (setting == 12) {
       console.log("The current setting is: " + setting);
       p.numOne = p.numOne / p.convenientNumOne;
       p.numTwo = p.numTwo / p.convenientNumTwo;
@@ -9130,6 +9130,7 @@ function updateProblems() {
     }
 
     if (setting == 14) {
+      normalDisplay();
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
@@ -9137,12 +9138,14 @@ function updateProblems() {
       decimalCheck(p.numOne * p.numTwo);
     }
     if (setting == 15) {
+      normalDisplay();
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
     }
     if (setting == 16) {
+      normalDisplay();
       p.numTwo = p.numOne;
       p.numOne = (p.numOne * p.multiplier) / p.divisor;
       decimalCheck(p.numOne);
@@ -9151,6 +9154,7 @@ function updateProblems() {
       decimalCheck(p.numOne / p.numTwo);
     }
     if (setting == 17) {
+      normalDisplay();
       // START CHANGE DISPLAY
       if (p.numOne == p.numTwo) {
         return updateCalc();
@@ -9171,6 +9175,7 @@ function updateProblems() {
       }
     }
     if (setting == 18) {
+      normalDisplay();
       p.numOne = p.numTwo * (genNumbers(99) + 2);
       if (p.operator == "x") {
         p.comparison = p.numOne * p.multiOne;
@@ -22055,8 +22060,10 @@ function handleSubmit(e) {
           if (p.question == "VB")
             correctAnswer =
               (commonQuantity / p.quantityB) * p.priceB * p.groups;
-          if (p.question == "QA") correctAnswer = p.quantityA * p.groups*commonQuantity;
-          if (p.question == "QB") correctAnswer = p.quantityB * p.groups*commonQuantity;
+          if (p.question == "QA")
+            correctAnswer = p.quantityA * p.groups * commonQuantity;
+          if (p.question == "QB")
+            correctAnswer = p.quantityB * p.groups * commonQuantity;
           // if (p.question == "T") correctAnswer = valueA + valueB;
         }
         if (p.version == "distance") {

@@ -635,14 +635,14 @@ const updateMany = async (req, res) => {
     const updating = await Attempt.updateMany(
       // { summary: { $exists: false } },
       // { $set: { summary: "test" } }
-      { user: "Javen chen" },
-      { $set: { user: "Javen Chen" } }
+      { user: "Yutong" },
+      { $set: { user: "Yutong Phua" } }
     );
     const updatingPlayer = await Highscore.updateMany(
       // { skip: { $exists: false } },
       // { $set: { skip: "" } }
-      { user: "Javen chen" },
-      { $set: { user: "Javen Chen" } }
+      { user: "Yutong" },
+      { $set: { user: "Yutong Phua" } }
     );
     console.log(updating);
   } catch (e) {
