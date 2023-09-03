@@ -22055,8 +22055,8 @@ function handleSubmit(e) {
           if (p.question == "VB")
             correctAnswer =
               (commonQuantity / p.quantityB) * p.priceB * p.groups;
-          if (p.question == "QA") correctAnswer = p.quantityA * p.groups;
-          if (p.question == "QB") correctAnswer = p.quantityB * p.groups;
+          if (p.question == "QA") correctAnswer = p.quantityA * p.groups*commonQuantity;
+          if (p.question == "QB") correctAnswer = p.quantityB * p.groups*commonQuantity;
           // if (p.question == "T") correctAnswer = valueA + valueB;
         }
         if (p.version == "distance") {
