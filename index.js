@@ -59,7 +59,7 @@ app.get("/", (req, res) => {
 // app.use("/arithmetic", express.static("./javascript/script.js"));
 app.get("/arithmetic", authController.authenticate, (req, res) => {
   let authenticate = req.auth;
-  if (req.auth.login == false) {
+  if (authenticate.login == false) {
     res.redirect("user/login");
   }
   currentUser = req.user;

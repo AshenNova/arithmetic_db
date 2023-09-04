@@ -9,6 +9,9 @@ const router = express.Router();
 router.route("/").get(authController.authenticate, userController.getAllUsers);
 router.route("/edit").get(authController.authenticate, userController.editUser);
 router
+  .route("/edit/:id")
+  .get(authController.authenticate, userController.editSingleUser);
+router
   .route("/edit/save")
   .post(authController.authenticate, userController.saveEditUser);
 router.route("/signup").post(authController.signup);

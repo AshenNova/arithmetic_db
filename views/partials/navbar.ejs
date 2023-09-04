@@ -30,9 +30,15 @@
           </ul>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">
+              <% if (authenticate.login) { %>
+                <a class="nav-link active" href="/user/edit/<%= currentUser._id %>">⚙️</a>
+              <% } %>
+            </li>    
+            <li class="nav-item">  
             <% if (currentUser.admin) { %>
               <a class="nav-link active" href="/user">Users</a>
             <% } %>
+            </li>
             <li class="nav-item">
               <% if (authenticate.login) { %>
                 <a class="nav-link active" href="/user/logout">Logout</a>

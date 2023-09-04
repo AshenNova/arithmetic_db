@@ -103,8 +103,13 @@ exports.login = async (req, res) => {
 
 exports.logout = (req, res) => {
   const token = "";
-  res.cookie("JWT", token, { maxAge: 1000, secure: true, httpOnly: true });
-  res.redirect("/attempts");
+  const cookieSetting = {
+    maxAge: 1000,
+    httpOnly: true,
+  };
+  if (process.env.NODE_ENV == "PRODUCTION") cookieSetting.secure = true;
+  res.cookie("JWT", token, { maxAge: 1000, httpOnly: true });
+  return res.redirect("/attempts");
 };
 
 exports.protect = async (req, res, next) => {

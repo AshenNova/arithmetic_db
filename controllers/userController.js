@@ -16,7 +16,7 @@ exports.getAllUsers = async (req, res) => {
     authenticate = req.auth;
 
     if (!currentUser.admin || !authenticate) {
-      res.redirect("user/login");
+      return res.redirect("user/login");
     }
 
     res.render("pages/all-user", {
@@ -27,7 +27,7 @@ exports.getAllUsers = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.redirect("user/login");
+    return res.redirect("user/login");
   }
 };
 
@@ -36,11 +36,34 @@ exports.editUser = async (req, res) => {
     !authenticate ||
     (!currentUser.admin && currentUser.username != req.query.username)
   ) {
-    res.redirect("/user/login");
+    return res.redirect("/user/login");
   }
   console.log("Editing");
   // console.log(req.query);
   const editUser = await User.findOne({ username: req.query.username });
+  currentUser = req.user;
+  authenticate = req.auth;
+  res.render("pages/edit-user", {
+    authenticate,
+    username,
+    currentUser,
+    editUser,
+  });
+};
+
+exports.editSingleUser = async (req, res) => {
+  console.log("Edit Single");
+
+  const id = req.params.id;
+  const editUser = await User.findOne({ _id: id });
+  console.log(req.user, editUser);
+  console.log(req.user._id.equals(editUser._id));
+  console.log(req.user.admin);
+  if (!req.user._id.equals(editUser._id) && !req.user.admin) {
+    return res.redirect("/user/login");
+  }
+  console.log(editUser);
+
   currentUser = req.user;
   authenticate = req.auth;
   res.render("pages/edit-user", {
@@ -69,13 +92,14 @@ exports.saveEditUser = async (req, res) => {
     if (req.body.password == "" || req.body.confirmPassword == "") {
       delete req.body.password;
       delete req.body.confirmPassword;
-    }
-    if (req.body.password == req.body.confirmPassword) {
-      req.body.password = await bcrypt.hash(req.body.password, 12);
     } else {
-      return res
-        .status(403)
-        .json({ message: `Password and confirm password is not the same.` });
+      if (req.body.password == req.body.confirmPassword) {
+        req.body.password = await bcrypt.hash(req.body.password, 12);
+      } else {
+        return res
+          .status(403)
+          .json({ message: `Password and confirm password is not the same.` });
+      }
     }
     console.log(req.body);
     const update = await User.findByIdAndUpdate(editUser._id, req.body, {
@@ -83,7 +107,7 @@ exports.saveEditUser = async (req, res) => {
     });
     console.log(`Update: ${update}`);
     console.log("Successfully updated.");
-    res.redirect("/user");
+    res.redirect("/attempts");
   } catch (err) {
     console.log(err);
   }
