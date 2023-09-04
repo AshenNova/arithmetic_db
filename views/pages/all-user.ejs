@@ -26,6 +26,7 @@
         <th scope="col">Admin</th>
         <th scope="col">Username</th>
         <th scope="col">Email</th>
+        <th scope="col">Age</th>
         <th scope="col">DOB</th>
         <th scope="col">Last login</th>
         <th scope="col">Edit</th>
@@ -38,9 +39,15 @@
                 <td><%= item.admin %></td>
                 <td><%= item.username %></td>
                 <td><%= item.email %></td>
+                <td><%= new Date().getFullYear()- item.DOB.getFullYear() %></td>
                 <td><%= item.DOB.toLocaleDateString() %></td>
                 <% if (item.loggedIn) { %>
-                  <td><%= item.loggedIn.toLocaleTimeString('en-US') + " " + item.loggedIn.toLocaleDateString() %> </td>
+                  <% if (item.loggedIn.getDay() == new Date().getDay()) { %>
+                    <td>Today, <%= item.loggedIn.toLocaleTimeString('en-US') %></td>
+                 <% } else { %>
+                    <td><%= item.loggedIn.toLocaleTimeString('en-US') + " " + item.loggedIn.toLocaleDateString() %> </td>
+                <%  } %>
+                 
                <%  } else { %>
                   <td>Nil</td>
                 <% } %>

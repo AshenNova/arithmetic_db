@@ -60,12 +60,16 @@ app.get("/", (req, res) => {
 app.get("/arithmetic", authController.authenticate, (req, res) => {
   let authenticate = req.auth;
   if (authenticate.login == false) {
-    res.redirect("user/login");
+    return res.redirect("user/login");
   }
   currentUser = req.user;
   username = req.user.username;
   console.log(authenticate);
-  res.render("./pages/arithmetic", { username, authenticate, currentUser });
+  res.render("./pages/arithmetic", {
+    username,
+    authenticate,
+    currentUser,
+  });
 });
 
 app.use("/attempts", authController.authenticate, attemptRoute);

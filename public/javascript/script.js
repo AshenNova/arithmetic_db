@@ -19552,7 +19552,7 @@ function handleSubmit(e) {
         correctAnswer = `${quotient} ${remainder}/${denominator}`;
       }
 
-      if (setting == 8) {
+      if (setting == 11) {
         // correctAnswer =
         //   p.numOne / p.convenientNumOne + p.numTwo / p.convenientNumTwo;
         // decimalCheck(correctAnswer);
@@ -19561,7 +19561,7 @@ function handleSubmit(e) {
         ];
         correctAnswer = accDecimal(answer[0]);
       }
-      if (setting == 9) {
+      if (setting == 12) {
         correctAnswer = p.numOne - p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }

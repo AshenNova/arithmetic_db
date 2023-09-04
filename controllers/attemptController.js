@@ -1,5 +1,6 @@
 const Attempt = require("../models/attemptModel");
 const Highscore = require("../models/highscoreModel");
+const User = require("../models/userModel");
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
@@ -56,19 +57,6 @@ exports.getAllAttempts = async (req, res) => {
   );
 
   let summaryObj = attemptsTwo[0];
-  // attemptsTwo.forEach((item, index) => {
-  // const obj = JSON.parse(item.summary);
-  // if (index < 2) {
-  // console.log(typeof item.summary);
-  // const obj = JSON.parse(item.summary);
-  // obj = JSON.parse(obj);
-  // console.log(item.summary);
-  // obj.forEach((item) => {
-  // summaryObj.push(item.summary);
-  // console.log(summaryObj);
-  // }
-  // }?
-  // });
   const filteredUser = "";
   let latestAttemptObj;
   authenticate = req.auth;
@@ -219,6 +207,68 @@ exports.getFilteredAttempts = async (req, res) => {
     res.redirect("/attempts");
   }
 };
+
+function points(level, award, age, eligible) {
+  console.log(`Level: ${level}, award: ${award}, Age: ${age}`);
+  let points = 0;
+  if (award == "Platinum") {
+    points = 5;
+  } else if (award == "Gold") {
+    points = 4;
+  } else if (award == "Silver") {
+    points = 3;
+  } else if (award == "Bronze") {
+    points = 2;
+  } else {
+    points = 1;
+  }
+  if (eligible == 1) points = 10;
+
+  const levelStr = level;
+  if (
+    levelStr.startsWith("1") ||
+    levelStr.startsWith("calOne") ||
+    levelStr.startsWith("heuOne")
+  ) {
+    console.log("Level 1s");
+  }
+  if (
+    levelStr.startsWith("2") ||
+    levelStr.startsWith("calTwo") ||
+    levelStr.startsWith("heuTwo")
+  ) {
+    console.log("Level 2s");
+  }
+  if (
+    levelStr.startsWith("3") ||
+    levelStr.startsWith("calThree") ||
+    levelStr.startsWith("heuThree")
+  ) {
+    console.log("Level 3s");
+  }
+  if (
+    levelStr.startsWith("4") ||
+    levelStr.startsWith("calFour") ||
+    levelStr.startsWith("heuFour")
+  ) {
+    console.log("Level 4s");
+  }
+  if (
+    levelStr.startsWith("5") ||
+    levelStr.startsWith("calFive") ||
+    levelStr.startsWith("heuFive")
+  ) {
+    console.log("Level 5s");
+  }
+  if (
+    levelStr.startsWith("6") ||
+    levelStr.startsWith("calSix") ||
+    levelStr.startsWith("heuSix")
+  ) {
+    console.log("Level 6s");
+  }
+  console.log(points);
+}
 
 exports.newAttempt = async (req, res) => {
   let data = {
@@ -460,6 +510,16 @@ exports.newAttempt = async (req, res) => {
   await standardDeviation();
 
   // LAST: SAVE ATTEMPT
+
+  const pointSystem = async (req, res) => {
+    const userNow = await User.findOne({ username: user.toLowerCase() });
+    console.log(userNow);
+    const age = new Date().getFullYear() - userNow.DOB.getFullYear();
+    points(level, award, age, eligible);
+  };
+
+  await pointSystem();
+
   const newAttempt = new Attempt({
     user: req.body.user,
     mode: req.body.mode,
@@ -635,14 +695,14 @@ const updateMany = async (req, res) => {
     const updating = await Attempt.updateMany(
       // { summary: { $exists: false } },
       // { $set: { summary: "test" } }
-      { user: "Yutong" },
-      { $set: { user: "Yutong Phua" } }
+      { user: "Travis" },
+      { $set: { user: "Travis Scott" } }
     );
     const updatingPlayer = await Highscore.updateMany(
       // { skip: { $exists: false } },
       // { $set: { skip: "" } }
-      { user: "Yutong" },
-      { $set: { user: "Yutong Phua" } }
+      { user: "Travis" },
+      { $set: { user: "Travis Scott" } }
     );
     console.log(updating);
   } catch (e) {

@@ -5,7 +5,13 @@
         <% if ( username ) { %>
           <% username = username.split(" ") %>
           <li class="text-white nav-link active" id="userName">
-            <%= username[0].charAt(0).toUpperCase() + username[0].slice(1, username[0].length).toLowerCase() %> <%= username[1].charAt(0).toUpperCase() + username[1].slice(1, username[1].length).toLowerCase() %></li>
+            <% let usernameArr = [] %>
+            <% username.forEach(item => { %>
+              <% usernameArr.push(item.charAt(0).toUpperCase() + item.slice(1, item.length)) %>
+            <% }) %>
+            <!-- <%= username[0].charAt(0).toUpperCase() + username[0].slice(1, username[0].length).toLowerCase() %> <%= username[1].charAt(0).toUpperCase() + username[1].slice(1, username[1].length).toLowerCase() %></li> -->
+            <%= usernameArr.join(" ") %>
+            </li>
         <% } else { %>
           <li class="text-white nav-link active" id="userName"></li>
         <% } %>
@@ -29,11 +35,6 @@
             </li>
           </ul>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <% if (authenticate.login) { %>
-                <a class="nav-link active" href="/user/edit/<%= currentUser._id %>">⚙️</a>
-              <% } %>
-            </li>    
             <li class="nav-item">  
             <% if (currentUser.admin) { %>
               <a class="nav-link active" href="/user">Users</a>
@@ -46,6 +47,11 @@
                 <a class="nav-link active" href="/user/login">Login</a>
               <% } %>
             </li>
+            <li class="nav-item">
+              <% if (authenticate.login) { %>
+                <a class="nav-link active" href="/user/edit/<%= currentUser._id %>">⚙️</a>
+              <% } %>
+            </li>    
           </ul>
         </div>
         </div>
