@@ -518,7 +518,7 @@ exports.newAttempt = async (req, res) => {
     points(level, award, age, eligible);
   };
 
-  await pointSystem();
+  // await pointSystem();
 
   const newAttempt = new Attempt({
     user: req.body.user,
