@@ -86,10 +86,26 @@ exports.login = async (req, res) => {
       cookieSetting,
     }); // Milliseconds
     console.log({ user });
-    const updateLogin = await User.updateOne(
-      { username: user.username },
-      { $set: { loggedIn: new Date() } }
+    // const previousLogin = await User.findOne({ username: user.username });
+    // console.log(previousLogin, previousLogin.loggedIn - new Date());
+    const daysAgo = Math.floor(
+      (new Date() - user.loggedIn) / (1000 * 60 * 60 * 24)
     );
+    console.log(`Last logged in: ${daysAgo} days ago`);
+    if (daysAgo > 2) {
+      user.points -= (daysAgo - 1) * 10;
+      if (user.points < 0) user.points = 0;
+      const penalty = await User.findByIdAndUpdate(user._id, {
+        points: user.points,
+        loggedIn: new Date(),
+      });
+    } else {
+      const updateLogin = await User.updateOne(
+        { username: user.username },
+        { $set: { loggedIn: new Date() } }
+      );
+    }
+
     if (user.admin) {
       res.redirect("/attempts");
     } else {

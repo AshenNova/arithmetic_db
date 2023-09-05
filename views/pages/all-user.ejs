@@ -36,7 +36,11 @@
     <tbody>
         <% allUsers.forEach(item => { %>
             <tr>
-                <td><%= item.admin %></td>
+              <% if (item.admin) { %>
+                <td><%= "⭐️" %></td>
+              <% } else { %>
+                <td></td>
+              <% } %>
                 <td><%= item.username %></td>
                 <td><%= item.email %></td>
                 <td><%= new Date().getFullYear()- item.DOB.getFullYear() %></td>

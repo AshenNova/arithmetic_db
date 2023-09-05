@@ -80,6 +80,7 @@
      <h1>Recent</h1>
       <tr>
         <th scope="col">Award</th>
+        <th scope="col">Points</th>
         <th scope="col">Name</th>
         <th scope="col">Mode</th>
         <th scope="col">Level</th>
@@ -148,13 +149,18 @@
                     <td><img src="/images/endgame/platinum.jpeg" class="award-size"></td>
                   <% } else if (item.award == "Gold") { %>
                     <td><img src="/images/endgame/gold.jpeg" class="award-size"></td>
-                    <% } else if (item.award == "Silver") { %>
-                      <td><img src="/images/endgame/silver.jpeg" class="award-size"></td>
-                      <% } else if (item.award == "Bronze") { %>
-                        <td><img src="/images/endgame/bronze.jpeg" class="award-size"></td>
-                     <% } else { %>
-                        <td><%= "" %></td>
-                      <% } %>
+                  <% } else if (item.award == "Silver") { %>
+                    <td><img src="/images/endgame/silver.jpeg" class="award-size"></td>
+                  <% } else if (item.award == "Bronze") { %>
+                    <td><img src="/images/endgame/bronze.jpeg" class="award-size"></td>
+                  <% } else { %>
+                    <td></td>
+                  <% } %>
+                  <% if ( item.points != 0) { %>
+                    <td><%= item.points %></td>
+                  <% } else { %>
+                    <td></td>
+                  <% } %>
                 <td><a href="/attempts/filter/?user=<%= item.user %>&level=&setting=&mode="><%= item.user %></a></td>
                 <% if ( item.mode == "Easy") {%>
                   <td class="btn btn-outline-success btn-sm"> <%= "Easy" %></td>
@@ -218,6 +224,8 @@
 <table class="table text-center table-hover">
     <thead class="thead-dark">
       <tr>
+        <th scope="col">Award</th>
+        <th scope="col">Points</th>
         <th scope="col">Name</th>
         <th scope="col">Mode</th>
         <th scope="col">Level</th>
@@ -237,6 +245,24 @@
           
             <tr>
                 <!-- <th scope="row">1</th> -->
+                <% if (item.award == "High") { %>
+                  <td><img src="/images/high-score.png" class="award-size"></td>
+                <% } else if (item.award == "Platinum") { %>
+                  <td><img src="/images/endgame/platinum.jpeg" class="award-size"></td>
+                <% } else if (item.award == "Gold") { %>
+                  <td><img src="/images/endgame/gold.jpeg" class="award-size"></td>
+                <% } else if (item.award == "Silver") { %>
+                  <td><img src="/images/endgame/silver.jpeg" class="award-size"></td>
+                <% } else if (item.award == "Bronze") { %>
+                  <td><img src="/images/endgame/bronze.jpeg" class="award-size"></td>
+                <% } else { %>
+                  <td></td>
+                <% } %>
+                <% if ( item.points != 0) { %>
+                  <td><%= item.points %></td>
+                <% } else { %>
+                  <td></td>
+                <% } %>
                 <td><%= item.user %></td>
                 <% if ( item.mode == "Easy") {%>
                   <td class="btn btn-outline-success btn-sm"> <%= "Easy" %></td>

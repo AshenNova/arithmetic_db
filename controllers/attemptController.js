@@ -208,7 +208,7 @@ exports.getFilteredAttempts = async (req, res) => {
   }
 };
 
-function points(level, award, age, eligible) {
+function points(level, award, age, eligible, setting) {
   console.log(`Level: ${level}, award: ${award}, Age: ${age}`);
   let points = 0;
   if (award == "Platinum") {
@@ -225,12 +225,15 @@ function points(level, award, age, eligible) {
   if (eligible == 1) points = 10;
 
   const levelStr = level;
+  let multiplier = 1;
+  let ageSituable = 0;
   if (
     levelStr.startsWith("1") ||
     levelStr.startsWith("calOne") ||
     levelStr.startsWith("heuOne")
   ) {
     console.log("Level 1s");
+    ageSituable = 7;
   }
   if (
     levelStr.startsWith("2") ||
@@ -238,6 +241,8 @@ function points(level, award, age, eligible) {
     levelStr.startsWith("heuTwo")
   ) {
     console.log("Level 2s");
+    ageSituable = 8;
+    // multiplier = 2;
   }
   if (
     levelStr.startsWith("3") ||
@@ -245,6 +250,8 @@ function points(level, award, age, eligible) {
     levelStr.startsWith("heuThree")
   ) {
     console.log("Level 3s");
+    ageSituable = 9;
+    // multiplier = 3;
   }
   if (
     levelStr.startsWith("4") ||
@@ -252,6 +259,8 @@ function points(level, award, age, eligible) {
     levelStr.startsWith("heuFour")
   ) {
     console.log("Level 4s");
+    ageSituable = 10;
+    // multiplier = 4;
   }
   if (
     levelStr.startsWith("5") ||
@@ -259,6 +268,8 @@ function points(level, award, age, eligible) {
     levelStr.startsWith("heuFive")
   ) {
     console.log("Level 5s");
+    ageSituable = 11;
+    // multiplier = 5;
   }
   if (
     levelStr.startsWith("6") ||
@@ -266,8 +277,19 @@ function points(level, award, age, eligible) {
     levelStr.startsWith("heuSix")
   ) {
     console.log("Level 6s");
+    ageSituable = 12;
+    // multiplier = 6;
   }
-  console.log(points);
+  if (levelStr.startsWith("cal") && setting == "99") {
+    multiplier = 2;
+  }
+  if (levelStr.startsWith("heu") && setting == "9") {
+    multiplier = 3;
+  }
+  if (age - ageSituable > 0) multiplier *= 0.5;
+  if (age - ageSituable == 0) multiplier *= 1;
+  if (age - ageSituable < 0) multiplier *= 2;
+  return points * multiplier;
 }
 
 exports.newAttempt = async (req, res) => {
@@ -510,16 +532,26 @@ exports.newAttempt = async (req, res) => {
   await standardDeviation();
 
   // LAST: SAVE ATTEMPT
-
+  let pointsAwarded;
   const pointSystem = async (req, res) => {
     const userNow = await User.findOne({ username: user.toLowerCase() });
     console.log(userNow);
     const age = new Date().getFullYear() - userNow.DOB.getFullYear();
-    points(level, award, age, eligible);
+    pointsAwarded = points(level, award, age, data.eligible, setting);
+    if (!userNow.points) {
+      userNow.points = pointsAwarded;
+    } else {
+      userNow.points += pointsAwarded;
+    }
+    console.log(
+      `Points Awarded: ${pointsAwarded}, Cumulative: ${userNow.points}`
+    );
+    const updatePoints = await User.findByIdAndUpdate(userNow._id, {
+      points: userNow.points,
+    });
   };
 
-  // await pointSystem();
-
+  await pointSystem();
   const newAttempt = new Attempt({
     user: req.body.user,
     mode: req.body.mode,
@@ -534,6 +566,7 @@ exports.newAttempt = async (req, res) => {
     ip: ip,
     summary: req.body.summary,
     award: data.award,
+    points: pointsAwarded,
   });
 
   try {

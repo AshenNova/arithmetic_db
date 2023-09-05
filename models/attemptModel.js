@@ -18,6 +18,7 @@ const attemptSchema = new mongoose.Schema({
   tries: String,
   summary: { type: String },
   award: String,
+  points: Number,
 });
 
 const Attempt = mongoose.model("attempts", attemptSchema);

@@ -36,6 +36,11 @@
           </ul>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">  
+              <% if (currentUser.points) { %>
+                <div class="nav-link active">[Points: <%= currentUser.points %>]</div>
+              <% } %>
+              </li>
+            <li class="nav-item">  
             <% if (currentUser.admin) { %>
               <a class="nav-link active" href="/user">Users</a>
             <% } %>
