@@ -532,7 +532,7 @@ exports.newAttempt = async (req, res) => {
   await standardDeviation();
 
   // LAST: SAVE ATTEMPT
-  let pointsAwarded;
+  let pointsAwarded = 0;
   const pointSystem = async (req, res) => {
     const userNow = await User.findOne({ username: user.toLowerCase() });
     console.log(userNow);
@@ -546,9 +546,22 @@ exports.newAttempt = async (req, res) => {
     console.log(
       `Points Awarded: ${pointsAwarded}, Cumulative: ${userNow.points}`
     );
-    const updatePoints = await User.findByIdAndUpdate(userNow._id, {
-      points: userNow.points,
+    let start = new Date();
+    start.setHours(0, 0, 0, 0);
+    let end = new Date();
+    end.setHours(23, 59, 59, 999);
+    const checkLimit = await Attempt.find({
+      user,
+      date: { $gte: start, $lt: end },
     });
+    console.log(`Attempts today: ${checkLimit}`);
+    if (checkLimit.length < 6) {
+      const updatePoints = await User.findByIdAndUpdate(userNow._id, {
+        points: userNow.points,
+      });
+    } else {
+      pointsAwarded = 0;
+    }
   };
 
   await pointSystem();
@@ -746,7 +759,7 @@ const updateMany = async (req, res) => {
 // updateMany();
 
 const deleteMany = async (req, res) => {
-  const deleteNow = { user: "Aixl lim" };
+  const deleteNow = { user: "Kenneth Lin" };
   try {
     const deleteHigh = await Highscore.deleteMany(deleteNow);
     const deleteAttempts = await Attempt.deleteMany(
