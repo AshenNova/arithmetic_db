@@ -2,19 +2,19 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">EpicMind</a>
-        <% if ( username ) { %>
-          <% username = username.split(" ") %>
+        <!-- <% if ( username ) { %> -->
+          <!-- <% username = username.split(" ") %> -->
           <li class="text-info nav-link active" id="userName">
-            <% let usernameArr = [] %>
+            <!-- <% let usernameArr = [] %>
             <% username.forEach(item => { %>
               <% usernameArr.push(item.charAt(0).toUpperCase() + item.slice(1, item.length)) %>
-            <% }) %>
+            <% }) %> -->
             <!-- <%= username[0].charAt(0).toUpperCase() + username[0].slice(1, username[0].length).toLowerCase() %> <%= username[1].charAt(0).toUpperCase() + username[1].slice(1, username[1].length).toLowerCase() %></li> -->
-            <%= usernameArr.join(" ") %>
+            <!-- <%= usernameArr.join(" ") %> -->
+            <%= currentUser.username %>
             </li>
-        <% } else { %>
-          <li class="text-white nav-link active" id="userName"></li>
-        <% } %>
+        <!-- <% } %> -->
+
        
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
