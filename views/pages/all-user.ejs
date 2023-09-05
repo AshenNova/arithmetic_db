@@ -51,11 +51,10 @@
                   <% if (item.loggedIn.getDay() == new Date().getDay()) { %>
                     <td>Today, <%= item.loggedIn.toLocaleTimeString('en-US') %></td>
                  <% } else { %>
-                    <td><%= item.loggedIn.toLocaleTimeString('en-US') + " " + item.loggedIn.toLocaleDateString() %> </td>
+                    <td><%= item.loggedIn.toLocaleTimeString('en') + " " + item.loggedIn.toLocaleDateString() %> </td>
                 <%  } %>
-                 
                <%  } else { %>
-                  <td>Nil</td>
+                  <td></td>
                 <% } %>
                 <td><a href="/user/edit/?username=<%= item.username %>">Edit</td>
                 <td>Delete</td>

@@ -4,7 +4,7 @@
         <a class="navbar-brand" href="/">EpicMind</a>
         <% if ( username ) { %>
           <% username = username.split(" ") %>
-          <li class="text-white nav-link active" id="userName">
+          <li class="text-info nav-link active" id="userName">
             <% let usernameArr = [] %>
             <% username.forEach(item => { %>
               <% usernameArr.push(item.charAt(0).toUpperCase() + item.slice(1, item.length)) %>
@@ -40,7 +40,7 @@
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">  
               <% if (currentUser.points) { %>
-                <div class="nav-link active">[Points: <%= currentUser.points %>]</div>
+                <div class="text-warning nav-link active">[Points: <%= currentUser.points %>]</div>
               <% } %>
               </li>
             <li class="nav-item">  
@@ -50,9 +50,9 @@
             </li>
             <li class="nav-item">
               <% if (authenticate.login) { %>
-                <a class="nav-link active" href="/user/logout">Logout</a>
+                <a class="text-danger nav-link active" href="/user/logout">Logout</a>
               <% } else { %>
-                <a class="nav-link active" href="/user/login">Login</a>
+                <a class="text-success nav-link active" href="/user/login">Login</a>
               <% } %>
             </li>
             <li class="nav-item">
