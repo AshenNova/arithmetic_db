@@ -115,6 +115,20 @@ exports.saveEditUser = async (req, res) => {
   // res.redirect("/attempts");
 };
 
+exports.getAllPoints = async (req, res) => {
+  const allUsers = await User.find().sort({ points: -1 });
+  // res.status(200).json({ message: "This is the points page!" });
+
+  currentUser = req.user;
+  authenticate = req.auth;
+  res.render("pages/points", {
+    authenticate,
+    username,
+    currentUser,
+    allUsers,
+  });
+};
+
 exports.login = (req, res) => {
   console.log(req.auth);
   authenticate = req.auth;

@@ -8,6 +8,11 @@ const router = express.Router();
 // router.post("/login", authController.login);
 router.route("/").get(authController.authenticate, userController.getAllUsers);
 router.route("/edit").get(authController.authenticate, userController.editUser);
+
+router
+  .route("/points")
+  .get(authController.authenticate, userController.getAllPoints);
+
 router
   .route("/edit/:id")
   .get(authController.authenticate, userController.editSingleUser);

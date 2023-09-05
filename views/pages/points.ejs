@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Points Overview</title>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/attempts-styles.css">
+    <link rel="stylesheet" href="/css/navbar-styles.css">
+     <link rel="icon" href="/images/favicon.ico?v=1.1">
+</head>
+<body>
+    <%- include("../partials/navbar") %>
+
+    <div class="container">
+        <h1>Current Points</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Points</th>
+                <th scope="col">Login</th>
+            </tr>
+            </thead>
+            <tbody>
+               
+                <% allUsers.forEach(item => { %>
+                   <% if (item.points > 0) { %>
+                      <tr>
+                        <td><a href="/attempts/filter/?user=<%= item.user %>&level=&setting=&mode="><%= item.username %></a></td>
+                        <td><%= item.points %></td>
+                        <td><%= item.loggedIn.toLocaleDateString() %></td>
+                      </tr>
+                    <% } %>
+            <% }) %>
+          
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>
