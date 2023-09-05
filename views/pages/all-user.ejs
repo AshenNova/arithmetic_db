@@ -25,6 +25,7 @@
         <!-- <th scope="col">#</th> -->
         <th scope="col">Admin</th>
         <th scope="col">Username</th>
+        <th scope="col">Points</th>
         <th scope="col">Email</th>
         <th scope="col">Age</th>
         <th scope="col">DOB</th>
@@ -42,6 +43,7 @@
                 <td></td>
               <% } %>
                 <td><%= item.username %></td>
+                <td><%= item.points %></td>
                 <td><%= item.email %></td>
                 <td><%= new Date().getFullYear()- item.DOB.getFullYear() %></td>
                 <td><%= item.DOB.toLocaleDateString() %></td>
