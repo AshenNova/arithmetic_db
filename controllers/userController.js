@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const Reward = require("../models/rewardModel");
 const bcrypt = require("bcryptjs");
 
 let username;
@@ -127,6 +128,41 @@ exports.getAllPoints = async (req, res) => {
     currentUser,
     allUsers,
   });
+};
+
+exports.getAllRewards = async (req, res) => {
+  currentUser = req.user;
+  authenticate = req.auth;
+  const allRewards = await Reward.find();
+  res.render("pages/rewards/claim-rewards", {
+    authenticate,
+    username,
+    currentUser,
+    allRewards,
+  });
+};
+
+exports.newReward = async (req, res) => {
+  currentUser = req.user;
+  authenticate = req.auth;
+  res.render("pages/rewards/new-rewards", {
+    authenticate,
+    username,
+    currentUser,
+  });
+};
+
+exports.postNewReward = async (req, res) => {
+  console.log(req.body);
+  try {
+    const newReward = await Reward.create(req.body);
+    console.log(newReward);
+
+    res.redirect("/user/points/rewards");
+  } catch (err) {
+    console.log(err);
+    return res.redirect("/user/points/rewards");
+  }
 };
 
 exports.login = (req, res) => {

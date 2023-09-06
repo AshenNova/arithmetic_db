@@ -9,10 +9,10 @@ const router = express.Router();
 router.route("/").get(authController.authenticate, userController.getAllUsers);
 router.route("/edit").get(authController.authenticate, userController.editUser);
 
-router
-  .route("/points")
-  .get(authController.authenticate, userController.getAllPoints);
-
+router.route("/points").get(userController.getAllPoints);
+router.route("/points/rewards").get(userController.getAllRewards);
+router.route("/points/rewards/new").get(userController.newReward);
+router.route("/points/rewards/new").post(userController.postNewReward);
 router
   .route("/edit/:id")
   .get(authController.authenticate, userController.editSingleUser);

@@ -43,23 +43,16 @@ import { cutOffCheck } from "./cut_off.js";
 import { displayContent } from "./content.js";
 import { helpMeFunc } from "./helpMe.js";
 
-// let user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
-// while (user == null || user.length < 2) {
+// let user = document.querySelector("#userName").textContent || "";
+// if (user == "") {
 //   user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
+//   // console.log(typeof user);
+//   while (user == null || user.length < 2) {
+//     user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
+//   }
+//   document.querySelector("#userName").textContent = user;
 // }
-// user = user.charAt(0).toUpperCase() + user.slice(1, user.length).toLowerCase();
-// user = user.trim();
-// document.querySelector("#userName").textContent = user;
-
-let user = document.querySelector("#userName").textContent || "";
-if (user == "") {
-  user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
-  // console.log(typeof user);
-  while (user == null || user.length < 2) {
-    user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
-  }
-  document.querySelector("#userName").textContent = user;
-}
+let user = document.querySelector("#userName").textContent;
 user = user.trim();
 if (user.split(" ").length > 1) {
   console.log("Splitting user");
@@ -22055,15 +22048,11 @@ function handleSubmit(e) {
         if (p.version == "money") {
           const commonQuantity = commonDeno(p.quantityA, p.quantityB);
           if (p.question == "VA")
-            correctAnswer =
-              (commonQuantity / p.quantityA) * p.priceA * p.groups;
+            correctAnswer = p.priceA * p.groups * commonQuantity;
           if (p.question == "VB")
-            correctAnswer =
-              (commonQuantity / p.quantityB) * p.priceB * p.groups;
-          if (p.question == "QA")
-            correctAnswer = p.quantityA * p.groups * commonQuantity;
-          if (p.question == "QB")
-            correctAnswer = p.quantityB * p.groups * commonQuantity;
+            correctAnswer = p.priceB * p.groups * commonQuantity;
+          if (p.question == "QA") correctAnswer = p.groups * commonQuantity;
+          if (p.question == "QB") correctAnswer = p.groups * commonQuantity;
           // if (p.question == "T") correctAnswer = valueA + valueB;
         }
         if (p.version == "distance") {
