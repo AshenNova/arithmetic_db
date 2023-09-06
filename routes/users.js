@@ -13,6 +13,7 @@ router.route("/points").get(userController.getAllPoints);
 router.route("/points/rewards").get(userController.getAllRewards);
 router.route("/points/rewards/new").get(userController.newReward);
 router.route("/points/rewards/new").post(userController.postNewReward);
+router.route("/points/rewards/claim").post(userController.claimReward);
 router
   .route("/edit/:id")
   .get(authController.authenticate, userController.editSingleUser);

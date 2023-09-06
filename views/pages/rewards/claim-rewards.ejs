@@ -7,6 +7,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/attempts-styles.css">
     <link rel="stylesheet" href="/css/navbar-styles.css">
      <link rel="icon" href="/images/favicon.ico?v=1.1">
@@ -15,6 +16,17 @@
 </head>
 <body>
     <%- include("../../partials/navbar") %>
+
+    <div class="container">
+      <h1> Rewards Log</h1>
+      <ul>
+      <% logRewards.forEach(item => { %>
+       
+          <li><%= item.claimed.toLocaleDateString() %> @ <%= item.claimed.toLocaleTimeString('en-US') %>: <b><%=  item.username %></b> claimed "<%= item.reward %>"" with <%= item.points %> points.</li>
+        
+      <% }) %>
+    </ul>
+    </div>
     <div class="container">
         <h1>Rewards</h1> 
 

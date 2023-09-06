@@ -1,11 +1,11 @@
-  <div class="nav-bar pb-4">
+  <div class="nav-bar">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">EpicMind</a>
 
           <% if (currentUser.username) { %>
             <li class="text-info nav-link active" id="userName">
-              <%= currentUser.username %>
+               <%= currentUser.username %>
             </li>
           <% } %>
         
@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-additional">
             <li class="nav-item">
-              <a class="nav-link active" href="/arithmetic">| Arithmetic |</a>
+              <a class="nav-link active" href="/arithmetic"> 🧮 Arithmetic </a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="/attempts"target="_blank">| Results |</a>
@@ -29,7 +29,7 @@
               <a class="nav-link active" href="/attempts/monthly-highscore"target="_blank">| Monthly Highscore |</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/user/points"target="_blank">| Points overview |</a>
+              <a class="nav-link active" href="/user/points"target="_blank">| Points Overview |</a>
             </li>
           </ul>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">

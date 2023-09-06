@@ -1,6 +1,8 @@
 const User = require("../models/userModel");
 const Reward = require("../models/rewardModel");
+const RewardLog = require("../models/rewardLogModel");
 const bcrypt = require("bcryptjs");
+const { findByIdAndUpdate } = require("../models/attemptModel");
 
 let username;
 let authenticate;
@@ -133,12 +135,20 @@ exports.getAllPoints = async (req, res) => {
 exports.getAllRewards = async (req, res) => {
   currentUser = req.user;
   authenticate = req.auth;
-  const allRewards = await Reward.find();
+  // const allRewards = await Reward.find();
+  // const logRewards = await RewardLog.find().sort({ date: -1 }).limit(20);
+
+  const [allRewards, logRewards] = await Promise.all([
+    Reward.find(),
+    RewardLog.find().sort({ claimed: -1 }).limit(20),
+  ]);
+  // const logRewards = await RewardLog.find().sort({ date: -1 }).limit(20);
   res.render("pages/rewards/claim-rewards", {
     authenticate,
     username,
     currentUser,
     allRewards,
+    logRewards,
   });
 };
 
@@ -163,6 +173,36 @@ exports.postNewReward = async (req, res) => {
     console.log(err);
     return res.redirect("/user/points/rewards");
   }
+};
+
+exports.claimReward = async (req, res) => {
+  console.log("Processing Claim");
+  console.log(req.body);
+  try {
+    const user = await User.findOne({ username: req.body.user });
+
+    if (user.points >= req.body.requirement) {
+      console.log("Enough!");
+      const updateLog = await RewardLog.create({
+        username: req.body.user,
+        description: req.body.description,
+        points: req.body.requirement,
+        reward: req.body.name,
+      });
+      console.log(updateLog);
+      const pointsAfterClaim = user.points - req.body.requirement;
+      const updatePoints = await User.findByIdAndUpdate(user._id, {
+        points: pointsAfterClaim,
+      });
+      res.send("Yes");
+    } else {
+      res.send("No");
+    }
+  } catch (err) {
+    console.log("Something happened");
+  }
+
+  // res.send();
 };
 
 exports.login = (req, res) => {
