@@ -22064,7 +22064,7 @@ function handleSubmit(e) {
           if (p.question == "QA") correctAnswer = totalFlagA;
           if (p.question == "QB") correctAnswer = totalFlagB;
           if (p.question == "VA" || p.question == "VB")
-            correctAnswer = (commonDistance * p.groups;
+            correctAnswer = commonDistance * p.groups;
         }
       }
     }
