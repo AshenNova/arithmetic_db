@@ -15486,8 +15486,11 @@ How many items are there in each bag?
       let firstScene = p.sceneAOne * p.unitA + p.sceneBOne * p.unitB;
       let secondScene = p.sceneATwo * p.unitA + p.sceneBTwo * p.unitB;
       if (p.type == "A") {
-        if (firstScene == secondScene) {
-          console.log("Clashing total");
+        // if (firstScene == secondScene) {
+        //   console.log("Clashing total");
+        //   return updateCalc();
+        // }
+        if (p.sceneAOne == p.sceneOne && p.sceneATwo == p.sceneBTwo) {
           return updateCalc();
         }
         displayProblem.innerHTML = `
@@ -15498,6 +15501,9 @@ How many items are there in each bag?
         p.varB = totalBOne;
       }
       if (p.type == "B") {
+        if (totalATwo == totalBTwo && totalATwo == 2) {
+          return updateCalc();
+        }
         firstScene = totalATwo * p.unitA + totalBTwo * p.unitB;
         const sceneATwoRemaining = totalATwo - p.sceneATwo;
         const sceneBTwoRemaining = totalBTwo - p.sceneBTwo;
@@ -16498,6 +16504,9 @@ How many items are there in each bag?
 
     // MORE THAN / LESS THAN
     if (setting == 3) {
+      if (p.denoA == p.denoB) {
+        return updateCalc();
+      }
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
       [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
       const commonDenominator = commonDeno(p.denoA, p.denoB);
