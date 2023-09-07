@@ -213,7 +213,7 @@
                 
                 <%= item.extra %></td>
                 <!-- <td><%= item.date.getFullYear() %></td> -->
-                <td><%= item.date.toLocaleTimeString('en-US') + " " + item.date.toLocaleDateString() %></td>
+                <td><%= item.date.toLocaleTimeString('en-US') + " " + item.date.toLocaleDateString('en-GB') %></td>
                 <!-- <td><%= item.date.getHours() %></td> -->
                 <% if (new Date().toLocaleDateString('en-US') == item.date.toLocaleDateString('en-US')) { %>
                   <td><%= "Today" %></td>

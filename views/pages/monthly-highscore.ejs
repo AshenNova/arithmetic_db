@@ -59,7 +59,7 @@
                       <td><%= item.score %></td>
                       <td><%= item.extra %></td>
                       <!-- <td><%= item.date.getFullYear() %></td> -->
-                      <td><%= item.date.toLocaleTimeString('en-US') + " " + item.date.toLocaleDateString() %></td>
+                      <td><%= item.date.toLocaleTimeString('en-US') + " " + item.date.toLocaleDateString('en-GB') %></td>
                       <% if (new Date().toLocaleDateString('en-US') == item.date.toLocaleDateString('en-US')) { %>
                         <td><%= "Today" %></td>
                       <% } else { %>
