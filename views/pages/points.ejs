@@ -15,6 +15,7 @@
 </head>
 <body>
     <%- include("../partials/navbar") %>
+    <%- include("../partials/rewardLog") %>
 
     <div class="container">
         <h1>Current Points</h1>
@@ -24,6 +25,7 @@
                 <th scope="col">Username</th>
                 <th scope="col">Points</th>
                 <th scope="col">Login</th>
+                <th scope="col">Ago</th>
             </tr>
             </thead>
             <tbody>
@@ -34,6 +36,7 @@
                         <td><a href="/attempts/filter/?user=<%= item.user %>&level=&setting=&mode="><%= item.username %></a></td>
                         <td><%= item.points %></td>
                         <td><%= item.loggedIn.toLocaleDateString() %></td>
+                        <td><%= Math.floor((Date.now() - item.loggedIn)/(1000*60*60*24)) %></td>
                       </tr>
                     <% } %>
             <% }) %>

@@ -1,0 +1,10 @@
+<div class="container">
+    <h1> Rewards Log</h1>
+    <ul>
+    <% logRewards.forEach(item => { %>
+     
+        <li><%= item.claimed.toLocaleDateString() %> @ <%= item.claimed.toLocaleTimeString('en-US') %>: <b><%=  item.username %></b> claimed "<%= item.reward %>"" with <%= item.points %> points.</li>
+      
+    <% }) %>
+  </ul>
+  </div>

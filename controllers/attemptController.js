@@ -555,7 +555,7 @@ exports.newAttempt = async (req, res) => {
       date: { $gte: start, $lt: end },
     });
     console.log(`Attempts today: ${checkLimit}`);
-    if (checkLimit.length < 6) {
+    if (checkLimit.length <= 5) {
       const updatePoints = await User.findByIdAndUpdate(userNow._id, {
         points: userNow.points,
       });
