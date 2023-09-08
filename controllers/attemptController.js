@@ -57,7 +57,7 @@ exports.getAllAttempts = async (req, res) => {
     page
   );
 
-  const logRewards = await RewardLog.find();
+  const logRewards = await RewardLog.find().sort({ claimed: -1 }).limit(10);
   let summaryObj = attemptsTwo[0];
   const filteredUser = "";
   let latestAttemptObj;

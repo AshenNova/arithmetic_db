@@ -121,7 +121,7 @@ exports.getAllPoints = async (req, res) => {
   // const allUsers = await User.find().sort({ points: -1 });
   const [allUsers, logRewards] = await Promise.all([
     User.find().sort({ points: -1 }),
-    RewardLog.find().sort({ claimed: -1 }).limit(10),
+    RewardLog.find().sort({ claimed: -1 }).limit(20),
   ]);
   // res.status(200).json({ message: "This is the points page!" });
 
