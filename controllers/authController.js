@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const Attempt = require("../models/attemptModel");
 const jwt = require("jsonwebtoken");
 
 const signToken = (id) => {
@@ -85,20 +86,35 @@ exports.login = async (req, res) => {
     res.cookie("JWT", token, {
       cookieSetting,
     }); // Milliseconds
-    console.log({ user });
-    // const previousLogin = await User.findOne({ username: user.username });
-    // console.log(previousLogin, previousLogin.loggedIn - new Date());
-    const daysAgo = Math.floor(
-      (new Date() - user.loggedIn) / (1000 * 60 * 60 * 24)
-    );
-    console.log(`Last logged in: ${daysAgo} days ago`);
-    if (daysAgo > 2) {
-      user.points -= (daysAgo - 1) * 10;
-      if (user.points < 0) user.points = 0;
-      const penalty = await User.findByIdAndUpdate(user._id, {
-        points: user.points,
-        loggedIn: new Date(),
-      });
+    const userString = user.username.split(" ");
+    let userArr = [];
+    userString.forEach((item) => {
+      userArr.push(item.charAt(0).toUpperCase() + item.slice(1, item.length));
+    });
+    userArr = userArr.join(" ");
+    // console.log(userArr);
+    const lastAttempt = await Attempt.find({ user: userArr }).sort({
+      date: -1,
+    });
+    if (lastAttempt[0]) {
+      console.log(lastAttempt[0]);
+      const daysAgo = Math.floor(
+        (new Date() - lastAttempt[0].date) / (1000 * 60 * 60 * 24)
+      );
+      console.log(`Last logged in: ${daysAgo} days ago`);
+      if (daysAgo > 2) {
+        user.points -= (daysAgo - 1) * 10;
+        if (user.points < 0) user.points = 0;
+        const penalty = await User.findByIdAndUpdate(user._id, {
+          points: user.points,
+          loggedIn: new Date(),
+        });
+      } else {
+        const updateLogin = await User.updateOne(
+          { username: user.username },
+          { $set: { loggedIn: new Date() } }
+        );
+      }
     } else {
       const updateLogin = await User.updateOne(
         { username: user.username },

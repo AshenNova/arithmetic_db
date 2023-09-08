@@ -108,21 +108,20 @@ exports.saveEditUser = async (req, res) => {
     const update = await User.findByIdAndUpdate(editUser._id, req.body, {
       new: true,
     });
+    req.body.confirmPassword = "";
     console.log(`Update: ${update}`);
     console.log("Successfully updated.");
     res.redirect("/attempts");
   } catch (err) {
     console.log(err);
   }
-
-  // res.redirect("/attempts");
 };
 
 exports.getAllPoints = async (req, res) => {
   // const allUsers = await User.find().sort({ points: -1 });
   const [allUsers, logRewards] = await Promise.all([
     User.find().sort({ points: -1 }),
-    RewardLog.find().sort({ claimed: -1 }).limit(20),
+    RewardLog.find().sort({ claimed: -1 }).limit(10),
   ]);
   // res.status(200).json({ message: "This is the points page!" });
 
@@ -165,6 +164,48 @@ exports.newReward = async (req, res) => {
     username,
     currentUser,
   });
+};
+
+exports.editReward = async (req, res) => {
+  console.log("Editing Reward");
+  const id = req.params.id;
+  console.log(id);
+  const reward = await Reward.findById(id);
+  console.log(reward);
+  currentUser = req.user;
+  authenticate = req.auth;
+  res.render("pages/rewards/edit-reward", {
+    authenticate,
+    username,
+    currentUser,
+    reward,
+  });
+};
+
+exports.saveReward = async (req, res) => {
+  console.log("Saving Reward");
+  const id = req.params.id;
+  const body = req.body;
+  try {
+    console.log(id);
+    console.log(body);
+    const reward = await Reward.findByIdAndUpdate(id, req.body);
+    // alert("Reward has been updated");
+    res.redirect("/user/points/rewards");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.deleteReward = async (req, res) => {
+  console.log("Deleting reward");
+  try {
+    const id = req.params.id;
+    const deleteReward = await Reward.findByIdAndDelete(id);
+    res.redirect("/user/points/rewards");
+  } catch (err) {
+    res.status(404).json({ message: err });
+  }
 };
 
 exports.postNewReward = async (req, res) => {

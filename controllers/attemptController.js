@@ -1,6 +1,7 @@
 const Attempt = require("../models/attemptModel");
 const Highscore = require("../models/highscoreModel");
 const User = require("../models/userModel");
+const RewardLog = require("../models/rewardLogModel");
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
@@ -56,6 +57,7 @@ exports.getAllAttempts = async (req, res) => {
     page
   );
 
+  const logRewards = await RewardLog.find();
   let summaryObj = attemptsTwo[0];
   const filteredUser = "";
   let latestAttemptObj;
@@ -71,6 +73,7 @@ exports.getAllAttempts = async (req, res) => {
     username,
     authenticate,
     currentUser,
+    logRewards,
   });
 };
 
@@ -192,6 +195,7 @@ exports.getFilteredAttempts = async (req, res) => {
     const todayCount = "";
     username = req.user.username;
     currentUser = req.user;
+    let logRewards;
     res.status(200).render("pages/attempts", {
       attempts,
       paginatedAttempts,
@@ -201,6 +205,7 @@ exports.getFilteredAttempts = async (req, res) => {
       username,
       authenticate,
       currentUser,
+      logRewards,
     });
   } catch (e) {
     console.log(e);

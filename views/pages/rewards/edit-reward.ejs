@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/attempts-styles.css">
+    <link rel="stylesheet" href="/css/navbar-styles.css">
+     <link rel="icon" href="/images/favicon.ico?v=1.1">
+
+    <title>Edit Reward</title>
+</head>
+<body>
+    <%- include("../../partials/navbar") %>
+    
+    <div class="container">
+        <h1>Edit Reward</h1>
+        
+        <form action="/user/points/rewards/edit/<%= reward._id %>" method="POST">
+            <div class="form-group required">
+                <label for="rewardName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="rewardName" name="rewardName" value="<%= reward.rewardName %>">
+              </div>
+            <div class="form-group required">
+              <label for="description" class="form-label">Description</label>
+              <input type="text" class="form-control" id="description" name="description" value="<%= reward.description %>">
+            </div>
+            <div class="form-group required">
+              <label for="requirement" class="form-label">Requirement</label>
+              <input type="number" class="form-control" id="requirement" name="requirement" value="<%= reward.requirement %>">
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-4">Save</button>
+          </form>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</html>

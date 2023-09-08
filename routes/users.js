@@ -14,6 +14,9 @@ router.route("/points/rewards").get(userController.getAllRewards);
 router.route("/points/rewards/new").get(userController.newReward);
 router.route("/points/rewards/new").post(userController.postNewReward);
 router.route("/points/rewards/claim").post(userController.claimReward);
+router.route("/points/rewards/edit/:id").get(userController.editReward);
+router.route("/points/rewards/edit/:id").post(userController.saveReward);
+router.route("/points/rewards/delete/:id").get(userController.deleteReward);
 router
   .route("/edit/:id")
   .get(authController.authenticate, userController.editSingleUser);
