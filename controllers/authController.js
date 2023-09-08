@@ -152,27 +152,27 @@ exports.protect = async (req, res, next) => {
 exports.authenticate = async (req, res, next) => {
   console.log("Authenticating");
   const accessToken = req.cookies["JWT"];
-  // console.log(accessToken);
-  if (!accessToken) {
-    console.log("No token");
-    req.user = "";
-    req.auth = {
-      login: false,
-    };
-  }
-  if (accessToken) {
-    try {
+
+  try {
+    if (accessToken) {
+      // try {
       const validToken = jwt.verify(accessToken, process.env.JWT_SECRET);
       if (validToken) {
         const user = await User.findById(validToken.id);
         req.user = user;
-        req.auth = {
-          login: true,
-        };
+        req.auth = { login: true };
       }
-    } catch (e) {
-      console.log(e);
+      // }
     }
+    if (!accessToken) {
+      console.log("No token");
+      req.user = "";
+      req.auth = { login: false };
+      console.log(req.auth);
+    }
+  } catch (err) {
+    console.log(err);
   }
+
   next();
 };

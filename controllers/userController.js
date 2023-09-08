@@ -2,7 +2,6 @@ const User = require("../models/userModel");
 const Reward = require("../models/rewardModel");
 const RewardLog = require("../models/rewardLogModel");
 const bcrypt = require("bcryptjs");
-const { findByIdAndUpdate } = require("../models/attemptModel");
 
 let username;
 let authenticate;
