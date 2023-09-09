@@ -10636,12 +10636,12 @@ function updateProblems() {
 
   //DISPLAY
   if (level == "calFiveb") {
-    // if (regen > 10) {
-    //   console.log("Regen activated!");
-    //   skipGlobalUpdateProblem = 0;
-    //   calArr.pop()
-    //   updateProblems();
-    // }
+    if (regen > 10) {
+      console.log("⭐️Regen activated!⭐️");
+      skipGlobalUpdateProblem = 0;
+      //   calArr.pop()
+      updateProblems();
+    }
     calculatorSymbol.classList.remove("hidden");
 
     //REMAINDER CONCEPT: BEFORE AND AFTER
