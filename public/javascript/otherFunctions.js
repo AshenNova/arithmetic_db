@@ -314,6 +314,9 @@ function commonDeno(first, second) {
     temp += max;
     count += 1;
     common.push(temp);
+    if (common[common.length - 1] > 200) {
+      return "Error";
+    }
     console.log(common);
   }
   return common[common.length - 1];

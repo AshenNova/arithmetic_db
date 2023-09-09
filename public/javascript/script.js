@@ -967,6 +967,7 @@ function calArrAll(max, arr, setting, maxSetting, level) {
 const updateCalc = function () {
   skipGlobalUpdateProblem = 1;
   regen += 1;
+  console.log(`Regen: ${regen}`);
   console.log(
     `Updating! skipGlobalUpdateProblem set to ${skipGlobalUpdateProblem}`
   );
@@ -10636,12 +10637,6 @@ function updateProblems() {
 
   //DISPLAY
   if (level == "calFiveb") {
-    if (regen > 10) {
-      console.log("⭐️Regen activated!⭐️");
-      skipGlobalUpdateProblem = 0;
-      //   calArr.pop()
-      updateProblems();
-    }
     calculatorSymbol.classList.remove("hidden");
 
     //REMAINDER CONCEPT: BEFORE AND AFTER
@@ -12123,11 +12118,13 @@ function updateProblems() {
         let c = 100;
         [p.percB, c] = simplify(p.percB, c);
         commonGroup = commonDeno(bAndc, p.percB + c);
+        if (commonGroup == "Error") return updateCalc();
         const multiplierOne = commonGroup / bAndc;
         newA = p.percA * multiplierOne;
         const multiplierTwo = commonGroup / (p.percB + c);
         newB = p.percB * multiplierTwo;
         newC = c * multiplierTwo;
+        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
         [newA, newB, newC] = simplifyThree(newA, newB, newC);
         p.answer = `${newA}:${newB}:${newC}`;
       }
@@ -12137,11 +12134,13 @@ function updateProblems() {
         let c = 100;
         [p.percB, c] = simplify(p.percB, c);
         commonGroup = commonDeno(bAndc, p.percB + c);
+        if (commonGroup == "Error") return updateCalc();
         const multiplierOne = commonGroup / bAndc;
         newA = p.percA * multiplierOne;
         const multiplierTwo = commonGroup / (p.percB + c);
         newB = p.percB * multiplierTwo;
         newC = c * multiplierTwo;
+        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
         [newA, newB, newC] = simplifyThree(newA, newB, newC);
         p.answer = `${newA}:${newB}:${newC}`;
       }
@@ -12151,11 +12150,13 @@ function updateProblems() {
         let aAndc = 100 - p.percB;
         [p.percB, aAndc] = simplify(p.percB, aAndc);
         commonGroup = commonDeno(p.percA + bAndc, p.percB + aAndc);
+        if (commonGroup == "Error") return updateCalc();
         const multiplierOne = commonGroup / (p.percA + bAndc);
         newA = p.percA * multiplierOne;
         const multiplierTwo = commonGroup / (p.percB + aAndc);
         newB = p.percB * multiplierTwo;
         newC = aAndc * multiplierTwo - newA;
+        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
         [newA, newB, newC] = simplifyThree(newA, newB, newC);
         p.answer = `${newA}:${newB}:${newC}`;
       }
@@ -12165,11 +12166,13 @@ function updateProblems() {
         let aAndc = 100 - p.percB;
         [p.percB, aAndc] = simplify(p.percB, aAndc);
         commonGroup = commonDeno(p.percA + bAndc, p.percB + aAndc);
+        if (commonGroup == "Error") return updateCalc();
         const multiplierOne = commonGroup / (p.percA + bAndc);
         newA = p.percA * multiplierOne;
         const multiplierTwo = commonGroup / (p.percB + aAndc);
         newB = p.percB * multiplierTwo;
         newC = aAndc * multiplierTwo - newA;
+        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
         [newA, newB, newC] = simplifyThree(newA, newB, newC);
         p.answer = `${newA}:${newB}:${newC}`;
       }
@@ -25277,8 +25280,17 @@ function genProblems() {
 
   //SETTINGS
   if (level == "calFiveb") {
-    setting = calArrAll(21, calArr, setting, 99);
-    setting = checkRange(setting, calArr, skipArr);
+    if (regen > 20) {
+      console.log("⭐️Regen activated!⭐️");
+      skipGlobalUpdateProblem = 0;
+      //   calArr.pop()
+      normalDisplay();
+      setting = 10;
+      console.log("Whats the regen?");
+    } else {
+      setting = calArrAll(21, calArr, setting, 99);
+      setting = checkRange(setting, calArr, skipArr);
+    }
 
     //REMAINDER CONCEPT: BEFORE AND AFTER
 
