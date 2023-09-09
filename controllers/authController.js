@@ -93,34 +93,37 @@ exports.login = async (req, res) => {
     });
     userArr = userArr.join(" ");
     // console.log(userArr);
-    const lastAttempt = await Attempt.find({ user: userArr }).sort({
-      date: -1,
-    });
-    if (lastAttempt[0]) {
-      console.log(lastAttempt[0]);
-      const daysAgo = Math.floor(
-        (new Date() - lastAttempt[0].date) / (1000 * 60 * 60 * 24)
-      );
-      console.log(`Last logged in: ${daysAgo} days ago`);
-      if (daysAgo > 2) {
-        user.points -= (daysAgo - 1) * 10;
-        if (user.points < 0) user.points = 0;
-        const penalty = await User.findByIdAndUpdate(user._id, {
-          points: user.points,
-          loggedIn: new Date(),
-        });
-      } else {
-        const updateLogin = await User.updateOne(
-          { username: user.username },
-          { $set: { loggedIn: new Date() } }
-        );
-      }
+    // const lastAttempt = await Attempt.find({ user: userArr }).sort({
+    //   date: -1,
+    // });
+    // if (lastAttempt[0]) {
+    // console.log(lastAttempt[0]);
+    // const daysAgo = Math.floor(
+    //   (new Date() - lastAttempt[0].date) / (1000 * 60 * 60 * 24)
+    // );
+    const daysAgo = Math.floor(
+      (new Date() - user.loggedIn) / (1000 * 60 * 60 * 24)
+    );
+    console.log(`Last logged in: ${daysAgo} days ago`);
+    if (daysAgo > 1) {
+      user.points -= (daysAgo - 1) * 10;
+      if (user.points < 0) user.points = 0;
+      const penalty = await User.findByIdAndUpdate(user._id, {
+        points: user.points,
+        loggedIn: new Date(),
+      });
     } else {
       const updateLogin = await User.updateOne(
         { username: user.username },
         { $set: { loggedIn: new Date() } }
       );
     }
+    // } else {
+    // const updateLogin = await User.updateOne(
+    //   { username: user.username },
+    //   { $set: { loggedIn: new Date() } }
+    // );
+    // }
 
     if (user.admin) {
       res.redirect("/attempts");
