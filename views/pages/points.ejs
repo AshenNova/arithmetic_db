@@ -33,7 +33,7 @@
                 <% allUsers.forEach(item => { %>
                    <% if (item.points > 0) { %>
                       <tr>
-                        <td><a href="/attempts/filter/?user=<%= item.user %>&level=&setting=&mode="><%= item.username %></a></td>
+                        <td><a href="/attempts/filter/?user=<%= item.username %>&level=&setting=&mode="><%= item.username %></a></td>
                         <td><%= item.points %></td>
                         <td><%= item.loggedIn.toLocaleDateString() %></td>
                         <td><%= Math.floor((Date.now() - item.loggedIn)/(1000*60*60*24)) %></td>

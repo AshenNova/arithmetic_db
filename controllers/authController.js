@@ -107,7 +107,7 @@ exports.login = async (req, res) => {
     console.log(`Last logged in: ${daysAgo} days ago`);
     if (daysAgo > 1) {
       user.points -= (daysAgo - 1) * 10;
-      if (user.points < 0) user.points = 0;
+      if (user.points < 0) user.points = "";
       const penalty = await User.findByIdAndUpdate(user._id, {
         points: user.points,
         loggedIn: new Date(),
