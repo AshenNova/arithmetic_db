@@ -42,7 +42,7 @@
               <% } else { %>
                 <td></td>
               <% } %>
-                <td><%= item.username %></td>
+                <td><a href="/attempts/filter/?user=<%= item.username %>&level=&setting=&mode=" target="_blank"><%= item.username %></a></td>
                 <td><%= item.points %></td>
                 <td><%= item.email %></td>
                 <td><%= new Date().getFullYear()- item.DOB.getFullYear() %></td>
