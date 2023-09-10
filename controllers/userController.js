@@ -103,11 +103,12 @@ exports.saveEditUser = async (req, res) => {
           .json({ message: `Password and confirm password is not the same.` });
       }
     }
+    req.body.confirmPassword = "";
     console.log(req.body);
     const update = await User.findByIdAndUpdate(editUser._id, req.body, {
       new: true,
     });
-    req.body.confirmPassword = "";
+    // req.body.confirmPassword = "";
     console.log(`Update: ${update}`);
     console.log("Successfully updated.");
     res.redirect("/attempts");

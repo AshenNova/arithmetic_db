@@ -48,7 +48,7 @@
                 <td><%= new Date().getFullYear()- item.DOB.getFullYear() %></td>
                 <td><%= item.DOB.toLocaleDateString('en-GB') %></td>
                 <% if (item.loggedIn) { %>
-                  <% if (item.loggedIn.getDay() == new Date().getDay()) { %>
+                  <% if (item.loggedIn.toLocaleDateString() == new Date().toLocaleDateString()) { %>
                     <td><%= item.loggedIn.toLocaleTimeString('en-US') %>, Today</td>
                  <% } else { %>
                     <td><%= item.loggedIn.toLocaleTimeString('en-US') + " " + item.loggedIn.toLocaleDateString('en-GB') %> </td>
