@@ -92,16 +92,7 @@ formElem.addEventListener("submit", async (e) => {
 });
 
 // console.log(rewardImageCl);
-const rewardImageCl = document.querySelectorAll(".rewardImage");
-const imagePopCl = document.querySelectorAll(".imagePop");
-console.log(rewardImageCl);
-console.log(imagePopCl);
-rewardImageCl.forEach((item, index) => {
-  item.addEventListener("click", function (e) {
-    console.log(item, index);
-    imagePopCl[index].classList.remove("hidden");
-  });
-});
+
 // function showPopup() {
 //   const imagePop = document.querySelectorAll(".imagePop");
 //   imagePop.forEach((item, index) => {
