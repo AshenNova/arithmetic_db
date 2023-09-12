@@ -217,10 +217,26 @@ exports.deleteReward = async (req, res) => {
 };
 
 const GOOGLE_API_FOLDER_ID = process.env.GOOGLE_API_FOLDER_ID;
-const auth = new google.auth.GoogleAuth({
-  keyFile: "./googlekey.json",
-  scopes: ["https://www.googleapis.com/auth/drive"],
-});
+
+console.log(`Environment: ${process.env.NODE_ENV}`);
+
+let auth;
+if (process.env.NODE_ENV == "DEVELOPMEN") {
+  auth = new google.auth.GoogleAuth({
+    keyFile: "./googlekey.json",
+    scopes: ["https://www.googleapis.com/auth/drive"],
+  });
+} else {
+  auth = new google.auth.GoogleAuth({
+    keyFile: "./google-credentials.json",
+    scopes: ["https://www.googleapis.com/auth/drive"],
+  });
+}
+
+// const auth = new google.auth.GoogleAuth({
+//   keyFile: "./googlekey.json",
+//   scopes: ["https://www.googleapis.com/auth/drive"],
+// });
 
 async function uploadFile(imagePath) {
   const bufferStream = new stream.PassThrough();
