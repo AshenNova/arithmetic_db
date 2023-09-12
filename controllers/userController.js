@@ -216,7 +216,7 @@ exports.deleteReward = async (req, res) => {
   }
 };
 
-const GOOGLE_API_FOLDER_ID = "17Ew7IE4nAdpURdU4gBJkjV_bolqzyvNQ";
+const GOOGLE_API_FOLDER_ID = process.env.GOOGLE_API_FOLDER_ID;
 const auth = new google.auth.GoogleAuth({
   keyFile: "./googlekey.json",
   scopes: ["https://www.googleapis.com/auth/drive"],
