@@ -1,4 +1,6 @@
 const express = require("express");
+const multer = require("multer");
+const upload = multer();
 
 const userController = require("../controllers/userController");
 const authController = require("../controllers/authController");
@@ -12,7 +14,10 @@ router.route("/edit").get(authController.authenticate, userController.editUser);
 router.route("/points").get(userController.getAllPoints);
 router.route("/points/rewards").get(userController.getAllRewards);
 router.route("/points/rewards/new").get(userController.newReward);
-router.route("/points/rewards/new").post(userController.postNewReward);
+router
+  .route("/points/rewards/new")
+  .post(upload.any(), userController.postNewReward);
+// router.route("/points/rewards/new").post(userController.postNewReward);
 router.route("/points/rewards/claim").post(userController.claimReward);
 router.route("/points/rewards/edit/:id").get(userController.editReward);
 router.route("/points/rewards/edit/:id").post(userController.saveReward);

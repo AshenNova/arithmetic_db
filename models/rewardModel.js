@@ -13,6 +13,9 @@ const rewardSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Please enter the point requirements for the reward"],
   },
+  link: {
+    type: String,
+  },
 });
 
 const Reward = mongoose.model("rewards", rewardSchema);

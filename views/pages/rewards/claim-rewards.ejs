@@ -16,6 +16,23 @@
       a{
         text-decoration: none;
       }
+      .imageCSS {
+        height: 500px;
+        max-height: 90%;
+        position: fixed;
+        border: solid 2px;
+       left: 50%;
+       top: 50%;
+       transform: translate(-50%, -50%);
+      }
+.imageClose{
+  /* position: relative; */
+  position: fixed;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
      </style>
     <title>Rewards</title>
 </head>
@@ -29,6 +46,7 @@
         <table class="table text-center">
             <thead>
               <tr>
+                <th scope="col">Image</th>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Points</th>
@@ -43,6 +61,17 @@
             <tbody>
                 <% allRewards.forEach(item => { %>
               <tr>
+                <% if (item.link) { %>
+                  <td class=rewardImage><img src="https://drive.google.com/uc?export=view&id=<%= item.link %>" style="width:42px; height: 42px"></td>
+                  <div class="imagePop hidden">
+                    <div class="container">
+                      <img class="imageCSS" src="https://drive.google.com/uc?export=view&id=<%= item.link %>">
+                      <button class="imageClose btn btn-danger">x</button>
+                   </div>
+                  </div>
+                <% }  else { %>
+                  <td></td>
+                <% } %>
                 <td class="rewardName"><%= item.rewardName %></td>
                 <td class="rewardDescription"><%= item.description %></td>
                 <td class="rewardRequirement"><%= item.requirement %></td>
@@ -59,5 +88,5 @@
     
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-<script src="/javascript/rewards.js"></script>
+<script src="/javascript/rewardsClaim.js"></script>
 </html>

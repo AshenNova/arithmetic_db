@@ -2,6 +2,12 @@ const User = require("../models/userModel");
 const Reward = require("../models/rewardModel");
 const RewardLog = require("../models/rewardLogModel");
 const bcrypt = require("bcryptjs");
+const fs = require("fs");
+const stream = require("stream");
+const path = require("path");
+const multer = require("multer");
+const upload = multer();
+const { google } = require("googleapis");
 
 let username;
 let authenticate;
@@ -186,6 +192,8 @@ exports.saveReward = async (req, res) => {
   console.log("Saving Reward");
   const id = req.params.id;
   const body = req.body;
+
+  console.log(body);
   try {
     console.log(id);
     console.log(body);
@@ -208,16 +216,80 @@ exports.deleteReward = async (req, res) => {
   }
 };
 
+const GOOGLE_API_FOLDER_ID = "17Ew7IE4nAdpURdU4gBJkjV_bolqzyvNQ";
+const auth = new google.auth.GoogleAuth({
+  keyFile: "./googlekey.json",
+  scopes: ["https://www.googleapis.com/auth/drive"],
+});
+
+async function uploadFile(imagePath) {
+  const bufferStream = new stream.PassThrough();
+  bufferStream.end(imagePath.buffer);
+  const { data } = await google.drive({ version: "v3", auth }).files.create({
+    media: {
+      mimeType: imagePath.mimeType,
+      body: bufferStream,
+    },
+    requestBody: {
+      name: imagePath.originalname,
+      parents: [GOOGLE_API_FOLDER_ID],
+    },
+    fields: "id,name",
+  });
+  console.log(`Uploaded file ${data.name} ${data.id}`);
+  return data.id;
+  // try {
+  //   const auth = new google.auth.GoogleAuth({
+  //     keyFile: "./googlekey.json",
+  //     scopes: ["https://www.googleapis.com/auth/drive"],
+  //   });
+
+  //   const driveService = google.drive({
+  //     version: "v3",
+  //     auth,
+  //   });
+
+  //   const fileMetaData = {
+  //     name: "rewards.jpg",
+  //     parents: [GOOGLE_API_FOLDER_ID],
+  //   };
+
+  //   // console.log(bufferStream);
+  //   const media = {
+  //     mimeType: imagePath.mimeType,
+  //     // body: fs.createReadStream(imagePath),
+  //     body: imagePath.buffer,
+  //   };
+
+  //   const response = await driveService.files.create({
+  //     resource: fileMetaData,
+  //     media: media,
+  //     field: "id",
+  //   });
+
+  //   return response.data.id;
+  // } catch (err) {
+  //   console.log("Uploaded Image", err);
+  // }
+}
+
 exports.postNewReward = async (req, res) => {
+  console.log(`Request: ${req}`);
   console.log(req.body);
   try {
+    const { body, files } = req;
+
+    const imageID = await uploadFile(files[0]);
+    console.log(imageID);
+    req.body.link = imageID;
     const newReward = await Reward.create(req.body);
     console.log(newReward);
 
-    res.redirect("/user/points/rewards");
+    // res.redirect("/user/points/rewards");
+    res.send("Success");
   } catch (err) {
     console.log(err);
-    return res.redirect("/user/points/rewards");
+    return res.send("Failed");
   }
 };
 
