@@ -16933,9 +16933,9 @@ How many items are there in each bag?
         if (diffValue < 0) {
           clue = `${Math.abs(
             diffValue
-          )} more small flags than big flags were used.`;
+          )} more big flags than small flags were used.`;
         } else {
-          clue = `${diffValue} more big flags than small flags were used.`;
+          clue = `${diffValue} more small flags than big flags were used.`;
         }
         let finalQuestion = undefined;
         if (p.question == "QA") {
