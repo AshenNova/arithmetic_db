@@ -33,6 +33,7 @@ export const displayContent = (level) => {
     3. Repeated Identity Type 3</br>
     4. Snake and Ladder</br>
     5. Cause and Effect</br>
+    6. Identical Effect: Discount</br>
     <hr>
     9. All
     `;

@@ -16397,6 +16397,33 @@ How many items are there in each bag?
       } up one entire flight of stairs?
       `;
     }
+
+    // IDENTICAL EFFECT: DISCOUNT
+    if (setting == 6) {
+      normalDisplay();
+      const discountedPriceA = (p.originalA * (100 - p.discount)) / 100;
+      const discountedPriceB = (p.originalB * (100 - p.discount)) / 100;
+      const diffEnd = Math.abs(discountedPriceA - discountedPriceB);
+
+      const decimalPlace = diffEnd.toString().split(".")[1];
+      if (decimalPlace) {
+        if (decimalPlace.length > 2) {
+          console.log("Decimal place");
+          return updateCalc();
+        }
+      }
+
+      const item = ["shirt", "pant", "bag"][genNumbers(3)];
+      displayProblem.innerHTML = `
+      A ${item} cost $${p.originalA} at Shop A.</br>
+      The same ${item} cost $${p.originalB} at Shop B.</br>
+      Both shops had the same percentage discount on that item.</br>
+      The difference between the discounted price of both items became $${diffEnd.toFixed(
+        2
+      )}.</br>
+      What percentage discount was given?
+      `;
+    }
   }
 
   if (level == "heuSixb") {
@@ -22009,6 +22036,11 @@ function handleSubmit(e) {
           correctAnswer = p.flightTotal * (p.ran + p.walk);
         }
       }
+
+      //IDENTICAL EFFECT: DISCOUNT
+      if (setting == 6) {
+        correctAnswer = p.discount;
+      }
     }
 
     // ANSWERS
@@ -26733,7 +26765,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "heuSix") {
-    setting = calArrAll(5, calArr, setting, 9);
+    setting = calArrAll(6, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
     // LOWEST COMMON TIME
     if (setting == 1) {
@@ -26800,10 +26832,18 @@ function genProblems() {
         walkSecondSet: genNumbers(total - 2) + 2,
       };
     }
+    // IDENTICAL EFFECT: DISCOUNT
+    if (setting == 6) {
+      return {
+        originalA: genNumbers(999) + 100,
+        originalB: genNumbers(999) + 100,
+        discount: (genNumbers(10) + 1) * 5,
+      };
+    }
   }
 
   if (level == "heuSixb") {
-    setting = calArrAll(7, calArr, setting, 9);
+    setting = calArrAll(6, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
 
     // SIMULTANEOUS EQUATION (PARTS AND UNITS) TYPE 1
@@ -28814,7 +28854,7 @@ function buttonLevelSetting() {
       );
 
       if (
-        ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       ) {
         setting = 9;
