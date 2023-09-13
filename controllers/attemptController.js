@@ -362,30 +362,16 @@ exports.newAttempt = async (req, res) => {
   //highscore
   const highScore = async (req, res) => {
     try {
-      console.log("Highscore check running");
-      const checkExist = await Highscore.findOne({ level, mode }).sort({
-        time: 1,
-      });
-      if (checkExist == null) {
-        data.eligible = 1;
-        // highscoreEligible = 1;
-        const newHighscore = new Highscore({
-          user: user,
-          mode: mode,
-          level: level,
-          time: time,
-          mistake: mistake,
-          score: score,
-          setting: setting,
+      const checkMin = await Attempt.find({ level, mode }).count();
+      if (checkMin > 5) {
+        console.log("Minimum met");
+        console.log("Highscore check running");
+        const checkExist = await Highscore.findOne({ level, mode }).sort({
+          time: 1,
         });
-        await newHighscore.save().then((res) => {
-          console.log("New highscore! 1");
-        });
-      } else {
-        console.log("Comparing");
-        // console.log(checkExist.time, newAttempt.time);
-        if (checkExist.time > time) {
+        if (checkExist == null) {
           data.eligible = 1;
+          // highscoreEligible = 1;
           const newHighscore = new Highscore({
             user: user,
             mode: mode,
@@ -395,11 +381,29 @@ exports.newAttempt = async (req, res) => {
             score: score,
             setting: setting,
           });
-          await newHighscore.save().then((result) => {
-            console.log("New highscore! 2");
+          await newHighscore.save().then((res) => {
+            console.log("New highscore! 1");
           });
         } else {
-          console.log("Too slow");
+          console.log("Comparing");
+          // console.log(checkExist.time, newAttempt.time);
+          if (checkExist.time > time) {
+            data.eligible = 1;
+            const newHighscore = new Highscore({
+              user: user,
+              mode: mode,
+              level: level,
+              time: time,
+              mistake: mistake,
+              score: score,
+              setting: setting,
+            });
+            await newHighscore.save().then((result) => {
+              console.log("New highscore! 2");
+            });
+          } else {
+            console.log("Too slow");
+          }
         }
       }
       // return 1;

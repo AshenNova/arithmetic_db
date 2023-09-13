@@ -16784,6 +16784,9 @@ How many items are there in each bag?
       if (p.question == "QB") {
         questionStatement = `How many ${itemB} are there?`;
       }
+      if (differenceValueB == 0) {
+        return updateCalc();
+      }
       displayProblem.innerHTML = `
       Someone spent $${
         totalValue % 1 == 0 ? totalValue : totalValue.toFixed(2)
