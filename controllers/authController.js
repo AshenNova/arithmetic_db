@@ -78,6 +78,10 @@ exports.login = async (req, res) => {
       maxAge: (1 * 24 * 60 * 60 * 1000) / 2,
       httpOnly: true,
     };
+    // const cookieSetting = {
+    //   maxAge: 1000 / 2,
+    //   httpOnly: true,
+    // };
     if (process.env.NODE.ENV == "PRODUCTION") {
       cookieSetting.secure = true;
     }
@@ -135,7 +139,7 @@ exports.logout = (req, res) => {
   };
   if (process.env.NODE_ENV == "PRODUCTION") cookieSetting.secure = true;
   res.cookie("JWT", token, { maxAge: 1000, httpOnly: true });
-  return res.redirect("/attempts");
+  return res.redirect("/user/login");
 };
 
 exports.protect = async (req, res, next) => {
@@ -156,7 +160,7 @@ exports.authenticate = async (req, res, next) => {
         req.user = user;
         req.auth = { login: true };
       } else {
-        res.redirect("user/login");
+        res.redirect("/user/login");
       }
       // }
     }

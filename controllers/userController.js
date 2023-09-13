@@ -313,9 +313,32 @@ exports.claimReward = async (req, res) => {
   console.log("Processing Claim");
   console.log(req.body);
   try {
+    const reward = await Reward.findById(req.body.id);
+    console.log(`Reward, ${reward}`);
+    console.log(`Quantity, ${reward.quantity}`);
+    if (reward.quantity < 1) {
+      return res.send("Nil");
+    }
     const user = await User.findOne({ username: req.body.user });
 
-    if (user.points >= req.body.requirement) {
+    if (user.gift > 0 && req.body.name.includes("Mechnical Pencil")) {
+      const updateLog = await RewardLog.create({
+        username: req.body.user,
+        description: req.body.description,
+        // points: req.body.requirement,
+        reward: req.body.name,
+      });
+      console.log(updateLog);
+      const giftAfterClaim = user.gift - 1;
+      const updateGift = await User.findByIdAndUpdate(user._id, {
+        gift: giftAfterClaim,
+      });
+      reward.quantity -= 1;
+      const updateQuantity = await Reward.findByIdAndUpdate(req.body.id, {
+        quantity: reward.quantity,
+      });
+      return res.send("Yes");
+    } else if (user.points >= req.body.requirement) {
       console.log("Enough!");
       const updateLog = await RewardLog.create({
         username: req.body.user,
@@ -328,9 +351,13 @@ exports.claimReward = async (req, res) => {
       const updatePoints = await User.findByIdAndUpdate(user._id, {
         points: pointsAfterClaim,
       });
-      res.send("Yes");
+      reward.quantity -= 1;
+      const updateQuantity = await Reward.findByIdAndUpdate(req.body.id, {
+        quantity: reward.quantity,
+      });
+      return res.send("Yes");
     } else {
-      res.send("No");
+      return res.send("No");
     }
   } catch (err) {
     console.log("Something happened");

@@ -2,8 +2,6 @@ const rewardImageCl = document.querySelectorAll(".rewardImage");
 const imagePopCl = document.querySelectorAll(".imagePop");
 const imageCloseBtn = document.querySelectorAll(".imageClose");
 
-// console.log(rewardImageCl);
-// console.log(imagePopCl);
 rewardImageCl.forEach((item, index) => {
   console.log("Image clicked");
   item.addEventListener("click", function (e) {

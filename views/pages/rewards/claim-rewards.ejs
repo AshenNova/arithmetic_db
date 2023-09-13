@@ -50,6 +50,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Points</th>
+                <th scope="col">Quantity</th>
                 <th scope="col">Claim</th>
                 <% if (currentUser.admin) { %>
                   <th scope="col"><%= "Edit" %></th>
@@ -72,9 +73,11 @@
                 <% }  else { %>
                   <td></td>
                 <% } %>
+                <td class="rewardId" style="display: none;"><%= item._id %></td>
                 <td class="rewardName"><%= item.rewardName %></td>
                 <td class="rewardDescription"><%= item.description %></td>
                 <td class="rewardRequirement"><%= item.requirement %></td>
+                <td class="rewardQuantity"><%= item.quantity %></td>
                 <td class="claimBtn btn btn-success btn-sm">Claim</td>
                 <% if (currentUser.admin) { %>
                   <td><a href="/user/points/rewards/edit/<%= item._id %>"><%= "⚙️" %></a></td>
@@ -88,5 +91,5 @@
     
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-<script src="/javascript/rewardsClaim.js"></script>
+<script src="/javascript/rewards.js"></script>
 </html>

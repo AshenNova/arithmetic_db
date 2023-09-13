@@ -29,6 +29,7 @@
         <th scope="col">Email</th>
         <th scope="col">Age</th>
         <th scope="col">DOB</th>
+        <th scope="col">Gift</th>
         <th scope="col">Last login</th>
         <th scope="col">Edit</th>
         <th scope="col">Delete</th>
@@ -47,6 +48,7 @@
                 <td><%= item.email %></td>
                 <td><%= new Date().getFullYear()- item.DOB.getFullYear() %></td>
                 <td><%= item.DOB.toLocaleDateString('en-GB') %></td>
+                <td><%= item.gift %></td>
                 <% if (item.loggedIn) { %>
                   <% if (item.loggedIn.toLocaleDateString() == new Date().toLocaleDateString()) { %>
                     <td><%= item.loggedIn.toLocaleTimeString('en-US') %>, Today</td>

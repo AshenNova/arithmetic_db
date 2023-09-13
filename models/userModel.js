@@ -41,7 +41,11 @@ const userSchema = new mongoose.Schema({
     default: Date.now(),
   },
   loggedIn: { type: Date },
-  points: Number,
+  points: { type: Number, default: 0 },
+  gift: {
+    type: Number,
+    default: 0,
+  },
 });
 
 userSchema.pre("save", async function (next) {

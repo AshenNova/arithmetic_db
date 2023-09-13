@@ -36,7 +36,11 @@
                         <div class="form-group required">
                             <label for="DOB">DOB (Date of Birth)</label>
                             <input type="date" class="form-control" id="email" required="" name="DOB" value="<%= editUser.DOB.getFullYear() %>-<%= (editUser.DOB.getMonth()+1).toString().padStart(2, 0) %>-<%= editUser.DOB.getDate().toString().padStart(2, 0) %>">
-                        </div>                      
+                        </div>   
+                        <div class="form-group required">
+                            <label for="DOB">Gift</label>
+                            <input type="number" class="form-control" id="gift" required="" name="gift" value="<%= editUser.gift %>">
+                        </div>                     
                     <div class="form-group required">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" required="" name="password">

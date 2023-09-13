@@ -16,6 +16,10 @@ const rewardSchema = new mongoose.Schema({
   link: {
     type: String,
   },
+  quantity: {
+    type: Number,
+    default: 1,
+  },
 });
 
 const Reward = mongoose.model("rewards", rewardSchema);
