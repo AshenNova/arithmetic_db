@@ -78,7 +78,12 @@
                 <td class="rewardDescription"><%= item.description %></td>
                 <td class="rewardRequirement"><%= item.requirement %></td>
                 <td class="rewardQuantity"><%= item.quantity %></td>
-                <td class="claimBtn btn btn-success btn-sm">Claim</td>
+                <% if (item.quantity == 0 || item.quantity == ""){ %>
+                  <td></td>
+                <% } else { %>
+                  <td class="claimBtn btn btn-success btn-sm">Claim</td>
+                <% } %> 
+                
                 <% if (currentUser.admin) { %>
                   <td><a href="/user/points/rewards/edit/<%= item._id %>"><%= "⚙️" %></a></td>
                   <td><a href="/user/points/rewards/delete/<%= item._id %>"><%= "Delete" %></a></td>
