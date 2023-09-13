@@ -176,3 +176,17 @@ exports.authenticate = async (req, res, next) => {
 
   next();
 };
+
+exports.loginCheck = async (req, res, next) => {
+  if (req.auth.login == false) {
+    return res.redirect("/user/login");
+  }
+  next();
+};
+
+exports.adminCheck = async (req, res, next) => {
+  if (req.user == "" || req.user.admin == false) {
+    return res.redirect("/user/login");
+  }
+  next();
+};

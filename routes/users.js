@@ -12,22 +12,34 @@ router.route("/").get(authController.authenticate, userController.getAllUsers);
 router.route("/edit").get(authController.authenticate, userController.editUser);
 
 router.route("/points").get(userController.getAllPoints);
-router.route("/points/rewards").get(userController.getAllRewards);
-router.route("/points/rewards/new").get(userController.newReward);
+router
+  .route("/points/rewards")
+  .get(authController.loginCheck, userController.getAllRewards);
 router
   .route("/points/rewards/new")
-  .post(upload.any(), userController.postNewReward);
+  .get(authController.adminCheck, userController.newReward);
+router
+  .route("/points/rewards/new")
+  .post(upload.any(), authController.adminCheck, userController.postNewReward);
 // router.route("/points/rewards/new").post(userController.postNewReward);
-router.route("/points/rewards/claim").post(userController.claimReward);
-router.route("/points/rewards/edit/:id").get(userController.editReward);
-router.route("/points/rewards/edit/:id").post(userController.saveReward);
-router.route("/points/rewards/delete/:id").get(userController.deleteReward);
+router
+  .route("/points/rewards/claim")
+  .post(authController.loginCheck, userController.claimReward);
+router
+  .route("/points/rewards/edit/:id")
+  .get(authController.adminCheck, userController.editReward);
+router
+  .route("/points/rewards/edit/:id")
+  .post(authController.adminCheck, userController.saveReward);
+router
+  .route("/points/rewards/delete/:id")
+  .get(authController.adminCheck, userController.deleteReward);
 router
   .route("/edit/:id")
-  .get(authController.authenticate, userController.editSingleUser);
+  .get(authController.adminCheck, userController.editSingleUser);
 router
   .route("/edit/save")
-  .post(authController.authenticate, userController.saveEditUser);
+  .post(authController.adminCheck, userController.saveEditUser);
 router.route("/signup").post(authController.signup);
 router.route("/login").post(authController.login);
 router.route("/logout").get(authController.logout);

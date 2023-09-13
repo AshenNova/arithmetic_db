@@ -16,7 +16,6 @@ let currentUser;
 //   username,
 //   authenticate,
 // };
-
 exports.getAllUsers = async (req, res) => {
   try {
     const allUsers = await User.find().sort({ loggedIn: -1 });
