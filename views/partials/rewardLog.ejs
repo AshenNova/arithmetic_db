@@ -6,7 +6,7 @@
                 <% if (item.points){ %>
                     🔔 <%= item.claimed.toLocaleDateString('en-GB') %> @ <%= item.claimed.toLocaleTimeString('en-US') %>: 👤 <b><%=  item.username %></b> claimed "<%= item.reward %>" with <%= item.points %> points.</p>
                <%  } else { %>
-                    🔆 <%= item.claimed.toLocaleDateString('en-GB') %> @ <%= item.claimed.toLocaleTimeString('en-US') %>: 👤 <b><%=  item.username %></b> claimed "<%= item.reward %>"" as a graduation gift.</p>
+                    🎓 <%= item.claimed.toLocaleDateString('en-GB') %> @ <%= item.claimed.toLocaleTimeString('en-US') %>: 👤 <b><%=  item.username %></b> claimed "<%= item.reward %>"" as a graduation gift.</p>
               <%  } %>
                
             <% }) %>
