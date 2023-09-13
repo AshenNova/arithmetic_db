@@ -155,6 +155,8 @@ exports.authenticate = async (req, res, next) => {
         const user = await User.findById(validToken.id);
         req.user = user;
         req.auth = { login: true };
+      } else {
+        res.redirect("user/login");
       }
       // }
     }
