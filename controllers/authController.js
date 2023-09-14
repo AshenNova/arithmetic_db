@@ -150,6 +150,9 @@ exports.protect = async (req, res, next) => {
 exports.authenticate = async (req, res, next) => {
   console.log("Authenticating");
   const accessToken = req.cookies["JWT"];
+  req.auth = {
+    login: undefined,
+  };
 
   try {
     if (accessToken) {
