@@ -388,7 +388,10 @@ exports.deleteRewardLog = async (req, res) => {
     const oldPoints = user.points;
     const updatePoints = oldPoints + refundPoints;
     // 3) QUERY REWARD
-    const reward = await Reward.findOne({ name: log.name });
+    const reward = await Reward.findOne({
+      description: log.description,
+      rewardName: log.reward,
+    });
     const rewardQuantity = reward.quantity;
     const updateQuantity = rewardQuantity + 1;
     // 4) RETURN AND DELETE
