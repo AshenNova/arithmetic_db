@@ -22,6 +22,15 @@ router
   .get(attemptController.getAllAttempts)
   .post(attemptController.newAttempt);
 
+router
+  .route("/edit/:id")
+  .get(authController.adminCheck, attemptController.getAttempt);
+router
+  .route("/edit/:id")
+  .post(authController.adminCheck, attemptController.saveAttempt);
+router
+  .route("/delete/:id")
+  .get(authController.adminCheck, attemptController.deleteAttempt);
 router.route("/filter").get(attemptController.getFilteredAttempts);
 router.route("/highscore").get(attemptController.getHighscore);
 router.route("/monthly-highscore").get(attemptController.monthlyHighscore);

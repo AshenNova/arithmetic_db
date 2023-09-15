@@ -8,6 +8,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const ip = require("ip");
 const { exists } = require("../models/attemptModel");
+const { findById } = require("../models/userModel");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -303,7 +304,7 @@ exports.newAttempt = async (req, res) => {
   };
 
   // RECEIVE DATA (MUST BE ON TOP)
-  console.log(req.body.summary);
+  console.log(req.body);
   const user = req.body.user;
   const mode = req.body.mode;
   const level = req.body.level;
@@ -523,7 +524,8 @@ exports.newAttempt = async (req, res) => {
       }
 
       if (data.eligible == 1) award = "High";
-      if (skip != "" || tries > 1) award = "Try harder";
+      // console.log("Tries", attemptNum, attemptNum > 1);
+      if (skip != "" || attemptNum > 1) award = "Try harder";
       console.log(bronze, silver, gold, platinum);
       console.log(`You got ${award}!`);
       data.medals = {
@@ -725,6 +727,76 @@ exports.getHighscore = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+  }
+};
+exports.getAttempt = async (req, res) => {
+  const id = req.params.id;
+  const attempt = await Attempt.findById(id);
+
+  username = req.user.username;
+  authenticate = req.auth;
+  currentUser = req.user;
+  res.render("pages/edit-attempt", {
+    attempt,
+    username,
+    authenticate,
+    currentUser,
+  });
+  try {
+  } catch (err) {
+    res.send(404).json({ message: err });
+  }
+};
+
+exports.saveAttempt = async (req, res) => {
+  console.log(req.body);
+  const id = req.params.id;
+  try {
+    const attempt = await Attempt.findById(id);
+    const username = attempt.user.toLowerCase();
+    const user = await User.findOne({ username });
+    const userCurrentPoints = user.points;
+    console.log(attempt, user);
+    // SAVE POINTS IS 10, BUT EDITTED POINTS IS 5.
+    const differencePoints = req.body.points - attempt.points;
+    const adjustedPoints = userCurrentPoints + differencePoints;
+    await Promise.all([
+      await User.updateOne({ username }, { $set: { points: adjustedPoints } }),
+      await Attempt.findByIdAndUpdate(id, {
+        points: req.body.points,
+        award: req.body.award,
+      }),
+    ]);
+    return res.redirect("/attempts");
+  } catch (err) {
+    res.send(404).json({ err });
+  }
+};
+
+exports.deleteAttempt = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const attempt = await Attempt.findById(id);
+    const username = attempt.user.toLowerCase();
+    const user = await User.findOne({ username });
+    const currentPoints = user.points;
+    const adjustedPoints = currentPoints - attempt.points;
+    const { updateUser, deleteAttempt } = await Promise.all([
+      User.updateOne(
+        { username },
+        {
+          $set: { points: adjustedPoints },
+        }
+      ),
+      Attempt.findByIdAndDelete(id),
+    ]);
+    console.log(updateUser);
+    return res.redirect("/attempts");
+  } catch (err) {
+    res.status(404).json({
+      err,
+    });
   }
 };
 

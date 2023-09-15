@@ -104,6 +104,11 @@
         <th scope="col">Date</th>
         <th scope="col">Ago</th>
         <th scope="col">Summary</th>
+        <% if (currentUser.admin) { %>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        <% } %>
+       
       </tr>
     </thead>
     <tbody>
@@ -222,6 +227,10 @@
                 <% } %>
                 
                 <td class="click-summary"><%= "📜" %></td>
+                <% if (currentUser.admin) { %>
+                  <td><a href="/attempts/edit/<%= item._id %>">Edit</a></td>
+                  <td><a href="/attempts/delete/<%= item._id %>">Delete</a></td>
+                <% } %>
             </tr>
             <% });%>
     </tbody>
