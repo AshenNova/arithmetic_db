@@ -46,5 +46,8 @@ router.route("/logout").get(authController.logout);
 
 router.route("/login").get(userController.login);
 router.route("/signup").get(userController.signup);
+router
+  .route("/delete/:id")
+  .get(authController.adminCheck, userController.deleteUser);
 
 module.exports = router;

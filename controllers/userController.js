@@ -122,6 +122,17 @@ exports.saveEditUser = async (req, res) => {
   }
 };
 
+exports.deleteUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log(id);
+    const deleteUser = await User.findByIdAndDelete(id);
+    return res.redirect("/user");
+  } catch (err) {
+    console.log("Delete User", err);
+  }
+};
+
 exports.getAllPoints = async (req, res) => {
   // const allUsers = await User.find().sort({ points: -1 });
   const [allUsers, logRewards] = await Promise.all([
