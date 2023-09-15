@@ -376,6 +376,41 @@ exports.claimReward = async (req, res) => {
   // res.send();
 };
 
+exports.deleteRewardLog = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    // 1) QUERY REWARDS LOG
+    const log = await RewardLog.findById(id);
+    const refundPoints = log.points;
+    // 2) QUERY USER
+    const user = await User.findOne({ username: log.username });
+    const oldPoints = user.points;
+    const updatePoints = oldPoints + refundPoints;
+    // 3) QUERY REWARD
+    const reward = await Reward.findOne({ name: log.name });
+    const rewardQuantity = reward.quantity;
+    const updateQuantity = rewardQuantity + 1;
+    // 4) RETURN AND DELETE
+    const [deleteLog, returnPoints] = await Promise.all([
+      RewardLog.findByIdAndDelete(id),
+      User.findByIdAndUpdate(user._id.toString(), {
+        points: updatePoints,
+      }),
+      Reward.findByIdAndUpdate(reward._id.toString(), {
+        quantity: updateQuantity,
+      }),
+    ]);
+    // const deleteLog = await RewardLog.findByIdAndDelete(id);
+    // const returnPoints = await User.findByIdAndUpdate(user._id.toString(), {
+    //   points: updatePoints,
+    // });
+    return res.redirect("/attempts");
+  } catch (err) {
+    res.status(404).json({ err });
+  }
+};
+
 exports.login = (req, res) => {
   console.log(req.auth);
   authenticate = req.auth;

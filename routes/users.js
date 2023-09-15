@@ -49,5 +49,8 @@ router.route("/signup").get(userController.signup);
 router
   .route("/delete/:id")
   .get(authController.adminCheck, userController.deleteUser);
+router
+  .route("/rewardLog/delete/:id")
+  .get(authController.adminCheck, userController.deleteRewardLog);
 
 module.exports = router;
