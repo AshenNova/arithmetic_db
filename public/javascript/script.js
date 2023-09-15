@@ -10366,8 +10366,8 @@ function updateProblems() {
       }
       if (p.version == "percentage back") {
         let answer = accDecimal((p.next / (100 + p.change)) * 100);
-        if (answer.toString().split(".")[1]) {
-          console.log("not whole");
+        if (answer.toString().split(".")[1].length > 2) {
+          console.log("recurring");
           return updateCalc();
         }
         const diff = p.change > 0 ? "increased by" : "decreased by";
@@ -25240,7 +25240,7 @@ function genProblems() {
         version: ["percentage back", "percentage forward", "change"][
           genNumbers(3)
         ],
-        change: genNumbers(200) - 100,
+        change: (genNumbers(9) + 1) * 10,
       };
     }
     // REPEATED IDENTITY PERCENTAGE
