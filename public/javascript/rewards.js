@@ -45,7 +45,6 @@ const imagePopCl = document.querySelectorAll(".imagePop");
 const imageCloseBtn = document.querySelectorAll(".imageClose");
 
 rewardImageCl.forEach((item, index) => {
-  console.log("Image clicked");
   item.addEventListener("click", function (e) {
     imagePopCl.forEach((item) => {
       item.classList.add("hidden");
@@ -101,6 +100,8 @@ imageCloseBtn.forEach((item) => {
 //       },
 //     });
 //   });
+
+// SUMMIT BRAND NEW REWARD FORM
 const formElem = document.querySelector("form");
 formElem.addEventListener("submit", async (e) => {
   console.log("form submitting");
@@ -110,23 +111,13 @@ formElem.addEventListener("submit", async (e) => {
     body: new FormData(formElem),
   })
     .then((response) => {
-      if (response == "Success") alert("New Reward Added Successfully!");
-      if (response == "Failed") alert("Sorry! New reward was not added.");
-      location.reload();
+      if (response.status == 200) {
+        alert("New Reward Added Successfully!");
+      } else {
+        alert("Sorry! New reward was not added.");
+      }
     })
     .catch((error) => {
       console.error(error);
     });
 });
-
-// console.log(rewardImageCl);
-
-// function showPopup() {
-//   const imagePop = document.querySelectorAll(".imagePop");
-//   imagePop.forEach((item, index) => {
-//     item.addEventListener("click", function (e) {
-//       console.log("click" + " " + index);
-//       item.classList.remove("hidden");
-//     });
-//   });
-// }

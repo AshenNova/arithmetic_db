@@ -28,9 +28,13 @@ router
 router
   .route("/points/rewards/edit/:id")
   .get(authController.adminCheck, userController.editReward);
+// router
+//   .route("/points/rewards/edit/:id")
+//   .post(authController.adminCheck, userController.saveReward);
 router
-  .route("/points/rewards/edit/:id")
-  .post(authController.adminCheck, userController.saveReward);
+  .route("/points/rewards/save")
+  .post(upload.any(), authController.adminCheck, userController.saveReward);
+
 router
   .route("/points/rewards/delete/:id")
   .get(authController.adminCheck, userController.deleteReward);

@@ -198,23 +198,6 @@ exports.editReward = async (req, res) => {
   });
 };
 
-exports.saveReward = async (req, res) => {
-  console.log("Saving Reward");
-  const id = req.params.id;
-  const body = req.body;
-
-  console.log(body);
-  try {
-    console.log(id);
-    console.log(body);
-    const reward = await Reward.findByIdAndUpdate(id, req.body);
-    // alert("Reward has been updated");
-    res.redirect("/user/points/rewards");
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 exports.deleteReward = async (req, res) => {
   console.log("Deleting reward");
   try {
@@ -227,11 +210,10 @@ exports.deleteReward = async (req, res) => {
 };
 
 const GOOGLE_API_FOLDER_ID = process.env.GOOGLE_API_FOLDER_ID;
-
 console.log(`Environment: ${process.env.NODE_ENV}`);
 
 let auth;
-if (process.env.NODE_ENV == "DEVELOPMEN") {
+if (process.env.NODE_ENV == "DEVELOPMENT") {
   auth = new google.auth.GoogleAuth({
     keyFile: "./googlekey.json",
     scopes: ["https://www.googleapis.com/auth/drive"],
@@ -264,39 +246,6 @@ async function uploadFile(imagePath) {
   });
   console.log(`Uploaded file ${data.name} ${data.id}`);
   return data.id;
-  // try {
-  //   const auth = new google.auth.GoogleAuth({
-  //     keyFile: "./googlekey.json",
-  //     scopes: ["https://www.googleapis.com/auth/drive"],
-  //   });
-
-  //   const driveService = google.drive({
-  //     version: "v3",
-  //     auth,
-  //   });
-
-  //   const fileMetaData = {
-  //     name: "rewards.jpg",
-  //     parents: [GOOGLE_API_FOLDER_ID],
-  //   };
-
-  //   // console.log(bufferStream);
-  //   const media = {
-  //     mimeType: imagePath.mimeType,
-  //     // body: fs.createReadStream(imagePath),
-  //     body: imagePath.buffer,
-  //   };
-
-  //   const response = await driveService.files.create({
-  //     resource: fileMetaData,
-  //     media: media,
-  //     field: "id",
-  //   });
-
-  //   return response.data.id;
-  // } catch (err) {
-  //   console.log("Uploaded Image", err);
-  // }
 }
 
 exports.postNewReward = async (req, res) => {
@@ -316,6 +265,24 @@ exports.postNewReward = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.send("Failed");
+  }
+};
+
+exports.saveReward = async (req, res) => {
+  console.log("Saving Reward");
+
+  const { body, files } = req;
+  try {
+    if (files.length != 0) {
+      const imageID = await uploadFile(files[0]);
+      req.body.link = imageID;
+    }
+    console.log({ body });
+    const reward = await Reward.findByIdAndUpdate(body.rewardId, body);
+    console.log({ reward });
+    res.send("1");
+  } catch (err) {
+    console.log(err);
   }
 };
 

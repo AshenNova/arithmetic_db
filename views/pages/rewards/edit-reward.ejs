@@ -18,8 +18,17 @@
     
     <div class="container">
         <h1>Edit Reward</h1>
-        
-        <form action="/user/points/rewards/edit/<%= reward._id %>" method="POST">
+        <div class=rewardImage><img src="https://drive.google.com/uc?export=view&id=<%= reward.link %>" style="width: 10%"></div>
+        <!-- <form id="editRewardForm" action="/user/points/rewards/edit/<%= reward._id %>" method="POST"> -->
+          <form action="/user/points/rewards/save %>" method="POST">
+          <div class="form-group required">
+            <label class="form-label" for="rewardId">Reward Id</label>
+            <input type="text" class="form-control" id="rewardId" name="rewardId" value="<%= reward._id %>"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="customFile" id="customFileInput">Default file input example</label>
+            <input type="file" class="form-control" id="customFile" name="imageFile"/>
+          </div>
             <div class="form-group required">
                 <label for="rewardName" class="form-label">Name</label>
                 <input type="text" class="form-control" id="rewardName" name="rewardName" value="<%= reward.rewardName %>">
@@ -42,4 +51,28 @@
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script>
+// SUBMITTING EDITTED REWARD FORM
+const formElem = document.querySelector("form");
+formElem.addEventListener("submit", async (e) => {
+  console.log("Editing existing reward");
+  e.preventDefault();
+  await fetch("/user/points/rewards/save", {
+    method: "POST",
+    body: new FormData(formElem),
+  })
+    .then((response) => {
+      console.log(response)
+      if (response.status == 200){
+        alert("Successfully saved!")
+      } else {
+        alert("Sorry! Failed to save.")
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+});
+
+</script>
 </html>
