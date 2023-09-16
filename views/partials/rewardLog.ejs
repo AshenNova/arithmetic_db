@@ -3,16 +3,17 @@
     <h1> Rewards Log</h1>
     
             <% logRewards.forEach(item => { %>
+                <div>
                 <% if (currentUser.admin) { %>
-                    <div><a href="/user/rewardLog/delete/<%= item._id %>" style="text-decoration: none;">❌</a>
+                    <a href="/user/rewardLog/delete/<%= item._id %>" style="text-decoration: none;">❌</a>
                 <% } %>
                 <% if (item.points){ %>
                     🔔 <%= item.claimed.toLocaleDateString('en-GB') %> @ <%= item.claimed.toLocaleTimeString('en-US') %>: 👤 <b><%=  item.username %></b> claimed "<%= item.reward %>" with <%= item.points %> points.
                <%  } else { %>
                     🎓 <%= item.claimed.toLocaleDateString('en-GB') %> @ <%= item.claimed.toLocaleTimeString('en-US') %>: 👤 <b><%=  item.username %></b> claimed "<%= item.reward %>"" as a graduation gift.
               <%  } %>
-                </p>
-            </div>
+                </p></div>
+           
             <% }) %>
   </div>
   <% } %>
