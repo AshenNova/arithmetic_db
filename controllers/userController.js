@@ -381,6 +381,22 @@ exports.deleteRewardLog = async (req, res) => {
   }
 };
 
+exports.recommend = async (req, res) => {
+  try {
+    console.log(req);
+    // res.send();
+    currentUser = req.user;
+    authenticate = req.auth;
+    res.render("pages/recommend", {
+      authenticate,
+      username,
+      currentUser,
+    });
+  } catch (err) {
+    res.status(404).json({ err });
+  }
+};
+
 exports.login = (req, res) => {
   console.log(req.auth);
   authenticate = req.auth;

@@ -16534,11 +16534,11 @@ How many items are there in each bag?
 
     // MORE THAN / LESS THAN
     if (setting == 3) {
+      [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
       if (p.denoA == p.denoB) {
         return updateCalc();
       }
-      [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
-      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
       const commonDenominator = commonDeno(p.denoA, p.denoB);
       p.varA = commonDenominator * p.unitOne * p.varAMul;
       p.varB = commonDenominator * p.unitOne * p.varBMul;
@@ -23174,7 +23174,7 @@ function genProblems() {
     console.log(state.global);
     if (setting == 1 || setting == 5) {
       return {
-        numOne: genNumbers(94) + 5,
+        numOne: genNumbers(94) + 7,
       };
     }
     if (setting == 2) {
@@ -26845,7 +26845,7 @@ function genProblems() {
     }
   }
 
-  if (level == "heuSixb") {
+  if (level == "|") {
     setting = calArrAll(6, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
 

@@ -48,15 +48,11 @@
               </ul>
             </li>
             <!-- <li class="nav-item">
-              <a class="nav-link active mx-4" href="/user/points"target="_blank"> Points Overview</a>
+              <a class="nav-link active mx-4" href="/user/recommend"target="_blank">🔥 Recommendation</a>
             </li> -->
           </ul>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <!-- <li class="nav-item"> 
-              <% if (currentUser.username) { %>
-                <div class="text-info nav-link active"><%= currentUser.username %></div>
-              <% } %>
-              </li> -->
+
             <li class="nav-item"> 
               <% if (currentUser.points) { %>
                 <a href="/user/points/rewards" class="text-warning nav-link active">[Points: <%= currentUser.points %>]</a>
