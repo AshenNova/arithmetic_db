@@ -13036,7 +13036,7 @@ How far is apart is Town A and Town B?
       const diffDistance = distance - distanceB;
       const timeB = (distance / p.speedB) * 60;
       const diffTime = timeB - p.timeA;
-      if (diffTime % 1 != 0) {
+      if (diffTime % 1 != 0 || diffTime == 60) {
         return updateCalc();
       }
 
@@ -16426,6 +16426,7 @@ How many items are there in each bag?
     }
   }
 
+  // DISPLAY
   if (level == "heuSixb") {
     normalDisplay();
 
@@ -25742,7 +25743,7 @@ function genProblems() {
         speedB: undefined,
         diffSpeed: (genNumbers(2) + 1) * 10,
         timeA: (genNumbers(10) + 1) * 15,
-        question: ["A", "B"][genNumbers(2)],
+        question: "A",
       };
     }
 
@@ -26845,7 +26846,7 @@ function genProblems() {
     }
   }
 
-  if (level == "|") {
+  if (level == "heuSixb") {
     setting = calArrAll(6, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
 
