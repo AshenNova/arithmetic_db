@@ -12,9 +12,10 @@ const { findById } = require("../models/userModel");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-let username;
-let authenticate;
-let currentUser;
+// let username;
+// let authenticate;
+// let currentUser;
+// authenticate.login = false;
 
 function paginate(stuff, totalItems, perPage, currentPage) {
   console.log(totalItems);
@@ -62,8 +63,9 @@ exports.getAllAttempts = async (req, res) => {
   let summaryObj = attemptsTwo[0];
   const filteredUser = "";
   let latestAttemptObj;
-  authenticate = req.auth;
-  currentUser = req.user;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  let username = req.user.username;
   res.status(200).render("pages/attempts", {
     attempts,
     paginatedAttempts,
@@ -194,8 +196,9 @@ exports.getFilteredAttempts = async (req, res) => {
     }
 
     const todayCount = "";
-    username = req.user.username;
-    currentUser = req.user;
+    let username = req.user.username;
+    let authenticate = req.auth;
+    let currentUser = req.user;
     let logRewards;
     res.status(200).render("pages/attempts", {
       attempts,
@@ -661,8 +664,9 @@ exports.monthlyHighscore = async (req, res) => {
     }
     // thisMonthHigh = monthly;
     // let username;
-    username = req.user.username;
-    currentUser = req.user;
+    let username = req.user.username;
+    let authenticate = req.auth;
+    let currentUser = req.user;
     res.status(200).render("pages/monthly-highscore", {
       thisMonthHigh,
       username,
@@ -716,9 +720,12 @@ exports.getHighscore = async (req, res) => {
       }
     }
     console.log(highscoreHolder);
-    username = req.user.username;
-    authenticate = req.auth;
-    currentUser = req.user;
+    // username = req.user.username;
+    // authenticate = req.auth;
+    // currentUser = req.user;
+    let username = req.user.username;
+    let authenticate = req.auth;
+    let currentUser = req.user;
     res.render("pages/highscore", {
       highscoreHoldersArr,
       username,
@@ -733,9 +740,12 @@ exports.getAttempt = async (req, res) => {
   const id = req.params.id;
   const attempt = await Attempt.findById(id);
 
-  username = req.user.username;
-  authenticate = req.auth;
-  currentUser = req.user;
+  // username = req.user.username;
+  // authenticate = req.auth;
+  // currentUser = req.user;
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
   res.render("pages/edit-attempt", {
     attempt,
     username,

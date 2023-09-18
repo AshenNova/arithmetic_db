@@ -26,6 +26,9 @@ exports.getAllUsers = async (req, res) => {
       return res.redirect("user/login");
     }
 
+    let username = req.user.username;
+    let authenticate = req.auth;
+    let currentUser = req.user;
     res.render("pages/all-user", {
       authenticate,
       username,
@@ -48,8 +51,9 @@ exports.editUser = async (req, res) => {
   console.log("Editing");
   // console.log(req.query);
   const editUser = await User.findOne({ username: req.query.username });
-  currentUser = req.user;
-  authenticate = req.auth;
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
   res.render("pages/edit-user", {
     authenticate,
     username,
@@ -71,8 +75,9 @@ exports.editSingleUser = async (req, res) => {
   }
   console.log(editUser);
 
-  currentUser = req.user;
-  authenticate = req.auth;
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
   res.render("pages/edit-user", {
     authenticate,
     username,
@@ -141,8 +146,9 @@ exports.getAllPoints = async (req, res) => {
   ]);
   // res.status(200).json({ message: "This is the points page!" });
 
-  currentUser = req.user;
-  authenticate = req.auth;
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
   res.render("pages/points", {
     authenticate,
     username,
@@ -153,8 +159,6 @@ exports.getAllPoints = async (req, res) => {
 };
 
 exports.getAllRewards = async (req, res) => {
-  currentUser = req.user;
-  authenticate = req.auth;
   // const allRewards = await Reward.find();
   // const logRewards = await RewardLog.find().sort({ date: -1 }).limit(20);
 
@@ -162,7 +166,10 @@ exports.getAllRewards = async (req, res) => {
     Reward.find(),
     RewardLog.find().sort({ claimed: -1 }).limit(20),
   ]);
-  // const logRewards = await RewardLog.find().sort({ date: -1 }).limit(20);
+
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
   res.render("pages/rewards/claim-rewards", {
     authenticate,
     username,
@@ -173,8 +180,9 @@ exports.getAllRewards = async (req, res) => {
 };
 
 exports.newReward = async (req, res) => {
-  currentUser = req.user;
-  authenticate = req.auth;
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
   res.render("pages/rewards/new-rewards", {
     authenticate,
     username,
@@ -188,8 +196,9 @@ exports.editReward = async (req, res) => {
   console.log(id);
   const reward = await Reward.findById(id);
   console.log(reward);
-  currentUser = req.user;
-  authenticate = req.auth;
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
   res.render("pages/rewards/edit-reward", {
     authenticate,
     username,
@@ -385,8 +394,9 @@ exports.recommend = async (req, res) => {
   try {
     console.log(req);
     // res.send();
-    currentUser = req.user;
-    authenticate = req.auth;
+    let username = req.user.username;
+    let authenticate = req.auth;
+    let currentUser = req.user;
     res.render("pages/recommend", {
       authenticate,
       username,
@@ -399,14 +409,16 @@ exports.recommend = async (req, res) => {
 
 exports.login = (req, res) => {
   console.log(req.auth);
-  authenticate = req.auth;
-  currentUser = req.user;
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
   res.render("pages/login", { username, authenticate, currentUser });
   // res.send("This is the login page.");
 };
 
 exports.signup = (req, res) => {
-  authenticate = req.auth;
-  currentUser = req.user;
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
   res.render("pages/signup", { username, authenticate, currentUser });
 };
