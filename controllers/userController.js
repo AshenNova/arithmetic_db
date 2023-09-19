@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const Reward = require("../models/rewardModel");
 const RewardLog = require("../models/rewardLogModel");
+const Attempt = require("../models/attemptModel");
 const bcrypt = require("bcryptjs");
 const fs = require("fs");
 const stream = require("stream");
@@ -392,15 +393,156 @@ exports.deleteRewardLog = async (req, res) => {
 
 exports.recommend = async (req, res) => {
   try {
-    console.log(req);
-    // res.send();
     let username = req.user.username;
+    const usernameStr = username.split(" ");
+    let nameTemp = [];
+    usernameStr.forEach((item) => {
+      nameTemp.push(item.charAt(0).toUpperCase() + item.slice(1, item.length));
+    });
+    nameTemp = nameTemp.join(" ");
+    // console.log(nameTemp);
+
+    const today = new Date();
+    console.log(today);
+    today.setHours(0, 0, 0, 0);
+    const latestAttempt = await Attempt.find({
+      user: nameTemp,
+      date: { $lt: today },
+      // user,
+      tries: "1",
+    }).sort({
+      level: -1,
+      date: -1,
+    });
+
+    // console.log(latestAttempt);
+    // let uniqLevel = [];
+    let recommend = [];
+    let levelRecommend = [];
+    let calRecommend = [];
+    let heuRecommend = [];
+    let awards = ["Try harder", "Bronze", "Silver", "Gold", "Platinum", ""];
+    // GET ALL UNIQUE LEVELS
+    latestAttempt.forEach((item) => {
+      if (item.level.startsWith("cal")) {
+        if (!calRecommend.includes(item.level)) calRecommend.push(item.level);
+      } else if (item.level.startsWith("heu")) {
+        if (!heuRecommend.includes(item.level)) heuRecommend.push(item.level);
+      } else {
+        if (!levelRecommend.includes(item.level))
+          levelRecommend.push(item.level);
+      }
+    });
+    console.log(calRecommend);
+    console.log(heuRecommend);
+    console.log(levelRecommend);
+
+    //CALCULATIONS
+    let calEntry = 0;
+    calRecommend.forEach((item) => {
+      latestAttempt.forEach((item2) => {
+        if (item == item2.level) {
+          awards.forEach((award) => {
+            if (item2.award == award) {
+              if (calEntry == 0) {
+                recommend.push(item2);
+                calEntry += 1;
+              }
+            }
+          });
+        }
+      });
+    });
+
+    console.log(recommend);
+
+    //HEURISTICS
+    let heuEntry = 0;
+    heuRecommend.forEach((item) => {
+      latestAttempt.forEach((item2) => {
+        if (item == item2.level) {
+          awards.forEach((award) => {
+            if (item2.award == award) {
+              if (heuEntry == 0) {
+                recommend.push(item2);
+                heuEntry += 1;
+              }
+            }
+          });
+        }
+      });
+    });
+
+    console.log(recommend);
+
+    // CHECK IF RECOMMENDATION IS LESS THAN 4 ENTRIES
+
+    // CHECK IF THE LATEST ENTRY OF A LEVEL IS 'TRY HARDER'
+    // IF YES, RECOMMEND IT.
+    // IF NO, CHECK ANOTHER LEVEL.
+    let uniqLevel = [];
+
+    latestAttempt.forEach((item) => {
+      if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
+        awards.forEach((award) => {
+          console.log(award);
+          levelRecommend.forEach((level) => {
+            console.log(level);
+            if (item.level == level && item.award == award) {
+              if (!uniqLevel.includes(item.level)) {
+                if (recommend.length < 6) {
+                  recommend.push(item);
+                  uniqLevel.push(item.level);
+                }
+              }
+            }
+          });
+        });
+      }
+    });
+
+    // 1ST ATTEMPT
+    // latestAttempt.forEach((item) => {
+    //   if (recommend.length < 6) {
+    //     if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
+    //       // uniqLevel.forEach((item2) => {
+    //       if (!uniqLevel.includes(item.level)) {
+    //         if (item.mode == "Hardcore") {
+    //           awards.forEach((award) => {
+    //             if (item.award == award) {
+    //               recommend.push(item);
+    //               uniqLevel.push(item.level);
+    //             }
+    //           });
+    //         } else if (item.mode == "Normal") {
+    //           awards.forEach((award) => {
+    //             if (item.award == award) {
+    //               recommend.push(item);
+    //               uniqLevel.push(item.level);
+    //             }
+    //           });
+    //         } else {
+    //           awards.forEach((award) => {
+    //             if (item.award == award) {
+    //               recommend.push(item);
+    //               uniqLevel.push(item.level);
+    //             }
+    //           });
+    //         }
+    //       }
+    //     }
+    //   }
+    // });
+
+    // const recommend = latestAttempt;
+
     let authenticate = req.auth;
     let currentUser = req.user;
     res.render("pages/recommend", {
       authenticate,
       username,
       currentUser,
+      recommend,
     });
   } catch (err) {
     res.status(404).json({ err });

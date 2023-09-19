@@ -19,29 +19,63 @@
     
     <div class="container">
         <h1>Recommendation</h1>
+        <h3>Still a work in progress.</h3>
         <table class="table text-center">
             <thead>
               <tr>
-                <th colspan="2">Recommend</th>
-                <th colspan="5">Previous</th>
+                <th colspan="4">Recommend</th>
+                <th colspan="4">Previous</th>
               </tr>
               <tr>
+                <th scope="col">Award</th>
+                
+                <th scope="col">Mode</th>
                 <th scope="col">Level</th>
                 <th scope="col">Setting</th>
                 <th scope="col">Time</th>
                 <th scope="col">Mistake</th>
                 <th scope="col">Score</th>
+                <th scope="col">Ago</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Test</td>
-                <td>Test</td>
-                <td>Test</td>
-                <td>Test</td>
-                <td>Test</td>
-              </tr>
-              <tr>
+              <% if (recommend.length != 0) { %>
+                <% recommend.forEach(item => { %>
+                  <tr>
+                    <% if (item.award == "High") { %>
+                      <td><img src="/images/high-score.png" class="award-size"></td>
+                    <% } else if (item.award == "Platinum") { %>
+                      <td><img src="/images/endgame/platinum.jpeg" class="award-size"></td>
+                    <% } else if (item.award == "Gold") { %>
+                      <td><img src="/images/endgame/gold.jpeg" class="award-size"></td>
+                    <% } else if (item.award == "Silver") { %>
+                      <td><img src="/images/endgame/silver.jpeg" class="award-size"></td>
+                    <% } else if (item.award == "Bronze") { %>
+                      <td><img src="/images/endgame/bronze.jpeg" class="award-size"></td>
+                    <% } else { %>
+                      <td></td>
+                    <% } %>
+                   
+                    <% if ( item.mode == "Easy") {%>
+                      <td class="btn btn-outline-success btn-sm"> <%= "Easy" %></td>
+                    <% } %>
+                    <% if ( item.mode == "Hardcore") { %>
+                      <td class="btn btn-outline-danger btn-sm"> <%= "Hardcore" %></td> 
+                    <% } %>
+                    <% if ( item.mode == "Normal") { %>
+                      <td class="btn btn-outline-dark btn-sm"> <%= "Normal" %></td>
+                    <% } %>
+                    <td><%= item.level %></td>
+                    <td><%= item.setting %></td>
+                    <td><%= item.time %></td>
+                    <td><%= item.mistake %></td>
+                    <td><%= item.score %></td>
+                    <td><%= Math.floor((new Date() - item.date)/(1000*60*60*24)) %></td>
+                  </tr>
+                <% }) %>
+              <% } else { %>
+                <td colspan="5">Empty... Do something...</td>
+              <% } %>
 
             </tbody>
           </table>
