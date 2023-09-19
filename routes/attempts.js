@@ -3,6 +3,7 @@ const express = require("express");
 // const Attempts = require("../models/attemptModel");
 const attemptController = require("../controllers/attemptController");
 const authController = require("../controllers/authController");
+const userController = require("../controllers/userController");
 
 // mongoose
 //   .connect(DB)
@@ -20,7 +21,10 @@ const router = express.Router();
 router
   .route("/")
   .get(attemptController.getAllAttempts)
-  .post(attemptController.newAttempt);
+  .post(
+    userController.generateRecommendMiddleware,
+    attemptController.newAttempt
+  );
 
 router
   .route("/edit/:id")

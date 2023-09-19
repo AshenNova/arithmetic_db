@@ -302,6 +302,7 @@ function points(level, award, age, eligible, setting) {
 }
 
 exports.newAttempt = async (req, res) => {
+  console.log(res);
   let data = {
     eligible: 0,
   };
