@@ -217,7 +217,7 @@ exports.getFilteredAttempts = async (req, res) => {
   }
 };
 
-function points(level, award, age, eligible, setting) {
+function points(level, award, age, eligible, setting, mode) {
   console.log(`Level: ${level}, award: ${award}, Age: ${age}`);
   let points = 0;
   if (award == "Platinum") {
@@ -290,25 +290,24 @@ function points(level, award, age, eligible, setting) {
     // multiplier = 6;
   }
   if (levelStr.startsWith("cal") && setting == "99") {
-    multiplier = 2;
+    multiplier += 1;
   }
   if (levelStr.startsWith("heu") && setting == "9") {
-    multiplier = 3;
+    multiplier += 2;
   }
   if (age - ageSituable > 0) multiplier *= 0.5;
   if (age - ageSituable == 0) multiplier *= 1;
   if (age - ageSituable < 0) multiplier *= 2;
+
   return points * multiplier;
 }
 
 exports.newAttempt = async (req, res) => {
-  console.log(res);
   let data = {
     eligible: 0,
   };
 
   // RECEIVE DATA (MUST BE ON TOP)
-  console.log(req.body);
   const user = req.body.user;
   const mode = req.body.mode;
   const level = req.body.level;
@@ -322,6 +321,9 @@ exports.newAttempt = async (req, res) => {
   const summary = req.body.summary;
   const ip = req.headers["x-forwarded-for"] || req.ip;
   console.log(`This is ${req.body.user}'s attempt number ${attemptNum}.`);
+
+  const { recommend } = res;
+  console.log(`Recommendation: ${recommend}`);
 
   // QUERY PREVIOUS ATTEMPT (USER, LEVEL, MODE, SETTING)
   let previousAttempt;
@@ -569,7 +571,30 @@ exports.newAttempt = async (req, res) => {
       user,
       date: { $gte: start, $lt: end },
     });
-    console.log(`Attempts today: ${checkLimit}`);
+    //BONUS POINTS FOR DOING RECOMMENDATION
+
+    recommend.forEach((item) => {
+      // CHECK IF THE ATTEMPT IS ON THE RECOMMENDED LIST
+      if (item.level == level && item.mode == mode) {
+        let count = 0;
+        // IF YES, CHECK IF IT IS THE FIRST ATTEMPT
+        checkLimit.forEach((today) => {
+          if (today.level == level && today.mode == mode) {
+            count += 1;
+            console.log(`Count: ${count}`);
+          }
+        });
+
+        if (count == 0) {
+          console.log(`Before: ${pointsAwarded}`);
+          console.log("BONUS!");
+          pointsAwarded += 5;
+          userNow.points += 5;
+          console.log(`After: ${pointsAwarded}`);
+        }
+      }
+    });
+    console.log(`Attempts today: ${checkLimit.length}`);
     if (checkLimit.length <= 5) {
       const updatePoints = await User.findByIdAndUpdate(userNow._id, {
         points: userNow.points,

@@ -27,8 +27,8 @@
                 <th colspan="4">Previous</th>
               </tr>
               <tr>
+                <th scope="col">Done</th>
                 <th scope="col">Award</th>
-                
                 <th scope="col">Mode</th>
                 <th scope="col">Level</th>
                 <th scope="col">Setting</th>
@@ -42,6 +42,11 @@
               <% if (recommend.length != 0) { %>
                 <% recommend.forEach(item => { %>
                   <tr>
+                    <% if (item.accomplish == true) { %>
+                        <td><%= "⭐️" %></td>
+                      <% } else { %>
+                        <td></td>
+                      <% } %>
                     <% if (item.award == "High") { %>
                       <td><img src="/images/high-score.png" class="award-size"></td>
                     <% } else if (item.award == "Platinum") { %>

@@ -489,7 +489,6 @@ const generateRec = async (nameTemp) => {
       });
     }
   });
-
   return recommend;
 };
 
@@ -524,6 +523,27 @@ exports.recommend = async (req, res) => {
     // console.log(nameTemp);
 
     const recommend = await generateRec(nameTemp);
+
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    const end = new Date();
+    end.setHours(23, 59, 59, 999);
+
+    const todayAttempts = await Attempt.find({
+      user: nameTemp,
+      date: { $gte: start, $lt: end },
+    });
+
+    // console.log(todayAttempts);
+    recommend.forEach((item, index) => {
+      todayAttempts.forEach((todayItem) => {
+        if (item.level == todayItem.level && item.mode == todayItem.mode) {
+          console.log("YES! " + index);
+          item.accomplish = true;
+        }
+      });
+    });
+    //  console.log(item.accomplish);
     let authenticate = req.auth;
     let currentUser = req.user;
     res.render("pages/recommend", {
