@@ -586,11 +586,11 @@ exports.newAttempt = async (req, res) => {
         });
 
         if (count == 0) {
-          console.log(`Before: ${pointsAwarded}`);
+          // console.log(`Before: ${pointsAwarded}`);
           console.log("BONUS!");
           pointsAwarded += 5;
           userNow.points += 5;
-          console.log(`After: ${pointsAwarded}`);
+          // console.log(`After: ${pointsAwarded}`);
         }
       }
     });

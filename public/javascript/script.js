@@ -16434,26 +16434,35 @@ How many items are there in each bag?
     if (setting == 1) {
       const personA = boyNames[genNumbers(boyNames.length)];
       const personB = girlNames[genNumbers(boyNames.length)];
+      // const valueAFirst = p.unitsA;
+      // const valueBFirst = p.unitsB;
+      if (p.unitsA == p.unitsB) p.unitsB += 1;
       [p.unitsA, p.unitsB] = simplify(p.unitsA, p.unitsB);
       const valueAFirst = p.unitsA * p.multiplier;
       const valueBFirst = p.unitsB * p.multiplier;
-      while (
-        p.situationA == 0 ||
-        p.situationB == 0 ||
-        Math.abs(p.situationA) == Math.abs(p.situationB)
-      ) {
-        p.situationA = genNumbers(200) - 100;
-        p.situationB = genNumbers(200) - 100;
+      p.situationA = [-1, 1][genNumbers(2)] * (genNumbers(valueAFirst - 1) + 1);
+      p.situationB = [-1, 1][genNumbers(2)] * (genNumbers(valueBFirst - 1) + 1);
+      console.log(p.situationA, p.situationB);
+      if (Math.abs(p.situationA) == Math.abs(p.situationB)) {
+        return updateCalc();
       }
+      // console.log(
+      //   `A: ${valueAFirst}, unitA : ${p.unitsA}, multi: ${p.multiplier}, situationA: ${p.situationA}`
+      // );
+      // console.log(
+      //   `B: ${valueBFirst}, unitB : ${p.unitsB}, multi: ${p.multiplier}, situationB: ${p.situationB}`
+      // );
       let valueAEnd = valueAFirst + p.situationA;
       let valueBEnd = valueBFirst + p.situationB;
+      // console.log(valueAEnd);
+      // console.log(valueBEnd);
       // console.log(`Before: ${p.partsA} : ${p.partsB}`);
       let partsA = valueAEnd;
       let partsB = valueBEnd;
       [partsA, partsB] = simplify(partsA, partsB);
-      console.log(`After: ${partsA} : ${partsB}`);
 
-      if (partsA > 15 || partsB > 15 || partsA <= 0 || partsB <= 0) {
+      // if (partsA > 15 || partsB > 15 || partsA <= 0 || partsB <= 0) {
+      if (partsA > 15 || partsB > 15 || partsA == partsB) {
         console.log("Oops");
         return updateCalc();
       }
@@ -16462,10 +16471,10 @@ How many items are there in each bag?
       The ratio of ${personA} to ${personB} at first is ${p.unitsA} : ${
         p.unitsB
       }.</br>
-      ${personA} ${p.situationA > 0 ? `spent` : "received another"} $${Math.abs(
+      ${personA} ${p.situationA < 0 ? `spent` : "received another"} $${Math.abs(
         p.situationA
       )}.</br> 
-      ${personB} ${p.situationB > 0 ? `spent` : "received another"} $${Math.abs(
+      ${personB} ${p.situationB < 0 ? `spent` : "received another"} $${Math.abs(
         p.situationB
       )}.</br>
       Their ratio became ${partsA} : ${partsB} in the end.</br>
@@ -26847,19 +26856,27 @@ function genProblems() {
   }
 
   if (level == "heuSixb") {
-    setting = calArrAll(6, calArr, setting, 9);
+    setting = calArrAll(7, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
 
     // SIMULTANEOUS EQUATION (PARTS AND UNITS) TYPE 1
     if (setting == 1) {
+      // const gen_unitsA = genNumbers(10) + 1;
+      // const gen_unitsB = genNumbers(10) + 1;
+      // const genAFirst = genNumbers(45) + 5;
+      // const genBFirst = genNumbers(45) + 5;
+      // const gen_multiplier = genNumbers(10) + 2;
       return {
-        multiplier: genNumbers(10) + 5,
+        multiplier: genNumbers(10) + 2,
         unitsA: genNumbers(10) + 1,
         unitsB: genNumbers(10) + 1,
-        situationA: genNumbers(200) - 100,
-        situationB: genNumbers(200) - 100,
+        situationA: undefined,
+        situationB: undefined,
+        // situationA: [-1, 1][genNumbers(2)] * (genNumbers(genAFirst - 1) + 1),
+        // situationB: [-1, 1][genNumbers(2)] * (genNumbers(genBFirst - 1) + 1),
         // partsA: 0,
         // partsB: 0,
+
         question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
       };
     }
