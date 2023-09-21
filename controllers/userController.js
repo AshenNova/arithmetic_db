@@ -42,6 +42,9 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.editUser = async (req, res) => {
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
   if (
     !authenticate ||
     (!currentUser.admin && currentUser.username != req.query.username)
@@ -51,9 +54,7 @@ exports.editUser = async (req, res) => {
   console.log("Editing");
   // console.log(req.query);
   const editUser = await User.findOne({ username: req.query.username });
-  let username = req.user.username;
-  let authenticate = req.auth;
-  let currentUser = req.user;
+
   res.render("pages/edit-user", {
     authenticate,
     username,
