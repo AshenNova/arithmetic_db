@@ -641,7 +641,8 @@ const generateRec = async (nameTemp) => {
                 attempt.award = "";
                 attempt.date = new Date();
               }
-              recommend.push(attempt);
+              if (!uniqLevel.includes(attempt.level)) recommend.push(attempt);
+              // recommend.push(attempt);
             } else {
               uniqLevel.push(attempt.level);
             }
