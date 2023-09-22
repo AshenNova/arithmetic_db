@@ -479,6 +479,7 @@ const generateRec = async (nameTemp) => {
           !attempt.level.startsWith("heu")
         ) {
           if (!uniqLevel.includes(attempt.level)) {
+            uniqLevel.push(attempt.level);
             if (attempt.award == award) {
               if (attempt.award != "Try harder") {
                 if (attempt.mode == "Easy") {
@@ -494,6 +495,8 @@ const generateRec = async (nameTemp) => {
                   // attempt.score = "";
                   // attempt.award = "";
                 } else {
+                  console.log("COMPLETED IN HARDCORE MODE", attempt.level);
+                  // console.log(attempt.level.startsWith("6"));
                   const levelOne = [
                     "1",
                     "1.01",
@@ -574,59 +577,71 @@ const generateRec = async (nameTemp) => {
                     const index = levelOne.indexOf(attempt.level);
                     if (index + 1 == levelOne.length) {
                       attempt.level = levelOne[0];
+                      attempt.mode = "Hardcore";
                     } else {
                       attempt.level = levelOne[index + 1];
+                      attempt.mode = "Easy";
                     }
                   }
                   if (attempt.level.startsWith("2")) {
                     const index = levelTwo.indexOf(attempt.level);
                     if (index + 1 == levelTwo.length) {
                       attempt.level = levelTwo[0];
+                      attempt.mode = "Hardcore";
                     } else {
                       attempt.level = levelTwo[index + 1];
+                      attempt.mode = "Easy";
                     }
                   }
                   if (attempt.level.startsWith("3")) {
                     const index = levelThree.indexOf(attempt.level);
                     if (index + 1 == levelThree.length) {
                       attempt.level = levelThree[0];
+                      attempt.mode = "Hardcore";
                     } else {
                       attempt.level = levelThree[index + 1];
+                      attempt.mode = "Easy";
                     }
                   }
                   if (attempt.level.startsWith("4")) {
                     const index = levelFour.indexOf(attempt.level);
                     if (index + 1 == levelFour.length) {
                       attempt.level = levelFour[0];
+                      attempt.mode = "Hardcore";
                     } else {
                       attempt.level = levelFour[index + 1];
+                      attempt.mode = "Easy";
                     }
                   }
                   if (attempt.level.startsWith("5")) {
                     const index = levelFive.indexOf(attempt.level);
                     if (index + 1 == levelFive.length) {
                       attempt.level = levelFive[0];
+                      attempt.mode = "Hardcore";
                     } else {
                       attempt.level = levelFive[index + 1];
+                      attempt.mode = "Easy";
                     }
                   }
                   if (attempt.level.startsWith("6")) {
+                    // console.log("here too!");
                     const index = levelSix.indexOf(attempt.level);
                     if (index + 1 == levelSix.length) {
                       attempt.level = levelSix[0];
+                      attempt.mode = "Hardcore";
                     } else {
                       attempt.level = levelSix[index + 1];
+                      attempt.mode = "Easy";
                     }
                   }
-                  attempt.mode = "Easy";
                 }
                 attempt.time = "";
                 attempt.mistake = "";
                 attempt.score = "";
                 attempt.award = "";
+                attempt.date = new Date();
               }
               recommend.push(attempt);
-              uniqLevel.push(attempt.level);
             } else {
               uniqLevel.push(attempt.level);
             }
