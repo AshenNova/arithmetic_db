@@ -570,6 +570,7 @@ exports.newAttempt = async (req, res) => {
     const checkLimit = await Attempt.find({
       user,
       date: { $gte: start, $lt: end },
+      tries: "1",
     });
     //BONUS POINTS FOR DOING RECOMMENDATION
 
