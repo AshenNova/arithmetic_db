@@ -481,17 +481,149 @@ const generateRec = async (nameTemp) => {
           if (!uniqLevel.includes(attempt.level)) {
             if (attempt.award == award) {
               if (attempt.award != "Try harder") {
+                if (attempt.mode == "Easy") {
+                  // attempt.time = "";
+                  // attempt.mistake = "";
+                  // attempt.score = "";
+                  // attempt.award = "";
+                  attempt.mode = "Normal";
+                } else if (attempt.mode == "Normal") {
+                  attempt.mode = "Hardcore";
+                  // attempt.time = "";
+                  // attempt.mistake = "";
+                  // attempt.score = "";
+                  // attempt.award = "";
+                } else {
+                  const levelOne = [
+                    "1",
+                    "1.01",
+                    "1.02",
+                    "1.03",
+                    "1.04",
+                    "1.05",
+                    "1.06",
+                    "1.07",
+                    "1.08",
+                  ];
+                  const levelTwo = [
+                    "2",
+                    "2.01",
+                    "2.02",
+                    "2.03",
+                    "2.04",
+                    "2.05",
+                    "2.06",
+                    "2.07",
+                  ];
+                  const levelThree = [
+                    "3",
+                    "3.01",
+                    "3.02",
+                    "3.03",
+                    "3.06",
+                    "3.07",
+                    "3.11",
+                    "3.12",
+                    "3.16",
+                    "3.17",
+                    "3.18",
+                    "3.19",
+                  ];
+                  const levelFour = [
+                    "4.01",
+                    "4.02",
+                    "4.03",
+                    "4.06",
+                    "4.08",
+                    "4.11",
+                    "4.12",
+                    "4.13",
+                    "4.16",
+                    "4.17",
+                    "4.18",
+                    "4.19",
+                    "4.20",
+                    "4.21",
+                    "4.22",
+                    "4.23",
+                    "4.24",
+                    "4.25",
+                    "4.26",
+                  ];
+                  const levelFive = [
+                    "5",
+                    "5.01",
+                    "5.02",
+                    "5.03",
+                    "5.04",
+                    "5.05",
+                    "5.06",
+                    "5.07",
+                    "5.08",
+                    "5.09",
+                    "5.10",
+                    "5.11",
+                    "5.12",
+                    "5.13",
+                    "5.14",
+                    "5.15",
+                    "5.16",
+                  ];
+                  const levelSix = ["6", "6.01", "6.02", "6.03"];
+                  if (attempt.level.startsWith("1")) {
+                    const index = levelOne.indexOf(attempt.level);
+                    if (index + 1 == levelOne.length) {
+                      attempt.level = levelOne[0];
+                    } else {
+                      attempt.level = levelOne[index + 1];
+                    }
+                  }
+                  if (attempt.level.startsWith("2")) {
+                    const index = levelTwo.indexOf(attempt.level);
+                    if (index + 1 == levelTwo.length) {
+                      attempt.level = levelTwo[0];
+                    } else {
+                      attempt.level = levelTwo[index + 1];
+                    }
+                  }
+                  if (attempt.level.startsWith("3")) {
+                    const index = levelThree.indexOf(attempt.level);
+                    if (index + 1 == levelThree.length) {
+                      attempt.level = levelThree[0];
+                    } else {
+                      attempt.level = levelThree[index + 1];
+                    }
+                  }
+                  if (attempt.level.startsWith("4")) {
+                    const index = levelFour.indexOf(attempt.level);
+                    if (index + 1 == levelFour.length) {
+                      attempt.level = levelFour[0];
+                    } else {
+                      attempt.level = levelFour[index + 1];
+                    }
+                  }
+                  if (attempt.level.startsWith("5")) {
+                    const index = levelFive.indexOf(attempt.level);
+                    if (index + 1 == levelFive.length) {
+                      attempt.level = levelFive[0];
+                    } else {
+                      attempt.level = levelFive[index + 1];
+                    }
+                  }
+                  if (attempt.level.startsWith("6")) {
+                    const index = levelSix.indexOf(attempt.level);
+                    if (index + 1 == levelSix.length) {
+                      attempt.level = levelSix[0];
+                    } else {
+                      attempt.level = levelSix[index + 1];
+                    }
+                  }
+                  attempt.mode = "Easy";
+                }
                 attempt.time = "";
                 attempt.mistake = "";
                 attempt.score = "";
                 attempt.award = "";
-                if (attempt.mode == "Easy") {
-                  attempt.mode = "Normal";
-                } else if (attempt.mode == "Normal") {
-                  attempt.mode = "Hardcore";
-                } else {
-                  attempt.mode = "Hardcore";
-                }
               }
               recommend.push(attempt);
               uniqLevel.push(attempt.level);
