@@ -407,6 +407,7 @@ const generateRec = async (nameTemp) => {
   let levelRecommend = [];
   let calRecommend = [];
   let heuRecommend = [];
+  let mode = ["Easy", "Normal", "Hardcore"];
   let awards = ["Try harder", "Bronze", "Silver", "Gold", "Platinum"];
   // GET ALL UNIQUE LEVELS
   latestAttempt.forEach((item) => {
@@ -423,7 +424,6 @@ const generateRec = async (nameTemp) => {
   console.log(levelRecommend);
 
   //CALCULATIONS
-
   let uniqLevel = [];
   awards.forEach((award) => {
     uniqLevel = [];
@@ -480,6 +480,19 @@ const generateRec = async (nameTemp) => {
         ) {
           if (!uniqLevel.includes(attempt.level)) {
             if (attempt.award == award) {
+              if (attempt.award != "Try harder") {
+                attempt.time = "";
+                attempt.mistake = "";
+                attempt.score = "";
+                attempt.award = "";
+                if (attempt.mode == "Easy") {
+                  attempt.mode = "Normal";
+                } else if (attempt.mode == "Normal") {
+                  attempt.mode = "Hardcore";
+                } else {
+                  attempt.mode = "Hardcore";
+                }
+              }
               recommend.push(attempt);
               uniqLevel.push(attempt.level);
             } else {
