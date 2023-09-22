@@ -575,21 +575,35 @@ exports.newAttempt = async (req, res) => {
 
     recommend.forEach((item) => {
       // CHECK IF THE ATTEMPT IS ON THE RECOMMENDED LIST
+      let accomplish = 0;
       if (item.level == level && item.mode == mode) {
         let count = 0;
+        accomplish += 1;
         // IF YES, CHECK IF IT IS THE FIRST ATTEMPT
         checkLimit.forEach((today) => {
           if (today.level == level && today.mode == mode) {
             count += 1;
+
             console.log(`Count: ${count}`);
           }
         });
 
+        recommend.forEach((item) => {
+          checkLimit.forEach((today) => {
+            if (today.level == item.level && today.mode == item.mode) {
+              accomplish += 1;
+            }
+          });
+        });
         if (count == 0) {
-          // console.log(`Before: ${pointsAwarded}`);
-          console.log("BONUS!");
-          pointsAwarded += 5;
-          userNow.points += 5;
+          console.log("BONUS!: " + accomplish);
+          pointsAwarded += accomplish;
+          userNow.points += accomplish;
+          if (recommend.length == accomplish) {
+            console.log("Complete bonus!: 15");
+            pointsAwarded += 15;
+            userNow.points += 15;
+          }
           // console.log(`After: ${pointsAwarded}`);
         }
       }

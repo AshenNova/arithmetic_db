@@ -26861,21 +26861,12 @@ function genProblems() {
 
     // SIMULTANEOUS EQUATION (PARTS AND UNITS) TYPE 1
     if (setting == 1) {
-      // const gen_unitsA = genNumbers(10) + 1;
-      // const gen_unitsB = genNumbers(10) + 1;
-      // const genAFirst = genNumbers(45) + 5;
-      // const genBFirst = genNumbers(45) + 5;
-      // const gen_multiplier = genNumbers(10) + 2;
       return {
         multiplier: genNumbers(10) + 2,
         unitsA: genNumbers(10) + 1,
         unitsB: genNumbers(10) + 1,
         situationA: undefined,
         situationB: undefined,
-        // situationA: [-1, 1][genNumbers(2)] * (genNumbers(genAFirst - 1) + 1),
-        // situationB: [-1, 1][genNumbers(2)] * (genNumbers(genBFirst - 1) + 1),
-        // partsA: 0,
-        // partsB: 0,
 
         question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
       };
