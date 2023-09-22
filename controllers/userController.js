@@ -471,7 +471,10 @@ const generateRec = async (nameTemp) => {
   // IF NO, CHECK ANOTHER LEVEL.
 
   awards.forEach((award) => {
+    // console.log(`Recommend: ${recommend}`);
+    console.log(`!!!! Award check !!!! ${award}`);
     uniqLevel = [];
+    console.log(uniqLevel);
     if (recommend.length < 6) {
       latestAttempt.forEach((attempt) => {
         if (
@@ -479,24 +482,20 @@ const generateRec = async (nameTemp) => {
           !attempt.level.startsWith("heu")
         ) {
           if (!uniqLevel.includes(attempt.level)) {
-            uniqLevel.push(attempt.level);
+            console.log("Checking: " + attempt.level);
+
             if (attempt.award == award) {
+              //CHECK IF AWARD IS BRONZE AND ABOVE
               if (attempt.award != "Try harder") {
                 if (attempt.mode == "Easy") {
-                  // attempt.time = "";
-                  // attempt.mistake = "";
-                  // attempt.score = "";
-                  // attempt.award = "";
+                  console.log("Easy detected, switching to Normal");
                   attempt.mode = "Normal";
                 } else if (attempt.mode == "Normal") {
+                  console.log("Normal detected, switching to Hardcore");
                   attempt.mode = "Hardcore";
-                  // attempt.time = "";
-                  // attempt.mistake = "";
-                  // attempt.score = "";
-                  // attempt.award = "";
                 } else {
+                  uniqLevel.push(attempt.level);
                   console.log("COMPLETED IN HARDCORE MODE", attempt.level);
-                  // console.log(attempt.level.startsWith("6"));
                   const levelOne = [
                     "1",
                     "1.01",
@@ -641,7 +640,12 @@ const generateRec = async (nameTemp) => {
                 attempt.award = "";
                 attempt.date = new Date();
               }
-              if (!uniqLevel.includes(attempt.level)) recommend.push(attempt);
+              console.log(uniqLevel);
+              if (!uniqLevel.includes(attempt.level) && recommend.length < 6) {
+                console.log("PUSHHHH!");
+                recommend.push(attempt);
+                uniqLevel.push(attempt.level);
+              }
               // recommend.push(attempt);
             } else {
               uniqLevel.push(attempt.level);
