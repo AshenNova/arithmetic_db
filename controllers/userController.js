@@ -404,6 +404,7 @@ const generateRec = async (nameTemp) => {
   });
 
   let recommend = [];
+  let recommendList = [];
   let levelRecommend = [];
   let calRecommend = [];
   let heuRecommend = [];
@@ -431,9 +432,13 @@ const generateRec = async (nameTemp) => {
       calRecommend.forEach((calLevel) => {
         latestAttempt.forEach((attempt) => {
           if (attempt.level == calLevel) {
-            if (!uniqLevel.includes(attempt.level)) {
+            if (
+              !uniqLevel.includes(attempt.level) &&
+              !recommendList.includes(attempt.level)
+            ) {
               if (attempt.award == award) {
                 recommend.push(attempt);
+                recommendList.push(attempt.level);
                 uniqLevel.push(attempt.level);
               } else {
                 uniqLevel.push(attempt.level);
@@ -452,9 +457,14 @@ const generateRec = async (nameTemp) => {
       heuRecommend.forEach((heuLevel) => {
         latestAttempt.forEach((attempt) => {
           if (attempt.level == heuLevel) {
-            if (!uniqLevel.includes(attempt.level)) {
+            if (
+              !uniqLevel.includes(
+                attempt.level && !recommendList.includes(attempt.level)
+              )
+            ) {
               if (attempt.award == award) {
                 recommend.push(attempt);
+                recommendList.push(attempt.level);
                 uniqLevel.push(attempt.level);
               } else {
                 uniqLevel.push(attempt.level);
@@ -481,7 +491,10 @@ const generateRec = async (nameTemp) => {
           !attempt.level.startsWith("cal") &&
           !attempt.level.startsWith("heu")
         ) {
-          if (!uniqLevel.includes(attempt.level)) {
+          if (
+            !uniqLevel.includes(attempt.level) &&
+            !recommendList.includes(attempt.level)
+          ) {
             console.log("Checking: " + attempt.level);
 
             if (attempt.award == award) {
@@ -640,10 +653,15 @@ const generateRec = async (nameTemp) => {
                 attempt.award = "";
                 attempt.date = new Date();
               }
-              console.log(uniqLevel);
-              if (!uniqLevel.includes(attempt.level) && recommend.length < 6) {
+              // console.log(uniqLevel);
+              if (
+                !uniqLevel.includes(attempt.level) &&
+                recommend.length < 6 &&
+                !recommendList.includes(attempt.level)
+              ) {
                 console.log("PUSHHHH!");
                 recommend.push(attempt);
+                recommendList.push(attempt.level);
                 uniqLevel.push(attempt.level);
               }
               // recommend.push(attempt);
