@@ -403,6 +403,10 @@ const generateRec = async (nameTemp) => {
     date: -1,
   });
 
+  const { DOB } = await User.findOne({ username: nameTemp.toLowerCase() });
+  const age = new Date().getFullYear() - DOB.getFullYear();
+  console.log(age);
+
   let recommend = [];
   let recommendList = [];
   let levelRecommend = [];
@@ -425,6 +429,18 @@ const generateRec = async (nameTemp) => {
   console.log(levelRecommend);
 
   //CALCULATIONS
+  const calOne = ["calOne"]; //age 7
+  const calTwo = ["calTwo"];
+  const calThree = ["calThree"];
+  const calFour = ["calFour"];
+  const calFive = ["calFive", "calFiveb"];
+  const calSix = ["calSix", "calSixb"];
+  const calAgeSeven = calOne;
+  const calAgeEight = calTwo;
+  const calAgeNine = calThree;
+  const calAgeTen = calFour;
+  const calAgeEleven = calFour.concat(calFive);
+  const calAgeTwelve = calFour.concat(calFive, calSix);
   let uniqLevel = [];
   awards.forEach((award) => {
     uniqLevel = [];
@@ -436,12 +452,46 @@ const generateRec = async (nameTemp) => {
               !uniqLevel.includes(attempt.level) &&
               !recommendList.includes(attempt.level)
             ) {
+              // if (attempt.award == award) {
               if (attempt.award == award) {
+                console.log(Award);
                 recommend.push(attempt);
                 recommendList.push(attempt.level);
                 uniqLevel.push(attempt.level);
               } else {
-                uniqLevel.push(attempt.level);
+                // uniqLevel.push(attempt.level);
+                console.log("Rotation or promoted");
+                if (age == 10) {
+                  const index = calAgeTen.indexOf(attempt.level);
+                  attempt.level = calAgeTen[index + 1];
+                  if (index + 1 == calAgeTen.length) {
+                    attempt.level = calAgeTen[0];
+                  }
+                }
+                if (age == 11) {
+                  const index = calAgeElven.indexOf(attempt.level);
+                  attempt.level = calAgeEleven[index + 1];
+                  if (index + 1 == calAgeElven.length) {
+                    attempt.level = calAgeElven[0];
+                  }
+                }
+                if (age == 12) {
+                  const index = calAgeTwelve.indexOf(attempt.level);
+                  attempt.level = calAgeTwelve[index + 1];
+                  if (index + 1 == calAgeTwelve.length) {
+                    attempt.level = calAgeTwelve[0];
+                  }
+                }
+                if (
+                  !recommendList.includes(attempt.level) &&
+                  recommend.length < 2
+                ) {
+                  attempt.setting = 99;
+                  attempt.mode = "Easy";
+                  recommend.push(attempt);
+                  recommendList.push(attempt.level);
+                  uniqLevel.push(attempt.level);
+                }
               }
             }
           }
@@ -451,6 +501,18 @@ const generateRec = async (nameTemp) => {
   });
 
   //HEURISTICS
+  const heuOne = ["heuOne"]; //age 7
+  const heuTwo = ["heuTwo", "heuTwob"];
+  const heuThree = ["heuThree", "heuThreeb"];
+  const heuFour = ["heuFour", "heuFourb"];
+  const heuFive = ["heuFive", "heuFiveb"];
+  const heuSix = ["heuSix", "heuSixb"];
+  const heuAgeSeven = heuOne;
+  const heuAgeEight = heuTwo;
+  const heuAgeNine = heuThree.concat(heuTwo);
+  const heuAgeTen = heuFour.concat(heuThree);
+  const heuAgeEleven = heuFour.concat(heuFive, heuThree);
+  const heuAgeTwelve = heuFour.concat(heuFive, heuSix, heuThree);
   awards.forEach((award) => {
     uniqLevel = [];
     if (recommend.length < 2) {
@@ -466,7 +528,53 @@ const generateRec = async (nameTemp) => {
                 recommendList.push(attempt.level);
                 uniqLevel.push(attempt.level);
               } else {
-                uniqLevel.push(attempt.level);
+                // uniqLevel.push(attempt.level);
+                console.log("Rotation or promoted");
+                if (age == 8) {
+                  const index = heuAgeEight.indexOf(attempt.level);
+                  attempt.level = heuAgeEight[index + 1];
+                  if (index + 1 == heuAgeEight.length) {
+                    attempt.level = heuAgeEight[0];
+                  }
+                }
+                if (age == 9) {
+                  const index = heuAgeNine.indexOf(attempt.level);
+                  attempt.level = heuAgeNine[index + 1];
+                  if (index + 1 == heuAgeNine.length) {
+                    attempt.level = heuAgeNine[0];
+                  }
+                }
+                if (age == 10) {
+                  const index = heuAgeTen.indexOf(attempt.level);
+                  attempt.level = heuAgeTen[index + 1];
+                  if (index + 1 == heuAgeTen.length) {
+                    attempt.level = heuAgeTen[0];
+                  }
+                }
+                if (age == 11) {
+                  const index = heuAgeElven.indexOf(attempt.level);
+                  attempt.level = heuAgeEleven[index + 1];
+                  if (index + 1 == heuAgeElven.length) {
+                    attempt.level = heuAgeElven[0];
+                  }
+                }
+                if (age == 12) {
+                  const index = heuAgeTwelve.indexOf(attempt.level);
+                  attempt.level = heuAgeTwelve[index + 1];
+                  if (index + 1 == heuAgeTwelve.length) {
+                    attempt.level = heuAgeTwelve[0];
+                  }
+                }
+                if (
+                  !recommendList.includes(attempt.level) &&
+                  recommend.length < 2
+                ) {
+                  attempt.setting = 9;
+                  attempt.mode = "Easy";
+                  recommend.push(attempt);
+                  recommendList.push(attempt.level);
+                  uniqLevel.push(attempt.level);
+                }
               }
             }
           }
