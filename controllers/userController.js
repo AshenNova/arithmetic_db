@@ -458,9 +458,8 @@ const generateRec = async (nameTemp) => {
         latestAttempt.forEach((attempt) => {
           if (attempt.level == heuLevel) {
             if (
-              !uniqLevel.includes(
-                attempt.level && !recommendList.includes(attempt.level)
-              )
+              !uniqLevel.includes(attempt.level) &&
+              !recommendList.includes(attempt.level)
             ) {
               if (attempt.award == award) {
                 recommend.push(attempt);
