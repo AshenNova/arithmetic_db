@@ -453,29 +453,27 @@ const generateRec = async (nameTemp) => {
   //HEURISTICS
   awards.forEach((award) => {
     uniqLevel = [];
-    // if (recommend.length < 2) {
-    heuRecommend.forEach((heuLevel) => {
-      latestAttempt.forEach((attempt) => {
-        if (attempt.level == heuLevel) {
-          if (
-            !uniqLevel.includes(
-              attempt.level &&
-                !recommendList.includes(attempt.level) &&
-                recommend.length < 2
-            )
-          ) {
-            if (attempt.award == award) {
-              recommend.push(attempt);
-              recommendList.push(attempt.level);
-              uniqLevel.push(attempt.level);
-            } else {
-              uniqLevel.push(attempt.level);
+    if (recommend.length < 2) {
+      heuRecommend.forEach((heuLevel) => {
+        latestAttempt.forEach((attempt) => {
+          if (attempt.level == heuLevel) {
+            if (
+              !uniqLevel.includes(
+                attempt.level && !recommendList.includes(attempt.level)
+              )
+            ) {
+              if (attempt.award == award) {
+                recommend.push(attempt);
+                recommendList.push(attempt.level);
+                uniqLevel.push(attempt.level);
+              } else {
+                uniqLevel.push(attempt.level);
+              }
             }
           }
-        }
+        });
       });
-    });
-    // }
+    }
   });
   // CHECK IF RECOMMENDATION IS LESS THAN 4 ENTRIES
   // CHECK IF THE LATEST ENTRY OF A LEVEL IS 'TRY HARDER'
