@@ -552,10 +552,10 @@ const generateRec = async (nameTemp) => {
                   }
                 }
                 if (age == 11) {
-                  const index = heuAgeElven.indexOf(attempt.level);
+                  const index = heuAgeEleven.indexOf(attempt.level);
                   attempt.level = heuAgeEleven[index + 1];
-                  if (index + 1 == heuAgeElven.length) {
-                    attempt.level = heuAgeElven[0];
+                  if (index + 1 == heuAgeEleven.length) {
+                    attempt.level = heuAgeEleven[0];
                   }
                 }
                 if (age == 12) {
