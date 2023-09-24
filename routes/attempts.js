@@ -18,10 +18,13 @@ const userController = require("../controllers/userController");
 //ROUTER
 const router = express.Router();
 
-router.route("/").get(attemptController.getAllAttempts).post(
-  // userController.generateRecommendMiddleware,
-  attemptController.newAttempt
-);
+router
+  .route("/")
+  .get(attemptController.getAllAttempts)
+  .post(
+    userController.generateRecommendMiddleware,
+    attemptController.newAttempt
+  );
 
 router
   .route("/edit/:id")
