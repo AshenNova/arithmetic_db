@@ -307,7 +307,7 @@ exports.newAttempt = async (req, res) => {
     eligible: 0,
   };
 
-  console.log(res.recommend);
+  // console.log(res.recommend);
   const { recommend } = res;
 
   // RECEIVE DATA (MUST BE ON TOP)
@@ -532,7 +532,6 @@ exports.newAttempt = async (req, res) => {
       if (data.eligible == 1) award = "High";
       // console.log("Tries", attemptNum, attemptNum > 1);
       if (skip != "" || attemptNum > 1) award = "Try harder";
-      console.log(bronze, silver, gold, platinum);
       console.log(`You got ${award}!`);
       data.medals = {
         bronze,
@@ -563,6 +562,7 @@ exports.newAttempt = async (req, res) => {
     console.log(
       `Points Awarded: ${pointsAwarded}, Cumulative: ${userNow.points}`
     );
+    //SEARCH FOR ALL THE ATTEMPTS DONE TODAY
     let start = new Date();
     start.setHours(0, 0, 0, 0);
     let end = new Date();
@@ -572,8 +572,8 @@ exports.newAttempt = async (req, res) => {
       date: { $gte: start, $lt: end },
       tries: "1",
     });
-    //BONUS POINTS FOR DOING RECOMMENDATION
 
+    //BONUS POINTS FOR DOING RECOMMENDATION
     recommend.forEach((item) => {
       // CHECK IF THE ATTEMPT IS ON THE RECOMMENDED LIST
       let accomplish = 0;
@@ -584,11 +584,11 @@ exports.newAttempt = async (req, res) => {
         checkLimit.forEach((today) => {
           if (today.level == level && today.mode == mode) {
             count += 1;
-
-            console.log(`Count: ${count}`);
+            console.log(`------> Count: ${count}`);
           }
         });
 
+        // CHECK HOW MANY DAILY RECOMMENDATIONS HAS BEEN DONE.
         recommend.forEach((item) => {
           checkLimit.forEach((today) => {
             if (today.level == item.level && today.mode == item.mode) {
@@ -596,10 +596,12 @@ exports.newAttempt = async (req, res) => {
             }
           });
         });
+        // ONLY AWARD THE FIRST ATTEMPT OF THE RECOMMENDED THE BONUS POINT
         if (count == 0) {
           console.log("BONUS!: " + accomplish);
           pointsAwarded += accomplish;
           userNow.points += accomplish;
+          //IF ALL RECOMMENDED HAS BEEN COMPLETED, AWARD MORE!
           if (recommend.length == accomplish) {
             console.log("Complete bonus!: 15");
             pointsAwarded += 15;
@@ -610,6 +612,11 @@ exports.newAttempt = async (req, res) => {
       }
     });
     console.log(`Attempts today: ${checkLimit.length}`);
+    checkLimit.forEach((today) => {
+      if (today.level == level) {
+        pointsAwarded = 1;
+      }
+    });
     if (checkLimit.length <= 5) {
       const updatePoints = await User.findByIdAndUpdate(userNow._id, {
         points: userNow.points,

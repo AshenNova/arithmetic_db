@@ -397,16 +397,28 @@ exports.deleteRewardLog = async (req, res) => {
 const generateRec = async (nameTemp) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  const latestAttempt = await Attempt.find({
-    user: nameTemp,
-    date: { $lt: today },
-    tries: "1",
-  }).sort({
-    level: -1,
-    date: -1,
-  });
+  const [latestAttempt, { DOB }] = await Promise.all([
+    Attempt.find({
+      user: nameTemp,
+      date: { $lt: today },
+      tries: "1",
+    }).sort({
+      level: -1,
+      date: -1,
+    }),
+    User.findOne({ username: nameTemp.toLowerCase() }),
+  ]);
 
-  const { DOB } = await User.findOne({ username: nameTemp.toLowerCase() });
+  // const latestAttempt = await Attempt.find({
+  //   user: nameTemp,
+  //   date: { $lt: today },
+  //   tries: "1",
+  // }).sort({
+  //   level: -1,
+  //   date: -1,
+  // });
+
+  // const { DOB } = await User.findOne({ username: nameTemp.toLowerCase() });
   const age = new Date().getFullYear() - DOB.getFullYear();
   console.log(age);
 
@@ -494,6 +506,7 @@ const generateRec = async (nameTemp) => {
                   attempt.time = "";
                   attempt.mistake = "";
                   attempt.score = "";
+                  attempt.award = "";
                   attempt.date = new Date();
                   recommend.push(attempt);
                   recommendList.push(attempt.level);
@@ -580,6 +593,7 @@ const generateRec = async (nameTemp) => {
                   attempt.mode = "Easy";
                   attempt.time = "";
                   attempt.mistake = "";
+                  attempt.award = "";
                   attempt.score = "";
                   attempt.date = new Date();
 
