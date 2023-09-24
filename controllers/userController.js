@@ -535,78 +535,78 @@ const generateRec = async (nameTemp) => {
   const heuAgeTwelve = heuFour.concat(heuFive, heuSix, heuThree);
   awards.forEach((award) => {
     uniqLevel = [];
-    if (recommend.length < 2) {
-      heuRecommend.forEach((heuLevel) => {
-        latestAttempt.forEach((attempt) => {
-          if (attempt.level == heuLevel) {
-            if (
-              !uniqLevel.includes(attempt.level) &&
-              !recommendList.includes(attempt.level)
-            ) {
-              if (attempt.award == award) {
+    // if (recommend.length < 2) {
+    heuRecommend.forEach((heuLevel) => {
+      latestAttempt.forEach((attempt) => {
+        if (attempt.level == heuLevel) {
+          if (
+            !uniqLevel.includes(attempt.level) &&
+            !recommendList.includes(attempt.level)
+          ) {
+            if (attempt.award == award && recommend.length < 2) {
+              recommend.push(attempt);
+              recommendList.push(attempt.level);
+              uniqLevel.push(attempt.level);
+            } else {
+              // uniqLevel.push(attempt.level);
+              console.log("Rotation or promoted");
+              if (age == 8) {
+                const index = heuAgeEight.indexOf(attempt.level);
+                attempt.level = heuAgeEight[index + 1];
+                if (index + 1 == heuAgeEight.length) {
+                  attempt.level = heuAgeEight[0];
+                }
+              }
+              if (age == 9) {
+                const index = heuAgeNine.indexOf(attempt.level);
+                attempt.level = heuAgeNine[index + 1];
+                if (index + 1 == heuAgeNine.length) {
+                  attempt.level = heuAgeNine[0];
+                }
+              }
+              if (age == 10) {
+                const index = heuAgeTen.indexOf(attempt.level);
+                attempt.level = heuAgeTen[index + 1];
+                if (index + 1 == heuAgeTen.length) {
+                  attempt.level = heuAgeTen[0];
+                }
+              }
+              if (age == 11) {
+                const index = heuAgeEleven.indexOf(attempt.level);
+                attempt.level = heuAgeEleven[index + 1];
+                if (index + 1 == heuAgeEleven.length) {
+                  attempt.level = heuAgeEleven[0];
+                }
+              }
+              if (age == 12) {
+                const index = heuAgeTwelve.indexOf(attempt.level);
+                attempt.level = heuAgeTwelve[index + 1];
+                if (index + 1 == heuAgeTwelve.length) {
+                  attempt.level = heuAgeTwelve[0];
+                }
+              }
+              if (
+                !recommendList.includes(attempt.level) &&
+                recommend.length < 2
+              ) {
+                attempt.setting = 9;
+                attempt.mode = "Easy";
+                attempt.time = "";
+                attempt.mistake = "";
+                attempt.award = "";
+                attempt.score = "";
+                attempt.date = new Date();
+
                 recommend.push(attempt);
                 recommendList.push(attempt.level);
                 uniqLevel.push(attempt.level);
-              } else {
-                // uniqLevel.push(attempt.level);
-                console.log("Rotation or promoted");
-                if (age == 8) {
-                  const index = heuAgeEight.indexOf(attempt.level);
-                  attempt.level = heuAgeEight[index + 1];
-                  if (index + 1 == heuAgeEight.length) {
-                    attempt.level = heuAgeEight[0];
-                  }
-                }
-                if (age == 9) {
-                  const index = heuAgeNine.indexOf(attempt.level);
-                  attempt.level = heuAgeNine[index + 1];
-                  if (index + 1 == heuAgeNine.length) {
-                    attempt.level = heuAgeNine[0];
-                  }
-                }
-                if (age == 10) {
-                  const index = heuAgeTen.indexOf(attempt.level);
-                  attempt.level = heuAgeTen[index + 1];
-                  if (index + 1 == heuAgeTen.length) {
-                    attempt.level = heuAgeTen[0];
-                  }
-                }
-                if (age == 11) {
-                  const index = heuAgeEleven.indexOf(attempt.level);
-                  attempt.level = heuAgeEleven[index + 1];
-                  if (index + 1 == heuAgeEleven.length) {
-                    attempt.level = heuAgeEleven[0];
-                  }
-                }
-                if (age == 12) {
-                  const index = heuAgeTwelve.indexOf(attempt.level);
-                  attempt.level = heuAgeTwelve[index + 1];
-                  if (index + 1 == heuAgeTwelve.length) {
-                    attempt.level = heuAgeTwelve[0];
-                  }
-                }
-                if (
-                  !recommendList.includes(attempt.level) &&
-                  recommend.length < 2
-                ) {
-                  attempt.setting = 9;
-                  attempt.mode = "Easy";
-                  attempt.time = "";
-                  attempt.mistake = "";
-                  attempt.award = "";
-                  attempt.score = "";
-                  attempt.date = new Date();
-
-                  recommend.push(attempt);
-                  recommendList.push(attempt.level);
-                  uniqLevel.push(attempt.level);
-                }
               }
             }
           }
-        });
+        }
       });
-    }
+    });
+    // }
   });
   // CHECK IF RECOMMENDATION IS LESS THAN 4 ENTRIES
   // CHECK IF THE LATEST ENTRY OF A LEVEL IS 'TRY HARDER'
