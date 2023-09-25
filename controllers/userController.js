@@ -444,6 +444,7 @@ const generateRec = async (nameTemp) => {
   console.log(levelRecommend);
 
   //CALCULATIONS
+  console.log("CHECKING CALCULATIONS");
   const calOne = ["calOne"]; //age 7
   const calTwo = ["calTwo"];
   const calThree = ["calThree"];
@@ -478,23 +479,28 @@ const generateRec = async (nameTemp) => {
                 console.log("Rotation or promoted");
                 if (age == 10) {
                   const index = calAgeTen.indexOf(attempt.level);
-                  attempt.level = calAgeTen[index + 1];
                   if (index + 1 == calAgeTen.length) {
                     attempt.level = calAgeTen[0];
+                  } else {
+                    attempt.level = calAgeTen[index + 1];
                   }
                 }
                 if (age == 11) {
-                  const index = calAgeElven.indexOf(attempt.level);
-                  attempt.level = calAgeEleven[index + 1];
-                  if (index + 1 == calAgeElven.length) {
-                    attempt.level = calAgeElven[0];
+                  const index = calAgeEleven.indexOf(attempt.level);
+
+                  if (index + 1 == calAgeEleven.length) {
+                    attempt.level = calAgeEleven[0];
+                  } else {
+                    attempt.level = calAgeEleven[index + 1];
                   }
                 }
                 if (age == 12) {
                   const index = calAgeTwelve.indexOf(attempt.level);
-                  attempt.level = calAgeTwelve[index + 1];
+
                   if (index + 1 == calAgeTwelve.length) {
                     attempt.level = calAgeTwelve[0];
+                  } else {
+                    attempt.level = calAgeTwelve[index + 1];
                   }
                 }
                 if (
@@ -521,6 +527,7 @@ const generateRec = async (nameTemp) => {
   });
 
   // //HEURISTICS
+  console.log("CHECKING HEURISTICS");
   const heuOne = ["heuOne"]; //age 7
   const heuTwo = ["heuTwo", "heuTwob"];
   const heuThree = ["heuThree", "heuThreeb"];
@@ -881,9 +888,11 @@ exports.recommend = async (req, res) => {
 
 exports.login = (req, res) => {
   console.log(req.auth);
+  const { message } = req;
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
+
   res.render("pages/login", { username, authenticate, currentUser });
   // res.send("This is the login page.");
 };

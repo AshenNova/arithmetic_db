@@ -55,10 +55,11 @@ exports.login = async (req, res) => {
   try {
     // 1. CHECK IF USER AND PASSWORD EXIST
     if (!username || !password) {
-      return res.status(400).json({
-        status: 400,
-        message: `Please enter a password or email.`,
-      });
+      // return res.status(400).json({
+      //   status: 400,
+      //   message: `Please enter a password or email.`,
+      // });
+      return res.redirect("/user/login");
     }
     // 2. CHECK IF PASSWORD IS CORRECT
     //HAVE TO USE .SELECT HAS WE SET THE PASSWORD TO NOT SHOW UP IN THE MODELS, HENCE IT WILL NOT SHOW UP HERE TOO. SO WE HAVE TO EXPLICITLY SELECT IT.
@@ -68,10 +69,11 @@ exports.login = async (req, res) => {
       user.password
     );
     if (!user || passwordAuthentication == false) {
-      return res.status(401).json({
-        status: 401,
-        message: `The username or the password has been entered incorrectly.`,
-      });
+      // return res.status(401).json({
+      //   status: 401,
+      //   message: `The username or the password has been entered incorrectly.`,
+      // });
+      return res.redirect("/user/login");
     }
     // 3. IF EVERYTHING IS OK, SEND TOKEN TO CLIENT
     const cookieSetting = {
@@ -126,7 +128,8 @@ exports.login = async (req, res) => {
       res.redirect("/arithmetic");
     }
   } catch (err) {
-    res.status(400).json({ message: err });
+    // res.status(400).json({ message: err });
+    return res.redirect("/user/login");
     // res.redirect("/arithmetic");
   }
 };
@@ -163,6 +166,8 @@ exports.authenticate = async (req, res, next) => {
         req.user = user;
         req.auth = { login: true };
       } else {
+        res.message = "Please login before proceeding";
+        console.log(res.message);
         res.redirect("/user/login");
       }
       // }
@@ -181,13 +186,27 @@ exports.authenticate = async (req, res, next) => {
 };
 
 exports.loginCheck = async (req, res, next) => {
+  console.log("Login Check");
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  // let message;
   if (req.auth.login == false) {
-    return res.redirect("/user/login");
+    console.log("Bad login");
+    // message = "Please login before proceeding";
+    // return res.redirect("/user/login");
+
+    return render("pages/login", {
+      username,
+      authenticate,
+      currentUser,
+    });
   }
   next();
 };
 
 exports.adminCheck = async (req, res, next) => {
+  console.log("Admin Check");
   if (req.user == "" || req.user.admin == false) {
     return res.redirect("/user/login");
   }

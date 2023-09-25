@@ -57,8 +57,10 @@ router
   .route("/rewardLog/delete/:id")
   .get(authController.adminCheck, userController.deleteRewardLog);
 
-router
-  .route("/recommend")
-  .get(authController.loginCheck, userController.recommend);
+router.route("/recommend").get(
+  // authController.authenticate,
+  authController.loginCheck,
+  userController.recommend
+);
 
 module.exports = router;
