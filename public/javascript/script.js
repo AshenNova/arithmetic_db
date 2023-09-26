@@ -23921,7 +23921,7 @@ function genProblems() {
         labelDEF: ["D", "E", "F"][genNumbers(3)],
         labelGHI: ["G", "H", "I"][genNumbers(3)],
         labelJKL: ["J", "K", "L"][genNumbers(3)],
-        labelMNO: ["M", "N", "O"][genNumbers(3)],
+        labelMNO: ["M", "P", "O"][genNumbers(3)],
 
         question: ["base", "height", "base2", "height2", "base3", "height3"][
           genNumbers(6)

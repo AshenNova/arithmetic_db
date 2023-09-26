@@ -506,7 +506,7 @@ const generateRec = async (nameTemp) => {
                 }
                 if (
                   !recommendList.includes(attempt.level) &&
-                  recommend.length < 2
+                  recommend.length < 1
                 ) {
                   attempt.setting = 99;
                   attempt.mode = "Easy";
