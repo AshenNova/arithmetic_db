@@ -469,8 +469,9 @@ const generateRec = async (nameTemp) => {
               !recommendList.includes(attempt.level)
             ) {
               // if (attempt.award == award) {
-              if (attempt.award == award) {
+              if (attempt.award == award && recommend.length < 1) {
                 console.log(award);
+                attempt.mode = "Easy";
                 recommend.push(attempt);
                 recommendList.push(attempt.level);
                 uniqLevel.push(attempt.level);
