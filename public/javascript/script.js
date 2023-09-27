@@ -691,6 +691,9 @@ function timer2() {
 
     // 1. SCORE REACHED OR TIME CUT
     if (state.score >= scoreNeeded || time == cutoff) {
+      document.querySelector(".loader").classList.remove("hidden");
+      // document.querySelector(".overlay");
+      // .setAttribute("backdrop-filter", "none");
       if (time == cutoff) {
         summaryStatus.innerHTML = `<h3 class="summary-status" style="color:red">Failed... ${summarySettingDisplay}</h3>`;
       }
@@ -724,35 +727,35 @@ function timer2() {
 
       // finalBox.classList.remove("hidden");
 
-      if (easy != 1) {
-        console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
-        if (gold == 0 && time == cutoff) {
-          document.querySelector(".trophy").appendChild(imageFailed);
-          console.log("Failed");
-        } else if (gold == 0 && time < cutoff) {
-          document.querySelector(".trophy").appendChild(imageB);
-          console.log("Bronze image");
-        } else if (time < gold) {
-          document.querySelector(".trophy").appendChild(imageG);
-          console.log("Gold image");
-        } else if (time < silver) {
-          document.querySelector(".trophy").appendChild(imageS);
-          console.log("Silver image");
-        } else if (time < bronze) {
-          document.querySelector(".trophy").appendChild(imageB);
-          console.log("Bronze image");
-        } else if (time < cutoff) {
-          document.querySelector(".trophy").appendChild(imageNMP);
-          console.log("Practice image");
-        } else {
-          document.querySelector(".trophy").appendChild(imageFailed);
-          console.log("Failed");
-        }
-      }
-      if (easy == 1) {
-        document.querySelector(".trophy").appendChild(imageCompleted);
-        console.log("Completed image");
-      }
+      // if (easy != 1) {
+      //   console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
+      //   if (gold == 0 && time == cutoff) {
+      //     document.querySelector(".trophy").appendChild(imageFailed);
+      //     console.log("Failed");
+      //   } else if (gold == 0 && time < cutoff) {
+      //     document.querySelector(".trophy").appendChild(imageB);
+      //     console.log("Bronze image");
+      //   } else if (time < gold) {
+      //     document.querySelector(".trophy").appendChild(imageG);
+      //     console.log("Gold image");
+      //   } else if (time < silver) {
+      //     document.querySelector(".trophy").appendChild(imageS);
+      //     console.log("Silver image");
+      //   } else if (time < bronze) {
+      //     document.querySelector(".trophy").appendChild(imageB);
+      //     console.log("Bronze image");
+      //   } else if (time < cutoff) {
+      //     document.querySelector(".trophy").appendChild(imageNMP);
+      //     console.log("Practice image");
+      //   } else {
+      //     document.querySelector(".trophy").appendChild(imageFailed);
+      //     console.log("Failed");
+      //   }
+      // }
+      // if (easy == 1) {
+      //   document.querySelector(".trophy").appendChild(imageCompleted);
+      //   console.log("Completed image");
+      // }
 
       const now = new Date();
       const duration = now - startTime;
@@ -29070,6 +29073,10 @@ $("#attemptAjex").on("submit", function (event) {
     data: attempt,
     // contentType: "application/json; charset=utf-8",
     success: function (res) {
+      // setTimeout(function () {
+      $(".loader").addClass("hidden");
+      // $(".overlay").attr("backdrop-filter", "none");
+      // }, 10000);
       console.log(`Response from the control is ${res}`);
       // console.log(`Ajax: ${res}`);
       const data = JSON.parse(res);
