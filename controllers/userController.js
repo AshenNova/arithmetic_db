@@ -17,6 +17,7 @@ let currentUser;
 //   username,
 //   authenticate,
 // };
+
 exports.getAllUsers = async (req, res) => {
   console.log("Getting all users");
   try {
@@ -644,6 +645,16 @@ const generateRec = async (nameTemp) => {
                 if (attempt.mode == "Easy") {
                   console.log("Easy detected, switching to Normal");
                   attempt.mode = "Normal";
+                  let count = 0;
+                  latestAttempt.forEach((item) => {
+                    if (item.level == attempt.level && item.mode == "Normal") {
+                      console.log(
+                        "Normal mode done before, switching to Hardcore"
+                      );
+                      count += 1;
+                    }
+                  });
+                  if (count != 0) attempt.mode == "Hardcore";
                 } else if (attempt.mode == "Normal") {
                   console.log("Normal detected, switching to Hardcore");
                   attempt.mode = "Hardcore";
@@ -727,69 +738,107 @@ const generateRec = async (nameTemp) => {
                     "5.16",
                   ];
                   const levelSix = ["6", "6.01", "6.02", "6.03"];
+
                   if (attempt.level.startsWith("1")) {
                     const index = levelOne.indexOf(attempt.level);
-                    if (index + 1 == levelOne.length) {
-                      attempt.level = levelOne[0];
-                      // attempt.mode = "Hardcore";
-                    } else {
-                      attempt.level = levelOne[index + 1];
-                      // attempt.mode = "Easy";
-                    }
-                  }
-                  if (attempt.level.startsWith("2")) {
-                    const index = levelTwo.indexOf(attempt.level);
-                    if (index + 1 == levelTwo.length) {
+                    if (age > 7) {
                       attempt.level = levelTwo[0];
-                      // attempt.mode = "Hardcore";
                     } else {
-                      attempt.level = levelTwo[index + 1];
-                      // attempt.mode = "Easy";
+                      if (index + 1 == levelOne.length) {
+                        attempt.level = levelOne[0];
+                        // attempt.mode = "Hardcore";
+                      } else {
+                        attempt.level = levelOne[index + 1];
+                        // attempt.mode = "Easy";
+                      }
                     }
-                  }
-                  if (attempt.level.startsWith("3")) {
-                    const index = levelThree.indexOf(attempt.level);
-                    if (index + 1 == levelThree.length) {
+                  } else if (attempt.level.startsWith("2")) {
+                    const index = levelTwo.indexOf(attempt.level);
+                    console.log(`Here, age: ${age}`);
+                    if (age > 8) {
                       attempt.level = levelThree[0];
-                      // attempt.mode = "Hardcore";
                     } else {
-                      attempt.level = levelThree[index + 1];
-                      // attempt.mode = "Easy";
+                      if (index + 1 == levelTwo.length) {
+                        attempt.level = levelTwo[0];
+                        // attempt.mode = "Hardcore";
+                      } else {
+                        attempt.level = levelTwo[index + 1];
+                        // attempt.mode = "Easy";
+                      }
                     }
-                  }
-                  if (attempt.level.startsWith("4")) {
-                    const index = levelFour.indexOf(attempt.level);
-                    if (index + 1 == levelFour.length) {
+                  } else if (attempt.level.startsWith("3")) {
+                    const index = levelThree.indexOf(attempt.level);
+                    if (age > 9) {
                       attempt.level = levelFour[0];
-                      // attempt.mode = "Hardcore";
                     } else {
-                      attempt.level = levelFour[index + 1];
-                      // attempt.mode = "Easy";
+                      if (index + 1 == levelThree.length) {
+                        attempt.level = levelThree[0];
+                        // attempt.mode = "Hardcore";
+                      } else {
+                        attempt.level = levelThree[index + 1];
+                        // attempt.mode = "Easy";
+                      }
                     }
-                  }
-                  if (attempt.level.startsWith("5")) {
-                    const index = levelFive.indexOf(attempt.level);
-                    if (index + 1 == levelFive.length) {
+                  } else if (attempt.level.startsWith("4")) {
+                    const index = levelFour.indexOf(attempt.level);
+                    if (age > 10) {
                       attempt.level = levelFive[0];
-                      // attempt.mode = "Hardcore";
                     } else {
-                      attempt.level = levelFive[index + 1];
-                      // attempt.mode = "Easy";
+                      if (index + 1 == levelFour.length) {
+                        attempt.level = levelFour[0];
+                        // attempt.mode = "Hardcore";
+                      } else {
+                        attempt.level = levelFour[index + 1];
+                        // attempt.mode = "Easy";
+                      }
                     }
-                  }
-                  if (attempt.level.startsWith("6")) {
+                  } else if (attempt.level.startsWith("5")) {
+                    const index = levelFive.indexOf(attempt.level);
+                    if (age > 11) {
+                      attempt.level = levelSix[0];
+                    } else {
+                      if (index + 1 == levelFive.length) {
+                        attempt.level = levelFive[0];
+                        // attempt.mode = "Hardcore";
+                      } else {
+                        attempt.level = levelFive[index + 1];
+                        // attempt.mode = "Easy";
+                      }
+                    }
+                  } else if (attempt.level.startsWith("6")) {
                     // console.log("here too!");
                     const index = levelSix.indexOf(attempt.level);
                     if (index + 1 == levelSix.length) {
-                      attempt.level = levelSix[0];
+                      attempt.level = levelFour[0];
                       // attempt.mode = "Hardcore";
                     } else {
                       attempt.level = levelSix[index + 1];
                       // attempt.mode = "Easy";
                     }
+                  } else {
+                    console.log(attempt.level);
                   }
                 }
-                attempt.mode = "Hardcore";
+
+                //CHECKING IF IT HAS BEEN DONE BEFORE
+
+                console.log(attempt.level);
+                let count;
+                latestAttempt.forEach((item) => {
+                  console.log(item.level);
+                  count = 0;
+                  if (item.level == attempt.level) {
+                    console.log(item.level, attempt.level);
+                    return (count = 1);
+                  }
+                });
+                console.log(`Count: ${count}`);
+                if (count == 0) {
+                  attempt.mode = "Easy";
+                } else {
+                  attempt.mode = "Hardcore";
+                }
+
                 attempt.time = "";
                 attempt.mistake = "";
                 attempt.score = "";
