@@ -196,7 +196,7 @@ exports.loginCheck = async (req, res, next) => {
     // message = "Please login before proceeding";
     // return res.redirect("/user/login");
 
-    return render("pages/login", {
+    return res.render("pages/login", {
       username,
       authenticate,
       currentUser,
