@@ -727,35 +727,35 @@ function timer2() {
 
       // finalBox.classList.remove("hidden");
 
-      // if (easy != 1) {
-      //   console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
-      //   if (gold == 0 && time == cutoff) {
-      //     document.querySelector(".trophy").appendChild(imageFailed);
-      //     console.log("Failed");
-      //   } else if (gold == 0 && time < cutoff) {
-      //     document.querySelector(".trophy").appendChild(imageB);
-      //     console.log("Bronze image");
-      //   } else if (time < gold) {
-      //     document.querySelector(".trophy").appendChild(imageG);
-      //     console.log("Gold image");
-      //   } else if (time < silver) {
-      //     document.querySelector(".trophy").appendChild(imageS);
-      //     console.log("Silver image");
-      //   } else if (time < bronze) {
-      //     document.querySelector(".trophy").appendChild(imageB);
-      //     console.log("Bronze image");
-      //   } else if (time < cutoff) {
-      //     document.querySelector(".trophy").appendChild(imageNMP);
-      //     console.log("Practice image");
-      //   } else {
-      //     document.querySelector(".trophy").appendChild(imageFailed);
-      //     console.log("Failed");
-      //   }
-      // }
-      // if (easy == 1) {
-      //   document.querySelector(".trophy").appendChild(imageCompleted);
-      //   console.log("Completed image");
-      // }
+      if (easy != 1) {
+        console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
+        if (gold == 0 && time == cutoff) {
+          document.querySelector(".trophy").appendChild(imageFailed);
+          console.log("Failed");
+        } else if (gold == 0 && time < cutoff) {
+          document.querySelector(".trophy").appendChild(imageB);
+          console.log("Bronze image");
+        } else if (time < gold) {
+          document.querySelector(".trophy").appendChild(imageG);
+          console.log("Gold image");
+        } else if (time < silver) {
+          document.querySelector(".trophy").appendChild(imageS);
+          console.log("Silver image");
+        } else if (time < bronze) {
+          document.querySelector(".trophy").appendChild(imageB);
+          console.log("Bronze image");
+        } else if (time < cutoff) {
+          document.querySelector(".trophy").appendChild(imageNMP);
+          console.log("Practice image");
+        } else {
+          document.querySelector(".trophy").appendChild(imageFailed);
+          console.log("Failed");
+        }
+      }
+      if (easy == 1) {
+        document.querySelector(".trophy").appendChild(imageCompleted);
+        console.log("Completed image");
+      }
 
       const now = new Date();
       const duration = now - startTime;
@@ -27198,7 +27198,7 @@ function buttonLevelSetting() {
 
     case "Level 1.01":
       level = 1.01;
-      scoreNeeded = 50;
+      scoreNeeded = 5;
       gold = highScore1DotZero1.time;
       silver = highScore1DotZero1.time + (cutoff - highScore1DotZero1.time) / 3;
       bronze =
@@ -29073,96 +29073,97 @@ $("#attemptAjex").on("submit", function (event) {
     data: attempt,
     // contentType: "application/json; charset=utf-8",
     success: function (res) {
-      // setTimeout(function () {
-      $(".loader").addClass("hidden");
-      // $(".overlay").attr("backdrop-filter", "none");
-      // }, 10000);
-      console.log(`Response from the control is ${res}`);
-      // console.log(`Ajax: ${res}`);
-      const data = JSON.parse(res);
-      console.log(`highscore?: ${data.eligible} Ajax`);
-      console.log(`Previous: ${data.previous} Ajax`);
-      console.log(`Highscoreholder: ${data.highscore} Ajax`);
-      if (data.eligible == 1) {
-        console.log("YESSSS");
-
-        $("img").attr("src", "/images/high-score.png");
-        $("img").addClass("constant-tilt-shake");
-        $(".finalBox").css("height", "475px");
-        $(".highscore").text("You have set a new highscore!");
-      }
-      if (data.eligible != 1) {
-        // if (easy != 1) {
-        // console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
-        if (time == cutoff) {
-          $("img").attr("src", "/images/endgame/failed.jpeg");
-        } else if (data.award == "Bronze") {
-          $("img").attr("src", "/images/endgame/bronze.jpeg");
-        } else if (data.award == "Gold") {
-          $("img").attr("src", "/images/endgame/gold.jpeg");
-        } else if (data.award == "Silver") {
-          $("img").attr("src", "/images/endgame/silver.jpeg");
-        } else if (data.award == "Try harder") {
-          $("img").attr("src", "/images/endgame/needmorepractice.jpeg");
-        } else {
-          $("img").attr("src", "/images/endgame/platinum.jpeg");
+      setTimeout(function () {
+        $(".loader").addClass("hidden");
+        // $(".overlay").attr("backdrop-filter", "none");
+        console.log(`Response from the control is ${res}`);
+        // console.log(`Ajax: ${res}`);
+        const data = JSON.parse(res);
+        console.log(`highscore?: ${data.eligible} Ajax`);
+        console.log(`Previous: ${data.previous} Ajax`);
+        console.log(`Highscoreholder: ${data.highscore} Ajax`);
+        if (data.eligible == 1) {
+          console.log("YESSSS");
+  
+          $("img").attr("src", "/images/high-score.png");
+          $("img").addClass("constant-tilt-shake");
+          $(".finalBox").css("height", "475px");
+          $(".highscore").text("You have set a new highscore!");
         }
-        // }
-        // if (easy == 1) {
-        //   $("img").attr("src", "/images/endgame/complete.jpeg");
-        // }
-        $(".highscore").text("");
-        $("img").removeClass("constant-tilt-shake");
-        $(".finalBox").css("height", "425px");
-      }
-      console.log("SUCCESS!");
-
-      //DISPLAY PREVIOUS
-      if (data.previous) {
-        document.getElementById("previous-table-user").innerHTML =
-          data.previous.user || 0;
-        document.getElementById("previous-table-time").innerHTML =
-          data.previous.time || 0;
-        document.getElementById("previous-table-mistake").innerHTML =
-          data.previous.mistake || 0;
-        document.getElementById("previous-table-score").innerHTML =
-          data.previous.score || 0;
-      } else {
-        document.getElementById("previous-table-user").innerHTML = "Nil";
-        document.getElementById("previous-table-time").innerHTML = "Nil";
-        document.getElementById("previous-table-mistake").innerHTML = "Nil";
-        document.getElementById("previous-table-score").innerHTML = "Nil";
-      }
-
-      //DISPLAY HIGHSCORE
-
-      if (data.highscore) {
-        document.getElementById("highscore-table-user").innerHTML =
-          data.highscore.user;
-        document.getElementById("highscore-table-time").innerHTML =
-          data.highscore.time;
-        document.getElementById("highscore-table-mistake").innerHTML =
-          data.highscore.mistake;
-        document.getElementById("highscore-table-score").innerHTML =
-          data.highscore.score;
-      } else {
-        document.getElementById("highscore-table-user").innerHTML = "Nil";
-        document.getElementById("highscore-table-time").innerHTML = "Nil";
-        document.getElementById("highscore-table-mistake").innerHTML = "Nil";
-        document.getElementById("highscore-table-score").innerHTML = "Nil";
-      }
-
-      if (data.medals.gold.lower == null) {
-        $("#gold").html(`Nil`);
-        $("#silver").html(`Nil`);
-        $("#bronze").html(`Nil`);
-      } else {
-        $("#gold").html(`< ${data.medals.gold.lower.toFixed(1)}`);
-        $("#silver").html(`< ${data.medals.silver.lower.toFixed(1)}`);
-        $("#bronze").html(`< ${data.medals.bronze.lower.toFixed(1)}`);
-      }
-
-      $(".finalBox").removeClass("hidden");
+        if (data.eligible != 1) {
+          // if (easy != 1) {
+          // console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`);
+          if (time == cutoff) {
+            $("img").attr("src", "/images/endgame/failed.jpeg");
+          } else if (data.award == "Bronze") {
+            $("img").attr("src", "/images/endgame/bronze.jpeg");
+          } else if (data.award == "Gold") {
+            $("img").attr("src", "/images/endgame/gold.jpeg");
+          } else if (data.award == "Silver") {
+            $("img").attr("src", "/images/endgame/silver.jpeg");
+          } else if (data.award == "Try harder") {
+            $("img").attr("src", "/images/endgame/needmorepractice.jpeg");
+          } else {
+            $("img").attr("src", "/images/endgame/platinum.jpeg");
+          }
+          // }
+          // if (easy == 1) {
+          //   $("img").attr("src", "/images/endgame/complete.jpeg");
+          // }
+          $(".highscore").text("");
+          $("img").removeClass("constant-tilt-shake");
+          $(".finalBox").css("height", "425px");
+        }
+        console.log("SUCCESS!");
+  
+        //DISPLAY PREVIOUS
+        if (data.previous) {
+          document.getElementById("previous-table-user").innerHTML =
+            data.previous.user || 0;
+          document.getElementById("previous-table-time").innerHTML =
+            data.previous.time || 0;
+          document.getElementById("previous-table-mistake").innerHTML =
+            data.previous.mistake || 0;
+          document.getElementById("previous-table-score").innerHTML =
+            data.previous.score || 0;
+        } else {
+          document.getElementById("previous-table-user").innerHTML = "Nil";
+          document.getElementById("previous-table-time").innerHTML = "Nil";
+          document.getElementById("previous-table-mistake").innerHTML = "Nil";
+          document.getElementById("previous-table-score").innerHTML = "Nil";
+        }
+  
+        //DISPLAY HIGHSCORE
+  
+        if (data.highscore) {
+          document.getElementById("highscore-table-user").innerHTML =
+            data.highscore.user;
+          document.getElementById("highscore-table-time").innerHTML =
+            data.highscore.time;
+          document.getElementById("highscore-table-mistake").innerHTML =
+            data.highscore.mistake;
+          document.getElementById("highscore-table-score").innerHTML =
+            data.highscore.score;
+        } else {
+          document.getElementById("highscore-table-user").innerHTML = "Nil";
+          document.getElementById("highscore-table-time").innerHTML = "Nil";
+          document.getElementById("highscore-table-mistake").innerHTML = "Nil";
+          document.getElementById("highscore-table-score").innerHTML = "Nil";
+        }
+  
+        if (data.medals.gold.lower == null) {
+          $("#gold").html(`Nil`);
+          $("#silver").html(`Nil`);
+          $("#bronze").html(`Nil`);
+        } else {
+          $("#gold").html(`< ${data.medals.gold.lower.toFixed(1)}`);
+          $("#silver").html(`< ${data.medals.silver.lower.toFixed(1)}`);
+          $("#bronze").html(`< ${data.medals.bronze.lower.toFixed(1)}`);
+        }
+  
+        $(".finalBox").removeClass("hidden");
+      }, 1000);
+     
     },
     error: function (res) {
       console.log(`Some error. ${res}.`);
