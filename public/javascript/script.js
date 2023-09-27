@@ -22107,13 +22107,17 @@ function handleSubmit(e) {
       if (setting == 7) {
         if (p.version == "money") {
           const commonQuantity = commonDeno(p.quantityA, p.quantityB);
+          console.log("Money, 1 group: " + commonQuantity);
           if (p.question == "VA")
-            correctAnswer = p.priceA * p.groups * commonQuantity;
+            correctAnswer =
+              ((p.groups * commonQuantity) / p.quantityA) * p.priceA;
           if (p.question == "VB")
-            correctAnswer = p.priceB * p.groups * commonQuantity;
+            correctAnswer =
+              ((p.groups * commonQuantity) / p.quantityB) * p.priceB;
           if (p.question == "QA") correctAnswer = p.groups * commonQuantity;
           if (p.question == "QB") correctAnswer = p.groups * commonQuantity;
           // if (p.question == "T") correctAnswer = valueA + valueB;
+          correctAnswer = accDecimal(correctAnswer);
         }
         if (p.version == "distance") {
           const commonDistance = commonDeno(p.priceA, p.priceB);
@@ -29084,7 +29088,7 @@ $("#attemptAjex").on("submit", function (event) {
         console.log(`Highscoreholder: ${data.highscore} Ajax`);
         if (data.eligible == 1) {
           console.log("YESSSS");
-  
+
           $("img").attr("src", "/images/high-score.png");
           $("img").addClass("constant-tilt-shake");
           $(".finalBox").css("height", "475px");
@@ -29115,7 +29119,7 @@ $("#attemptAjex").on("submit", function (event) {
           $(".finalBox").css("height", "425px");
         }
         console.log("SUCCESS!");
-  
+
         //DISPLAY PREVIOUS
         if (data.previous) {
           document.getElementById("previous-table-user").innerHTML =
@@ -29132,9 +29136,9 @@ $("#attemptAjex").on("submit", function (event) {
           document.getElementById("previous-table-mistake").innerHTML = "Nil";
           document.getElementById("previous-table-score").innerHTML = "Nil";
         }
-  
+
         //DISPLAY HIGHSCORE
-  
+
         if (data.highscore) {
           document.getElementById("highscore-table-user").innerHTML =
             data.highscore.user;
@@ -29150,7 +29154,7 @@ $("#attemptAjex").on("submit", function (event) {
           document.getElementById("highscore-table-mistake").innerHTML = "Nil";
           document.getElementById("highscore-table-score").innerHTML = "Nil";
         }
-  
+
         if (data.medals.gold.lower == null) {
           $("#gold").html(`Nil`);
           $("#silver").html(`Nil`);
@@ -29160,10 +29164,9 @@ $("#attemptAjex").on("submit", function (event) {
           $("#silver").html(`< ${data.medals.silver.lower.toFixed(1)}`);
           $("#bronze").html(`< ${data.medals.bronze.lower.toFixed(1)}`);
         }
-  
+
         $(".finalBox").removeClass("hidden");
       }, 1000);
-     
     },
     error: function (res) {
       console.log(`Some error. ${res}.`);
