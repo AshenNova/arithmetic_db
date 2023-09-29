@@ -403,13 +403,15 @@ const generateRec = async (nameTemp) => {
       user: nameTemp,
       date: { $lt: today },
       tries: "1",
-    }).sort({
-      level: -1,
-      date: -1,
-    }),
+    })
+      .sort({
+        level: -1,
+        date: -1,
+      })
+      .lean(),
     User.findOne({ username: nameTemp.toLowerCase() }),
   ]);
-
+  // console.log(`THESE ARE THE LATEST ATTEMPTS ${latestAttempt}`);
   // const latestAttempt = await Attempt.find({
   //   user: nameTemp,
   //   date: { $lt: today },
@@ -430,6 +432,7 @@ const generateRec = async (nameTemp) => {
   let heuRecommend = [];
   let mode = ["Easy", "Normal", "Hardcore"];
   let awards = ["Try harder", "Bronze", "Silver", "Gold", "Platinum"];
+
   // GET ALL UNIQUE LEVELS
   latestAttempt.forEach((item) => {
     if (item.level.startsWith("cal")) {
@@ -464,6 +467,8 @@ const generateRec = async (nameTemp) => {
     if (recommend.length < 1) {
       calRecommend.forEach((calLevel) => {
         latestAttempt.forEach((attempt) => {
+          console.log(`In calcuation: ${attempt.level} 🥀`);
+          let recommendObj = { ...attempt };
           if (attempt.level == calLevel) {
             if (
               !uniqLevel.includes(attempt.level) &&
@@ -472,8 +477,12 @@ const generateRec = async (nameTemp) => {
               // if (attempt.award == award) {
               if (attempt.award == award && recommend.length < 1) {
                 console.log(award);
-                attempt.mode = "Easy";
-                recommend.push(attempt);
+                recommendObj.level = attempt.level;
+                recommendObj.mode = "Easy";
+                // attempt.mode = "Easy";
+                // recommend.push(attempt);
+                recommend.push(recommendObj);
+                console.log(`Try new stuff ${recommend}`);
                 recommendList.push(attempt.level);
                 uniqLevel.push(attempt.level);
               } else {
@@ -482,41 +491,53 @@ const generateRec = async (nameTemp) => {
                 if (age == 10) {
                   const index = calAgeTen.indexOf(attempt.level);
                   if (index + 1 == calAgeTen.length) {
-                    attempt.level = calAgeTen[0];
+                    // attempt.level = calAgeTen[0];
+                    recommendObj.level = calAgeTen[0];
                   } else {
-                    attempt.level = calAgeTen[index + 1];
+                    // recommendObj= calAgeTen[index + 1];
+                    recommendObj.level = calAgeTen[index + 1];
                   }
                 }
                 if (age == 11) {
                   const index = calAgeEleven.indexOf(attempt.level);
 
                   if (index + 1 == calAgeEleven.length) {
-                    attempt.level = calAgeEleven[0];
+                    // attempt.level = calAgeEleven[0];
+                    recommendObj.level = calAgeEleven[0];
                   } else {
-                    attempt.level = calAgeEleven[index + 1];
+                    // attempt.level = calAgeEleven[index + 1];
+                    recommendObj.level = calAgeEleven[index + 1];
                   }
                 }
                 if (age == 12) {
                   const index = calAgeTwelve.indexOf(attempt.level);
 
                   if (index + 1 == calAgeTwelve.length) {
-                    attempt.level = calAgeTwelve[0];
+                    recommendObj.level = calAgeTwelve[0];
                   } else {
-                    attempt.level = calAgeTwelve[index + 1];
+                    recommendObj.level = calAgeTwelve[index + 1];
                   }
                 }
                 if (
                   !recommendList.includes(attempt.level) &&
                   recommend.length < 1
                 ) {
-                  attempt.setting = 99;
-                  attempt.mode = "Easy";
-                  attempt.time = "";
-                  attempt.mistake = "";
-                  attempt.score = "";
-                  attempt.award = "";
+                  // recommendObj = attempt;
+                  recommendObj.setting = 99;
+                  recommendObj.mode = "Easy";
+                  recommendObj.time = "";
+                  recommendObj.mistake = "";
+                  recommendObj.score = "";
+                  recommendObj.award = "";
+                  // attempt.setting = 99;
+                  // attempt.mode = "Easy";
+                  // attempt.time = "";
+                  // attempt.mistake = "";
+                  // attempt.score = "";
+                  // attempt.award = "";
                   attempt.date = new Date();
-                  recommend.push(attempt);
+                  console.log(`Obj: ${recommendObj}`);
+                  recommend.push(recommendObj);
                   recommendList.push(attempt.level);
                   uniqLevel.push(attempt.level);
                 }
@@ -547,13 +568,18 @@ const generateRec = async (nameTemp) => {
     // if (recommend.length < 2) {
     heuRecommend.forEach((heuLevel) => {
       latestAttempt.forEach((attempt) => {
+        console.log(`In heuristics: ${attempt.level} 🌞`);
+
+        let recommendObj = { ...attempt };
+        console.log(`${recommendObj.level}`);
+        // console.log(`Heu: ${recommendObj.toString()} ☀️`);
         if (attempt.level == heuLevel) {
           if (
             !uniqLevel.includes(attempt.level) &&
             !recommendList.includes(attempt.level)
           ) {
             if (attempt.award == award && recommend.length < 2) {
-              recommend.push(attempt);
+              recommend.push(recommendObj);
               recommendList.push(attempt.level);
               uniqLevel.push(attempt.level);
             } else {
@@ -561,52 +587,88 @@ const generateRec = async (nameTemp) => {
               console.log("Rotation or promoted");
               if (age == 8) {
                 const index = heuAgeEight.indexOf(attempt.level);
-                attempt.level = heuAgeEight[index + 1];
+                recommendObj.level = heuAgeEight[index + 1];
                 if (index + 1 == heuAgeEight.length) {
-                  attempt.level = heuAgeEight[0];
+                  recommendObj.level = heuAgeEight[0];
                 }
               }
               if (age == 9) {
                 const index = heuAgeNine.indexOf(attempt.level);
-                attempt.level = heuAgeNine[index + 1];
+                recommendObj.level = heuAgeNine[index + 1];
                 if (index + 1 == heuAgeNine.length) {
-                  attempt.level = heuAgeNine[0];
+                  recommendObj.level = heuAgeNine[0];
                 }
               }
               if (age == 10) {
                 const index = heuAgeTen.indexOf(attempt.level);
-                attempt.level = heuAgeTen[index + 1];
+                recommendObj.level = heuAgeTen[index + 1];
                 if (index + 1 == heuAgeTen.length) {
-                  attempt.level = heuAgeTen[0];
+                  recommendObj.level = heuAgeTen[0];
                 }
               }
               if (age == 11) {
                 const index = heuAgeEleven.indexOf(attempt.level);
-                attempt.level = heuAgeEleven[index + 1];
+                recommendObj.level = heuAgeEleven[index + 1];
                 if (index + 1 == heuAgeEleven.length) {
-                  attempt.level = heuAgeEleven[0];
+                  recommendObj.level = heuAgeEleven[0];
                 }
               }
               if (age == 12) {
                 const index = heuAgeTwelve.indexOf(attempt.level);
-                attempt.level = heuAgeTwelve[index + 1];
+                recommendObj.level = heuAgeTwelve[index + 1];
                 if (index + 1 == heuAgeTwelve.length) {
-                  attempt.level = heuAgeTwelve[0];
+                  recommendObj.level = heuAgeTwelve[0];
                 }
               }
+              // if (age == 8) {
+              //   const index = heuAgeEight.indexOf(attempt.level);
+              //   attempt.level = heuAgeEight[index + 1];
+              //   if (index + 1 == heuAgeEight.length) {
+              //     attempt.level = heuAgeEight[0];
+              //   }
+              // }
+              // if (age == 9) {
+              //   const index = heuAgeNine.indexOf(attempt.level);
+              //   attempt.level = heuAgeNine[index + 1];
+              //   if (index + 1 == heuAgeNine.length) {
+              //     attempt.level = heuAgeNine[0];
+              //   }
+              // }
+              // if (age == 10) {
+              //   const index = heuAgeTen.indexOf(attempt.level);
+              //   attempt.level = heuAgeTen[index + 1];
+              //   if (index + 1 == heuAgeTen.length) {
+              //     attempt.level = heuAgeTen[0];
+              //   }
+              // }
+              // if (age == 11) {
+              //   const index = heuAgeEleven.indexOf(attempt.level);
+              //   attempt.level = heuAgeEleven[index + 1];
+              //   if (index + 1 == heuAgeEleven.length) {
+              //     attempt.level = heuAgeEleven[0];
+              //   }
+              // }
+              // if (age == 12) {
+              //   const index = heuAgeTwelve.indexOf(attempt.level);
+              //   attempt.level = heuAgeTwelve[index + 1];
+              //   if (index + 1 == heuAgeTwelve.length) {
+              //     attempt.level = heuAgeTwelve[0];
+              //   }
+              // }
               if (
                 !recommendList.includes(attempt.level) &&
                 recommend.length < 2
               ) {
-                attempt.setting = 9;
-                attempt.mode = "Easy";
-                attempt.time = "";
-                attempt.mistake = "";
-                attempt.award = "";
-                attempt.score = "";
-                attempt.date = new Date();
-
-                recommend.push(attempt);
+                recommendObj.setting = 9;
+                recommendObj.mode = "Easy";
+                recommendObj.time = "";
+                recommendObj.mistake = "";
+                recommendObj.award = "";
+                recommendObj.score = "";
+                recommendObj.date = new Date();
+                console.log(`heu: ${recommendObj}`);
+                recommend.push(recommendObj);
+                // recommend.push(attempt);
                 recommendList.push(attempt.level);
                 uniqLevel.push(attempt.level);
               }
@@ -629,6 +691,10 @@ const generateRec = async (nameTemp) => {
     console.log(uniqLevel);
     if (recommend.length < 6) {
       latestAttempt.forEach((attempt) => {
+        let recommendObj = { ...attempt };
+        // let recommendObj = Object.assign({}, attempt);
+        console.log(`In levels: ${attempt.level} 🌗`);
+        console.log(`${recommendObj.level}`);
         if (
           !attempt.level.startsWith("cal") &&
           !attempt.level.startsWith("heu")
@@ -637,14 +703,14 @@ const generateRec = async (nameTemp) => {
             !uniqLevel.includes(attempt.level) &&
             !recommendList.includes(attempt.level)
           ) {
-            console.log("Checking: " + attempt.level);
+            // console.log("Checking: " + attempt.level);
 
             if (attempt.award == award) {
               //CHECK IF AWARD IS BRONZE AND ABOVE
               if (attempt.award != "Try harder") {
                 if (attempt.mode == "Easy") {
                   console.log("Easy detected, switching to Normal");
-                  attempt.mode = "Normal";
+                  recommendObj.mode = "Normal";
                   let count = 0;
                   latestAttempt.forEach((item) => {
                     if (item.level == attempt.level && item.mode == "Normal") {
@@ -654,10 +720,10 @@ const generateRec = async (nameTemp) => {
                       count += 1;
                     }
                   });
-                  if (count != 0) attempt.mode == "Hardcore";
+                  if (count != 0) recommendObj.mode = "Hardcore";
                 } else if (attempt.mode == "Normal") {
                   console.log("Normal detected, switching to Hardcore");
-                  attempt.mode = "Hardcore";
+                  recommendObj.mode = "Hardcore";
                 } else {
                   uniqLevel.push(attempt.level);
                   console.log("COMPLETED IN HARDCORE MODE", attempt.level);
@@ -738,121 +804,127 @@ const generateRec = async (nameTemp) => {
                     "5.16",
                   ];
                   const levelSix = ["6", "6.01", "6.02", "6.03"];
-
-                  if (attempt.level.startsWith("1")) {
+                  console.log(`${attempt.level} <-------`);
+                  if (attempt.level.startsWith("1") || attempt.level == "1") {
                     const index = levelOne.indexOf(attempt.level);
-                    if (age > 7) {
-                      attempt.level = levelTwo[0];
-                    } else {
-                      if (index + 1 == levelOne.length) {
-                        attempt.level = levelOne[0];
-                        // attempt.mode = "Hardcore";
+                    console.log(`----> ${index}, ${levelOne.length}`);
+                    if (index == levelOne.length - 1) {
+                      if (age > 7) {
+                        recommendObj.level = levelTwo[0];
                       } else {
-                        attempt.level = levelOne[index + 1];
-                        // attempt.mode = "Easy";
+                        recommendObj.level = levelOne[index + 1];
                       }
+                    } else {
+                      recommendObj.level = levelOne[index + 1];
                     }
+                    // if (age > 7) {
+                    //   attempt.level = levelTwo[0];
+                    // } else {
+                    //   if (index + 1 == levelOne.length) {
+                    //     attempt.level = levelOne[0];
+                    //     // attempt.mode = "Hardcore";
+                    //   } else {
+                    //     attempt.level = levelOne[index + 1];
+                    //     // attempt.mode = "Easy";
+                    //   }
+                    // }
                   } else if (attempt.level.startsWith("2")) {
                     const index = levelTwo.indexOf(attempt.level);
-                    console.log(`Here, age: ${age}`);
-                    if (age > 8) {
-                      attempt.level = levelThree[0];
-                    } else {
-                      if (index + 1 == levelTwo.length) {
-                        attempt.level = levelTwo[0];
-                        // attempt.mode = "Hardcore";
+                    if (index == levelTwo.length - 1) {
+                      if (age > 8) {
+                        recommendObj.level = levelThree[0];
                       } else {
-                        attempt.level = levelTwo[index + 1];
-                        // attempt.mode = "Easy";
+                        recommendObj.level = levelTwo[index + 1];
                       }
+                    } else {
+                      recommendObj.level = levelTwo[index + 1];
                     }
                   } else if (attempt.level.startsWith("3")) {
                     const index = levelThree.indexOf(attempt.level);
-                    if (age > 9) {
-                      attempt.level = levelFour[0];
-                    } else {
-                      if (index + 1 == levelThree.length) {
-                        attempt.level = levelThree[0];
-                        // attempt.mode = "Hardcore";
+                    if (index == levelThree.length - 1) {
+                      if (age > 9) {
+                        recommendObj.level = levelFour[0];
                       } else {
-                        attempt.level = levelThree[index + 1];
-                        // attempt.mode = "Easy";
+                        recommendObj.level = levelThree[index + 1];
                       }
+                    } else {
+                      recommendObj.level = levelThree[index + 1];
                     }
                   } else if (attempt.level.startsWith("4")) {
                     const index = levelFour.indexOf(attempt.level);
-                    if (age > 10) {
-                      attempt.level = levelFive[0];
-                    } else {
-                      if (index + 1 == levelFour.length) {
-                        attempt.level = levelFour[0];
-                        // attempt.mode = "Hardcore";
+                    if (index == levelFour.length - 1) {
+                      if (age > 10) {
+                        recommendObj.level = levelFive[0];
                       } else {
-                        attempt.level = levelFour[index + 1];
-                        // attempt.mode = "Easy";
+                        recommendObj.level = levelFour[index + 1];
                       }
+                    } else {
+                      recommendObj.level = levelFour[index + 1];
                     }
                   } else if (attempt.level.startsWith("5")) {
                     const index = levelFive.indexOf(attempt.level);
-                    if (age > 11) {
-                      attempt.level = levelSix[0];
-                    } else {
-                      if (index + 1 == levelFive.length) {
-                        attempt.level = levelFive[0];
-                        // attempt.mode = "Hardcore";
+                    if (index == levelFive.length - 1) {
+                      if (age > 11) {
+                        recommendObj.level = levelSix[0];
                       } else {
-                        attempt.level = levelFive[index + 1];
-                        // attempt.mode = "Easy";
+                        recommendObj.level = levelFive[index + 1];
                       }
+                    } else {
+                      recommendObj.level = levelFive[index + 1];
                     }
                   } else if (attempt.level.startsWith("6")) {
-                    // console.log("here too!");
                     const index = levelSix.indexOf(attempt.level);
-                    if (index + 1 == levelSix.length) {
-                      attempt.level = levelFour[0];
-                      // attempt.mode = "Hardcore";
+                    if (index == levelSix.length - 1) {
+                      if (age > 12) {
+                        recommendObj.level = levelFour[0];
+                      } else {
+                        recommendObj.level = levelSix[index + 1];
+                      }
                     } else {
-                      attempt.level = levelSix[index + 1];
-                      // attempt.mode = "Easy";
+                      recommendObj.level = levelSix[index + 1];
                     }
                   } else {
-                    console.log(attempt.level);
+                    console.log(`The end`);
                   }
                 }
-
+                console.log(`Newly assigned ${recommendObj.level}`);
                 //CHECKING IF IT HAS BEEN DONE BEFORE
 
-                console.log(`Checking: ${attempt.level}`);
+                console.log(
+                  `Before: ${attempt.level} After:${recommendObj.level}`
+                );
+
                 let count = 0;
-                latestAttempt.forEach((item) => {
-                  console.log(item.level);
-                  // count = 0;
-                  if (item.level == attempt.level) {
-                    console.log(item.level, attempt.level);
-                    return (count = 1);
+                latestAttempt.forEach((latest) => {
+                  if (latest.level == attempt.level) {
+                    count += 1;
                   }
                 });
                 console.log(`Count: ${count}`);
                 if (count == 0) {
-                  attempt.mode = "Easy";
+                  console.log(`Setting ${recommendObj.level} to Easy`);
+                  recommendObj.mode = "Easy";
                 } else {
-                  attempt.mode = "Hardcore";
+                  console.log(`Setting ${recommendObj.level} to Hardcore`);
+                  recommendObj.mode = "Hardcore";
                 }
 
-                attempt.time = "";
-                attempt.mistake = "";
-                attempt.score = "";
-                attempt.award = "";
-                attempt.date = new Date();
+                // recommendObj.level = attempt.level;
+                recommendObj.time = "";
+                recommendObj.mistake = "";
+                recommendObj.score = "";
+                recommendObj.award = "";
+                recommendObj.date = new Date();
               }
               // console.log(uniqLevel);
               if (
-                !uniqLevel.includes(attempt.level) &&
+                // !uniqLevel.includes(attempt.level) &&
                 recommend.length < 6 &&
                 !recommendList.includes(attempt.level)
               ) {
                 console.log("PUSHHHH!");
-                recommend.push(attempt);
+                console.log(recommendObj);
+                recommend.push(recommendObj);
                 recommendList.push(attempt.level);
                 uniqLevel.push(attempt.level);
               }
