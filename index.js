@@ -6,6 +6,8 @@ const path = require("path");
 require("dotenv/config");
 const attemptRoute = require("./routes/attempts");
 const userRoute = require("./routes/users");
+const AppError = require("./utils/appError");
+const globalErrorHandler = require("./controllers/errorController");
 const cookieParser = require("cookie-parser");
 const authController = require("./controllers/authController");
 const cors = require("cors");
@@ -75,10 +77,20 @@ app.get("/arithmetic", authController.authenticate, (req, res) => {
 
 app.use("/attempts", authController.authenticate, attemptRoute);
 app.use("/user", authController.authenticate, userRoute);
+app.get("*", function (req, res, next) {
+  // res.redirect("./pages/arithmetic");
+  // const err = new Error(`Can't find${req.originalUrl} on this server!`);
+  // err.status = "Fail";
+  // err.statusCode = "404";
 
-// app.get("*", function (req, res) {
-//   res.redirect("./pages/arithmetic");
-// });
+  // if the next function receives an arguement within, express will assume that there is an error. next(error)
+  // and skip every other middleware to the error handling middleware.
+  // next(err);
+
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+app.use(globalErrorHandler);
 app.listen(process.env.PORT || 3000, () => {
   console.log(`We are listening!`);
 });

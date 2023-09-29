@@ -822,11 +822,11 @@ const generateRec = async (nameTemp) => {
 
                 //CHECKING IF IT HAS BEEN DONE BEFORE
 
-                console.log(attempt.level);
-                let count;
+                console.log(`Checking: ${attempt.level}`);
+                let count = 0;
                 latestAttempt.forEach((item) => {
                   console.log(item.level);
-                  count = 0;
+                  // count = 0;
                   if (item.level == attempt.level) {
                     console.log(item.level, attempt.level);
                     return (count = 1);

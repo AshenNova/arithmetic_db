@@ -7,6 +7,8 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const ip = require("ip");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 const { exists } = require("../models/attemptModel");
 const { findById } = require("../models/userModel");
 
@@ -32,7 +34,7 @@ function paginate(stuff, totalItems, perPage, currentPage) {
   return { pagination };
 }
 
-exports.getAllAttempts = async (req, res) => {
+exports.getAllAttempts = catchAsync(async (req, res, next) => {
   // console.log(`IP address is: ${req.ip}`);
   const page = req.query.page * 1 || 1;
   const limit = 20;
@@ -78,144 +80,143 @@ exports.getAllAttempts = async (req, res) => {
     currentUser,
     logRewards,
   });
-};
+});
 
-exports.getFilteredAttempts = async (req, res) => {
-  try {
-    const queryObj = req.query;
-    console.log(queryObj);
-    const page = queryObj.page || 1;
-    const limit = 15;
+exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
+  // try {
+  const queryObj = req.query;
+  console.log(queryObj);
+  const page = queryObj.page || 1;
+  const limit = 15;
 
-    console.log(queryObj);
-    let user = queryObj.user;
-    const level = queryObj.level;
-    const setting = queryObj.setting;
-    const mode = queryObj.mode;
+  console.log(queryObj);
+  let user = queryObj.user;
+  const level = queryObj.level;
+  const setting = queryObj.setting;
+  const mode = queryObj.mode;
 
-    let filter = {};
-    console.log(user, level, setting, mode);
-    let tempName = [];
-    if (user != "") {
-      user = user.split(" ");
-      user.forEach((name) => {
-        console.log(name);
-        tempName.push(
-          name.charAt(0).toUpperCase() + name.slice(1, name.length)
-        );
-      });
-      filter.user = tempName.join(" ");
-    }
-    if (level != "") filter.level = level;
-    if (setting != "") filter.setting = setting;
-    if (mode != "") filter.mode = mode;
-
-    const filteredUser = filter.user;
-    const attempts = await Attempt.find(filter)
-      .sort({ date: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit);
-
-    // console.log(`Filtered ${attempts}`);
-    const attemptsTwo = attempts;
-    // const attemptsTwo = await Attempt.find().sort({ date: -1 });
-    const paginatedAttempts = paginate(
-      attemptsTwo,
-      attemptsTwo.length,
-      limit,
-      page
-    );
-
-    // HISTORY
-    const params = queryObj;
-    // console.log(params);
-    let latestAttemptObj = 0;
-    if (filter.hasOwnProperty("user")) {
-      // const filterUserStr = filter.user.split(" ");
-      const user = filter.user;
-      // console.log(user);
-      const latestAttempt = await Attempt.find({
-        user: { $regex: user, $options: "i" },
-        // user,
-        tries: "1",
-      }).sort({
-        level: -1,
-        date: -1,
-      });
-
-      console.log(latestAttempt);
-      let stageOne = [];
-      for (let i = 0; i < latestAttempt.length; i++) {
-        if (stageOne.includes(latestAttempt[i].level)) {
-          console.log("Already in");
-        } else {
-          console.log("Nope");
-          stageOne.push(latestAttempt[i].level);
-        }
-      }
-      console.log(stageOne);
-      let stageTwo = [];
-      for (let i = 0; i < stageOne.length; i++) {
-        let countEasy = 0;
-        let countNormal = 0;
-        let countHard = 0;
-        for (let a = 0; a < latestAttempt.length; a++) {
-          if (
-            stageOne[i] == latestAttempt[a].level &&
-            latestAttempt[a].mode == "Easy"
-          ) {
-            if (countEasy == 0) {
-              stageTwo.push(latestAttempt[a]);
-              countEasy += 1;
-            }
-          }
-          if (
-            stageOne[i] == latestAttempt[a].level &&
-            latestAttempt[a].mode == "Normal"
-          ) {
-            if (countNormal == 0) {
-              stageTwo.push(latestAttempt[a]);
-              countNormal += 1;
-            }
-          }
-          if (
-            stageOne[i] == latestAttempt[a].level &&
-            latestAttempt[a].mode == "Hardcore"
-          ) {
-            if (countHard == 0) {
-              stageTwo.push(latestAttempt[a]);
-              countHard += 1;
-            }
-            // count += 1;
-          }
-        }
-        // console.log(`Stage 2: ${stageTwo}`);
-        latestAttemptObj = stageTwo;
-        // console.log(latestAttempt);
-      }
-    }
-
-    const todayCount = "";
-    let username = req.user.username;
-    let authenticate = req.auth;
-    let currentUser = req.user;
-    let logRewards;
-    res.status(200).render("pages/attempts", {
-      attempts,
-      paginatedAttempts,
-      latestAttemptObj,
-      todayCount,
-      filteredUser,
-      username,
-      authenticate,
-      currentUser,
-      logRewards,
+  let filter = {};
+  console.log(user, level, setting, mode);
+  let tempName = [];
+  if (user != "") {
+    user = user.split(" ");
+    user.forEach((name) => {
+      console.log(name);
+      tempName.push(name.charAt(0).toUpperCase() + name.slice(1, name.length));
     });
-  } catch (e) {
-    console.log(e);
-    res.redirect("/attempts");
+    filter.user = tempName.join(" ");
   }
-};
+  if (level != "") filter.level = level;
+  if (setting != "") filter.setting = setting;
+  if (mode != "") filter.mode = mode;
+
+  const filteredUser = filter.user;
+  const attempts = await Attempt.find(filter)
+    .sort({ date: -1 })
+    .skip((page - 1) * limit)
+    .limit(limit);
+
+  // console.log(`Filtered ${attempts}`);
+  const attemptsTwo = attempts;
+  // const attemptsTwo = await Attempt.find().sort({ date: -1 });
+  const paginatedAttempts = paginate(
+    attemptsTwo,
+    attemptsTwo.length,
+    limit,
+    page
+  );
+
+  // HISTORY
+  const params = queryObj;
+  // console.log(params);
+  let latestAttemptObj = 0;
+  if (filter.hasOwnProperty("user")) {
+    // const filterUserStr = filter.user.split(" ");
+    const user = filter.user;
+    // console.log(user);
+    const latestAttempt = await Attempt.find({
+      user: { $regex: user, $options: "i" },
+      // user,
+      tries: "1",
+    }).sort({
+      level: -1,
+      date: -1,
+    });
+
+    console.log(latestAttempt);
+    let stageOne = [];
+    for (let i = 0; i < latestAttempt.length; i++) {
+      if (stageOne.includes(latestAttempt[i].level)) {
+        console.log("Already in");
+      } else {
+        console.log("Nope");
+        stageOne.push(latestAttempt[i].level);
+      }
+    }
+    console.log(stageOne);
+    let stageTwo = [];
+    for (let i = 0; i < stageOne.length; i++) {
+      let countEasy = 0;
+      let countNormal = 0;
+      let countHard = 0;
+      for (let a = 0; a < latestAttempt.length; a++) {
+        if (
+          stageOne[i] == latestAttempt[a].level &&
+          latestAttempt[a].mode == "Easy"
+        ) {
+          if (countEasy == 0) {
+            stageTwo.push(latestAttempt[a]);
+            countEasy += 1;
+          }
+        }
+        if (
+          stageOne[i] == latestAttempt[a].level &&
+          latestAttempt[a].mode == "Normal"
+        ) {
+          if (countNormal == 0) {
+            stageTwo.push(latestAttempt[a]);
+            countNormal += 1;
+          }
+        }
+        if (
+          stageOne[i] == latestAttempt[a].level &&
+          latestAttempt[a].mode == "Hardcore"
+        ) {
+          if (countHard == 0) {
+            stageTwo.push(latestAttempt[a]);
+            countHard += 1;
+          }
+          // count += 1;
+        }
+      }
+      // console.log(`Stage 2: ${stageTwo}`);
+      latestAttemptObj = stageTwo;
+      // console.log(latestAttempt);
+    }
+  }
+
+  const todayCount = "";
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  let logRewards;
+  res.status(200).render("pages/attempts", {
+    attempts,
+    paginatedAttempts,
+    latestAttemptObj,
+    todayCount,
+    filteredUser,
+    username,
+    authenticate,
+    currentUser,
+    logRewards,
+  });
+  // }
+  // catch (e) {
+  //   console.log(e);
+  //   res.redirect("/attempts");
+  // }
+});
 
 function points(level, award, age, eligible, setting, mode) {
   console.log(`Level: ${level}, award: ${award}, Age: ${age}`);
@@ -302,7 +303,7 @@ function points(level, award, age, eligible, setting, mode) {
   return points * multiplier;
 }
 
-exports.newAttempt = async (req, res) => {
+exports.newAttempt = catchAsync(async (req, res, next) => {
   let data = {
     eligible: 0,
   };
@@ -393,6 +394,7 @@ exports.newAttempt = async (req, res) => {
           });
         } else {
           console.log("Comparing");
+          // data.eligible = 0;
           // console.log(checkExist.time, newAttempt.time);
           if (checkExist.time > time) {
             data.eligible = 1;
@@ -421,36 +423,37 @@ exports.newAttempt = async (req, res) => {
 
   //CHECK IF NEW HIGHSCORE HAS BEEN SET
   // const highScoreCheck = async (req, res) => {
-  try {
-    if (
-      attemptNum == 1 &&
-      !level.startsWith("cal") &&
-      attemptNum == 1 &&
-      !level.startsWith("heu")
-    ) {
-      await highScore();
-    } else if (
-      level.startsWith("cal") &&
-      setting == "99" &&
-      attemptNum == 1 &&
-      skip == ""
-    ) {
-      await highScore();
-    } else if (
-      level.startsWith("heu") &&
-      setting == "9" &&
-      attemptNum == 1 &&
-      skip == ""
-    ) {
-      await highScore();
-    } else {
-      console.log("Not eligible for highscore.");
-      // res.send();
-    }
-    // await result.then(console.log(result));
-  } catch (e) {
-    console.log(e);
+  // try {
+  if (
+    attemptNum == 1 &&
+    !level.startsWith("cal") &&
+    attemptNum == 1 &&
+    !level.startsWith("heu")
+  ) {
+    await highScore();
+  } else if (
+    level.startsWith("cal") &&
+    setting == "99" &&
+    attemptNum == 1 &&
+    skip == ""
+  ) {
+    await highScore();
+  } else if (
+    level.startsWith("heu") &&
+    setting == "9" &&
+    attemptNum == 1 &&
+    skip == ""
+  ) {
+    await highScore();
+  } else {
+    console.log("Not eligible for highscore.");
+    // res.send();
   }
+  // await result.then(console.log(result));
+  // }
+  // catch (e) {
+  //   console.log(e);
+  // }
   // };
   let award;
   const standardDeviation = async (req, res) => {
@@ -644,153 +647,153 @@ exports.newAttempt = async (req, res) => {
     points: pointsAwarded,
   });
 
-  try {
-    await newAttempt.save().then((doc) => {
-      console.log(doc);
-    });
-  } catch (e) {
-    console.log(e);
-  }
+  // try {
+  // await newAttempt.save().then((doc) => {
+  //   console.log(doc);
+  // });
 
-  console.log(`Highscore?: ${data.eligible}`);
-  res.send(JSON.stringify(data));
-};
+  await newAttempt.save().then(() => {
+    console.log(`Highscore?: ${data.eligible}`);
+    res.send(JSON.stringify(data));
+  });
+  // }
+  // catch (e) {
+  //   console.log(e);
+  // }
+});
 
-exports.monthlyHighscore = async (req, res) => {
-  try {
-    const allLevels = await Attempt.distinct("level");
-    const allModes = await Attempt.distinct("mode");
-    let thisMonthHigh = [];
-    const thisMonth = new Date().getMonth() + 1;
-    console.log(allLevels, allModes);
+exports.monthlyHighscore = catchAsync(async (req, res) => {
+  // try {
+  const allLevels = await Attempt.distinct("level");
+  const allModes = await Attempt.distinct("mode");
+  let thisMonthHigh = [];
+  const thisMonth = new Date().getMonth() + 1;
+  console.log(allLevels, allModes);
 
-    //RETRY
-    const monthly = await Attempt.find({
-      $expr: { $eq: [{ $month: "$date" }, thisMonth] },
-      tries: "1",
-      skip: "",
-    }).sort({ level: 1, time: 1 });
+  //RETRY
+  const monthly = await Attempt.find({
+    $expr: { $eq: [{ $month: "$date" }, thisMonth] },
+    tries: "1",
+    skip: "",
+  }).sort({ level: 1, time: 1 });
 
-    for (let l = 0; l < allLevels.length; l++) {
-      let genesis = 0;
-      for (let m = 0; m < allModes.length; m++) {
-        for (let s = 0; s < monthly.length; s++) {
+  for (let l = 0; l < allLevels.length; l++) {
+    let genesis = 0;
+    for (let m = 0; m < allModes.length; m++) {
+      for (let s = 0; s < monthly.length; s++) {
+        if (
+          monthly[s].level == allLevels[l] &&
+          monthly[s].mode == allModes[m]
+        ) {
           if (
-            monthly[s].level == allLevels[l] &&
-            monthly[s].mode == allModes[m]
-          ) {
-            if (
-              monthly[s].level.startsWith("cal") &&
-              monthly[s].setting == "99"
-            ) {
-              if (genesis == 0) {
-                thisMonthHigh.push(monthly[s]);
-                genesis += 1;
-              }
-            }
-            if (
-              monthly[s].level.startsWith("heu") &&
-              monthly[s].setting == "9"
-            ) {
-              if (genesis == 0) {
-                thisMonthHigh.push(monthly[s]);
-                genesis += 1;
-              }
-            }
-            if (
-              !monthly[s].level.startsWith("cal") &&
-              !monthly[s].level.startsWith("heu")
-            ) {
-              if (genesis == 0) {
-                thisMonthHigh.push(monthly[s]);
-                genesis += 1;
-              }
-            }
-          }
-        }
-      }
-    }
-    // thisMonthHigh = monthly;
-    // let username;
-    let username = req.user.username;
-    let authenticate = req.auth;
-    let currentUser = req.user;
-    res.status(200).render("pages/monthly-highscore", {
-      thisMonthHigh,
-      username,
-      authenticate,
-      currentUser,
-    });
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-exports.getHighscore = async (req, res) => {
-  try {
-    //GETTING ALL UNIQUE LEVELS && MODES IN HIGHSCORE COLLECTION
-    const highscoreLevels = await Highscore.distinct("level");
-    const highscoreModes = await Highscore.distinct("mode");
-    let highscoreHoldersArr = [];
-
-    // for (let i = 0; i < highscoreLevels.length; i++) {
-    //   for (let x = 0; x < highscoreModes.length; x++) {
-    //     const highscoreHolder = await Highscore.find({
-    //       level: highscoreLevels[i],
-    //       mode: highscoreModes[x],
-    //     })
-    //       .sort({ time: 1 })
-    //       .limit(1);
-    //     // console.log(highscoreHolder);
-    //     if (highscoreHolder[0]) highscoreHoldersArr.push(highscoreHolder[0]);
-    //   }
-    // }
-
-    const highscoreHolder = await Highscore.find().sort({ level: 1, time: 1 });
-
-    // let genesisTwo = 0;
-
-    for (let a = 0; a < highscoreLevels.length; a++) {
-      for (let m = 0; m < highscoreModes.length; m++) {
-        let genesis = 0;
-        for (let b = 0; b < highscoreHolder.length; b++) {
-          if (
-            highscoreHolder[b].mode == highscoreModes[m] &&
-            highscoreHolder[b].level == highscoreLevels[a]
+            monthly[s].level.startsWith("cal") &&
+            monthly[s].setting == "99"
           ) {
             if (genesis == 0) {
-              highscoreHoldersArr.push(highscoreHolder[b]);
+              thisMonthHigh.push(monthly[s]);
               genesis += 1;
-              // genesisTwo += 1;
+            }
+          }
+          if (monthly[s].level.startsWith("heu") && monthly[s].setting == "9") {
+            if (genesis == 0) {
+              thisMonthHigh.push(monthly[s]);
+              genesis += 1;
+            }
+          }
+          if (
+            !monthly[s].level.startsWith("cal") &&
+            !monthly[s].level.startsWith("heu")
+          ) {
+            if (genesis == 0) {
+              thisMonthHigh.push(monthly[s]);
+              genesis += 1;
             }
           }
         }
       }
     }
-    console.log(highscoreHolder);
-    // username = req.user.username;
-    // authenticate = req.auth;
-    // currentUser = req.user;
-    let username = req.user.username;
-    let authenticate = req.auth;
-    let currentUser = req.user;
-    res.render("pages/highscore", {
-      highscoreHoldersArr,
-      username,
-      authenticate,
-      currentUser,
-    });
-  } catch (error) {
-    console.log(error);
   }
-};
-exports.getAttempt = async (req, res) => {
-  const id = req.params.id;
-  const attempt = await Attempt.findById(id);
+  // thisMonthHigh = monthly;
+  // let username;
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  res.status(200).render("pages/monthly-highscore", {
+    thisMonthHigh,
+    username,
+    authenticate,
+    currentUser,
+  });
+  // } catch (e) {
+  //   console.log(e);
+  // }
+});
 
+exports.getHighscore = catchAsync(async (req, res, next) => {
+  // try {
+  //GETTING ALL UNIQUE LEVELS && MODES IN HIGHSCORE COLLECTION
+  const highscoreLevels = await Highscore.distinct("level");
+  const highscoreModes = await Highscore.distinct("mode");
+  let highscoreHoldersArr = [];
+
+  // for (let i = 0; i < highscoreLevels.length; i++) {
+  //   for (let x = 0; x < highscoreModes.length; x++) {
+  //     const highscoreHolder = await Highscore.find({
+  //       level: highscoreLevels[i],
+  //       mode: highscoreModes[x],
+  //     })
+  //       .sort({ time: 1 })
+  //       .limit(1);
+  //     // console.log(highscoreHolder);
+  //     if (highscoreHolder[0]) highscoreHoldersArr.push(highscoreHolder[0]);
+  //   }
+  // }
+
+  const highscoreHolder = await Highscore.find().sort({ level: 1, time: 1 });
+
+  // let genesisTwo = 0;
+
+  for (let a = 0; a < highscoreLevels.length; a++) {
+    for (let m = 0; m < highscoreModes.length; m++) {
+      let genesis = 0;
+      for (let b = 0; b < highscoreHolder.length; b++) {
+        if (
+          highscoreHolder[b].mode == highscoreModes[m] &&
+          highscoreHolder[b].level == highscoreLevels[a]
+        ) {
+          if (genesis == 0) {
+            highscoreHoldersArr.push(highscoreHolder[b]);
+            genesis += 1;
+            // genesisTwo += 1;
+          }
+        }
+      }
+    }
+  }
+  console.log(highscoreHolder);
   // username = req.user.username;
   // authenticate = req.auth;
   // currentUser = req.user;
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  res.render("pages/highscore", {
+    highscoreHoldersArr,
+    username,
+    authenticate,
+    currentUser,
+  });
+  // } catch (error) {
+  //   console.log(error);
+  // }
+});
+exports.getAttempt = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+  const attempt = await Attempt.findById(id);
+
+  if (!attempt) {
+    return next(new AppError(`No such attempt was found.`, 404));
+  }
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
@@ -800,100 +803,110 @@ exports.getAttempt = async (req, res) => {
     authenticate,
     currentUser,
   });
-  try {
-  } catch (err) {
-    res.send(404).json({ message: err });
-  }
-};
+  // try {
+  // } catch (err) {
+  //   res.send(404).json({ message: err });
+  // }
+});
 
-exports.saveAttempt = async (req, res) => {
-  console.log(req.body);
+exports.saveAttempt = catchAsync(async (req, res, next) => {
+  // console.log(req.body);
   const id = req.params.id;
-  try {
-    const attempt = await Attempt.findById(id);
-    const username = attempt.user.toLowerCase();
-    const user = await User.findOne({ username });
-    const userCurrentPoints = user.points;
-    console.log(attempt, user);
-    // SAVE POINTS IS 10, BUT EDITTED POINTS IS 5.
-    const differencePoints = req.body.points - attempt.points;
-    const adjustedPoints = userCurrentPoints + differencePoints;
-    await Promise.all([
-      await User.updateOne({ username }, { $set: { points: adjustedPoints } }),
-      await Attempt.findByIdAndUpdate(id, {
-        points: req.body.points,
-        award: req.body.award,
-      }),
-    ]);
-    return res.redirect("/attempts");
-  } catch (err) {
-    res.send(404).json({ err });
-  }
-};
+  // try {
+  const attempt = await Attempt.findById(id);
 
-exports.deleteAttempt = async (req, res) => {
+  if (!attempt) {
+    return next(new AppError(`No such attempt was found.`, 404));
+  }
+
+  const username = attempt.user.toLowerCase();
+  const user = await User.findOne({ username });
+  const userCurrentPoints = user.points;
+  console.log(attempt, user);
+  // SAVE POINTS IS 10, BUT EDITTED POINTS IS 5.
+  const differencePoints = req.body.points - attempt.points;
+  const adjustedPoints = userCurrentPoints + differencePoints;
+  await Promise.all([
+    await User.updateOne({ username }, { $set: { points: adjustedPoints } }),
+    await Attempt.findByIdAndUpdate(id, {
+      points: req.body.points,
+      award: req.body.award,
+    }),
+  ]);
+  return res.redirect("/attempts");
+  // } catch (err) {
+  //   res.send(404).json({ err });
+  // }
+});
+
+exports.deleteAttempt = catchAsync(async (req, res, next) => {
   const id = req.params.id;
 
-  try {
-    const attempt = await Attempt.findById(id);
-    const username = attempt.user.toLowerCase();
-    const user = await User.findOne({ username });
-    const currentPoints = user.points;
-    const adjustedPoints = currentPoints - attempt.points;
-    const { updateUser, deleteAttempt } = await Promise.all([
-      User.updateOne(
-        { username },
-        {
-          $set: { points: adjustedPoints },
-        }
-      ),
-      Attempt.findByIdAndDelete(id),
-    ]);
-    console.log(updateUser);
-    return res.redirect("/attempts");
-  } catch (err) {
-    res.status(404).json({
-      err,
-    });
-  }
-};
+  // try {
+  const attempt = await Attempt.findById(id);
 
-const update = async (req, res) => {
-  try {
-    // const updating = await Attempt.updateMany({}, { $set: { tries: 1 } });
-    // console.log(updating);
-    const updating = await Attempt.updateOne(
-      // { user: "Player", level: "3.17" },
-      { user: "CaiusChong" },
-      { $set: { user: "Caiuschong" } }
-    );
-    console.log(updating);
-  } catch (e) {
-    console.log(`Error ${e}`);
+  if (!attempt) {
+    return next(new AppError(`No such attempt was found.`, 404));
   }
-};
 
-const updateMany = async (req, res) => {
-  try {
-    // const updating = await Attempt.updateMany({}, { $set: { tries: 1 } });
-    // console.log(updating);
-    const updating = await Attempt.updateMany(
-      // { summary: { $exists: false } },
-      // { $set: { summary: "test" } }
-      { user: "Travis" },
-      { $set: { user: "Travis Scott" } }
-    );
-    const updatingPlayer = await Highscore.updateMany(
-      // { skip: { $exists: false } },
-      // { $set: { skip: "" } }
-      { user: "Travis" },
-      { $set: { user: "Travis Scott" } }
-    );
-    console.log(updating);
-  } catch (e) {
-    console.log(`Error ${e}`);
-  }
-};
+  const username = attempt.user.toLowerCase();
+  const user = await User.findOne({ username });
+  const currentPoints = user.points;
+  const adjustedPoints = currentPoints - attempt.points;
+  const { updateUser, deleteAttempt } = await Promise.all([
+    User.updateOne(
+      { username },
+      {
+        $set: { points: adjustedPoints },
+      }
+    ),
+    Attempt.findByIdAndDelete(id),
+  ]);
+  console.log(updateUser);
+  return res.redirect("/attempts");
+  // } catch (err) {
+  //   res.status(404).json({
+  //     err,
+  //   });
+  // }
+});
+
+const update = catchAsync(async (req, res, next) => {
+  // try {
+  // const updating = await Attempt.updateMany({}, { $set: { tries: 1 } });
+  // console.log(updating);
+  const updating = await Attempt.updateOne(
+    // { user: "Player", level: "3.17" },
+    { user: "CaiusChong" },
+    { $set: { user: "Caiuschong" } }
+  );
+  console.log(updating);
+  // } catch (e) {
+  //   console.log(`Error ${e}`);
+  // }
+});
+
+const updateMany = catchAsync(async (req, res, next) => {
+  // try {
+  // const updating = await Attempt.updateMany({}, { $set: { tries: 1 } });
+  // console.log(updating);
+  const updating = await Attempt.updateMany(
+    // { summary: { $exists: false } },
+    // { $set: { summary: "test" } }
+    { user: "Travis" },
+    { $set: { user: "Travis Scott" } }
+  );
+  const updatingPlayer = await Highscore.updateMany(
+    // { skip: { $exists: false } },
+    // { $set: { skip: "" } }
+    { user: "Travis" },
+    { $set: { user: "Travis Scott" } }
+  );
+  console.log(updating);
+  // } catch (e) {
+  //   console.log(`Error ${e}`);
+  // }
+});
 
 // updateMany();
 

@@ -29155,6 +29155,7 @@ $("#attemptAjex").on("submit", function (event) {
           document.getElementById("highscore-table-score").innerHTML = "Nil";
         }
 
+        // if (data.medals.gold.lower == null) {
         if (data.medals.gold.lower == null) {
           $("#gold").html(`Nil`);
           $("#silver").html(`Nil`);
