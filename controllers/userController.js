@@ -529,12 +529,6 @@ const generateRec = async (nameTemp) => {
                   recommendObj.mistake = "";
                   recommendObj.score = "";
                   recommendObj.award = "";
-                  // attempt.setting = 99;
-                  // attempt.mode = "Easy";
-                  // attempt.time = "";
-                  // attempt.mistake = "";
-                  // attempt.score = "";
-                  // attempt.award = "";
                   attempt.date = new Date();
                   console.log(`Obj: ${recommendObj}`);
                   recommend.push(recommendObj);
@@ -817,17 +811,6 @@ const generateRec = async (nameTemp) => {
                     } else {
                       recommendObj.level = levelOne[index + 1];
                     }
-                    // if (age > 7) {
-                    //   attempt.level = levelTwo[0];
-                    // } else {
-                    //   if (index + 1 == levelOne.length) {
-                    //     attempt.level = levelOne[0];
-                    //     // attempt.mode = "Hardcore";
-                    //   } else {
-                    //     attempt.level = levelOne[index + 1];
-                    //     // attempt.mode = "Easy";
-                    //   }
-                    // }
                   } else if (attempt.level.startsWith("2")) {
                     const index = levelTwo.indexOf(attempt.level);
                     if (index == levelTwo.length - 1) {

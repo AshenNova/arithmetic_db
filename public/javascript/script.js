@@ -10186,14 +10186,16 @@ function updateProblems() {
         lengthArr = [];
       }
       console.log("Shaded: " + shaded, "Unshaded: " + unshaded);
-
+      p.shaded = shaded;
+      p.unshaded = unshaded;
       let difference = "added";
 
+      //UNCHANGED TOTAL
       if (p.version == "total") {
         p.change = Math.abs(p.change);
       }
-      while (p.change == 0) {
-        p.change = genNumbers(16) - 8;
+      if (p.change == 0) {
+        p.change = [-1, 1][genNumbers(2)] * (genNumbers(8) + 1);
       }
       if (p.change < 0) {
         difference = "removed";
@@ -10205,17 +10207,37 @@ function updateProblems() {
         unshadedEnd = unshaded += p.change * -1;
       }
 
+      if (p.version == "difference") {
+        if (p.change == 0) {
+          p.change = [-1, 1][genNumbers(2)] * (genNumbers(8) + 1);
+        }
+        shadedEnd = shaded += p.change;
+        unshadedEnd = unshaded += p.change;
+        if (shadedEnd == unshadedEnd || shadedEnd <= 0 || unshaded <= 0) {
+          return updateCalc();
+        }
+      }
+
       [shadedEnd, unshadedEnd] = simplify(shadedEnd, unshadedEnd);
       if (unshadedEnd == unshaded) {
         console.log("No change in ratio for unshaded");
         return updateCalc();
       }
+      //UNCHANGED DIFFERENCE
+      if (p.version == "difference") {
+        displayProblem.insertAdjacentHTML(
+          "afterbegin",
+          `How many equal number of white or black squares have to be ${difference} for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?`
+        );
+      }
+      //UNCHANGED OBJ
       if (p.version == "object") {
         displayProblem.insertAdjacentHTML(
           "afterbegin",
           `How many black squares have to be ${difference} for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?`
         );
       }
+      //UNCHANGED TOTAL
       if (p.version == "total") {
         displayProblem.insertAdjacentHTML(
           "afterbegin",
@@ -12996,13 +13018,26 @@ function updateProblems() {
           )} km more than ${personA} before they met along the way.`;
         }
       }
+      if (p.type == "C") {
+        middleClue = `${personB} made a U-turn at Town B and met ${personA} ${Math.abs(
+          diffDistance
+        )} km from Town B.`;
+      }
 
       //MAIN PASSAGE
-      displayProblem.innerHTML = `
-      Town M is between Town A and Town B.</br>
-      ${personA} set off from Town A towards Town B at ${p.speedA} km/h and vice versa for ${personB} at ${p.speedB} km/h.</br>
-      ${middleClue}</br>
-`;
+      if (p.type == "A" || p.typr == "B") {
+        displayProblem.innerHTML = `
+        Town M is between Town A and Town B.</br>
+        ${personA} set off from Town A towards Town B at ${p.speedA} km/h and vice versa for ${personB} at ${p.speedB} km/h.</br>
+        ${middleClue}</br>
+        `;
+      }
+      if (p.type == "C") {
+        displayProblem.innerHTML = `
+        ${personA} set off from Town A towards Town B at ${p.speedA} km/h and vice versa for ${personB} at ${p.speedB} km/h.</br>
+        ${middleClue}</br>
+        `;
+      }
 
       //QUESTION
       if (p.question == "A")
@@ -19971,6 +20006,17 @@ function handleSubmit(e) {
       //RATIO: WIPE ON WIPE OFF
       if (setting == 16) {
         correctAnswer = Math.abs(p.change);
+        if (p.version == "difference") {
+          const differenceAtFirst = Math.abs(p.shaded - p.unshaded);
+          let shadedEnd = (p.shaded += p.change);
+          let unshadedEnd = (p.unshaded += p.change);
+          [shadedEnd, unshadedEnd] = simplify(shadedEnd, unshadedEnd);
+          const differenceEnd = Math.abs(shadedEnd - unshadedEnd);
+          const commonNum = commonDeno(differenceAtFirst, differenceEnd);
+          correctAnswer =
+            (commonNum / differenceAtFirst) * p.shaded -
+            (commonNum / differenceEnd) * shadedEnd;
+        }
       }
 
       if (setting == 17) {
@@ -25203,10 +25249,12 @@ function genProblems() {
     // RATIO: WIPE ON WIPE OFF
     if (setting == 16) {
       return {
-        version: ["total", "object"][genNumbers(2)],
+        version: ["difference", "total", "object"][genNumbers(3)],
         length: genNumbers(5) + 5,
         breadth: genNumbers(2) + 3,
         change: genNumbers(16) - 8,
+        shaded: undefined,
+        unshaded: undefined,
       };
     }
 
@@ -25743,7 +25791,7 @@ function genProblems() {
     //SPEED: DIFFERENCE IN SPEED (MID)
     if (setting == 7) {
       return {
-        type: ["A", "B"][genNumbers(2)],
+        type: ["A", "B", "C"][genNumbers(3)],
         speedA: genNumbers(50) + 50,
         diffSpeed: [-1, 1][genNumbers(2)] * (genNumbers(10) + 20),
         speedB: undefined,
@@ -28740,10 +28788,18 @@ function buttonLevelSetting() {
       break;
 
     case "Heu.3":
-      setting = prompt(
-        "What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n6. Round up/down\n7. Double Effect\n8. Grouping ( Bonus )\n\n9. All"
-      );
+      // setting = prompt(
+      //   "What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n6. Round up/down\n7. Double Effect\n8. Grouping ( Bonus )\n\n9. All"
+      // );
       level = "heuThree";
+      optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
+      setting = prompt(
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
+        9
+      );
+
       scoreNeeded = 10;
       range = 0;
       displayProblem.style.fontSize = "18px";
@@ -28755,10 +28811,10 @@ function buttonLevelSetting() {
       break;
 
     case "Heu.3b":
-      setting = prompt(
-        "What level?\n\n 1. Repeated Identity\n2. Equal Beginning\n3. Equal End\n4. Unchanged Object\n5. Working Backwards Straightline\n\n9. All",
-        9
-      );
+      // setting = prompt(
+      //   "What level?\n\n 1. Repeated Identity\n2. Equal Beginning\n3. Equal End\n4. Unchanged Object\n5. Working Backwards Straightline\n\n9. All",
+      //   9
+      // );
       level = "heuThreeb";
       if (
         ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
@@ -28775,8 +28831,15 @@ function buttonLevelSetting() {
 
     case "Heu.4":
       level = "heuFour";
+      // setting = prompt(
+      //   "What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n4.Repeated Identity ( Type 2 )\n5. Uneven Grouping\n6. Grouping Rows\n7. Systematic Listing\n\n9. All"
+      // );
+      optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
-        "What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n4.Repeated Identity ( Type 2 )\n5. Uneven Grouping\n6. Grouping Rows\n7. Systematic Listing\n\n9. All"
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
+        9
       );
       scoreNeeded = 10;
       range = 0;
@@ -28817,10 +28880,16 @@ function buttonLevelSetting() {
 
     case "Heu.5":
       level = "heuFive";
+      // setting = prompt(
+      //   "What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n6. Shaking Hands\n7. Bonus\n8. Different Quantity with Difference\n\n9. All"
+      // );
+      optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
-        "What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n6. Shaking Hands\n7. Bonus\n8. Different Quantity with Difference\n\n9. All"
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
+        9
       );
-
       if (
         ![1, 2, 3, 4, 5, 6, 7, 8, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
@@ -28837,10 +28906,6 @@ function buttonLevelSetting() {
 
     case "Heu.5b":
       level = "heuFiveb";
-      // setting = prompt(
-      //   "What level?\n1. Working Backwards (Type 1)\n2. Working Backwards (Type 2)\n3. Working Backwards (Type 3) Independent\n4. Either or\n5. Unchanged Total (if)\n\n9. All"
-      // );
-
       optionsBox.classList.remove("hidden");
       optionsBox.textContent = `Available settings:`;
       optionsBox.insertAdjacentHTML("beforeend", displayContent(level));

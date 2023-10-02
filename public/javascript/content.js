@@ -1,6 +1,48 @@
 export const displayContent = (level) => {
   //   let html = undefined;
 
+  if (level == "heuThree") {
+    return `
+    </p>
+    1. Sum and Difference</br>
+    2. Supposition</br>
+    3. Under the same unit ( Unit )</br>
+    4. Under the same unit ( Difference )</br>
+    5. Equal Grouping</br>
+    6. Round up/down</br>
+    7. Double Effect</br>
+    8. Grouping ( Bonus )</br>
+    <hr>
+    9. All`;
+  }
+
+  if (level == "heuThreeb") {
+    return `
+    </p>
+    1. Repeated Identity</br>
+    2. Equal Beginning</br>
+    3. Equal End</br>
+    4. Unchanged Object</br>
+    5. Working Backwards Straightline</br>
+    <hr>
+    9. All`;
+  }
+
+  if (level == "heuFour") {
+    return `
+    </p>
+    1. Excess and Shortage ( Type 1 )</br>
+    2. Excess and Shortage ( Type 2 )</br>
+    3. Origin</br>
+    4.Repeated Identity ( Type 2 )</br>
+    5. Uneven Grouping</br>
+    6. Grouping Rows</br>
+    7. Systematic Listing</br>
+    <hr>
+    9. All
+    `;
+  }
+
   if (level == "heuFourb") {
     return `
     </p>
@@ -13,6 +55,21 @@ export const displayContent = (level) => {
     <hr>
     9. All`;
   }
+  if (level == "heuFive") {
+    return `
+    </p>
+    1. Grouping with Difference</br>
+    2. Supposition (Negative)</br>
+    3. Supposition negative ( Difference)</br>
+    4. Identical Quantity with Difference</br>
+    5. Substitution</br>
+    6. Shaking Hands</br>
+    7. Bonus</br>
+    8. Different Quantity with Difference</br>
+    <hr>
+    9. All
+    `;
+  }
 
   if (level == "heuFiveb") {
     return `
@@ -21,7 +78,7 @@ export const displayContent = (level) => {
     2. Working Backwards (Type 2)</br>
     3. Working Backwards (Type 3) Independent</br>
     4. Either or</br>
-    5. Unchanged Total (if)
+    5. Unchanged Total (if)</br>
     <hr>9. All
     `;
   }
