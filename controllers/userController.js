@@ -869,7 +869,7 @@ const generateRec = async (nameTemp) => {
               if (
                 // !uniqLevel.includes(attempt.level) &&
                 recommend.length < 6 &&
-                !recommendList.includes(attempt.level)
+                !recommendList.includes(recommendObj.level)
               ) {
                 console.log("PUSHHHH!");
                 console.log(recommendObj);
