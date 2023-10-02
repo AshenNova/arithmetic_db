@@ -169,7 +169,7 @@ exports.getAllRewards = async (req, res) => {
 
   const [allRewards, logRewards] = await Promise.all([
     Reward.find(),
-    RewardLog.find().sort({ claimed: -1 }).limit(20),
+    RewardLog.find().sort({ claimed: -1 }).limit(10),
   ]);
 
   let username = req.user.username;
@@ -614,41 +614,6 @@ const generateRec = async (nameTemp) => {
                   recommendObj.level = heuAgeTwelve[0];
                 }
               }
-              // if (age == 8) {
-              //   const index = heuAgeEight.indexOf(attempt.level);
-              //   attempt.level = heuAgeEight[index + 1];
-              //   if (index + 1 == heuAgeEight.length) {
-              //     attempt.level = heuAgeEight[0];
-              //   }
-              // }
-              // if (age == 9) {
-              //   const index = heuAgeNine.indexOf(attempt.level);
-              //   attempt.level = heuAgeNine[index + 1];
-              //   if (index + 1 == heuAgeNine.length) {
-              //     attempt.level = heuAgeNine[0];
-              //   }
-              // }
-              // if (age == 10) {
-              //   const index = heuAgeTen.indexOf(attempt.level);
-              //   attempt.level = heuAgeTen[index + 1];
-              //   if (index + 1 == heuAgeTen.length) {
-              //     attempt.level = heuAgeTen[0];
-              //   }
-              // }
-              // if (age == 11) {
-              //   const index = heuAgeEleven.indexOf(attempt.level);
-              //   attempt.level = heuAgeEleven[index + 1];
-              //   if (index + 1 == heuAgeEleven.length) {
-              //     attempt.level = heuAgeEleven[0];
-              //   }
-              // }
-              // if (age == 12) {
-              //   const index = heuAgeTwelve.indexOf(attempt.level);
-              //   attempt.level = heuAgeTwelve[index + 1];
-              //   if (index + 1 == heuAgeTwelve.length) {
-              //     attempt.level = heuAgeTwelve[0];
-              //   }
-              // }
               if (
                 !recommendList.includes(attempt.level) &&
                 recommend.length < 2
@@ -687,7 +652,7 @@ const generateRec = async (nameTemp) => {
       latestAttempt.forEach((attempt) => {
         let recommendObj = { ...attempt };
         // let recommendObj = Object.assign({}, attempt);
-        console.log(`In levels: ${attempt.level} 🌗`);
+        console.log(`In levels: ${attempt.level}🌗`);
         console.log(`${recommendObj.level}`);
         if (
           !attempt.level.startsWith("cal") &&
@@ -806,7 +771,7 @@ const generateRec = async (nameTemp) => {
                       if (age > 7) {
                         recommendObj.level = levelTwo[0];
                       } else {
-                        recommendObj.level = levelOne[index + 1];
+                        recommendObj.level = levelOne[0];
                       }
                     } else {
                       recommendObj.level = levelOne[index + 1];
@@ -814,10 +779,11 @@ const generateRec = async (nameTemp) => {
                   } else if (attempt.level.startsWith("2")) {
                     const index = levelTwo.indexOf(attempt.level);
                     if (index == levelTwo.length - 1) {
+                      console.log("Ended Level 2s");
                       if (age > 8) {
                         recommendObj.level = levelThree[0];
                       } else {
-                        recommendObj.level = levelTwo[index + 1];
+                        recommendObj.level = levelTwo[0];
                       }
                     } else {
                       recommendObj.level = levelTwo[index + 1];
@@ -828,7 +794,7 @@ const generateRec = async (nameTemp) => {
                       if (age > 9) {
                         recommendObj.level = levelFour[0];
                       } else {
-                        recommendObj.level = levelThree[index + 1];
+                        recommendObj.level = levelThree[0];
                       }
                     } else {
                       recommendObj.level = levelThree[index + 1];
@@ -839,7 +805,7 @@ const generateRec = async (nameTemp) => {
                       if (age > 10) {
                         recommendObj.level = levelFive[0];
                       } else {
-                        recommendObj.level = levelFour[index + 1];
+                        recommendObj.level = levelFour[0];
                       }
                     } else {
                       recommendObj.level = levelFour[index + 1];
@@ -850,7 +816,7 @@ const generateRec = async (nameTemp) => {
                       if (age > 11) {
                         recommendObj.level = levelSix[0];
                       } else {
-                        recommendObj.level = levelFive[index + 1];
+                        recommendObj.level = levelFive[0];
                       }
                     } else {
                       recommendObj.level = levelFive[index + 1];
@@ -861,7 +827,7 @@ const generateRec = async (nameTemp) => {
                       if (age > 12) {
                         recommendObj.level = levelFour[0];
                       } else {
-                        recommendObj.level = levelSix[index + 1];
+                        recommendObj.level = levelSix[0];
                       }
                     } else {
                       recommendObj.level = levelSix[index + 1];
