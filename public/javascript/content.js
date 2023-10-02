@@ -243,6 +243,10 @@ export const displayContent = (level) => {
     <hr>
     20. Average: External Change</br>
     21. Average: Odd consecutive days</br>
+    <hr>
+    22. Ratio: Manipulation of units with value
+    <hr>
+    99. All
     `;
   }
   if (level == "calSix") {

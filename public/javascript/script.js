@@ -12423,7 +12423,72 @@ function updateProblems() {
       How many ${obj}s were made on day ${p.chosen}?
       `;
     }
+    //RATIO: MANIPULATION OF UNITS WITH VALUE
+    if (setting == 22) {
+      normalDisplay();
+      const multi = genNumbers(50) + 50;
+      p.total = (p.unitA + p.unitB) * multi;
+      let unitSentence;
+      let valueSentence;
+      if (p.situation == "A") {
+        let tempA = p.unitA;
+        let tempSituationA = p.situationA;
+        [tempA, tempSituationA] = simplify(tempA, tempSituationA);
+        let changeUnit;
+        p.situationA < 0
+          ? (changeUnit = "decreased")
+          : (changeUnit = "increased");
+        unitSentence = `A ${changeUnit} by ${Math.abs(
+          tempSituationA
+        )}/${tempA}.`;
+        let changeValue;
+        p.valueB < 0
+          ? (changeValue = "decreased")
+          : (changeValue = "increased");
+        valueSentence = `B ${changeValue} by ${Math.abs(p.valueB)}.`;
 
+        const valueAEnd = multi * (p.unitA + p.situationA);
+        const valueBEnd = multi * p.unitB + p.valueB;
+        p.end = valueAEnd + valueBEnd;
+        //CHANGE UNIT INTO SIMPLIFIEST FORM.
+        // [p.unitA, p.situationA] = simplify(p.unitA, p.situationA);
+      }
+      if (p.situation == "B") {
+        let tempB = p.unitB;
+        let tempSituationB = p.situationB;
+        [tempB, tempSituationB] = simplify(tempB, tempSituationB);
+        let changeUnit;
+        p.situationB < 0
+          ? (changeUnit = "decreased")
+          : (changeUnit = "increased");
+        unitSentence = `B ${changeUnit} by ${Math.abs(
+          tempSituationB
+        )}/${tempB}.`;
+        let changeValue;
+        p.valueA < 0
+          ? (changeValue = "decreased")
+          : (changeValue = "increased");
+        valueSentence = `A ${changeValue} by ${Math.abs(p.valueA)}.`;
+
+        const valueBEnd = multi * (p.unitB + p.situationB);
+        const valueAEnd = multi * p.unitA + p.valueA;
+        p.end = valueAEnd + valueBEnd;
+        //CHANGE UNIT INTO SIMPLIFIEST FORM.
+        // [p.unitB, p.situationB] = simplify(p.unitB, p.situationB);
+      }
+      if (p.end <= 0) {
+        console.log("Negative end");
+        return updateCalc();
+      }
+      [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
+      displayProblem.innerHTML = `
+      A and B's ratios at first were ${p.unitA} : ${p.unitB}.</br>
+      ${unitSentence}</br>
+      ${valueSentence}</br>
+      The total in the end is ${p.end}.</br>
+      What was the total at first?
+      `;
+    }
     // BOTTOM OF CALFIVEB
   }
 
@@ -20363,6 +20428,11 @@ function handleSubmit(e) {
       if (setting == 21) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
+
+      //RATIO: MANIPULATION OF UNITS WITH VALUE
+      if (setting == 22) {
+        correctAnswer = p.total;
+      }
     }
 
     //ANSWERS
@@ -25686,6 +25756,23 @@ function genProblems() {
         increase: genNumbers(5) + 3,
       };
     }
+
+    //RATIO: MANIPULATION OF UNITS WITH VALUE
+    if (setting == 22) {
+      const gen_unitA = genNumbers(10) + 2;
+      const gen_unitB = genNumbers(10) + 2;
+      return {
+        unitA: gen_unitA,
+        unitB: gen_unitB,
+        situationA: [-1, 1][genNumbers(2)] * (gen_unitA - 1),
+        situationB: [-1, 1][genNumbers(2)] * (gen_unitB - 1),
+        situation: ["A", "B"][genNumbers(2)],
+        valueA: [-1, 1][genNumbers(2)] * (genNumbers(899) + 100),
+        valueB: [-1, 1][genNumbers(2)] * (genNumbers(899) + 100),
+        total: undefined,
+        end: undefined,
+      };
+    }
   }
   //SETTINGS
   if (level == "calSix") {
@@ -28675,7 +28762,7 @@ function buttonLevelSetting() {
         99
       );
       if (
-        ![...Array.from({ length: 21 }, (_, i) => i + 1), 99].includes(
+        ![...Array.from({ length: 22 }, (_, i) => i + 1), 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")
