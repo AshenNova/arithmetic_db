@@ -5,8 +5,8 @@ const Attempt = require("../models/attemptModel");
 const bcrypt = require("bcryptjs");
 const catchAsync = require("../utils/catchAsync");
 const fs = require("fs");
-const stream = require("stream");
 const path = require("path");
+const stream = require("stream");
 const multer = require("multer");
 const upload = multer();
 const { google } = require("googleapis");
@@ -406,12 +406,16 @@ const generateRec = async (nameTemp) => {
       tries: "1",
     })
       .sort({
-        level: -1,
+        // level: -1,
         date: -1,
       })
+      // .limit(10)
       .lean(),
     User.findOne({ username: nameTemp.toLowerCase() }),
   ]);
+  latestAttempt.forEach((item) => {
+    console.log(`${item.level} ⭐️`);
+  });
   // console.log(`THESE ARE THE LATEST ATTEMPTS ${latestAttempt}`);
   // const latestAttempt = await Attempt.find({
   //   user: nameTemp,
@@ -424,7 +428,7 @@ const generateRec = async (nameTemp) => {
 
   // const { DOB } = await User.findOne({ username: nameTemp.toLowerCase() });
   const age = new Date().getFullYear() - DOB.getFullYear();
-  console.log(age);
+  // console.log(age);
 
   let recommend = [];
   let recommendList = [];
@@ -468,7 +472,7 @@ const generateRec = async (nameTemp) => {
     if (recommend.length < 1) {
       calRecommend.forEach((calLevel) => {
         latestAttempt.forEach((attempt) => {
-          console.log(`In calcuation: ${attempt.level} 🥀`);
+          // console.log(`In calcuation: ${attempt.level} 🥀`);
           let recommendObj = { ...attempt };
           if (attempt.level == calLevel) {
             if (
@@ -477,18 +481,18 @@ const generateRec = async (nameTemp) => {
             ) {
               // if (attempt.award == award) {
               if (attempt.award == award && recommend.length < 1) {
-                console.log(award);
+                // console.log(award);
                 recommendObj.level = attempt.level;
                 recommendObj.mode = "Easy";
                 // attempt.mode = "Easy";
                 // recommend.push(attempt);
                 recommend.push(recommendObj);
-                console.log(`Try new stuff ${recommend}`);
+                // console.log(`Try new stuff ${recommend}`);
                 recommendList.push(attempt.level);
                 uniqLevel.push(attempt.level);
               } else {
                 // uniqLevel.push(attempt.level);
-                console.log("Rotation or promoted");
+                // console.log("Rotation or promoted");
                 if (age == 10) {
                   const index = calAgeTen.indexOf(attempt.level);
                   if (index + 1 == calAgeTen.length) {
@@ -531,7 +535,7 @@ const generateRec = async (nameTemp) => {
                   recommendObj.score = "";
                   recommendObj.award = "";
                   attempt.date = new Date();
-                  console.log(`Obj: ${recommendObj}`);
+                  // console.log(`Obj: ${recommendObj}`);
                   recommend.push(recommendObj);
                   recommendList.push(attempt.level);
                   uniqLevel.push(attempt.level);
@@ -554,89 +558,88 @@ const generateRec = async (nameTemp) => {
   const heuSix = ["heuSix", "heuSixb"];
   const heuAgeSeven = heuOne;
   const heuAgeEight = heuTwo;
-  const heuAgeNine = heuThree.concat(heuTwo);
-  const heuAgeTen = heuFour.concat(heuThree);
-  const heuAgeEleven = heuFour.concat(heuFive, heuThree);
-  const heuAgeTwelve = heuFour.concat(heuFive, heuSix, heuThree);
+  const heuAgeNine = heuTwo.concat(heuThree); //p3
+  const heuAgeTen = heuThree.concat(heuFour); //p4
+  const heuAgeEleven = heuThree.concat(heuFour, heuFive); //p5
+  const heuAgeTwelve = heuThree.concat(heuFour, heuFive, heuSix); //p6
   awards.forEach((award) => {
     uniqLevel = [];
     // if (recommend.length < 2) {
-    heuRecommend.forEach((heuLevel) => {
-      latestAttempt.forEach((attempt) => {
+    // heuRecommend.forEach(heuRecommendl) => {
+    latestAttempt.forEach((attempt) => {
+      let recommendObj = { ...attempt };
+      // console.log(`${recommendObj.level}`);
+      // console.log(`Heu: ${recommendObj.toString()} ☀️`);
+      if (heuRecommend.includes(attempt.level) && recommend.length < 2) {
         console.log(`In heuristics: ${attempt.level} 🌞`);
-
-        let recommendObj = { ...attempt };
-        console.log(`${recommendObj.level}`);
-        // console.log(`Heu: ${recommendObj.toString()} ☀️`);
-        if (attempt.level == heuLevel) {
-          if (
-            !uniqLevel.includes(attempt.level) &&
-            !recommendList.includes(attempt.level)
-          ) {
-            if (attempt.award == award && recommend.length < 2) {
+        if (
+          !uniqLevel.includes(attempt.level) &&
+          !recommendList.includes(attempt.level)
+        ) {
+          if (attempt.award == "Try harder" && recommend.length < 2) {
+            recommend.push(recommendObj);
+            recommendList.push(attempt.level);
+            uniqLevel.push(attempt.level);
+          } else {
+            // uniqLevel.push(attempt.level);
+            console.log("Rotation or promoted");
+            if (age == 8) {
+              const index = heuAgeEight.indexOf(attempt.level);
+              recommendObj.level = heuAgeEight[index + 1];
+              if (index + 1 == heuAgeEight.length) {
+                recommendObj.level = heuAgeEight[0];
+              }
+            }
+            if (age == 9) {
+              const index = heuAgeNine.indexOf(attempt.level);
+              recommendObj.level = heuAgeNine[index + 1];
+              if (index + 1 == heuAgeNine.length) {
+                recommendObj.level = heuAgeNine[0];
+              }
+            }
+            if (age == 10) {
+              const index = heuAgeTen.indexOf(attempt.level);
+              recommendObj.level = heuAgeTen[index + 1];
+              if (index + 1 == heuAgeTen.length) {
+                recommendObj.level = heuAgeTen[0];
+              }
+            }
+            if (age == 11) {
+              const index = heuAgeEleven.indexOf(attempt.level);
+              recommendObj.level = heuAgeEleven[index + 1];
+              if (index + 1 == heuAgeEleven.length) {
+                recommendObj.level = heuAgeEleven[0];
+              }
+            }
+            if (age == 12) {
+              const index = heuAgeTwelve.indexOf(attempt.level);
+              recommendObj.level = heuAgeTwelve[index + 1];
+              if (index + 1 == heuAgeTwelve.length) {
+                recommendObj.level = heuAgeTwelve[0];
+              }
+            }
+            if (
+              !recommendList.includes(attempt.level) &&
+              recommend.length < 2
+            ) {
+              recommendObj.setting = 9;
+              recommendObj.mode = "Easy";
+              recommendObj.time = "";
+              recommendObj.mistake = "";
+              recommendObj.award = "";
+              recommendObj.score = "";
+              recommendObj.date = new Date();
+              console.log(`heu: ${recommendObj}`);
               recommend.push(recommendObj);
+              // recommend.push(attempt);
               recommendList.push(attempt.level);
               uniqLevel.push(attempt.level);
-            } else {
-              // uniqLevel.push(attempt.level);
-              console.log("Rotation or promoted");
-              if (age == 8) {
-                const index = heuAgeEight.indexOf(attempt.level);
-                recommendObj.level = heuAgeEight[index + 1];
-                if (index + 1 == heuAgeEight.length) {
-                  recommendObj.level = heuAgeEight[0];
-                }
-              }
-              if (age == 9) {
-                const index = heuAgeNine.indexOf(attempt.level);
-                recommendObj.level = heuAgeNine[index + 1];
-                if (index + 1 == heuAgeNine.length) {
-                  recommendObj.level = heuAgeNine[0];
-                }
-              }
-              if (age == 10) {
-                const index = heuAgeTen.indexOf(attempt.level);
-                recommendObj.level = heuAgeTen[index + 1];
-                if (index + 1 == heuAgeTen.length) {
-                  recommendObj.level = heuAgeTen[0];
-                }
-              }
-              if (age == 11) {
-                const index = heuAgeEleven.indexOf(attempt.level);
-                recommendObj.level = heuAgeEleven[index + 1];
-                if (index + 1 == heuAgeEleven.length) {
-                  recommendObj.level = heuAgeEleven[0];
-                }
-              }
-              if (age == 12) {
-                const index = heuAgeTwelve.indexOf(attempt.level);
-                recommendObj.level = heuAgeTwelve[index + 1];
-                if (index + 1 == heuAgeTwelve.length) {
-                  recommendObj.level = heuAgeTwelve[0];
-                }
-              }
-              if (
-                !recommendList.includes(attempt.level) &&
-                recommend.length < 2
-              ) {
-                recommendObj.setting = 9;
-                recommendObj.mode = "Easy";
-                recommendObj.time = "";
-                recommendObj.mistake = "";
-                recommendObj.award = "";
-                recommendObj.score = "";
-                recommendObj.date = new Date();
-                console.log(`heu: ${recommendObj}`);
-                recommend.push(recommendObj);
-                // recommend.push(attempt);
-                recommendList.push(attempt.level);
-                uniqLevel.push(attempt.level);
-              }
             }
           }
         }
-      });
+      }
     });
+    // });
     // }
   });
   // CHECK IF RECOMMENDATION IS LESS THAN 4 ENTRIES
@@ -646,15 +649,14 @@ const generateRec = async (nameTemp) => {
 
   awards.forEach((award) => {
     // console.log(`Recommend: ${recommend}`);
-    console.log(`!!!! Award check !!!! ${award}`);
+    // console.log(`!!!! Award check !!!! ${award}`);
     uniqLevel = [];
     console.log(uniqLevel);
     if (recommend.length < 6) {
       latestAttempt.forEach((attempt) => {
         let recommendObj = { ...attempt };
         // let recommendObj = Object.assign({}, attempt);
-        console.log(`In levels: ${attempt.level}🌗`);
-        console.log(`${recommendObj.level}`);
+
         if (
           !attempt.level.startsWith("cal") &&
           !attempt.level.startsWith("heu")
@@ -664,7 +666,8 @@ const generateRec = async (nameTemp) => {
             !recommendList.includes(attempt.level)
           ) {
             // console.log("Checking: " + attempt.level);
-
+            // console.log(`In levels: ${attempt.level}🌗`);
+            // console.log(`${recommendObj.level}`);
             if (attempt.award == award) {
               //CHECK IF AWARD IS BRONZE AND ABOVE
               if (attempt.award != "Try harder") {
@@ -764,10 +767,10 @@ const generateRec = async (nameTemp) => {
                     "5.16",
                   ];
                   const levelSix = ["6", "6.01", "6.02", "6.03"];
-                  console.log(`${attempt.level} <-------`);
+                  // console.log(`${attempt.level} <-------`);
                   if (attempt.level.startsWith("1") || attempt.level == "1") {
                     const index = levelOne.indexOf(attempt.level);
-                    console.log(`----> ${index}, ${levelOne.length}`);
+                    // console.log(`----> ${index}, ${levelOne.length}`);
                     if (index == levelOne.length - 1) {
                       if (age > 7) {
                         recommendObj.level = levelTwo[0];
@@ -837,12 +840,12 @@ const generateRec = async (nameTemp) => {
                     console.log(`The end`);
                   }
                 }
-                console.log(`Newly assigned ${recommendObj.level}`);
+                // console.log(`Newly assigned ${recommendObj.level}`);
                 //CHECKING IF IT HAS BEEN DONE BEFORE
 
-                console.log(
-                  `Before: ${attempt.level} After:${recommendObj.level}`
-                );
+                // console.log(
+                //   `Before: ${attempt.level} After:${recommendObj.level}`
+                // );
 
                 let count = 0;
                 latestAttempt.forEach((latest) => {
@@ -850,7 +853,7 @@ const generateRec = async (nameTemp) => {
                     count += 1;
                   }
                 });
-                console.log(`Count: ${count}`);
+                // console.log(`Count: ${count}`);
                 if (count == 0) {
                   console.log(`Setting ${recommendObj.level} to Easy`);
                   recommendObj.mode = "Easy";
