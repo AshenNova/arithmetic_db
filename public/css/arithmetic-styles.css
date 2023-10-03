@@ -337,7 +337,7 @@ table {
 .working {
   font-size: 1.5em;
   /* position: relative; */
-  margin-bottom: 20%;
+  margin-bottom: 40px;
   letter-spacing: 5px;
 }
 
@@ -359,6 +359,7 @@ table {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   /* padding-bottom: 0; */
+  margin-top: 20px;
 }
 
 #skipBtn {
