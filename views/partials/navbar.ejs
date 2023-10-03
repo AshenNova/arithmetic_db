@@ -15,9 +15,10 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-additional">
-            <li class="nav-item">
+          <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-additional"> -->
+            <!-- <li class="nav-item">
               <a class="nav-link active mx-4" href="/arithmetic"> 🧮 Arithmetic </a>
             </li>
             <li class="nav-item">
@@ -32,12 +33,6 @@
                 <li><a class="dropdown-item" href="/attempts/monthly-highscore" target="_blank">AMonthly Highscore</a></li>
               </ul>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link active mx-4" href="/attempts/highscore"target="_blank">All Time Highscore</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active mx-4" href="/attempts/monthly-highscore" target="_blank">Monthly Highscore</a>
-            </li> -->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle mx-4" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 🥂  Points
@@ -50,7 +45,52 @@
             <li class="nav-item">
               <a class="nav-link active mx-4" href="/user/recommend"target="_blank">🔥 Recommendation</a>
             </li>
+          </ul> -->
+
+          <!-- //REVAMP -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-additional">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle mx-4" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Mathematics
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li>
+                    <a class="dropdown-item" href="/arithmetic"> 🧮 Arithmetic </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/attempts"target="_blank">✨ Results</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/attempts/highscore" target="_blank">🏆 All Time Highscore</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/attempts/monthly-highscore" target="_blank">🏆 Monthly Highscore</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/user/points" target="_blank">🥕 Points Overview</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/user/points/rewards" target="_blank">🥂 Rewards</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/user/recommend"target="_blank">🔥 Recommendation</a>
+                  </li>
+                </ul>
+            </li>
+        <!-- </ul> -->
+        <% if (currentUser.admin) { %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle mx-4" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Science
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" href="/arithmetic"> 🧮 Arithmetic </a>
+            </li>
           </ul>
+         </li>
+        </ul>
+        <% } %>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
             <li class="nav-item"> 
@@ -71,6 +111,7 @@
               </li>
               <% } %>
 <!-- 
+  
             <li class="nav-item">  
             <% if (currentUser.admin) { %>
               <a class="nav-link active" href="/user">Users</a>

@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const Attempt = require("../models/attemptModel");
 const jwt = require("jsonwebtoken");
+const catchAsync = require("../utils/catchAsync");
 
 const signToken = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
@@ -49,7 +50,7 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+exports.login = catchAsync(async (req, res, next) => {
   console.log("Log in");
   const { username, password } = req.body;
   try {
@@ -132,7 +133,7 @@ exports.login = async (req, res) => {
     return res.redirect("/user/login");
     // res.redirect("/arithmetic");
   }
-};
+});
 
 exports.logout = (req, res) => {
   const token = "";
@@ -150,42 +151,42 @@ exports.protect = async (req, res, next) => {
   next();
 };
 
-exports.authenticate = async (req, res, next) => {
+exports.authenticate = catchAsync(async (req, res, next) => {
   console.log("Authenticating");
   const accessToken = req.cookies["JWT"];
   req.auth = {
     login: undefined,
   };
 
-  try {
-    if (accessToken) {
-      // try {
-      const validToken = jwt.verify(accessToken, process.env.JWT_SECRET);
-      if (validToken) {
-        const user = await User.findById(validToken.id);
-        req.user = user;
-        req.auth = { login: true };
-      } else {
-        res.message = "Please login before proceeding";
-        console.log(res.message);
-        res.redirect("/user/login");
-      }
-      // }
+  // try {
+  if (accessToken) {
+    // try {
+    const validToken = jwt.verify(accessToken, process.env.JWT_SECRET);
+    if (validToken) {
+      const user = await User.findById(validToken.id);
+      req.user = user;
+      req.auth = { login: true };
+    } else {
+      res.message = "Please login before proceeding";
+      console.log(res.message);
+      res.redirect("/user/login");
     }
-    if (!accessToken) {
-      console.log("No token");
-      req.user = "";
-      req.auth = { login: false };
-      console.log(req.auth);
-    }
-  } catch (err) {
-    console.log(err);
+    // }
   }
+  if (!accessToken) {
+    console.log("No token");
+    req.user = "";
+    req.auth = { login: false };
+    console.log(req.auth);
+  }
+  // } catch (err) {
+  //   console.log(err);
+  // }
 
   next();
-};
+});
 
-exports.loginCheck = async (req, res, next) => {
+exports.loginCheck = catchAsync(async (req, res, next) => {
   console.log("Login Check");
   let username = req.user.username;
   let authenticate = req.auth;
@@ -203,12 +204,12 @@ exports.loginCheck = async (req, res, next) => {
     });
   }
   next();
-};
+});
 
-exports.adminCheck = async (req, res, next) => {
+exports.adminCheck = catchAsync(async (req, res, next) => {
   console.log("Admin Check");
   if (req.user == "" || req.user.admin == false) {
     return res.redirect("/user/login");
   }
   next();
-};
+});

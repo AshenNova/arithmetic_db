@@ -3,6 +3,7 @@ const Reward = require("../models/rewardModel");
 const RewardLog = require("../models/rewardLogModel");
 const Attempt = require("../models/attemptModel");
 const bcrypt = require("bcryptjs");
+const catchAsync = require("../utils/catchAsync");
 const fs = require("fs");
 const stream = require("stream");
 const path = require("path");
@@ -18,31 +19,31 @@ let currentUser;
 //   authenticate,
 // };
 
-exports.getAllUsers = async (req, res) => {
+exports.getAllUsers = catchAsync(async (req, res, next) => {
   console.log("Getting all users");
-  try {
-    const allUsers = await User.find().sort({ loggedIn: -1 });
+  // try {
+  const allUsers = await User.find().sort({ loggedIn: -1 });
 
-    let username = req.user.username;
-    let authenticate = req.auth;
-    let currentUser = req.user;
-    if (!currentUser.admin || !authenticate) {
-      return res.redirect("user/login");
-    }
-
-    res.render("pages/all-user", {
-      authenticate,
-      username,
-      allUsers,
-      currentUser,
-    });
-  } catch (err) {
-    console.log(err);
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  if (!currentUser.admin || !authenticate) {
     return res.redirect("user/login");
   }
-};
 
-exports.editUser = async (req, res) => {
+  res.render("pages/all-user", {
+    authenticate,
+    username,
+    allUsers,
+    currentUser,
+  });
+  // } catch (err) {
+  //   console.log(err);
+  //   return res.redirect("user/login");
+  // }
+});
+
+exports.editUser = catchAsync(async (req, res, next) => {
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
@@ -62,9 +63,9 @@ exports.editUser = async (req, res) => {
     currentUser,
     editUser,
   });
-};
+});
 
-exports.editSingleUser = async (req, res) => {
+exports.editSingleUser = catchAsync(async (req, res, next) => {
   console.log("Edit Single");
 
   const id = req.params.id;
@@ -86,64 +87,64 @@ exports.editSingleUser = async (req, res) => {
     currentUser,
     editUser,
   });
-};
+});
 
-exports.saveEditUser = async (req, res) => {
+exports.saveEditUser = catchAsync(async (req, res, next) => {
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
   console.log("Save edited user");
   console.log(currentUser.admin);
   console.log(req.body);
-  try {
-    const editUser = await User.findOne({ username: req.body.username });
+  // try {
+  const editUser = await User.findOne({ username: req.body.username });
 
-    if (
-      !currentUser.admin &&
-      currentUser.username != req.body.username &&
-      authenticate
-    ) {
-      res.status(403).json({ message: `You are not authorized to do this.` });
-    }
-    console.log(req.body.password, req.body.confirmPassword);
-    if (req.body.password == "" || req.body.confirmPassword == "") {
-      delete req.body.password;
-      delete req.body.confirmPassword;
+  if (
+    !currentUser.admin &&
+    currentUser.username != req.body.username &&
+    authenticate
+  ) {
+    res.status(403).json({ message: `You are not authorized to do this.` });
+  }
+  console.log(req.body.password, req.body.confirmPassword);
+  if (req.body.password == "" || req.body.confirmPassword == "") {
+    delete req.body.password;
+    delete req.body.confirmPassword;
+  } else {
+    if (req.body.password == req.body.confirmPassword) {
+      req.body.password = await bcrypt.hash(req.body.password, 12);
     } else {
-      if (req.body.password == req.body.confirmPassword) {
-        req.body.password = await bcrypt.hash(req.body.password, 12);
-      } else {
-        return res
-          .status(403)
-          .json({ message: `Password and confirm password is not the same.` });
-      }
+      return res
+        .status(403)
+        .json({ message: `Password and confirm password is not the same.` });
     }
-    req.body.confirmPassword = "";
-    console.log(req.body);
-    const update = await User.findByIdAndUpdate(editUser._id, req.body, {
-      new: true,
-    });
-    // req.body.confirmPassword = "";
-    console.log(`Update: ${update}`);
-    console.log("Successfully updated.");
-    res.redirect("/attempts");
-  } catch (err) {
-    console.log(err);
   }
-};
+  req.body.confirmPassword = "";
+  console.log(req.body);
+  const update = await User.findByIdAndUpdate(editUser._id, req.body, {
+    new: true,
+  });
+  // req.body.confirmPassword = "";
+  console.log(`Update: ${update}`);
+  console.log("Successfully updated.");
+  res.redirect("/attempts");
+  // } catch (err) {
+  //   console.log(err);
+  // }
+});
 
-exports.deleteUser = async (req, res) => {
-  try {
-    const id = req.params.id;
-    console.log(id);
-    const deleteUser = await User.findByIdAndDelete(id);
-    return res.redirect("/user");
-  } catch (err) {
-    console.log("Delete User", err);
-  }
-};
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  // try {
+  const id = req.params.id;
+  console.log(id);
+  const deleteUser = await User.findByIdAndDelete(id);
+  return res.redirect("/user");
+  // } catch (err) {
+  //   console.log("Delete User", err);
+  // }
+});
 
-exports.getAllPoints = async (req, res) => {
+exports.getAllPoints = catchAsync(async (req, res, next) => {
   // const allUsers = await User.find().sort({ points: -1 });
   const [allUsers, logRewards] = await Promise.all([
     User.find().sort({ points: -1 }),
@@ -161,9 +162,9 @@ exports.getAllPoints = async (req, res) => {
     allUsers,
     logRewards,
   });
-};
+});
 
-exports.getAllRewards = async (req, res) => {
+exports.getAllRewards = catchAsync(async (req, res, next) => {
   // const allRewards = await Reward.find();
   // const logRewards = await RewardLog.find().sort({ date: -1 }).limit(20);
 
@@ -182,9 +183,9 @@ exports.getAllRewards = async (req, res) => {
     allRewards,
     logRewards,
   });
-};
+});
 
-exports.newReward = async (req, res) => {
+exports.newReward = catchAsync(async (req, res, next) => {
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
@@ -193,9 +194,9 @@ exports.newReward = async (req, res) => {
     username,
     currentUser,
   });
-};
+});
 
-exports.editReward = async (req, res) => {
+exports.editReward = catchAsync(async (req, res, next) => {
   console.log("Editing Reward");
   const id = req.params.id;
   console.log(id);
@@ -210,18 +211,18 @@ exports.editReward = async (req, res) => {
     currentUser,
     reward,
   });
-};
+});
 
-exports.deleteReward = async (req, res) => {
+exports.deleteReward = catchAsync(async (req, res, next) => {
   console.log("Deleting reward");
-  try {
-    const id = req.params.id;
-    const deleteReward = await Reward.findByIdAndDelete(id);
-    res.redirect("/user/points/rewards");
-  } catch (err) {
-    res.status(404).json({ message: err });
-  }
-};
+  // try {
+  const id = req.params.id;
+  const deleteReward = await Reward.findByIdAndDelete(id);
+  res.redirect("/user/points/rewards");
+  // } catch (err) {
+  //   res.status(404).json({ message: err });
+  // }
+});
 
 const GOOGLE_API_FOLDER_ID = process.env.GOOGLE_API_FOLDER_ID;
 console.log(`Environment: ${process.env.NODE_ENV}`);
@@ -262,138 +263,138 @@ async function uploadFile(imagePath) {
   return data.id;
 }
 
-exports.postNewReward = async (req, res) => {
+exports.postNewReward = catchAsync(async (req, res, next) => {
   console.log(`Request: ${req}`);
   console.log(req.body);
-  try {
-    const { body, files } = req;
+  // try {
+  const { body, files } = req;
 
-    const imageID = await uploadFile(files[0]);
-    console.log(imageID);
-    req.body.link = imageID;
-    const newReward = await Reward.create(req.body);
-    console.log(newReward);
+  const imageID = await uploadFile(files[0]);
+  console.log(imageID);
+  req.body.link = imageID;
+  const newReward = await Reward.create(req.body);
+  console.log(newReward);
 
-    // res.redirect("/user/points/rewards");
-    res.send("Success");
-  } catch (err) {
-    console.log(err);
-    return res.send("Failed");
-  }
-};
+  // res.redirect("/user/points/rewards");
+  res.send("Success");
+  // } catch (err) {
+  //   console.log(err);
+  //   return res.send("Failed");
+  // }
+});
 
-exports.saveReward = async (req, res) => {
+exports.saveReward = catchAsync(async (req, res, next) => {
   console.log("Saving Reward");
 
   const { body, files } = req;
-  try {
-    if (files.length != 0) {
-      const imageID = await uploadFile(files[0]);
-      req.body.link = imageID;
-    }
-    console.log({ body });
-    const reward = await Reward.findByIdAndUpdate(body.rewardId, body);
-    console.log({ reward });
-    res.send("1");
-  } catch (err) {
-    console.log(err);
+  // try {
+  if (files.length != 0) {
+    const imageID = await uploadFile(files[0]);
+    req.body.link = imageID;
   }
-};
+  console.log({ body });
+  const reward = await Reward.findByIdAndUpdate(body.rewardId, body);
+  console.log({ reward });
+  res.send("1");
+  // } catch (err) {
+  //   console.log(err);
+  // }
+});
 
-exports.claimReward = async (req, res) => {
+exports.claimReward = catchAsync(async (req, res, next) => {
   console.log("Processing Claim");
   console.log(req.body);
-  try {
-    const reward = await Reward.findById(req.body.id);
-    console.log(`Reward, ${reward}`);
-    console.log(`Quantity, ${reward.quantity}`);
-    if (reward.quantity < 1) {
-      return res.send("Nil");
-    }
-    const user = await User.findOne({ username: req.body.user });
-
-    if (user.gift > 0 && req.body.name.includes("Mechnical Pencil")) {
-      const updateLog = await RewardLog.create({
-        username: req.body.user,
-        description: req.body.description,
-        // points: req.body.requirement,
-        reward: req.body.name,
-      });
-      console.log(updateLog);
-      const giftAfterClaim = user.gift - 1;
-      const updateGift = await User.findByIdAndUpdate(user._id, {
-        gift: giftAfterClaim,
-      });
-      reward.quantity -= 1;
-      const updateQuantity = await Reward.findByIdAndUpdate(req.body.id, {
-        quantity: reward.quantity,
-      });
-      return res.send("Yes");
-    } else if (user.points >= req.body.requirement) {
-      console.log("Enough!");
-      const updateLog = await RewardLog.create({
-        username: req.body.user,
-        description: req.body.description,
-        points: req.body.requirement,
-        reward: req.body.name,
-      });
-      console.log(updateLog);
-      const pointsAfterClaim = user.points - req.body.requirement;
-      const updatePoints = await User.findByIdAndUpdate(user._id, {
-        points: pointsAfterClaim,
-      });
-      reward.quantity -= 1;
-      const updateQuantity = await Reward.findByIdAndUpdate(req.body.id, {
-        quantity: reward.quantity,
-      });
-      return res.send("Yes");
-    } else {
-      return res.send("No");
-    }
-  } catch (err) {
-    console.log("Something happened");
+  // try {
+  const reward = await Reward.findById(req.body.id);
+  console.log(`Reward, ${reward}`);
+  console.log(`Quantity, ${reward.quantity}`);
+  if (reward.quantity < 1) {
+    return res.send("Nil");
   }
+  const user = await User.findOne({ username: req.body.user });
+
+  if (user.gift > 0 && req.body.name.includes("Mechnical Pencil")) {
+    const updateLog = await RewardLog.create({
+      username: req.body.user,
+      description: req.body.description,
+      // points: req.body.requirement,
+      reward: req.body.name,
+    });
+    console.log(updateLog);
+    const giftAfterClaim = user.gift - 1;
+    const updateGift = await User.findByIdAndUpdate(user._id, {
+      gift: giftAfterClaim,
+    });
+    reward.quantity -= 1;
+    const updateQuantity = await Reward.findByIdAndUpdate(req.body.id, {
+      quantity: reward.quantity,
+    });
+    return res.send("Yes");
+  } else if (user.points >= req.body.requirement) {
+    console.log("Enough!");
+    const updateLog = await RewardLog.create({
+      username: req.body.user,
+      description: req.body.description,
+      points: req.body.requirement,
+      reward: req.body.name,
+    });
+    console.log(updateLog);
+    const pointsAfterClaim = user.points - req.body.requirement;
+    const updatePoints = await User.findByIdAndUpdate(user._id, {
+      points: pointsAfterClaim,
+    });
+    reward.quantity -= 1;
+    const updateQuantity = await Reward.findByIdAndUpdate(req.body.id, {
+      quantity: reward.quantity,
+    });
+    return res.send("Yes");
+  } else {
+    return res.send("No");
+  }
+  // } catch (err) {
+  //   console.log("Something happened");
+  // }
 
   // res.send();
-};
+});
 
-exports.deleteRewardLog = async (req, res) => {
+exports.deleteRewardLog = catchAsync(async (req, res, next) => {
   const id = req.params.id;
 
-  try {
-    // 1) QUERY REWARDS LOG
-    const log = await RewardLog.findById(id);
-    const refundPoints = log.points;
-    // 2) QUERY USER
-    const user = await User.findOne({ username: log.username });
-    const oldPoints = user.points;
-    const updatePoints = oldPoints + refundPoints;
-    // 3) QUERY REWARD
-    const reward = await Reward.findOne({
-      description: log.description,
-      rewardName: log.reward,
-    });
-    const rewardQuantity = reward.quantity;
-    const updateQuantity = rewardQuantity + 1;
-    // 4) RETURN AND DELETE
-    const [deleteLog, returnPoints] = await Promise.all([
-      RewardLog.findByIdAndDelete(id),
-      User.findByIdAndUpdate(user._id.toString(), {
-        points: updatePoints,
-      }),
-      Reward.findByIdAndUpdate(reward._id.toString(), {
-        quantity: updateQuantity,
-      }),
-    ]);
-    // const deleteLog = await RewardLog.findByIdAndDelete(id);
-    // const returnPoints = await User.findByIdAndUpdate(user._id.toString(), {
-    //   points: updatePoints,
-    // });
-    return res.redirect("/attempts");
-  } catch (err) {
-    res.status(404).json({ err });
-  }
-};
+  // try {
+  // 1) QUERY REWARDS LOG
+  const log = await RewardLog.findById(id);
+  const refundPoints = log.points;
+  // 2) QUERY USER
+  const user = await User.findOne({ username: log.username });
+  const oldPoints = user.points;
+  const updatePoints = oldPoints + refundPoints;
+  // 3) QUERY REWARD
+  const reward = await Reward.findOne({
+    description: log.description,
+    rewardName: log.reward,
+  });
+  const rewardQuantity = reward.quantity;
+  const updateQuantity = rewardQuantity + 1;
+  // 4) RETURN AND DELETE
+  const [deleteLog, returnPoints] = await Promise.all([
+    RewardLog.findByIdAndDelete(id),
+    User.findByIdAndUpdate(user._id.toString(), {
+      points: updatePoints,
+    }),
+    Reward.findByIdAndUpdate(reward._id.toString(), {
+      quantity: updateQuantity,
+    }),
+  ]);
+  // const deleteLog = await RewardLog.findByIdAndDelete(id);
+  // const returnPoints = await User.findByIdAndUpdate(user._id.toString(), {
+  //   points: updatePoints,
+  // });
+  return res.redirect("/attempts");
+  // } catch (err) {
+  //   res.status(404).json({ err });
+  // }
+});
 
 const generateRec = async (nameTemp) => {
   const today = new Date();
@@ -890,72 +891,72 @@ const generateRec = async (nameTemp) => {
   return recommend;
 };
 
-exports.generateRecommendMiddleware = async (req, res, next) => {
-  try {
-    let username = req.user.username;
-    const usernameStr = username.split(" ");
-    let nameTemp = [];
-    usernameStr.forEach((item) => {
-      nameTemp.push(item.charAt(0).toUpperCase() + item.slice(1, item.length));
+exports.generateRecommendMiddleware = catchAsync(async (req, res, next) => {
+  // try {
+  let username = req.user.username;
+  const usernameStr = username.split(" ");
+  let nameTemp = [];
+  usernameStr.forEach((item) => {
+    nameTemp.push(item.charAt(0).toUpperCase() + item.slice(1, item.length));
+  });
+  nameTemp = nameTemp.join(" ");
+  // console.log(nameTemp);
+
+  const recommend = await generateRec(nameTemp);
+  console.log(`Middleware: ${recommend}`);
+  res.recommend = recommend;
+  // console.log(res.recommend);
+  next();
+  // } catch (err) {
+  //   res.status(404).json({ err });
+  // }
+});
+
+exports.recommend = catchAsync(async (req, res, next) => {
+  // try {
+  let username = req.user.username;
+  const usernameStr = username.split(" ");
+  let nameTemp = [];
+  usernameStr.forEach((item) => {
+    nameTemp.push(item.charAt(0).toUpperCase() + item.slice(1, item.length));
+  });
+  nameTemp = nameTemp.join(" ");
+  // console.log(nameTemp);
+
+  const recommend = await generateRec(nameTemp);
+
+  const start = new Date();
+  start.setHours(0, 0, 0, 0);
+  const end = new Date();
+  end.setHours(23, 59, 59, 999);
+
+  const todayAttempts = await Attempt.find({
+    user: nameTemp,
+    date: { $gte: start, $lt: end },
+  });
+
+  // console.log(todayAttempts);
+  recommend.forEach((item, index) => {
+    todayAttempts.forEach((todayItem) => {
+      if (item.level == todayItem.level && item.mode == todayItem.mode) {
+        console.log("YES! " + index);
+        item.accomplish = true;
+      }
     });
-    nameTemp = nameTemp.join(" ");
-    // console.log(nameTemp);
-
-    const recommend = await generateRec(nameTemp);
-    console.log(`Middleware: ${recommend}`);
-    res.recommend = recommend;
-    // console.log(res.recommend);
-    next();
-  } catch (err) {
-    res.status(404).json({ err });
-  }
-};
-
-exports.recommend = async (req, res) => {
-  try {
-    let username = req.user.username;
-    const usernameStr = username.split(" ");
-    let nameTemp = [];
-    usernameStr.forEach((item) => {
-      nameTemp.push(item.charAt(0).toUpperCase() + item.slice(1, item.length));
-    });
-    nameTemp = nameTemp.join(" ");
-    // console.log(nameTemp);
-
-    const recommend = await generateRec(nameTemp);
-
-    const start = new Date();
-    start.setHours(0, 0, 0, 0);
-    const end = new Date();
-    end.setHours(23, 59, 59, 999);
-
-    const todayAttempts = await Attempt.find({
-      user: nameTemp,
-      date: { $gte: start, $lt: end },
-    });
-
-    // console.log(todayAttempts);
-    recommend.forEach((item, index) => {
-      todayAttempts.forEach((todayItem) => {
-        if (item.level == todayItem.level && item.mode == todayItem.mode) {
-          console.log("YES! " + index);
-          item.accomplish = true;
-        }
-      });
-    });
-    //  console.log(item.accomplish);
-    let authenticate = req.auth;
-    let currentUser = req.user;
-    res.render("pages/recommend", {
-      authenticate,
-      username,
-      currentUser,
-      recommend,
-    });
-  } catch (err) {
-    res.status(404).json({ err });
-  }
-};
+  });
+  //  console.log(item.accomplish);
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  res.render("pages/recommend", {
+    authenticate,
+    username,
+    currentUser,
+    recommend,
+  });
+  // } catch (err) {
+  //   res.status(404).json({ err });
+  // }
+});
 
 exports.login = (req, res) => {
   console.log(req.auth);
