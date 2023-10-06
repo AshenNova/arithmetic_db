@@ -13,45 +13,83 @@ const handleDuplicateFieldDB = (err) => {
   return new AppError(message, 400);
 };
 
+const validationErrorDB = (err) => {
+  // LOOP THROUGH THE ERR.ERRORS OBJECT AND EXTRACT THE VALUES... THEN PUT THE "VALUES" WITHIN 'MESSAGE' KEY INTO AN ARRAY.
+  const errors = Object.values(err.errors).map((el) => el.message);
+  const message = `Invalid input Data. ${errors.join(". ")}`;
+  return new AppError(message, 400);
+};
+
 module.exports = (err, req, res, next) => {
   console.log("ERROR detected");
   err.statusCode = err.statusCode || 500; // INTERNAL ERROR
   err.status = err.status || "Error";
 
   if (process.env.NODE_ENV == "DEVELOPMENT") {
-    res.status(err.statusCode).json({
-      status: err.status,
-      error: err,
-      message: err.message,
-      stack: err.stack,
-    });
-  } else {
-    // OPERATIONAL ERROR
-    if (err.isOperational) {
-      //DESTRUCTOR THE OBJECT
-      let error = { ...err, name: err.name };
-      if (err.name == "CastError") {
-        console.log(error);
-        error = handleCastErrorDB(err);
-      }
-      if (err.code == "11000") {
-        console.log(error);
-        error = handleDuplicateFieldDB(err);
-      }
-      res.status(error.statusCode).json({
-        status: error.status,
-        message: error.message,
+    // A) API
+    if (req.originalUrl.startsWith("/api")) {
+      return res.status(err.statusCode).json({
+        status: err.status,
+        error: err,
+        message: err.message,
+        stack: err.stack,
       });
+    }
+    // B) RENDERED WEBSITE
+    console.log("Development B");
+    return res
+      .status(err.statusCode)
+      .render("error/error", { message: err.message });
+  } else {
+    // ---> IN PRODUCTION <----
+    // A) API
+    if (req.originalUrl.startsWith("/api")) {
+      // OPERATIONAL ERROR
+      if (err.isOperational) {
+        //DESTRUCTOR THE OBJECT
+        let error = { ...err, name: err.name };
+        if (err.name == "CastError") {
+          console.log(error);
+          error = handleCastErrorDB(err);
+        }
+        if (err.name == "ValidationError") {
+          console.log(error);
+          error = validationErrorDB(err);
+        }
+        if (err.code == "11000") {
+          console.log(error);
+          error = handleDuplicateFieldDB(err);
+        }
 
-      //   PROGRAMMING ERROR`
+        return res.status(error.statusCode).json({
+          status: error.status,
+          message: error.message,
+        });
+        //PROGRAMMING ERROR
+      } else {
+        // 1) LOG THE ERROR
+        console.error(`ERROR 🔥`, err);
+        // 2) SEND THE ERROR
+        res.status(500).json({
+          status: "Error",
+          message: "Something went wrong",
+        });
+      }
+    }
+
+    // B) RENDER WEBSITE
+    if (err.isOperational) {
+      return res
+        .status(err.statusCode)
+        .render("error/error", { message: err.message });
     } else {
+      //   PROGRAMMING ERROR`
       // 1) LOG THE ERROR
       console.error(`ERROR 🔥`, err);
       // 2) SEND THE ERROR
-      res.status(500).json({
-        status: "Error",
-        message: "Something went wrong",
-      });
+      return res
+        .status(err.statusCode)
+        .render("error/error", { message: "Please try again later" });
     }
   }
 };

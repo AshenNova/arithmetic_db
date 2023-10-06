@@ -791,9 +791,10 @@ exports.getAttempt = catchAsync(async (req, res, next) => {
   const id = req.params.id;
   const attempt = await Attempt.findById(id);
 
-  // if (!attempt) {
-  //   return next(new AppError(`No such attempt was found.`, 404));
-  // }
+  if (!attempt) {
+    return next(new AppError(`No such attempt was found.`, 404));
+  }
+
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;

@@ -5,12 +5,12 @@ const scienceSchema = new mongoose.Schema({
   subtopic: String,
   comment: String,
   level: Number,
-  text: String,
+  question: String,
   answer: String,
   image: String,
   date: { type: Date, default: Date.now },
 });
 
-const Science = mongoose.model("science", scienceSchema);
+const Science = mongoose.model("sciences", scienceSchema);
 
 module.exports = Science;

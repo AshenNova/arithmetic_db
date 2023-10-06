@@ -10,6 +10,7 @@ const stream = require("stream");
 const multer = require("multer");
 const upload = multer();
 const { google } = require("googleapis");
+const AppError = require("../utils/appError");
 
 let username;
 let authenticate;
@@ -56,6 +57,10 @@ exports.editUser = catchAsync(async (req, res, next) => {
   console.log("Editing");
   // console.log(req.query);
   const editUser = await User.findOne({ username: req.query.username });
+
+  if (!editUser) {
+    return next(new AppError(`No such User was found.`, 404));
+  }
 
   res.render("pages/edit-user", {
     authenticate,
@@ -833,7 +838,13 @@ const generateRec = async (nameTemp) => {
                       recommendObj.level = levelSix[index + 1];
                     }
                   } else {
-                    console.log(`The end`);
+                    console.log("If other levels");
+                    if (age <= 7) recommendObj.level = levelOne[0];
+                    if (age == 8) recommendObj.level = levelTwo[0];
+                    if (age == 9) recommendObj.level = levelThree[0];
+                    if (age == 10) recommendObj.level = levelFour[0];
+                    if (age == 11) recommendObj.level = levelFive[0];
+                    if (age == 12) recommendObj.level = levelSix[0];
                   }
                 }
                 //CHECKING IF IT HAS BEEN DONE BEFORE
@@ -844,7 +855,7 @@ const generateRec = async (nameTemp) => {
 
                 let count = 0;
                 latestAttempt.forEach((latest) => {
-                  if (latest.level == attempt.level) {
+                  if (latest.level == recommendObj.level) {
                     count += 1;
                   }
                 });
@@ -873,7 +884,7 @@ const generateRec = async (nameTemp) => {
                 console.log("PUSHHHH!");
                 console.log(recommendObj);
                 recommend.push(recommendObj);
-                recommendList.push(attempt.level);
+                recommendList.push(recommendObj.level);
                 uniqLevel.push(attempt.level);
               }
               // recommend.push(attempt);

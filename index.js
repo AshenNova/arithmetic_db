@@ -6,6 +6,7 @@ const path = require("path");
 require("dotenv/config");
 const attemptRoute = require("./routes/attempts");
 const userRoute = require("./routes/users");
+const scienceRoute = require("./routes/sciences");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const cookieParser = require("cookie-parser");
@@ -16,22 +17,26 @@ let username;
 let currentUser;
 // let authenticate;
 
+//HAVE TO PLACE THIS AT THE TOP AS WE WANT TO START LISTENING FROM THE START
+//eg CONSOLE.LOG(X -> Logging a variable that has not been defined)
+process.on("uncaughtException", (err) => {
+  console.log(err.name, err.message);
+  console.log("UNCAUGHT EXCEPTIONS! 🔥 SHUTTING DOWN....");
+  //IN UNCAUGHT EXCEPTION; WE WANT TO CRASH EXPRESS IMMEDIATELY AS IT WOULD BE IN AN 'UNCLEAN' STATE.
+  // server.close(() => {
+  process.exit(1);
+  // });
+});
+
 const app = express();
-// const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
-// app.set("trust proxy", 1);
 app.use(
   cors({
     credentials: true,
     origin: "https://www.epicmindarithmetic",
-    //     // exposedHeaders: ["set-cookie"],
   })
 );
 
-// app.use(cors({ credentials: "include" }));
-
-// app.use(cors());
-// app.options("*", cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -77,6 +82,7 @@ app.get("/arithmetic", authController.authenticate, (req, res) => {
 
 app.use("/attempts", authController.authenticate, attemptRoute);
 app.use("/user", authController.authenticate, userRoute);
+app.use("/science", authController.authenticate, scienceRoute);
 app.get("*", function (req, res, next) {
   // res.redirect("./pages/arithmetic");
   // const err = new Error(`Can't find${req.originalUrl} on this server!`);
@@ -91,6 +97,20 @@ app.get("*", function (req, res, next) {
 });
 
 app.use(globalErrorHandler);
-app.listen(process.env.PORT || 3000, () => {
+
+const server = app.listen(process.env.PORT || 3000, () => {
   console.log(`We are listening!`);
+});
+
+//WHENEVER THERE IS A PROMISE IS REJECT, AN 'EVENT' WITH THE NAME 'UNHANDLED REJECTION' IS CREATED; HENCE WE CAN LISTEN FOR IT.
+process.on("unhandledRejection", (err) => {
+  console.log(err.name, err.message);
+  console.log("UNHANDLED REJECTION! 🔥 SHUTTING DOWN....");
+  //WE DO NOT JUST WANT TO SHUT DOWN ABRUPTLY;
+  //WE WANT TO DO IT GRACEFULLY;
+  //HENCE WE SHALL SHUTDOWN THE SERVER FIRST WITH '.CLOSE'; LETS THE SERVER FINISH ALL PROCESSES FIRST.
+  //THEN ENTIRE PROCESS SHUTS DOWN
+  server.close(() => {
+    process.exit(1);
+  });
 });
