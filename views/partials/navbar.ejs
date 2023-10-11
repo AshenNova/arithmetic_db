@@ -78,19 +78,30 @@
                 </ul>
             </li>
         <!-- </ul> -->
-        <% if (currentUser.admin) { %>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle mx-4" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Science
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li>
-              <a class="dropdown-item" href="/arithmetic"> 🧮 Arithmetic </a>
+        <% if (currentUser.subject) { %>
+          <% if (currentUser.admin || currentUser.subject.includes("Primary Science")) { %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle mx-4" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Science
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="/science/topics"> 🧮 Topics </a>
+                </li>
+                <% if (currentUser.admin) { %>    
+                <li>
+                  <a class="dropdown-item" href="/science"> 🧮 All Questions </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/science/new"> 🧮 Post Question </a>
+                </li>
+                 <% } %>
+          <% }%>
+              </ul>
             </li>
-          </ul>
-         </li>
-       
         <% } %>
+   
+      
       </ul>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 

@@ -4914,6 +4914,7 @@ function updateProblems() {
         while (refColor3 == refColor2 || refColor3 == p.refColor) {
           refColor3 = colorArr[genNumbers(4)];
         }
+        if (p.denoTwo == p.numTwo || p.numOne == p.denoOne) return updateCalc();
         displayProblem.innerHTML = `
       ${p.numOne}/${p.denoOne} of ${p.identity} is ${p.refColor}.</p>
       ${p.numTwo}/${p.denoTwo} of ${p.identity} is ${refColor2}.</p>
@@ -9273,6 +9274,13 @@ function updateProblems() {
       }
       arrDisplay = arrDisplay.join(" ");
       displayProblem.textContent = `${arrDisplay}`;
+    }
+
+    // DECIMALS: PARTS AND INTERVAL
+
+    if (setting == 20) {
+      drawingDisplay();
+      drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
     }
   }
   // DISPLAY
@@ -19807,6 +19815,10 @@ function handleSubmit(e) {
           correctAnswer = correctAnswer * p.sets;
         }
       }
+
+      if (setting == 20) {
+        correctAnswer = p.start + p.eachInterval * p.arrow;
+      }
     }
 
     //ANSWERS
@@ -24889,7 +24901,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(19, calArr, setting, 99);
+    setting = calArrAll(20, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
@@ -25069,6 +25081,20 @@ function genProblems() {
         numTwo: sum - genNumOne,
         version: undefined,
         blank: genNumbers(3),
+      };
+    }
+    //  DECIMALS: PARTS AND INTERVALS
+    if (setting == 20) {
+      const gen_intervals = [5, 8, 10][genNumbers(3)];
+      const gen_eachIntervals = [0.1, 0.01, 0.2, 0.02, 0.5, 0.05][
+        genNumbers(6)
+      ];
+      return {
+        start: genNumbers(100) + 1 + gen_eachIntervals * genNumbers(10) + 1,
+        intervals: gen_intervals,
+        eachInterval: gen_eachIntervals,
+        end: undefined,
+        arrow: genNumbers(gen_intervals - 1) + 1,
       };
     }
   }
@@ -28717,7 +28743,7 @@ function buttonLevelSetting() {
       //   )
       // );
       if (
-        ![...Array.from({ length: 19 }, (_, i) => i + 1), 99].includes(
+        ![...Array.from({ length: 20 }, (_, i) => i + 1), 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")
@@ -28903,6 +28929,13 @@ function buttonLevelSetting() {
       //   9
       // );
       level = "heuThreeb";
+      optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
+      setting = prompt(
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
+        9
+      );
       if (
         ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
         !setting.split("").includes("-")

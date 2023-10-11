@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+    <link rel="stylesheet" href="/css/navbar-styles.css">
+     <link rel="icon" href="/images/favicon.ico?v=1.1">
+    <title>Questions</title>
+
+<style>
+.hidden {
+    display:none;
+}
+.flip-card {
+    width: 50vw;
+}
+.flip-card-back {
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 25px;
+    padding: 10px;
+}
+
+.center{
+    max-width: 700px;
+    margin: auto;
+   
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
+</head>
+
+<body>
+    <%- include("../partials/navbar") %>
+   
+    <div class="container center">
+    
+        <btn class="btn btn-primary start">Start</btn>
+       <% questions.forEach(item => { %>
+
+            <div class="flip-card hidden">
+                <div class="flip-card-inner">
+                    <div class="card-front">
+                        <!-- <div class="card-body"> -->
+                        <!-- <img src="..." class="card-img-top" alt="..."> -->
+                        <h5 class="card-title"><%= item.question %></h5>
+                        <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                        <div class="btn btn-success answer mt-4">Answer</div>
+                        <!-- <div class="btn btn-danger">Don't know.</div> -->
+                        <!-- </div> --> 
+                    </div>
+                    <div class="flip-card-back hidden mt-4">
+                        <h5 class="card-title">Topic: <%= item.topic %></h5>
+                        <h5>Subtopic: <%= item.subtopic %></h5>
+                        <h5>Answer: <%= item.answer %></h5>
+                        <h5>Comment: <%= item.comment %></h1>
+                        <div class="buttons hidden">
+                            <btn class="btn btn-success correct">Correct</btn>
+                            <btn class="btn btn-danger incorrect">Incorrect</btn>
+                            <btn class="btn btn-warning next">Next</btn>
+                            <a href="/science/topics" class="btn btn-primary done hidden">Done</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       <% }) %>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script src="/javascript/card.js"></script>
+</html>

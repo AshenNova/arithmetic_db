@@ -62,11 +62,14 @@ exports.editUser = catchAsync(async (req, res, next) => {
     return next(new AppError(`No such User was found.`, 404));
   }
 
+  let subjects = ["Primary Math", "Primary Science"];
+  console.log(editUser.subject);
   res.render("pages/edit-user", {
     authenticate,
     username,
     currentUser,
     editUser,
+    subjects,
   });
 });
 

@@ -168,6 +168,7 @@ export const displayContent = (level) => {
       18. Decimals: Division and Multiplication with splitting</br>
       <hr>
       19. Multiplication in Sets</br>
+      20. Decimals: Parts and Intervals</br>
       <hr>
       99. All
       `;

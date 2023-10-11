@@ -37,6 +37,15 @@ module.exports = (err, req, res, next) => {
     }
     // B) RENDERED WEBSITE
     console.log("Development B");
+    if (err.message == "jwt expired") {
+      const token = "";
+      const cookieSetting = {
+        maxAge: 1000,
+        httpOnly: true,
+      };
+      res.cookie("JWT", token, { maxAge: 1000, httpOnly: true });
+      return res.redirect("/user/login");
+    }
     return res
       .status(err.statusCode)
       .render("error/error", { message: err.message });

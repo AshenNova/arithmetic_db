@@ -35,12 +35,31 @@
                         </div>  
                         <div class="form-group required">
                             <label for="DOB">DOB (Date of Birth)</label>
-                            <input type="date" class="form-control" id="email" required="" name="DOB" value="<%= editUser.DOB.getFullYear() %>-<%= (editUser.DOB.getMonth()+1).toString().padStart(2, 0) %>-<%= editUser.DOB.getDate().toString().padStart(2, 0) %>">
+                            <input type="date" class="form-control" id="DOB" required="" name="DOB" value="<%= editUser.DOB.getFullYear() %>-<%= (editUser.DOB.getMonth()+1).toString().padStart(2, 0) %>-<%= editUser.DOB.getDate().toString().padStart(2, 0) %>">
                         </div>   
                         <div class="form-group required">
                             <label for="DOB">Gift</label>
                             <input type="number" class="form-control" id="gift" required="" name="gift" value="<%= editUser.gift %>">
-                        </div>                     
+                        </div> 
+                        <div>Subject</div>
+                            <% subjects.forEach(item => { %>
+                                <% if (editUser.subject.includes(item)  ) { %>
+                                    <div class="form-group form-check">
+                                        <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subject" checked>
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            <%= item %>
+                                        </label>
+                                    </div> 
+                                <% } else { %>
+                                    <div class="form-group form-check">
+                                        <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckDefault" name="subject">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            <%= item %>
+                                        </label>
+                                    </div>
+                                <% } %>
+                            <% }) %> 
+                                 
                     <div class="form-group required">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" required="" name="password">

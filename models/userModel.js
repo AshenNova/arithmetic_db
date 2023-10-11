@@ -46,6 +46,11 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  subject: {
+    type: Array,
+    // enum: ["Primary Math", "Primary Science"],
+    default: "Primary Math",
+  },
 });
 
 userSchema.pre("save", async function (next) {

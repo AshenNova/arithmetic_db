@@ -10,6 +10,9 @@ router.route("/").get(scienceController.getAllQuestions);
 router
   .route("/new")
   .get(scienceController.createQuestion)
-  .post(scienceController.postQuestion);
+  .post(scienceController.saveQuestion);
 
+router.route("/topics").get(scienceController.getTopic);
+
+router.route("/questions").post(scienceController.getQuestions);
 module.exports = router;

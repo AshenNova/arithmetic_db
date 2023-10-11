@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+    <link rel="stylesheet" href="/css/navbar-styles.css">
+     <link rel="icon" href="/images/favicon.ico?v=1.1">
+    <title>Topics</title>
+</head>
+<body>
+    <%- include("../partials/navbar") %>
+    <div class="container">
+        <h1>Choose your topics</h1>
+
+          <form action="/science/questions" method="post">
+            <div class="form-group">
+                <label for="numberOfQuestions" class="form-label">Number of Questions</label>
+                <input type="number" class="form-control" id="numberOfQuestions" name="numberOfQuestions" value="10">
+
+            </div>
+        <h1>P3</h1>    
+        <% topic_p3.forEach(item => { %>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="topic" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                    <%= item %>
+                </label>
+            </div>
+        <% }) %>
+        <h1>P4</h1>    
+    <% topic_p4.forEach(item => { %>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="topic" checked>
+            <label class="form-check-label" for="flexCheckChecked">
+                <%= item %>
+            </label>
+            </div>
+    <% }) %>
+        <h1>P5</h1>    
+        <% topic_p5.forEach(item => { %>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="topic" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                  <%= item %>
+                </label>
+              </div>
+        <% }) %>
+        <h1>P6</h1>    
+        <% topic_p6.forEach(item => { %>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="topic" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                    <%= item %>
+                </label>
+                </div>
+        <% }) %>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</html>

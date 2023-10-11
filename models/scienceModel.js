@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const scienceSchema = new mongoose.Schema({
-  topic: String,
+  topic: { type: String, require: [true, "Please fill in a topic"] },
   subtopic: String,
   comment: String,
-  level: Number,
-  question: String,
-  answer: String,
+  level: { type: String, require: [true, "Please fill in a level"] },
+  question: { type: String, require: [true, "Please fill in a question"] },
+  answer: { type: String, require: [true, "Please fill in the answer"] },
   image: String,
   date: { type: Date, default: Date.now },
 });

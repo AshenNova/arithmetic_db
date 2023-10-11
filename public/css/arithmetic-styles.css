@@ -541,4 +541,7 @@ img {
     width: auto;
     position: static;
   }
+  .working {
+    margin-bottom: 70px;
+  }
 }
