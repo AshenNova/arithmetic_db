@@ -22,8 +22,8 @@
             <thead>
               <tr>
                 <th scope="col">Topic</th>
-                <th scope="col">Subtopic</th>
-                <th scope="col">Level</th>
+                <!-- <th scope="col">Subtopic</th>
+                <th scope="col">Level</th> -->
                 <th scope="col">Question</th>
                 <th scope="col">Answer</th>
                 <th scope="col">Image</th>
@@ -33,9 +33,11 @@
 
                 <% getAllQuestions.forEach(item => { %>
                     <tr>
-                        <td><%= item.topic %></td>
-                        <td><%= item.subtopic %></td>
-                        <td><%= item.level %></td>
+                      <td>
+                      <%= item.level %><br>
+                      <%= item.topic %><br>
+                      <%= item.subtopic %>
+                    </td>
                         <td><%= item.question %></td>
                         <td><%= item.answer %></td>
                         <td><%= item.image %></td>

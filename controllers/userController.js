@@ -248,11 +248,6 @@ if (process.env.NODE_ENV == "DEVELOPMENT") {
   });
 }
 
-// const auth = new google.auth.GoogleAuth({
-//   keyFile: "./googlekey.json",
-//   scopes: ["https://www.googleapis.com/auth/drive"],
-// });
-
 async function uploadFile(imagePath) {
   const bufferStream = new stream.PassThrough();
   bufferStream.end(imagePath.buffer);

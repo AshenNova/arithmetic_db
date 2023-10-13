@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const upload = multer();
 // const attemptController = require("../controllers/attemptController");
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
@@ -10,9 +12,12 @@ router.route("/").get(scienceController.getAllQuestions);
 router
   .route("/new")
   .get(scienceController.createQuestion)
-  .post(scienceController.saveQuestion);
+  .post(upload.any(), scienceController.saveQuestion);
 
 router.route("/topics").get(scienceController.getTopic);
-
 router.route("/questions").post(scienceController.getQuestions);
+router
+  .route("/questions/extrapractice")
+  .get(scienceController.extraPracticeQuestions);
+router.route("/updateUserScience").post(scienceController.updateUserScience);
 module.exports = router;

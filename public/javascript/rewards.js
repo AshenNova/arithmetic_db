@@ -112,9 +112,9 @@ formElem.addEventListener("submit", async (e) => {
   })
     .then((response) => {
       if (response.status == 200) {
-        alert("New Reward Added Successfully!");
+        alert("Question was successfully added!");
       } else {
-        alert("Sorry! New reward was not added.");
+        alert("Sorry! Failed to add question.");
       }
     })
     .catch((error) => {

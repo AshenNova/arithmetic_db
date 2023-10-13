@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+    <link rel="stylesheet" href="/css/navbar-styles.css">
+     <link rel="icon" href="/images/favicon.ico?v=1.1">
+    <title>Science</title>
+</head>
+<style>
+  .hidden {
+    display: none;
+  }
+
+</style>
+<body>
+    <%- include("../partials/navbar") %>
+    <div class="container">
+        <h1>Extra Questions</h1>
+
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Topic</th>
+                <!-- <th scope="col">Subtopic</th> -->
+                <!-- <th scope="col">Level</th> -->
+                <th scope="col">Question</th>
+                <th scope="col">Answer</th>
+              </tr>
+            </thead>
+            <tbody>
+
+                <% extraQuestions.forEach(item => { %>
+                    <tr>
+                        <td>
+                          <%= item.level %><br>
+                          <%= item.topic %><br>
+                          <%= item.subtopic %>
+                      </td>
+                        <td><%= item.question %></td>
+                        <td class="btn-answer">
+                          <btn class="btn btn-success">Answer
+                        </td>
+                          <!-- <div class="answer hidden"> -->
+                           <td class="hidden answer">
+                             <% if (item.image) { %>
+                              <%= item.image %><br>
+                              <hr>
+                            <% } %>
+                            
+                             <b>Answer:</b><br>
+                             <%= item.answer %><br>
+                             <hr>
+                             <b>Comment:</b><br>
+                             <%= item.comment %>
+                            </td>
+                        <!-- </div> -->
+                      </btn>
+                      </tr>
+                <% }) %>
+             
+           
+            </tbody>
+          </table>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <script>
+    const btn = document.querySelectorAll(".btn-answer")
+    const answer = document.querySelectorAll(".answer")
+    btn.forEach((item, index) => {
+      item.addEventListener("click", e => {
+        // console.log(index)
+        // console.log(e.target)
+        btn[index].classList.add("hidden")
+        answer[index].classList.remove("hidden")
+      })
+      // item.addEventListener("mouseout", e => {
+      //   btn[index].classList.remove("hidden")
+      //   answer[index].classList.add("hidden")
+      // })
+    })
+  </script>
+</html>

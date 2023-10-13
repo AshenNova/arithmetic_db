@@ -19,47 +19,77 @@
         <h1>Choose your topics</h1>
 
           <form action="/science/questions" method="post">
-            <div class="form-group">
-                <label for="numberOfQuestions" class="form-label">Number of Questions</label>
-                <input type="number" class="form-control" id="numberOfQuestions" name="numberOfQuestions" value="10">
-
+            <div class="form-group w-25">
+                <!-- <div class="col-xs-2"> -->
+                    <label for="numberOfQuestions" class="form-label">Number of Questions</label>
+                    <input type="number" class="form-control" id="numberOfQuestions" name="numberOfQuestions" value="10">
+                <!-- </div> -->
             </div>
-        <h1>P3</h1>    
+        
+        <div class="row">
+            <div class="col-1">
+        <h1>P3</h1>
+    </div>
+    <div class="col-11">
         <% topic_p3.forEach(item => { %>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="topic" checked>
-                <label class="form-check-label" for="flexCheckChecked">
-                    <%= item %>
-                </label>
+                     <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="topic_p3" checked>
+                     <label class="form-check-label" for="flexCheckChecked">
+                        <%= item %>
+                    </label>
             </div>
         <% }) %>
-        <h1>P4</h1>    
+    </div>
+        </div>
+        <hr>
+        <div class="row">
+        <div class="col-1">
+        <h1>P4</h1>
+    </div>
+    <div class="col-11">
     <% topic_p4.forEach(item => { %>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="topic" checked>
+            <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="topic_p4" checked>
             <label class="form-check-label" for="flexCheckChecked">
                 <%= item %>
             </label>
             </div>
     <% }) %>
-        <h1>P5</h1>    
+</div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-1">
+        <h1>P5</h1>
+    </div>
+    <div class="col-11">
         <% topic_p5.forEach(item => { %>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="topic" checked>
+                <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="topic_p5" checked>
                 <label class="form-check-label" for="flexCheckChecked">
                   <%= item %>
                 </label>
               </div>
         <% }) %>
+    </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-1">
         <h1>P6</h1>    
+    </div>
+    <div class="col-11">
         <% topic_p6.forEach(item => { %>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="topic" checked>
+                <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="topic_p6" checked>
                 <label class="form-check-label" for="flexCheckChecked">
                     <%= item %>
                 </label>
                 </div>
         <% }) %>
+    </div>
+    </div>
+    <hr>
         
         <button type="submit" class="btn btn-primary">Submit</button>
         </form>

@@ -51,6 +51,9 @@ const userSchema = new mongoose.Schema({
     // enum: ["Primary Math", "Primary Science"],
     default: "Primary Math",
   },
+  incorrectScience: {
+    type: Array,
+  },
 });
 
 userSchema.pre("save", async function (next) {
