@@ -144,7 +144,7 @@ exports.saveQuestion = async (req, res) => {
 };
 
 exports.getTopic = async (req, res) => {
-  if (!req.user.subject.includes("Primary Science") || !req.user.admin) {
+  if (!req.user.subject.includes("Primary Science") && !req.user.admin) {
     return res.redirect("/user/login");
   }
   let username = req.user.username;
