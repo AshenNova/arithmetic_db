@@ -8,6 +8,7 @@ const scienceSchema = new mongoose.Schema({
   question: { type: String, require: [true, "Please fill in a question"] },
   answer: { type: String, require: [true, "Please fill in the answer"] },
   image: String,
+  imageQ: String,
   date: { type: Date, default: Date.now },
 });
 

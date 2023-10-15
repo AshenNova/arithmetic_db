@@ -20,4 +20,8 @@ router
   .route("/questions/extrapractice")
   .get(scienceController.extraPracticeQuestions);
 router.route("/updateUserScience").post(scienceController.updateUserScience);
+
+router.route("/questions/:id").get(scienceController.viewScience);
+router.route("/questions/edit/:id").get(scienceController.editScience);
+router.route("/questions/delete/:id").get(scienceController.deleteScience);
 module.exports = router;

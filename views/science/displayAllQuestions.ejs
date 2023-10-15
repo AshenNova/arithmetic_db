@@ -26,7 +26,8 @@
                 <th scope="col">Level</th> -->
                 <th scope="col">Question</th>
                 <th scope="col">Answer</th>
-                <th scope="col">Image</th>
+                <th colspan="3">Actions</th>
+                <!-- <th scope="col">Image</th> -->
               </tr>
             </thead>
             <tbody>
@@ -38,9 +39,24 @@
                       <%= item.topic %><br>
                       <%= item.subtopic %>
                     </td>
-                        <td><%= item.question %></td>
-                        <td><%= item.answer %></td>
-                        <td><%= item.image %></td>
+                        <td>
+                          <% if (item.imageQ) { %>
+                            <%= "🌁" %><br>
+                            <% } %>
+                          <%= item.question %>
+                        </td>
+                        <td>
+                          <% if (item.image) { %>
+                            <%= "🌁" %><br>
+                            <% } %>
+                            <%= item.answer %>
+                          </td>
+                          <td>
+                            <a href="/science/questions/<%= item._id %>" target="_blank">View</a><br>
+                            <a href="/science/questions/edit/<%= item._id %>" target="_blank">Edit</a><br>
+                            <a href="/science/questions/delete/<%= item._id %>">Delete</a>
+                        </td>
+                        <!-- <td><%= item.image %></td> -->
                       </tr>
                 <% }) %>
              

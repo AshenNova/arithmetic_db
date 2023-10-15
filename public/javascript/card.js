@@ -4,7 +4,7 @@ const buttons = document.querySelectorAll(".buttons");
 const start = document.querySelector(".start");
 const flipCard = document.querySelectorAll(".flip-card");
 const nextBtn = document.querySelectorAll(".next");
-const doneBtn = document.querySelectorAll(".done");
+const doneBtn = document.querySelector(".done");
 const correctBtn = document.querySelectorAll(".correct");
 const incorrectBtn = document.querySelectorAll(".incorrect");
 const questionID = document.querySelectorAll(".questionID");
@@ -26,11 +26,16 @@ start.addEventListener("click", (e) => {
 });
 
 function nextQuestion(item, index) {
+  console.log(index, correctBtn.length);
   // console.log(index, correctBtn.length);
   // item.addEventListener("click", (e) => {
   if (index != correctBtn.length - 1) {
     flipCard[index + 1].classList.remove("hidden");
     flipCard[index].classList.add("hidden");
+  }
+  if (index == correctBtn.length - 1) {
+    flipCard[index].classList.add("hidden");
+    doneBtn.classList.remove("hidden");
   }
   // });
 }
@@ -52,9 +57,8 @@ incorrectBtn.forEach((item, index) => {
   });
 });
 // nextBtn[nextBtn.length - 1].classList.add("hidden");
-doneBtn[doneBtn.length - 1].classList.remove("hidden");
 
-doneBtn[doneBtn.length - 1].addEventListener("click", (e) => {
+doneBtn.addEventListener("click", (e) => {
   e.preventDefault();
   // incorrectArr = incorrectArr;
   let arr = {

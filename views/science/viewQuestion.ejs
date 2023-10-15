@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+    <link rel="stylesheet" href="/css/navbar-styles.css">
+     <link rel="icon" href="/images/favicon.ico?v=1.1">
+    <title>View question</title>
+
+</head>
+<style>
+    img {
+        max-width: 50vw;
+    }
+</style>
+<body>
+    <%- include("../partials/navbar") %>
+    <div class="container mt-4">
+        <h1>Viewing <%= question._id %></h1>
+        <h5>Topic:</h5>
+        <p><%= question.level %></p>
+        <p><%= question.topic %></p>
+        <p><%= question.subtopic %></p>
+        <hr>
+        <div class="row">
+            <div class="col-6">
+                <h5>Question image:</h5>
+                <% if (question.imageQ) { %>
+                    <!-- <div class="science-image"> -->
+                        <img src="https://drive.google.com/uc?export=view&id=<%= question.imageQ %>">
+                    <!-- </div> -->
+                    <% } %>
+                <h5>Question:</h5>
+                <p><%= question.question %></p>
+             </div>
+             <div class="col-6">
+                 <h5>Answer image:</h5>
+                <% if (question.image) { %>
+                    <!-- <div class="science-image"> -->
+                        <img src="https://drive.google.com/uc?export=view&id=<%= question.image %>">
+                    <!-- </div> -->
+                    <% } %>
+                <h5>Answer:</h5>
+                <p><%= question.answer %></p>
+              </div>
+        </div>
+        <h5>Comment:</h5>
+        <p><%= question.comment %></p>
+
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</html>

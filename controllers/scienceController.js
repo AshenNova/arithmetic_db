@@ -17,7 +17,7 @@ exports.getAllQuestions = async (req, res) => {
   let currentUser = req.user;
   console.log("Getting all questions");
   try {
-    const getAllQuestions = await Science.find().sort({ date: -1 });
+    const getAllQuestions = await Science.find().sort({ date: -1 }).limit(20);
     res.render("./science/displayAllQuestions", {
       username,
       authenticate,
@@ -113,31 +113,75 @@ exports.saveQuestion = async (req, res) => {
     res.redirect("/science/topics");
   }
   console.log(req.body);
-  if (req.body.topic[1] == "Select") {
-    req.body.topic = req.body.topic[0];
-  } else {
-    req.body.topic = req.body.topic[1];
-  }
-  if (req.body.subtopic[1] == "Select") {
-    req.body.subtopic = req.body.subtopic[0];
-  } else {
-    req.body.subtopic = req.body.subtopic[1];
-  }
-  req.body.level = req.body.level.toLowerCase();
-
-  // FOR IMAGES
-  const { body, files } = req;
-  // if (files)
-  if (files.length != 0) {
-    const imageID = await uploadFile(files[0]);
-    // console.log(imageID);
-    req.body.image = imageID;
-  }
-
+  // NORMAL SAVE
   try {
-    const newQuestion = await Science.create(req.body);
-    console.log(newQuestion);
-    res.redirect("/science/new");
+    if (!req.body.questionID) {
+      if (req.body.topic[1] == "Select") {
+        req.body.topic = req.body.topic[0];
+      } else {
+        req.body.topic = req.body.topic[1];
+      }
+      if (req.body.subtopic[1] == "Select") {
+        req.body.subtopic = req.body.subtopic[0];
+      } else {
+        req.body.subtopic = req.body.subtopic[1];
+      }
+      req.body.level = req.body.level.toLowerCase();
+
+      // FOR IMAGES
+      console.log(req.files);
+      // try {
+      const { body, files } = req;
+      // if (files)
+      console.log(body);
+      console.log(files.length);
+      if (files.length != 0) {
+        if (files.length == 1) {
+          if (files[0].fieldname == "imageQ") {
+            const imageQ = await uploadFile(files[0]);
+            req.body.imageQ = imageQ;
+          }
+          if (files[0].fieldname == "imageA") {
+            const imageA = await uploadFile(files[0]);
+            req.body.image = imageA;
+          }
+        } else {
+          const imageQ = await uploadFile(files[0]);
+          req.body.imageQ = imageQ;
+          const imageA = await uploadFile(files[1]);
+          req.body.image = imageA;
+        }
+      }
+      const newQuestion = await Science.create(req.body);
+      console.log(newQuestion);
+      res.redirect("/science/new");
+    } else {
+      // SAVE EDITS
+      console.log("Trying to save previous question");
+      if (req.body.topic[1] == "Select") {
+        req.body.topic = req.body.topic[0];
+      } else {
+        req.body.topic = req.body.topic[1];
+      }
+      if (req.body.subtopic[1] == "Select") {
+        req.body.subtopic = req.body.subtopic[0];
+      } else {
+        req.body.subtopic = req.body.subtopic[1];
+      }
+      req.body.level = req.body.level.toLowerCase();
+      console.log("here");
+      const updates = req.body;
+      // Object.keys(updates).forEach((key) => {
+      //   if (obj[key] == "") {
+      //     delete obj[key];
+      //   }
+      // });
+      const question = await Science.findByIdAndUpdate(req.body.questionID, {
+        topic: updates.topic,
+      });
+      console.log(question);
+      res.send();
+    }
   } catch (e) {
     res.status(400).json({ message: e });
   }
@@ -259,3 +303,54 @@ exports.updateUserScience = async (req, res) => {
   );
   res.send();
 };
+
+exports.viewScience = async (req, res) => {
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+
+  const id = req.params.id;
+  console.log(id);
+  const question = await Science.findById(id);
+
+  res.render("./science/viewQuestion", {
+    username,
+    authenticate,
+    currentUser,
+    question,
+  });
+};
+
+exports.editScience = async (req, res) => {
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+
+  let topic = await Science.distinct("topic");
+  let subtopic = await Science.distinct("subtopic");
+  if (subtopic.includes("")) {
+    const index = subtopic.indexOf("");
+    console.log(index);
+    subtopic.splice(index, 1);
+  }
+
+  const id = req.params.id;
+  console.log(id);
+  const question = await Science.findById(id);
+
+  res.render("./science/editQuestion", {
+    username,
+    authenticate,
+    currentUser,
+    question,
+    topic,
+    subtopic,
+  });
+};
+
+exports.deleteScience = catchAsync(async (req, res, next) => {
+  console.log("Deleting Science question");
+  const id = req.params.id;
+  const deleteQuestion = await Science.findByIdAndDelete(id);
+  res.redirect("/science");
+});
