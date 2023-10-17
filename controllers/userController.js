@@ -967,12 +967,13 @@ exports.recommend = catchAsync(async (req, res, next) => {
 
 exports.login = (req, res) => {
   console.log(req.auth);
-  const { message } = req;
+  // const { message } = req;
+  let message;
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
 
-  res.render("pages/login", { username, authenticate, currentUser });
+  res.render("pages/login", { username, authenticate, currentUser, message });
   // res.send("This is the login page.");
 };
 

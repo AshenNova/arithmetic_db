@@ -53,6 +53,15 @@ module.exports = (err, req, res, next) => {
     // ---> IN PRODUCTION <----
     // A) API
     if (req.originalUrl.startsWith("/api")) {
+      if (err.message == "jwt expired") {
+        const token = "";
+        const cookieSetting = {
+          maxAge: 1000,
+          httpOnly: true,
+        };
+        res.cookie("JWT", token, { maxAge: 1000, httpOnly: true });
+        return res.redirect("/user/login");
+      }
       // OPERATIONAL ERROR
       if (err.isOperational) {
         //DESTRUCTOR THE OBJECT

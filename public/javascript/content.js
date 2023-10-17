@@ -140,6 +140,7 @@ export const displayContent = (level) => {
     21. Fractions: Shapes</br>
     22. Fractions: Addition and Subtraction</br>
     23. Fractions: Expansion and simplification</br>
+    24. Fractions: Mid-point</br>
     <hr></hr>
     99. All`;
   }
@@ -188,30 +189,31 @@ export const displayContent = (level) => {
       <hr></hr>
       8. Geometry: Right angled Triangle</br>
       9. Geometry: Area of Triangle</br>
+      10. Geometry: Big - Small</br>
       
       <hr></hr>
-      10. Volume: Dimensions and Surface Area</br>
-      11. Volume: Numerator with a Value</br>
+      11. Volume: Dimensions and Surface Area</br>
+      12. Volume: Numerator with a Value</br>
       <hr></hr>
-      12. Ratio: Simplification and Expansion</br>
-      13. Ratio: Shapes</br>
-      14. Ratio: Repeated Identity</br>
-      15. Ratio: Identical Total</br>
-      16. Ratio: Wipe on wipe off</br>
+      13. Ratio: Simplification and Expansion</br>
+      14. Ratio: Shapes</br>
+      15. Ratio: Repeated Identity</br>
+      16. Ratio: Identical Total</br>
+      17. Ratio: Wipe on wipe off</br>
       <hr></hr>
-      17. Rates: Part thereof part thereafter</br>
-      18. Rates: Taps</br>
+      18. Rates: Part thereof part thereafter</br>
+      19. Rates: Taps</br>
       <hr></hr>
-      19. Percentage: Percentage of</br>
-      20. Percentage: Perchange change</br>
-      21. Percentage: Repeated Identity</br>
+      20. Percentage: Percentage of</br>
+      21. Percentage: Perchange change</br>
+      22. Percentage: Repeated Identity</br>
       
-      22. Percentage: Remainder Concept</br>
-      23. Percentage: Simple and Further discount</br>
+      23. Percentage: Remainder Concept</br>
+      24. Percentage: Simple and Further discount</br>
 
       <hr></hr>
-      24. Average: Internal change</br>
-      25. Average: Triangle Numbers</br>
+      25. Average: Internal change</br>
+      26. Average: Triangle Numbers</br>
       <hr></hr>
       </p>99. All
       

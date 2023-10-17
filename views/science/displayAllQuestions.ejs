@@ -16,6 +16,36 @@
 <body>
     <%- include("../partials/navbar") %>
     <div class="container">
+      <form action="/science/filter" method="/get">
+        <div class="row">
+          <div class="col-sm-2 my-2">
+            <label for="user">Level:</label>
+            <input type='text' name="level"></input>
+          </div>
+          <div class="col-sm-2 my-2">
+            <label for="user">Topic:</label>
+            <input type='text' name="topic"></input>
+          </div>
+          <div class="col-sm-2 my-2">
+           <label for="level">Subtopic:</label>
+            <input type='text' name="subtopic"></input>
+          </div>
+          <div class="col-sm-2 my-2">
+            <label for="setting">Question:</label>
+            <input type='text' name="question"></input>
+          </div>
+          <div class="row">
+            <div class="col-1">
+             <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+            <div class="col-1">
+              <a button class="btn btn-danger" href="/science">Clear</a>
+             </div>
+          </div>
+
+      </form>
+    </div>
+    <div class="container">
         <h1>All Questions</h1>
 
         <table class="table">

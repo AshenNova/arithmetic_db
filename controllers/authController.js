@@ -60,13 +60,24 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
+  // let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  let message;
   console.log("Log in");
   const { username, password } = req.body;
   // try {
   // 1. CHECK IF USER AND PASSWORD EXIST
   console.log("USER AND PASSWORD EXIST CHECK!");
   if (!username || !password) {
-    return next(new AppError("Please enter a password or email", 401));
+    // return next(new AppError("Please enter a password or email", 401));
+    message = "Please enter a password or email.";
+    return res.render("pages/login", {
+      username,
+      authenticate,
+      currentUser,
+      message,
+    });
   }
   console.log("Cleared! 1");
   // 2. CHECK IF PASSWORD IS CORRECT
@@ -80,9 +91,16 @@ exports.login = catchAsync(async (req, res, next) => {
   console.log("Cleared! 2");
   console.log("CHECK IF EMAIL OR PASSWORD IS CORRECT!");
   if (!user || passwordAuthentication == false) {
-    return next(
-      new AppError("The email or password entered is incorrect.", 401)
-    );
+    // return next(
+    //   new AppError("The email or password entered is incorrect.", 401)
+    // );
+    message = "The email or password entered is incorrect.";
+    return res.render("pages/login", {
+      username,
+      authenticate,
+      currentUser,
+      message,
+    });
   }
   console.log("Cleared! 3");
   // 3. IF EVERYTHING IS OK, SEND TOKEN TO CLIENT
@@ -168,6 +186,7 @@ exports.authenticate = catchAsync(async (req, res, next) => {
   };
 
   // try {
+  // if (process.env.NODE_ENV != "DEVELOPMENT") {
   if (accessToken) {
     // try {
     const validToken = jwt.verify(accessToken, process.env.JWT_SECRET);
@@ -188,10 +207,8 @@ exports.authenticate = catchAsync(async (req, res, next) => {
     req.auth = { login: false };
     console.log(req.auth);
   }
-  // } catch (err) {
-  //   console.log(err);
   // }
-
+  console.log("Done authenticating");
   next();
 });
 

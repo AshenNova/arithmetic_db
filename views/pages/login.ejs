@@ -13,13 +13,27 @@
      <link rel="icon" href="/images/favicon.ico?v=1.1">
 
 </head>
+<style>
+    .message {
+background-color:#f8d7da;
+    }
+
+</style>
 <body>
     <%- include("../partials/navbar"); %>
     <div class="py-5">
+        <div class="container">
+            <% if (message) { %>
+                <div class="container">
+                   <div class="message"><%= message %></div>
+                </div>
+            <% } %>
         <h1 class="text-center">Welcome! Please log in below.</h1>
-        
-      <div class="container">
+    
+    
+     
                       <div class="row">
+                       
                           <div class="col-md-5 mx-auto">
                               <div class="card card-body">
                                                           

@@ -8,6 +8,7 @@ const userController = require("../controllers/userController");
 const scienceController = require("../controllers/scienceController");
 
 router.route("/").get(scienceController.getAllQuestions);
+router.route("/filter").get(scienceController.getAllQuestions);
 
 router
   .route("/new")
