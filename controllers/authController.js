@@ -195,9 +195,9 @@ exports.authenticate = catchAsync(async (req, res, next) => {
       req.user = user;
       req.auth = { login: true };
     } else {
-      res.message = "Please login before proceeding";
-      console.log(res.message);
-      res.redirect("/user/login");
+      // res.message = "Please login before proceeding";
+      // console.log(res.message);
+      return res.redirect("/user/login");
     }
     // }
   }

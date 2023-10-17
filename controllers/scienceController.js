@@ -11,56 +11,55 @@ const express = require("express");
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
-exports.getAllQuestions = async (req, res) => {
+exports.getAllQuestions = catchAsync(async (req, res, next) => {
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
   console.log("Getting all questions");
-  if (req.params) {
-    try {
-      console.log(req.query);
-      Object.keys(req.query).forEach((key) => {
-        if (req.query[key] == "") {
-          delete req.query[key];
-        }
-      });
-      if (req.query.question) {
-        const text = req.query.question;
-        req.query.question = {
-          // question: {
-          $regex: text,
-          // $options: "i",
-          // },
-        };
-        // console.log(req.query.question);
+  if (req.query.length != undefined) {
+    console.log("QUERY DETECTED");
+    Object.keys(req.query).forEach((key) => {
+      if (req.query[key] == "") {
+        delete req.query[key];
       }
-      console.log(req.query);
-      const getAllQuestions = await Science.find(req.query);
-      res.render("./science/displayAllQuestions", {
-        username,
-        authenticate,
-        currentUser,
-        getAllQuestions,
-      });
-    } catch (e) {
-      res.status(400).json({ status: "Failed", message: e });
+    });
+    if (req.query.question) {
+      const text = req.query.question;
+      req.query.question = {
+        // question: {
+        $regex: text,
+        // $options: "i",
+        // },
+      };
+      // console.log(req.query.question);
     }
+    console.log(req.query);
+    const getAllQuestions = await Science.find(req.query).sort({ date: -1 });
+    res.render("./science/displayAllQuestions", {
+      username,
+      authenticate,
+      currentUser,
+      getAllQuestions,
+    });
+    // } catch (e) {
+    //   res.status(400).json({ status: "Failed", message: e });
+    // }
   } else {
-    try {
-      const getAllQuestions = await Science.find().sort({ date: -1 }).limit(20);
-      res.render("./science/displayAllQuestions", {
-        username,
-        authenticate,
-        currentUser,
-        getAllQuestions,
-      });
-    } catch (e) {
-      res.status(400).json({ status: "Failed", message: e });
-    }
+    // try {
+    const getAllQuestions = await Science.find().sort({ date: -1 }).limit(20);
+    res.render("./science/displayAllQuestions", {
+      username,
+      authenticate,
+      currentUser,
+      getAllQuestions,
+    });
+    // } catch (e) {
+    //   res.status(400).json({ status: "Failed", message: e });
+    // }
   }
 
   // res.status(200).json({ message: "Well come to science!" });
-};
+});
 
 exports.extraPracticeQuestions = async (req, res) => {
   let username = req.user.username;
