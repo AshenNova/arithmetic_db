@@ -16,7 +16,8 @@ exports.getAllQuestions = catchAsync(async (req, res, next) => {
   let authenticate = req.auth;
   let currentUser = req.user;
   console.log("Getting all questions");
-  if (req.query.length != undefined) {
+  // console.log(req.query);
+  if (Object.keys(req.query).length != 0) {
     console.log("QUERY DETECTED");
     Object.keys(req.query).forEach((key) => {
       if (req.query[key] == "") {
@@ -61,27 +62,33 @@ exports.getAllQuestions = catchAsync(async (req, res, next) => {
   // res.status(200).json({ message: "Well come to science!" });
 });
 
-exports.extraPracticeQuestions = async (req, res) => {
+exports.extraPracticeQuestions = catchAsync(async (req, res, next) => {
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
   let extra = req.user.incorrectScience;
   // console.log(extra);
   console.log("Getting extra questions");
-  try {
-    const extraQuestions = await Science.find({ _id: { $in: extra } });
-    // console.log(extraQuestions);
-    res.render("./science/extraPracticeQuestions", {
-      username,
-      authenticate,
-      currentUser,
-      extraQuestions,
-    });
-  } catch (e) {
-    res.status(400).json({ status: "Failed", message: e });
+  console.log(extra);
+  if (extra.includes("")) {
+    const index = extra.indexOf("");
+    extra.splice(index, 1);
+    await User.findByIdAndUpdate(req.user._id, { incorrectScience: extra });
   }
+  // try {
+  const extraQuestions = await Science.find({ _id: { $in: extra } });
+  // console.log(extraQuestions);
+  res.render("./science/extraPracticeQuestions", {
+    username,
+    authenticate,
+    currentUser,
+    extraQuestions,
+  });
+  // } catch (e) {
+  //   res.status(400).json({ status: "Failed", message: e });
+  // }
   // res.status(200).json({ message: "Well come to science!" });
-};
+});
 
 exports.createQuestion = async (req, res) => {
   console.log("Creating Questions");
@@ -141,7 +148,7 @@ async function uploadFile(imagePath) {
 
 exports.saveQuestion = async (req, res) => {
   if (!req.user.admin) {
-    res.redirect("/science/topics");
+    return res.redirect("/science/topics");
   }
   console.log(req.body);
   // NORMAL SAVE
@@ -188,7 +195,9 @@ exports.saveQuestion = async (req, res) => {
       res.redirect("/science/new");
     } else {
       // SAVE EDITS
+
       console.log("Trying to save previous question");
+      const { body, files } = req;
       if (req.body.topic[1] == "Select") {
         req.body.topic = req.body.topic[0];
       } else {
@@ -200,16 +209,33 @@ exports.saveQuestion = async (req, res) => {
         req.body.subtopic = req.body.subtopic[1];
       }
       req.body.level = req.body.level.toLowerCase();
-      console.log("here");
+      if (files.length != 0) {
+        if (files.length == 1) {
+          if (files[0].fieldname == "imageQ") {
+            const imageQ = await uploadFile(files[0]);
+            req.body.imageQ = imageQ;
+          }
+          if (files[0].fieldname == "imageA") {
+            const imageA = await uploadFile(files[0]);
+            req.body.image = imageA;
+          }
+        } else {
+          const imageQ = await uploadFile(files[0]);
+          req.body.imageQ = imageQ;
+          const imageA = await uploadFile(files[1]);
+          req.body.image = imageA;
+        }
+      }
       const updates = req.body;
       // Object.keys(updates).forEach((key) => {
       //   if (obj[key] == "") {
       //     delete obj[key];
       //   }
       // });
-      const question = await Science.findByIdAndUpdate(req.body.questionID, {
-        topic: updates.topic,
-      });
+      const question = await Science.findByIdAndUpdate(
+        req.body.questionID,
+        updates
+      );
       console.log(question);
       res.send();
     }

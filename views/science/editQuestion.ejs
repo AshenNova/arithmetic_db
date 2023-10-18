@@ -112,7 +112,7 @@ formElem.addEventListener("submit", async (e) => {
     .then((response) => {
         console.log(response)
       if (response.status == 200) {
-        alert("New question was added successfully!");
+        alert("Question was saved successfully!");
         
         const link = "/science/questions/" + id
         window.location.href = link

@@ -8,6 +8,7 @@ const doneBtn = document.querySelector(".done");
 const correctBtn = document.querySelectorAll(".correct");
 const incorrectBtn = document.querySelectorAll(".incorrect");
 const questionID = document.querySelectorAll(".questionID");
+const questionCl = document.querySelectorAll(".question");
 
 let incorrectArr = [];
 let correctArr = [];
@@ -17,6 +18,7 @@ answers.forEach((item, index) => {
     item.classList.add("hidden");
     cardback[index].classList.remove("hidden");
     buttons[index].classList.remove("hidden");
+    questionCl[index].classList.add("question-bg");
   });
 });
 
