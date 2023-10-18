@@ -8761,6 +8761,109 @@ function updateProblems() {
       fractionsOperator.textContent = " and ";
       fractionChoice.textContent = "What fraction is exactly in between";
     }
+
+    if (setting == 25){
+      drawingDisplay()
+      ctx.font = "1em serif";
+      ctx.save();
+  
+      if (difficulty == 1 || (difficulty == 9 && p.rollx == 0)) {
+        ctx.fillText(
+          `Find the ${p.areaOrPerimeter} of the ${p.shapeChoice}.`,
+          20,
+          40
+        );
+        ctx.translate(200, 137.5);
+        ctx.fillStyle = "orange";
+        ctx.strokeStyle = "grey";
+        ctx.lineWidth = 5;
+  
+        if (p.shapeChoice == "square") {
+          ctx.beginPath();
+          ctx.rect(
+            -p.squareCoord,
+            -p.squareCoord,
+            p.squareCoord * 2,
+            p.squareCoord * 2
+          );
+          ctx.stroke();
+          ctx.fill();
+  
+          ctx.fillStyle = "black";
+          ctx.fillText(
+            `${p.squareSide} ${p.unitMeasurement}`,
+            -15,
+            -p.squareCoord - 10
+          );
+        }
+  
+        if (p.shapeChoice == "rectangle") {
+          p.rectLength = p.rectLengthCoord / 10;
+          p.rectBreadth = p.rectBreadthCoord / 10;
+          ctx.beginPath();
+          ctx.rect(
+            -p.rectLengthCoord,
+            -p.rectBreadthCoord,
+            p.rectLengthCoord * 2,
+            p.rectBreadthCoord * 2
+          );
+          ctx.stroke();
+          ctx.fill();
+  
+          ctx.fillStyle = "black";
+          ctx.fillText(
+            `${p.rectBreadth} ${p.unitMeasurement}`,
+            p.rectLengthCoord + 5,
+            0 + 2
+          );
+          ctx.fillText(
+            `${p.rectLength} ${p.unitMeasurement}`,
+            -15,
+            -p.rectBreadthCoord - 10
+          );
+        }
+      }
+  
+      if (difficulty == 2 || (difficulty == 9 && p.rollx == 1)) {
+        ctx.fillText(
+          `Find the ${
+            p.shapeChoice == "rectangle" ? p.side : "length of each side"
+          } of the ${p.shapeChoice}.`,
+          20,
+          40
+        );
+        ctx.translate(200, 137.5);
+        ctx.fillStyle = "orange";
+        ctx.strokeStyle = "grey";
+        ctx.lineWidth = 5;
+  
+        if (p.shapeChoice == "square") {
+          ctx.beginPath();
+          ctx.rect(
+            -p.squareCoord,
+            -p.squareCoord,
+            p.squareCoord * 2,
+            p.squareCoord * 2
+          );
+          ctx.stroke();
+          ctx.fill();
+  
+          ctx.save();
+          p.area = p.squareSide * p.squareSide;
+          p.perimeter = p.squareSide * 4;
+          ctx.fillStyle = "black";
+          ctx.translate(-200, -137.5);
+          ctx.fillText(
+            `The ${p.areaOrPerimeter} of the ${p.shapeChoice} is ${
+              p.areaOrPerimeter == "area"
+                ? `${p.area} ${p.unitMeasurement}2.`
+                : `${p.perimeter} ${p.unitMeasurement}.`
+            } `,
+            20,
+            60
+          );
+          ctx.restore();
+    }
   }
 
   if (level == "calFour") {
@@ -25010,6 +25113,29 @@ function genProblems() {
         numeTwo: Math.ceil((genNumbers(gen_denoTwo - 1) + 1) / 2),
         answerNume: undefined,
         answerDeno: undefined,
+      };
+    }
+
+    //GEOMETRY: AREA AND PERIMETER
+    if (setting == 25){
+    return {
+      shapeChoice: ["rectangle", "square"][genNumbers(2)],
+      squareCoord: genNumbers(50) + 30,
+
+      rectLengthCoord: genNumbers(5) * 10 + 50,
+      rectBreadthCoord: genNumbers(5) * 10 + 10,
+
+      squareSide: genNumbers(12) + 2,
+      rectLength: undefined,
+      rectBreadth: undefined,
+
+      unitMeasurement: ["cm", "m", "km"][genNumbers(3)],
+      areaOrPerimeter: ["area", "perimeter"][genNumbers(2)],
+
+      side: ["length", "breadth"][genNumbers(2)],
+      area: undefined,
+      perimeter: undefined,
+      rollx: genNumbers(2),
       };
     }
   }

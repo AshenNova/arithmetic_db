@@ -25,6 +25,7 @@ answers.forEach((item, index) => {
 start.addEventListener("click", (e) => {
   start.classList.add("hidden");
   flipCard[0].classList.remove("hidden");
+  document.querySelector(".modeOfUse").classList.add("hidden");
 });
 
 function nextQuestion(item, index) {

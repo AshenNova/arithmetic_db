@@ -80,6 +80,9 @@ app.get("/arithmetic", authController.authenticate, (req, res) => {
   });
 });
 
+app.use("/trial", function (req, res) {
+  res.render("./trial/signup");
+});
 app.use("/attempts", authController.authenticate, attemptRoute);
 app.use("/user", authController.authenticate, userRoute);
 app.use("/science", authController.authenticate, scienceRoute);
