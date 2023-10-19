@@ -40,7 +40,6 @@ exports.signup = catchAsync(async (req, res, next) => {
   // });
 
   const token = signToken(newUser._id);
-
   console.log({ newUser });
   newUser.password = undefined;
   res.redirect("/user/login");
@@ -104,8 +103,11 @@ exports.login = catchAsync(async (req, res, next) => {
   }
   console.log("Cleared! 3");
   // 3. IF EVERYTHING IS OK, SEND TOKEN TO CLIENT
+
   const cookieSetting = {
-    maxAge: (1 * 24 * 60 * 60 * 1000) / 2,
+    // maxAge: (1 * 24 * 60 * 60 * 1000) / 2,
+    // Max-age: 1,
+    // expires: new Date(Date.now() + 10),
     httpOnly: true,
   };
   // const cookieSetting = {
@@ -118,7 +120,8 @@ exports.login = catchAsync(async (req, res, next) => {
   // }
   const token = signToken(user._id);
   res.cookie("JWT", token, {
-    cookieSetting,
+    maxAge: 1000 * 60 * 60 * 12,
+    httpOnly: true,
   }); // Milliseconds
   const userString = user.username.split(" ");
   let userArr = [];
@@ -165,7 +168,7 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.logout = (req, res) => {
   const token = "";
   const cookieSetting = {
-    maxAge: 1000,
+    maxAge: 0,
     httpOnly: true,
   };
   if (process.env.NODE_ENV == "PRODUCTION") cookieSetting.secure = true;
@@ -222,11 +225,12 @@ exports.loginCheck = catchAsync(async (req, res, next) => {
     console.log("Bad login");
     // message = "Please login before proceeding";
     // return res.redirect("/user/login");
-
+    let message;
     return res.render("pages/login", {
       username,
       authenticate,
       currentUser,
+      message,
     });
   }
   next();

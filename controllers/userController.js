@@ -174,22 +174,22 @@ exports.getAllPoints = catchAsync(async (req, res, next) => {
 
 exports.getAllRewards = catchAsync(async (req, res, next) => {
   // const allRewards = await Reward.find();
-  // const logRewards = await RewardLog.find().sort({ date: -1 }).limit(20);
-
+  // const logRewards = await RewardLog.find().sort({ date: -1 }).limit(20);");
   const [allRewards, logRewards] = await Promise.all([
     Reward.find(),
     RewardLog.find().sort({ claimed: -1 }).limit(10),
   ]);
-
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
+
   res.render("pages/rewards/claim-rewards", {
     authenticate,
     username,
     currentUser,
     allRewards,
     logRewards,
+    // message,
   });
 });
 
