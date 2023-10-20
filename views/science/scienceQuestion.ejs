@@ -105,13 +105,21 @@ formElem.addEventListener("submit", async (e) => {
     method: "POST",
     body: new FormData(formElem),
   })
-    .then((response) => {
-      if (response.status == 200) {
-        alert("New question was added successfully!");
-      } else {
-        alert("Sorry! Failed to save question.");
-      }
+    .then((response) => response.json()).then((data) => {
+      console.log(data)
+      alert("New question was added successfully!");
+      window.location.href = "/science/questions/" + data.newQuestion._id
+
     })
+      // console.log(response.data)
+    //   console.log(data)
+    //   if (response.status == 200) {
+    //     alert("New question was added successfully!");
+    //     // window.location.href = "/science/questions/" + 0
+    //   } else {
+    //     alert("Sorry! Failed to save question.");
+    //   }
+    // })
     .catch((error) => {
       console.error(error);
     });

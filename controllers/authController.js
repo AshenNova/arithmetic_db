@@ -104,12 +104,10 @@ exports.login = catchAsync(async (req, res, next) => {
   console.log("Cleared! 3");
   // 3. IF EVERYTHING IS OK, SEND TOKEN TO CLIENT
 
-  const cookieSetting = {
-    // maxAge: (1 * 24 * 60 * 60 * 1000) / 2,
-    // Max-age: 1,
-    // expires: new Date(Date.now() + 10),
-    httpOnly: true,
-  };
+  // const cookieSetting = {
+  //   maxAge: (1 * 24 * 60 * 60 * 1000) / 2,
+  //   httpOnly: true,
+  // };
   // const cookieSetting = {
   //   maxAge: 1000 / 2,
   //   httpOnly: true,

@@ -1,5 +1,6 @@
 const Science = require("../models/scienceModel.js");
 const User = require("../models/userModel.js");
+const Attempt = require("../models/attemptModel.js");
 const catchAsync = require("../utils/catchAsync");
 const stream = require("stream");
 const multer = require("multer");
@@ -192,7 +193,18 @@ exports.saveQuestion = async (req, res) => {
       }
       const newQuestion = await Science.create(req.body);
       console.log(newQuestion);
-      res.redirect("/science/new");
+      console.log("Question saved");
+      let data = {};
+      data.newQuestion = newQuestion;
+      // console.log(data);
+      // res.send(JSON.parse(data));
+      // data = JSON.stringify(data);
+      // console.log(data);
+      res.send(data);
+
+      // res.redirect("/science/new");
+
+      // res.send(JSON.stringify(data));
     } else {
       // SAVE EDITS
 
@@ -307,14 +319,36 @@ exports.getQuestions = async (req, res) => {
 
     const questionsDB = p3.concat(p4, p5, p6);
     let questions = [];
+    let questionsIdArr = [];
+
+    // SET NUMBER OF QUESTIONS
     if (limit > questionsDB.length) limit = questionsDB.length;
-    while (questions.length != limit) {
+
+    //FIND IF THE CURRENT USER HAS ANY PREVIOUSLY INCORRECT QUESTIONS
+    const incorrectQuestionsId = (await User.findById(currentUser._id))
+      .incorrectScience;
+    // console.log(incorrectQuestionsId);
+    const chosenId =
+      incorrectQuestionsId[
+        Math.floor(Math.random() * incorrectQuestionsId.length)
+      ];
+    // console.log(chosenId);
+    const incorrectQuestion = await Science.findById(chosenId);
+    // console.log(incorrectQuestion);
+    questions.push(incorrectQuestion);
+    // questionsIdArr.push(incorrectQuestion._id);
+    // console.log(questionsIdArr);
+    //FILL UP WITH OTHER QUESTIONS
+    while (questions.length < limit) {
       const chosenQuestion =
         questionsDB[Math.floor(Math.random() * questionsDB.length)];
       const index = questionsDB.indexOf(chosenQuestion);
       questionsDB.splice(index, 1);
-      questions.push(chosenQuestion);
+      // console.log(chosenQuestion._id);
+      if (!questionsIdArr.includes(chosenQuestion._id))
+        questions.push(chosenQuestion);
     }
+    // console.log(questions);
     // res.status(200).json({ status: "Success", message: e });
     res.render("./science/displayQuestions", {
       username,
@@ -352,7 +386,23 @@ exports.updateUserScience = async (req, res) => {
       }
     });
   }
-
+  console.log(currentUser);
+  let name = currentUser.username.split(" ");
+  let nameArr = [];
+  console.log(name);
+  name.forEach((item) => {
+    console.log(item);
+    item = item.charAt(0).toUpperCase() + item.slice(1);
+    nameArr.push(item);
+  });
+  const finalUserName = nameArr.join(" ");
+  console.log(finalUserName);
+  const attempt = await Attempt.create({
+    user: finalUserName,
+    subject: "Science",
+    summary: "",
+    score: req.body.questions,
+  });
   const updating = await User.findByIdAndUpdate(
     currentUser._id,
     { incorrectScience: list },
@@ -368,6 +418,12 @@ exports.viewScience = async (req, res) => {
 
   const id = req.params.id;
   console.log(id);
+  // let question;
+  // if (id == 0) {
+  //   question = await Science.findOne().sort({ date: -1 });
+  // } else {
+  //   question = await Science.findById(id);
+  // }
   const question = await Science.findById(id);
 
   res.render("./science/viewQuestion", {

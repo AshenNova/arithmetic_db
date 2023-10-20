@@ -336,6 +336,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         mode: mode,
         setting: setting,
         tries: "1",
+        subject: "Math",
       })
         .sort({ date: -1 })
         .limit(2);
@@ -889,20 +890,20 @@ const update = catchAsync(async (req, res, next) => {
 
 const updateMany = catchAsync(async (req, res, next) => {
   // try {
-  // const updating = await Attempt.updateMany({}, { $set: { tries: 1 } });
-  // console.log(updating);
-  const updating = await Attempt.updateMany(
-    // { summary: { $exists: false } },
-    // { $set: { summary: "test" } }
-    { user: "Travis" },
-    { $set: { user: "Travis Scott" } }
-  );
-  const updatingPlayer = await Highscore.updateMany(
-    // { skip: { $exists: false } },
-    // { $set: { skip: "" } }
-    { user: "Travis" },
-    { $set: { user: "Travis Scott" } }
-  );
+  const updating = await Attempt.updateMany({}, { $set: { subject: "Math" } });
+  console.log(updating);
+  // const updating = await Attempt.updateMany(
+  // { summary: { $exists: false } },
+  // { $set: { summary: "test" } }
+  // { user: "Travis" },
+  // { $set: { user: "Travis Scott" } }
+  // );
+  // const updatingPlayer = await Highscore.updateMany(
+  //   // { skip: { $exists: false } },
+  //   // { $set: { skip: "" } }
+  //   { user: "Travis" },
+  //   { $set: { user: "Travis Scott" } }
+  // );
   console.log(updating);
   // } catch (e) {
   //   console.log(`Error ${e}`);

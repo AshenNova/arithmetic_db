@@ -29005,6 +29005,11 @@ function buttonLevelSetting() {
     case "Heu.1":
       level = "heuOne";
       setting = prompt("What level?\n1.More than / less than");
+      if (
+        ![1, 9].includes(setting * 1) &&
+        !setting.split("").includes("-")
+      )
+        setting = 9;
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";

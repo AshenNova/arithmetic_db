@@ -67,6 +67,7 @@ doneBtn.addEventListener("click", (e) => {
   let arr = {
     incorrect: incorrectArr,
     correct: correctArr,
+    questions: incorrectArr.length + correctArr.length,
   };
 
   console.log(incorrectArr);

@@ -19,6 +19,10 @@ const attemptSchema = new mongoose.Schema({
   summary: { type: String },
   award: String,
   points: Number,
+  subject: {
+    type: String,
+    default: "Math",
+  },
 });
 
 const Attempt = mongoose.model("attempts", attemptSchema);
