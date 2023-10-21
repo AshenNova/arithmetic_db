@@ -43,14 +43,18 @@
                           <%= item.topic %><br>
                           <%= item.subtopic %>
                       </td>
-                        <td><%= item.question %></td>
+                      <% if (item.imageQ) { %>
+                        <td><img src="https://drive.google.com/uc?export=view&id=<%= item.imageQ %>"><br>
+                        <hr>
+                      <% } %>
+                        <%= item.question %></td>
                         <td class="btn-answer">
                           <btn class="btn btn-success">Answer
                         </td>
                           <!-- <div class="answer hidden"> -->
                            <td class="hidden answer">
                              <% if (item.image) { %>
-                              <%= item.image %><br>
+                              <img src="https://drive.google.com/uc?export=view&id=<%= item.image %>"><br>
                               <hr>
                             <% } %>
                             
