@@ -43,8 +43,9 @@
                           <%= item.topic %><br>
                           <%= item.subtopic %>
                       </td>
+                      <td>
                       <% if (item.imageQ) { %>
-                        <td><img src="https://drive.google.com/uc?export=view&id=<%= item.imageQ %>"><br>
+                        <img src="https://drive.google.com/uc?export=view&id=<%= item.imageQ %>"><br>
                         <hr>
                       <% } %>
                         <%= item.question %></td>
