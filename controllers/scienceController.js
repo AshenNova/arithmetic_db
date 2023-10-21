@@ -327,16 +327,19 @@ exports.getQuestions = async (req, res) => {
     //FIND IF THE CURRENT USER HAS ANY PREVIOUSLY INCORRECT QUESTIONS
     const incorrectQuestionsId = (await User.findById(currentUser._id))
       .incorrectScience;
-    // console.log(incorrectQuestionsId);
+    console.log(incorrectQuestionsId);
     const chosenId =
       incorrectQuestionsId[
         Math.floor(Math.random() * incorrectQuestionsId.length)
       ];
-    // console.log(chosenId);
-    const incorrectQuestion = await Science.findById(chosenId);
-    // console.log(incorrectQuestion);
-    questions.push(incorrectQuestion);
-    // questionsIdArr.push(incorrectQuestion._id);
+    console.log(chosenId);
+    if (chosenId) {
+      const incorrectQuestion = await Science.findById(chosenId.toString());
+      console.log(incorrectQuestion);
+      questions.push(incorrectQuestion);
+      questionsIdArr.push(incorrectQuestion._id);
+    }
+
     // console.log(questionsIdArr);
     //FILL UP WITH OTHER QUESTIONS
     while (questions.length < limit) {
@@ -355,6 +358,7 @@ exports.getQuestions = async (req, res) => {
       authenticate,
       currentUser,
       questions,
+      limit,
     });
   } catch (e) {
     res.status(400).json({ status: "Failed", message: e });

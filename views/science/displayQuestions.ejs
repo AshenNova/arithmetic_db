@@ -87,7 +87,7 @@ img {
             </ul>
         </div>
         <btn class="btn btn-primary start">Start</btn>
-       <% questions.forEach(item => { %>
+       <% questions.forEach((item, index) => { %>
 
             <div class="flip-card hidden">
                 <div class="flip-card-inner">
@@ -100,7 +100,7 @@ img {
                                 <img src="https://drive.google.com/uc?export=view&id=<%= item.imageQ %>">
                             </div>
                             <% } %>
-                        <h5 class="card-title">Question:</br></h5>
+                        <h5 class="card-title">Question <%= index+1 %>/<%= limit %>:</br></h5>
                         <div class="question"><%= item.question %></div>
                         <!-- <hr> -->
                         <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->

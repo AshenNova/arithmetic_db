@@ -12,6 +12,7 @@ const questionCl = document.querySelectorAll(".question");
 
 let incorrectArr = [];
 let correctArr = [];
+let click = 0;
 answers.forEach((item, index) => {
   console.log(index);
   item.addEventListener("click", (e) => {
@@ -62,26 +63,29 @@ incorrectBtn.forEach((item, index) => {
 // nextBtn[nextBtn.length - 1].classList.add("hidden");
 
 doneBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  // incorrectArr = incorrectArr;
-  let arr = {
-    incorrect: incorrectArr,
-    correct: correctArr,
-    questions: incorrectArr.length + correctArr.length,
-  };
+  if (click == 0) {
+    click += 1;
+    e.preventDefault();
+    // incorrectArr = incorrectArr;
+    let arr = {
+      incorrect: incorrectArr,
+      correct: correctArr,
+      questions: incorrectArr.length + correctArr.length,
+    };
 
-  console.log(incorrectArr);
-  // console.log(data);
-  $.ajax({
-    url: "/science/updateUserScience",
-    method: "POST",
-    // contentType: "application/json",
-    // data: JSON.stringify(arr),
-    data: arr,
+    console.log(incorrectArr);
+    // console.log(data);
+    $.ajax({
+      url: "/science/updateUserScience",
+      method: "POST",
+      // contentType: "application/json",
+      // data: JSON.stringify(arr),
+      data: arr,
 
-    success: function (res) {
-      window.location.replace("/science/topics");
-    },
-    error: function (res) {},
-  });
+      success: function (res) {
+        window.location.replace("/science/topics");
+      },
+      error: function (res) {},
+    });
+  }
 });
