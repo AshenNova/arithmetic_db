@@ -27,7 +27,11 @@
               <label class="form-label">Previous</label>
               <!-- <div id="topic" class="form-text">We'll never share your email with anyone else.</div> -->
               <select class="form-select" aria-label="Default select example" name="topic">
-                <option selected>Select</option>
+                <option selected><% if (previous) { %>
+                  <%= previous.topic %> 
+                <% } else { %>
+                  Select</option>
+                  <% } %>
                 <!-- <input type="text" class="form-control" id="topic" name="topic"> -->
                 <% topic.forEach(item => { %>
                   <option value="<%= item %>" ><%= item %></option>
@@ -48,7 +52,13 @@
                    <div class="col-6">
                     <label class="form-label">Previous</label>
                     <select class="form-select" aria-label="Default select example" name="subtopic">
-                      <option selected>Select</option>
+                      <!-- <option selected>Select</option> -->
+                      <option selected><% if (previous) { %>
+                        <%= previous.subtopic %> 
+                      <% } else { %>
+                        Select</option>
+                        <% } %>
+
                       <!-- <input type="text" class="form-control" id="topic" name="topic"> -->
                       <% subtopic.forEach(item => { %>
                         <option value="<%= item %>" ><%= item %></option>
@@ -58,11 +68,12 @@
                  </div>
             </div>
 
-         
-          
               <div class="form-group mb-3 required">
                 <label for="level" class="form-label">Level</label>
-                <input type="text" class="form-control" id="level" name="level" style="text-transform: lowercase">
+                <input type="text" class="form-control" id="level" name="level" style="text-transform: lowercase"
+                <% if (previous) { %>
+                  value="<%= previous.level %>"
+                <% } %>>
               </div>
               <div class="row">
                 <div class="col-6">

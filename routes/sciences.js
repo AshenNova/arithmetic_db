@@ -15,6 +15,9 @@ router
   .get(scienceController.createQuestion)
   .post(upload.any(), scienceController.saveQuestion);
 
+router.route("/new/:id").get(scienceController.createQuestion);
+// .post(upload.any(), scienceController.saveQuestion);
+
 router.route("/topics").get(scienceController.getTopic);
 router.route("/questions").post(scienceController.getQuestions);
 router

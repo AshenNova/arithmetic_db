@@ -54,7 +54,8 @@
         </div>
         <h5>Comment:</h5>
         <p><%= question.comment %></p>
-
+        <a href="/science/questions/edit/<%=question._id %>" class="btn btn-primary">Edit</a>
+        <a href="/science/new/<%= question._id %>" class="btn btn-warning">Clone</a>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>

@@ -93,6 +93,12 @@ exports.extraPracticeQuestions = catchAsync(async (req, res, next) => {
 
 exports.createQuestion = async (req, res) => {
   console.log("Creating Questions");
+
+  console.log(req.params);
+  let previous;
+  if (req.params.id) {
+    previous = await Science.findOne().sort({ date: -1 });
+  }
   //   res.status(200).json({ message: "Creating new question" });
   let topic = await Science.distinct("topic");
   let subtopic = await Science.distinct("subtopic");
@@ -110,6 +116,7 @@ exports.createQuestion = async (req, res) => {
     currentUser,
     topic,
     subtopic,
+    previous,
   });
 };
 

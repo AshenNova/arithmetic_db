@@ -8076,7 +8076,7 @@ function updateProblems() {
       simpleFractionDisplay();
       denominatorOne.classList.remove("hidden");
       fractionsLine.classList.remove("hidden");
-      fractionsWholeNum.textContent = "";
+      // fractionsWholeNum.textContent = "";
       if (p.operator == "+") {
         while (p.numeOne + p.numeTwo > p.deno) {
           if (p.numeOne >= p.numeTwo) {
@@ -8150,10 +8150,6 @@ function updateProblems() {
         displayProblem.style.fontSize = "20px";
         displayProblem.style.textAlign = "left";
       }
-    }
-    // FRACTIONS DISPLAY
-    if (setting == 20 || setting == 21) {
-      simpleFractionDisplay();
     }
 
     if (setting == 18) {
@@ -29005,10 +29001,7 @@ function buttonLevelSetting() {
     case "Heu.1":
       level = "heuOne";
       setting = prompt("What level?\n1.More than / less than");
-      if (
-        ![1, 9].includes(setting * 1) &&
-        !setting.split("").includes("-")
-      )
+      if (![1, 9].includes(setting * 1) && !setting.split("").includes("-"))
         setting = 9;
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
