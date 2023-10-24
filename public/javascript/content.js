@@ -135,13 +135,16 @@ export const displayContent = (level) => {
     <hr>
     19. Time: Timeline ( hours and mins )</br>
     <hr>
-    20. Money: Addition Subtraction and Multiplication</br>
+    20. Parts and Intervals ( Conversion)<br>
     <hr>
-    21. Fractions: Shapes</br>
-    22. Fractions: Addition and Subtraction</br>
-    23. Fractions: Expansion and simplification</br>
-    24. Fractions: Mid-point</br>
+    21. Money: Addition Subtraction and Multiplication</br>
+    <hr>
+    22. Fractions: Shapes</br>
+    23. Fractions: Addition and Subtraction</br>
+    24. Fractions: Expansion and simplification</br>
+    25. Fractions: Mid-point</br>
     <hr></hr>
+    26. Geometry: Area and Perimeter</br>
     99. All`;
   }
   if (level == "calFour") {

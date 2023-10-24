@@ -50,7 +50,7 @@ export function cutOffCheck(level, setting, time) {
         push = "Yes";
       }
     }
-    if ([16, 20, 21, 24].includes(setting)) {
+    if ([16, 21, 22, 23, 24, 25, 26].includes(setting)) {
       if (time > 180) {
         push = "Yes";
       }

@@ -62,5 +62,6 @@ router.route("/recommend").get(
   authController.loginCheck,
   userController.recommend
 );
+// router.route("/trial").post(userController.trial);
 
 module.exports = router;

@@ -18,39 +18,179 @@
         <h1>Free Trial Form</h1>
         <p>Before you fill in the form, you may first want to read our rules and regulations.</p>
     </div>
-    <div class="container">
-    <form action="/trial/form" method="post">
+    <div class="container mb-3">
+      <form action="/trial/new" method="post">
         <div class="mb-3">
-          
-          <label for="outlet" class="form-label">Outlet</label>
-          <select class="form-select" aria-label="Default select example">
+          <label for="outlet" class="form-label" >Outlet</label>
+          <select class="form-select" aria-label="Default select example" name="outlet">
             <option selected>Choose</option>
             <option value="1">Toa Payoh</option>
             <option value="2">Hougang</option>
             <option value="3">Private</option>
           </select>
         </div>
+        <div class="mb-3">
+          <label for="outlet" class="form-label" >Timing</label>
+          <select class="form-select" aria-label="Default select example" name="timing">
+            <option selected>?</option>
+          </select>
+          <div><b>*Note that the free trial timing reflected are identical to the available slots.</b></div>
+        </div>
+        <div class="mb-3">
+          <label for="otherTiming" class="form-label" name="otherTiming">Other Timing</label>
+           <input type="text" class="form-control" name="otherTiming" placeholder="If there is no situable timing. Please fill in your preferred day and timing. Thanks!">
+        </div>
+        <div class="mb-3">
+          <!-- <label for="subject" class="form-label" name="subject">Subject</label> -->
+          <p>Subject</p>
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="subject">
+          <label class="form-check-label" for="flexCheckDefault">Standard Math</label>
+          <input class="form-check-input ms-3" type="checkbox" value="" id="flexCheckDefault" name="subject">
+          <label class="form-check-label" for="flexCheckDefault">Foundation Math</label>
+          <input class="form-check-input ms-3" type="checkbox" value="" id="flexCheckDefault" name="subject">
+          <label class="form-check-label" for="flexCheckDefault">Standard Science</label>
+          <input class="form-check-input ms-3" type="checkbox" value="" id="flexCheckDefault" name="subject">
+          <label class="form-check-label" for="flexCheckDefault">Foundation Science</label>
+        </div>
+
+        <h1>Details</h1>
+        <div class="row">
+          <div class="col">
+            <h4>Student</h4>
             <div class="mb-3">
-              <label for="childName" class="form-label">Child's name</label>
-              <input type="text" class="form-control" id="childName">
+              <label for="childName" class="form-label">Name</label>
+              <input type="text" class="form-control" name="childName">
             </div>
             <div class="mb-3">
-                <label for="childSurname" class="form-label">Child's surname</label>
-                <input type="text" class="form-control" id="childSurname"> 
+                <label for="childSurname" class="form-label">Surname</label>
+                <input type="text" class="form-control" name="childSurname"> 
            </div>
            <div class="mb-3">
-            <label for="parentName" class="form-label">Parent's name</label>
-            <input type="text" class="form-control" id="parentName">
+            <label for="DOB" class="form-label">Date of birth</label>
+            <input type="date" class="form-control" name="DOB"> 
+           </div>
+           <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <select class="form-select" aria-label="Default select example"name="gender">
+              <option selected>Choose</option>
+              <option value="1">Male</option>
+              <option value="2">famale</option>
+            </select>
+          </div>
+           <div class="mb-3">
+            <label for="school" class="form-label">School</label>
+            <input type="text" class="form-control" name="school"> 
+           </div>
+          </div>
+
+          <div class="col">
+            <h4>Parent/Guardian 1</h4>
+           <div class="mb-3">
+            <label for="parentOneName" class="form-label">Name</label>
+            <input type="text" class="form-control" name="parentOneName">
+            <!-- <div name="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
+          </div>
+          <div class="mb-3">
+            <label for="parentOneSurname" class="form-label">Surname</label>
+            <input type="text" class="form-control" name="parentOneSurname">
+            <!-- <div name="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
+          </div>
+          <div class="mb-3">
+            <label for="roleOne" class="form-label">Role</label>
+            <input type="text" class="form-control" name="roleOne" placeholder="Father / Mother etc">
             <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
           <div class="mb-3">
-              <label for="parentSurname" class="form-label">Parent's surname</label>
-              <input type="text" class="form-control" id="parentSurname">
-         </div>
-    
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <label for="ContactOne" class="form-label">Contact Number</label>
+            <input type="text" class="form-control" name="ContactOne">
+            <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" name="email">
+            <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
+          </div>
+        </div>
+            <div class="col">
+              <h4>Parent/Guardian 2</h4>
+              <div class="mb-3">
+                  <label for="parentTwoSurname" class="form-label">Name</label>
+                  <input type="text" class="form-control" name="parentTwoSurname">
+             </div>
+            <div class="mb-3">
+              <label for="parentTwoSurname" class="form-label">Surname</label>
+              <input type="text" class="form-control" name="parentTwoSurname">
+              <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
+            </div>
+            <div class="mb-3">
+              <label for="roleTwo" class="form-label">Role</label>
+              <input type="text" class="form-control" name="roleTwo" placeholder="Father / Mother etc">
+              <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
+            </div>
+            <div class="mb-3">
+              <label for="ContactTwo" class="form-label">Contact Number</label>
+              <input type="text" class="form-control" name="ContactTwo">
+              <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
+            </div>
+          </div>
+        </div>
+        <h1>Questions</h1>
+        <div class="mb-3">
+          <label for="questionA" class="form-label">Does your child have any learning disabilities?</label>
+          <textarea type="text" class="form-control" name="questionA" placeholder="If no, leave blank. If yes, please tells us what disability"></textarea>
+       </div>
+       <div class="mb-3">
+        <label for="questionB" class="form-label">Is this your child's first time attending tuition for the subject that you are interested in signing him/her up for?</label>
+        <textarea type="text" class="form-control" name="questionB" placeholder="If yes, leave blank. If no, please tells why you did not continue there?"></textarea>
+       </div>
+       <div class="mb-3">
+        <label for="questionC" class="form-label">What should we do if your child misbehavies?</label>
+        <textarea type="text" class="form-control" name="questionC" placeholder="Fill in the blank"></textarea>
+       </div>
+       <div class="mb-3">
+        <label for="questionD" class="form-label" >Do you allow physical punishment?</label>
+        <select class="form-select" aria-label="Default select example" name="questionD">
+          <option selected>Choose</option>
+          <option value="1">Yes</option>
+          <option value="2">No</option>
+          <!-- <option value="3">Private</option> -->
+        </select>
+      </div>
 
-    </form>
+        <h1>Rules and Regulations</h1>
+        <ul>
+          <li><h4>Payment and fees</h4></li>
+          <div class="ms-3">
+              <p>Please check with the admin staff as the amount is subjected to change.</p>
+          </div>
+          <li><h4>Class Size</h4></li>
+            <div class="ms-3">
+              <p>3 pax to 5 pax.</p>
+              <p>A maximum size of 3 but allow 2 more pax for either extra or make up lessons.</p>
+            </div>
+          <li><h4>Absence / Sick</h4></li>
+            <div class="ms-3">
+              <p>Please inform the tutor at least 2 hours in advance and arrange for make up.</p>
+            </div>
+          <li><h4>Make up lessons</h4></li>
+            <div class="ms-3">
+              <p>Make up lessons will expire within 1 month of occurence, and cannot be used to offset next month's fees.</p>
+            </div>
+          <li><h4>Public Holiday</h4></li>
+            <div class="ms-3">
+              <p>Assume that classes will still continue except for Chinese New Year or unless specificied otherwise.</p>
+              <p>If you choose to not attend, please inform and arrange for make up.</p>
+            </div>
+          <li><h4>Bringing forward of lessons</h4></li>
+          <div class="ms-3">
+              <p>Lessons from school holidays period would usually be brought forward to the earlier months to better prepare your child for the upcoming exams.</p>
+              <p>Those "extra" lessons will only need to be paid during its actual month.</p>
+              <p><i>eg. Lessons from June Holidays brought forward into May only needs to be paid when June comes around.</i></p>
+          </div>
+         </ul>
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+     </form>
 </div>
  
 </body>

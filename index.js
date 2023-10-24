@@ -7,6 +7,7 @@ require("dotenv/config");
 const attemptRoute = require("./routes/attempts");
 const userRoute = require("./routes/users");
 const scienceRoute = require("./routes/sciences");
+const trialRoute = require("./routes/trials");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const cookieParser = require("cookie-parser");
@@ -80,9 +81,7 @@ app.get("/arithmetic", authController.authenticate, (req, res) => {
   });
 });
 
-app.use("/trial", function (req, res) {
-  res.render("./trial/signup");
-});
+app.use("/trial", trialRoute);
 app.use("/attempts", authController.authenticate, attemptRoute);
 app.use("/user", authController.authenticate, userRoute);
 app.use("/science", authController.authenticate, scienceRoute);

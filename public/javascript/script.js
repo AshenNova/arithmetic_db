@@ -579,6 +579,7 @@ function normalDisplay() {
   displayProblem.style.textAlign = "left";
 }
 function drawingDisplay() {
+  // canvasTextId.classList.remove("hidden")
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.clearRect(0, 0, 1000, 1000);
   firstCanvas.classList.remove("hidden");
@@ -8142,7 +8143,7 @@ function updateProblems() {
       setting == 16 ||
       setting == 17 ||
       setting == 19 ||
-      setting == 21
+      setting == 22
     ) {
       normalDisplay();
 
@@ -8152,9 +8153,6 @@ function updateProblems() {
       }
     }
 
-    if (setting == 18) {
-      drawingDisplay();
-    }
     if (setting == 1) {
       const numOneStr = p.numOne.toString();
       let numTwoStr = p.numTwo.toString();
@@ -8591,6 +8589,7 @@ function updateProblems() {
     }
 
     if (setting == 18) {
+      drawingDisplay();
       drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
     }
 
@@ -8628,8 +8627,71 @@ function updateProblems() {
         `;
       }
     }
-    // MONEY: ADDITION AND SUBTRACTION
+
     if (setting == 20) {
+      drawingDisplay();
+      p.answerUnit = "g";
+      if (p.unit == "ℓ") p.answerUnit = "ml";
+      if (p.unit == "km") p.answerUnit = "m";
+      if (p.unit == "m") p.answerUnit = "cm";
+
+      canvasTextId.textContent = `Give your answer in ${p.answerUnit}`;
+      p.eachInterval = 1 / p.intervals;
+
+      function drawIntervalsUnits(start, intervals, eachInterval, question) {
+        const largeIntervals = 20;
+        const adjustment = 10;
+        ctx.save();
+        ctx.font = "1em serif";
+        ctx.translate(50, 100);
+        //BEGIN
+        ctx.beginPath();
+        ctx.moveTo(0, -largeIntervals);
+        ctx.fillText(`${start}`, -adjustment, -largeIntervals - adjustment);
+        ctx.lineTo(0, largeIntervals);
+        ctx.stroke();
+
+        //END
+        const end = start + eachInterval * intervals;
+        ctx.beginPath();
+        ctx.moveTo(300, -largeIntervals);
+        ctx.fillText(
+          `${end} ${p.unit}`,
+          300 - adjustment,
+          -largeIntervals - adjustment
+        );
+        ctx.lineTo(300, largeIntervals);
+        ctx.stroke();
+
+        //START ARROW
+        ctx.beginPath();
+        ctx.moveTo(-10, 0);
+        ctx.lineTo(325, 0);
+        ctx.stroke();
+
+        //SMALLER INTERVALS
+        for (let i = 1; i < intervals; i++) {
+          const intervalAway = 300 / intervals;
+          // const largeIntervals = 20;
+          ctx.beginPath();
+          ctx.moveTo(0 + intervalAway * i, -largeIntervals / 2);
+          ctx.lineTo(0 + intervalAway * i, largeIntervals / 2);
+          ctx.stroke();
+
+          //DOWNARROW
+          if (i == question) {
+            console.log(question);
+            ctx.fillText(`? `, 0 + intervalAway * i - 4, -15);
+          }
+        }
+        ctx.restore();
+      }
+
+      drawIntervalsUnits(p.start, p.intervals, p.eachInterval, p.arrow);
+    }
+
+    // MONEY: ADDITION AND SUBTRACTION
+    if (setting == 21) {
       normalDisplay();
 
       if (p.symbol == "+" || p.symbol == "-") {
@@ -8658,14 +8720,14 @@ function updateProblems() {
       }
     }
     //FRACTIONS: SHAPES
-    if (setting == 21) {
+    if (setting == 22) {
       drawingDisplay();
       drawForFraction(state, "fraction");
       // console.log(mediumColumn, smallRow, p.shaded, p.total);
     }
 
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 22) {
+    if (setting == 23) {
       simpleFractionDisplay();
       [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
@@ -8693,7 +8755,7 @@ function updateProblems() {
     }
 
     //FRACTIONS: EXPANSION AND SIMPLIFICATION
-    if (setting == 23) {
+    if (setting == 24) {
       simpleFractionDisplay();
       [p.oriNume, p.oriDeno] = simplify(p.oriNume, p.oriDeno);
       if (p.mulOne == p.mulTwo) p.mulTwo += 1;
@@ -8731,7 +8793,7 @@ function updateProblems() {
     }
 
     // FRACTIONS: MID-POINT
-    if (setting == 24) {
+    if (setting == 25) {
       simpleFractionDisplay();
       [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
@@ -8756,6 +8818,158 @@ function updateProblems() {
       denominatorTwo.textContent = p.denoTwo;
       fractionsOperator.textContent = " and ";
       fractionChoice.textContent = "What fraction is exactly in between";
+    }
+
+    //GEOMETRY: AREA AND PERIMETER
+    if (setting == 26) {
+      drawingDisplay();
+      ctx.font = "1em serif";
+      ctx.save();
+
+      if (p.rollx == 0) {
+        canvasTextId.innerHTML = `Find the ${p.areaOrPerimeter} of the ${p.shapeChoice}.</br>`;
+        ctx.translate(200, 137.5);
+        ctx.fillStyle = "orange";
+        ctx.strokeStyle = "grey";
+        ctx.lineWidth = 5;
+
+        if (p.shapeChoice == "square") {
+          ctx.beginPath();
+          ctx.rect(
+            -p.squareCoord,
+            -p.squareCoord,
+            p.squareCoord * 2,
+            p.squareCoord * 2
+          );
+          ctx.stroke();
+          ctx.fill();
+
+          ctx.fillStyle = "black";
+          ctx.fillText(
+            `${p.squareSide} ${p.unitMeasurement}`,
+            -15,
+            -p.squareCoord - 10
+          );
+        }
+
+        if (p.shapeChoice == "rectangle") {
+          p.rectLength = p.rectLengthCoord / 10;
+          p.rectBreadth = p.rectBreadthCoord / 10;
+          ctx.beginPath();
+          ctx.rect(
+            -p.rectLengthCoord,
+            -p.rectBreadthCoord,
+            p.rectLengthCoord * 2,
+            p.rectBreadthCoord * 2
+          );
+          ctx.stroke();
+          ctx.fill();
+
+          ctx.fillStyle = "black";
+          ctx.fillText(
+            `${p.rectBreadth} ${p.unitMeasurement}`,
+            p.rectLengthCoord + 5,
+            0 + 2
+          );
+          ctx.fillText(
+            `${p.rectLength} ${p.unitMeasurement}`,
+            -15,
+            -p.rectBreadthCoord - 10
+          );
+        }
+      }
+
+      if (p.rollx == 1) {
+        canvasTextId.innerHTML = `Find the ${
+          p.shapeChoice == "rectangle" ? p.side : "length of each side"
+        } of the ${p.shapeChoice}.</br>`;
+        ctx.translate(200, 137.5);
+        ctx.fillStyle = "orange";
+        ctx.strokeStyle = "grey";
+        ctx.lineWidth = 5;
+
+        if (p.shapeChoice == "square") {
+          ctx.beginPath();
+          ctx.rect(
+            -p.squareCoord,
+            -p.squareCoord,
+            p.squareCoord * 2,
+            p.squareCoord * 2
+          );
+          ctx.stroke();
+          ctx.fill();
+
+          ctx.save();
+          p.area = p.squareSide * p.squareSide;
+          p.perimeter = p.squareSide * 4;
+          ctx.fillStyle = "black";
+          ctx.translate(-200, -137.5);
+          canvasTextId.insertAdjacentHTML(
+            "beforeend",
+            `The ${p.areaOrPerimeter} of the ${p.shapeChoice} is ${
+              p.areaOrPerimeter == "area"
+                ? `${p.area} ${p.unitMeasurement}2.`
+                : `${p.perimeter} ${p.unitMeasurement}.`
+            } `
+          );
+          ctx.restore();
+        }
+
+        if (p.shapeChoice == "rectangle") {
+          p.rectLength = p.rectLengthCoord / 10;
+          p.rectBreadth = p.rectBreadthCoord / 10;
+          p.area = p.rectLength * p.rectBreadth;
+          p.perimeter = (p.rectLength + p.rectBreadth) * 2;
+          ctx.beginPath();
+          ctx.rect(
+            -p.rectLengthCoord,
+            -p.rectBreadthCoord,
+            p.rectLengthCoord * 2,
+            p.rectBreadthCoord * 2
+          );
+          ctx.stroke();
+          ctx.fill();
+
+          ctx.fillStyle = "black";
+          if (p.side == "breadth") {
+            ctx.fillText(
+              `${p.rectLength} ${p.unitMeasurement}`,
+              -15,
+              -p.rectBreadthCoord - 10
+            );
+          }
+          if (p.side == "length") {
+            ctx.fillText(
+              `${p.rectBreadth} ${p.unitMeasurement}`,
+              p.rectLengthCoord + 5,
+              0 + 2
+            );
+          }
+
+          ctx.save();
+          ctx.translate(-200, -137.5);
+          canvasTextId.insertAdjacentHTML(
+            "beforeend",
+            `The ${p.areaOrPerimeter} of the ${p.shapeChoice} is ${
+              p.areaOrPerimeter == "area"
+                ? `${p.area} ${p.unitMeasurement}2.`
+                : `${p.perimeter} ${p.unitMeasurement}.`
+            } `
+          );
+          // ctx.fillText(
+          //   `The ${p.areaOrPerimeter} of the ${p.shapeChoice} is ${
+          //     p.areaOrPerimeter == "area"
+          //       ? `${p.area} ${p.unitMeasurement}2.`
+          //       : `${p.perimeter} ${p.unitMeasurement}.`
+          //   } `,
+          //   20,
+          //   60
+          // );
+          ctx.restore();
+        }
+      }
+
+      ctx.restore();
     }
   }
 
@@ -15357,7 +15571,7 @@ How many items are there in each bag?
         Every ${ordinalPosition[p.numTwo]} participant receives ${
           things[genNumbers(2) + 2]
         }.</p>
-        Which is the ${p.times} participant to receive both?
+        Which is the ${p.times} participant to receive both?</br>
         <i>Leave your answer in ordinal numbers.</i>
         `;
       }
@@ -15684,7 +15898,7 @@ How many items are there in each bag?
         //   console.log("Clashing total");
         //   return updateCalc();
         // }
-        if (p.sceneAOne == p.sceneOne && p.sceneATwo == p.sceneBTwo) {
+        if (p.sceneAOne == p.sceneBOne && p.sceneATwo == p.sceneBTwo) {
           return updateCalc();
         }
         displayProblem.innerHTML = `
@@ -19614,8 +19828,18 @@ function handleSubmit(e) {
         }
       }
 
-      //MONEY: ADDITION SUBTRACTION AND MULTIPLICATION
+      // PART AND INTERVAL: CONVERSION
       if (setting == 20) {
+        let answer = p.start + p.eachInterval * p.arrow;
+        if (p.answerUnit == "g" || p.answerUnit == "m" || p.answerUnit == "ml")
+          answer *= 1000;
+        if (p.answerUnit == "cm") answer *= 100;
+
+        correctAnswer = Math.floor(answer);
+      }
+
+      //MONEY: ADDITION SUBTRACTION AND MULTIPLICATION
+      if (setting == 21) {
         if (p.symbol == "+") {
           correctAnswer = accDecimal((p.varA + p.varB) / 100);
         }
@@ -19628,7 +19852,7 @@ function handleSubmit(e) {
       }
 
       //FRACTIONS: SHAPE
-      if (setting == 21) {
+      if (setting == 22) {
         let shaded = p.shaded;
         let unshaded = p.total - shaded;
         [shaded, unshaded] = simplify(shaded, unshaded);
@@ -19641,7 +19865,7 @@ function handleSubmit(e) {
       }
 
       // FRACTIONS: ADDITION AND SUBTRACTION
-      if (setting == 22) {
+      if (setting == 23) {
         const commonDenoFind = commonDeno(p.denoOne, p.denoTwo);
         const newNumeOne = (commonDenoFind / p.denoOne) * p.numeOne;
         const newNumeTwo = (commonDenoFind / p.denoTwo) * p.numeTwo;
@@ -19660,14 +19884,49 @@ function handleSubmit(e) {
       }
 
       //FRACTIONS: EXPANSION AND SIMPLIFICATION
-      if (setting == 23) {
+      if (setting == 24) {
         correctAnswer = p.answer;
       }
 
       // FRACTIONS: MID-POINT
-      if (setting == 24) {
+      if (setting == 25) {
         [p.answerNume, p.answerDeno] = simplify(p.answerNume, p.answerDeno);
         correctAnswer = `${p.answerNume}/${p.answerDeno}`;
+      }
+
+      //GEOMETRY: AREA AND PERIMETER
+      if (setting == 26) {
+        if (p.rollx == 0) {
+          if (p.shapeChoice == "square") {
+            if (p.areaOrPerimeter == "area") {
+              correctAnswer = p.squareSide * p.squareSide;
+            }
+            if (p.areaOrPerimeter == "perimeter") {
+              correctAnswer = p.squareSide * 4;
+            }
+          }
+          if (p.shapeChoice == "rectangle") {
+            if (p.areaOrPerimeter == "area") {
+              correctAnswer = p.rectLength * p.rectBreadth;
+            }
+            if (p.areaOrPerimeter == "perimeter") {
+              correctAnswer = (p.rectLength + p.rectBreadth) * 2;
+            }
+          }
+        }
+        if (p.rollx == 1) {
+          if (p.shapeChoice == "square") {
+            correctAnswer = p.squareSide;
+          }
+          if (p.shapeChoice == "rectangle") {
+            if (p.side == "breadth") {
+              correctAnswer = p.rectBreadth;
+            }
+            if (p.side == "length") {
+              correctAnswer = p.rectLength;
+            }
+          }
+        }
       }
     }
 
@@ -24758,7 +25017,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(24, calArr, setting, 99, level);
+    setting = calArrAll(26, calArr, setting, 99, level);
     setting = checkRange(setting, calArr, skipArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -24949,8 +25208,22 @@ function genProblems() {
       };
     }
 
-    // MONEY: ADDITION AND SUBTRACTION
+    // PARTS AND INTERVALS
     if (setting == 20) {
+      const gen_intervals = [2, 4, 5, 8, 10][genNumbers(5)];
+      return {
+        start: 0,
+        intervals: gen_intervals,
+        unit: ["kg", "ℓ", "m", "km"][genNumbers(4)],
+        answerUnit: undefined,
+        eachInterval: undefined,
+        end: undefined,
+        arrow: genNumbers(gen_intervals - 1) + 1,
+      };
+    }
+
+    // MONEY: ADDITION AND SUBTRACTION
+    if (setting == 21) {
       return {
         varA: genNumbers(10000 - 100) + 100,
         varB: genNumbers(10000 - 100) + 100,
@@ -24959,7 +25232,7 @@ function genProblems() {
     }
 
     //FRACTION: SHAPES
-    if (setting == 21) {
+    if (setting == 22) {
       return {
         shapes: ["square", "triangle", "rectangle", "circle"][genNumbers(4)],
         shaded: undefined,
@@ -24971,7 +25244,7 @@ function genProblems() {
     }
 
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 22) {
+    if (setting == 23) {
       const gen_denoOne = genNumbers(9) + 2;
       const gen_denoTwo = genNumbers(8) + 3;
       return {
@@ -24983,7 +25256,7 @@ function genProblems() {
       };
     }
     // FRACTIONS: EXPAND AND SIMPLIFICATION
-    if (setting == 23) {
+    if (setting == 24) {
       const gen_deno = genNumbers(5) + 3;
       const gen_nume = genNumbers(gen_deno - 2) + 2;
       return {
@@ -24996,7 +25269,7 @@ function genProblems() {
       };
     }
     // FRACTIONS: MID POINT
-    if (setting == 24) {
+    if (setting == 25) {
       const gen_denoOne = genNumbers(7) + 4;
       const gen_denoTwo = genNumbers(gen_denoOne - 2) + 2;
       return {
@@ -25009,8 +25282,8 @@ function genProblems() {
       };
     }
 
-    //GEOMETRY: AREA AND PERIMETER
-    if (setting == 25) {
+    // GEOMETRY: AREA AND PERIMETER
+    if (setting == 26) {
       return {
         shapeChoice: ["rectangle", "square"][genNumbers(2)],
         squareCoord: genNumbers(50) + 30,
@@ -28858,7 +29131,7 @@ function buttonLevelSetting() {
       if (
         ![
           1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-          21, 22, 23, 24, 99,
+          21, 22, 23, 24, 25, 26, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
