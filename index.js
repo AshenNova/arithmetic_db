@@ -8,6 +8,7 @@ const attemptRoute = require("./routes/attempts");
 const userRoute = require("./routes/users");
 const scienceRoute = require("./routes/sciences");
 const trialRoute = require("./routes/trials");
+const lessonRoute = require("./routes/lessons");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const cookieParser = require("cookie-parser");
@@ -81,7 +82,8 @@ app.get("/arithmetic", authController.authenticate, (req, res) => {
   });
 });
 
-app.use("/trial", trialRoute);
+app.use("/lesson", authController.authenticate, lessonRoute);
+app.use("/trial", authController.authenticate, trialRoute);
 app.use("/attempts", authController.authenticate, attemptRoute);
 app.use("/user", authController.authenticate, userRoute);
 app.use("/science", authController.authenticate, scienceRoute);

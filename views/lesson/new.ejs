@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+  <link rel="stylesheet" href="/css/navbar-styles.css">
+   <link rel="icon" href="/images/favicon.ico?v=1.1">
+
+  
+  <title>All users</title>
+</head>
+<body>
+  <%- include("../partials/navbar"); %>
+
+  <div class="container mt-3">
+  <h1>New Lesson</h1>
+ 
+  <form action="/lesson/new" method="post">
+    <div class="mb-3">
+      <label for="outlet" class="form-label" >Outlet</label>
+      <select class="form-select" aria-label="Default select example" name="outlet">
+        <% if (lesson) { %>
+          <option selected><%= lesson.outlet %></option>
+        <% } else { %>
+          <option selected>Choose</option>
+        <% } %>
+        <option value="Toa Payoh">Toa Payoh</option>
+        <option value="Hougang">Hougang</option>
+        <option value="Private">Private</option>
+      </select>
+    </div>  
+    <div class="mb-3">
+      <label for="day" class="form-label" >Outlet</label>
+      <select class="form-select" aria-label="Default select example" name="day">
+        <% if (lesson) { %>
+          <option selected><%= lesson.day %></option>
+        <% } else { %>
+          <option selected>Choose</option>
+        <% } %>
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+        <option value="Saturday">Saturday</option>
+        <option value="Sunday">Sunday</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <div class="form-group required">
+        <label class="form-label" for="time">Time</label>
+        <input type="text" class="form-control" id="rewardId" name="time" <% if (lesson) { %>
+          value="<%= lesson.time %>"
+        <% } %>>
+      </div>
+    </div>
+    <div class="mb-3">
+      <div class="form-group required">
+        <label class="form-label" for="slot">Slot</label>
+        <input type="number" class="form-control" name="slot" <% if (lesson) { %>
+          value="<%= lesson.slot %>"
+        <% } %>>
+      </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script src="/javascript/confirmation.js"></script>
+</html>

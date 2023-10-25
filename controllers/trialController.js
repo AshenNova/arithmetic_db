@@ -1,4 +1,5 @@
 const Trial = require("../models/trialModel");
+const Lesson = require("../models/lessonModel");
 
 exports.new = async (req, res) => {
   try {
@@ -13,6 +14,20 @@ exports.new = async (req, res) => {
   }
 };
 
-exports.signup = (req, res) => {
-  res.render("trial/signup");
+exports.signup = async (req, res) => {
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+
+  const toapayoh = await Lesson.find({ outlet: "Toa Payoh" });
+  const hougang = await Lesson.find({ outlet: "Hougang" });
+  const private = await Lesson.find({ outlet: "Private" });
+  res.render("trial/signup", {
+    username,
+    authenticate,
+    currentUser,
+    toapayoh,
+    hougang,
+    private,
+  });
 };

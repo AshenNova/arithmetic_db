@@ -14,25 +14,49 @@
     <title>Science</title>
 </head>
 <body>
+  <%- include("../partials/navbar") %>
     <div class="container">
         <h1>Free Trial Form</h1>
+        <p>This form is for Primary level Math and Science.</p>
         <p>Before you fill in the form, you may first want to read our rules and regulations.</p>
     </div>
     <div class="container mb-3">
       <form action="/trial/new" method="post">
         <div class="mb-3">
           <label for="outlet" class="form-label" >Outlet</label>
-          <select class="form-select" aria-label="Default select example" name="outlet">
-            <option selected>Choose</option>
-            <option value="1">Toa Payoh</option>
-            <option value="2">Hougang</option>
-            <option value="3">Private</option>
+          <select class="form-select" aria-label="Default select example" name="outlet" id="slct1">
+            <option selected>Choose an outlet</option>
+            <!-- <option value="Toa Payoh">Toa Payoh</option>
+            <option value="Hougang">Hougang</option>
+            <option value="Private">Private</option> -->
           </select>
         </div>
         <div class="mb-3">
-          <label for="outlet" class="form-label" >Timing</label>
-          <select class="form-select" aria-label="Default select example" name="timing">
-            <option selected>?</option>
+          <div class="toapayoh" style="display: none;">
+            <% toapayoh.forEach(item => { %>
+              <% if (item.slot != 0) { %>
+                <%= item.day %>, <%= item.time %>;
+              <% } %> 
+            <% }) %>
+          </div>
+          <div class="hougang" style="display: none;">
+            <% hougang.forEach(item => { %>
+              <% if (item.slot != 0) { %>
+                <%= item.day %>, <%= item.time %>;
+              <% } %> 
+            <% }) %>
+          </div>
+          <div class="private" style="display: none;">
+            <% private.forEach(item => { %>
+              <% if (item.slot != 0) { %>
+                <%= item.day %>, <%= item.time %>;
+              <% } %> 
+            <% }) %>
+          </div>
+          <label for="outlet" class="form-label"  >Timing</label>
+          <select class="form-select" aria-label="Default select example" name="timing" id="slct2">
+            <option selected>Choose a time slot.</option>
+                      
           </select>
           <div><b>*Note that the free trial timing reflected are identical to the available slots.</b></div>
         </div>
@@ -151,9 +175,8 @@
         <label for="questionD" class="form-label" >Do you allow physical punishment?</label>
         <select class="form-select" aria-label="Default select example" name="questionD">
           <option selected>Choose</option>
-          <option value="1">Yes</option>
-          <option value="2">No</option>
-          <!-- <option value="3">Private</option> -->
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
         </select>
       </div>
 
@@ -194,6 +217,45 @@
 </div>
  
 </body>
+<script>
+  let toapayoh = document.querySelector(".toapayoh").innerHTML
+  let hougang = document.querySelector(".hougang").innerHTML
+  let private = document.querySelector(".toapayoh").innerHTML
+  toapayoh = toapayoh.split(";")
+  hougang = hougang.split(";")
+  private = private.split(";")
+  // let hougang = ["Hougang"]
+  // console.log(toapayoh.trim())
+  const outlet = ["Toa Payoh", "Hougang", "Private"]
+  let slct1 = document.getElementById("slct1")
+  let slct2 = document.getElementById("slct2")
+
+  outlet.forEach(function addOutlet(item){
+    let option = document.createElement("option")
+    option.text = item
+    option.value = item
+    slct1.appendChild(option)
+  })
+
+  slct1.onchange = function () {
+    slct2.innerHTML = "<option></option>"
+      if (this.value == "Toa Payoh"){
+        addToSlct2(toapayoh)
+      }
+      if (this.value == "Hougang"){
+        addToSlct2(hougang)
+      }
+  }
+
+  function addToSlct2(arr){
+    arr.forEach(function (item){
+      let option = document.createElement("option")
+      option.text = item;
+      option.value = item;
+      slct2.appendChild(option)
+    })
+  }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
 </html>

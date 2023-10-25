@@ -8633,8 +8633,12 @@ function updateProblems() {
       p.answerUnit = "g";
       if (p.unit == "ℓ") p.answerUnit = "ml";
       if (p.unit == "km") p.answerUnit = "m";
-      if (p.unit == "m") p.answerUnit = "cm";
+      if (p.unit == "m") {
+        p.answerUnit = "cm"
+    p.intervals = [2, 4, 5, 10][genNumbers(4)]
+  };
 
+      
       canvasTextId.textContent = `Give your answer in ${p.answerUnit}`;
       p.eachInterval = 1 / p.intervals;
 
@@ -9002,6 +9006,7 @@ function updateProblems() {
       equalSymbol.textContent = "=";
     }
     if (setting == 1) {
+      normalDisplay();
       if (p.numOne == p.numTwo) {
         return updateProblems();
       }
@@ -9032,6 +9037,7 @@ function updateProblems() {
       p.numOne = holdingNum;
     }
     if (setting == 2) {
+      normalDisplay();
       // START CHANGE DISPLAY
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
@@ -9051,6 +9057,7 @@ function updateProblems() {
       <i>List in ascending order.</i>`;
     }
     if (setting == 3) {
+      normalDisplay();
       // START CHANGE DISPLAY
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
@@ -9102,6 +9109,7 @@ function updateProblems() {
       <i>List in ascending order.</i>`;
     }
     if (setting == 4) {
+      workingDisplay();
       if (p.numOne % 10 == 0) {
         p.numOne += 1;
       }
@@ -9116,6 +9124,7 @@ function updateProblems() {
 
     // LEFT SIDE RIGHT SIDE
     if (setting == 5) {
+      normalDisplay();
       let leftSide = resultSide(p.limit, p.multiMin, p.multiMax);
       let rightSide = blankSide(
         leftSide.result,
