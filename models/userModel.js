@@ -54,6 +54,8 @@ const userSchema = new mongoose.Schema({
   incorrectScience: {
     type: Array,
   },
+  freeze: { type: Boolean, default: false },
+  freezeEndDate: { type: Date },
 });
 
 userSchema.pre("save", async function (next) {

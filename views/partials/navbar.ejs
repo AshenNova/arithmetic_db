@@ -80,7 +80,12 @@
 
             <li class="nav-item"> 
               <% if (currentUser.points) { %>
-                <a href="/user/points/rewards" class="text-warning nav-link active">[Points: <%= currentUser.points %>]</a>
+                <a href="/user/points/rewards" class="<% if (currentUser.freeze) { %>
+                 text-primary 
+              <% } else { %>
+                text-warning
+              <% } %> 
+              nav-link active">[Points: <%= currentUser.points %>]</a>
               <% } %>
               </li>
               <% if (currentUser.admin) { %>
@@ -91,8 +96,10 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item" href="/user">Users</a></li>
                   <li><a class="dropdown-item" href="/user/points/rewards/new">+Rewards</a></li>
-                  <li><a class="dropdown-item" href="/trial/signup">Form</a></li>
-                  <li><a class="dropdown-item" href="/lesson">Lessons</a></li>
+                  <li><a class="dropdown-item" href="/lesson/new">Create Lesson</a></li>
+                  <li><a class="dropdown-item" href="/lesson">View Lessons</a></li>
+                  <li><a class="dropdown-item" href="/trial">View Trials</a></li>
+                  <li><a class="dropdown-item" href="/trial/signup">Signup Form</a></li>
                   <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
                 </ul>
               </li>

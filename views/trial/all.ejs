@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+    <link rel="stylesheet" href="/css/navbar-styles.css">
+     <link rel="icon" href="/images/favicon.ico?v=1.1">
+    <title>View All Trials</title>
+</head>
+
+<style>
+ .center {
+   /* display: flex; */
+   max-width: 700px;
+    align-items: center;
+ }
+</style>
+<body>
+  <%- include("../partials/navbar") %>
+
+  <div class="container">
+  <% if (getAllTrials.length) { %>
+    <table class="table">
+        <th scope="col">Filled on</th>
+        <th scope="col">Interest</th>
+         <th scope="col">Student</th>
+         <th scope="col">Parent / Guardian One</th>
+         <th scope="col">Parent / Guardian Two</th>
+         <th scope="col">Questions</th>
+   
+         <% getAllTrials.forEach(item => { %>
+            <tr>
+            <td><%= item.filledIn.toLocaleTimeString('en-US') %></td>
+             <td><%= item.outlet %></br>
+              <%= item.timing %></br>
+              <% if (item.otherTiming) { %>
+                <span class="text-danger">Other: <%= item.otherTiming %></span></br>
+              <% } %>
+             <% if (item.subject.length > 1) { %>
+          
+                <ul>
+                    <% item.subject.forEach(item => { %>
+                      <li><%= item %></li>
+                    <% }) %>
+                </ul>
+              </br>
+               <% } else { %>
+                <%= item.subject %></br>
+              <% } %>
+               </td>
+             <td><%= item.childName %> <%= item.childSurname %> ( Age: <%= new Date().getFullYear() - item.DOB.getFullYear() %> )</br>
+              <%= item.level %></br>
+              <%= item.gender %></br>
+             <%= item.school %></br>
+             </td>
+             <td>
+              <%= item.parentOneName %> <%= item.parentOneSurname %></br>
+              <%= item.roleOne %></br>
+              <%= item.contactOne %></br>
+              <%= item.emailOne %></br>
+             </td>
+             <td>
+               <%= item.parentTwoName %> <%= item.parentTwoSurname %></br>
+               <%= item.outlet.roleTwo %></br>
+               <%= item.outlet.contactTwo %></br>
+             </td>
+             <td>
+               A: <%= item.outlet.questionA %></br>
+               B: <%= item.outlet.questionB %></br>
+               C: <%= item.outlet.questionC %></br>
+               D: <%= item.outlet.questionD %>
+              </td>
+            </tr>
+         <% }) %>
+   
+     </table>
+  <% } else { %>
+<h1> Empty </h1>
+  <% } %> 
+</div>
+ 
+ 
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</html>

@@ -9,4 +9,5 @@ router
   .post(lessonController.postNewLesson);
 
 router.route("/edit/:id").get(lessonController.createNewLesson);
+router.route("/delete/:id").get(lessonController.deleteLesson);
 module.exports = router;

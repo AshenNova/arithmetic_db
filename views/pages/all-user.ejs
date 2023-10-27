@@ -23,6 +23,7 @@
     <thead>
       <tr>
         <!-- <th scope="col">#</th> -->
+        <th scope="col">Frozen</th>
         <th scope="col">Admin</th>
         <th scope="col">Username</th>
         <th scope="col">Points</th>
@@ -38,6 +39,11 @@
     <tbody>
         <% allUsers.forEach(item => { %>
             <tr>
+              <% if (item.freeze) { %>
+                <td><%= "❄️" %></td>
+              <% } else { %>
+                <td></td>
+              <% } %>
               <% if (item.admin) { %>
                 <td><%= "⭐️" %></td>
               <% } else { %>

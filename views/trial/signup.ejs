@@ -11,10 +11,27 @@
     <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
     <link rel="stylesheet" href="/css/navbar-styles.css">
      <link rel="icon" href="/images/favicon.ico?v=1.1">
-    <title>Science</title>
+    <title>Free Trial</title>
 </head>
+<style>
+  .message {
+    background-color:#f8d7da;
+    margin-top: 1%;
+    margin-bottom: 1%
+  }
+  .focus {
+    background-color:#f8d7da;
+  }
+
+</style>
 <body>
   <%- include("../partials/navbar") %>
+  <div class="container message">
+    <% if (message) { %>
+
+     <%= message %>
+    <% } %>
+  </div>
     <div class="container">
         <h1>Free Trial Form</h1>
         <p>This form is for Primary level Math and Science.</p>
@@ -23,12 +40,14 @@
     <div class="container mb-3">
       <form action="/trial/new" method="post">
         <div class="mb-3">
-          <label for="outlet" class="form-label" >Outlet</label>
+          <label for="outlet" class="form-label focus" >Outlet*</label>
           <select class="form-select" aria-label="Default select example" name="outlet" id="slct1">
-            <option selected>Choose an outlet</option>
-            <!-- <option value="Toa Payoh">Toa Payoh</option>
-            <option value="Hougang">Hougang</option>
-            <option value="Private">Private</option> -->
+            <% if (clone) { %>
+              <option value="<%= clone.outlet %>" selected><%= clone.outlet %></option>
+             <% } else { %>
+              <option selected>Choose an outlet</option>
+             <% } %> 
+              
           </select>
         </div>
         <div class="mb-3">
@@ -53,28 +72,72 @@
               <% } %> 
             <% }) %>
           </div>
-          <label for="outlet" class="form-label"  >Timing</label>
+          <label for="outlet" class="form-label focus"  >Timing*</label>
           <select class="form-select" aria-label="Default select example" name="timing" id="slct2">
-            <option selected>Choose a time slot.</option>
-                      
+            <% if (clone) { %>
+              <option value="<%= clone.timing %>" selected><%= clone.timing %></option>
+             <% } else { %>
+              <option selected>Choose a time slot.</option>
+             <% } %> 
           </select>
           <div><b>*Note that the free trial timing reflected are identical to the available slots.</b></div>
         </div>
         <div class="mb-3">
           <label for="otherTiming" class="form-label" name="otherTiming">Other Timing</label>
-           <input type="text" class="form-control" name="otherTiming" placeholder="If there is no situable timing. Please fill in your preferred day and timing. Thanks!">
+           <input type="text" class="form-control" name="otherTiming" placeholder="If there is no situable timing. Please fill in your preferred day and timing. Thanks!" <% if (clone) { %>
+             value="<%= clone.otherTiming %>"
+          <% } %>>
         </div>
         <div class="mb-3">
           <!-- <label for="subject" class="form-label" name="subject">Subject</label> -->
-          <p>Subject</p>
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="subject">
-          <label class="form-check-label" for="flexCheckDefault">Standard Math</label>
-          <input class="form-check-input ms-3" type="checkbox" value="" id="flexCheckDefault" name="subject">
-          <label class="form-check-label" for="flexCheckDefault">Foundation Math</label>
-          <input class="form-check-input ms-3" type="checkbox" value="" id="flexCheckDefault" name="subject">
-          <label class="form-check-label" for="flexCheckDefault">Standard Science</label>
-          <input class="form-check-input ms-3" type="checkbox" value="" id="flexCheckDefault" name="subject">
-          <label class="form-check-label" for="flexCheckDefault">Foundation Science</label>
+          <label class="form-label focus">Subject*</label>
+            <% if (clone && clone.subject) { %>
+              <p>
+                <% if (clone.subject.includes("Standard Math")) { %>
+                  <input class="form-check-input" type="checkbox" value="Standard Math" id="flexCheckDefault" name="subject" checked>
+                  <label class="form-check-label" for="flexCheckDefault">Standard Math</label>
+                <% } else { %>
+                  <input class="form-check-input" type="checkbox" value="Standard Math" id="flexCheckDefault" name="subject" >
+                  <label class="form-check-label" for="flexCheckDefault">Standard Math</label>
+                <% } %> 
+
+                <% if (clone.subject.includes("Foundation Math")) { %>
+                  <input class="form-check-input ms-3" type="checkbox" value="Foundation Math" id="flexCheckDefault" name="subject" checked>
+                  <label class="form-check-label" for="flexCheckDefault">Foundation Math</label>
+                <% } else { %>
+                  <input class="form-check-input ms-3" type="checkbox" value="Foundation Math" id="flexCheckDefault" name="subject" >
+                  <label class="form-check-label" for="flexCheckDefault">Foundation Math</label>
+                <% } %> 
+
+                <% if (clone.subject.includes("Standard Science")) { %>
+                  <input class="form-check-input ms-3" type="checkbox" value="Standard Science" id="flexCheckDefault" name="subject" checked>
+                  <label class="form-check-label" for="flexCheckDefault">Standard Science</label>
+                <% } else { %>
+                  <input class="form-check-input ms-3" type="checkbox" value="Standard Science" id="flexCheckDefault" name="subject" >
+                  <label class="form-check-label" for="flexCheckDefault">Standard Science</label>
+                <% } %> 
+
+                <% if (clone.subject.includes("Foundation Science")) { %>
+                  <input class="form-check-input ms-3" type="checkbox" value="Foundation Science" id="flexCheckDefault" name="subject" checked>
+                  <label class="form-check-label" for="flexCheckDefault">Foundation Science</label>
+                <% } else { %>
+                  <input class="form-check-input ms-3" type="checkbox" value="Foundation Science" id="flexCheckDefault" name="subject" >
+                  <label class="form-check-label" for="flexCheckDefault">Foundation Science</label>
+                <% } %> 
+               
+                </p>
+            <% } else { %>
+              <p>
+                <input class="form-check-input" type="checkbox" value="Standard Math" id="flexCheckDefault" name="subject">
+                <label class="form-check-label" for="flexCheckDefault">Standard Math</label>
+                <input class="form-check-input ms-3" type="checkbox" value="Foundation Math" id="flexCheckDefault" name="subject">
+                <label class="form-check-label" for="flexCheckDefault">Foundation Math</label>
+                <input class="form-check-input ms-3" type="checkbox" value="Standard Science" id="flexCheckDefault" name="subject">
+                <label class="form-check-label" for="flexCheckDefault">Standard Science</label>
+                <input class="form-check-input ms-3" type="checkbox" value="Foundation Science" id="flexCheckDefault" name="subject">
+                <label class="form-check-label" for="flexCheckDefault">Foundation Science</label>
+                </p>
+            <% } %>
         </div>
 
         <h1>Details</h1>
@@ -82,56 +145,101 @@
           <div class="col">
             <h4>Student</h4>
             <div class="mb-3">
-              <label for="childName" class="form-label">Name</label>
-              <input type="text" class="form-control" name="childName">
+              <label for="childName" class="form-label focus">Name*</label>
+              <input type="text" class="form-control" name="childName"<% if (clone && clone.childName) { %>
+                <%= clone.childName %>
+             <% } %>>
             </div>
             <div class="mb-3">
-                <label for="childSurname" class="form-label">Surname</label>
-                <input type="text" class="form-control" name="childSurname"> 
+                <label for="childSurname" class="form-label focus">Surname*</label>
+                <input type="text" class="form-control" name="childSurname"<% if (clone && clone.childSurname) { %>
+                  value="<%= clone.childSurname %>"
+               <% } %>> 
+           </div>
+        
+           <% if (clone && clone.DOB) { %>
+            <div class="mb-3">
+              <label for="DOB" class="form-label focus">Date of birth*</label>
+              <input type="date" class="form-control" name="DOB" value="<%= clone.DOB %>">
+             </div>
+           <% } else { %>
+            <div class="mb-3">
+              <label for="DOB" class="form-label focus">Date of birth*</label>
+              <input type="date" class="form-control" name="DOB">
+             </div>
+           <% } %>
+           <div class="mb-3">
+            <label for="level" class="form-label focus">Level (For year <%= new Date().getFullYear() %>)*</label>
+            <select class="form-select" aria-label="Default select example" name="level">
+              <% if (clone && clone.level) { %>
+                <option value="<%= clone.level %>"selected><%= clone.level %></option>
+              <% } else { %>
+                <option selected>Choose level</option>
+              <% } %>
+              <option value="p1">p1</option>
+              <option value="p2">p2</option>
+              <option value="p3">p3</option>
+              <option value="p4">p4</option>
+              <option value="p5">p5</option>
+              <option value="p6">p6</option>
+          </select>
            </div>
            <div class="mb-3">
-            <label for="DOB" class="form-label">Date of birth</label>
-            <input type="date" class="form-control" name="DOB"> 
-           </div>
-           <div class="mb-3">
-            <label for="gender" class="form-label">Gender</label>
+            <label for="gender" class="form-label focus">Gender*</label>
             <select class="form-select" aria-label="Default select example"name="gender">
-              <option selected>Choose</option>
-              <option value="1">Male</option>
-              <option value="2">famale</option>
+              <% if (clone && clone.gender) { %>
+                <option value="<%= clone.gender %>"selected><%= clone.gender %></option>
+              <% } else { %>
+                <option selected>Choose</option>
+              <% } %>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
             </select>
           </div>
            <div class="mb-3">
-            <label for="school" class="form-label">School</label>
-            <input type="text" class="form-control" name="school"> 
+            <label for="school" class="form-label focus">School*</label>
+            <% if (clone && clone.school) { %>
+              <input type="text" class="form-control" name="school" value="<%= clone.school %>"> 
+            <% } else { %>
+              <input type="text" class="form-control" name="school"> 
+            <% } %>
            </div>
           </div>
-
           <div class="col">
             <h4>Parent/Guardian 1</h4>
            <div class="mb-3">
-            <label for="parentOneName" class="form-label">Name</label>
-            <input type="text" class="form-control" name="parentOneName">
+            <label for="parentOneName" class="form-label focus">Name*</label>
+            <input type="text" class="form-control" name="parentOneName" <% if (clone) { %>
+              value="<%= clone.parentOneName %>"
+             <% } %>>
             <!-- <div name="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
           <div class="mb-3">
-            <label for="parentOneSurname" class="form-label">Surname</label>
-            <input type="text" class="form-control" name="parentOneSurname">
+            <label for="parentOneSurname" class="form-label focus">Surname*</label>
+            <input type="text" class="form-control" name="parentOneSurname"<% if (clone) { %>
+              value="<%= clone.parentOneSurname %>"
+             <% } %>>
             <!-- <div name="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
           <div class="mb-3">
-            <label for="roleOne" class="form-label">Role</label>
-            <input type="text" class="form-control" name="roleOne" placeholder="Father / Mother etc">
+            <label for="roleOne" class="form-label focus">Role*</label>
+            <input type="text" class="form-control" name="roleOne" placeholder="Father / Mother etc" <% if (clone) { %>
+              value="<%= clone.roleOne %>"
+             <% } %>>
             <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
           <div class="mb-3">
-            <label for="ContactOne" class="form-label">Contact Number</label>
-            <input type="text" class="form-control" name="ContactOne">
+            <label for="ContactOne" class="form-label focus">Contact Number*</label>
+            <input type="text" class="form-control" name="contactOne"<% if (clone) { %>
+              value="<%= clone.contactOne %>"
+             <% } %>>
             <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
           <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="text" class="form-control" name="email">
+            <label for="email" class="form-label focus">Email*</label>
+            <input type="text" class="form-control" name="emailOne"<% if (clone) { %>
+              value="<%= clone.emailOne %>"
+             <% } %>>
             <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
         </div>
@@ -139,42 +247,89 @@
               <h4>Parent/Guardian 2</h4>
               <div class="mb-3">
                   <label for="parentTwoSurname" class="form-label">Name</label>
-                  <input type="text" class="form-control" name="parentTwoSurname">
+                  <input type="text" class="form-control" name="parentTwoName" <% if (clone) { %>
+                    value="<%= clone.parentTwoName %>"
+                   <% } %>>
              </div>
             <div class="mb-3">
               <label for="parentTwoSurname" class="form-label">Surname</label>
-              <input type="text" class="form-control" name="parentTwoSurname">
+              <input type="text" class="form-control" name="parentTwoSurname" <% if (clone) { %>
+                value="<%= clone.parentTwoSurname %>"
+               <% } %>>
               <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
             </div>
             <div class="mb-3">
               <label for="roleTwo" class="form-label">Role</label>
-              <input type="text" class="form-control" name="roleTwo" placeholder="Father / Mother etc">
+              <input type="text" class="form-control" name="roleTwo" placeholder="Father / Mother etc" <% if (clone) { %>
+                value="<%= clone.roleTwo %>"
+               <% } %>>
               <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
             </div>
             <div class="mb-3">
               <label for="ContactTwo" class="form-label">Contact Number</label>
-              <input type="text" class="form-control" name="ContactTwo">
+              <input type="text" class="form-control" name="ContactTwo" <% if (clone) { %>
+                value="<%= clone.contactTwo %>"
+               <% } %>>
               <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
             </div>
           </div>
         </div>
         <h1>Questions</h1>
+        
         <div class="mb-3">
-          <label for="questionA" class="form-label">Does your child have any learning disabilities?</label>
-          <textarea type="text" class="form-control" name="questionA" placeholder="If no, leave blank. If yes, please tells us what disability"></textarea>
+          <label for="questionA" class="form-label">What is the most recent result if any.</label>
+          <% if (clone && clone.questionA) { %>
+            <input type="text" class="form-control" name="questionA" placeholder="30/40 or 75%" value="<%= clone.questionA %>">
+          <% } else { %>
+            <input type="text" class="form-control" name="questionA" placeholder="30/40 or 75%">
+          <% } %>
+        </div>
+        <div class="mb-3">
+          <label for="questionB" class="form-label focus">Do you want your child to receive homework?*</label>
+          <select class="form-select" aria-label="Default select example" name="questionB">
+            <% if (clone && clone.questionB) { %>
+              <option value="<%= clone.questionB %>"selected><%= clone.questionB %></option>
+            <% } else { %>
+              <option selected>Choose</option>
+            <% } %>
+            <option value="Yes">Yes, I would ensure that he/she completes the work.</option>
+            <option value="No">If no, expect slower progress.</option>
+        </select>
+        </div>
+      
+        <div class="mb-3">
+          <label for="questionC" class="form-label">Does your child have any learning disabilities?</label>
+          <% if (clone && clone.questionC) { %>
+            <textarea type="text" class="form-control" name="questionC" placeholder="If no, leave blank. If yes, please tells us more."><%= clone.questionC %></textarea>
+          <% } else { %>
+            <textarea type="text" class="form-control" name="questionC" placeholder="If no, leave blank. If yes, please tells us more."></textarea>
+          <% } %>
        </div>
        <div class="mb-3">
-        <label for="questionB" class="form-label">Is this your child's first time attending tuition for the subject that you are interested in signing him/her up for?</label>
-        <textarea type="text" class="form-control" name="questionB" placeholder="If yes, leave blank. If no, please tells why you did not continue there?"></textarea>
+        <label for="questionD" class="form-label">Is this your child's first time attending tuition for the subject that you are interested in signing him/her up for?</label>
+        <% if (clone && clone.questionD) { %>
+          <textarea type="text" class="form-control" name="questionD" placeholder="If yes, leave blank. If no, please tells why you did not continue there?"  ><%= clone.questionD %></textarea>
+        <% } else { %>
+          <textarea type="text" class="form-control" name="questionD" placeholder="If yes, leave blank. If no, please tells why you did not continue there?"></textarea>
+        <% } %>
        </div>
        <div class="mb-3">
-        <label for="questionC" class="form-label">What should we do if your child misbehavies?</label>
-        <textarea type="text" class="form-control" name="questionC" placeholder="Fill in the blank"></textarea>
+        <label for="questionE" class="form-label focus">What should we do if your child misbehavies?</label>
+        <% if (clone && clone.questionE) { %>
+          <textarea type="text" class="form-control" name="questionE" placeholder="Fill in the blank"><% clone.questionE %></textarea>
+        <% } else { %>
+          <textarea type="text" class="form-control" name="questionE" placeholder="Fill in the blank"></textarea>
+        <% } %>
+       
        </div>
        <div class="mb-3">
-        <label for="questionD" class="form-label" >Do you allow physical punishment?</label>
-        <select class="form-select" aria-label="Default select example" name="questionD">
-          <option selected>Choose</option>
+        <label for="questionF" class="form-label focus" >Do you allow physical punishment?*</label>
+        <select class="form-select" aria-label="Default select example" name="questionF">
+          <% if (clone && clone.questionF) { %>
+            <option value="<%= clone.questionF %>"selected><%= clone.questionF %></option>
+          <% } else { %>
+            <option selected>Choose</option>
+          <% } %>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
         </select>
@@ -197,7 +352,7 @@
             </div>
           <li><h4>Make up lessons</h4></li>
             <div class="ms-3">
-              <p>Make up lessons will expire within 1 month of occurence, and cannot be used to offset next month's fees.</p>
+              <p>Make up lessons will expire within 1 month of occurrence and cannot be used to offset next month's fees.</p>
             </div>
           <li><h4>Public Holiday</h4></li>
             <div class="ms-3">
@@ -218,12 +373,26 @@
  
 </body>
 <script>
-  let toapayoh = document.querySelector(".toapayoh").innerHTML
-  let hougang = document.querySelector(".hougang").innerHTML
-  let private = document.querySelector(".toapayoh").innerHTML
+  let toapayoh = document.querySelector(".toapayoh").textContent
+  let hougang = document.querySelector(".hougang").textContent
+  let private = document.querySelector(".toapayoh").textContent
   toapayoh = toapayoh.split(";")
   hougang = hougang.split(";")
   private = private.split(";")
+  console.log(toapayoh)
+  toapayoh.forEach((item, index) => {
+    toapayoh[index] = item.trim()
+  })
+  hougang.forEach((item, index) => {
+    hougang[index] = item.trim()
+  })
+  private.forEach((item, index) => {
+    private[index] = item.trim()
+  })
+  toapayoh.pop()
+  hougang.pop()
+  private.pop()
+
   // let hougang = ["Hougang"]
   // console.log(toapayoh.trim())
   const outlet = ["Toa Payoh", "Hougang", "Private"]
@@ -244,6 +413,9 @@
       }
       if (this.value == "Hougang"){
         addToSlct2(hougang)
+      }
+      if (this.value == "Private"){
+        addToSlct2(private)
       }
   }
 
