@@ -97,7 +97,7 @@ exports.createQuestion = async (req, res) => {
   console.log(req.params);
   let previous;
   if (req.params.id) {
-    previous = await Science.findOne().sort({ date: -1 });
+    previous = await Science.findById(req.params.id);
   }
   //   res.status(200).json({ message: "Creating new question" });
   let topic = await Science.distinct("topic");
@@ -271,23 +271,57 @@ exports.getTopic = async (req, res) => {
   let authenticate = req.auth;
   let currentUser = req.user;
   try {
-    let topic_p3 = [];
-    let topic_p4 = [];
-    let topic_p5 = [];
-    let topic_p6 = [];
+    // let topic_p3 = [];
+    // let topic_p4 = [];
+    // let topic_p5 = [];
+    // let topic_p6 = [];
+    // let age = new Date().getFullYear() - currentUser.DOB.getFullYear();
+    // console.log(age);
+    // const everything = await Science.find();
+    // everything.forEach((item) => {
+    //   item.level = item.level.toLowerCase();
+    //   if (item.level == "p3" && !topic_p3.includes(item.topic) && age >= 8)
+    //     topic_p3.push(item.topic);
+    //   if (item.level == "p4" && !topic_p4.includes(item.topic) && age >= 9)
+    //     topic_p4.push(item.topic);
+    //   if (item.level == "p5" && !topic_p5.includes(item.topic) && age >= 10)
+    //     topic_p5.push(item.topic);
+    //   if (item.level == "p6" && !topic_p6.includes(item.topic) && age >= 11)
+    //     topic_p6.push(item.topic);
+    // });
+    let subtopic_p3 = [];
+    let subtopic_p4 = [];
+    let subtopic_p5 = [];
+    let subtopic_p6 = [];
     let age = new Date().getFullYear() - currentUser.DOB.getFullYear();
     console.log(age);
     const everything = await Science.find();
     everything.forEach((item) => {
       item.level = item.level.toLowerCase();
-      if (item.level == "p3" && !topic_p3.includes(item.topic) && age >= 8)
-        topic_p3.push(item.topic);
-      if (item.level == "p4" && !topic_p4.includes(item.topic) && age >= 9)
-        topic_p4.push(item.topic);
-      if (item.level == "p5" && !topic_p5.includes(item.topic) && age >= 10)
-        topic_p5.push(item.topic);
-      if (item.level == "p6" && !topic_p6.includes(item.topic) && age >= 11)
-        topic_p6.push(item.topic);
+      if (
+        item.level == "p3" &&
+        !subtopic_p3.includes(item.subtopic) &&
+        age >= 8
+      )
+        subtopic_p3.push(item.subtopic);
+      if (
+        item.level == "p4" &&
+        !subtopic_p4.includes(item.subtopic) &&
+        age >= 9
+      )
+        subtopic_p4.push(item.subtopic);
+      if (
+        item.level == "p5" &&
+        !subtopic_p5.includes(item.subtopic) &&
+        age >= 10
+      )
+        subtopic_p5.push(item.subtopic);
+      if (
+        item.level == "p6" &&
+        !subtopic_p6.includes(item.subtopic) &&
+        age >= 11
+      )
+        subtopic_p6.push(item.subtopic);
     });
     // const topics = await Science.distinct("topic");
 
@@ -295,10 +329,10 @@ exports.getTopic = async (req, res) => {
       username,
       authenticate,
       currentUser,
-      topic_p3,
-      topic_p4,
-      topic_p5,
-      topic_p6,
+      subtopic_p3,
+      subtopic_p4,
+      subtopic_p5,
+      subtopic_p6,
     });
   } catch (e) {
     res.status(400).json({ status: "Failed", message: e });
@@ -306,7 +340,7 @@ exports.getTopic = async (req, res) => {
 };
 
 exports.getQuestions = async (req, res) => {
-  console.log("Sent topic, querying for questions");
+  console.log("Sent subtopic, querying for questions");
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
@@ -314,10 +348,10 @@ exports.getQuestions = async (req, res) => {
   try {
     console.log(req.body);
     const [p3, p4, p5, p6] = await Promise.all([
-      Science.find({ level: "p3", topic: req.body.topic_p3 }).lean(),
-      Science.find({ level: "p4", topic: req.body.topic_p4 }).lean(),
-      Science.find({ level: "p5", topic: req.body.topic_p5 }).lean(),
-      Science.find({ level: "p6", topic: req.body.topic_p6 }).lean(),
+      Science.find({ level: "p3", subtopic: req.body.subtopic_p3 }).lean(),
+      Science.find({ level: "p4", subtopic: req.body.subtopic_p4 }).lean(),
+      Science.find({ level: "p5", subtopic: req.body.subtopic_p5 }).lean(),
+      Science.find({ level: "p6", subtopic: req.body.subtopic_p6 }).lean(),
     ]);
     // const p3 = await Science.find({ topic: req.body.topic_p3, level: "p3" });
     // const p4 = await Science.find({ topic: req.body.topic_p4, level: "p4" });
@@ -331,23 +365,29 @@ exports.getQuestions = async (req, res) => {
     // SET NUMBER OF QUESTIONS
     if (limit > questionsDB.length) limit = questionsDB.length;
 
-    //FIND IF THE CURRENT USER HAS ANY PREVIOUSLY INCORRECT QUESTIONS
+    //CHECK IF THE CURRENT USER HAS ANY PREVIOUSLY INCORRECT QUESTIONS
     const incorrectQuestionsId = (await User.findById(currentUser._id))
       .incorrectScience;
     console.log(incorrectQuestionsId);
-    const chosenId =
-      incorrectQuestionsId[
-        Math.floor(Math.random() * incorrectQuestionsId.length)
-      ];
-    console.log(chosenId);
-    if (chosenId) {
-      const incorrectQuestion = await Science.findById(chosenId.toString());
-      console.log(incorrectQuestion);
-      questions.push(incorrectQuestion);
-      questionsIdArr.push(incorrectQuestion._id);
+
+    if (incorrectQuestionsId) {
+      while (
+        questions.length < Math.floor(limit / 3) &&
+        incorrectQuestionsId != 0
+      ) {
+        const chosenId =
+          incorrectQuestionsId[
+            Math.floor(Math.random() * incorrectQuestionsId.length)
+          ];
+        const incorrectQuestion = await Science.findById(chosenId);
+        console.log(incorrectQuestion);
+        const index = incorrectQuestionsId.indexOf(incorrectQuestion);
+        incorrectQuestionsId.splice(index, 1);
+        questions.push(incorrectQuestion);
+        questionsIdArr.push(incorrectQuestion._id);
+      }
     }
 
-    // console.log(questionsIdArr);
     //FILL UP WITH OTHER QUESTIONS
     while (questions.length < limit) {
       const chosenQuestion =
