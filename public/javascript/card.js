@@ -49,15 +49,14 @@ correctBtn.forEach((item, index) => {
     nextQuestion(item, index);
   });
   const question = questionID[index].textContent;
-  // console.log(question);
-  correctArr.push(question);
+  if (correctArr.includes(question)) correctArr.push(question);
 });
 incorrectBtn.forEach((item, index) => {
   item.addEventListener("click", (e) => {
     nextQuestion(item, index);
     const question = questionID[index].textContent;
     console.log(question);
-    incorrectArr.push(question);
+    if (incorrectArr.includes(question)) incorrectArr.push(question);
   });
 });
 // nextBtn[nextBtn.length - 1].classList.add("hidden");
