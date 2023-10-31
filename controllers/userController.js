@@ -1022,16 +1022,20 @@ exports.summary = async (req, res) => {
       let todayLevel = [];
       let todayCal = [];
       let todayHeu = [];
+      console.log(today);
       today.forEach((item) => {
-        if (today.item) {
+        if (item.level) {
           if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
             todayLevel.push(item);
+            console.log("1");
           }
           if (item.level.startsWith("cal")) {
             todayCal.push(item);
+            console.log("2");
           }
           if (item.level.startsWith("heu")) {
             todayHeu.push(item);
+            console.log("3");
           }
         }
       });
@@ -1086,7 +1090,6 @@ exports.summary = async (req, res) => {
       let monthLevel = [];
       let monthCal = [];
       let monthHeu = [];
-      console.log(month);
       month.forEach((item) => {
         if (item.level) {
           if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
@@ -1131,7 +1134,6 @@ exports.summary = async (req, res) => {
           }
         }
       });
-      console.log(yearCount);
       yearLevelCount = yearLevel.length;
       yearCalCount = yearCal.length;
       yearHeuCount = yearHeu.length;
