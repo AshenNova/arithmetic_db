@@ -921,7 +921,7 @@ exports.generateRecommendMiddleware = catchAsync(async (req, res, next) => {
 
 exports.recommend = catchAsync(async (req, res, next) => {
   // try {
-  let username = req.user.username;
+  let username = req.user.username.trim();
   const usernameStr = username.split(" ");
   let nameTemp = [];
   usernameStr.forEach((item) => {
@@ -965,6 +965,222 @@ exports.recommend = catchAsync(async (req, res, next) => {
   // }
 });
 
+exports.summary = async (req, res) => {
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  let searchedUser;
+  let allCount;
+  let todayCount;
+  let weekCount;
+  let monthCount;
+  let yearCount;
+  let todayLevelCount;
+  let todayCalCount;
+  let todayHeuCount;
+  let weekLevelCount;
+  let weekCalCount;
+  let weekHeuCount;
+  let monthLevelCount;
+  let monthCalCount;
+  let monthHeuCount;
+  let yearLevelCount;
+  let yearCalCount;
+  let yearHeuCount;
+  let allLevelCount;
+  let allCalCount;
+  let allHeuCount;
+  // let attempts;
+  console.log(req.query);
+  try {
+    if (req.query.username) {
+      console.log(req.query.username);
+      console.log("Searching for user with specified ID");
+      const small = req.query.username.split(" ");
+      let arr = [];
+      small.forEach((item) => {
+        const temp = item.charAt(0).toUpperCase() + item.slice(1, item.length);
+        arr.push(temp);
+      });
+      const username = arr.join(" ");
+      console.log(username);
+      searchedUser = await User.findOne({ username: req.query.username });
+      allCount = await Attempt.find({ user: username }).count();
+
+      //TODAY
+      console.log("Today start");
+      const start = new Date();
+      start.setHours(0, 0, 0, 0);
+      const end = new Date();
+      end.setHours(23, 59, 59, 999);
+      const today = await Attempt.find({
+        user: username,
+        date: { $gte: start, $lt: end },
+      });
+      todayCount = today.length;
+      console.log(`Today: ${todayCount}`);
+      let todayLevel = [];
+      let todayCal = [];
+      let todayHeu = [];
+      today.forEach((item) => {
+        if (today.item) {
+          if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
+            todayLevel.push(item);
+          }
+          if (item.level.startsWith("cal")) {
+            todayCal.push(item);
+          }
+          if (item.level.startsWith("heu")) {
+            todayHeu.push(item);
+          }
+        }
+      });
+      todayLevelCount = todayLevel.length;
+      todayCalCount = todayCal.length;
+      todayHeuCount = todayHeu.length;
+      console.log("Today end");
+      //THIS WEEK
+      console.log("Week start");
+      const now = new Date();
+      const day = now.getDay();
+      const oneDay = 1000 * 60 * 60 * 24;
+      // 2 = Tuesday; 3 = Wednesday
+      let begin = new Date(start.getTime() - (day - (day - 1)) * oneDay);
+      // console.log(begin);
+      const week = await Attempt.find({
+        user: username,
+        date: { $gte: begin, $lt: end },
+      });
+      weekCount = week.length;
+      console.log(`Week: ${weekCount}`);
+
+      let weekLevel = [];
+      let weekCal = [];
+      let weekHeu = [];
+      week.forEach((item) => {
+        if (item.level) {
+          if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
+            weekLevel.push(item);
+          }
+          if (item.level.startsWith("cal")) {
+            weekCal.push(item);
+          }
+          if (item.level.startsWith("heu")) {
+            weekHeu.push(item);
+          }
+        }
+      });
+      weekLevelCount = weekLevel.length;
+      weekCalCount = weekCal.length;
+      weekHeuCount = weekHeu.length;
+      console.log("Week End");
+      //THIS MONTH
+      console.log("Month start");
+      const thisMonth = start.getMonth() + 1;
+      const month = await Attempt.find({
+        $expr: { $eq: [{ $month: "$date" }, thisMonth] },
+        user: username,
+      });
+      monthCount = month.length;
+
+      let monthLevel = [];
+      let monthCal = [];
+      let monthHeu = [];
+      console.log(month);
+      month.forEach((item) => {
+        if (item.level) {
+          if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
+            monthLevel.push(item);
+          }
+          if (item.level.startsWith("cal")) {
+            monthCal.push(item);
+          }
+          if (item.level.startsWith("heu")) {
+            monthHeu.push(item);
+          }
+        }
+      });
+      monthLevelCount = monthLevel.length;
+      monthCalCount = monthCal.length;
+      monthHeuCount = monthHeu.length;
+      console.log(`Month: ${monthCount}`);
+      console.log("Month End");
+      // THIS YEAR
+      console.log("Year Start");
+      const thisYear = new Date().getFullYear();
+      const year = await Attempt.find({
+        $expr: { $eq: [{ $year: "$date" }, thisYear] },
+        user: username,
+      });
+      console.log("HERE!");
+      yearCount = year.length;
+
+      let yearLevel = [];
+      let yearCal = [];
+      let yearHeu = [];
+      year.forEach((item) => {
+        if (item.level) {
+          if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
+            yearLevel.push(item);
+          }
+          if (item.level.startsWith("cal")) {
+            yearCal.push(item);
+          }
+          if (item.level.startsWith("heu")) {
+            yearHeu.push(item);
+          }
+        }
+      });
+      console.log(yearCount);
+      yearLevelCount = yearLevel.length;
+      yearCalCount = yearCal.length;
+      yearHeuCount = yearHeu.length;
+      console.log("Year End");
+      if (!searchedUser) {
+        searchedUser = "Not found";
+      }
+    } else {
+      console.log("Empty");
+    }
+    res.render("pages/summary", {
+      username,
+      authenticate,
+      currentUser,
+      searchedUser,
+      todayCount,
+      todayLevelCount,
+      todayCalCount,
+      todayHeuCount,
+      weekCount,
+      weekLevelCount,
+      weekCalCount,
+      weekHeuCount,
+      monthCount,
+      monthLevelCount,
+      monthCalCount,
+      monthHeuCount,
+      yearCount,
+      yearLevelCount,
+      yearCalCount,
+      yearHeuCount,
+      allCount,
+      allLevelCount,
+      allCalCount,
+      allHeuCount,
+    });
+  } catch (e) {
+    res.status(400).json({ message: e });
+    // if (e.name == "CastError") {
+    //   searchUser = "Not found";
+    //   res.render("pages/summary", {
+    //     username,
+    //     authenticate,
+    //     currentUser,
+    //     searchedUser,
+    //   });
+    // }
+  }
+};
 exports.login = (req, res) => {
   console.log(req.auth);
   // const { message } = req;

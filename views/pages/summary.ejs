@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <% if (searchedUser && searchedUser != "Not found") { %>
+        <title><%= searchedUser.username %></title>
+    <% } else { %>
+        <title>Summary</title>
+    <% } %>
+  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+    <link rel="stylesheet" href="/css/navbar-styles.css">
+     <link rel="icon" href="/images/favicon.ico?v=1.1">
+
+</head>
+<body>
+    <%- include("../partials/navbar"); %>
+    <div class="container mt-4">
+        <form action="/user/summary/" method="get">
+            <div class="form-group required mb-3">
+                <label for="name">Name</label>
+                <input type="text" class="form-control text-lowercase" required="" name="username" placeholder="🔍 eg. aixl lim">
+            </div>    
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a class="btn btn-danger" href="/user/summary">Clear</a>
+        </form>
+        <% if (searchedUser == "Not found") { %>
+            <h1>There is no such student.</h1>
+        <% } else if (searchedUser) { %>
+
+            <h1> Summary for <%= searchedUser.username %></h1>
+            <h2>Arithmetic Practice</h2>
+                <a href="/user/recommend">Recommendation</a>
+                <h6>Last Login: <%= searchedUser.loggedIn.toLocaleDateString("en-GB") %></h6>
+                <hr>
+                <table class="table text-center">
+                    <th scope="col"></th>
+                    <th scope="col">Count</th>
+                    <th scope="col">Level</th>
+                    <th scope="col">Calculation</th>
+                    <th scope="col">Heuristics</th>
+
+                    <tr>
+                        <td>Today</td>
+                        <td><%= todayCount %></td>
+                        <td><%= todayLevelCount %></td>
+                        <td><%= todayCalCount %></td>
+                        <td><%= todayHeuCount %></td>
+                    </tr>
+                    <tr>
+                        <td>This week</td>
+                        <td><%= weekCount %></td>
+                        <td><%= weekLevelCount %></td>
+                        <td><%= weekCalCount %></td>
+                        <td><%= weekHeuCount %></td>
+                    </tr>
+                    <tr>
+                        <td>This month</td>
+                        <td><%= monthCount %></td>
+                        <td><%= monthLevelCount %></td>
+                        <td><%= monthCalCount %></td>
+                        <td><%= monthHeuCount %></td>
+                    </tr>
+                    <tr>
+                        <td>This year</td>
+                        <td><%= yearCount %></td>
+                        <td><%= yearLevelCount %></td>
+                        <td><%= yearCalCount %></td>
+                        <td><%= yearHeuCount %></td>
+                    </tr>
+                    <tr>
+                        <td>All</td>
+                        <td><%= allCount %></td>
+                        <td><%= allLevelCount %></td>
+                        <td><%= allCalCount %></td>
+                        <td><%= allHeuCount %></td>
+                    </tr>
+                </table>
+            <h2>Written Work</h2>
+            <table class="table">
+                <th scope="col">Homework</th>
+                <th scope="col">Question</th>
+                <th scope="col">Issue Date</th>
+                <th scope="col">Due date</th>
+                <th scope="col">Progression</th>
+            </table>
+        <% } else { %>
+            <h1> Please search for a student.</h1>
+        <% } %>
+       
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</html>

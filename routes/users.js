@@ -10,6 +10,12 @@ const router = express.Router();
 // router.post("/login", authController.login);
 router.route("/").get(authController.authenticate, userController.getAllUsers);
 router.route("/edit").get(authController.authenticate, userController.editUser);
+router
+  .route("/summary")
+  .get(authController.authenticate, userController.summary);
+router
+  .route("/summary/:username")
+  .get(authController.authenticate, userController.summary);
 
 router.route("/points").get(userController.getAllPoints);
 router
