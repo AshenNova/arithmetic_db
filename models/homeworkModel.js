@@ -7,6 +7,7 @@ const homeworkSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  subject: String,
   issueTimes: {
     type: Number,
     default: 1,

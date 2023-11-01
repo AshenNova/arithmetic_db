@@ -84,6 +84,7 @@
                 </table>
             <h2>Written Work</h2>
             <table class="table mb-3 text-center">
+                <th scope="col">Subject</th>
                 <th scope="col">Issued</th>
                 <th scope="col">Description</th>
                 <th scope="col">Issue Date</th>
@@ -96,27 +97,41 @@
                 <% } %>
                 <% if (homework) { %>
                     <% homework.forEach(item => { %>
-                        <tr>
-                            <td><%= item.issueTimes %></td>
-                            <td>
-                                <%= item.description %></br>
-                                <% if (item.linkA) { %>
-                                    <a href="<%= item.linkA %>" target="_blank">Link A</a></br>
+                        <!-- Math -->
+                        <% if (item.status != "Complete"){ %>
+                            <tr>
+                                <% if (item.subject == "Math") { %>
+                                    <td><button class="btn btn-primary"><%= item.subject %></button></td>
+                                <% } else { %>
+                                    <td><button class="btn btn-success"><%= item.subject %></button></td>
                                 <% } %>
-                                <% if (item.linkB) { %>
-                                    <a href="<%= item.linkB %>" target="_blank">Link B</a></br>
+                                <td><%= item.issueTimes %></td>
+                                <td>
+                                    <%= item.description %></br>
+                                    <% if (item.linkA) { %>
+                                        <a href="<%= item.linkA %>" target="_blank">Link A</a></br>
+                                    <% } %>
+                                    <% if (item.linkB) { %>
+                                        <a href="<%= item.linkB %>" target="_blank">Link B</a></br>
+                                    <% } %>
+                                </td>
+                                <td><%= item.dateIssue.toLocaleDateString('en-GB') %></td>
+                                <% if (item.dueDate) { %>
+                                    <td><%= item.dueDate.toLocaleDateString('en-GB') %></td>
+                                    <td><%= Math.ceil((item.dueDate - new Date())/(1000*60*60*24)) %></td>
+                                 <% } else { %>
+                                     <td>Nil</td>
+                                     <td>Nil</td>
+                                 <% } %>
+                                <td><%= item.comment %></td>
+                                <td><%= item.status %></td>
+                                <% if (currentUser.admin) { %>
+                                    <td>Edit</td>
+                                    <td>Delete</td>
                                 <% } %>
-                            </td>
-                            <td><%= item.dateIssue.toLocaleDateString('en-GB') %></td>
-                            <td><%= item.dueDate.toLocaleDateString('en-GB') %></td>
-                            <td><%= Math.ceil((item.dueDate - new Date())/(1000*60*60*24)) %></td>
-                            <td><%= item.comment %></td>
-                            <td><%= item.status %></td>
-                            <% if (currentUser.admin) { %>
-                                <td>Edit</td>
-                                <td>Delete</td>
-                            <% } %>
-                        </tr>
+                            </tr>
+                       <% } %>
+                       <!-- SCIENCE -->
                     <% }) %>
                 <% } else { %>
                     <tr>

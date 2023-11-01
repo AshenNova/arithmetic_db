@@ -1131,7 +1131,10 @@ exports.summary = async (req, res) => {
 
       //HOMEWORK!!!
       console.log(req.query.username);
-      homework = await Homework.find({ name: req.query.username });
+      homework = await Homework.find({ name: req.query.username }).sort({
+        subject: -1,
+        dateIssue: -1,
+      });
       console.log(homework);
       if (!searchedUser) {
         searchedUser = "Not found";

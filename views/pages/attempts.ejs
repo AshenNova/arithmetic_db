@@ -180,13 +180,13 @@
                   <% } %>
                 <td><a href="/attempts/filter/?user=<%= item.user %>&level=&setting=&mode="><%= item.user %></a></td>
                 <% if ( item.mode == "Easy") {%>
-                  <td class="btn btn-outline-success btn-sm"> <%= "Easy" %></td>
+                  <td><button class="btn btn-outline-success btn-sm"><%= "Easy" %></button></td>
                 <% } %>
                 <% if ( item.mode == "Hardcore") { %>
-                  <td class="btn btn-outline-danger btn-sm"> <%= "Hardcore" %></td> 
+                  <td><button class="btn btn-outline-danger btn-sm"><%= "Hardcore" %></button></td> 
               <% } %>
                 <% if ( item.mode == "Normal") { %>
-                  <td class="btn btn-outline-dark btn-sm"> <%= "Normal" %></td>
+                  <td><button class="btn btn-outline-dark btn-sm"><%= "Normal" %></button></td>
                   <% } %>
                 <!-- <td><%= item.mode %></td> -->
                 <td><%= item.level %></td>
