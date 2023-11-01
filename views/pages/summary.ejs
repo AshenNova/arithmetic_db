@@ -99,9 +99,13 @@
                         <tr>
                             <td><%= item.issueTimes %></td>
                             <td>
-                                <%= item.description %>
-                                <%= item.linkA %>
-                                <%= item.linkB %>
+                                <%= item.description %></br>
+                                <% if (item.linkA) { %>
+                                    <a href="<%= item.linkA %>" target="_blank">Link A</a></br>
+                                <% } %>
+                                <% if (item.linkB) { %>
+                                    <a href="<%= item.linkB %>" target="_blank">Link B</a></br>
+                                <% } %>
                             </td>
                             <td><%= item.dateIssue.toLocaleDateString('en-GB') %></td>
                             <td><%= item.dueDate.toLocaleDateString('en-GB') %></td>
