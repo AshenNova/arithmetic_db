@@ -8634,11 +8634,10 @@ function updateProblems() {
       if (p.unit == "ℓ") p.answerUnit = "ml";
       if (p.unit == "km") p.answerUnit = "m";
       if (p.unit == "m") {
-        p.answerUnit = "cm"
-    p.intervals = [2, 4, 5, 10][genNumbers(4)]
-  };
+        p.answerUnit = "cm";
+        p.intervals = [2, 4, 5, 10][genNumbers(4)];
+      }
 
-      
       canvasTextId.textContent = `Give your answer in ${p.answerUnit}`;
       p.eachInterval = 1 / p.intervals;
 
@@ -17965,7 +17964,7 @@ function handleSubmit(e) {
         } else {
           correctAnswer =
             commonMultipleArrTwo[0] +
-            "," +
+            ", " +
             commonMultipleArrTwo[commonMultipleArrTwo.length - 1];
         }
       } else {
