@@ -13,6 +13,7 @@ const questionCl = document.querySelectorAll(".question");
 let incorrectArr = [];
 let correctArr = [];
 let click = 0;
+let questionsClick = 0;
 answers.forEach((item, index) => {
   console.log(index);
   item.addEventListener("click", (e) => {
@@ -49,14 +50,20 @@ correctBtn.forEach((item, index) => {
     nextQuestion(item, index);
   });
   const question = questionID[index].textContent;
-  if (correctArr.includes(question)) correctArr.push(question);
+  if (!correctArr.includes(question)) {
+    correctArr.push(question);
+    questionsClick += 1;
+  }
 });
 incorrectBtn.forEach((item, index) => {
   item.addEventListener("click", (e) => {
     nextQuestion(item, index);
     const question = questionID[index].textContent;
     console.log(question);
-    if (incorrectArr.includes(question)) incorrectArr.push(question);
+    if (!incorrectArr.includes(question)) {
+      incorrectArr.push(question);
+      questionsClick += 1;
+    }
   });
 });
 // nextBtn[nextBtn.length - 1].classList.add("hidden");
@@ -69,7 +76,7 @@ doneBtn.addEventListener("click", (e) => {
     let arr = {
       incorrect: incorrectArr,
       correct: correctArr,
-      questions: incorrectArr.length + correctArr.length,
+      questions: questionsClick,
     };
 
     console.log(incorrectArr);

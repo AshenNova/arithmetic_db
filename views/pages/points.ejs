@@ -31,12 +31,13 @@
             <tbody>
                
                 <% allUsers.forEach(item => { %>
-                   <% if ((item.points > 0 || Math.floor((Date.now() - item.loggedIn)/(1000*60*60*24)) < 30)) { %>
+                <% const ago = Math.floor((Date.now() - item.loggedIn)/(1000*60*60*24)) %>
+                   <% if (item.points > 0 && ago < 30) { %>
                       <tr>
                         <td><a href="/attempts/filter/?user=<%= item.username %>&level=&setting=&mode="><%= item.username %></a></td>
                         <td><%= item.points %></td>
                         <td><%= item.loggedIn.toLocaleDateString() %></td>
-                        <td><%= Math.floor((Date.now() - item.loggedIn)/(1000*60*60*24)) %></td>
+                        <td><%= ago %></td>
                       </tr>
                     <% } %>
             <% }) %>

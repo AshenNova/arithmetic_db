@@ -35,11 +35,12 @@
 
             <h1> Summary for <%= searchedUser.username %></h1>
             <h2>Arithmetic Practice</h2>
-                <a href="/user/recommend">Recommendation</a>
-                <h6>Last Login: <%= searchedUser.loggedIn.toLocaleDateString("en-GB") %></h6>
+                 <a href="/attempts/filter?user=<%= searchedUser.username %>&level=&setting=&mode=" target="_blank" class="btn btn-outline-primary">Results</a>
+                <a href="/user/recommend" class="btn btn-outline-primary" target="_blank">Recommendation</a>
+               
                 <hr>
                 <table class="table text-center">
-                    <th scope="col"></th>
+                    <th scope="col">Last Login: <%= searchedUser.loggedIn.toLocaleDateString("en-GB") %></th>
                     <th scope="col">Count</th>
                     <th scope="col">Level</th>
                     <th scope="col">Calculation</th>

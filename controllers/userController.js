@@ -970,26 +970,27 @@ exports.summary = async (req, res) => {
   let authenticate = req.auth;
   let currentUser = req.user;
   let searchedUser;
-  let allCount;
-  let todayCount;
-  let weekCount;
-  let monthCount;
-  let yearCount;
-  let todayLevelCount;
-  let todayCalCount;
-  let todayHeuCount;
-  let weekLevelCount;
-  let weekCalCount;
-  let weekHeuCount;
-  let monthLevelCount;
-  let monthCalCount;
-  let monthHeuCount;
-  let yearLevelCount;
-  let yearCalCount;
-  let yearHeuCount;
-  let allLevelCount;
-  let allCalCount;
-  let allHeuCount;
+
+  let todayCount = 0;
+  let weekCount = 0;
+  let monthCount = 0;
+  let yearCount = 0;
+  let todayLevelCount = 0;
+  let todayCalCount = 0;
+  let todayHeuCount = 0;
+  let weekLevelCount = 0;
+  let weekCalCount = 0;
+  let weekHeuCount = 0;
+  let monthLevelCount = 0;
+  let monthCalCount = 0;
+  let monthHeuCount = 0;
+  let yearLevelCount = 0;
+  let yearCalCount = 0;
+  let yearHeuCount = 0;
+  let allLevelCount = 0;
+  let allCalCount = 0;
+  let allHeuCount = 0;
+  let allCount = 0;
   // let attempts;
   console.log(req.query);
   try {
@@ -1026,22 +1027,19 @@ exports.summary = async (req, res) => {
       today.forEach((item) => {
         if (item.level) {
           if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
-            todayLevel.push(item);
-            console.log("1");
+            todayLevelCount += 1;
           }
           if (item.level.startsWith("cal")) {
-            todayCal.push(item);
-            console.log("2");
+            todayCalCount += 1;
           }
           if (item.level.startsWith("heu")) {
-            todayHeu.push(item);
-            console.log("3");
+            todayHeuCount += 1;
           }
         }
       });
-      todayLevelCount = todayLevel.length;
-      todayCalCount = todayCal.length;
-      todayHeuCount = todayHeu.length;
+      // todayLevelCount = todayLevel.length;
+      // todayCalCount = todayCal.length;
+      // todayHeuCount = todayHeu.length;
       console.log("Today end");
       //THIS WEEK
       console.log("Week start");
@@ -1058,25 +1056,21 @@ exports.summary = async (req, res) => {
       weekCount = week.length;
       console.log(`Week: ${weekCount}`);
 
-      let weekLevel = [];
-      let weekCal = [];
-      let weekHeu = [];
       week.forEach((item) => {
         if (item.level) {
           if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
-            weekLevel.push(item);
+            // weekLevel.push(item);
+            weekLevelCount += 1;
           }
           if (item.level.startsWith("cal")) {
-            weekCal.push(item);
+            weekCalCount += 1;
           }
           if (item.level.startsWith("heu")) {
-            weekHeu.push(item);
+            // weekHeu.push(item);
+            weekHeuCount += 1;
           }
         }
       });
-      weekLevelCount = weekLevel.length;
-      weekCalCount = weekCal.length;
-      weekHeuCount = weekHeu.length;
       console.log("Week End");
       //THIS MONTH
       console.log("Month start");
@@ -1087,25 +1081,23 @@ exports.summary = async (req, res) => {
       });
       monthCount = month.length;
 
-      let monthLevel = [];
-      let monthCal = [];
-      let monthHeu = [];
       month.forEach((item) => {
         if (item.level) {
           if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
-            monthLevel.push(item);
+            // monthLevel.push(item);
+            monthLevelCount += 1;
           }
           if (item.level.startsWith("cal")) {
-            monthCal.push(item);
+            // monthCal.push(item);
+            monthCalCount += 1;
           }
           if (item.level.startsWith("heu")) {
-            monthHeu.push(item);
+            // monthHeu.push(item);
+            monthHeuCount += 1;
           }
         }
       });
-      monthLevelCount = monthLevel.length;
-      monthCalCount = monthCal.length;
-      monthHeuCount = monthHeu.length;
+
       console.log(`Month: ${monthCount}`);
       console.log("Month End");
       // THIS YEAR
@@ -1118,25 +1110,20 @@ exports.summary = async (req, res) => {
       console.log("HERE!");
       yearCount = year.length;
 
-      let yearLevel = [];
-      let yearCal = [];
-      let yearHeu = [];
       year.forEach((item) => {
         if (item.level) {
           if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
-            yearLevel.push(item);
+            yearLevelCount += 1;
           }
           if (item.level.startsWith("cal")) {
-            yearCal.push(item);
+            yearCalCount += 1;
           }
           if (item.level.startsWith("heu")) {
-            yearHeu.push(item);
+            yearHeuCount += 1;
           }
         }
       });
-      yearLevelCount = yearLevel.length;
-      yearCalCount = yearCal.length;
-      yearHeuCount = yearHeu.length;
+
       console.log("Year End");
       if (!searchedUser) {
         searchedUser = "Not found";

@@ -183,31 +183,10 @@ exports.login = catchAsync(async (req, res, next) => {
     { $set: { loggedIn: new Date() } }
   );
 
-  // if (daysAgo > 1 && user.freeze == false) {
-  //   console.log("Not Frozen");
-  //   user.points -= (daysAgo - 1) * 10;
-  //   if (user.points < 0) user.points = 0;
-  //   const penalty = await User.findByIdAndUpdate(user._id, {
-  //     points: user.points,
-  //     loggedIn: new Date(),
-  //   });
-  // } else {
-  //   const updateLogin = await User.updateOne(
-  //     { username: user.username },
-  //     { $set: { loggedIn: new Date() } }
-  //   );
-  // }
-  // } else {
-  // const updateLogin = await User.updateOne(
-  //   { username: user.username },
-  //   { $set: { loggedIn: new Date() } }
-  // );
-  // }
-
   if (user.admin) {
     res.redirect("/attempts");
   } else {
-    res.redirect("/arithmetic");
+    res.redirect("/user/summary/?username=" + user.username);
   }
   // } catch (err) {
   //   // res.status(400).json({ message: err });
