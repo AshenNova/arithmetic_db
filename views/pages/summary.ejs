@@ -83,12 +83,42 @@
                     </tr>
                 </table>
             <h2>Written Work</h2>
-            <table class="table">
-                <th scope="col">Homework</th>
-                <th scope="col">Question</th>
+            <table class="table mb-3 text-center">
+                <th scope="col">Issued</th>
+                <th scope="col">Description</th>
                 <th scope="col">Issue Date</th>
                 <th scope="col">Due date</th>
-                <th scope="col">Progression</th>
+                <th scope="col">Days left</th>
+                <th scope="col">Comment</th>
+                <th scope="col">Status</th>
+                <% if (currentUser.admin) { %>
+                    <th colspan="3">Actions</th>
+                <% } %>
+                <% if (homework) { %>
+                    <% homework.forEach(item => { %>
+                        <tr>
+                            <td><%= item.issueTimes %></td>
+                            <td>
+                                <%= item.description %>
+                                <%= item.linkA %>
+                                <%= item.linkB %>
+                            </td>
+                            <td><%= item.dateIssue.toLocaleDateString('en-GB') %></td>
+                            <td><%= item.dueDate.toLocaleDateString('en-GB') %></td>
+                            <td><%= Math.floor((item.dueDate - new Date())/(1000*60*60*24)) %></td>
+                            <td><%= item.comment %></td>
+                            <td><%= item.status %></td>
+                            <% if (currentUser.admin) { %>
+                                <td>Edit</td>
+                                <td>Delete</td>
+                            <% } %>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        No homework, ask for some (:
+                    </tr>
+                <% } %>               
             </table>
         <% } else { %>
             <h1> Please search for a student.</h1>

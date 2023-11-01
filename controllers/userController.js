@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const Reward = require("../models/rewardModel");
 const RewardLog = require("../models/rewardLogModel");
 const Attempt = require("../models/attemptModel");
+const Homework = require("../models/homeworkModel");
 const bcrypt = require("bcryptjs");
 const catchAsync = require("../utils/catchAsync");
 const fs = require("fs");
@@ -970,6 +971,7 @@ exports.summary = async (req, res) => {
   let authenticate = req.auth;
   let currentUser = req.user;
   let searchedUser;
+  let homework;
 
   let todayCount = 0;
   let weekCount = 0;
@@ -1125,6 +1127,10 @@ exports.summary = async (req, res) => {
       });
 
       console.log("Year End");
+
+      //HOMEWORK!!!
+      homework = await Homework.find({ name: req.query.username });
+      console.log(homework);
       if (!searchedUser) {
         searchedUser = "Not found";
       }
@@ -1156,6 +1162,7 @@ exports.summary = async (req, res) => {
       allLevelCount,
       allCalCount,
       allHeuCount,
+      homework,
     });
   } catch (e) {
     res.status(400).json({ message: e });

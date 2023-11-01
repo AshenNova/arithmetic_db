@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+  <link rel="stylesheet" href="/css/navbar-styles.css">
+   <link rel="icon" href="/images/favicon.ico?v=1.1">
+
+  
+  <title>Issue homework</title>
+</head>
+<body>
+  <%- include("../partials/navbar"); %>
+
+  <div class="container mt-3">
+  <h1>New homework</h1>
+ 
+  <form action="/homework/new" method="post">
+    
+    <p>Student</p>
+    <select class="form-select mb-3" aria-label="Default select example" name="name">
+        <option selected>Choose</option>
+        <% getAllUsers.forEach(item => { %>
+            <option value="<%= item %>"><%= item %></option>
+        <% }) %>
+      </select>
+      <div class="mb-3">
+        <div class="form-group required">
+          <label class="form-label" for="description">Description</label>
+          <input type="text" class="form-control" name="description">
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="form-group required">
+          <label class="form-label" for="linkA">Link A</label>
+          <input type="text" class="form-control" name="linkA">
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="form-group required">
+          <label class="form-label" for="linkB">Link B</label>
+          <input type="text" class="form-control" name="linkB">
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="form-group required">
+          <label class="form-label" for="comment">Comment</label>
+          <textarea type="text" class="form-control" name="comment"></textarea>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-3">
+            <div class="form-group required">
+                <label class="form-label" for="dateIssue">Issue Date ( Leave blank if today )</label>
+                <input type="date" class="form-control" name="dateIssue">
+             </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group required">
+                <label class="form-label" for="dateIssue">Due Date</br></label>
+                <input type="date" class="form-control" name="dueDate">
+            </div>
+        </div>
+      </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</html>
