@@ -995,9 +995,10 @@ exports.summary = async (req, res) => {
   let allCount = 0;
   // let attempts;
   console.log(req.query);
+
   try {
     if (req.query.username) {
-      console.log(req.query.username);
+      req.query.username = req.query.username.toLowerCase();
       console.log("Searching for user with specified ID");
       const small = req.query.username.split(" ");
       let arr = [];
@@ -1129,6 +1130,7 @@ exports.summary = async (req, res) => {
       console.log("Year End");
 
       //HOMEWORK!!!
+      console.log(req.query.username);
       homework = await Homework.find({ name: req.query.username });
       console.log(homework);
       if (!searchedUser) {
