@@ -33,7 +33,11 @@
             <h1>There is no such student.</h1>
         <% } else if (searchedUser) { %>
 
-            <h1> Summary for <%= searchedUser.username %></h1>
+
+            <% const nameA = searchedUser.username.split(" ")[0] %>
+            <% const nameB = searchedUser.username.split(" ")[1] %>
+         
+            <h1> Summary for <u><%= nameA.charAt(0).toUpperCase() %><%= nameA.slice(1, nameA.length) %> <%= nameB.charAt(0).toUpperCase() %><%= nameB.slice(1, nameB.length) %></u></h1>
             <h2>Arithmetic Practice</h2>
                  <a href="/attempts/filter?user=<%= searchedUser.username %>&level=&setting=&mode=" target="_blank" class="btn btn-outline-primary">Results</a>
                 <a href="/user/recommend" class="btn btn-outline-primary" target="_blank">Recommendation</a>
@@ -98,7 +102,7 @@
                 <% if (homework) { %>
                     <% homework.forEach(item => { %>
                         <!-- Math -->
-                        <% if (item.status != "Complete"){ %>
+                        <% if (item.status != "Completed"){ %>
                             <tr>
                                 <% if (item.subject == "Math") { %>
                                     <td><button class="btn btn-primary"><%= item.subject %></button></td>
@@ -126,13 +130,48 @@
                                 <td><%= item.comment %></td>
                                 <td><%= item.status %></td>
                                 <% if (currentUser.admin) { %>
-                                    <td>Edit</td>
-                                    <td>Delete</td>
+                                    <td><a href="/homework/new/<%= item._id %>">Edit</a></td>
+                                    <td><a href="/homework/delete/<%= item._id %>/<%= item.name %>">Delete</a></td>
                                 <% } %>
                             </tr>
-                       <% } %>
+                         <% } %>
                        <!-- SCIENCE -->
-                    <% }) %>
+                       <% }) %>
+                    
+                        <% homework.forEach(item => { %>
+                            <% if (currentUser.admin == true && item.status == "Completed") { %>
+                                <tr class="table-secondary">
+                                    <% if (item.subject == "Math") { %>
+                                        <td><button class="btn btn-primary"><%= item.subject %></button></td>
+                                    <% } else { %>
+                                        <td><button class="btn btn-success"><%= item.subject %></button></td>
+                                    <% } %>
+                                    <td><%= item.issueTimes %></td>
+                                    <td>
+                                        <%= item.description %></br>
+                                        <% if (item.linkA) { %>
+                                            <a href="<%= item.linkA %>" target="_blank">Link A</a></br>
+                                        <% } %>
+                                        <% if (item.linkB) { %>
+                                            <a href="<%= item.linkB %>" target="_blank">Link B</a></br>
+                                        <% } %>
+                                    </td>
+                                    <td><%= item.dateIssue.toLocaleDateString('en-GB') %></td>
+                                    <% if (item.dueDate) { %>
+                                        <td><%= item.dueDate.toLocaleDateString('en-GB') %></td>
+                                        <td><%= Math.ceil((item.dueDate - new Date())/(1000*60*60*24)) %></td>
+                                     <% } else { %>
+                                         <td>Nil</td>
+                                         <td>Nil</td>
+                                     <% } %>
+                                    <td><%= item.comment %></td>
+                                    <td><%= item.status %></td>
+                                    <td><a href="/homework/new/<%= item._id %>">Edit</a></td>
+                                    <td><a href="/homework/delete/<%= item._id %>/<%= item.name %>">Delete</a></td>
+                                </tr>
+                               <% } %>
+                        <% }) %>
+                      
                 <% } else { %>
                     <tr>
                         No homework, ask for some (:

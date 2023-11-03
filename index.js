@@ -57,7 +57,10 @@ mongoose
     // console.log(con.connections);
   })
   .catch((err) => {
-    console.log(err);
+    server.close(() => {
+      console.log(err);
+      process.exit(1);
+    });
   });
 
 //ROUTERS

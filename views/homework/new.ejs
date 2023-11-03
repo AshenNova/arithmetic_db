@@ -17,59 +17,108 @@
 <body>
   <%- include("../partials/navbar"); %>
 
-  <div class="container mt-3">
+  <div class="container mt-3 mb-3">
   <h1>New homework</h1>
  
   <form action="/homework/new" method="post">
-    
+    <% if (editHomework) { %>
+      <div class="mb-3">
+        <div class="form-group required">
+          <label class="form-label" for="id">ID</label>
+          <input type="text" class="form-control" name="id" value="<%= editHomework._id %>" readonly="readonly">
+        </div>
+      </div>
+    <% } %>
+
+    <p>Status</p>
+    <select class="form-select mb-3" aria-label="Default select example" name="status">
+      <% if (editHomework) { %>
+        <option value="<%= editHomework.status %>"><%= editHomework.status %></option>
+      <% } else { %>
+        <option selected value="">Today</option>
+      <% } %>
+      <option value="Incomplete">Incomplete</option>
+          <option value="Seen">Seen</option>
+          <option value="In-progress">In-progress</option>
+            <option value="Completed">Completed</option>
+      </select>
+
     <p>Student</p>
     <select class="form-select mb-3" aria-label="Default select example" name="name">
+      <% if (editHomework) { %>
+        <option value="<%= editHomework.name %>"><%= editHomework.name %></option>
+      <% } else { %>
         <option selected>Choose</option>
+      <% } %>
+     
         <% getAllUsers.forEach(item => { %>
             <option value="<%= item %>"><%= item %></option>
         <% }) %>
       </select>
       <p>Subject</p>
       <select class="form-select mb-3" aria-label="Default select example" name="subject">
+        <% if (editHomework) { %>
+          <option value="<%= editHomework.subject %>"><%= editHomework.subject %></option>
+        <% } else { %>
           <option selected>Choose</option>
+        <% } %>
+          
             <option value="Math">Math</option>
             <option value="Science">Science</option>
         </select>
       <div class="mb-3">
         <div class="form-group required">
           <label class="form-label" for="description">Description</label>
-          <input type="text" class="form-control" name="description">
+          <input type="text" class="form-control" name="description" <% if (editHomework) { %>
+ value="<%= editHomework.description %>"
+          <% } %> 
+          >
         </div>
       </div>
       <div class="mb-3">
         <div class="form-group required">
           <label class="form-label" for="linkA">Link A</label>
-          <input type="text" class="form-control" name="linkA">
+          <input type="text" class="form-control" name="linkA" <% if (editHomework) { %>
+            value="<%= editHomework.linkA %>"
+                     <% } %>
+                     >
         </div>
       </div>
       <div class="mb-3">
         <div class="form-group required">
           <label class="form-label" for="linkB">Link B</label>
-          <input type="text" class="form-control" name="linkB">
+          <input type="text" class="form-control" name="linkB"<% if (editHomework) { %>
+            value="<%= editHomework.linkB %>"
+                     <% } %>
+                     >
         </div>
       </div>
       <div class="mb-3">
         <div class="form-group required">
           <label class="form-label" for="comment">Comment</label>
-          <textarea type="text" class="form-control" name="comment"></textarea>
+          <textarea type="text" class="form-control" name="comment"><% if (editHomework) { %>
+            <%= editHomework.comment %>
+                     <% } %>
+                     </textarea>
         </div>
       </div>
       <div class="row mb-3">
         <div class="col-3">
             <div class="form-group required">
                 <label class="form-label" for="dateIssue">Issue Date ( Leave blank if today )</label>
-                <input type="date" class="form-control" name="dateIssue">
+                <input type="date" class="form-control" name="dateIssue"<% if (editHomework) { %>
+                  value="<%= editHomework.dateIssue.getFullYear() %>-<%= (editHomework.dateIssue.getMonth()+1).toString().padStart(2, 0) %>-<%= editHomework.dateIssue.getDate().toString().padStart(2, 0) %>"
+                           <% } %>
+                           >
              </div>
         </div>
         <div class="col-3">
             <div class="form-group required">
                 <label class="form-label" for="dateIssue">Due Date</br></label>
-                <input type="date" class="form-control" name="dueDate">
+                <input type="date" class="form-control" name="dueDate" <% if (editHomework && editHomework.dueDate) { %>
+                  value="<%= editHomework.dueDate.getFullYear() %>-<%= (editHomework.dueDate.getMonth()+1).toString().padStart(2, 0) %>-<%= editHomework.dueDate.getDate().toString().padStart(2, 0) %>"
+                           <% } %>
+                           >
             </div>
         </div>
       </div>
