@@ -613,9 +613,9 @@ const drawGrid = (xSquares, ySquares, width) => {
 
 const drawSquares = (x, y, width, side) => {
   ctx.save();
-  ctx.font = "1em serif";
-  ctx.fillText(`The length of each square is ${side}cm.`, 20, 20);
-  ctx.fillText(`What is the area below?`, 20, 40);
+  // ctx.font = "1em serif";
+  // ctx.fillText(`The length of each square is ${side}cm.`, 20, 20);
+  // ctx.fillText(`What is the area below?`, 20, 40);
   ctx.translate(0, 50);
   // ctx.setLineDash([1, 1]);
   ctx.fillStyle = "red";

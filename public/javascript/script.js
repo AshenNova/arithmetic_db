@@ -583,6 +583,7 @@ function drawingDisplay() {
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.clearRect(0, 0, 1000, 1000);
   firstCanvas.classList.remove("hidden");
+  canvasTextId.classList.remove("hidden");
   wholeNumberContainer.classList.add("hidden");
   fractionsContainer.classList.add("hidden");
   fractionsContainerTwo.classList.add("hidden");
@@ -891,6 +892,7 @@ function resetStuff() {
   canvas.setAttribute("height", "275px");
   displayProblem.style.margin = "30px 0";
   displayProblem.style.textAlign = "center";
+  canvasTextId.classList.add("hidden");
   threeNumerator.classList.add("line");
   equalSymbol.innerHTML = "=";
   fractionsContainerTwo.style.margin = "0 25px 15px";
@@ -2345,15 +2347,7 @@ function updateProblems() {
 
   if (level == 3.12) {
     drawingDisplay();
-    // displayProblem.innerHTML = `
-    // Pattern 1: 1</br>
-    // Pattern 2: 3</br>
-    // Pattern 3: 6</br>
-    // Pattern 4: 10</br>
-    // ...</br>
-    // Pattern ${p.numOne}: ?
-    // `;
-
+    canvasTextId.innerHTML = `The length of each square is ${p.side} cm.</br>What is the area below?`;
     p.count = drawSquares(p.length, p.breadth, 30, p.side);
     drawGrid(p.length, p.breadth, 30);
     if (p.count == "Error") return updateCalc();
@@ -18094,47 +18088,6 @@ function handleSubmit(e) {
     }
 
     if (level == 3.16) {
-      // if (p.optionFinal == 5) {
-      //   correctAnswer = `${p.numOne + 1}x${p.numOne}/2`;
-      // }
-      // // level 3.12
-      // if (p.optionFinal == 1) {
-      //   correctAnswer = p.numOne + 1 + "x" + p.numOne + "/2";
-      // }
-      // // level 3.13
-      // if (p.optionFinal == 2) {
-      //   if (p.numThree > p.numTwo) {
-      //     correctAnswer = `${p.numThree}n-${p.numThree - p.numTwo} ${
-      //       p.numThree * p.numFour + (p.numTwo - p.numThree)
-      //     }`;
-      //   } else if (p.numThree == p.numTwo) {
-      //     correctAnswer = `${p.numThree}n ${p.numThree * p.numFour}`;
-      //   } else {
-      //     correctAnswer = `${p.numThree}n+${p.numTwo - p.numThree} ${
-      //       p.numThree * p.numFour + (p.numTwo - p.numThree)
-      //     }`;
-      //   }
-      // }
-      // // level 3.14
-      // if (p.optionFinal == 3) {
-      //   correctAnswer =
-      //     p.numFive +
-      //     "x" +
-      //     p.numFive +
-      //     "=" +
-      //     p.numFive * p.numFive +
-      //     " " +
-      //     (p.numFive + p.numSix);
-      // }
-      // // level 3.15
-      // if (p.optionFinal == 4) {
-      //   let remainder = (p.position % arr.length) - 1;
-      //   if (remainder < 0) {
-      //     remainder = arr.length - 1;
-      //   }
-      //   console.log(remainder);
-      //   correctAnswer = arr[remainder];
-      // }
       if (setting == 5) {
         correctAnswer = `${p.numOne + 1}x${p.numOne}/2`;
       }

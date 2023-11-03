@@ -44,12 +44,16 @@
                
                 <hr>
                 <table class="table text-center">
-                    <th scope="col">Last Login: <%= searchedUser.loggedIn.toLocaleDateString("en-GB") %></th>
-                    <th scope="col">Count</th>
-                    <th scope="col">Level</th>
-                    <th scope="col">Calculation</th>
-                    <th scope="col">Heuristics</th>
-
+                    <thead class=table-dark>
+                    <div class="row">
+                        <th scope="col" class="col-2">Last Login: <%= searchedUser.loggedIn.toLocaleDateString("en-GB") %></th>
+                        <th scope="col" class="col-2">Count</th>
+                        <th scope="col" class="col-2">Level</th>
+                        <th scope="col" class="col-2">Calculation</th>
+                        <th scope="col" class="col-2">Heuristics</th>
+                     </div>
+                    </thead>
+                   
                     <tr>
                         <td>Today</td>
                         <td><%= todayCount %></td>
@@ -80,25 +84,24 @@
                     </tr>
                     <tr>
                         <td>All</td>
-                        <td><%= allCount %></td>
-                        <td><%= allLevelCount %></td>
-                        <td><%= allCalCount %></td>
-                        <td><%= allHeuCount %></td>
+                        <td rowspan="4"><%= allCount %></td>
                     </tr>
                 </table>
             <h2>Written Work</h2>
             <table class="table mb-3 text-center">
-                <th scope="col">Subject</th>
-                <th scope="col">Issued</th>
-                <th scope="col">Description</th>
-                <th scope="col">Issue Date</th>
-                <th scope="col">Due date</th>
-                <th scope="col">Days left</th>
-                <th scope="col">Comment</th>
-                <th scope="col">Status</th>
+                <thead class="table-dark">
+                    <th scope="col">Subject</th>
+                    <th scope="col">Issued</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Issue Date</th>
+                    <th scope="col">Due date</th>
+                    <th scope="col">Days left</th>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Status</th>
                 <% if (currentUser.admin) { %>
                     <th colspan="3">Actions</th>
                 <% } %>
+            </thead>
                 <% if (homework) { %>
                     <% homework.forEach(item => { %>
                         <!-- Math -->
@@ -113,10 +116,10 @@
                                 <td>
                                     <%= item.description %></br>
                                     <% if (item.linkA) { %>
-                                        <a href="<%= item.linkA %>" target="_blank">Link A</a></br>
+                                        <a href="<%= item.linkA %>" target="_blank">Paper</a></br>
                                     <% } %>
                                     <% if (item.linkB) { %>
-                                        <a href="<%= item.linkB %>" target="_blank">Link B</a></br>
+                                        <a href="<%= item.linkB %>" target="_blank">Answer</a></br>
                                     <% } %>
                                 </td>
                                 <td><%= item.dateIssue.toLocaleDateString('en-GB') %></td>
