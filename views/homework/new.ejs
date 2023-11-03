@@ -35,11 +35,11 @@
       <% if (editHomework) { %>
         <option value="<%= editHomework.status %>"><%= editHomework.status %></option>
       <% } else { %>
-        <option selected value="">Today</option>
+        <option selected value="Incomplete">Incomplete</option>
       <% } %>
       <option value="Incomplete">Incomplete</option>
-          <option value="Seen">Seen</option>
-          <option value="In-progress">In-progress</option>
+          <option value="Seen, not gone through">Seen, not gone through</option>
+          <option value="Going through">Going through</option>
             <option value="Completed">Completed</option>
       </select>
 
@@ -98,8 +98,7 @@
           <label class="form-label" for="comment">Comment</label>
           <textarea type="text" class="form-control" name="comment"><% if (editHomework) { %>
             <%= editHomework.comment %>
-                     <% } %>
-                     </textarea>
+          <% } %></textarea>
         </div>
       </div>
       <div class="row mb-3">
