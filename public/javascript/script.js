@@ -2100,6 +2100,7 @@ function updateProblems() {
     }
   }
 
+  //DISPLAY
   if (level == 3.07) {
     if (p.numOne == p.numTwo && p.numTwo == p.numThree) {
       p.numOne = p.numOne + 1;
@@ -17932,6 +17933,7 @@ function handleSubmit(e) {
       }
     }
 
+    // ANSWER
     if (level == 3.07) {
       arr.sort(function (a, b) {
         return b - a;
@@ -17960,6 +17962,7 @@ function handleSubmit(e) {
             commonMultipleArrTwo[0] +
             ", " +
             commonMultipleArrTwo[commonMultipleArrTwo.length - 1];
+            correctAnswerTwo = commonMultipleArrTwo[commonMultipleArrTwo.length - 1]
         }
       } else {
         correctAnswer = commonMultipleArrTwo[0];

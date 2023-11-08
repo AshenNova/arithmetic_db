@@ -33,6 +33,7 @@
          <th scope="col">Parent / Guardian One</th>
          <th scope="col">Parent / Guardian Two</th>
          <th scope="col">Questions</th>
+         <th scope="col" colspan="3">Actions</th>
    
          <% getAllTrials.forEach(item => { %>
             <tr>
@@ -67,15 +68,21 @@
              </td>
              <td>
                <%= item.parentTwoName %> <%= item.parentTwoSurname %></br>
-               <%= item.outlet.roleTwo %></br>
-               <%= item.outlet.contactTwo %></br>
+               <%= item.roleTwo %></br>
+               <%= item.contactTwo %></br>
              </td>
              <td>
-               A: <%= item.outlet.questionA %></br>
-               B: <%= item.outlet.questionB %></br>
-               C: <%= item.outlet.questionC %></br>
-               D: <%= item.outlet.questionD %>
+               A: <%= item.questionA %></br>
+               B: <%= item.questionB %></br>
+               C: <%= item.questionC %></br>
+               D: <%= item.questionD %></br>
+               E: <%= item.questionE %></br>
+               F: <%= item.questionF %></br>
+
               </td>
+              <td>Edit</td>
+              <td><a href="trial/delete/<%= item._id %>">Delete</a></td>
+              <td>Trial</td>
             </tr>
          <% }) %>
    

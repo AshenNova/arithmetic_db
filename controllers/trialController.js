@@ -23,23 +23,43 @@ exports.new = async (req, res) => {
       message,
     });
   } catch (error) {
-    const toapayoh = await Lesson.find({ outlet: "Toa Payoh" });
-    const hougang = await Lesson.find({ outlet: "Hougang" });
-    const private = await Lesson.find({ outlet: "Private" });
-    const clone = req.body;
-    message = "*Please enter all required fields";
-    console.log(error);
-    res.render("trial/signup", {
-      username,
-      authenticate,
-      currentUser,
-      clone,
-      message,
-      toapayoh,
-      hougang,
-      private,
-    });
+    // const toapayoh = await Lesson.find({ outlet: "Toa Payoh" });
+    // const hougang = await Lesson.find({ outlet: "Hougang" });
+    // const private = await Lesson.find({ outlet: "Private" });
+    // const clone = req.body;
+    // message = "*Please enter all required fields";
+    // console.log(error);
+    // res.render("trial/signup", {
+    //   username,
+    //   authenticate,
+    //   currentUser,
+    //   clone,
+    //   message,
+    //   toapayoh,
+    //   hougang,
+    //   private,
+    // });
+    res.send("missing");
   }
+};
+exports.trialEnd = async (req, res) => {
+  console.log("Trial End");
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  let trial;
+  if (trial && !trial._id) {
+    return res.redirect("/trial/signup");
+  }
+  let message;
+  trial = await Trial.findOne().sort({ filledIn: -1 });
+  res.render("trial/end", {
+    username,
+    authenticate,
+    currentUser,
+    trial,
+    message,
+  });
 };
 
 exports.signup = async (req, res) => {
@@ -107,4 +127,9 @@ exports.getAllTrials = async (req, res) => {
   } catch (e) {
     res.status(404).json({ message: e });
   }
+};
+
+exports.deleteTrial = async (req, res) => {
+  await Trial.findByIdAndDelete(req.params.id);
+  res.redirect("/trial");
 };

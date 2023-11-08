@@ -35,7 +35,40 @@
     <div class="container">
         <h1>Free Trial Form</h1>
         <p>This form is for Primary level Math and Science.</p>
-        <p>Before you fill in the form, you may first want to read our rules and regulations.</p>
+        <p>Before fillinf in the form, please read our rules and regulations.</p>
+
+        <h1>Rules and Regulations</h1>
+        <ul>
+          <li><h4>Payment and fees</h4></li>
+          <div class="ms-3">
+              <p>Please check with the admin staff as the amount is subjected to change.</p>
+          </div>
+          <li><h4>Class Size</h4></li>
+            <div class="ms-3">
+              <p>3 to 5 students.</p>
+              <p>A maximum size of 3 but allow 2 more students for either extra or make up lessons.</p>
+            </div>
+          <li><h4>Absence / Sick</h4></li>
+            <div class="ms-3">
+              <p>Please inform the tutor at least 2 hours in advance and arrange for make up.</p>
+            </div>
+          <li><h4>Make up lessons</h4></li>
+            <div class="ms-3">
+              <p>Make up lessons will expire within 1 month of occurrence and cannot be used to offset next month's fees.</p>
+            </div>
+          <li><h4>Public Holiday</h4></li>
+            <div class="ms-3">
+              <p>Assume that classes will still continue except for Chinese New Year or unless specificied otherwise.</p>
+              <p>If you choose to not attend, please inform and arrange for make up.</p>
+            </div>
+          <li><h4>Bringing forward of lessons</h4></li>
+          <div class="ms-3">
+              <p>Lessons from school holidays period would usually be brought forward to the earlier months to better prepare your child for the upcoming exams.</p>
+              <p>Those "extra" lessons will only need to be paid during its actual month.</p>
+              <p><i>eg. Lessons from June Holidays brought forward into May only needs to be paid when June comes around.</i></p>
+          </div>
+         </ul>
+
     </div>
     <div class="container mb-3">
       <form action="/trial/new" method="post">
@@ -84,7 +117,7 @@
         </div>
         <div class="mb-3">
           <label for="otherTiming" class="form-label" name="otherTiming">Other Timing</label>
-           <input type="text" class="form-control" name="otherTiming" placeholder="If there is no situable timing. Please fill in your preferred day and timing. Thanks!" <% if (clone) { %>
+           <input type="text" class="form-control" id="OtherTiming" name="otherTiming" placeholder="If there is no situable timing. Please fill in your preferred day and timing. Thanks!" <% if (clone) { %>
              value="<%= clone.otherTiming %>"
           <% } %>>
         </div>
@@ -128,13 +161,13 @@
                 </p>
             <% } else { %>
               <p>
-                <input class="form-check-input" type="checkbox" value="Standard Math" id="flexCheckDefault" name="subject">
+                <input class="form-check-input" type="checkbox" value="Standard Math" id="subject1" name="subject">
                 <label class="form-check-label" for="flexCheckDefault">Standard Math</label>
-                <input class="form-check-input ms-3" type="checkbox" value="Foundation Math" id="flexCheckDefault" name="subject">
+                <input class="form-check-input ms-3" type="checkbox" value="Foundation Math" id="subjec2" name="subjec">
                 <label class="form-check-label" for="flexCheckDefault">Foundation Math</label>
-                <input class="form-check-input ms-3" type="checkbox" value="Standard Science" id="flexCheckDefault" name="subject">
+                <input class="form-check-input ms-3" type="checkbox" value="Standard Science" id="subjec3" name="subject">
                 <label class="form-check-label" for="flexCheckDefault">Standard Science</label>
-                <input class="form-check-input ms-3" type="checkbox" value="Foundation Science" id="flexCheckDefault" name="subject">
+                <input class="form-check-input ms-3" type="checkbox" value="Foundation Science" id="subject4" name="subject">
                 <label class="form-check-label" for="flexCheckDefault">Foundation Science</label>
                 </p>
             <% } %>
@@ -145,32 +178,32 @@
           <div class="col">
             <h4>Student</h4>
             <div class="mb-3">
-              <label for="childName" class="form-label focus">Name*</label>
-              <input type="text" class="form-control" name="childName"<% if (clone && clone.childName) { %>
+              <label for="childName" class="form-label">Name*</label>
+              <input type="text" class="form-control" id="childName" name="childName"<% if (clone && clone.childName) { %>
                 <%= clone.childName %>
              <% } %>>
             </div>
             <div class="mb-3">
-                <label for="childSurname" class="form-label focus">Surname*</label>
-                <input type="text" class="form-control" name="childSurname"<% if (clone && clone.childSurname) { %>
+                <label for="childSurname" class="form-label">Surname*</label>
+                <input type="text" class="form-control" id= "childSurname" name="childSurname"<% if (clone && clone.childSurname) { %>
                   value="<%= clone.childSurname %>"
                <% } %>> 
            </div>
         
            <% if (clone && clone.DOB) { %>
             <div class="mb-3">
-              <label for="DOB" class="form-label focus">Date of birth*</label>
-              <input type="date" class="form-control" name="DOB" value="<%= clone.DOB %>">
+              <label for="DOB" class="form-label">Date of birth*</label>
+              <input type="date" class="form-control" id="DOB" name="DOB" value="<%= clone.DOB %>">
              </div>
            <% } else { %>
             <div class="mb-3">
-              <label for="DOB" class="form-label focus">Date of birth*</label>
-              <input type="date" class="form-control" name="DOB">
+              <label for="DOB" class="form-label">Date of birth*</label>
+              <input type="date" class="form-control" id="DOB" name="DOB">
              </div>
            <% } %>
            <div class="mb-3">
             <label for="level" class="form-label focus">Level (For year <%= new Date().getFullYear() %>)*</label>
-            <select class="form-select" aria-label="Default select example" name="level">
+            <select class="form-select" aria-label="Default select example" id="level" name="level">
               <% if (clone && clone.level) { %>
                 <option value="<%= clone.level %>"selected><%= clone.level %></option>
               <% } else { %>
@@ -186,7 +219,7 @@
            </div>
            <div class="mb-3">
             <label for="gender" class="form-label focus">Gender*</label>
-            <select class="form-select" aria-label="Default select example"name="gender">
+            <select class="form-select" aria-label="Default select example" id="gender" name="gender">
               <% if (clone && clone.gender) { %>
                 <option value="<%= clone.gender %>"selected><%= clone.gender %></option>
               <% } else { %>
@@ -199,9 +232,9 @@
            <div class="mb-3">
             <label for="school" class="form-label focus">School*</label>
             <% if (clone && clone.school) { %>
-              <input type="text" class="form-control" name="school" value="<%= clone.school %>"> 
+              <input type="text" class="form-control" name="school" id="school" value="<%= clone.school %>"> 
             <% } else { %>
-              <input type="text" class="form-control" name="school"> 
+              <input type="text" class="form-control" id="school" name="school"> 
             <% } %>
            </div>
           </div>
@@ -209,35 +242,35 @@
             <h4>Parent/Guardian 1</h4>
            <div class="mb-3">
             <label for="parentOneName" class="form-label focus">Name*</label>
-            <input type="text" class="form-control" name="parentOneName" <% if (clone) { %>
+            <input type="text" class="form-control" id="parentOneName" name="parentOneName" <% if (clone) { %>
               value="<%= clone.parentOneName %>"
              <% } %>>
             <!-- <div name="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
           <div class="mb-3">
             <label for="parentOneSurname" class="form-label focus">Surname*</label>
-            <input type="text" class="form-control" name="parentOneSurname"<% if (clone) { %>
+            <input type="text" class="form-control" id="parentOneSurname" name="parentOneSurname"<% if (clone) { %>
               value="<%= clone.parentOneSurname %>"
              <% } %>>
             <!-- <div name="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
           <div class="mb-3">
             <label for="roleOne" class="form-label focus">Role*</label>
-            <input type="text" class="form-control" name="roleOne" placeholder="Father / Mother etc" <% if (clone) { %>
+            <input type="text" class="form-control" id="roleOne" placeholder="Father / Mother etc" <% if (clone) { %>
               value="<%= clone.roleOne %>"
              <% } %>>
             <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
           <div class="mb-3">
             <label for="ContactOne" class="form-label focus">Contact Number*</label>
-            <input type="text" class="form-control" name="contactOne"<% if (clone) { %>
+            <input type="text" class="form-control" id="contactOne"<% if (clone) { %>
               value="<%= clone.contactOne %>"
              <% } %>>
             <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
           <div class="mb-3">
             <label for="email" class="form-label focus">Email*</label>
-            <input type="text" class="form-control" name="emailOne"<% if (clone) { %>
+            <input type="text" class="form-control" id="emailOne"<% if (clone) { %>
               value="<%= clone.emailOne %>"
              <% } %>>
             <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
@@ -247,27 +280,27 @@
               <h4>Parent/Guardian 2</h4>
               <div class="mb-3">
                   <label for="parentTwoSurname" class="form-label">Name</label>
-                  <input type="text" class="form-control" name="parentTwoName" <% if (clone) { %>
+                  <input type="text" class="form-control" id="parentTwoName" <% if (clone) { %>
                     value="<%= clone.parentTwoName %>"
                    <% } %>>
              </div>
             <div class="mb-3">
               <label for="parentTwoSurname" class="form-label">Surname</label>
-              <input type="text" class="form-control" name="parentTwoSurname" <% if (clone) { %>
+              <input type="text" class="form-control" id="parentTwoSurname" <% if (clone) { %>
                 value="<%= clone.parentTwoSurname %>"
                <% } %>>
               <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
             </div>
             <div class="mb-3">
               <label for="roleTwo" class="form-label">Role</label>
-              <input type="text" class="form-control" name="roleTwo" placeholder="Father / Mother etc" <% if (clone) { %>
+              <input type="text" class="form-control" id="roleTwo" placeholder="Father / Mother etc" <% if (clone) { %>
                 value="<%= clone.roleTwo %>"
                <% } %>>
               <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
             </div>
             <div class="mb-3">
               <label for="ContactTwo" class="form-label">Contact Number</label>
-              <input type="text" class="form-control" name="ContactTwo" <% if (clone) { %>
+              <input type="text" class="form-control" id="ContactTwo" <% if (clone) { %>
                 value="<%= clone.contactTwo %>"
                <% } %>>
               <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
@@ -279,14 +312,14 @@
         <div class="mb-3">
           <label for="questionA" class="form-label">What is the most recent result if any.</label>
           <% if (clone && clone.questionA) { %>
-            <input type="text" class="form-control" name="questionA" placeholder="30/40 or 75%" value="<%= clone.questionA %>">
+            <input type="text" class="form-control" id="questionA" placeholder="30/40 or 75%" value="<%= clone.questionA %>">
           <% } else { %>
-            <input type="text" class="form-control" name="questionA" placeholder="30/40 or 75%">
+            <input type="text" class="form-control" id="questionA" placeholder="30/40 or 75%">
           <% } %>
         </div>
         <div class="mb-3">
           <label for="questionB" class="form-label focus">Do you want your child to receive homework?*</label>
-          <select class="form-select" aria-label="Default select example" name="questionB">
+          <select class="form-select" aria-label="Default select example" id="questionB">
             <% if (clone && clone.questionB) { %>
               <option value="<%= clone.questionB %>"selected><%= clone.questionB %></option>
             <% } else { %>
@@ -300,31 +333,31 @@
         <div class="mb-3">
           <label for="questionC" class="form-label">Does your child have any learning disabilities?</label>
           <% if (clone && clone.questionC) { %>
-            <textarea type="text" class="form-control" name="questionC" placeholder="If no, leave blank. If yes, please tells us more."><%= clone.questionC %></textarea>
+            <textarea type="text" class="form-control" id="questionC" placeholder="If no, leave blank. If yes, please tells us more."><%= clone.questionC %></textarea>
           <% } else { %>
-            <textarea type="text" class="form-control" name="questionC" placeholder="If no, leave blank. If yes, please tells us more."></textarea>
+            <textarea type="text" class="form-control" id="questionC" placeholder="If no, leave blank. If yes, please tells us more."></textarea>
           <% } %>
        </div>
        <div class="mb-3">
         <label for="questionD" class="form-label">Is this your child's first time attending tuition for the subject that you are interested in signing him/her up for?</label>
         <% if (clone && clone.questionD) { %>
-          <textarea type="text" class="form-control" name="questionD" placeholder="If yes, leave blank. If no, please tells why you did not continue there?"  ><%= clone.questionD %></textarea>
+          <textarea type="text" class="form-control" id="questionD" placeholder="If yes, leave blank. If no, please tells why you did not continue there?"  ><%= clone.questionD %></textarea>
         <% } else { %>
-          <textarea type="text" class="form-control" name="questionD" placeholder="If yes, leave blank. If no, please tells why you did not continue there?"></textarea>
+          <textarea type="text" class="form-control" id="questionD" placeholder="If yes, leave blank. If no, please tells why you did not continue there?"></textarea>
         <% } %>
        </div>
        <div class="mb-3">
         <label for="questionE" class="form-label focus">What should we do if your child misbehavies?</label>
         <% if (clone && clone.questionE) { %>
-          <textarea type="text" class="form-control" name="questionE" placeholder="Fill in the blank"><% clone.questionE %></textarea>
+          <textarea type="text" class="form-control" id="questionE" placeholder="Fill in the blank"><% clone.questionE %></textarea>
         <% } else { %>
-          <textarea type="text" class="form-control" name="questionE" placeholder="Fill in the blank"></textarea>
+          <textarea type="text" class="form-control" id="questionE" placeholder="Fill in the blank"></textarea>
         <% } %>
        
        </div>
        <div class="mb-3">
         <label for="questionF" class="form-label focus" >Do you allow physical punishment?*</label>
-        <select class="form-select" aria-label="Default select example" name="questionF">
+        <select class="form-select" aria-label="Default select example" id="questionF">
           <% if (clone && clone.questionF) { %>
             <option value="<%= clone.questionF %>"selected><%= clone.questionF %></option>
           <% } else { %>
@@ -335,38 +368,8 @@
         </select>
       </div>
 
-        <h1>Rules and Regulations</h1>
-        <ul>
-          <li><h4>Payment and fees</h4></li>
-          <div class="ms-3">
-              <p>Please check with the admin staff as the amount is subjected to change.</p>
-          </div>
-          <li><h4>Class Size</h4></li>
-            <div class="ms-3">
-              <p>3 pax to 5 pax.</p>
-              <p>A maximum size of 3 but allow 2 more pax for either extra or make up lessons.</p>
-            </div>
-          <li><h4>Absence / Sick</h4></li>
-            <div class="ms-3">
-              <p>Please inform the tutor at least 2 hours in advance and arrange for make up.</p>
-            </div>
-          <li><h4>Make up lessons</h4></li>
-            <div class="ms-3">
-              <p>Make up lessons will expire within 1 month of occurrence and cannot be used to offset next month's fees.</p>
-            </div>
-          <li><h4>Public Holiday</h4></li>
-            <div class="ms-3">
-              <p>Assume that classes will still continue except for Chinese New Year or unless specificied otherwise.</p>
-              <p>If you choose to not attend, please inform and arrange for make up.</p>
-            </div>
-          <li><h4>Bringing forward of lessons</h4></li>
-          <div class="ms-3">
-              <p>Lessons from school holidays period would usually be brought forward to the earlier months to better prepare your child for the upcoming exams.</p>
-              <p>Those "extra" lessons will only need to be paid during its actual month.</p>
-              <p><i>eg. Lessons from June Holidays brought forward into May only needs to be paid when June comes around.</i></p>
-          </div>
-         </ul>
-        <button type="submit" class="btn btn-primary">Submit</button>
+       
+        <button type="submit" class="btn btn-primary submit">Submit</button>
 
      </form>
 </div>
@@ -429,5 +432,65 @@
   }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script>
+  document.querySelector('.submit').addEventListener("click", function(e){
+    e.preventDefault()
 
+    let subjects = []
+    console.log($("#subject1").val())
+    if ($("#subject1").val()) subjects.push($("#subject1").val())
+    if ($("#subject2").val()) subjects.push($("#subject2").val())
+    if ($("#subject3").val()) subjects.push($("#subject3").val())
+    if ($("#subject4").val()) subjects.push($("#subject4").val())
+  
+
+    let newTrial = {
+      outlet: $("#slct1").val(),
+      timing: $("#slct2").val(),
+      otherTiming: $("#otherTiming").val(),
+      subject: subjects,
+      childName:$("#childName").val(),
+      childSurname:$("#childSurname").val(),
+      DOB:$("#DOB").val(),
+      level:$("#level").val(),
+      gender:$("#gender").val(),
+      school:$("#school").val(),
+      parentOneName:$("#parentOneName").val(),
+      parentOneSurname:$("#parentOneSurname").val(),
+      roleOne:$("#roleOne").val(),
+      contactOne:$("#contactOne").val(),
+      emailOne:$("#emailOne").val(),
+      parentTwoName:$("#parentTwoName").val(),
+      parentTwoSurname:$("#parentTwoSurname").val(),
+      roleTwo:$("#roleTwo").val(),
+      contactTwo:$("#contactTwo").val(),
+      questionA:$("#questionA").val(),
+      questionB:$("#questionB").val(),
+      questionC:$("#questionC").val(),
+      questionD:$("#questionD").val(),
+      questionE:$("#questionE").val(),
+      questionF:$("#questionF").val(),
+
+    }
+    console.log("Submitting trial form")
+    console.log(newTrial)
+
+    $.ajax({
+      url: "/trial/new",
+      method: "Post",
+      data: newTrial,
+      success: function(res){
+        if (res == "missing"){
+          alert("Please fill in all the necessary details.")
+        } else {
+          window.location.replace("/trial/end");
+        }
+      },
+      error: function(res){
+        console.log("Failed!")
+      }
+
+    })
+  })
+</script>
 </html>

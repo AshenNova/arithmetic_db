@@ -3,6 +3,7 @@ const Attempt = require("../models/attemptModel");
 const jwt = require("jsonwebtoken");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+const sendEmail = require("../utils/email");
 
 const signToken = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
@@ -14,6 +15,14 @@ exports.signup = catchAsync(async (req, res, next) => {
   console.log("Signing Up!");
   console.log(req.body);
   const combineName = `${req.body.givenName} ${req.body.surname}`;
+
+  const message = "A new user has been created.";
+
+  await sendEmail({
+    // to: "Kennerve14@gmail.com",
+    subject: "New user on Arithmetic",
+    message,
+  });
   // console.log(combineName);
   // try {
   // const newUser = await User.create(req.body);
