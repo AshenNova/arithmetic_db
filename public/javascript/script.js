@@ -18213,7 +18213,7 @@ function handleSubmit(e) {
         }
       }
       console.log(arr);
-      correctAnswer = arr.toString();
+      correctAnswer = arr.join(", ");
     }
 
     if (level == 4.01) {

@@ -979,10 +979,14 @@ exports.summary = async (req, res) => {
   let yearCount = 0;
   let todayLevelCount = 0;
   let todayCalCount = 0;
+  let todayCalFirst = 0;
+  let todayHeuFirst = 0;
   let todayHeuCount = 0;
   let weekLevelCount = 0;
   let weekCalCount = 0;
   let weekHeuCount = 0;
+  let weekCalFirst = 0;
+  let weekHeuFirst = 0;
   let monthLevelCount = 0;
   let monthCalCount = 0;
   let monthHeuCount = 0;
@@ -1023,9 +1027,6 @@ exports.summary = async (req, res) => {
       });
       todayCount = today.length;
       console.log(`Today: ${todayCount}`);
-      let todayLevel = [];
-      let todayCal = [];
-      let todayHeu = [];
       console.log(today);
       today.forEach((item) => {
         if (item.level) {
@@ -1034,9 +1035,15 @@ exports.summary = async (req, res) => {
           }
           if (item.level.startsWith("cal")) {
             todayCalCount += 1;
+            if (item.tries == "1") {
+              todayCalFirst += 1;
+            }
           }
           if (item.level.startsWith("heu")) {
             todayHeuCount += 1;
+            if (item.tries == "1") {
+              todayHeuFirst += 1;
+            }
           }
         }
       });
@@ -1067,10 +1074,16 @@ exports.summary = async (req, res) => {
           }
           if (item.level.startsWith("cal")) {
             weekCalCount += 1;
+            if (item.tries == "1") {
+              weekCalFirst += 1;
+            }
           }
           if (item.level.startsWith("heu")) {
             // weekHeu.push(item);
             weekHeuCount += 1;
+            if (item.tries == "1") {
+              weekCalFirst += 1;
+            }
           }
         }
       });
@@ -1151,10 +1164,14 @@ exports.summary = async (req, res) => {
       todayLevelCount,
       todayCalCount,
       todayHeuCount,
+      todayCalFirst,
+      todayHeuFirst,
       weekCount,
       weekLevelCount,
       weekCalCount,
       weekHeuCount,
+      weekCalFirst,
+      weekHeuFirst,
       monthCount,
       monthLevelCount,
       monthCalCount,
