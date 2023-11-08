@@ -14091,6 +14091,7 @@ How far is apart is Town A and Town B?
   }
   // HEUTWO DISPLAY
   if (level == "heuTwo") {
+    normalDisplay();
     if (
       setting == 1 ||
       (setting == 9 && p.rollz == 1) ||
@@ -14194,6 +14195,7 @@ How far is apart is Town A and Town B?
   }
   // display
   if (level == "heuTwob") {
+    normalDisplay();
     if (
       setting == 1 ||
       (setting == 9 && p.rollz == 1) ||
@@ -17962,7 +17964,8 @@ function handleSubmit(e) {
             commonMultipleArrTwo[0] +
             ", " +
             commonMultipleArrTwo[commonMultipleArrTwo.length - 1];
-            correctAnswerTwo = commonMultipleArrTwo[commonMultipleArrTwo.length - 1]
+          correctAnswerTwo =
+            commonMultipleArrTwo[commonMultipleArrTwo.length - 1];
         }
       } else {
         correctAnswer = commonMultipleArrTwo[0];
