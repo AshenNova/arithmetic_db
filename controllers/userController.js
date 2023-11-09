@@ -1055,10 +1055,11 @@ exports.summary = async (req, res) => {
       console.log("Week start");
       const now = new Date();
       const day = now.getDay();
+      console.log(`The day is ${day}`);
       const oneDay = 1000 * 60 * 60 * 24;
       // 2 = Tuesday; 3 = Wednesday
-      let begin = new Date(start.getTime() - (day - (day - 1)) * oneDay);
-      // console.log(begin);
+      let begin = new Date(start.getTime() - (day - 1) * oneDay);
+      console.log(begin.toLocaleDateString("en-GB"));
       const week = await Attempt.find({
         user: username,
         date: { $gte: begin, $lt: end },
@@ -1148,6 +1149,7 @@ exports.summary = async (req, res) => {
         subject: -1,
         dateIssue: -1,
       });
+
       console.log(homework);
       if (!searchedUser) {
         searchedUser = "Not found";

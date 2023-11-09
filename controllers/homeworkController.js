@@ -19,6 +19,8 @@ exports.getHomework = async (req, res) => {
     if (req.params.id) {
       console.log(req.params);
       editHomework = await Homework.findById(req.params.id);
+      // editHomework.comment = editHomework.comment.trim();
+      console.log(editHomework);
     }
     res.render("homework/new", {
       username,

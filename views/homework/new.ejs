@@ -70,9 +70,8 @@
         <div class="form-group required">
           <label class="form-label" for="description">Description</label>
           <input type="text" class="form-control" name="description" <% if (editHomework) { %>
- value="<%= editHomework.description %>"
-          <% } %> 
-          >
+            value="<%= editHomework.description %>"
+          <% } %>>
         </div>
       </div>
       <div class="mb-3">
@@ -96,9 +95,7 @@
       <div class="mb-3">
         <div class="form-group required">
           <label class="form-label" for="comment">Comment</label>
-          <textarea type="text" class="form-control" name="comment"><% if (editHomework) { %>
-            <%= editHomework.comment %>
-          <% } %></textarea>
+          <textarea type="text" class="form-control" name="comment"><% if (editHomework) { %><%= editHomework.comment %><% } %></textarea>
         </div>
       </div>
       <div class="row mb-3">
