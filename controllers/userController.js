@@ -1054,7 +1054,8 @@ exports.summary = async (req, res) => {
       //THIS WEEK
       console.log("Week start");
       const now = new Date();
-      const day = now.getDay();
+      let day = now.getDay();
+      if (day == 0) day = 7;
       console.log(`The day is ${day}`);
       const oneDay = 1000 * 60 * 60 * 24;
       // 2 = Tuesday; 3 = Wednesday

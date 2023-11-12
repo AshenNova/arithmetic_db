@@ -10532,7 +10532,7 @@ function updateProblems() {
       if (p.version == "difference") {
         displayProblem.insertAdjacentHTML(
           "afterbegin",
-          `How many equal number of white or black squares have to be ${difference} for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?`
+          `An equal number of white and black squares have been ${difference} for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?</br>How many black squares were ${difference}?`
         );
       }
       //UNCHANGED OBJ
