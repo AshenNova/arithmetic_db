@@ -20797,15 +20797,9 @@ function handleSubmit(e) {
             let leftDeno = comDeno;
             [leftNume, leftDeno] = simplify(leftNume, leftDeno);
             correctAnswer = `${leftNume}/${leftDeno}`;
-            // if ((p.type = "mixed fractions")) {
-            //   if (leftNume / leftDeno > 0) {
-            //     correctAnswer = `${Math.floor(
-            //       leftNume / leftDeno
-            //     )} ${leftNume}/${leftDeno}`;
-            //   }
-            // }
           }
         }
+        if (correctAnswer <= 0) return updateCalc();
       }
 
       // CIRCLES

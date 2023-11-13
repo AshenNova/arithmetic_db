@@ -52,19 +52,6 @@ exports.signup = catchAsync(async (req, res, next) => {
   console.log({ newUser });
   newUser.password = undefined;
   res.redirect("/user/login");
-  // } catch (e) {
-  // if (e.code == 11000) {
-  //   res.status(400).json({
-  //     status: "Failed",
-  //     message: "The email you have entered has already being taken.",
-  //   });
-  // } else {
-  // res.status(400).json({
-  //   status: "Failed",
-  //   message: { e },
-  // });
-  // }
-  // }
 });
 
 exports.login = catchAsync(async (req, res, next) => {
