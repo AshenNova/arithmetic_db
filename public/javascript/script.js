@@ -20776,8 +20776,6 @@ function handleSubmit(e) {
     //ANSWERS
     if (level == "calSix") {
       if (setting == 1) {
-        console.log(p.numerator, p.denominator);
-        console.log(p.numerator / p.denominator);
         let start = p.whole + p.numerator / p.denominator;
         if (p.type == "whole") start = p.whole;
         const object = p.numeratorTwo / p.denominatorTwo;
@@ -20789,17 +20787,17 @@ function handleSubmit(e) {
           [remainder, p.denominatorTwo] = simplify(remainder, p.denominatorTwo);
           correctAnswer = `${remainder}/${p.denominatorTwo}`;
           if (p.type == "simple fractions" || p.type == "mixed fractions") {
+            // change to improper fraction
             const totalNume = p.whole * p.denominator + p.numerator;
             const comDeno = commonDeno(p.denominator, p.denominatorTwo);
-            let newNumeOne = (totalNume * comDeno) / p.denominator;
-            let newNumeTwo = (p.numeratorTwo * comDeno) / p.denominatorTwo;
+            let newNumeOne = totalNume * (comDeno / p.denominator);
+            let newNumeTwo = p.numeratorTwo * (comDeno / p.denominatorTwo);
             let leftNume = newNumeOne - newNumeTwo * quotient;
             let leftDeno = comDeno;
             [leftNume, leftDeno] = simplify(leftNume, leftDeno);
             correctAnswer = `${leftNume}/${leftDeno}`;
           }
         }
-        if (correctAnswer <= 0) return updateCalc();
       }
 
       // CIRCLES
