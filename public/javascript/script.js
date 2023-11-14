@@ -18544,42 +18544,6 @@ function handleSubmit(e) {
       }
     }
     if (level == 4.11) {
-      // level 4.09
-      // if (p.optionFinal == "1") {
-      //   for (let i = p.numThree; i > 1; i--) {
-      //     if (p.numTwo % i == 0 && p.numThree % i == 0) {
-      //       p.numTwo /= i;
-      //       p.numThree /= i;
-      //     }
-      //   }
-      //   console.log(p.numThree, arr[0]);
-      //   p.numFour = p.numOne * p.numThree + p.numTwo;
-      //   if (p.numThree != arr[0]) {
-      //     correctAnswer = `${p.numOne} ${p.numTwo}/${p.numThree}=${p.numFour}/${p.numThree}`;
-      //   } else if (p.numTwo == 1) {
-      //     p.numFour = p.numOne * p.numThree + p.numTwo;
-      //     correctAnswer = p.numFour + "/" + p.numThree;
-      //   } else {
-      //     correctAnswer = p.numFour + "/" + p.numThree;
-      //   }
-      // }
-      // if (p.optionFinal == "2") {
-      //   // level 4.10
-      //   for (let i = p.numTwo; i > 1; i--) {
-      //     if (p.numTwo % i == 0 && p.numThree % i == 0) {
-      //       p.numTwo /= i;
-      //       p.numThree /= i;
-      //     }
-      //   }
-      //   if (p.numThree != arr[1]) {
-      //     correctAnswer = `${p.numOne} ${arr[0]}/${arr[1]}=${p.numOne} ${
-      //       p.numTwo % p.numThree
-      //     }/${p.numThree}`;
-      //   } else {
-      //     correctAnswer =
-      //       p.numOne + " " + (p.numTwo % p.numThree) + "/" + p.numThree;
-      //   }
-      // }
       if (setting == 1) {
         for (let i = p.numThree; i > 1; i--) {
           if (p.numTwo % i == 0 && p.numThree % i == 0) {
@@ -18710,8 +18674,14 @@ function handleSubmit(e) {
           column -= 1;
           if (column < 0) column = columnArr.length - 1;
           const row = Math.floor(p.number / 4);
-          correctAnswer = `${columnArr[column]}, ${row}`;
-          correctAnswerTwo = `${row}, ${columnArr[column]}`;
+          if (p.number % 4 == 0){
+            correctAnswer = `${columnArr[column]}, ${row}`;
+            correctAnswerTwo = `${row}, ${columnArr[column]}`;
+          } else {
+            correctAnswer = `${columnArr[column]}, ${row+1}`;
+            correctAnswerTwo = `${row+1}, ${columnArr[column]}`;
+          }
+         
         }
         if (p.question == "number") {
           correctAnswer = (p.row - 1) * 4 + columnArr.indexOf(p.column) + 1;
