@@ -1,9 +1,14 @@
 let setTime = 3;
 
-window.addEventListener("load", function () {
-  $(".loader").addClass("hidden");
-});
+// window.addEventListener("load", function () {
+//   $(".loader").addClass("hidden");
+// });
 
+window.onload = function () {
+  // setTimeout(function () {
+  document.querySelector(".loader").classList.add("hidden");
+  // }, 2000);
+};
 // const screenHeight = window.screen.availHeight;
 // const screenWidth = window.screen.availWidth;
 const screenHeight = window.innerHeight;
