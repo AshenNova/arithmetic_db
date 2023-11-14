@@ -1,7 +1,7 @@
 let setTime = 3;
 
 window.addEventListener("load", function () {
-  // $(".loader").addClass("hidden");
+  $(".loader").addClass("hidden");
 });
 
 // const screenHeight = window.screen.availHeight;
