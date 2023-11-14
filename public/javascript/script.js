@@ -18702,6 +18702,7 @@ function handleSubmit(e) {
           if (column < 0) column = columnArr.length - 1;
           const row = Math.floor(p.number / 4);
           correctAnswer = `${columnArr[column]}, ${row}`;
+          correctAnswerTwo = `${row}, ${columnArr[column]}`;
         }
         if (p.question == "number") {
           correctAnswer = (p.row - 1) * 4 + columnArr.indexOf(p.column) + 1;
@@ -18721,10 +18722,13 @@ function handleSubmit(e) {
           const left = p.number - row * 4;
           if (p.number % 8 == 0) {
             correctAnswer = `${columnArrSnake}, ${row}`;
+            correctAnswerTwo = `${row}, ${columnArrSnake}`;
           } else if (left > 0 && left < 5) {
             correctAnswer = `${columnArrSnake}, ${row + 1}`;
+            correctAnswerTwo = `${row+1}, ${columnArrSnake}`;
           } else {
             correctAnswer = `${columnArrSnake}, ${row + 2}`;
+            correctAnswerTwo = `${row+2}, ${columnArrSnake}`;
           }
         }
         if (p.question == "number") {
