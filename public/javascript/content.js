@@ -158,21 +158,22 @@ export const displayContent = (level) => {
       <hr>
       6. Fractions: Addition: Mixed Fractions</br>
       7. Fractions: Subtraction: Mixed Fractions</br>
-      8. Fractions: Unit with a Value</br>
-      9. Fractions: Form</br>
-      10. Fractions: Conversion</br>
+      8. Fractions: Numberline</br>
+      9. Fractions: Unit with a Value</br>
+      10. Fractions: Form</br>
+      11. Fractions: Conversion</br>
       <hr>
-      11. Decimals: Addition</br>
-      12. Decimals: Subtraction</br>
-      13. Decimals: Overlapping Place Value</br>
-      14. Decimals: Multiplication (Single)</br>
-      15. Decimals: Multiplication (Double)</br>
-      16. Decimals: Division </br>
-      17. Fractions to Decimal (Limit)</br>
-      18. Decimals: Division and Multiplication with splitting</br>
+      12. Decimals: Addition</br>
+      13. Decimals: Subtraction</br>
+      14. Decimals: Overlapping Place Value</br>
+      15. Decimals: Multiplication (Single)</br>
+      16. Decimals: Multiplication (Double)</br>
+      17. Decimals: Division </br>
+      18. Fractions to Decimal (Limit)</br>
+      19. Decimals: Division and Multiplication with splitting</br>
       <hr>
-      19. Multiplication in Sets</br>
-      20. Decimals: Parts and Intervals</br>
+      20. Multiplication in Sets</br>
+      21. Decimals: Parts and Intervals</br>
       <hr>
       99. All
       `;
