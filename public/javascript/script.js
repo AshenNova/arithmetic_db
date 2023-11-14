@@ -1,5 +1,9 @@
 let setTime = 3;
 
+window.addEventListener("load", function () {
+  // $(".loader").addClass("hidden");
+});
+
 // const screenHeight = window.screen.availHeight;
 // const screenWidth = window.screen.availWidth;
 const screenHeight = window.innerHeight;
@@ -18725,10 +18729,10 @@ function handleSubmit(e) {
             correctAnswerTwo = `${row}, ${columnArrSnake}`;
           } else if (left > 0 && left < 5) {
             correctAnswer = `${columnArrSnake}, ${row + 1}`;
-            correctAnswerTwo = `${row+1}, ${columnArrSnake}`;
+            correctAnswerTwo = `${row + 1}, ${columnArrSnake}`;
           } else {
             correctAnswer = `${columnArrSnake}, ${row + 2}`;
-            correctAnswerTwo = `${row+2}, ${columnArrSnake}`;
+            correctAnswerTwo = `${row + 2}, ${columnArrSnake}`;
           }
         }
         if (p.question == "number") {
