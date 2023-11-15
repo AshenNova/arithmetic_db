@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="/css/attempts-styles.css">
     <link rel="stylesheet" href="/css/navbar-styles.css">
      <link rel="icon" href="/images/favicon.ico?v=1.1">
-     <% if (filteredUser != "") { %>
-    <title><%= filteredUser %>'s Results</title>
+     <% if (filteredUser == undefined) { %>
+      <title> Results </title>
   <% } else { %>
-    <title> Results </title>
+    <title><%= filteredUser %>'s Results</title>
   <% } %>
 </head>
 <body>

@@ -111,6 +111,7 @@ exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
   if (mode != "") filter.mode = mode;
 
   const filteredUser = filter.user;
+  console.log(`${filteredUser}?`);
   const attempts = await Attempt.find(filter)
     .sort({ date: -1 })
     .skip((page - 1) * limit)
