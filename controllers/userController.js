@@ -1085,7 +1085,7 @@ exports.summary = async (req, res) => {
             // weekHeu.push(item);
             weekHeuCount += 1;
             if (item.tries == "1") {
-              weekCalFirst += 1;
+              weekHeuFirst += 1;
             }
           }
         }

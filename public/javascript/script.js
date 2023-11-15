@@ -15996,6 +15996,7 @@ How many items are there in each bag?
         if (p.sceneAOne == p.sceneBOne && p.sceneATwo == p.sceneBTwo) {
           return updateCalc();
         }
+
         displayProblem.innerHTML = `
         ${p.sceneAOne}/${totalAOne} girls and ${p.sceneBOne}/${totalBOne} boys is ${firstScene}.</p>
         ${p.sceneATwo}/${totalATwo} girls and ${p.sceneBTwo}/${totalBTwo} boys is ${secondScene}.</p>
@@ -16024,7 +16025,11 @@ How many items are there in each bag?
         console.log("Half half");
         return updateCalc();
       }
-      if (((totalAOne == totalATwo) == totalBOne) == totalBTwo) {
+      if (
+        totalAOne == totalATwo &&
+        totalAOne == totalBOne &&
+        totalAOne == totalBTwo
+      ) {
         console.log("Same numbers");
         return updateCalc();
       }
@@ -18674,14 +18679,13 @@ function handleSubmit(e) {
           column -= 1;
           if (column < 0) column = columnArr.length - 1;
           const row = Math.floor(p.number / 4);
-          if (p.number % 4 == 0){
+          if (p.number % 4 == 0) {
             correctAnswer = `${columnArr[column]}, ${row}`;
             correctAnswerTwo = `${row}, ${columnArr[column]}`;
           } else {
-            correctAnswer = `${columnArr[column]}, ${row+1}`;
-            correctAnswerTwo = `${row+1}, ${columnArr[column]}`;
+            correctAnswer = `${columnArr[column]}, ${row + 1}`;
+            correctAnswerTwo = `${row + 1}, ${columnArr[column]}`;
           }
-         
         }
         if (p.question == "number") {
           correctAnswer = (p.row - 1) * 4 + columnArr.indexOf(p.column) + 1;
