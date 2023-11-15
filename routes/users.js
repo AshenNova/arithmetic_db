@@ -51,6 +51,7 @@ router
   .route("/edit/save")
   .post(authController.adminCheck, userController.saveEditUser);
 router.route("/signup").post(authController.signup);
+router.route("/signuptrial/:id").get(authController.signupTrial);
 router.route("/login").post(authController.login);
 router.route("/logout").get(authController.logout);
 

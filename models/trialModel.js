@@ -86,6 +86,10 @@ const trialSchema = new mongoose.Schema({
   questionD: String,
   questionE: { type: String, require: [true, "Please fill in the question."] },
   questionF: { type: String, require: [true, "Please fill in the question."] },
+  trialSession: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Trial = mongoose.model("trials", trialSchema);

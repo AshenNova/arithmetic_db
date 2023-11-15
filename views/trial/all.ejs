@@ -36,56 +36,110 @@
          <th scope="col" colspan="3">Actions</th>
    
          <% getAllTrials.forEach(item => { %>
-            <tr>
-            <td><%= item.filledIn.toLocaleTimeString('en-US') %></td>
-             <td><%= item.outlet %></br>
-              <%= item.timing %></br>
-              <% if (item.otherTiming) { %>
-                <span class="text-danger">Other: <%= item.otherTiming %></span></br>
-              <% } %>
-             <% if (item.subject.length > 1) { %>
+          <% if (item.trialSession != true) { %>
+              <tr>
+                <td><%= item.filledIn.toLocaleTimeString('en-US') %></td>
+                <td><%= item.outlet %></br>
+                  <%= item.timing %></br>
+                  <% if (item.otherTiming) { %>
+                    <span class="text-danger">Other: <%= item.otherTiming %></span></br>
+                  <% } %>
+                <% if (item.subject.length > 1) { %>
+              
+                    <ul>
+                        <% item.subject.forEach(item => { %>
+                          <li><%= item %></li>
+                        <% }) %>
+                    </ul>
+                  </br>
+                  <% } else { %>
+                    <%= item.subject %></br>
+                  <% } %>
+                  </td>
+                <td><%= item.childName %> <%= item.childSurname %> ( Age: <%= new Date().getFullYear() - item.DOB.getFullYear() %> )</br>
+                  <%= item.level %></br>
+                  <%= item.gender %></br>
+                <%= item.school %></br>
+                </td>
+                <td>
+                  <%= item.parentOneName %> <%= item.parentOneSurname %></br>
+                  <%= item.roleOne %></br>
+                  <%= item.contactOne %></br>
+                  <%= item.emailOne %></br>
+                </td>
+                <td>
+                  <%= item.parentTwoName %> <%= item.parentTwoSurname %></br>
+                  <%= item.roleTwo %></br>
+                  <%= item.contactTwo %></br>
+                </td>
+                <td>
+                  A: <%= item.questionA %></br>
+                  B: <%= item.questionB %></br>
+                  C: <%= item.questionC %></br>
+                  D: <%= item.questionD %></br>
+                  E: <%= item.questionE %></br>
+                  F: <%= item.questionF %></br>
+    
+                  </td>
+                  <td><a href="trial/edit/<%= item._id %>">Edit</a></td>
+                  <td><a href="trial/delete/<%= item._id %>">Delete</a></td>
+                  <td><a href="user/signuptrial/<%= item.id %>">Trial</a></td>
+                </tr>
+            <% } %> 
+          <% }) %>
           
-                <ul>
-                    <% item.subject.forEach(item => { %>
-                      <li><%= item %></li>
-                    <% }) %>
-                </ul>
-              </br>
-               <% } else { %>
-                <%= item.subject %></br>
-              <% } %>
-               </td>
-             <td><%= item.childName %> <%= item.childSurname %> ( Age: <%= new Date().getFullYear() - item.DOB.getFullYear() %> )</br>
-              <%= item.level %></br>
-              <%= item.gender %></br>
-             <%= item.school %></br>
-             </td>
-             <td>
-              <%= item.parentOneName %> <%= item.parentOneSurname %></br>
-              <%= item.roleOne %></br>
-              <%= item.contactOne %></br>
-              <%= item.emailOne %></br>
-             </td>
-             <td>
-               <%= item.parentTwoName %> <%= item.parentTwoSurname %></br>
-               <%= item.roleTwo %></br>
-               <%= item.contactTwo %></br>
-             </td>
-             <td>
-               A: <%= item.questionA %></br>
-               B: <%= item.questionB %></br>
-               C: <%= item.questionC %></br>
-               D: <%= item.questionD %></br>
-               E: <%= item.questionE %></br>
-               F: <%= item.questionF %></br>
-
-              </td>
-              <td>Edit</td>
-              <td><a href="trial/delete/<%= item._id %>">Delete</a></td>
-              <td>Trial</td>
-            </tr>
-         <% }) %>
-   
+          <% getAllTrials.forEach(item => { %>
+            <% if (item.trialSession == true) { %>
+                <tr class="table-secondary">
+                  <td><%= item.filledIn.toLocaleTimeString('en-US') %></td>
+                  <td><%= item.outlet %></br>
+                    <%= item.timing %></br>
+                    <% if (item.otherTiming) { %>
+                      <span class="text-danger">Other: <%= item.otherTiming %></span></br>
+                    <% } %>
+                  <% if (item.subject.length > 1) { %>
+                
+                      <ul>
+                          <% item.subject.forEach(item => { %>
+                            <li><%= item %></li>
+                          <% }) %>
+                      </ul>
+                    </br>
+                    <% } else { %>
+                      <%= item.subject %></br>
+                    <% } %>
+                    </td>
+                  <td><%= item.childName %> <%= item.childSurname %> ( Age: <%= new Date().getFullYear() - item.DOB.getFullYear() %> )</br>
+                    <%= item.level %></br>
+                    <%= item.gender %></br>
+                  <%= item.school %></br>
+                  </td>
+                  <td>
+                    <%= item.parentOneName %> <%= item.parentOneSurname %></br>
+                    <%= item.roleOne %></br>
+                    <%= item.contactOne %></br>
+                    <%= item.emailOne %></br>
+                  </td>
+                  <td>
+                    <%= item.parentTwoName %> <%= item.parentTwoSurname %></br>
+                    <%= item.roleTwo %></br>
+                    <%= item.contactTwo %></br>
+                  </td>
+                  <td>
+                    A: <%= item.questionA %></br>
+                    B: <%= item.questionB %></br>
+                    C: <%= item.questionC %></br>
+                    D: <%= item.questionD %></br>
+                    E: <%= item.questionE %></br>
+                    F: <%= item.questionF %></br>
+      
+                    </td>
+                    <td><a href="trial/edit/<%= item._id %>">Edit</a></td>
+                    <td><a href="trial/delete/<%= item._id %>">Delete</a></td>
+                    <td><a href="user/signuptrial/<%= item.id %>">Trial</a></td>
+                  </tr>
+              <% } %> 
+            <% }) %>
      </table>
   <% } else { %>
 <h1> Empty </h1>

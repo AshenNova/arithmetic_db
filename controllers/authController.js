@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const Attempt = require("../models/attemptModel");
+const Trial = require("../models/trialModel");
 const jwt = require("jsonwebtoken");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
@@ -16,13 +17,6 @@ exports.signup = catchAsync(async (req, res, next) => {
   console.log(req.body);
   const combineName = `${req.body.givenName} ${req.body.surname}`;
 
-  const message = "A new user has been created.";
-
-  await sendEmail({
-    // to: "Kennerve14@gmail.com",
-    subject: "New user on Arithmetic",
-    message,
-  });
   // console.log(combineName);
   // try {
   // const newUser = await User.create(req.body);
@@ -35,6 +29,13 @@ exports.signup = catchAsync(async (req, res, next) => {
     confirmPassword: req.body.confirmPassword,
   });
 
+  const message = "A new user has been created.";
+
+  await sendEmail({
+    // to: "Kennerve14@gmail.com",
+    subject: "New user on Arithmetic",
+    message,
+  });
   if (!newUser) {
     return next(
       new AppError(
@@ -43,16 +44,52 @@ exports.signup = catchAsync(async (req, res, next) => {
       )
     );
   }
-  // PAYLOAD -> SECRET -> OPTIONS (EXPIRY)
-  // const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
-  //   expiresIn: process.env.JWT_EXPIRES,
-  // });
 
   const token = signToken(newUser._id);
   console.log({ newUser });
   newUser.password = undefined;
   res.redirect("/user/login");
 });
+
+exports.signupTrial = async (req, res) => {
+  console.log("Creatin account for trial!");
+  // console.log(req.body);
+  // const combineName = `${req.body.givenName} ${req.body.surname}`;
+
+  const id = req.params.id;
+  console.log(id);
+  const trialStudent = await Trial.findById(id);
+  console.log(trialStudent);
+  // console.log(combineName);
+  // try {
+  // const newUser = await User.create(req.body);
+  // USE THE BELOW CODE INSTEAD SO THAT ONLY THE LISTED PARAMETERS AT THE BOTTOM ARE ACCEPTED. IF NOT, HACKERS CAN SET THEMSELVES AS ADMIN.
+  const newUser = await User.create({
+    username: `${trialStudent.childName} ${trialStudent.childSurname}`,
+    DOB: trialStudent.DOB,
+    email: trialStudent.emailOne,
+    password: "epicmind",
+    confirmPassword: "epicmind",
+  });
+
+  await Trial.findByIdAndUpdate(id, { trialSession: true });
+  const message = "A new user has been created.";
+
+  await sendEmail({
+    // to: "Kennerve14@gmail.com",
+    subject: "New user on Arithmetic",
+    message,
+  });
+  res.redirect("/trial");
+  if (!newUser) {
+    return next(
+      new AppError(
+        "User was not created, some fields were incorrect/missing",
+        401
+      )
+    );
+  }
+};
 
 exports.login = catchAsync(async (req, res, next) => {
   // let username = req.user.username;

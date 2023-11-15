@@ -49,11 +49,27 @@
               <% } else { %>
                 <td></td>
               <% } %>
+              <% let toBirthday %>
+              <% const thisYear = new Date().getFullYear() %>
+              <% const realYear = item.DOB.getFullYear() %>
+              <% let { DOB } = item %>
+              <% if (new Date() > DOB.setFullYear(thisYear)) { %>
+                <% toBirthday = -Math.floor((new Date()-DOB.setFullYear(thisYear+1))/(1000*60*60*24)) %>
+              <% } else { %>
+                <% toBirthday = Math.floor((new Date()-DOB.setFullYear(thisYear))/(1000*60*60*24)) %>
+              <% } %>
+              <% item.DOB.setFullYear(realYear) %>
                 <td><a href="/attempts/filter/?user=<%= item.username %>&level=&setting=&mode=" target="_blank"><%= item.username %></a></td>
                 <td><%= item.points %></td>
                 <td><%= item.email %></td>
-                <td><%= new Date().getFullYear()- item.DOB.getFullYear() %></td>
-                <td><%= item.DOB.toLocaleDateString('en-GB') %></td>
+                <td><%= new Date().getFullYear()- realYear %></td>
+                <td>
+                  <% if (toBirthday < 0) { %>
+                    <span class="text-warning">( <%= toBirthday %> )</span>
+                  <% }  else { %>
+                    ( <%= toBirthday %> )
+                  <% } %>
+                   <%= item.DOB.toLocaleDateString('en-GB') %></td>
                 <td><%= item.gift %></td>
                 <% if (item.loggedIn) { %>
                   <% if (item.loggedIn.toLocaleDateString() == new Date().toLocaleDateString()) { %>
