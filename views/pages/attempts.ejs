@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/attempts-styles.css">
     <link rel="stylesheet" href="/css/navbar-styles.css">
      <link rel="icon" href="/images/favicon.ico?v=1.1">
-     <% if (filteredUser == undefined) { %>
+     <% if (filteredUser == undefined || filteredUser == "") { %>
       <title> Results </title>
   <% } else { %>
     <title><%= filteredUser %>'s Results</title>
@@ -88,7 +88,7 @@
   </div>
 </div>
 <table class="table text-center table-hover">
-    <thead class="thead-dark">
+    <thead class="table-dark">
 
       <tr>
         <th scope="col">Award</th>
@@ -262,7 +262,7 @@
 <div class="container">
   <h1> Unique Latest Attempts </h1>
 <table class="table text-center table-hover">
-    <thead class="thead-dark">
+  <thead class="table-dark">
       <tr>
         <th scope="col">Award</th>
         <th scope="col">Points</th>
