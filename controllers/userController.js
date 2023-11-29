@@ -532,7 +532,19 @@ const generateRec = async (nameTemp) => {
               recommend.length < 1
             ) {
               // recommendObj = attempt;
-              recommendObj.setting = 99;
+              latestAttempt.forEach((item) => {
+                let count = 0;
+                if (
+                  item.level.startsWith(attempt.level) &&
+                  item.setting == 99
+                ) {
+                  count += 1;
+                  if (count != 0) {
+                    return (recommendObj.setting = 99);
+                  }
+                }
+              });
+
               recommendObj.mode = "Easy";
               recommendObj.time = "";
               recommendObj.mistake = "";
