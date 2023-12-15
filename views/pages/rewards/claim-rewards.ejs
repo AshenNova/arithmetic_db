@@ -61,34 +61,36 @@
 
             <tbody>
                 <% allRewards.forEach(item => { %>
-              <tr>
-                <% if (item.link) { %>
-                  <td class=rewardImage><img src="https://drive.google.com/uc?export=view&id=<%= item.link %>" style="width:42px; height: 42px"></td>
-                  <div class="imagePop hidden">
-                    <div class="container">
-                      <img class="imageCSS" src="https://drive.google.com/uc?export=view&id=<%= item.link %>">
-                      <button class="imageClose btn btn-danger">x</button>
-                   </div>
-                  </div>
-                <% }  else { %>
-                  <td></td>
-                <% } %>
-                <td class="rewardId" style="display: none;"><%= item._id %></td>
-                <td class="rewardName"><%= item.rewardName %></td>
-                <td class="rewardDescription"><%= item.description %></td>
-                <td class="rewardRequirement"><%= item.requirement %></td>
-                <td class="rewardQuantity"><%= item.quantity %></td>
-                <% if (item.quantity == 0 || item.quantity == ""){ %>
-                  <td class="claimBtn btn btn-danger btn-sm">None</td>
-                <% } else { %>
-                  <td class="claimBtn btn btn-success btn-sm">Claim</td>
-                <% } %> 
-                
-                <% if (currentUser.admin) { %>
-                  <td><a href="/user/points/rewards/edit/<%= item._id %>"><%= "⚙️" %></a></td>
-                  <td><a href="/user/points/rewards/delete/<%= item._id %>"><%= "Delete" %></a></td>
-                <% } %>
-              </tr>
+                  <% if (item.quantity != 0 || currentUser.admin ){ %>
+                    <tr>
+                      <% if (item.link) { %>
+                        <td class=rewardImage><img src="https://drive.google.com/uc?export=view&id=<%= item.link %>" style="width:42px; height: 42px"></td>
+                        <div class="imagePop hidden">
+                          <div class="container">
+                            <img class="imageCSS" src="https://drive.google.com/uc?export=view&id=<%= item.link %>">
+                            <button class="imageClose btn btn-danger">x</button>
+                         </div>
+                        </div>
+                      <% }  else { %>
+                        <td></td>
+                      <% } %>
+                      <td class="rewardId" style="display: none;"><%= item._id %></td>
+                      <td class="rewardName"><%= item.rewardName %></td>
+                      <td class="rewardDescription"><%= item.description %></td>
+                      <td class="rewardRequirement"><%= item.requirement %></td>
+                      <td class="rewardQuantity"><%= item.quantity %></td>
+                      <% if (item.quantity == 0 || item.quantity == ""){ %>
+                        <td class="claimBtn btn btn-danger btn-sm">None</td>
+                      <% } else { %>
+                        <td class="claimBtn btn btn-success btn-sm">Claim</td>
+                      <% } %> 
+                      
+                      <% if (currentUser.admin) { %>
+                        <td><a href="/user/points/rewards/edit/<%= item._id %>"><%= "⚙️" %></a></td>
+                        <td><a href="/user/points/rewards/delete/<%= item._id %>"><%= "Delete" %></a></td>
+                      <% } %>
+                    </tr>
+                  <% } %>
                <% }) %>
             </tbody>
           </table>

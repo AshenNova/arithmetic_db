@@ -112,9 +112,10 @@ formElem.addEventListener("submit", async (e) => {
   })
     .then((response) => {
       if (response.status == 200) {
-        alert("Question was successfully added!");
+        alert("Reward was successfully added!");
+        window.location.replace("/user/points/rewards");
       } else {
-        alert("Sorry! Failed to add question.");
+        alert("Sorry! Failed to add reward.");
       }
     })
     .catch((error) => {

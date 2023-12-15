@@ -532,8 +532,15 @@ const generateRec = async (nameTemp) => {
               recommend.length < 1
             ) {
               // recommendObj = attempt;
+              let count = 0;
+              let highestSetting = recommendObj.setting;
               latestAttempt.forEach((item) => {
-                let count = 0;
+                if (
+                  item.setting >= highestSetting &&
+                  recommendObj.setting != 99
+                ) {
+                  recommendObj.setting = highestSetting;
+                }
                 if (
                   item.level.startsWith(attempt.level) &&
                   item.setting == 99
@@ -544,7 +551,8 @@ const generateRec = async (nameTemp) => {
                   }
                 }
               });
-
+              if (highestSetting != 1)
+                recommendObj.setting = `1-${highestSetting}`;
               recommendObj.mode = "Easy";
               recommendObj.time = "";
               recommendObj.mistake = "";
