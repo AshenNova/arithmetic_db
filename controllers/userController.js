@@ -485,18 +485,15 @@ const generateRec = async (nameTemp) => {
           console.log(`In calcuation: ${attempt.level} 🥀`);
           // if (attempt.award == award) {
           if (attempt.award == award && recommend.length < 1) {
-            // console.log(award);
+            console.log("Here?");
             recommendObj.level = attempt.level;
             recommendObj.mode = "Easy";
-            // attempt.mode = "Easy";
-            // recommend.push(attempt);
             recommend.push(recommendObj);
-            // console.log(`Try new stuff ${recommend}`);
             recommendList.push(attempt.level);
             uniqLevel.push(attempt.level);
           } else {
             // uniqLevel.push(attempt.level);
-            // console.log("Rotation or promoted");
+            console.log("Rotation or promoted");
             if (age == 10) {
               const index = calAgeTen.indexOf(attempt.level);
               if (index + 1 == calAgeTen.length) {
@@ -531,28 +528,32 @@ const generateRec = async (nameTemp) => {
               !recommendList.includes(attempt.level) &&
               recommend.length < 1
             ) {
+              console.log("here 2?");
               // recommendObj = attempt;
               let count = 0;
-              let highestSetting = recommendObj.setting;
+              // let highestSetting = recommendObj.setting;
               latestAttempt.forEach((item) => {
-                if (
-                  item.setting >= highestSetting &&
-                  recommendObj.setting != 99
-                ) {
-                  recommendObj.setting = highestSetting;
-                }
                 if (
                   item.level.startsWith(attempt.level) &&
                   item.setting == 99
                 ) {
                   count += 1;
-                  if (count != 0) {
-                    return (recommendObj.setting = 99);
+                  console.log(count);
+                  if (count > 0) {
+                    recommendObj.setting = 99;
                   }
                 }
               });
-              if (highestSetting != 1)
-                recommendObj.setting = `1-${highestSetting}`;
+              if (count == 0) {
+                console.log("test ⚡️");
+                if (
+                  (recommendObj.setting * 1) % 1 == 0 &&
+                  recommendObj.setting != 1
+                ) {
+                  recommendObj.setting = `1-${recommendObj.setting}`;
+                }
+              }
+
               recommendObj.mode = "Easy";
               recommendObj.time = "";
               recommendObj.mistake = "";
