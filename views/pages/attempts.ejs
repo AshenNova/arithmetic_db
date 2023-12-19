@@ -58,13 +58,24 @@
   <div class="container">
   <nav aria-label="Page navigation example">
     <ul class="pagination">
-      <% if (paginatedAttempts.pagination.previousPage > 0) { %>
-      <li class="page-item"><a class="page-link" href="/attempts?page=<%= paginatedAttempts.pagination.previousPage %>">Previous</a></li>
+      <% if (!latestAttemptObj) { %>
+        <% if (paginatedAttempts.pagination.previousPage > 0) { %>
+          <li class="page-item"><a class="page-link" href="/attempts?page=<%= paginatedAttempts.pagination.previousPage %>">Previous</a></li>
+          <% } %>
+          <li class="page-item"><p class="page-link" href=""><%= paginatedAttempts.pagination.currentPage %></p></li>
+          <% if (paginatedAttempts.pagination.nextPage <= paginatedAttempts.pagination.totalPages){ %>
+          <li class="page-item"><a class="page-link" href="/attempts?page=<%= paginatedAttempts.pagination.nextPage %>">Next</a></li>
+          <% } %>
+      <% }  else { %>
+        <% if (paginatedAttempts.pagination.previousPage > 0) { %>
+          <li class="page-item"><a class="page-link" href="/attempts/filter?user=<%= queryObj.user %>&level=<%= queryObj.level %>&setting=<%= queryObj.setting %>&mode=<%= queryObj.mode %>&page=<%= paginatedAttempts.pagination.previousPage %>">Previous</a></li>
+          <% } %>
+          <li class="page-item"><p class="page-link" href=""><%= paginatedAttempts.pagination.currentPage %></p></li>
+          <% if (paginatedAttempts.pagination.nextPage <= paginatedAttempts.pagination.totalPages){ %>
+          <li class="page-item"><a class="page-link" href="/attempts/filter?user=<%= queryObj.user %>&level=<%= queryObj.level %>&setting=<%= queryObj.setting %>&mode=<%= queryObj.mode %>&page=<%= paginatedAttempts.pagination.nextPage %>">Next</a></li>
+          <% } %>
       <% } %>
-      <li class="page-item"><p class="page-link" href=""><%= paginatedAttempts.pagination.currentPage %></p></li>
-      <% if (paginatedAttempts.pagination.nextPage <= paginatedAttempts.pagination.totalPages){ %>
-      <li class="page-item"><a class="page-link" href="/attempts?page=<%= paginatedAttempts.pagination.nextPage %>">Next</a></li>
-      <% } %>
+     
     </ul>
   </nav>
 </div>
@@ -121,14 +132,6 @@
           <% if (item.summary == "") { %>
             <%= "Blank" %>
           <% } else { %>
-            <!-- <table class="table"> -->
-              <!-- <thead>
-                <tr> -->
-                <!-- <th scope="col">Attempt</th>
-                <th scope="col">Status</th>
-                <th scope="col">Time</th> -->
-              <!-- </tr> -->
-              <!-- </thead> -->
               <div class="row">
                 <div class="col">Attempt</div>
                 <div class="col">Setting</div>
@@ -155,9 +158,7 @@
            <button class="summaryCloseBtn btn btn-danger">Close</button>
         </div>
         <!-- </table> -->
-         
-
-          
+                   
                 <tr>
                   <% if (item.subject == "Math") { %>
                   <% if (item.award == "High") { %>

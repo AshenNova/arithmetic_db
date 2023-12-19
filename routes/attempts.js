@@ -5,16 +5,6 @@ const attemptController = require("../controllers/attemptController");
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
 
-// mongoose
-//   .connect(DB)
-//   .then((con) => {
-//     console.log("Connection to Database established!");
-//     // console.log(con.connections);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
-
 //ROUTER
 const router = express.Router();
 

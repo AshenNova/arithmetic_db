@@ -36,6 +36,7 @@ function paginate(stuff, totalItems, perPage, currentPage) {
 
 exports.getAllAttempts = catchAsync(async (req, res, next) => {
   // console.log(`IP address is: ${req.ip}`);
+  console.log("Showing all results");
   const page = req.query.page * 1 || 1;
   const limit = 20;
 
@@ -60,7 +61,7 @@ exports.getAllAttempts = catchAsync(async (req, res, next) => {
     limit,
     page
   );
-
+  console.log(paginatedAttempts.pagination);
   const logRewards = await RewardLog.find().sort({ claimed: -1 }).limit(10);
   let summaryObj = attemptsTwo[0];
   const filteredUser = "";
@@ -84,24 +85,26 @@ exports.getAllAttempts = catchAsync(async (req, res, next) => {
 
 exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
   // try {
+  console.log("Attempting to filter");
   const queryObj = req.query;
-  console.log(queryObj);
-  const page = queryObj.page || 1;
-  const limit = 15;
+  // console.log(queryObj);
+  const page = queryObj.page * 1 || 1;
+  const limit = 20;
 
-  console.log(queryObj);
-  let user = queryObj.user;
+  // console.log(queryObj);
+  console.log(req.params);
+  console.log(req.query);
+  let user = queryObj.user || req.params.user;
   const level = queryObj.level;
   const setting = queryObj.setting;
   const mode = queryObj.mode;
 
   let filter = {};
-  console.log(user, level, setting, mode);
   let tempName = [];
   if (user != "") {
     user = user.split(" ");
     user.forEach((name) => {
-      console.log(name);
+      // console.log(name);
       tempName.push(name.charAt(0).toUpperCase() + name.slice(1, name.length));
     });
     filter.user = tempName.join(" ");
@@ -111,22 +114,24 @@ exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
   if (mode != "") filter.mode = mode;
 
   const filteredUser = filter.user;
-  console.log(`${filteredUser}?`);
+  // console.log(`${filteredUser}?`);
   const attempts = await Attempt.find(filter)
     .sort({ date: -1 })
     .skip((page - 1) * limit)
     .limit(limit);
 
-  // console.log(`Filtered ${attempts}`);
-  const attemptsTwo = attempts;
-  // const attemptsTwo = await Attempt.find().sort({ date: -1 });
+  const attemptsTwo = await Attempt.find(filter).sort({ date: -1 });
+  // .skip((page - 1) * limit)
+  // .limit(limit);
+
+  // const attemptsTwo = attempts;
   const paginatedAttempts = paginate(
     attemptsTwo,
     attemptsTwo.length,
     limit,
     page
   );
-
+  console.log(paginatedAttempts.pagination);
   // HISTORY
   const params = queryObj;
   // console.log(params);
@@ -144,17 +149,17 @@ exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
       date: -1,
     });
 
-    console.log(latestAttempt);
+    // console.log(latestAttempt);
     let stageOne = [];
     for (let i = 0; i < latestAttempt.length; i++) {
       if (stageOne.includes(latestAttempt[i].level)) {
-        console.log("Already in");
+        // console.log("Already in");
       } else {
-        console.log("Nope");
+        // console.log("Nope");
         stageOne.push(latestAttempt[i].level);
       }
     }
-    console.log(stageOne);
+    // console.log(stageOne);
     let stageTwo = [];
     for (let i = 0; i < stageOne.length; i++) {
       let countEasy = 0;
@@ -202,6 +207,7 @@ exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
   let currentUser = req.user;
   let logRewards;
   res.status(200).render("pages/attempts", {
+    queryObj,
     attempts,
     paginatedAttempts,
     latestAttemptObj,
