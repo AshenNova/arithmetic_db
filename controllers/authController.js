@@ -97,10 +97,13 @@ exports.login = catchAsync(async (req, res, next) => {
   let currentUser = req.user;
   let message;
   console.log("Log in");
-  const { username, password } = req.body;
+  const { password } = req.body;
+  let { username } = req.body;
+  username = username.trim();
   // try {
   // 1. CHECK IF USER AND PASSWORD EXIST
   console.log("USER AND PASSWORD EXIST CHECK!");
+  username = username.trim();
   if (!username || !password) {
     // return next(new AppError("Please enter a password or email", 401));
     message = "Please enter a password or email.";

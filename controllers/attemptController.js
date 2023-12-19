@@ -94,7 +94,7 @@ exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
   // console.log(queryObj);
   console.log(req.params);
   console.log(req.query);
-  let user = queryObj.user || req.params.user;
+  let user = queryObj.user;
   const level = queryObj.level;
   const setting = queryObj.setting;
   const mode = queryObj.mode;
