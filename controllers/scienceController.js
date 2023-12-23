@@ -399,6 +399,7 @@ exports.getQuestions = async (req, res) => {
       // console.log(chosenQuestion._id);
       if (!questionsIdArr.includes(chosenQuestion._id))
         questions.push(chosenQuestion);
+      questionsIdArr.push(chosenQuestion._id);
     }
     // console.log(questions);
     // res.status(200).json({ status: "Success", message: e });

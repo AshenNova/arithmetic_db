@@ -485,7 +485,6 @@ const generateRec = async (nameTemp) => {
           console.log(`In calcuation: ${attempt.level} 🥀`);
           // if (attempt.award == award) {
           if (attempt.award == award && recommend.length < 1) {
-            console.log("Here?");
             recommendObj.level = attempt.level;
             recommendObj.mode = "Easy";
             recommend.push(recommendObj);
@@ -553,7 +552,6 @@ const generateRec = async (nameTemp) => {
                   recommendObj.setting = `1-${recommendObj.setting}`;
                 }
               }
-
               recommendObj.mode = "Easy";
               recommendObj.time = "";
               recommendObj.mistake = "";
@@ -887,6 +885,51 @@ const generateRec = async (nameTemp) => {
                 } else {
                   console.log(`Setting ${recommendObj.level} to Hardcore`);
                   recommendObj.mode = "Hardcore";
+                }
+
+                // LEVEL WITH SETTINGS
+                if (recommendObj.level == 2.02) {
+                  if (age == 8 || age == 7) {
+                    recommendObj.setting == 3;
+                  } else if (age == 9) {
+                    recommendObj.setting == 4;
+                  } else if (age == 10) {
+                    recommendObj.setting == 5;
+                  } else if (age == 11) {
+                    recommendObj.setting == 6;
+                  } else if (age == 12) {
+                    recommendObj.setting == 7;
+                  } else {
+                    recommendObj.setting == 7;
+                  }
+                }
+
+                if (recommendObj.level == 3.16) {
+                  let countNine = 0;
+                  let countOne = 0;
+                  let countTwo = 0;
+                  let countThree = 0;
+                  latestAttempt.forEach((item) => {
+                    if (item.level == 3.16) {
+                      if (item.setting == 1) countOne += 1;
+                      if (item.setting == 2 || item.setting == "1-2") {
+                        countTwo += 1;
+                      }
+                      if (item.setting == 3 || item.setting == "1-3") {
+                        countThree += 1;
+                      }
+                      if (item.setting == 9) countNine += 1;
+                    }
+                  });
+                  if (countNine > 0) {
+                    recommendObj.setting = 9;
+                  } else if (countThree > 0) {
+                    recommendObj.setting = "1-3";
+                  } else if (countTwo > 0) {
+                    recommendObj.setting = "1-2";
+                  } else {
+                    recommendObj.setting = 1;
+                  }
                 }
 
                 // recommendObj.level = attempt.level;
