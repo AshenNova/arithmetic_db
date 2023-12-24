@@ -928,7 +928,7 @@ const generateRec = async (nameTemp) => {
                   } else if (countTwo > 0) {
                     recommendObj.setting = "1-2";
                   } else {
-                    recommendObj.setting = 1;
+                    recommendObj.setting = "1";
                   }
                 }
 
