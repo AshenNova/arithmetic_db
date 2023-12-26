@@ -8713,6 +8713,9 @@ function updateProblems() {
       if (p.unit == "m") {
         p.answerUnit = "cm";
         p.intervals = [2, 4, 5, 10][genNumbers(4)];
+        while (p.arrow == 0 || p.arrow == p.intervals) {
+          p.arrow = genNumbers(p.intervals);
+        }
       }
 
       canvasTextId.textContent = `Give your answer in ${p.answerUnit}`;
