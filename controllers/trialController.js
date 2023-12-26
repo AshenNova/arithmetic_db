@@ -8,9 +8,6 @@ exports.new = async (req, res) => {
   let message;
 
   try {
-    // Object.keys(req.body).forEach((key) => {
-    //   if (req.body[key] == "") delete req.query[key];
-    // });
     console.log(req.body);
 
     const trial = await Trial.create(req.body);
@@ -23,23 +20,27 @@ exports.new = async (req, res) => {
       message,
     });
   } catch (error) {
-    // const toapayoh = await Lesson.find({ outlet: "Toa Payoh" });
-    // const hougang = await Lesson.find({ outlet: "Hougang" });
-    // const private = await Lesson.find({ outlet: "Private" });
-    // const clone = req.body;
-    // message = "*Please enter all required fields";
-    // console.log(error);
-    // res.render("trial/signup", {
-    //   username,
-    //   authenticate,
-    //   currentUser,
-    //   clone,
-    //   message,
-    //   toapayoh,
-    //   hougang,
-    //   private,
-    // });
-    res.send("missing");
+    let errorMsgHandle = error.message.split(": ");
+    errorMsgHandle.shift();
+    errorMsgHandle.shift();
+    errorMsgHandle = errorMsgHandle.join();
+    errorMsgHandle = errorMsgHandle.split(",");
+    let errorMsg = [];
+    errorMsgHandle.forEach((item, index) => {
+      if (index % 2 == 0 || index == 0) {
+        errorMsg.push(item);
+      }
+    });
+    console.log(errorMsg);
+    // errorMsg = errorMsg.join(" ");
+    // console.log(errorMsg);
+    // errorMsg = errorMsg.split(": ");
+    // console.log(errorMsg);
+    const response = {
+      status: "Failed",
+      errorMsg,
+    };
+    res.send(response);
   }
 };
 exports.trialEnd = async (req, res) => {

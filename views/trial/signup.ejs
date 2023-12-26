@@ -35,7 +35,7 @@
     <div class="container">
         <h1>Free Trial Form</h1>
         <p>This form is for Primary level Math and Science.</p>
-        <p>Before fillinf in the form, please read our rules and regulations.</p>
+        <p>Before filling in the form, please read our rules and regulations.</p>
 
         <h1>Rules and Regulations</h1>
         <ul>
@@ -480,11 +480,16 @@
       method: "Post",
       data: newTrial,
       success: function(res){
-        if (res == "missing"){
-          alert("Please fill in all the necessary details.")
-        } else {
-          window.location.replace("/trial/end");
+        console.log(res)
+        if (res.status == "Failed"){
+
+          let error = res.errorMsg.join("\n")
+          
+          alert(error)
         }
+        // } else {
+        //   window.location.replace("/trial/end");
+        // }
       },
       error: function(res){
         console.log("Failed!")

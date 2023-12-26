@@ -546,7 +546,7 @@ const generateRec = async (nameTemp) => {
               if (count == 0) {
                 console.log("test ⚡️");
                 if (
-                  (recommendObj.setting * 1) % 1 == 0 &&
+                  Number.isInteger(recommendObj.setting) &&
                   recommendObj.setting != 1
                 ) {
                   recommendObj.setting = `1-${recommendObj.setting}`;
