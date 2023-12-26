@@ -890,17 +890,17 @@ const generateRec = async (nameTemp) => {
                 // LEVEL WITH SETTINGS
                 if (recommendObj.level == 2.02) {
                   if (age == 8 || age == 7) {
-                    recommendObj.setting == 3;
+                    recommendObj.setting = 3;
                   } else if (age == 9) {
-                    recommendObj.setting == 4;
+                    recommendObj.setting = 4;
                   } else if (age == 10) {
-                    recommendObj.setting == 5;
+                    recommendObj.setting = 5;
                   } else if (age == 11) {
-                    recommendObj.setting == 6;
+                    recommendObj.setting = 6;
                   } else if (age == 12) {
-                    recommendObj.setting == 7;
+                    recommendObj.setting = 7;
                   } else {
-                    recommendObj.setting == 7;
+                    recommendObj.setting = 7;
                   }
                 }
 
