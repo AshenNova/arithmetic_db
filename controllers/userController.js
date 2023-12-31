@@ -787,6 +787,8 @@ const generateRec = async (nameTemp) => {
                     "5.14",
                     "5.15",
                     "5.16",
+                    "5.17",
+                    "5.18",
                   ];
                   const levelSix = ["6", "6.01", "6.02", "6.03"];
                   if (attempt.level.startsWith("1")) {

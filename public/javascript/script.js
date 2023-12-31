@@ -6971,6 +6971,10 @@ function updateProblems() {
   }
 
   if (level == 6) {
+    if (p.numOne == p.denoOne || p.numTwo == p.denoTwo) {
+      console.log("Same")
+      return updateCalc()
+    }
     numeratorOne.textContent = p.numOne;
     denominatorOne.textContent = p.denoOne;
     numeratorTwo.textContent = p.numTwo;
