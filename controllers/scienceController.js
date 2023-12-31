@@ -384,6 +384,7 @@ exports.getQuestions = async (req, res) => {
         const index = incorrectQuestionsId.indexOf(incorrectQuestion);
         incorrectQuestionsId.splice(index, 1);
         if (!questionsIdArr.includes(incorrectQuestion._id)) {
+          console.log("Push incorrect question");
           questions.push(incorrectQuestion);
           questionsIdArr.push(incorrectQuestion._id);
         }

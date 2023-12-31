@@ -6904,7 +6904,7 @@ function updateProblems() {
     `;
     }
   }
-  if (level == 6.0) {
+  if (level == 5.18) {
     if (
       p.numOne == p.denoOne ||
       p.numTwo == p.denoTwo ||
@@ -6969,6 +6969,16 @@ function updateProblems() {
     ${p.sentenceD}
     `;
   }
+
+  if (level == 6) {
+    numeratorOne.textContent = p.numOne;
+    denominatorOne.textContent = p.denoOne;
+    numeratorTwo.textContent = p.numTwo;
+    denominatorTwo.textContent = p.denoTwo;
+    fractionsOperator.textContent = "÷";
+    fractionChoice.textContent = "";
+  }
+
   if (level == 6.01) {
     if (difficulty <= 0) {
       difficulty = 0;
@@ -19313,37 +19323,6 @@ function handleSubmit(e) {
       }
     }
 
-    if (level == 6.0) {
-      if (p.choiceBC == "B" && p.choiceOne == "percentage") {
-        if (p.situationA == "increased by") {
-          correctAnswer = `${p.numThree}/${100 + p.percentageOne}x100`;
-        } else {
-          correctAnswer = `${p.numThree}/${100 - p.percentageOne}x100`;
-        }
-      }
-      if (p.choiceBC == "B" && p.choiceOne == "fraction") {
-        if (p.situationA == "increased by") {
-          correctAnswer = `${p.numThree}/${p.denoOne + p.numOne}x${p.denoOne}`;
-        } else {
-          correctAnswer = `${p.numThree}/${p.denoOne - p.numOne}x${p.denoOne}`;
-        }
-      }
-      if (p.choiceBC == "C" && p.choiceTwo == "percentage") {
-        if (p.situationB == "increased by") {
-          correctAnswer = `${p.denoThree}/${100 + p.percentageTwo}x100`;
-        } else {
-          correctAnswer = `${p.denoThree}/${100 - p.percentageTwo}x100`;
-        }
-      }
-      if (p.choiceBC == "C" && p.choiceTwo == "fraction") {
-        if (p.situationB == "increased by") {
-          correctAnswer = `${p.denoThree}/${p.denoTwo + p.numTwo}x${p.denoTwo}`;
-        } else {
-          correctAnswer = `${p.denoThree}/${p.denoTwo - p.numTwo}x${p.denoTwo}`;
-        }
-      }
-    }
-
     if (level == 5.12) {
       correctAnswer = p.length * p.breadth * p.height;
     }
@@ -19417,6 +19396,54 @@ function handleSubmit(e) {
       correctAnswer = p.answer;
     }
 
+    if (level == 5.18) {
+      if (p.choiceBC == "B" && p.choiceOne == "percentage") {
+        if (p.situationA == "increased by") {
+          correctAnswer = `${p.numThree}/${100 + p.percentageOne}x100`;
+        } else {
+          correctAnswer = `${p.numThree}/${100 - p.percentageOne}x100`;
+        }
+      }
+      if (p.choiceBC == "B" && p.choiceOne == "fraction") {
+        if (p.situationA == "increased by") {
+          correctAnswer = `${p.numThree}/${p.denoOne + p.numOne}x${p.denoOne}`;
+        } else {
+          correctAnswer = `${p.numThree}/${p.denoOne - p.numOne}x${p.denoOne}`;
+        }
+      }
+      if (p.choiceBC == "C" && p.choiceTwo == "percentage") {
+        if (p.situationB == "increased by") {
+          correctAnswer = `${p.denoThree}/${100 + p.percentageTwo}x100`;
+        } else {
+          correctAnswer = `${p.denoThree}/${100 - p.percentageTwo}x100`;
+        }
+      }
+      if (p.choiceBC == "C" && p.choiceTwo == "fraction") {
+        if (p.situationB == "increased by") {
+          correctAnswer = `${p.denoThree}/${p.denoTwo + p.numTwo}x${p.denoTwo}`;
+        } else {
+          correctAnswer = `${p.denoThree}/${p.denoTwo - p.numTwo}x${p.denoTwo}`;
+        }
+      }
+    }
+
+    if (level == 6) {
+      let num = p.numOne * p.denoTwo;
+      let deno = p.denoOne * p.numTwo;
+      console.log(num, deno)
+      let whole = Math.floor(num/deno);
+      let remainder = num % deno;
+      if ( whole == 0) {
+        [num, deno] = simplify(num, deno);
+        correctAnswer = `${num}/${deno}`
+      } else if ( whole > 0 && remainder != 0){
+        [remainder, deno] = simplify(remainder, deno);
+        correctAnswer = `${whole} ${remainder}/${deno}`
+      } 
+      if ( remainder == 0){
+        correctAnswer = whole
+      }
+    }
     if (level == 6.01) {
       if (difficulty == 0) {
         if (p.rollType == "area") {
@@ -24698,7 +24725,7 @@ function genProblems() {
     };
   }
 
-  if (level == 6.0) {
+  if (level == 5.18) {
     return {
       percentageOne: (genNumbers(18) + 1) * 5,
       percentageTwo: (genNumbers(18) + 1) * 5,
@@ -24724,6 +24751,16 @@ function genProblems() {
       situationB: ["used", "increased by"][genNumbers(2)],
     };
   }
+
+  if (level == 6) {
+    return {
+      numOne: genNumbers(10) + 1,
+      denoOne: genNumbers(10) + 1,
+      numTwo: genNumbers(10) + 1,
+      denoTwo: genNumbers(10) + 1,
+    };
+  }
+
   if (level == 6.01) {
     return {
       rollType: ["area", "circumference"][genNumbers(2)],
@@ -29092,8 +29129,8 @@ function buttonLevelSetting() {
       // firstCanvas.classList.remove("hidden");
       break;
 
-    case "Level 6.0":
-      level = 6.0;
+    case "Level 5.18":
+      level = 5.18;
       scoreNeeded = 10;
       gold = highScore6DotZero.time;
       silver = highScore6DotZero.time + (cutoff - highScore6DotZero.time) / 3;
@@ -29102,6 +29139,14 @@ function buttonLevelSetting() {
       highScoreName.innerHTML = highScore6DotZero.name;
       highScoreTime.innerHTML = highScore6DotZero.time;
       highScoreMistakes.innerHTML = highScore6DotZero.mistake;
+      document.querySelector("#user-input").setAttribute("type", "text");
+      displayProblem.style.fontSize = "25px";
+      break;
+
+    case "Level 6.0":
+      level = 6;
+      scoreNeeded = 10;
+      simpleFractionDisplay();
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "25px";
       break;
