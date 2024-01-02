@@ -304,7 +304,8 @@ exports.loginCheck = catchAsync(async (req, res, next) => {
 
 exports.adminCheck = catchAsync(async (req, res, next) => {
   console.log("Admin Check");
-  if (req.user == "" || req.user.admin == false) {
+  console.log(req.user.username);
+  if (req.user.username == "" && req.user.admin == false) {
     return res.redirect("/user/login");
   }
   next();

@@ -79,6 +79,16 @@ const trialSchema = new mongoose.Schema({
     // minLength: [8, "The number you have provided is too short."],
     // required: [true, "Please tell us your contact number."],
   },
+  address: {
+    type: String,
+    // minLength: [8, "The number you have provided is too short."],
+    // required: [true, "Please tell us your contact number."],
+  },
+  postal: {
+    type: String,
+    // minLength: [8, "The number you have provided is too short."],
+    // required: [true, "Please tell us your contact number."],
+  },
 
   questionA: String,
   questionB: { type: String, require: [true, "Please fill in the question."] },

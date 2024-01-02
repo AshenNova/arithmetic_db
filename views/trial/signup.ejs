@@ -33,11 +33,20 @@
     <% } %>
   </div>
     <div class="container">
-        <h1>Free Trial Form</h1>
+        <h1>Please choose the part that is relevant to you.</h1>
+        <p>❗️ Note that there is no free trial for private home tuition only at Epicmind centres.</p>
         <p>This form is for Primary level Math and Science.</p>
         <p>Before filling in the form, please read our rules and regulations.</p>
-
-        <h1>Rules and Regulations</h1>
+        <div class="container mb-3">
+          <p><a class="btn btn-primary me-3" href="#private">Private</a><a href="#centre" class="btn btn-primary">Centre</a></p>
+          <h1 id="private">Rules and Regulations for <u>Private Home Tuition</u>.</h1>
+          <li>There is no free trial. Trial is priced at $50 for an hour.</li>
+          <li>Each session is $100 for 2 hours.</li>
+          <li>Fees for the month are to be paid in full before / on the first lesson of the month.</li>
+          <li>Missed lessons are to be made up via Zoom which would expire within a month of occurence and cannot be used to offset next payment.</li>
+      </div>
+      <div class="container mb-3">
+        <h1 id="centre">Rules and Regulations at <u>Epicmind Centres</u>.</h1>
         <ul>
           <li><h4>Payment and fees</h4></li>
           <div class="ms-3">
@@ -68,7 +77,7 @@
               <p><i>eg. Lessons from June Holidays brought forward into May only needs to be paid when June comes around.</i></p>
           </div>
          </ul>
-
+        </div>
     </div>
     <div class="container mb-3">
       <form action="/trial/new" method="post">
@@ -124,8 +133,9 @@
         <div class="mb-3">
           <!-- <label for="subject" class="form-label" name="subject">Subject</label> -->
           <label class="form-label focus">Subject*</label>
+        </br>
             <% if (clone && clone.subject) { %>
-              <p>
+              <%= console.log("Cloned") %>
                 <% if (clone.subject.includes("Standard Math")) { %>
                   <input class="form-check-input" type="checkbox" value="Standard Math" id="flexCheckDefault" name="subject" checked>
                   <label class="form-check-label" for="flexCheckDefault">Standard Math</label>
@@ -133,7 +143,7 @@
                   <input class="form-check-input" type="checkbox" value="Standard Math" id="flexCheckDefault" name="subject" >
                   <label class="form-check-label" for="flexCheckDefault">Standard Math</label>
                 <% } %> 
-
+              </br>
                 <% if (clone.subject.includes("Foundation Math")) { %>
                   <input class="form-check-input ms-3" type="checkbox" value="Foundation Math" id="flexCheckDefault" name="subject" checked>
                   <label class="form-check-label" for="flexCheckDefault">Foundation Math</label>
@@ -141,7 +151,7 @@
                   <input class="form-check-input ms-3" type="checkbox" value="Foundation Math" id="flexCheckDefault" name="subject" >
                   <label class="form-check-label" for="flexCheckDefault">Foundation Math</label>
                 <% } %> 
-
+              </br>
                 <% if (clone.subject.includes("Standard Science")) { %>
                   <input class="form-check-input ms-3" type="checkbox" value="Standard Science" id="flexCheckDefault" name="subject" checked>
                   <label class="form-check-label" for="flexCheckDefault">Standard Science</label>
@@ -149,7 +159,7 @@
                   <input class="form-check-input ms-3" type="checkbox" value="Standard Science" id="flexCheckDefault" name="subject" >
                   <label class="form-check-label" for="flexCheckDefault">Standard Science</label>
                 <% } %> 
-
+              </br>
                 <% if (clone.subject.includes("Foundation Science")) { %>
                   <input class="form-check-input ms-3" type="checkbox" value="Foundation Science" id="flexCheckDefault" name="subject" checked>
                   <label class="form-check-label" for="flexCheckDefault">Foundation Science</label>
@@ -158,18 +168,18 @@
                   <label class="form-check-label" for="flexCheckDefault">Foundation Science</label>
                 <% } %> 
                
-                </p>
             <% } else { %>
-              <p>
-                <input class="form-check-input" type="checkbox" value="Standard Math" id="subject1" name="subject">
+                <input class="form-check-input ms-3" type="checkbox" value="Standard Math" id="subject1" name="subject">
                 <label class="form-check-label" for="flexCheckDefault">Standard Math</label>
-                <input class="form-check-input ms-3" type="checkbox" value="Foundation Math" id="subjec2" name="subjec">
+                 </br>
+                <input class="form-check-input ms-3" type="checkbox" value="Foundation Math" id="subject2" name="subject">
                 <label class="form-check-label" for="flexCheckDefault">Foundation Math</label>
-                <input class="form-check-input ms-3" type="checkbox" value="Standard Science" id="subjec3" name="subject">
+                  </br>
+                <input class="form-check-input ms-3" type="checkbox" value="Standard Science" id="subject3" name="subject">
                 <label class="form-check-label" for="flexCheckDefault">Standard Science</label>
+                </br>
                 <input class="form-check-input ms-3" type="checkbox" value="Foundation Science" id="subject4" name="subject">
                 <label class="form-check-label" for="flexCheckDefault">Foundation Science</label>
-                </p>
             <% } %>
         </div>
 
@@ -275,6 +285,18 @@
              <% } %>>
             <!-- <div id="parentName" class="form-text">We'll never share your email with anyone else.</div> -->
           </div>
+          <div class="mb-3">
+            <label for="address" class="form-label focus">Street Address (Must fill in for Private Home Tuition)</label>
+            <input type="text" class="form-control" id="address"<% if (clone) { %>
+              value="<%= clone.address %>"
+             <% } %>>
+          </div>
+          <div class="mb-3">
+            <label for="postal" class="form-label focus">Postal Code (Must fill in for Private Home Tuition)</label>
+            <input type="text" class="form-control" id="postal"<% if (clone) { %>
+              value="<%= clone.postal %>"
+             <% } %>>
+          </div>
         </div>
             <div class="col">
               <h4>Parent/Guardian 2</h4>
@@ -378,7 +400,7 @@
 <script>
   let toapayoh = document.querySelector(".toapayoh").textContent
   let hougang = document.querySelector(".hougang").textContent
-  let private = document.querySelector(".toapayoh").textContent
+  let private = document.querySelector(".private").textContent
   toapayoh = toapayoh.split(";")
   hougang = hougang.split(";")
   private = private.split(";")
@@ -437,13 +459,13 @@
     e.preventDefault()
 
     let subjects = []
+    console.log(e)
     console.log($("#subject1").val())
-    if ($("#subject1").val()) subjects.push($("#subject1").val())
-    if ($("#subject2").val()) subjects.push($("#subject2").val())
-    if ($("#subject3").val()) subjects.push($("#subject3").val())
-    if ($("#subject4").val()) subjects.push($("#subject4").val())
+    if ($("#subject1").is(":checked")) subjects.push($("#subject1").val())
+    if ($("#subject2").is(":checked")) subjects.push($("#subject2").val())
+    if ($("#subject3").is(":checked")) subjects.push($("#subject3").val())
+    if ($("#subject4").is(":checked")) subjects.push($("#subject4").val())
   
-
     let newTrial = {
       outlet: $("#slct1").val(),
       timing: $("#slct2").val(),
@@ -486,10 +508,9 @@
           let error = res.errorMsg.join("\n")
           
           alert(error)
+        } else {
+          window.location.replace("/trial/end");
         }
-        // } else {
-        //   window.location.replace("/trial/end");
-        // }
       },
       error: function(res){
         console.log("Failed!")

@@ -79,9 +79,9 @@ exports.editSingleUser = catchAsync(async (req, res, next) => {
 
   const id = req.params.id;
   const editUser = await User.findOne({ _id: id });
-  console.log(req.user, editUser);
-  console.log(req.user._id.equals(editUser._id));
-  console.log(req.user.admin);
+  console.log(editUser);
+  const subjects = editUser.subject;
+  console.log(subjects);
   if (!req.user._id.equals(editUser._id) && !req.user.admin) {
     return res.redirect("/user/login");
   }
@@ -95,6 +95,7 @@ exports.editSingleUser = catchAsync(async (req, res, next) => {
     username,
     currentUser,
     editUser,
+    subjects,
   });
 });
 
@@ -114,6 +115,15 @@ exports.saveEditUser = catchAsync(async (req, res, next) => {
     authenticate
   ) {
     res.status(403).json({ message: `You are not authorized to do this.` });
+  }
+  console.log(req.body);
+  if (!currentUser.admin) {
+    delete req.body.email;
+    delete req.body.DOB;
+    delete req.body.subject;
+    delete req.body.gift;
+    delete req.body.freeze;
+    delete req.body.freezeEndDate;
   }
   console.log(req.body.password, req.body.confirmPassword);
   if (req.body.password == "" || req.body.confirmPassword == "") {
@@ -891,7 +901,7 @@ const generateRec = async (nameTemp) => {
 
                 // LEVEL WITH SETTINGS
                 if (recommendObj.level == 2.02) {
-                  if (age == 8 || age == 7) {
+                  if (age == 8 || age <= 7) {
                     recommendObj.setting = 3;
                   } else if (age == 9) {
                     recommendObj.setting = 4;
