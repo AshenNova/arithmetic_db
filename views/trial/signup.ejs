@@ -11,7 +11,7 @@
     <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
     <link rel="stylesheet" href="/css/navbar-styles.css">
      <link rel="icon" href="/images/favicon.ico?v=1.1">
-    <title>Free Trial</title>
+    <title>Form</title>
 </head>
 <style>
   .message {
@@ -332,7 +332,7 @@
         <h1>Questions</h1>
         
         <div class="mb-3">
-          <label for="questionA" class="form-label">What is the most recent result if any.</label>
+          <label for="questionA" class="form-label">Most recent result (if any)</label>
           <% if (clone && clone.questionA) { %>
             <input type="text" class="form-control" id="questionA" placeholder="30/40 or 75%" value="<%= clone.questionA %>">
           <% } else { %>
@@ -347,8 +347,8 @@
             <% } else { %>
               <option selected>Choose</option>
             <% } %>
-            <option value="Yes">Yes, I would ensure that he/she completes the work.</option>
-            <option value="No">If no, expect slower progress.</option>
+            <option value="Yes">Yes (Please ensure that he/she completes the work)</option>
+            <option value="No">No (Expect slower progression).</option>
         </select>
         </div>
       

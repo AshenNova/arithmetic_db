@@ -34,12 +34,16 @@
          <th scope="col">Parent / Guardian Two</th>
          <th scope="col">Questions</th>
          <th scope="col" colspan="3">Actions</th>
-   
+      
+         
          <% getAllTrials.forEach(item => { %>
+          <% const school = item.school.split(" ").join("+") %>
           <% if (item.trialSession != true) { %>
               <tr>
                 <td><%= item.filledIn.toLocaleTimeString('en-US') %></td>
                 <td><%= item.outlet %></br>
+                  <%= item.address %></br>
+                  <a href="https://www.google.com/maps/place/Singapore+<%= item.postal %>" target="_blank"><%= item.postal %></a></br>
                   <%= item.timing %></br>
                   <% if (item.otherTiming) { %>
                     <span class="text-danger">Other: <%= item.otherTiming %></span></br>
@@ -59,18 +63,19 @@
                 <td><%= item.childName %> <%= item.childSurname %> ( Age: <%= new Date().getFullYear() - item.DOB.getFullYear() %> )</br>
                   <%= item.level %></br>
                   <%= item.gender %></br>
-                <%= item.school %></br>
+                  
+                  <a href="https://www.google.com/maps/search/<%= school %>" target="_blank"><%= item.school %></a></br>
                 </td>
                 <td>
-                  <%= item.parentOneName %> <%= item.parentOneSurname %></br>
-                  <%= item.roleOne %></br>
+                  <%= item.parentOneName %> <%= item.parentOneSurname %> (<%= item.roleOne %>)</br>
                   <%= item.contactOne %></br>
                   <%= item.emailOne %></br>
                 </td>
                 <td>
-                  <%= item.parentTwoName %> <%= item.parentTwoSurname %></br>
-                  <%= item.roleTwo %></br>
-                  <%= item.contactTwo %></br>
+                  <% if (item.parentTwoName) { %>
+                    <%= item.parentTwoName %> <%= item.parentTwoSurname %> (<%= item.roleTwo %>)</br>
+                    <%= item.contactTwo %></br>
+                  <% } %>
                 </td>
                 <td>
                   A: <%= item.questionA %></br>
@@ -89,10 +94,13 @@
           <% }) %>
           
           <% getAllTrials.forEach(item => { %>
+            <% const school = item.school.split(" ").join("+") %>
             <% if (item.trialSession == true) { %>
                 <tr class="table-secondary">
                   <td><%= item.filledIn.toLocaleTimeString('en-US') %></td>
                   <td><%= item.outlet %></br>
+                    <%= item.address %></br>
+                    <a href="https://www.google.com/maps/place/Singapore+<%= item.postal %>" target="_blank"><%= item.postal %></a></br>
                     <%= item.timing %></br>
                     <% if (item.otherTiming) { %>
                       <span class="text-danger">Other: <%= item.otherTiming %></span></br>
@@ -112,18 +120,18 @@
                   <td><%= item.childName %> <%= item.childSurname %> ( Age: <%= new Date().getFullYear() - item.DOB.getFullYear() %> )</br>
                     <%= item.level %></br>
                     <%= item.gender %></br>
-                  <%= item.school %></br>
+                    <a href="https://www.google.com/maps/search/<%= school %>" target="_blank"><%= item.school %></a></br>
                   </td>
                   <td>
-                    <%= item.parentOneName %> <%= item.parentOneSurname %></br>
-                    <%= item.roleOne %></br>
+                    <%= item.parentOneName %> <%= item.parentOneSurname %> (<%= item.roleOne %>)</br>
                     <%= item.contactOne %></br>
                     <%= item.emailOne %></br>
                   </td>
                   <td>
-                    <%= item.parentTwoName %> <%= item.parentTwoSurname %></br>
-                    <%= item.roleTwo %></br>
-                    <%= item.contactTwo %></br>
+                    <% if (item.parentTwoName) { %>
+                      <%= item.parentTwoName %> <%= item.parentTwoSurname %> (<%= item.roleTwo %>)</br>
+                      <%= item.contactTwo %></br>
+                    <% } %>
                   </td>
                   <td>
                     A: <%= item.questionA %></br>

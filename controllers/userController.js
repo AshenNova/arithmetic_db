@@ -12,14 +12,13 @@ const multer = require("multer");
 const upload = multer();
 const { google } = require("googleapis");
 const AppError = require("../utils/appError");
+const {
+  recaptchaenterprise,
+} = require("googleapis/build/src/apis/recaptchaenterprise");
 
 let username;
 let authenticate;
 let currentUser;
-// let fields = {
-//   username,
-//   authenticate,
-// };
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   console.log("Getting all users");
@@ -462,9 +461,6 @@ const generateRec = async (nameTemp) => {
       if (!levelRecommend.includes(item.level)) levelRecommend.push(item.level);
     }
   });
-  console.log(calRecommend);
-  console.log(heuRecommend);
-  console.log(levelRecommend);
 
   //CALCULATIONS
   console.log("CHECKING CALCULATIONS");
@@ -537,29 +533,46 @@ const generateRec = async (nameTemp) => {
               !recommendList.includes(attempt.level) &&
               recommend.length < 1
             ) {
-              console.log("here 2?");
-              // recommendObj = attempt;
               let count = 0;
-              // let highestSetting = recommendObj.setting;
+              let maximum = 1;
               latestAttempt.forEach((item) => {
-                if (
-                  item.level.startsWith(attempt.level) &&
-                  item.setting == 99
-                ) {
-                  count += 1;
-                  console.log(count);
-                  if (count > 0) {
-                    recommendObj.setting = 99;
+                if (item.level.startsWith(recommendObj.level)) {
+                  if (item.setting == 99) {
+                    console.log("99 exist");
+                    count += 1;
+                  } else {
+                    console.log(
+                      `Checking if setting is integer: ${item.setting}`
+                    );
+                    // console.log(Number.isInteger(item.setting * 1));
+                    if (Number.isInteger(item.setting * 1)) {
+                      console.log("Yes Integer");
+                      console.log(item.setting);
+                      if (item.setting > maximum) {
+                        maximum = item.setting;
+                      }
+                    } else {
+                      console.log("No integer, splitting");
+                      console.log(item.setting);
+                      const split = item.setting.split("-");
+                      console.log(split);
+                      const largest = split[split.length];
+                      if (largest > maximum) {
+                        maximum = largest;
+                      }
+                    }
                   }
                 }
               });
-              if (count == 0) {
-                console.log("test ⚡️");
-                if (
-                  Number.isInteger(recommendObj.setting) &&
-                  recommendObj.setting != 1
-                ) {
-                  recommendObj.setting = `1-${recommendObj.setting}`;
+              console.log(`Calculation maximum = ${maximum}`);
+              if (count > 0) {
+                console.log("Setting to 99");
+                recommendObj.setting = 99;
+              } else {
+                if (maximum == 1) {
+                  recommendObj.setting = 1;
+                } else {
+                  recommendObj.setting = `1-${maximum}`;
                 }
               }
               recommendObj.mode = "Easy";
@@ -650,10 +663,52 @@ const generateRec = async (nameTemp) => {
               }
             }
             if (
-              !recommendList.includes(attempt.level) &&
+              !recommendList.includes(recommendObj.level) &&
               recommend.length < 2
             ) {
-              recommendObj.setting = 9;
+              let count = 0;
+              let maximum = 1;
+              latestAttempt.forEach((item) => {
+                if (item.level.startsWith(recommendObj.level)) {
+                  if (item.setting == 9) {
+                    console.log("9 exist");
+                    count += 1;
+                  } else {
+                    console.log(
+                      `Checking if setting is integer: ${item.setting}`
+                    );
+                    // console.log(Number.isInteger(item.setting * 1));
+                    if (Number.isInteger(item.setting * 1)) {
+                      console.log("Yes Integer");
+                      console.log(item.setting);
+                      if (item.setting > maximum) {
+                        maximum = item.setting;
+                      }
+                    } else {
+                      console.log("No integer, splitting");
+                      console.log(item.setting);
+                      const split = item.setting.split("-");
+                      console.log(split);
+                      const largest = split[split.length];
+                      if (largest > maximum) {
+                        maximum = largest;
+                      }
+                    }
+                  }
+                }
+              });
+              console.log(`Calculation maximum = ${maximum}`);
+              if (count > 0) {
+                console.log("Setting to 9");
+                recommendObj.setting = 9;
+              } else {
+                if (maximum == 1) {
+                  recommendObj.setting = 1;
+                } else {
+                  recommendObj.setting = `1-${maximum}`;
+                }
+              }
+
               recommendObj.mode = "Easy";
               recommendObj.time = "";
               recommendObj.mistake = "";
@@ -679,14 +734,11 @@ const generateRec = async (nameTemp) => {
   // IF NO, CHECK ANOTHER LEVEL.
 
   awards.forEach((award) => {
-    // console.log(`Recommend: ${recommend}`);
-    // console.log(`!!!! Award check !!!! ${award}`);
     uniqLevel = [];
     console.log(uniqLevel);
     if (recommend.length < 6) {
       latestAttempt.forEach((attempt) => {
         let recommendObj = { ...attempt };
-        // let recommendObj = Object.assign({}, attempt);
 
         if (
           !attempt.level.startsWith("cal") &&
@@ -696,9 +748,6 @@ const generateRec = async (nameTemp) => {
             !uniqLevel.includes(attempt.level) &&
             !recommendList.includes(attempt.level)
           ) {
-            // console.log("Checking: " + attempt.level);
-            // console.log(`In levels: ${attempt.level}🌗`);
-            // console.log(`${recommendObj.level}`);
             if (attempt.award == award) {
               //CHECK IF AWARD IS BRONZE AND ABOVE
               if (attempt.award != "Try harder") {
