@@ -499,7 +499,7 @@ const generateRec = async (nameTemp) => {
           } else {
             // uniqLevel.push(attempt.level);
             console.log("Rotation or promoted");
-            if (attempt.setting == 99) {
+            if (attempt.setting == 99 && attempt.extra == "") {
               if (age == 10) {
                 const index = calAgeTen.indexOf(attempt.level);
                 if (index + 1 == calAgeTen.length) {
@@ -630,7 +630,7 @@ const generateRec = async (nameTemp) => {
           } else {
             // uniqLevel.push(attempt.level);
             console.log("Rotation or promoted");
-            if (attempt.setting == 9) {
+            if (attempt.setting == 9 && attempt.extra == "") {
               if (age == 8) {
                 const index = heuAgeEight.indexOf(attempt.level);
                 recommendObj.level = heuAgeEight[index + 1];
