@@ -56,34 +56,6 @@ exports.new = async (req, res) => {
   }
 };
 
-// exports.editTrial = async (req, res) => {
-//   let username = req.user.username;
-//   let authenticate = req.auth;
-//   let currentUser = req.user;
-//   let message;
-//   let clone;
-//   console.log("Editing existing trial sessions");
-//   try {
-//     const url = req.url;
-//     console.log(url);
-//     const id = req.params.id;
-//     console.log(id);
-//     const trial = await Trial.findById(id);
-//     res.render("trial/signup", {
-//       username,
-//       authenticate,
-//       currentUser,
-//       message,
-//       clone,
-//       trial,
-//     });
-//   } catch (e) {
-//     res.status(401).json({
-//       message: e,
-//     });
-//   }
-// };
-
 exports.trialEnd = async (req, res) => {
   console.log("Trial End");
   let username = req.user.username;

@@ -34,9 +34,9 @@
   </div>
     <div class="container">
         <h1>Please choose the part that is relevant to you.</h1>
-        <p>❗️ Note that there is no free trial for private home tuition only at Epicmind centres.</p>
+        <p>❗️ Note that there is no free trial for private home tuition. Only available at Epicmind Centres.</p>
         <p>This form is for Primary level Math and Science.</p>
-        <p>Before filling in the form, please read our rules and regulations.</p>
+        <p>Before filling in the <a href="#form">form</a>, please read our rules and regulations.</p>
         <div class="container mb-3">
           <p><a class="btn btn-primary me-3" href="#private">Private</a><a href="#centre" class="btn btn-primary">Centre</a></p>
           <h1 id="private">Rules and Regulations for <u>Private Home Tuition</u>.</h1>
@@ -79,9 +79,10 @@
          </ul>
         </div>
     </div>
-    <div class="container mb-3">
+    <div class="container mb-3" id="form">
+      <h1>Form</h1>
       <% if (clone && clone.edit == 1) { %>
-        <form action="/trial/save/<%= clone._id%>" method="post">
+        <form action="/trial/save/<%= clone._id%>" method="post" >
       <% } else { %>
         <form action="/trial/new" method="post">
       <% } %>
