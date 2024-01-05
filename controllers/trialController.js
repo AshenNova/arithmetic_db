@@ -1,5 +1,6 @@
 const Trial = require("../models/trialModel");
 const Lesson = require("../models/lessonModel");
+const sendEmail = require("../utils/email");
 
 exports.new = async (req, res) => {
   let username = req.user.username;
@@ -11,7 +12,22 @@ exports.new = async (req, res) => {
     console.log(req.body);
 
     const trial = await Trial.create(req.body);
-    // res.status(200).json({ status: "Success" });
+    // SEND MAIL
+    const message = "You have a new trial.";
+
+    await sendEmail({
+      // to: "Kennerve14@gmail.com",
+      subject: "A new trial",
+      message,
+    });
+    if (!newUser) {
+      return next(
+        new AppError(
+          "User was not created, some fields were incorrect/missing",
+          401
+        )
+      );
+    }
     res.render("trial/end", {
       username,
       authenticate,
@@ -32,10 +48,6 @@ exports.new = async (req, res) => {
       }
     });
     console.log(errorMsg);
-    // errorMsg = errorMsg.join(" ");
-    // console.log(errorMsg);
-    // errorMsg = errorMsg.split(": ");
-    // console.log(errorMsg);
     const response = {
       status: "Failed",
       errorMsg,
@@ -43,6 +55,35 @@ exports.new = async (req, res) => {
     res.send(response);
   }
 };
+
+// exports.editTrial = async (req, res) => {
+//   let username = req.user.username;
+//   let authenticate = req.auth;
+//   let currentUser = req.user;
+//   let message;
+//   let clone;
+//   console.log("Editing existing trial sessions");
+//   try {
+//     const url = req.url;
+//     console.log(url);
+//     const id = req.params.id;
+//     console.log(id);
+//     const trial = await Trial.findById(id);
+//     res.render("trial/signup", {
+//       username,
+//       authenticate,
+//       currentUser,
+//       message,
+//       clone,
+//       trial,
+//     });
+//   } catch (e) {
+//     res.status(401).json({
+//       message: e,
+//     });
+//   }
+// };
+
 exports.trialEnd = async (req, res) => {
   console.log("Trial End");
   let username = req.user.username;
@@ -69,9 +110,17 @@ exports.signup = async (req, res) => {
   let currentUser = req.user;
   let clone;
   let message;
-
   try {
-    if (req.params.id) {
+    const url = req.url;
+    console.log(url);
+    if (req.params.id && url.startsWith("/edit")) {
+      if (!currentUser.admin) {
+        return res.redirect("/user/login");
+      }
+      console.log("Editing");
+      clone = await Trial.findById(req.params.id);
+      clone.edit = 1;
+    } else if (req.params.id) {
       console.log("ANOTHER!");
       clone = await Trial.findById(req.params.id);
       console.log(clone);
@@ -107,7 +156,19 @@ exports.signup = async (req, res) => {
     res.status(404).json({ message: e });
   }
 };
-
+exports.save = async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  try {
+    console.log(req.body);
+    const save = await Trial.findByIdAndUpdate(id, req.body);
+    res.redirect("/trial");
+  } catch (e) {
+    res.status(401).json({
+      message: `${e}, Failed to save.`,
+    });
+  }
+};
 exports.getAllTrials = async (req, res) => {
   console.log("GETTING ALL THE TRIALS");
   let username = req.user.username;

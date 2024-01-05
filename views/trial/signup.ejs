@@ -80,7 +80,12 @@
         </div>
     </div>
     <div class="container mb-3">
-      <form action="/trial/new" method="post">
+      <% if (clone && clone.edit == 1) { %>
+        <form action="/trial/save/<%= clone._id%>" method="post">
+      <% } else { %>
+        <form action="/trial/new" method="post">
+      <% } %>
+     
         <div class="mb-3">
           <label for="outlet" class="form-label focus" >Outlet*</label>
           <select class="form-select" aria-label="Default select example" name="outlet" id="slct1">
@@ -137,10 +142,10 @@
             <% if (clone && clone.subject) { %>
               <%= console.log("Cloned") %>
                 <% if (clone.subject.includes("Standard Math")) { %>
-                  <input class="form-check-input" type="checkbox" value="Standard Math" id="flexCheckDefault" name="subject" checked>
+                  <input class="form-check-input ms-3" type="checkbox" value="Standard Math" id="flexCheckDefault" name="subject" checked>
                   <label class="form-check-label" for="flexCheckDefault">Standard Math</label>
                 <% } else { %>
-                  <input class="form-check-input" type="checkbox" value="Standard Math" id="flexCheckDefault" name="subject" >
+                  <input class="form-check-input ms-3" type="checkbox" value="Standard Math" id="flexCheckDefault" name="subject" >
                   <label class="form-check-label" for="flexCheckDefault">Standard Math</label>
                 <% } %> 
               </br>
@@ -190,7 +195,7 @@
             <div class="mb-3">
               <label for="childName" class="form-label">Name*</label>
               <input type="text" class="form-control" id="childName" name="childName"<% if (clone && clone.childName) { %>
-                <%= clone.childName %>
+                value="<%= clone.childName %>"
              <% } %>>
             </div>
             <div class="mb-3">
@@ -203,7 +208,7 @@
            <% if (clone && clone.DOB) { %>
             <div class="mb-3">
               <label for="DOB" class="form-label">Date of birth*</label>
-              <input type="date" class="form-control" id="DOB" name="DOB" value="<%= clone.DOB %>">
+              <input type="date" class="form-control" id="DOB" name="DOB" value="<%= clone.DOB.getFullYear() %>-<%= (clone.DOB.getMonth()+1).toString().padStart(2, 0) %>-<%= clone.DOB.getDate().toString().padStart(2, 0) %>">
              </div>
            <% } else { %>
             <div class="mb-3">
@@ -390,8 +395,12 @@
         </select>
       </div>
 
-       
+       <% if (clone && clone.edit == 1){ %>
+        <button class="btn btn-secondary">Save</button>
+       <% } else { %>
         <button type="submit" class="btn btn-primary submit">Submit</button>
+       <% } %>
+        
 
      </form>
 </div>

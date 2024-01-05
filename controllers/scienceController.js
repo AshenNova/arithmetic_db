@@ -271,24 +271,6 @@ exports.getTopic = async (req, res) => {
   let authenticate = req.auth;
   let currentUser = req.user;
   try {
-    // let topic_p3 = [];
-    // let topic_p4 = [];
-    // let topic_p5 = [];
-    // let topic_p6 = [];
-    // let age = new Date().getFullYear() - currentUser.DOB.getFullYear();
-    // console.log(age);
-    // const everything = await Science.find();
-    // everything.forEach((item) => {
-    //   item.level = item.level.toLowerCase();
-    //   if (item.level == "p3" && !topic_p3.includes(item.topic) && age >= 8)
-    //     topic_p3.push(item.topic);
-    //   if (item.level == "p4" && !topic_p4.includes(item.topic) && age >= 9)
-    //     topic_p4.push(item.topic);
-    //   if (item.level == "p5" && !topic_p5.includes(item.topic) && age >= 10)
-    //     topic_p5.push(item.topic);
-    //   if (item.level == "p6" && !topic_p6.includes(item.topic) && age >= 11)
-    //     topic_p6.push(item.topic);
-    // });
     let subtopic_p3 = [];
     let subtopic_p4 = [];
     let subtopic_p5 = [];
