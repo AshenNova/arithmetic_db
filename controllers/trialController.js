@@ -1,16 +1,18 @@
 const Trial = require("../models/trialModel");
 const Lesson = require("../models/lessonModel");
 const sendEmail = require("../utils/email");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
 
-exports.new = async (req, res) => {
+exports.new = catchAsync(async (req, res, next) => {
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
   let message;
+  // let newUser;
 
   try {
     console.log(req.body);
-
     const trial = await Trial.create(req.body);
     // SEND MAIL
     const message = "You have a new trial.";
@@ -20,7 +22,7 @@ exports.new = async (req, res) => {
       subject: "A new trial",
       message,
     });
-    if (!newUser) {
+    if (!trial) {
       return next(
         new AppError(
           "User was not created, some fields were incorrect/missing",
@@ -36,6 +38,8 @@ exports.new = async (req, res) => {
       message,
     });
   } catch (error) {
+    console.log(error);
+    console.log("Error!");
     let errorMsgHandle = error.message.split(": ");
     errorMsgHandle.shift();
     errorMsgHandle.shift();
@@ -54,7 +58,7 @@ exports.new = async (req, res) => {
     };
     res.send(response);
   }
-};
+});
 
 exports.trialEnd = async (req, res) => {
   console.log("Trial End");

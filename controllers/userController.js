@@ -538,14 +538,18 @@ const generateRec = async (nameTemp) => {
             ) {
               let count = 0;
               let maximum = 1;
+              console.log(`The maximum is ${maximum}`);
               latestAttempt.forEach((item) => {
                 if (item.level.startsWith(recommendObj.level)) {
+                  // console.log("Rabbit 1");
                   if (item.setting == 99) {
+                    // console.log("Rabbit 1-1");
                     console.log("99 exist");
                     count += 1;
                   } else {
+                    // console.log("Rabbit 1-2");
                     console.log(
-                      `Checking if setting is integer: ${item.setting}`
+                      `Checking if setting is integer: ${item.setting} for Level: ${item.level}`
                     );
                     // console.log(Number.isInteger(item.setting * 1));
                     if (Number.isInteger(item.setting * 1)) {
@@ -559,6 +563,7 @@ const generateRec = async (nameTemp) => {
                       console.log(item.setting);
                       const split = item.setting.split("-");
                       console.log(split);
+                      console.log(`The level is ${item.level}`);
                       const largest = split[split.length];
                       if (largest > maximum) {
                         maximum = largest;
