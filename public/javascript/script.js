@@ -6972,8 +6972,8 @@ function updateProblems() {
 
   if (level == 6) {
     if (p.numOne == p.denoOne || p.numTwo == p.denoTwo) {
-      console.log("Same")
-      return updateCalc()
+      console.log("Same");
+      return updateCalc();
     }
     numeratorOne.textContent = p.numOne;
     denominatorOne.textContent = p.denoOne;
@@ -16742,7 +16742,35 @@ How many items are there in each bag?
       What is the value of ${p.question == "A" ? "A" : "B"}?</p>
       `;
     }
+    if (setting == 6) {
+      // Quantity is the number of students
+      let object = ["sweet", "chocolate", "pen", "pencil"];
+      object = object[genNumbers(object.length)];
+      if (p.valueA == p.valueB) {
+        return updateCalc();
+      }
+      if (p.valueA > p.valueB) {
+        [p.valueA, p.valueB] = [p.valueB, p.valueA];
+      }
+      p.totalQuantity = p.quantityA + p.quantityB;
+      p.totalValue = p.valueA * p.quantityA + p.valueB * p.quantityB;
+      if (p.totalQuantity == p.totalValue) return updateCalc();
+      [p.totalQuantity, p.totalValue] = simplify(p.totalQuantity, p.totalValue);
+
+      let sentenceA = ["ratio", "fraction"][genNumbers(2)];
+      if (sentenceA == "fraction") {
+        sentenceA = `The fraction of the number of students to ${object}s is ${p.totalQuantity}/${p.totalValue}`;
+      } else {
+        sentenceA = `The ratio of the number of students to ${object}s is ${p.totalQuantity} : ${p.totalValue}`;
+      }
+      displayProblem.innerHTML = `
+      ${sentenceA}.</br>
+      Each student receives either ${p.valueA} or ${p.valueB} ${object}s.</br>
+      What fraction of the total number of students received ${p.valueA} ${object}?
+      `;
+    }
   }
+
   // DISPLAY
   if (level == "heuSix") {
     calculatorSymbol.classList.remove("hidden");
@@ -19434,18 +19462,18 @@ function handleSubmit(e) {
     if (level == 6) {
       let num = p.numOne * p.denoTwo;
       let deno = p.denoOne * p.numTwo;
-      console.log(num, deno)
-      let whole = Math.floor(num/deno);
+      console.log(num, deno);
+      let whole = Math.floor(num / deno);
       let remainder = num % deno;
-      if ( whole == 0) {
+      if (whole == 0) {
         [num, deno] = simplify(num, deno);
-        correctAnswer = `${num}/${deno}`
-      } else if ( whole > 0 && remainder != 0){
+        correctAnswer = `${num}/${deno}`;
+      } else if (whole > 0 && remainder != 0) {
         [remainder, deno] = simplify(remainder, deno);
-        correctAnswer = `${whole} ${remainder}/${deno}`
-      } 
-      if ( remainder == 0){
-        correctAnswer = whole
+        correctAnswer = `${whole} ${remainder}/${deno}`;
+      }
+      if (remainder == 0) {
+        correctAnswer = whole;
       }
     }
     if (level == 6.01) {
@@ -22568,7 +22596,17 @@ function handleSubmit(e) {
         if (p.question == "A") correctAnswer = p.valueA;
         if (p.question == "B") correctAnswer = p.valueB;
       }
+
+      if (setting == 6) {
+        const allA = p.valueA*p.totalQuantity
+        const bigDiff = p.totalValue - allA
+        const smallDiff = p.valueB - p.valueA
+        const QB = bigDiff/smallDiff
+        let AB = p.totalQuantity - QB
+        correctAnswer = `${AB}/${p.totalQuantity}`
+
     }
+  }
     //ANSWERS
     if (level == "heuSix") {
       // LOWEST COMMON TIME
@@ -27434,7 +27472,7 @@ function genProblems() {
   }
   // SETTINGS
   if (level == "heuFiveb") {
-    setting = calArrAll(5, calArr, setting, 9);
+    setting = calArrAll(6, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 1) {
@@ -27514,6 +27552,18 @@ function genProblems() {
         valueA: (genNumbers(9) + 1) * 5,
         valueB: (genNumbers(9) + 1) * 5,
         question: ["A", "B"][genNumbers(2)],
+      };
+    }
+
+    // SUPPOSITION (RATIO)
+    if (setting == 6) {
+      return {
+        valueA: genNumbers(5) + 1,
+        quantityA: genNumbers(5) + 1,
+        valueB: genNumbers(5) + 1,
+        quantityB: genNumbers(5) + 1,
+        totalValue: undefined,
+        totalQuantity: undefined,
       };
     }
   }
@@ -29640,7 +29690,7 @@ function buttonLevelSetting() {
         9
       );
       if (
-        ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 9;

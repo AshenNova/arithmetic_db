@@ -91,11 +91,11 @@ const trialSchema = new mongoose.Schema({
   },
 
   questionA: String,
-  questionB: { type: String, require: [true, "Please fill in the question."] },
+  questionB: { type: String, required: [true, "Please fill in the question."] },
   questionC: String,
   questionD: String,
-  questionE: { type: String, require: [true, "Please fill in the question."] },
-  questionF: { type: String, require: [true, "Please fill in the question."] },
+  questionE: { type: String, required: [true, "Please fill in the question."] },
+  questionF: { type: String, required: [true, "Please fill in the question."] },
   trialSession: {
     type: Boolean,
     default: false,

@@ -100,32 +100,22 @@ export function cutOffCheck(level, setting, time) {
       push = "Yes";
     }
   }
-  if (level == "heuThree") {
+  if (level == "heuThree" || level == "heuThreeb") {
     if (time > 240) {
       push = "Yes";
     }
   }
-  if (level == "heuThreeb") {
+  if (level == "heuFour" || level == "heuFourb") {
     if (time > 240) {
       push = "Yes";
     }
   }
-  if (level == "heuFour") {
+  if (level == "heuFive" || level == "heuFiveb") {
     if (time > 240) {
       push = "Yes";
     }
   }
-  if (level == "heuFourb") {
-    if (time > 240) {
-      push = "Yes";
-    }
-  }
-  if (level == "heuSix") {
-    if (time > 300) {
-      push = "Yes";
-    }
-  }
-  if (level == "heuSixb") {
+  if (level == "heuSix" || level == "heuSixb") {
     if (time > 300) {
       push = "Yes";
     }

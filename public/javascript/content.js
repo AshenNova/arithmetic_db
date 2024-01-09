@@ -79,6 +79,7 @@ export const displayContent = (level) => {
     3. Working Backwards (Type 3) Independent</br>
     4. Either or</br>
     5. Unchanged Total (if)</br>
+    6. Supposition (Units)</br>
     <hr>9. All
     `;
   }

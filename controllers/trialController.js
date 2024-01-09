@@ -62,6 +62,7 @@ exports.new = catchAsync(async (req, res, next) => {
 
 exports.trialEnd = async (req, res) => {
   console.log("Trial End");
+  console.log(req.url);
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
@@ -77,6 +78,16 @@ exports.trialEnd = async (req, res) => {
     currentUser,
     trial,
     message,
+  });
+};
+exports.options = async (req, res) => {
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  res.render("trial/options", {
+    username,
+    authenticate,
+    currentUser,
   });
 };
 
@@ -132,6 +143,63 @@ exports.signup = async (req, res) => {
     res.status(404).json({ message: e });
   }
 };
+exports.private = (req, res) => {
+  res.send();
+};
+
+exports.centre = async (req, res) => {
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  let clone;
+  let message;
+  try {
+    const url = req.url;
+    console.log(url);
+    if (req.params.id && url.startsWith("/edit")) {
+      if (!currentUser.admin) {
+        return res.redirect("/user/login");
+      }
+      console.log("Editing");
+      clone = await Trial.findById(req.params.id);
+      clone.edit = 1;
+    } else if (req.params.id) {
+      console.log("ANOTHER!");
+      clone = await Trial.findById(req.params.id);
+      console.log(clone);
+      clone.childName = "";
+      clone.outlet = "";
+      clone.timing = "";
+      clone.subject = "";
+      clone.DOB = "";
+      clone.level = "";
+      clone.gender = "";
+      clone.school = "";
+      clone.questionA = "";
+      clone.questionB = "";
+      clone.questionC = "";
+      clone.questionD = "";
+      clone.questionE = "";
+      clone.questionF = "";
+    }
+    const toapayoh = await Lesson.find({ outlet: "Toa Payoh" });
+    const hougang = await Lesson.find({ outlet: "Hougang" });
+    // const private = await Lesson.find({ outlet: "Private" });
+    res.render("trial/centre", {
+      username,
+      authenticate,
+      currentUser,
+      toapayoh,
+      hougang,
+      // private,
+      clone,
+      message,
+    });
+  } catch (e) {
+    res.status(404).json({ message: e });
+  }
+};
+
 exports.save = async (req, res) => {
   const id = req.params.id;
   console.log(id);
