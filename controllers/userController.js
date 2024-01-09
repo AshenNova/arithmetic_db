@@ -555,7 +555,7 @@ const generateRec = async (nameTemp) => {
                     if (Number.isInteger(item.setting * 1)) {
                       console.log("Yes Integer");
                       console.log(item.setting);
-                      if (item.setting > maximum) {
+                      if (item.setting * 1 > maximum) {
                         maximum = item.setting;
                       }
                     } else {
@@ -564,7 +564,7 @@ const generateRec = async (nameTemp) => {
                       const split = item.setting.split("-");
                       console.log(split);
                       console.log(`The level is ${item.level}`);
-                      const largest = split[split.length];
+                      const largest = split[split.length - 1];
                       if (largest > maximum) {
                         maximum = largest;
                       }
@@ -700,7 +700,7 @@ const generateRec = async (nameTemp) => {
                       console.log(item.setting);
                       const split = item.setting.split("-");
                       console.log(split);
-                      const largest = split[split.length];
+                      const largest = split[split.length - 1];
                       if (largest > maximum) {
                         maximum = largest;
                       }
