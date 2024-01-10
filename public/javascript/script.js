@@ -2703,7 +2703,8 @@ function updateProblems() {
     ctx.font = "1em serif";
     ctx.save();
 
-    if (difficulty == 1 || (difficulty == 9 && p.rollx == 0)) {
+    // if (difficulty == 1 || (difficulty == 9 && p.rollx == 0)) {
+    if (setting == 1) {
       ctx.fillText(
         `Find the ${p.areaOrPerimeter} of the ${p.shapeChoice}.`,
         20,
@@ -2760,7 +2761,8 @@ function updateProblems() {
       }
     }
 
-    if (difficulty == 2 || (difficulty == 9 && p.rollx == 1)) {
+    // if (difficulty == 2 || (difficulty == 9 && p.rollx == 1)) {
+    if (setting == 2) {
       ctx.fillText(
         `Find the ${
           p.shapeChoice == "rectangle" ? p.side : "length of each side"
@@ -18312,7 +18314,8 @@ function handleSubmit(e) {
     }
 
     if (level == 3.19) {
-      if (difficulty == 1 || (difficulty == 9 && p.rollx == 0)) {
+      // if (difficulty == 1 || (difficulty == 9 && p.rollx == 0)) {
+      if (setting == 1) {
         if (p.shapeChoice == "square") {
           if (p.areaOrPerimeter == "area") {
             correctAnswer = p.squareSide * p.squareSide;
@@ -18330,7 +18333,8 @@ function handleSubmit(e) {
           }
         }
       }
-      if (difficulty == 2 || (difficulty == 9 && p.rollx == 1)) {
+      // if (difficulty == 2 || (difficulty == 9 && p.rollx == 1)) {
+      if (setting == 2) {
         if (p.shapeChoice == "square") {
           correctAnswer = p.squareSide;
         }
@@ -22598,15 +22602,14 @@ function handleSubmit(e) {
       }
 
       if (setting == 6) {
-        const allA = p.valueA*p.totalQuantity
-        const bigDiff = p.totalValue - allA
-        const smallDiff = p.valueB - p.valueA
-        const QB = bigDiff/smallDiff
-        let AB = p.totalQuantity - QB
-        correctAnswer = `${AB}/${p.totalQuantity}`
-
+        const allA = p.valueA * p.totalQuantity;
+        const bigDiff = p.totalValue - allA;
+        const smallDiff = p.valueB - p.valueA;
+        const QB = bigDiff / smallDiff;
+        let AB = p.totalQuantity - QB;
+        correctAnswer = `${AB}/${p.totalQuantity}`;
+      }
     }
-  }
     //ANSWERS
     if (level == "heuSix") {
       // LOWEST COMMON TIME
@@ -23901,9 +23904,11 @@ function genProblems() {
   }
 
   if (level == 3.19) {
-    if (difficulty != 1 && difficulty != 2 && difficulty != 9) {
-      difficulty = 9;
-    }
+    // if (difficulty != 1 && difficulty != 2 && difficulty != 9) {
+    //   difficulty = 9;
+    // }
+    setting = calArrAll(2, calArr, setting, 9);
+    setting = checkRange(setting, calArr, skipArr);
     console.log(difficulty);
     return {
       shapeChoice: ["rectangle", "square"][genNumbers(2)],
@@ -28490,7 +28495,8 @@ function buttonLevelSetting() {
       break;
 
     case "Level 3.19":
-      difficulty = prompt("1. Basics\n2. Reverse\n\n9. All", 9);
+      setting = prompt("1. Basics\n2. Reverse\n\n9. All", 9);
+      if (![1, 2, 9].includes(setting)) setting = 9;
       level = 3.19;
       scoreNeeded = 20;
       gold = highScore3DotZero19.time;
