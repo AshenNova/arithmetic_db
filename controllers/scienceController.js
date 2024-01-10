@@ -16,6 +16,9 @@ exports.getAllQuestions = catchAsync(async (req, res, next) => {
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
+  const topic = await Science.distinct("topic");
+  const subtopic = await Science.distinct("subtopic");
+  console.log(topic, subtopic);
   console.log("Getting all questions");
   // console.log(req.query);
   if (Object.keys(req.query).length != 0) {
@@ -35,13 +38,19 @@ exports.getAllQuestions = catchAsync(async (req, res, next) => {
       };
       // console.log(req.query.question);
     }
+
+    if (req.query.topic == "Select") delete req.query.topic;
+    if (req.query.subtopic == "Select") delete req.query.subtopic;
     console.log(req.query);
+
     const getAllQuestions = await Science.find(req.query).sort({ date: -1 });
     res.render("./science/displayAllQuestions", {
       username,
       authenticate,
       currentUser,
       getAllQuestions,
+      topic,
+      subtopic,
     });
     // } catch (e) {
     //   res.status(400).json({ status: "Failed", message: e });
@@ -54,6 +63,8 @@ exports.getAllQuestions = catchAsync(async (req, res, next) => {
       authenticate,
       currentUser,
       getAllQuestions,
+      topic,
+      subtopic,
     });
     // } catch (e) {
     //   res.status(400).json({ status: "Failed", message: e });
@@ -350,7 +361,7 @@ exports.getQuestions = async (req, res) => {
     //CHECK IF THE CURRENT USER HAS ANY PREVIOUSLY INCORRECT QUESTIONS
     const incorrectQuestionsId = (await User.findById(currentUser._id))
       .incorrectScience;
-    console.log(incorrectQuestionsId);
+    // console.log(incorrectQuestionsId);
 
     if (incorrectQuestionsId) {
       while (
@@ -362,8 +373,9 @@ exports.getQuestions = async (req, res) => {
             Math.floor(Math.random() * incorrectQuestionsId.length)
           ];
         const incorrectQuestion = await Science.findById(chosenId);
-        console.log(incorrectQuestion);
-        const index = incorrectQuestionsId.indexOf(incorrectQuestion);
+        // console.log(incorrectQuestion);
+        const index = incorrectQuestionsId.indexOf(chosenId);
+        // console.log(`The index is ${index}`);
         incorrectQuestionsId.splice(index, 1);
         if (!questionsIdArr.includes(incorrectQuestion._id)) {
           console.log("Push incorrect question");
