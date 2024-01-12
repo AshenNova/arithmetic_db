@@ -15,11 +15,25 @@ exports.new = catchAsync(async (req, res, next) => {
     console.log(req.body);
     const trial = await Trial.create(req.body);
     // SEND MAIL
-    const message = "You have a new trial.";
+    const message = `
+    Outlet: ${req.body.outlet}
+    Timing: ${req.body.timing}
+    Student's name: ${req.body.childName} ${req.body.childSurname}
+    Gender: ${req.body.gender}
+    Level: ${req.body.level}
+    School: ${req.body.school}
+    Parent's Name: ${req.body.parentOneName} ${req.body.parentOneSurname}
+    Contact: ${req.body.contactOne}
+    Recent score: ${req.body.questionA}
+    Homework: ${req.body.questionB}
+    Learning Disability: ${req.body.questionC}
+    Reason for quitting previous tuition: ${req.body.questionD}
+    Physical punishment: ${req.body.questionE}
+    `;
 
     await sendEmail({
       // to: "Kennerve14@gmail.com",
-      subject: "A new trial",
+      subject: `A new trial for ${req.body.outlet}`,
       message,
     });
     if (!trial) {

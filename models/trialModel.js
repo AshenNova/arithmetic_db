@@ -2,8 +2,11 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 
 const trialSchema = new mongoose.Schema({
-  outlet: String,
-  timing: String,
+  outlet: { type: String, required: [true, "Please choose an outlet."] },
+  timing: {
+    type: String,
+    required: [true, "Please a suitable timing after choosing outlet."],
+  },
   otherTiming: String,
   filledIn: {
     type: Date,

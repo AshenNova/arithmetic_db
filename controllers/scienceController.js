@@ -317,7 +317,9 @@ exports.getTopic = async (req, res) => {
         subtopic_p6.push(item.subtopic);
     });
     // const topics = await Science.distinct("topic");
-
+    const userScienceSetting = (await User.findById(currentUser._id))
+      .scienceSetting;
+    console.log(userScienceSetting);
     res.render("./science/getTopic", {
       username,
       authenticate,
@@ -326,6 +328,7 @@ exports.getTopic = async (req, res) => {
       subtopic_p4,
       subtopic_p5,
       subtopic_p6,
+      userScienceSetting,
     });
   } catch (e) {
     res.status(400).json({ status: "Failed", message: e });
@@ -346,6 +349,18 @@ exports.getQuestions = async (req, res) => {
       Science.find({ level: "p5", subtopic: req.body.subtopic_p5 }).lean(),
       Science.find({ level: "p6", subtopic: req.body.subtopic_p6 }).lean(),
     ]);
+
+    let updateScienceSetting = {
+      p3: req.body.subtopic_p3,
+      p4: req.body.subtopic_p4,
+      p5: req.body.subtopic_p5,
+      p6: req.body.subtopic_p6,
+    };
+
+    const saveScienceSetting = await User.findByIdAndUpdate(currentUser._id, {
+      scienceSetting: updateScienceSetting,
+    });
+    console.log(`Saving Settings: ${saveScienceSetting}`);
     // const p3 = await Science.find({ topic: req.body.topic_p3, level: "p3" });
     // const p4 = await Science.find({ topic: req.body.topic_p4, level: "p4" });
     // const p5 = await Science.find({ topic: req.body.topic_p5, level: "p5" });

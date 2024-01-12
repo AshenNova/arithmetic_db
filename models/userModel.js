@@ -54,6 +54,7 @@ const userSchema = new mongoose.Schema({
   incorrectScience: {
     type: Array,
   },
+  scienceSetting: Object,
   freeze: { type: Boolean, default: false },
   freezeEndDate: { type: Date },
 });

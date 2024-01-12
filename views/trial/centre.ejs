@@ -93,7 +93,7 @@
             <% if (clone) { %>
               <option value="<%= clone.outlet %>" selected><%= clone.outlet %></option>
              <% } else { %>
-              <option selected>Choose an outlet</option>
+              <option selected value="">Choose an outlet</option>
              <% } %> 
               
           </select>
@@ -119,7 +119,7 @@
             <% if (clone) { %>
               <option value="<%= clone.timing %>" selected><%= clone.timing %></option>
              <% } else { %>
-              <option selected>Choose a time slot.</option>
+              <option selected value="">Choose a time slot.</option>
              <% } %> 
           </select>
           <div><b>*Note that the free trial timing reflected are identical to the available slots.</b></div>
@@ -457,68 +457,75 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script>
+  let click = 0
   document.querySelector('.submit').addEventListener("click", function(e){
     e.preventDefault()
+    if (click == 0){
+      click += 1
+     
 
-    let subjects = []
-    console.log(e)
-    console.log($("#subject1").val())
-    if ($("#subject1").is(":checked")) subjects.push($("#subject1").val())
-    if ($("#subject2").is(":checked")) subjects.push($("#subject2").val())
-    if ($("#subject3").is(":checked")) subjects.push($("#subject3").val())
-    if ($("#subject4").is(":checked")) subjects.push($("#subject4").val())
-  
-    let newTrial = {
-      outlet: $("#slct1").val(),
-      timing: $("#slct2").val(),
-      otherTiming: $("#otherTiming").val(),
-      subject: subjects,
-      childName:$("#childName").val(),
-      childSurname:$("#childSurname").val(),
-      DOB:$("#DOB").val(),
-      level:$("#level").val(),
-      gender:$("#gender").val(),
-      school:$("#school").val(),
-      parentOneName:$("#parentOneName").val(),
-      parentOneSurname:$("#parentOneSurname").val(),
-      roleOne:$("#roleOne").val(),
-      contactOne:$("#contactOne").val(),
-      emailOne:$("#emailOne").val(),
-      parentTwoName:$("#parentTwoName").val(),
-      parentTwoSurname:$("#parentTwoSurname").val(),
-      roleTwo:$("#roleTwo").val(),
-      contactTwo:$("#contactTwo").val(),
-      questionA:$("#questionA").val(),
-      questionB:$("#questionB").val(),
-      questionC:$("#questionC").val(),
-      questionD:$("#questionD").val(),
-      questionE:$("#questionE").val(),
-      questionF:$("#questionF").val(),
+let subjects = []
+console.log(e)
+console.log($("#subject1").val())
+if ($("#subject1").is(":checked")) subjects.push($("#subject1").val())
+if ($("#subject2").is(":checked")) subjects.push($("#subject2").val())
+if ($("#subject3").is(":checked")) subjects.push($("#subject3").val())
+if ($("#subject4").is(":checked")) subjects.push($("#subject4").val())
 
+let newTrial = {
+  outlet: $("#slct1").val(),
+  timing: $("#slct2").val(),
+  otherTiming: $("#otherTiming").val(),
+  subject: subjects,
+  childName:$("#childName").val(),
+  childSurname:$("#childSurname").val(),
+  DOB:$("#DOB").val(),
+  level:$("#level").val(),
+  gender:$("#gender").val(),
+  school:$("#school").val(),
+  parentOneName:$("#parentOneName").val(),
+  parentOneSurname:$("#parentOneSurname").val(),
+  roleOne:$("#roleOne").val(),
+  contactOne:$("#contactOne").val(),
+  emailOne:$("#emailOne").val(),
+  parentTwoName:$("#parentTwoName").val(),
+  parentTwoSurname:$("#parentTwoSurname").val(),
+  roleTwo:$("#roleTwo").val(),
+  contactTwo:$("#contactTwo").val(),
+  questionA:$("#questionA").val(),
+  questionB:$("#questionB").val(),
+  questionC:$("#questionC").val(),
+  questionD:$("#questionD").val(),
+  questionE:$("#questionE").val(),
+  questionF:$("#questionF").val(),
+
+}
+console.log("Submitting trial form")
+console.log(newTrial)
+
+$.ajax({
+  url: "/trial/new",
+  method: "Post",
+  data: newTrial,
+  success: function(res){
+    console.log(res)
+    if (res.status == "Failed"){
+      click = 0
+
+      let error = res.errorMsg.join("\n")
+      
+      alert(error)
+    } else {
+      window.location.replace("/trial/end");
     }
-    console.log("Submitting trial form")
-    console.log(newTrial)
+  },
+  error: function(res){
+    console.log("Failed!")
+  }
 
-    $.ajax({
-      url: "/trial/new",
-      method: "Post",
-      data: newTrial,
-      success: function(res){
-        console.log(res)
-        if (res.status == "Failed"){
-
-          let error = res.errorMsg.join("\n")
-          
-          alert(error)
-        } else {
-          window.location.replace("/trial/end");
-        }
-      },
-      error: function(res){
-        console.log("Failed!")
-      }
-
-    })
+})
+    }
+   
   })
 </script>
 </html>
