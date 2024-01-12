@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-  loggedIn: { type: Date },
+  loggedIn: { type: Date, default: new Date() },
   points: { type: Number, default: 0 },
   gift: {
     type: Number,

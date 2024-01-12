@@ -140,9 +140,16 @@ exports.signup = async (req, res) => {
       clone.questionE = "";
       clone.questionF = "";
     }
-    const toapayoh = await Lesson.find({ outlet: "Toa Payoh" });
-    const hougang = await Lesson.find({ outlet: "Hougang" });
-    const private = await Lesson.find({ outlet: "Private" });
+    const toapayoh = await Lesson.find({ outlet: "Toa Payoh" }).sort({
+      day: -1,
+    });
+    const hougang = await Lesson.find({ outlet: "Hougang" }).sort({
+      day: -1,
+    });
+    const private = await Lesson.find({ outlet: "Private" }).sort({
+      day: -1,
+    });
+    console.log(toapayoh);
     res.render("trial/signup", {
       username,
       authenticate,
@@ -196,8 +203,12 @@ exports.centre = async (req, res) => {
       clone.questionE = "";
       clone.questionF = "";
     }
-    const toapayoh = await Lesson.find({ outlet: "Toa Payoh" });
-    const hougang = await Lesson.find({ outlet: "Hougang" });
+    const toapayoh = await Lesson.find({ outlet: "Toa Payoh" }).sort({
+      day: -1,
+    });
+    const hougang = await Lesson.find({ outlet: "Hougang" }).sort({
+      day: -1,
+    });
     // const private = await Lesson.find({ outlet: "Private" });
     res.render("trial/centre", {
       username,
