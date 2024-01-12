@@ -62,44 +62,6 @@ imageCloseBtn.forEach((item) => {
     });
   });
 });
-// document
-//   .querySelector("#customFileLabel")
-//   .addEventListener("change", function (e) {
-//     const tmppath = URL.createObjectURL(
-//       document.querySelector("#customFile").files[0]
-//     );
-//     $("img").fadeIn("fast").attr("src", tmppath);
-//     // document.querySelector("#customFileLabel").textContent =
-//     //   document.querySelector("#customFile").files[0].name;
-//   });
-
-// document
-//   .querySelector("#rewardSubmitForm")
-//   .addEventListener("submit", function (e) {
-//     console.log("AJAX!");
-//     e.preventDefault();
-
-//     const dataForm = document.querySelector("#rewardSubmitForm");
-//     console.log(dataForm);
-//     console.log("Creating new reward");
-//     const newReward = {
-//       rewardName: $("#rewardName").val(),
-//       description: $("#description").val(),
-//       imageURL: $("#customFile").val(),
-//       requirement: $("#requirement").val(),
-//     };
-//     $.ajax({
-//       url: "/user/points/rewards/new",
-//       method: "POST",
-//       data: newReward,
-//       success: function (res) {
-//         console.log("Received back");
-//       },
-//       error: function (e) {
-//         console.log(e);
-//       },
-//     });
-//   });
 
 // SUMMIT BRAND NEW REWARD FORM
 const formElem = document.querySelector("form");
