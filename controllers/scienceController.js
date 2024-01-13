@@ -317,9 +317,10 @@ exports.getTopic = async (req, res) => {
         subtopic_p6.push(item.subtopic);
     });
     // const topics = await Science.distinct("topic");
-    const userScienceSetting = (await User.findById(currentUser._id))
-      .scienceSetting;
-    console.log(userScienceSetting);
+    console.log(currentUser._id);
+    let userScienceSetting =
+      (await User.findById(currentUser._id)).scienceSetting || 0;
+    // if (!userScienceSetting) userScienceSetting = 0;
     res.render("./science/getTopic", {
       username,
       authenticate,
