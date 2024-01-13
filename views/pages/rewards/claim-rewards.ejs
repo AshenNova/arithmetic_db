@@ -64,10 +64,11 @@
                   <% if (item.quantity != 0 || currentUser.admin ){ %>
                     <tr>
                       <% if (item.link) { %>
-                        <td class=rewardImage><img src="https://drive.google.com/uc?export=view&id=<%= item.link %>" style="width:42px; height: 42px"></td>
+                        <td class=rewardImage><iframe src="https://drive.google.com/file/d/<%= item.link %>/preview" style="width:42px; height: 42px"></iframe></td>
                         <div class="imagePop hidden">
                           <div class="container">
-                            <img class="imageCSS" src="https://drive.google.com/uc?export=view&id=<%= item.link %>">
+                            <!-- <img class="imageCSS" src="https://drive.google.com/uc?export=view&id=<%= item.link %>"> -->
+                            <iframe class="imageCSS" src="https://drive.google.com/file/d/<%= item.link %>/preview"></iframe>
                             <button class="imageClose btn btn-danger">x</button>
                          </div>
                         </div>
