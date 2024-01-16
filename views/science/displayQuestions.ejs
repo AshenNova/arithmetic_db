@@ -97,7 +97,8 @@ img {
                         <p class="questionID hidden"><%= item._id %></p>
                         <% if (item.imageQ) { %>
                             <div class="science-image">
-                                <iframe src="https://drive.google.com/file/d/<%= item.imageQ %>/preview"></iframe>
+                                <!-- <iframe src="https://drive.google.com/file/d/<%= item.imageQ %>/preview"></iframe> -->
+                                <img src="https://drive.google.com/thumbnail?id=<%= item.imageQ %>">
                                 <!-- <img src="https://lh3.google.com/u/0/d/<%= item.imageQ %>"> -->
                             </div>
                             <% } %>
@@ -117,8 +118,8 @@ img {
                         <%= item.subtopic %></br>
                         <% if (item.image) { %>
                         <div class="science-image">
-                            <iframe src="https://drive.google.com/file/d/<%= item.image %>/preview"></iframe>
-                            <!-- <img src="https://lh3.google.com/u/0/d/<%= item.image %>"> -->
+                            <!-- <iframe src="https://drive.google.com/file/d/<%= item.image %>/preview"></iframe> -->
+                            <img src="https://drive.google.com/thumbnail?id=<%= item.image %>">
                         </div>
                         <% } %>
                         <h5>Answer:</br></h5>

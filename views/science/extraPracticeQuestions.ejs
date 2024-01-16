@@ -51,7 +51,8 @@
                       <td>
                       <% if (item.imageQ) { %>
                         <!-- <img src="https://drive.google.com/uc?export=view&id=<%= item.imageQ %>"><br> -->
-                        <iframe src="https://drive.google.com/file/d/<%= item.imageQ %>/preview"></iframe>
+                        <!-- <iframe src="https://drive.google.com/file/d/<%= item.imageQ %>/preview"></iframe> -->
+                        <img src="https://drive.google.com/thumbnail?id=<%= item.imageQ %>">
                         <hr>
                       <% } %>
                         <%= item.question %></td>
@@ -62,7 +63,8 @@
                            <td class="hidden answer">
                              <% if (item.image) { %>
                               <!-- <img src="https://drive.google.com/uc?export=view&id=<%= item.image %>"><br> -->
-                              <iframe src="https://drive.google.com/file/d/<%= item.image %>/preview"></iframe>
+                              <!-- <iframe src="https://drive.google.com/file/d/<%= item.image %>/preview"></iframe> -->
+                              <img src="https://drive.google.com/thumbnail?id=<%= item.image %>">
                               <hr>
                             <% } %>
                             
