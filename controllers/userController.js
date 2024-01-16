@@ -501,6 +501,7 @@ const generateRec = async (nameTemp) => {
             console.log("Rotation or promoted");
             if (attempt.extra == "") {
               let ageCal;
+              if (age <= 7) ageCal = calAgeSeven;
               if (age == 8) ageCal = calAgeEight;
               if (age == 9) ageCal = calAgeNine;
               if (age == 10) ageCal = calAgeTen;
@@ -508,7 +509,6 @@ const generateRec = async (nameTemp) => {
               if (age == 12) ageCal = calAgeTwelve;
               distinctLevels.forEach((item) => {
                 if (ageCal.includes(item) && !calculationsArr.includes(item)) {
-                  console.log("YES!");
                   calculationsArr.push(item);
                 }
               });
@@ -806,6 +806,7 @@ const generateRec = async (nameTemp) => {
   // IF YES, RECOMMEND IT.
   // IF NO, CHECK ANOTHER LEVEL.
 
+  //NORMAL LEVELS
   awards.forEach((award) => {
     uniqLevel = [];
     console.log(uniqLevel);
@@ -923,82 +924,188 @@ const generateRec = async (nameTemp) => {
                     "5.18",
                   ];
                   const levelSix = ["6", "6.01", "6.02", "6.03"];
-                  if (attempt.level.startsWith("1")) {
-                    const index = levelOne.indexOf(attempt.level);
-                    if (index == levelOne.length - 1) {
-                      if (age > 7) {
-                        recommendObj.level = levelTwo[0];
-                      } else {
-                        recommendObj.level = levelOne[0];
+
+                  let ageLevel;
+                  if (age <= 7) ageLevel = [];
+                  if (age == 8) {
+                    ageLevel = levelOne;
+                    const removeList = ["1", "1.02"];
+                    removeList.forEach((item) => {
+                      if (ageLevel.includes(item)) {
+                        const index = ageLevel.indexOf(item);
+                        ageLevel.splice(index, 1);
                       }
-                    } else {
-                      recommendObj.level = levelOne[index + 1];
-                    }
-                  } else if (attempt.level.startsWith("2")) {
-                    const index = levelTwo.indexOf(attempt.level);
-                    if (index == levelTwo.length - 1) {
-                      console.log("Ended Level 2s");
-                      if (age > 8) {
-                        recommendObj.level = levelThree[0];
-                      } else {
-                        recommendObj.level = levelTwo[0];
-                      }
-                    } else {
-                      recommendObj.level = levelTwo[index + 1];
-                    }
-                  } else if (attempt.level.startsWith("3")) {
-                    const index = levelThree.indexOf(attempt.level);
-                    if (index == levelThree.length - 1) {
-                      if (age > 9) {
-                        recommendObj.level = levelFour[0];
-                      } else {
-                        recommendObj.level = levelThree[0];
-                      }
-                    } else {
-                      recommendObj.level = levelThree[index + 1];
-                    }
-                  } else if (attempt.level.startsWith("4")) {
-                    const index = levelFour.indexOf(attempt.level);
-                    if (index == levelFour.length - 1) {
-                      if (age > 10) {
-                        recommendObj.level = levelFive[0];
-                      } else {
-                        recommendObj.level = levelFour[0];
-                      }
-                    } else {
-                      recommendObj.level = levelFour[index + 1];
-                    }
-                  } else if (attempt.level.startsWith("5")) {
-                    const index = levelFive.indexOf(attempt.level);
-                    if (index == levelFive.length - 1) {
-                      if (age > 11) {
-                        recommendObj.level = levelSix[0];
-                      } else {
-                        recommendObj.level = levelFive[0];
-                      }
-                    } else {
-                      recommendObj.level = levelFive[index + 1];
-                    }
-                  } else if (attempt.level.startsWith("6")) {
-                    const index = levelSix.indexOf(attempt.level);
-                    if (index == levelSix.length - 1) {
-                      if (age > 12) {
-                        recommendObj.level = levelFour[0];
-                      } else {
-                        recommendObj.level = levelSix[0];
-                      }
-                    } else {
-                      recommendObj.level = levelSix[index + 1];
-                    }
-                  } else {
-                    console.log("If other levels");
-                    if (age <= 7) recommendObj.level = levelOne[0];
-                    if (age == 8) recommendObj.level = levelTwo[0];
-                    if (age == 9) recommendObj.level = levelThree[0];
-                    if (age == 10) recommendObj.level = levelFour[0];
-                    if (age == 11) recommendObj.level = levelFive[0];
-                    if (age == 12) recommendObj.level = levelSix[0];
+                    });
                   }
+                  // p3
+                  if (age == 9) {
+                    ageLevel = levelOne.concat(levelTwo);
+                    const removeList = ["1", "1.01", "1.02", "2.01"];
+                    removeList.forEach((item) => {
+                      if (ageLevel.includes(item)) {
+                        const index = ageLevel.indexOf(item);
+                        ageLevel.splice(index, 1);
+                      }
+                    });
+                  }
+                  //p4
+                  if (age == 10) {
+                    ageLevel = levelOne.concat(levelTwo, levelThree);
+                  }
+                  if (age == 11)
+                    ageLevel = levelOne.concat(levelTwo, levelThree, levelFour);
+
+                  if (age == 12)
+                    ageLevel = levelOne.concat(
+                      levelTwo,
+                      levelThree,
+                      levelFour,
+                      levelFive,
+                      levelFive
+                    );
+                  //Delete list for age 10, 11 and 12
+                  if (age == 10 || age == 11 || age == 12) {
+                    const removeList = [
+                      "1",
+                      "1.01",
+                      "1.02",
+                      "1.03",
+                      "1.06",
+                      "2",
+                      "2.01",
+                      "2.03",
+                      "3",
+                      "3.04",
+                      "3.05",
+                      "3.09",
+                      "3.1",
+                    ];
+                    removeList.forEach((item) => {
+                      if (ageLevel.includes(item)) {
+                        const index = ageLevel.indexOf(item);
+                        ageLevel.splice(index, 1);
+                      }
+                    });
+                  }
+                  //include current age levels
+                  console.log(`Age levels are: ${ageLevel}`);
+                  distinctLevels.forEach((item) => {
+                    if (age <= 7) {
+                      if (item.startsWith("1")) {
+                        ageLevel.push(item);
+                      }
+                    }
+                    if (age == 8) {
+                      if (item.startsWith("2")) {
+                        ageLevel.push(item);
+                      }
+                    }
+                    if (age == 9) {
+                      if (item.startsWith("3")) {
+                        ageLevel.push(item);
+                      }
+                    }
+                    if (age == 10) {
+                      if (item.startsWith("4")) {
+                        ageLevel.push(item);
+                      }
+                    }
+                    if (age == 11) {
+                      if (item.startsWith("5")) {
+                        ageLevel.push(item);
+                      }
+                    }
+                    if (age == 12) {
+                      if (item.startsWith("6")) {
+                        ageLevel.push(item);
+                      }
+                    }
+                  });
+                  console.log(`Age levels are: ${ageLevel}`);
+                  console.log(ageLevel + " 💯");
+                  const index = ageLevel.indexOf(attempt.level);
+                  console.log(index, ageLevel.length);
+                  recommendObj.level = ageLevel[index + 1];
+                  if (index + 1 == ageLevel.length) {
+                    recommendObj.level = ageLevel[0];
+                  }
+
+                  // if (attempt.level.startsWith("1")) {
+                  //   const index = levelOne.indexOf(attempt.level);
+                  //   if (index == levelOne.length - 1) {
+                  //     if (age > 7) {
+                  //       recommendObj.level = levelTwo[0];
+                  //     } else {
+                  //       recommendObj.level = levelOne[0];
+                  //     }
+                  //   } else {
+                  //     recommendObj.level = levelOne[index + 1];
+                  //   }
+                  // } else if (attempt.level.startsWith("2")) {
+                  //   const index = levelTwo.indexOf(attempt.level);
+                  //   if (index == levelTwo.length - 1) {
+                  //     console.log("Ended Level 2s");
+                  //     if (age > 8) {
+                  //       recommendObj.level = levelThree[0];
+                  //     } else {
+                  //       recommendObj.level = levelTwo[0];
+                  //     }
+                  //   } else {
+                  //     recommendObj.level = levelTwo[index + 1];
+                  //   }
+                  // } else if (attempt.level.startsWith("3")) {
+                  //   const index = levelThree.indexOf(attempt.level);
+                  //   if (index == levelThree.length - 1) {
+                  //     if (age > 9) {
+                  //       recommendObj.level = levelFour[0];
+                  //     } else {
+                  //       recommendObj.level = levelThree[0];
+                  //     }
+                  //   } else {
+                  //     recommendObj.level = levelThree[index + 1];
+                  //   }
+                  // } else if (attempt.level.startsWith("4")) {
+                  //   const index = levelFour.indexOf(attempt.level);
+                  //   if (index == levelFour.length - 1) {
+                  //     if (age > 10) {
+                  //       recommendObj.level = levelFive[0];
+                  //     } else {
+                  //       recommendObj.level = levelFour[0];
+                  //     }
+                  //   } else {
+                  //     recommendObj.level = levelFour[index + 1];
+                  //   }
+                  // } else if (attempt.level.startsWith("5")) {
+                  //   const index = levelFive.indexOf(attempt.level);
+                  //   if (index == levelFive.length - 1) {
+                  //     if (age > 11) {
+                  //       recommendObj.level = levelSix[0];
+                  //     } else {
+                  //       recommendObj.level = levelFive[0];
+                  //     }
+                  //   } else {
+                  //     recommendObj.level = levelFive[index + 1];
+                  //   }
+                  // } else if (attempt.level.startsWith("6")) {
+                  //   const index = levelSix.indexOf(attempt.level);
+                  //   if (index == levelSix.length - 1) {
+                  //     if (age > 12) {
+                  //       recommendObj.level = levelFour[0];
+                  //     } else {
+                  //       recommendObj.level = levelSix[0];
+                  //     }
+                  //   } else {
+                  //     recommendObj.level = levelSix[index + 1];
+                  //   }
+                  // } else {
+                  //   console.log("If other levels");
+                  //   if (age <= 7) recommendObj.level = levelOne[0];
+                  //   if (age == 8) recommendObj.level = levelTwo[0];
+                  //   if (age == 9) recommendObj.level = levelThree[0];
+                  //   if (age == 10) recommendObj.level = levelFour[0];
+                  //   if (age == 11) recommendObj.level = levelFive[0];
+                  //   if (age == 12) recommendObj.level = levelSix[0];
+                  // }
                 }
                 //CHECKING IF IT HAS BEEN DONE BEFORE
 
