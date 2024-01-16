@@ -667,7 +667,8 @@ const generateRec = async (nameTemp) => {
             // uniqLevel.push(attempt.level);
             console.log("Rotation or promoted");
             if (attempt.extra == "") {
-              let ageHeu;
+              let ageHeu = [];
+              if (age <= 7) ageHeu = heuAgeSeven;
               if (age == 8) ageHeu = heuAgeEight;
               if (age == 9) ageHeu = heuAgeNine;
               if (age == 10) ageHeu = heuAgeTen;
