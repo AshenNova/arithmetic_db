@@ -426,9 +426,7 @@ const generateRec = async (nameTemp) => {
       .lean(),
     User.findOne({ username: nameTemp.toLowerCase() }),
   ]);
-  latestAttempt.forEach((item) => {
-    console.log(`${item.level} ⭐️`);
-  });
+  let distinctLevels = await Attempt.distinct("level", { user: nameTemp });
   // console.log(`THESE ARE THE LATEST ATTEMPTS ${latestAttempt}`);
   // const latestAttempt = await Attempt.find({
   //   user: nameTemp,
@@ -464,16 +462,18 @@ const generateRec = async (nameTemp) => {
 
   //CALCULATIONS
   console.log("CHECKING CALCULATIONS");
+  // let calculations = await Attempt.distinct("level", { user: nameTemp });
+  let calculationsArr = [];
   const calOne = ["calOne"]; //age 7
   const calTwo = ["calTwo"];
   const calThree = ["calThree"];
   const calFour = ["calFour"];
   const calFive = ["calFive", "calFiveb"];
   const calSix = ["calSix", "calSixb"];
-  const calAgeSeven = calOne;
-  const calAgeEight = calTwo;
-  const calAgeNine = calThree;
-  const calAgeTen = calFour;
+  const calAgeSeven = calOne; //p1
+  const calAgeEight = calTwo; //p2
+  const calAgeNine = calThree.concat(calTwo); //p3
+  const calAgeTen = calThree.concat(calFour); //p4
   const calAgeEleven = calFour.concat(calFive);
   const calAgeTwelve = calFour.concat(calFive, calSix);
   let uniqLevel = [];
@@ -499,37 +499,65 @@ const generateRec = async (nameTemp) => {
           } else {
             // uniqLevel.push(attempt.level);
             console.log("Rotation or promoted");
-            if (attempt.setting == 99 && attempt.extra == "") {
-              if (age == 10) {
-                const index = calAgeTen.indexOf(attempt.level);
-                if (index + 1 == calAgeTen.length) {
-                  // attempt.level = calAgeTen[0];
-                  recommendObj.level = calAgeTen[0];
-                } else {
-                  // recommendObj= calAgeTen[index + 1];
-                  recommendObj.level = calAgeTen[index + 1];
+            if (attempt.extra == "") {
+              let ageCal;
+              if (age == 8) ageCal = calAgeEight;
+              if (age == 9) ageCal = calAgeNine;
+              if (age == 10) ageCal = calAgeTen;
+              if (age == 11) ageCal = calAgeEleven;
+              if (age == 12) ageCal = calAgeTwelve;
+              distinctLevels.forEach((item) => {
+                if (ageCal.includes(item) && !calculationsArr.includes(item)) {
+                  console.log("YES!");
+                  calculationsArr.push(item);
                 }
+              });
+              console.log(calculationsArr + " 💯");
+              const index = calculationsArr.indexOf(attempt.level);
+              recommendObj.level = calculationsArr[index + 1];
+              if (index + 1 == calculationsArr.length) {
+                recommendObj.level = calculationsArr[0];
               }
-              if (age == 11) {
-                const index = calAgeEleven.indexOf(attempt.level);
+              // if (age == 9) {
+              //   const index = calAgeNine.indexOf(attempt.level);
+              //   if (index + 1 == calAgeNine.length) {
+              //     // attempt.level = calAgeNine[0];
+              //     recommendObj.level = calAgeNine[0];
+              //   } else {
+              //     // recommendObj= calAgeNine[index + 1];
+              //     recommendObj.level = calAgeNine[index + 1];
+              //   }
+              // }
+              // if (age == 10) {
+              //   const index = calAgeTen.indexOf(attempt.level);
+              //   if (index + 1 == calAgeTen.length) {
+              //     // attempt.level = calAgeTen[0];
+              //     recommendObj.level = calAgeTen[0];
+              //   } else {
+              //     // recommendObj= calAgeTen[index + 1];
+              //     recommendObj.level = calAgeTen[index + 1];
+              //   }
+              // }
+              // if (age == 11) {
+              //   const index = calAgeEleven.indexOf(attempt.level);
 
-                if (index + 1 == calAgeEleven.length) {
-                  // attempt.level = calAgeEleven[0];
-                  recommendObj.level = calAgeEleven[0];
-                } else {
-                  // attempt.level = calAgeEleven[index + 1];
-                  recommendObj.level = calAgeEleven[index + 1];
-                }
-              }
-              if (age == 12) {
-                const index = calAgeTwelve.indexOf(attempt.level);
+              //   if (index + 1 == calAgeEleven.length) {
+              //     // attempt.level = calAgeEleven[0];
+              //     recommendObj.level = calAgeEleven[0];
+              //   } else {
+              //     // attempt.level = calAgeEleven[index + 1];
+              //     recommendObj.level = calAgeEleven[index + 1];
+              //   }
+              // }
+              // if (age == 12) {
+              //   const index = calAgeTwelve.indexOf(attempt.level);
 
-                if (index + 1 == calAgeTwelve.length) {
-                  recommendObj.level = calAgeTwelve[0];
-                } else {
-                  recommendObj.level = calAgeTwelve[index + 1];
-                }
-              }
+              //   if (index + 1 == calAgeTwelve.length) {
+              //     recommendObj.level = calAgeTwelve[0];
+              //   } else {
+              //     recommendObj.level = calAgeTwelve[index + 1];
+              //   }
+              // }
             }
 
             if (
@@ -604,6 +632,9 @@ const generateRec = async (nameTemp) => {
 
   // //HEURISTICS
   console.log("CHECKING HEURISTICS");
+  let heuristics = await Attempt.distinct("level", { user: nameTemp });
+  console.log("Attempted " + heuristics + " before");
+  let heuristicsArr = [];
   const heuOne = ["heuOne"]; //age 7
   const heuTwo = ["heuTwo", "heuTwob"];
   const heuThree = ["heuThree", "heuThreeb"];
@@ -635,42 +666,73 @@ const generateRec = async (nameTemp) => {
           } else {
             // uniqLevel.push(attempt.level);
             console.log("Rotation or promoted");
-            if (attempt.setting == 9 && attempt.extra == "") {
-              if (age == 8) {
-                const index = heuAgeEight.indexOf(attempt.level);
-                recommendObj.level = heuAgeEight[index + 1];
-                if (index + 1 == heuAgeEight.length) {
-                  recommendObj.level = heuAgeEight[0];
+            if (attempt.extra == "") {
+              let ageHeu;
+              if (age == 8) ageHeu = heuAgeEight;
+              if (age == 9) ageHeu = heuAgeNine;
+              if (age == 10) ageHeu = heuAgeTen;
+              if (age == 11) ageHeu = heuAgeEleven;
+              if (age == 12) ageHeu = heuAgeTwelve;
+              distinctLevels.forEach((item) => {
+                if (ageHeu.includes(item) && !heuristicsArr.includes(item)) {
+                  console.log("YES!");
+                  heuristicsArr.push(item);
                 }
+              });
+              console.log(heuristicsArr + " 💯");
+              const index = heuristicsArr.indexOf(attempt.level);
+              recommendObj.level = heuristicsArr[index + 1];
+              if (index + 1 == heuristicsArr.length) {
+                recommendObj.level = heuristicsArr[0];
               }
-              if (age == 9) {
-                const index = heuAgeNine.indexOf(attempt.level);
-                recommendObj.level = heuAgeNine[index + 1];
-                if (index + 1 == heuAgeNine.length) {
-                  recommendObj.level = heuAgeNine[0];
-                }
-              }
-              if (age == 10) {
-                const index = heuAgeTen.indexOf(attempt.level);
-                recommendObj.level = heuAgeTen[index + 1];
-                if (index + 1 == heuAgeTen.length) {
-                  recommendObj.level = heuAgeTen[0];
-                }
-              }
-              if (age == 11) {
-                const index = heuAgeEleven.indexOf(attempt.level);
-                recommendObj.level = heuAgeEleven[index + 1];
-                if (index + 1 == heuAgeEleven.length) {
-                  recommendObj.level = heuAgeEleven[0];
-                }
-              }
-              if (age == 12) {
-                const index = heuAgeTwelve.indexOf(attempt.level);
-                recommendObj.level = heuAgeTwelve[index + 1];
-                if (index + 1 == heuAgeTwelve.length) {
-                  recommendObj.level = heuAgeTwelve[0];
-                }
-              }
+              // if (age == 8) {
+              //   //p2
+
+              //   const index = heuAgeEight.indexOf(attempt.level);
+              //   recommendObj.level = heuAgeEight[index + 1];
+              //   if (index + 1 == heuAgeEight.length) {
+              //     recommendObj.level = heuAgeEight[0];
+              //   }
+              // }
+              // //p3
+              // if (age == 9) {
+              //   heuristics.forEach((item) => {
+              //     if (
+              //       heuAgeNine.includes(item) &&
+              //       !heuristicsArr.includes(item)
+              //     ) {
+              //       console.log("YES!");
+              //       heuristicsArr.push(item);
+              //     }
+              //   });
+              //   console.log(heuristicsArr + " 💯");
+              //   const index = heuristicsArr.indexOf(attempt.level);
+              //   recommendObj.level = heuristicsArr[index + 1];
+              //   if (index + 1 == heuristicsArr.length) {
+              //     recommendObj.level = heuristicsArr[0];
+              //   }
+              // }
+              // if (age == 10) {
+              //   const index = heuAgeTen.indexOf(attempt.level);
+              //   recommendObj.level = heuAgeTen[index + 1];
+              //   if (index + 1 == heuAgeTen.length) {
+              //     recommendObj.level = heuAgeTen[0];
+              //   }
+              // }
+              // if (age == 11) {
+              //   const index = heuAgeEleven.indexOf(attempt.level);
+              //   recommendObj.level = heuAgeEleven[index + 1];
+              //   if (index + 1 == heuAgeEleven.length) {
+              //     recommendObj.level = heuAgeEleven[0];
+              //   }
+              // }
+              // if (age == 12) {
+              //   const index = heuAgeTwelve.indexOf(attempt.level);
+              //   recommendObj.level = heuAgeTwelve[index + 1];
+              //   if (index + 1 == heuAgeTwelve.length) {
+              //     recommendObj.level = heuAgeTwelve[0];
+              //   }
+              // }
             }
 
             if (
