@@ -18,6 +18,14 @@
      <link rel="icon" href="/images/favicon.ico?v=1.1">
 
 </head>
+<style>
+.hidden {
+    display: none;
+}
+.single {
+    display: inline-block;
+}
+</style>
 <body>
     <%- include("../partials/navbar"); %>
     <div class="container mt-4">
@@ -42,9 +50,8 @@
                  <a href="/attempts/filter?user=<%= searchedUser.username %>&level=&setting=&mode=" target="_blank" class="btn btn-outline-primary">Results</a>
                 <a href="/user/recommend" class="btn btn-outline-primary" target="_blank">Recommendation</a>
                
-                <hr>
-                <table class="table text-center">
-                    <thead class=table-dark>
+                <table class="table text-center table-bordered my-3">
+                    <thead class="table-dark">
                     <div class="row">
                         <th scope="col" class="col-2">Last Login: <%= searchedUser.loggedIn.toLocaleDateString("en-GB") %></th>
                         <th scope="col" class="col-2">Count</th>
@@ -84,11 +91,11 @@
                     </tr>
                     <tr>
                         <td>All</td>
-                        <td rowspan="4"><%= allCount %></td>
+                        <td colspan="4"><%= allCount %></td>
                     </tr>
                 </table>
             <h2>Written Work</h2>
-            <table class="table mb-3 text-center">
+            <table class="table mb-3 text-center table-bordered">
                 <thead class="table-dark">
                     <th scope="col">Subject</th>
                     <th scope="col">Issued</th>
@@ -140,7 +147,24 @@
                          <% } %>
                        <!-- SCIENCE -->
                        <% }) %>
-                    
+                        </table>
+                        <div class="m-3">
+                            <h2 class="single">Completed</h2><btn class="btn-primary btn ms-3 single" id="completeBtn">View</btn>
+                        </div>
+                        <table class="table mb-3 text-center completeTable hidden table-bordered">
+                            <thead class="table-dark">
+                                <th scope="col">Subject</th>
+                                <th scope="col">Issued</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Issue Date</th>
+                                <th scope="col">Due date</th>
+                                <th scope="col">Days left</th>
+                                <th scope="col">Comment</th>
+                                <th scope="col">Status</th>
+                            <% if (currentUser.admin) { %>
+                                <th colspan="3">Actions</th>
+                            <% } %>
+                        </thead>
                         <% homework.forEach(item => { %>
                             <% if (currentUser.admin == true && item.status == "Completed") { %>
                                 <tr class="table-secondary">
@@ -188,4 +212,11 @@
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script>
+    const completeBtn = document.querySelector("#completeBtn")
+    completeBtn.addEventListener( "click", function(e) {
+        console.log("click complete")
+        document.querySelector(".completeTable").classList.toggle("hidden")
+    })
+</script>
 </html>
