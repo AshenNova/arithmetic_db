@@ -339,6 +339,8 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
 
   // QUERY PREVIOUS ATTEMPT (USER, LEVEL, MODE, SETTING)
   let previousAttempt;
+
+  const DOB = (await User.findOne({ username: user.toLowerCase() })).DOB;
   const previous = async (req, res) => {
     try {
       previousAttempt = await Attempt.find({
@@ -408,6 +410,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
           console.log("Comparing");
           // data.eligible = 0;
           // console.log(checkExist.time, newAttempt.time);
+          console.log(`Age: ${DOB}`);
           if (checkExist.time > time) {
             data.eligible = 1;
             const newHighscore = new Highscore({
@@ -418,6 +421,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
               mistake: mistake,
               score: score,
               setting: setting,
+              age: new Date().getFullYear() - DOB.getFullYear(),
             });
             await newHighscore.save().then((result) => {
               console.log("New highscore! 2");

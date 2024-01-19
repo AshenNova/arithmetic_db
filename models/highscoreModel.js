@@ -9,6 +9,7 @@ const highscoreSchema = new mongoose.Schema({
   score: Number,
   setting: { type: String, default: 0 },
   date: { type: Date, default: Date.now },
+  age: Number,
 });
 
 const Highscore = mongoose.model("highscore", highscoreSchema);
