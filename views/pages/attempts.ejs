@@ -27,19 +27,27 @@
         <div class="row">
           <div class="col-sm-2 my-2">
             <label for="user">User:</label>
-            <input type='text' name="user"></input>
+            <input type='text' name="user" <% if (queryObj && queryObj.user) { %>
+              value="<%= queryObj.user %>"
+            <% } %>></input>
           </div>
           <div class="col-sm-2 my-2">
            <label for="level">Level:</label>
-            <input type='text' name="level"></input>
+            <input type='text' name="level" <% if (queryObj && queryObj.level) { %>
+              value="<%= queryObj.level %>"
+            <% } %>></input>
           </div>
           <div class="col-sm-2 my-2">
             <label for="setting">Setting:</label>
-            <input type='text' name="setting"></input>
+            <input type='text' name="setting"<% if (queryObj && queryObj.setting) { %>
+              value="<%= queryObj.setting %>"
+            <% } %>></input>
           </div>
           <div class="col-sm-2 my-2">
             <label for="mode">Mode:</label>
-            <input type='text' name="mode"></input>
+            <input type='text' name="mode" <% if (queryObj && queryObj.mode) { %>
+              value="<%= queryObj.mode %>"
+            <% } %>></input>
             <!-- <select class="form-select" data-bs-toggle="dropdown">
               <options>Normal</options>
               <options>Easy</options>

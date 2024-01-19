@@ -13,8 +13,11 @@ exports.new = catchAsync(async (req, res, next) => {
 
   try {
     console.log(req.body);
+    req.body.childName = req.body.childName.trim();
+    req.body.childSurname = req.body.childSurname.trim();
     const trial = await Trial.create(req.body);
     // SEND MAIL
+
     const message = `
     Outlet: ${req.body.outlet}
     Timing: ${req.body.timing}

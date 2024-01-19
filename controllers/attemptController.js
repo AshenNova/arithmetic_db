@@ -39,6 +39,7 @@ exports.getAllAttempts = catchAsync(async (req, res, next) => {
   console.log("Showing all results");
   const page = req.query.page * 1 || 1;
   const limit = 20;
+  let queryObj;
 
   let start = new Date();
   start.setHours(0, 0, 0, 0);
@@ -69,6 +70,7 @@ exports.getAllAttempts = catchAsync(async (req, res, next) => {
   let authenticate = req.auth;
   let currentUser = req.user;
   let username = req.user.username;
+
   res.status(200).render("pages/attempts", {
     attempts,
     paginatedAttempts,
@@ -80,6 +82,7 @@ exports.getAllAttempts = catchAsync(async (req, res, next) => {
     authenticate,
     currentUser,
     logRewards,
+    queryObj,
   });
 });
 
@@ -206,6 +209,7 @@ exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
   let authenticate = req.auth;
   let currentUser = req.user;
   let logRewards;
+  console.log(queryObj);
   res.status(200).render("pages/attempts", {
     queryObj,
     attempts,

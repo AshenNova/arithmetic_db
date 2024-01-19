@@ -12955,10 +12955,10 @@ function updateProblems() {
         if (
           (numeTotal / p.denominator) % (p.numeratorTwo / p.denominatorTwo) ==
           0
-        ){
+        ) {
           return updateCalc();
         }
-         
+
         displayProblem.innerHTML = `
         ${person} has ${p.whole} ${p.numerator}/${p.denominator} m of cloth at first.</p>
         ${p.numeratorTwo}/${p.denominatorTwo} m is needed to make a shirt.</p>

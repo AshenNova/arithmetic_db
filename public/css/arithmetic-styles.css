@@ -181,7 +181,7 @@ table {
   position: absolute;
   margin: auto;
   top: 31%;
-  height: 425px;
+  height: auto;
   width: 400px;
   border-radius: 10px;
   background-color: white;

@@ -119,13 +119,25 @@ exports.login = catchAsync(async (req, res, next) => {
   //HAVE TO USE .SELECT HAS WE SET THE PASSWORD TO NOT SHOW UP IN THE MODELS, HENCE IT WILL NOT SHOW UP HERE TOO. SO WE HAVE TO EXPLICITLY SELECT IT.
   console.log("SEARCHING FOR USER");
   const user = await User.findOne({ username }).select("+password");
+  if (!user) {
+    // return next(
+    //   new AppError("The email or password entered is incorrect.", 401)
+    // );
+    message = "The email or password entered is incorrect.";
+    return res.render("pages/login", {
+      username,
+      authenticate,
+      currentUser,
+      message,
+    });
+  }
   const passwordAuthentication = await user.correctPassword(
     password,
     user.password
   );
   console.log("Cleared! 2");
   console.log("CHECK IF EMAIL OR PASSWORD IS CORRECT!");
-  if (!user || passwordAuthentication == false) {
+  if (passwordAuthentication == false) {
     // return next(
     //   new AppError("The email or password entered is incorrect.", 401)
     // );
