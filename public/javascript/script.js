@@ -14583,14 +14583,24 @@ How many items are there in each bag?
     ) {
       p.totalValue =
         (p.objectOneX * p.unitSentence + p.objectTwoX) * p.multipler;
-      displayProblem.innerHTML = `
+      const order = ["A", "B"][genNumbers(2)];
+      if (order == "A") {
+        displayProblem.innerHTML = `
           ${p.objectOne} is ${p.unitSentence} times of ${p.objectTwo}.</br>
           If ${p.objectOneX} ${p.objectOne} and ${p.objectTwoX} ${
-        p.objectTwo
-      } is ${p.totalValue}.</br>
-          What is ${p.rollQn == "A" ? p.objectOne : p.objectTwo}?
-
+          p.objectTwo
+        } is ${p.totalValue}.</br>
+          What is the value of ${p.rollQn == "A" ? p.objectOne : p.objectTwo}?
         `;
+      } else {
+        displayProblem.innerHTML = `
+          If ${p.objectOneX} ${p.objectOne} and ${p.objectTwoX} ${
+          p.objectTwo
+        } is ${p.totalValue}.</br>
+      ${p.objectOne} is ${p.unitSentence} times of ${p.objectTwo}.</br>
+          What is the value of ${p.rollQn == "A" ? p.objectOne : p.objectTwo}?
+        `;
+      }
     }
 
     if (
@@ -14604,15 +14614,28 @@ How many items are there in each bag?
       console.log(p.objectOneV, p.objectTwoV, p.objectOneQ, p.objectTwoQ);
       p.totalValue = p.objectOneQ * p.objectOneV + p.objectTwoQ * p.objectTwoV;
       p.difference = Math.abs(p.objectOneV - p.objectTwoV);
-      displayProblem.innerHTML = `
-      ${p.objectOne} is ${p.difference} ${
-        p.objectOneV > p.objectTwoV ? "more" : "less"
-      } than ${p.objectTwo}.</br>
-      If ${p.objectOneQ} ${p.objectOne} and ${p.objectTwoQ} ${p.objectTwo} is ${
-        p.totalValue
-      }.</br>
-      What is ${p.rollQn == "A" ? p.objectOne : p.objectTwo}?
-      `;
+      const order = ["A", "B"][genNumbers(2)];
+      if (order == "A") {
+        displayProblem.innerHTML = `
+        If ${p.objectOneQ} ${p.objectOne} and ${p.objectTwoQ} ${
+          p.objectTwo
+        } is ${p.totalValue}.</br>
+        ${p.objectOne} is ${p.difference} ${
+          p.objectOneV > p.objectTwoV ? "more" : "less"
+        } than ${p.objectTwo}.</br>
+        What is ${p.rollQn == "A" ? p.objectOne : p.objectTwo}?
+        `;
+      } else {
+        displayProblem.innerHTML = `
+        ${p.objectOne} is ${p.difference} ${
+          p.objectOneV > p.objectTwoV ? "more" : "less"
+        } than ${p.objectTwo}.</br>
+        If ${p.objectOneQ} ${p.objectOne} and ${p.objectTwoQ} ${
+          p.objectTwo
+        } is ${p.totalValue}.</br>
+        What is ${p.rollQn == "A" ? p.objectOne : p.objectTwo}?
+        `;
+      }
     }
 
     if (
