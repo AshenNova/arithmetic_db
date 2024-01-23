@@ -341,6 +341,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
   let previousAttempt;
 
   const DOB = (await User.findOne({ username: user.toLowerCase() })).DOB;
+  const currentAge = new Date().getFullYear() - DOB.getFullYear();
   const previous = async (req, res) => {
     try {
       previousAttempt = await Attempt.find({
@@ -384,11 +385,20 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
   //highscore
   const highScore = async (req, res) => {
     try {
-      const checkMin = await Attempt.find({ level, mode }).count();
+      // const checkMin = await Attempt.find({ level, mode }).count();
+      const checkMin = await Attempt.find({
+        level,
+        mode,
+        age: currentAge,
+      }).count();
       if (checkMin > 5) {
         console.log("Minimum met");
         console.log("Highscore check running");
-        const checkExist = await Highscore.findOne({ level, mode }).sort({
+        const checkExist = await Highscore.findOne({
+          level,
+          mode,
+          age: currentAge,
+        }).sort({
           time: 1,
         });
         if (checkExist == null) {
@@ -402,6 +412,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
             mistake: mistake,
             score: score,
             setting: setting,
+            age: currentAge,
           });
           await newHighscore.save().then((res) => {
             console.log("New highscore! 1");
@@ -421,7 +432,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
               mistake: mistake,
               score: score,
               setting: setting,
-              age: new Date().getFullYear() - DOB.getFullYear(),
+              age: currentAge,
             });
             await newHighscore.save().then((result) => {
               console.log("New highscore! 2");
@@ -465,12 +476,6 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     console.log("Not eligible for highscore.");
     // res.send();
   }
-  // await result.then(console.log(result));
-  // }
-  // catch (e) {
-  //   console.log(e);
-  // }
-  // };
   let award;
   const standardDeviation = async (req, res) => {
     try {
@@ -480,6 +485,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         tries: "1",
         setting: setting,
         skip: "",
+        age: currentAge,
       }).sort({ time: 1 });
       let sum = 0;
       let allTheTiming = [];
@@ -661,6 +667,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     summary: req.body.summary,
     award: data.award,
     points: pointsAwarded,
+    age: new Date().getFullYear() - DOB.getFullYear(),
   });
 
   // try {
@@ -751,6 +758,7 @@ exports.getHighscore = catchAsync(async (req, res, next) => {
   const highscoreLevels = await Highscore.distinct("level");
   const highscoreModes = await Highscore.distinct("mode");
   let highscoreHoldersArr = [];
+  // console.log(highscoreLevels);
 
   // for (let i = 0; i < highscoreLevels.length; i++) {
   //   for (let x = 0; x < highscoreModes.length; x++) {
@@ -767,8 +775,145 @@ exports.getHighscore = catchAsync(async (req, res, next) => {
 
   const highscoreHolder = await Highscore.find().sort({ level: 1, time: 1 });
 
-  // let genesisTwo = 0;
+  const [
+    highscoreAge7,
+    highscoreAge8,
+    highscoreAge9,
+    highscoreAge10,
+    highscoreAge11,
+    highscoreAge12,
+  ] = await Promise.all([
+    Highscore.find({ age: 7 }).sort({ level: 1, time: 1 }),
+    Highscore.find({ age: 8 }).sort({ level: 1, time: 1 }),
+    Highscore.find({ age: 9 }).sort({ level: 1, time: 1 }),
+    Highscore.find({ age: 10 }).sort({ level: 1, time: 1 }),
+    Highscore.find({ age: 11 }).sort({ level: 1, time: 1 }),
+    Highscore.find({ age: 12 }).sort({ level: 1, time: 1 }),
+  ]);
 
+  let sevenArr = [];
+  let eightArr = [];
+  let nineArr = [];
+  let tenArr = [];
+  let elevenArr = [];
+  let twelveArr = [];
+
+  // let allArr = [sevenArr, eightArr, nineArr, tenArr, elevenArr];
+  //7
+  let ageArr = [
+    highscoreAge7,
+    highscoreAge8,
+    highscoreAge9,
+    highscoreAge10,
+    highscoreAge11,
+    highscoreAge12,
+  ];
+  let arr = [sevenArr, eightArr, nineArr, tenArr, elevenArr, twelveArr];
+  console.log(highscoreAge7);
+  console.log(ageArr[0]);
+  ageArr.forEach((ageAttempts, index) => {
+    console.log(index);
+    // console.log(ageAttempts);
+    ageAttempts.forEach((item) => {
+      // console.log(item);
+      let level = [];
+      highscoreModes.forEach((mode) => {
+        if (
+          highscoreLevels.includes(item.level) &&
+          item.mode == mode &&
+          !level.includes(item.level)
+        ) {
+          arr[index].push(item);
+          level.push(item.level);
+        }
+      });
+    });
+    console.log(`Primary ${index + 1} done.`);
+  });
+  // highscoreAge7.forEach((item) => {
+  //   let level = [];
+  //   highscoreModes.forEach((mode) => {
+  //     if (
+  //       highscoreLevels.includes(item.level) &&
+  //       item.mode == mode &&
+  //       !level.includes(item.level)
+  //     ) {
+  //       sevenArr.push(item);
+  //       level.push(item.level);
+  //     }
+  //   });
+  // });
+  // //8
+  // highscoreAge8.forEach((item) => {
+  //   let level = [];
+  //   highscoreModes.forEach((mode) => {
+  //     if (
+  //       highscoreLevels.includes(item.level) &&
+  //       item.mode == mode &&
+  //       !level.includes(item.level)
+  //     ) {
+  //       eightArr.push(item);
+  //       level.push(item.level);
+  //     }
+  //   });
+  // });
+  // //9
+  // highscoreAge9.forEach((item) => {
+  //   let level = [];
+  //   highscoreModes.forEach((mode) => {
+  //     if (
+  //       highscoreLevels.includes(item.level) &&
+  //       item.mode == mode &&
+  //       !level.includes(item.level)
+  //     ) {
+  //       nineArr.push(item);
+  //       level.push(item.level);
+  //     }
+  //   });
+  // });
+  // //10
+  // highscoreAge10.forEach((item) => {
+  //   let level = [];
+  //   highscoreModes.forEach((mode) => {
+  //     if (
+  //       highscoreLevels.includes(item.level) &&
+  //       item.mode == mode &&
+  //       !level.includes(item.level)
+  //     ) {
+  //       tenArr.push(item);
+  //       level.push(item.level);
+  //     }
+  //   });
+  // });
+  // //11
+  // highscoreAge11.forEach((item) => {
+  //   let level = [];
+  //   highscoreModes.forEach((mode) => {
+  //     if (
+  //       highscoreLevels.includes(item.level) &&
+  //       item.mode == mode &&
+  //       !level.includes(item.level)
+  //     ) {
+  //       elevenArr.push(item);
+  //       level.push(item.level);
+  //     }
+  //   });
+  // });
+  // //12
+  // highscoreAge12.forEach((item) => {
+  //   let level = [];
+  //   highscoreModes.forEach((mode) => {
+  //     if (
+  //       highscoreLevels.includes(item.level) &&
+  //       item.mode == mode &&
+  //       !level.includes(item.level)
+  //     ) {
+  //       twelveArr.push(item);
+  //       level.push(item.level);
+  //     }
+  //   });
+  // });
+  // console.log(twelveArr);
   for (let a = 0; a < highscoreLevels.length; a++) {
     for (let m = 0; m < highscoreModes.length; m++) {
       let genesis = 0;
@@ -786,7 +931,7 @@ exports.getHighscore = catchAsync(async (req, res, next) => {
       }
     }
   }
-  console.log(highscoreHolder);
+  // console.log(highscoreHolder);
   // username = req.user.username;
   // authenticate = req.auth;
   // currentUser = req.user;
@@ -798,6 +943,12 @@ exports.getHighscore = catchAsync(async (req, res, next) => {
     username,
     authenticate,
     currentUser,
+    sevenArr,
+    eightArr,
+    nineArr,
+    tenArr,
+    elevenArr,
+    twelveArr,
   });
   // } catch (error) {
   //   console.log(error);
@@ -870,7 +1021,7 @@ exports.deleteAttempt = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ username });
   const currentPoints = user.points;
   const adjustedPoints = currentPoints - attempt.points;
-  const { updateUser, deleteAttempt } = await Promise.all([
+  const [updateUser, deleteAttempt] = await Promise.all([
     User.updateOne(
       { username },
       {

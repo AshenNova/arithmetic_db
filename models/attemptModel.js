@@ -23,6 +23,7 @@ const attemptSchema = new mongoose.Schema({
     type: String,
     default: "Math",
   },
+  age: Number,
 });
 
 const Attempt = mongoose.model("attempts", attemptSchema);

@@ -19,54 +19,60 @@
   <%- include("../partials/navbar"); %>
 
   <% const today = new Date().getDay() %>
-
+<% const dataArr = [sevenArr, eightArr, nineArr, tenArr, elevenArr, twelveArr] %>
   <div class="container">
     <h1> All Time</h1>
-    <table class="table text-center table-hover">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Mode</th>
-            <th scope="col">Level</th>
-            <th scope="col">Setting</th>
-            <th scope="col">Time</th>
-            <th scope="col">Mistakes</th>
-            <th scope="col">Score</th>
-            <th scope="col">Extra</th>
-            <th scope="col">Date</th>
-            <th scope="col">Ago</th>
-          </tr>
-        </thead>
-        <tbody>
-         
-            <% highscoreHoldersArr.forEach(item => { %>
-                    <td><%= item.user %></td>
-                    <% if ( item.mode == "Easy") {%>
-                      <td class="btn btn-outline-success btn-sm"> <%= "Easy" %></td>
-                    <% } %>
-                    <% if ( item.mode == "Hardcore") { %>
-                      <td class="btn btn-outline-danger btn-sm"> <%= "Hardcore" %></td> 
-                    <% } %>
-                    <% if ( item.mode == "Normal") { %>
-                      <td class="btn btn-outline-dark btn-sm"> <%= "Normal" %></td>
-                    <% } %>
-                    <td><%= item.level %></td>
-                    <td><%= item.setting %></td>
-                    <td><%= item.time %></td>
-                    <td><%= item.mistake %></td>
-                    <td><%= item.score %></td>
-                    <td><%= item.extra %></td>
-                    <!-- <td><%= item.date.getFullYear() %></td> -->
-                    <td><%= item.date.toLocaleTimeString('en-US') + " " + item.date.toLocaleDateString('en-GB') %></td>
-                    <% if (new Date().toLocaleDateString('en-US') == item.date.toLocaleDateString('en-US')) { %>
-                      <td><%= "Today" %></td>
-                    <% } else { %>
-                      <td><%= Math.floor((new Date() - item.date)/(1000*60*60*24)) %></td>
-                    <% } %>
-                </tr>
-                <% });%>
-        </tbody>
-      </table>
+    <% dataArr.forEach((item, index) => { %>
+      <h2>Primary <%= index+1 %></h2>
+      <table class="table text-center table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Mode</th>
+              <th scope="col">Level</th>
+              <th scope="col">Setting</th>
+              <th scope="col">Time</th>
+              <th scope="col">Mistakes</th>
+              <th scope="col">Score</th>
+              <th scope="col">Extra</th>
+              <th scope="col">Date</th>
+              <th scope="col">Ago</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% item.forEach(item => { %>
+              
+              <tr>
+              <td><%= item.user %></td>
+              <% if ( item.mode == "Easy") {%>
+                <td class="btn btn-outline-success btn-sm"> <%= "Easy" %></td>
+              <% } %>
+              <% if ( item.mode == "Hardcore") { %>
+                <td class="btn btn-outline-danger btn-sm"> <%= "Hardcore" %></td> 
+              <% } %>
+              <% if ( item.mode == "Normal") { %>
+                <td class="btn btn-outline-dark btn-sm"> <%= "Normal" %></td>
+              <% } %>
+              <td><%= item.level %></td>
+              <td><%= item.setting %></td>
+              <td><%= item.time %></td>
+              <td><%= item.mistake %></td>
+              <td><%= item.score %></td>
+              <td><%= item.extra %></td>
+              <!-- <td><%= item.date.getFullYear() %></td> -->
+              <td><%= item.date.toLocaleTimeString('en-US') + " " + item.date.toLocaleDateString('en-GB') %></td>
+              <% if (new Date().toLocaleDateString('en-US') == item.date.toLocaleDateString('en-US')) { %>
+                <td><%= "Today" %></td>
+              <% } else { %>
+                <td><%= Math.floor((new Date() - item.date)/(1000*60*60*24)) %></td>
+              <% } %>
+              </tr>
+          <% });%>
+          </tbody>
+        </table>
+    <% }) %>
+   
+      
     </div>
   
   </body>

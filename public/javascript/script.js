@@ -14648,11 +14648,23 @@ How many items are there in each bag?
       }
       p.total = (genNumbers(8) + 2) * (p.objectOneV + p.objectTwoV);
       if (p.rollQn2 != "total") {
-        displayProblem.innerHTML = `
-        Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
-        Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
-        There is an equal number of ${p.objectOne} and ${p.objectTwo}.</br>
-        The total for both is ${p.total} ${p.unitMeasurement}.</br>
+        const order = ["A", "B"][genNumbers(2)];
+        if (order == "A") {
+          displayProblem.innerHTML = `
+          Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
+          Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
+          There is an equal number of ${p.objectOne} and ${p.objectTwo}.</br>
+          `;
+        } else {
+          displayProblem.innerHTML = `
+          There is an equal number of ${p.objectOne} and ${p.objectTwo}.</br>
+          Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
+          Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
+          `;
+        }
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `The total for both is ${p.total} ${p.unitMeasurement}.</br>
         ${
           p.rollQn2 == "many"
             ? `How many ${
@@ -14661,16 +14673,54 @@ How many items are there in each bag?
             : `What is the total for ${
                 p.rollQn == "A" ? p.objectOne : p.objectTwo
               }? `
-        }
-        `;
+        }`
+        );
       } else {
-        displayProblem.innerHTML = `
-        Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
-        Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
-        There is an equal number of ${p.objectOne} and ${p.objectTwo}.</br>
-        The total for both is ${p.total} ${p.unitMeasurement}.</br>
-        How many ${p.objectOne}s and ${p.objectTwo}s are there in total?
-        `;
+        displayProblem.innerHTML = ``;
+        let stuff = [
+          `Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
+        Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>`,
+          ` There is an equal number of ${p.objectOne} and ${p.objectTwo}.</br>`,
+          `The total for both is ${p.total} ${p.unitMeasurement}.</br>`,
+        ];
+        console.log("Part 1");
+        while (stuff.length != 0) {
+          console.log("Part 2");
+          const sentence = stuff[genNumbers(stuff.length)];
+          const index = stuff.indexOf(sentence);
+          stuff.splice(index, 1);
+
+          displayProblem.insertAdjacentHTML("beforeend", sentence);
+        }
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          ` How many ${p.objectOne}s and ${p.objectTwo}s are there in total?`
+        );
+        // if (order == "A") {
+        //   displayProblem.innerHTML = `
+        //   Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
+        //   Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
+        //   There is an equal number of ${p.objectOne} and ${p.objectTwo}.</br>
+        //   The total for both is ${p.total} ${p.unitMeasurement}.</br>
+        //   How many ${p.objectOne}s and ${p.objectTwo}s are there in total?
+        //   `;
+        // } else if (order == "B") {
+        //   displayProblem.innerHTML = `
+        //   There is an equal number of ${p.objectOne} and ${p.objectTwo}.</br>
+        //   The total for both is ${p.total} ${p.unitMeasurement}.</br>
+        //   Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
+        //   Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
+        //   How many ${p.objectOne}s and ${p.objectTwo}s are there in total?
+        //   `;
+        // } else {
+        //   displayProblem.innerHTML = `
+        //   The total for both is ${p.total} ${p.unitMeasurement}.</br>
+        //   There is an equal number of ${p.objectOne} and ${p.objectTwo}.</br>
+        //   Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
+        //   Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
+        //   How many ${p.objectOne}s and ${p.objectTwo}s are there in total?
+        //   `;
+        // }
       }
     }
 
@@ -28017,7 +28067,7 @@ function buttonLevelSetting() {
 
     case "Level 1.01":
       level = 1.01;
-      scoreNeeded = 50;
+      scoreNeeded = 5;
 
       gold = highScore1DotZero1.time;
       silver = highScore1DotZero1.time + (cutoff - highScore1DotZero1.time) / 3;
