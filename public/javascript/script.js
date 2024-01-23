@@ -4350,14 +4350,14 @@ function updateProblems() {
   }
 
   if (level == 4.21) {
-    if (difficulty > 4) {
-      difficulty = 4;
+    if (difficulty > 9) {
+      difficulty = 9;
     }
-    if (difficulty == 4) {
+    if (difficulty == 9) {
       p.rollType = genNumbers(4);
     }
 
-    if ((p.rollType > 2 && difficulty == 4) || difficulty >= 2) {
+    if ((p.rollType > 2 && difficulty == 9) || difficulty >= 2) {
       calculatorSymbol.classList.remove("hidden");
     } else {
       calculatorSymbol.classList.add("hidden");
@@ -28902,7 +28902,7 @@ function buttonLevelSetting() {
 
     case "Level 4.21":
       difficulty = prompt(
-        "0. Perfect Cutting\n1. Rectangle\n2. Cuboid\n3. Circles\n\n4. Everything"
+        "0. Perfect Cutting\n1. Rectangle\n2. Cuboid\n3. Circles\n\n9. Everything"
       );
       level = 4.21;
       scoreNeeded = 10;

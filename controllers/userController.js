@@ -408,6 +408,108 @@ exports.deleteRewardLog = catchAsync(async (req, res, next) => {
   //   res.status(404).json({ err });
   // }
 });
+function settings(level, age, allAttempts) {
+  if (level == 2.02 || level == 2.05) {
+    if (age == 8 || age <= 7) {
+      return 3;
+    } else if (age == 9) {
+      return 4;
+    } else if (age == 10) {
+      return 5;
+    } else if (age == 11) {
+      return 6;
+    } else if (age == 12) {
+      return 7;
+    } else {
+      return 7;
+    }
+  } else if (level == 3.16) {
+    let countNine = 0;
+    let countOne = 0;
+    let countTwo = 0;
+    let countThree = 0;
+    allAttempts.forEach((item) => {
+      if (item.level == 3.16) {
+        if (item.setting == 1) countOne += 1;
+        if (item.setting == 2 || item.setting == "1-2") {
+          countTwo += 1;
+        }
+        if (item.setting == 3 || item.setting == "1-3") {
+          countThree += 1;
+        }
+        if (item.setting == 9) countNine += 1;
+      }
+    });
+    if (countNine > 0) {
+      return 9;
+    } else if (countThree > 0) {
+      return "1-3";
+    } else if (countTwo > 0) {
+      return "1-2";
+    } else {
+      return "1";
+    }
+  } else if (level == 3.19 || level == 4.11) {
+    let countNine = 0;
+    let countOne = 0;
+    let countTwo = 0;
+    let countThree = 0;
+    allAttempts.forEach((item) => {
+      if (item.level == 3.19) {
+        if (item.setting == 1) countOne += 1;
+        if (item.setting == 2 || item.setting == "1-2") {
+          countTwo += 1;
+        }
+        // if (item.setting == 3 || item.setting == "1-3") {
+        //   countThree += 1;
+        // }
+        if (item.setting == 9) countNine += 1;
+      }
+    });
+    if (countNine > 0) {
+      return 9;
+      // } else if (countThree > 0) {
+      //   return "1-3";
+      // } else if (countTwo > 0) {
+      //   return "1-2";
+    } else {
+      return "1";
+    }
+  } else if (level == 4.21) {
+    let countNine = 0;
+    let countOne = 0;
+    let countTwo = 0;
+    let countThree = 0;
+    let countFour = 0;
+
+    allAttempts.forEach((item) => {
+      if (item.level == 4.21) {
+        if (item.setting == 1) countOne += 1;
+        if (item.setting == 2 || item.setting == "1-2") {
+          countTwo += 1;
+        }
+        if (item.setting == 3 || item.setting == "1-3") {
+          countThree += 1;
+        }
+        if (item.setting == 4 || item.setting == "1-4") {
+          countFour += 1;
+        }
+        if (item.setting == 9) countNine += 1;
+      }
+    });
+    if (countNine > 0) {
+      return 9;
+    } else if (countThree > 0) {
+      return "1-3";
+    } else if (countTwo > 0) {
+      return "1-2";
+    } else {
+      return "1";
+    }
+  } else {
+    return "";
+  }
+}
 
 const generateRec = async (nameTemp) => {
   const today = new Date();
@@ -518,46 +620,6 @@ const generateRec = async (nameTemp) => {
               if (index + 1 == calculationsArr.length) {
                 recommendObj.level = calculationsArr[0];
               }
-              // if (age == 9) {
-              //   const index = calAgeNine.indexOf(attempt.level);
-              //   if (index + 1 == calAgeNine.length) {
-              //     // attempt.level = calAgeNine[0];
-              //     recommendObj.level = calAgeNine[0];
-              //   } else {
-              //     // recommendObj= calAgeNine[index + 1];
-              //     recommendObj.level = calAgeNine[index + 1];
-              //   }
-              // }
-              // if (age == 10) {
-              //   const index = calAgeTen.indexOf(attempt.level);
-              //   if (index + 1 == calAgeTen.length) {
-              //     // attempt.level = calAgeTen[0];
-              //     recommendObj.level = calAgeTen[0];
-              //   } else {
-              //     // recommendObj= calAgeTen[index + 1];
-              //     recommendObj.level = calAgeTen[index + 1];
-              //   }
-              // }
-              // if (age == 11) {
-              //   const index = calAgeEleven.indexOf(attempt.level);
-
-              //   if (index + 1 == calAgeEleven.length) {
-              //     // attempt.level = calAgeEleven[0];
-              //     recommendObj.level = calAgeEleven[0];
-              //   } else {
-              //     // attempt.level = calAgeEleven[index + 1];
-              //     recommendObj.level = calAgeEleven[index + 1];
-              //   }
-              // }
-              // if (age == 12) {
-              //   const index = calAgeTwelve.indexOf(attempt.level);
-
-              //   if (index + 1 == calAgeTwelve.length) {
-              //     recommendObj.level = calAgeTwelve[0];
-              //   } else {
-              //     recommendObj.level = calAgeTwelve[index + 1];
-              //   }
-              // }
             }
 
             if (
@@ -808,6 +870,7 @@ const generateRec = async (nameTemp) => {
   // IF NO, CHECK ANOTHER LEVEL.
 
   //NORMAL LEVELS
+
   awards.forEach((award) => {
     uniqLevel = [];
     console.log(uniqLevel);
@@ -1031,83 +1094,6 @@ const generateRec = async (nameTemp) => {
                   if (index + 1 == ageLevel.length) {
                     recommendObj.level = ageLevel[0];
                   }
-
-                  // if (attempt.level.startsWith("1")) {
-                  //   const index = levelOne.indexOf(attempt.level);
-                  //   if (index == levelOne.length - 1) {
-                  //     if (age > 7) {
-                  //       recommendObj.level = levelTwo[0];
-                  //     } else {
-                  //       recommendObj.level = levelOne[0];
-                  //     }
-                  //   } else {
-                  //     recommendObj.level = levelOne[index + 1];
-                  //   }
-                  // } else if (attempt.level.startsWith("2")) {
-                  //   const index = levelTwo.indexOf(attempt.level);
-                  //   if (index == levelTwo.length - 1) {
-                  //     console.log("Ended Level 2s");
-                  //     if (age > 8) {
-                  //       recommendObj.level = levelThree[0];
-                  //     } else {
-                  //       recommendObj.level = levelTwo[0];
-                  //     }
-                  //   } else {
-                  //     recommendObj.level = levelTwo[index + 1];
-                  //   }
-                  // } else if (attempt.level.startsWith("3")) {
-                  //   const index = levelThree.indexOf(attempt.level);
-                  //   if (index == levelThree.length - 1) {
-                  //     if (age > 9) {
-                  //       recommendObj.level = levelFour[0];
-                  //     } else {
-                  //       recommendObj.level = levelThree[0];
-                  //     }
-                  //   } else {
-                  //     recommendObj.level = levelThree[index + 1];
-                  //   }
-                  // } else if (attempt.level.startsWith("4")) {
-                  //   const index = levelFour.indexOf(attempt.level);
-                  //   if (index == levelFour.length - 1) {
-                  //     if (age > 10) {
-                  //       recommendObj.level = levelFive[0];
-                  //     } else {
-                  //       recommendObj.level = levelFour[0];
-                  //     }
-                  //   } else {
-                  //     recommendObj.level = levelFour[index + 1];
-                  //   }
-                  // } else if (attempt.level.startsWith("5")) {
-                  //   const index = levelFive.indexOf(attempt.level);
-                  //   if (index == levelFive.length - 1) {
-                  //     if (age > 11) {
-                  //       recommendObj.level = levelSix[0];
-                  //     } else {
-                  //       recommendObj.level = levelFive[0];
-                  //     }
-                  //   } else {
-                  //     recommendObj.level = levelFive[index + 1];
-                  //   }
-                  // } else if (attempt.level.startsWith("6")) {
-                  //   const index = levelSix.indexOf(attempt.level);
-                  //   if (index == levelSix.length - 1) {
-                  //     if (age > 12) {
-                  //       recommendObj.level = levelFour[0];
-                  //     } else {
-                  //       recommendObj.level = levelSix[0];
-                  //     }
-                  //   } else {
-                  //     recommendObj.level = levelSix[index + 1];
-                  //   }
-                  // } else {
-                  //   console.log("If other levels");
-                  //   if (age <= 7) recommendObj.level = levelOne[0];
-                  //   if (age == 8) recommendObj.level = levelTwo[0];
-                  //   if (age == 9) recommendObj.level = levelThree[0];
-                  //   if (age == 10) recommendObj.level = levelFour[0];
-                  //   if (age == 11) recommendObj.level = levelFive[0];
-                  //   if (age == 12) recommendObj.level = levelSix[0];
-                  // }
                 }
                 //CHECKING IF IT HAS BEEN DONE BEFORE
 
@@ -1131,49 +1117,57 @@ const generateRec = async (nameTemp) => {
                 }
 
                 // LEVEL WITH SETTINGS
-                if (recommendObj.level == 2.02) {
-                  if (age == 8 || age <= 7) {
-                    recommendObj.setting = 3;
-                  } else if (age == 9) {
-                    recommendObj.setting = 4;
-                  } else if (age == 10) {
-                    recommendObj.setting = 5;
-                  } else if (age == 11) {
-                    recommendObj.setting = 6;
-                  } else if (age == 12) {
-                    recommendObj.setting = 7;
-                  } else {
-                    recommendObj.setting = 7;
-                  }
-                }
 
-                if (recommendObj.level == 3.16) {
-                  let countNine = 0;
-                  let countOne = 0;
-                  let countTwo = 0;
-                  let countThree = 0;
-                  latestAttempt.forEach((item) => {
-                    if (item.level == 3.16) {
-                      if (item.setting == 1) countOne += 1;
-                      if (item.setting == 2 || item.setting == "1-2") {
-                        countTwo += 1;
-                      }
-                      if (item.setting == 3 || item.setting == "1-3") {
-                        countThree += 1;
-                      }
-                      if (item.setting == 9) countNine += 1;
-                    }
-                  });
-                  if (countNine > 0) {
-                    recommendObj.setting = 9;
-                  } else if (countThree > 0) {
-                    recommendObj.setting = "1-3";
-                  } else if (countTwo > 0) {
-                    recommendObj.setting = "1-2";
-                  } else {
-                    recommendObj.setting = "1";
-                  }
-                }
+                recommendObj.setting = settings(
+                  recommendObj.level,
+                  age,
+                  latestAttempt
+                );
+                //Level 2.02
+                // if (recommendObj.level == 2.02) {
+                //   if (age == 8 || age <= 7) {
+                //     recommendObj.setting = 3;
+                //   } else if (age == 9) {
+                //     recommendObj.setting = 4;
+                //   } else if (age == 10) {
+                //     recommendObj.setting = 5;
+                //   } else if (age == 11) {
+                //     recommendObj.setting = 6;
+                //   } else if (age == 12) {
+                //     recommendObj.setting = 7;
+                //   } else {
+                //     recommendObj.setting = 7;
+                //   }
+                // }
+
+                //Level 3.16
+                // if (recommendObj.level == 3.16) {
+                //   let countNine = 0;
+                //   let countOne = 0;
+                //   let countTwo = 0;
+                //   let countThree = 0;
+                //   latestAttempt.forEach((item) => {
+                //     if (item.level == 3.16) {
+                //       if (item.setting == 1) countOne += 1;
+                //       if (item.setting == 2 || item.setting == "1-2") {
+                //         countTwo += 1;
+                //       }
+                //       if (item.setting == 3 || item.setting == "1-3") {
+                //         countThree += 1;
+                //       }
+                //       if (item.setting == 9) countNine += 1;
+                //     }
+                //   });
+                //   if (countNine > 0) {
+                //     recommendObj.setting = 9;
+                //   } else if (countThree > 0) {
+                //     recommendObj.setting = "1-3";
+                //   } else if (countTwo > 0) {
+                //     recommendObj.setting = "1-2";
+                //   } else {
+                //     recommendObj.setting = "1";
+                //   }
+                // }
 
                 // recommendObj.level = attempt.level;
                 recommendObj.time = "";
