@@ -15,6 +15,7 @@ const globalErrorHandler = require("./controllers/errorController");
 const cookieParser = require("cookie-parser");
 const authController = require("./controllers/authController");
 const cors = require("cors");
+const rateLimit = require("express-rate-limit");
 
 let username;
 let currentUser;
@@ -43,6 +44,14 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// Limits the number of connection
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000, // 1hours
+  message:
+    "Too many requests has been made from this IP, please try again in an hour!",
+});
+app.use("/user/login", limiter);
 // JAVASCRIPT
 const arithemeticJavascript = "./javascript/script.js";
 app.use("/", express.static(path.join(__dirname, "public")));
