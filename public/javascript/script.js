@@ -29567,7 +29567,6 @@ function buttonLevelSetting() {
 }
 //FOR TIMINGS AND HIGHSCORE
 const allLevelButtons = [...settingButton].concat([...heuristics], [...calBtn]);
-console.log(allLevelButtons);
 allLevelButtons.forEach((item, index) => {
   item.addEventListener("dblclick", function (e) {
     console.log(e);
@@ -29639,15 +29638,24 @@ allLevelButtons.forEach((item, index) => {
           highscore.textContent = `No highscore has been set.`;
         }
         // }, 1000);
-        modeStarter.textContent = `${data.mode}`;
-        platinumStarter.textContent = `< ${Math.floor(data.gold.upper)}`;
-        goldStarter.textContent = `< ${Math.floor(data.gold.lower)}`;
-        silverStarter.textContent = `< ${Math.floor(data.silver.lower)}`;
-        bronzeStarter.textContent = `< ${Math.floor(data.bronze.lower)}`;
+        modeStarter.textContent = `${mode}`;
+        if (data.gold) {
+          platinumStarter.textContent = `< ${Math.floor(data.gold.upper)}`;
+          goldStarter.textContent = `< ${Math.floor(data.gold.lower)}`;
+          silverStarter.textContent = `< ${Math.floor(data.silver.lower)}`;
+          bronzeStarter.textContent = `< ${Math.floor(data.bronze.lower)}`;
+        } else {
+          platinumStarter.textContent = `Nil`;
+          goldStarter.textContent = `Nil`;
+          silverStarter.textContent = `Nil`;
+          bronzeStarter.textContent = `Nil`;
+        }
+
         if (data.previous) {
-          previousAttempt.textContent = `Previous: ${Math.floor(
+          previousAttempt.textContent = `Previous Attempt: ${Math.floor(
             data.previous.time
-          )}s, ${data.previous.mistake} mistakes`;
+          )}s, ${data.previous.mistake} mistakes, ${data.daysAgo} days ago
+          `;
         } else {
           previousAttempt.textContent = `This is your 1st Attempt.`;
         }

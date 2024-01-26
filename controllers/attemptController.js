@@ -730,7 +730,11 @@ exports.previousAttempts = async (req, res) => {
       setting: setting,
       skip: "",
       age: age,
-    }).sort({ time: -1 });
+    }).sort({ date: -1 });
+
+    data.daysAgo = Math.floor(
+      (new Date() - data.previous.date) / (1000 * 60 * 60 * 24)
+    );
 
     //STANDARD DEVIATION
     const queryMean = await Attempt.find({
