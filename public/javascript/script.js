@@ -186,7 +186,11 @@ const toMultiplesBtn = document.querySelector(".toMultiples");
 const highScoreName = document.querySelector(".highScoreName");
 const highScoreTime = document.querySelector(".highScoreTime");
 const highScoreMistakes = document.querySelector(".highScoreMistakes");
-
+const highscore = document.querySelector("#highscore");
+const modeSetting = document.querySelector("#mode");
+const goldSetting = document.querySelector("#gold");
+const silverSetting = document.querySelector("#silver");
+const bronzeSetting = document.querySelector("#bronze");
 const fractionChoice = document.querySelector(".fraction-choice");
 const wholeNumberContainer = document.querySelector(".whole-numbers-container");
 const fractionsContainer = document.querySelector(".fractions-container");
@@ -27995,16 +27999,6 @@ for (let i = 0; i < heuristics.length; i++) {
   });
 }
 
-// for (let i = 0; i < calBtn.length; i++) {
-//   calBtn[i].addEventListener("dblclick", function () {
-//     buttonLevel = this.innerHTML;
-//     mulLevel = "nil";
-
-//     buttonLevelSetting();
-//     levelBox();
-//   });
-// }
-
 calBtn.forEach((item) => {
   item.addEventListener("dblclick", function () {
     buttonLevel = this.innerHTML;
@@ -28022,11 +28016,13 @@ calBtn.forEach((item) => {
 hardcoreMode.addEventListener("click", function () {
   if (hardcore == 0) {
     hardcore = 1;
+    mode = "Hardcore";
     easy = 0;
     mainBox.style.borderColor = "red";
     levelSetting.style.borderColor = "red";
   } else {
     hardcore = 0;
+    mode = "Normal";
     mainBox.style.borderColor = "black";
     levelSetting.style.borderColor = "black";
   }
@@ -28036,11 +28032,13 @@ hardcoreMode.addEventListener("click", function () {
 easyMode.addEventListener("click", function () {
   if (easy == 0) {
     easy = 1;
+    mode = "Easy";
     hardcore = 0;
     mainBox.style.borderColor = "#39FF14";
     levelSetting.style.borderColor = "#39FF14";
   } else {
     easy = 0;
+    mode = "Normal";
     mainBox.style.borderColor = "black";
     levelSetting.style.borderColor = "black";
   }
@@ -28048,6 +28046,7 @@ easyMode.addEventListener("click", function () {
 });
 
 // LEVEL SETTINGS
+
 function buttonLevelSetting() {
   // if (levelArr.length != 0){
   //   buttonLevel = `Level ${levelArr[0]}`
@@ -28060,9 +28059,7 @@ function buttonLevelSetting() {
       silver = highScore1DotZero.time + (cutoff - highScore1DotZero.time) / 3;
       bronze =
         highScore1DotZero.time + ((cutoff - highScore1DotZero.time) / 3) * 2;
-      highScoreName.innerHTML = highScore1DotZero.name;
-      highScoreTime.innerHTML = highScore1DotZero.time;
-      highScoreMistakes.innerHTML = highScore1DotZero.mistake;
+
       break;
 
     case "Level 1.01":
@@ -28073,17 +28070,13 @@ function buttonLevelSetting() {
       silver = highScore1DotZero1.time + (cutoff - highScore1DotZero1.time) / 3;
       bronze =
         highScore1DotZero1.time + ((cutoff - highScore1DotZero1.time) / 3) * 2;
-      highScoreName.innerHTML = highScore1DotZero1.name;
-      highScoreTime.innerHTML = highScore1DotZero1.time;
-      highScoreMistakes.innerHTML = highScore1DotZero1.mistake;
+
       break;
 
     case "Level 1.02":
       level = 1.02;
       scoreNeeded = 50;
-      highScoreName.innerHTML = highScore1DotZero2.name;
-      highScoreTime.innerHTML = highScore1DotZero2.time;
-      highScoreMistakes.innerHTML = highScore1DotZero2.mistake;
+
       helpMe.style.fontSize = "1.5em";
       break;
 
@@ -28094,9 +28087,7 @@ function buttonLevelSetting() {
       silver = highScore1DotZero3.time + (cutoff - highScore1DotZero.time3) / 3;
       bronze =
         highScore1DotZero3.time + ((cutoff - highScore1DotZero.time3) / 3) * 2;
-      highScoreName.innerHTML = highScore1DotZero3.name;
-      highScoreTime.innerHTML = highScore1DotZero3.time;
-      highScoreMistakes.innerHTML = highScore1DotZero3.mistake;
+
       break;
 
     case "Level 1.04":
@@ -28106,9 +28097,7 @@ function buttonLevelSetting() {
       silver = highScore1DotZero4.time + (cutoff - highScore1DotZero.time4) / 3;
       bronze =
         highScore1DotZero4.time + ((cutoff - highScore1DotZero.time4) / 3) * 2;
-      highScoreName.innerHTML = highScore1DotZero4.name;
-      highScoreTime.innerHTML = highScore1DotZero4.time;
-      highScoreMistakes.innerHTML = highScore1DotZero4.mistake;
+
       document.querySelector("#user-input").setAttribute("type", "text");
       instructions.innerHTML = `
         1 + 2 = 3 or 3 = 2 + 1</br>
@@ -28123,9 +28112,7 @@ function buttonLevelSetting() {
       silver = highScore1DotZero5.time + (cutoff - highScore1DotZero5.time) / 3;
       bronze =
         highScore1DotZero5.time + ((cutoff - highScore1DotZero5.time) / 3) * 2;
-      highScoreName.innerHTML = highScore1DotZero5.name;
-      highScoreTime.innerHTML = highScore1DotZero5.time;
-      highScoreMistakes.innerHTML = highScore1DotZero5.mistake;
+
       document.querySelector("#user-input").setAttribute("type", "text");
       instructions.innerHTML =
         "Answer using</br> 'c+', 'c-', 'd-', 'r+' or 'r-' ";
@@ -28138,9 +28125,7 @@ function buttonLevelSetting() {
       silver = highScore1DotZero6.time + (cutoff - highScore1DotZero6.time) / 3;
       bronze =
         highScore1DotZero6.time + ((cutoff - highScore1DotZero6.time) / 3) * 2;
-      highScoreName.innerHTML = highScore1DotZero6.name;
-      highScoreTime.innerHTML = highScore1DotZero6.time;
-      highScoreMistakes.innerHTML = highScore1DotZero5.mistake;
+
       instructions.textContent = "";
       break;
 
@@ -28151,9 +28136,7 @@ function buttonLevelSetting() {
       silver = highScore1DotZero7.time + (cutoff - highScore1DotZero7.time) / 3;
       bronze =
         highScore1DotZero7.time + ((cutoff - highScore1DotZero7.time) / 3) * 2;
-      highScoreName.innerHTML = highScore1DotZero7.name;
-      highScoreTime.innerHTML = highScore1DotZero7.time;
-      highScoreMistakes.innerHTML = highScore1DotZero7.mistake;
+
       displayProblem.style.fontSize = "25px";
       document.querySelector("#user-input").style.marginTop = "100px";
       break;
@@ -28161,14 +28144,6 @@ function buttonLevelSetting() {
     case "Level 1.08":
       level = 1.08;
       scoreNeeded = 20;
-      // gold = highScore1DotZero7.time
-      // silver = highScore1DotZero7.time+((cutoff-highScore1DotZero7.time)/3)
-      // bronze = highScore1DotZero7.time+((cutoff-highScore1DotZero7.time)/3)*2
-      // highScoreName.innerHTML = highScore1DotZero7.name
-      // highScoreTime.innerHTML = highScore1DotZero7.time
-      // highScoreMistakes.innerHTML = highScore1DotZero7.mistake
-      // displayProblem.style.fontSize = "25px";
-      // document.querySelector("#user-input").style.marginTop = "100px";
       instructions.textContent = "Give the answer.";
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "25px";
@@ -28177,9 +28152,7 @@ function buttonLevelSetting() {
     case "Level 2.0":
       level = 2.0;
       scoreNeeded = 50;
-      highScoreName.innerHTML = highScore2DotZero.name;
-      highScoreTime.innerHTML = highScore2DotZero.time;
-      highScoreMistakes.innerHTML = highScore2DotZero.mistake;
+
       break;
 
     case "Level 2.01":
@@ -28189,9 +28162,7 @@ function buttonLevelSetting() {
       silver = highScore2DotZero1.time + (cutoff - highScore2DotZero1.time) / 3;
       bronze =
         highScore2DotZero1.time + ((cutoff - highScore2DotZero1.time) / 3) * 2;
-      highScoreName.innerHTML = highScore2DotZero1.name;
-      highScoreTime.innerHTML = highScore2DotZero1.time;
-      highScoreMistakes.innerHTML = highScore2DotZero1.mistake;
+
       break;
 
     case "Level 2.02":
@@ -28201,9 +28172,7 @@ function buttonLevelSetting() {
       silver = highScore2DotZero2.time + (cutoff - highScore2DotZero2.time) / 3;
       bronze =
         highScore2DotZero2.time + ((cutoff - highScore2DotZero2.time) / 3) * 2;
-      highScoreName.innerHTML = highScore2DotZero2.name;
-      highScoreTime.innerHTML = highScore2DotZero2.time;
-      highScoreMistakes.innerHTML = highScore2DotZero2.mistake;
+
       displayProblem.style.fontSize = "25px";
       digit = prompt(
         "How many digits?\n3. Primary 2\n4. Primary 3\n5. Primary 4\n6. Primary 5\n7. Primary 6"
@@ -28215,9 +28184,7 @@ function buttonLevelSetting() {
       level = 2.03;
       scoreNeeded = 50;
       gold = highScore2DotZero3.time;
-      highScoreName.innerHTML = highScore2DotZero3.name;
-      highScoreTime.innerHTML = highScore2DotZero3.time;
-      highScoreMistakes.innerHTML = highScore2DotZero3.mistake;
+
       break;
 
     case "Level 2.04":
@@ -28227,9 +28194,7 @@ function buttonLevelSetting() {
       silver = highScore2DotZero4.time + (cutoff - highScore2DotZero4.time) / 3;
       bronze =
         highScore2DotZero4.time + ((cutoff - highScore2DotZero4.time) / 3) * 2;
-      highScoreName.innerHTML = highScore2DotZero4.name;
-      highScoreTime.innerHTML = highScore2DotZero4.time;
-      highScoreMistakes.innerHTML = highScore2DotZero4.mistake;
+
       break;
 
     case "Level 2.05":
@@ -28243,9 +28208,7 @@ function buttonLevelSetting() {
         "How many digits?\n3. Primary 2\n4. Primary 3\n5. Primary 4\n6. Primary 5\n7. Primary 6"
       );
       arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-      highScoreName.innerHTML = highScore2DotZero5.name;
-      highScoreTime.innerHTML = highScore2DotZero5.time;
-      highScoreMistakes.innerHTML = highScore2DotZero5.mistake;
+
       instructions.textContent = "Form the Number";
       displayProblem.style.fontSize = "25px";
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -28258,9 +28221,7 @@ function buttonLevelSetting() {
       silver = highScore2DotZero6.time + (cutoff - highScore2DotZero6.time) / 3;
       bronze =
         highScore2DotZero6.time + ((cutoff - highScore2DotZero6.time) / 3) * 2;
-      highScoreName.innerHTML = highScore2DotZero6.name;
-      highScoreTime.innerHTML = highScore2DotZero6.time;
-      highScoreMistakes.innerHTML = highScore2DotZero6.mistake;
+
       displayProblem.style.fontSize = "25px";
       break;
 
@@ -28271,9 +28232,7 @@ function buttonLevelSetting() {
       silver = highScore2DotZero7.time + (cutoff - highScore2DotZero7.time) / 3;
       bronze =
         highScore2DotZero7.time + ((cutoff - highScore2DotZero7.time) / 3) * 2;
-      highScoreName.innerHTML = highScore2DotZero7.name;
-      highScoreTime.innerHTML = highScore2DotZero7.time;
-      highScoreMistakes.innerHTML = highScore2DotZero7.mistake;
+
       wholeNumberContainer.classList.add("hidden");
       fractionsContainer.classList.remove("hidden");
       instructions.textContent = "Answer using '1' or '2' only";
@@ -28286,9 +28245,7 @@ function buttonLevelSetting() {
       level = 2.08;
       scoreNeeded = 10;
       gold = highScore2DotZero8.time;
-      highScoreName.innerHTML = highScore2DotZero8.name;
-      highScoreTime.innerHTML = highScore2DotZero8.time;
-      highScoreMistakes.innerHTML = highScore2DotZero8.mistake;
+
       displayProblem.style.fontSize = "25px";
       document.querySelector("#user-input").setAttribute("type", "text");
       document.querySelector("#user-input").style.width = "300px";
@@ -28301,9 +28258,7 @@ function buttonLevelSetting() {
       silver = highScore2DotZero9.time + (cutoff - highScore2DotZero9.time) / 3;
       bronze =
         highScore2DotZero9.time + ((cutoff - highScore2DotZero9.time) / 3) * 2;
-      highScoreName.innerHTML = highScore2DotZero9.name;
-      highScoreTime.innerHTML = highScore2DotZero9.time;
-      highScoreMistakes.innerHTML = highScore2DotZero9.mistake;
+
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -28313,17 +28268,13 @@ function buttonLevelSetting() {
     case "Level 3.0":
       level = 3.0;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3DotZero.name;
-      highScoreTime.innerHTML = highScore3DotZero.time;
-      highScoreMistakes.innerHTML = highScore3DotZero.mistake;
+
       break;
 
     case "Level 3.01":
       level = 3.01;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3DotZero1.name;
-      highScoreTime.innerHTML = highScore3DotZero1.time;
-      highScoreMistakes.innerHTML = highScore3DotZero1.mistake;
+
       break;
 
     case "Level 3.02":
@@ -28331,18 +28282,14 @@ function buttonLevelSetting() {
       scoreNeeded = 30;
       gold = 141;
       silver = 230;
-      highScoreName.innerHTML = highScore3DotZero2.name;
-      highScoreTime.innerHTML = highScore3DotZero2.time;
-      highScoreMistakes.innerHTML = highScore3DotZero2.mistake;
+
       document.querySelector("#user-input").setAttribute("max", "9999999");
       break;
 
     case "Level 3.03":
       level = 3.03;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3DotZero3.name;
-      highScoreTime.innerHTML = highScore3DotZero3.time;
-      highScoreMistakes.innerHTML = highScore3DotZero3.mistake;
+
       break;
 
     case "Level 3.04":
@@ -28350,26 +28297,20 @@ function buttonLevelSetting() {
       scoreNeeded = 30;
       gold = 284;
       silver = 521;
-      highScoreName.innerHTML = highScore3DotZero4.name;
-      highScoreTime.innerHTML = highScore3DotZero4.time;
-      highScoreMistakes.innerHTML = highScore3DotZero4.mistake;
+
       break;
 
     case "Level 3.05":
       level = 3.05;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3DotZero5.name;
-      highScoreTime.innerHTML = highScore3DotZero5.time;
-      highScoreMistakes.innerHTML = highScore3DotZero5.mistake;
+
       break;
 
     case "Level 3.06":
       level = 3.06;
       scoreNeeded = 30;
       gold = highScore3DotZero6.time;
-      highScoreName.innerHTML = highScore3DotZero6.name;
-      highScoreTime.innerHTML = highScore3DotZero6.time;
-      highScoreMistakes.innerHTML = highScore3DotZero6.mistake;
+
       document.querySelector("#user-input").setAttribute("type", "text");
       instructions.innerHTML = `Do not leave any spaces.</br>
         Answer using capital 'L' and 'ml' for volume`;
@@ -28380,9 +28321,7 @@ function buttonLevelSetting() {
       level = 3.07;
       scoreNeeded = 30;
       gold = highScore3DotZero7.time;
-      highScoreName.innerHTML = highScore3DotZero7.name;
-      highScoreTime.innerHTML = highScore3DotZero7.time;
-      highScoreMistakes.innerHTML = highScore3DotZero7.mistake;
+
       instructions.innerHTML = `Lowest Common Multiple</br>
         5, 3, 2 => 15</br>
         5, 3, 5 => 5,15</br>
@@ -28394,9 +28333,7 @@ function buttonLevelSetting() {
       level = 3.08;
       scoreNeeded = 20;
       gold = highScore3DotZero8.time;
-      highScoreName.innerHTML = highScore3DotZero8.name;
-      highScoreTime.innerHTML = highScore3DotZero8.time;
-      highScoreMistakes.innerHTML = highScore3DotZero8.mistake;
+
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -28406,9 +28343,7 @@ function buttonLevelSetting() {
       level = 3.09;
       scoreNeeded = 30;
       gold = highScore3DotZero9.time;
-      highScoreName.innerHTML = highScore3DotZero9.name;
-      highScoreTime.innerHTML = highScore3DotZero9.time;
-      highScoreMistakes.innerHTML = highScore3DotZero9.mistake;
+
       wholeNumberContainer.classList.add("hidden");
       fractionsContainerTwo.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -28424,9 +28359,7 @@ function buttonLevelSetting() {
       bronze =
         highScore3DotZero10.time +
         ((cutoff - highScore3DotZero10.time) / 3) * 2;
-      highScoreName.innerHTML = highScore3DotZero10.name;
-      highScoreTime.innerHTML = highScore3DotZero10.time;
-      highScoreMistakes.innerHTML = highScore3DotZero10.mistake;
+
       wholeNumberContainer.classList.add("hidden");
       fractionsContainerTwo.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -28442,9 +28375,7 @@ function buttonLevelSetting() {
       bronze =
         highScore3DotZero11.time +
         ((cutoff - highScore3DotZero11.time) / 3) * 2;
-      highScoreName.innerHTML = highScore3DotZero11.name;
-      highScoreTime.innerHTML = highScore3DotZero11.time;
-      highScoreMistakes.innerHTML = highScore3DotZero11.mistake;
+
       wholeNumberContainer.classList.add("hidden");
       fractionsContainerTwo.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -28460,53 +28391,6 @@ function buttonLevelSetting() {
       displayProblem.style.marginTop = "0";
       // instructions.textContent = "Form an Equation from the pattern";
       break;
-
-    // case "Level 3.13":
-    //   level = 3.13;
-    //   scoreNeeded = 20;
-    //   gold = 471;
-    //   highScoreName.innerHTML = highScore3DotZero13.name;
-    //   highScoreTime.innerHTML = highScore3DotZero13.time;
-    //   highScoreMistakes.innerHTML = highScore3DotZero13.mistake;
-    //   document.querySelector("#user-input").setAttribute("type", "text");
-    //   displayProblem.style.fontSize = "25px";
-    //   displayProblem.style.marginTop = "0";
-    //   instructions.textContent =
-    //     "Form an Equation using 'n' from the pattern and provide an answer";
-    //   break;
-
-    // case "Level 3.14":
-    //   level = 3.14;
-    //   scoreNeeded = 20;
-    //   gold = highScore3DotZero14.time;
-    //   highScoreName.innerHTML = highScore3DotZero14.name;
-    //   highScoreTime.innerHTML = highScore3DotZero14.time;
-    //   highScoreMistakes.innerHTML = highScore3DotZero14.mistake;
-    //   document.querySelector("#user-input").setAttribute("type", "text");
-    //   displayProblem.style.fontSize = "25px";
-    //   displayProblem.style.marginTop = "0";
-    //   instructions.textContent =
-    //     "Form an Equation from the pattern and provide an answer";
-    //   break;
-
-    // case "Level 3.15":
-    //   level = 3.15;
-    //   scoreNeeded = 20;
-    //   gold = highScore3DotZero15.time;
-    //   silver =
-    //     highScore3DotZero15.time + (cutoff - highScore3DotZero15.time) / 3;
-    //   bronze =
-    //     highScore3DotZero15.time +
-    //     ((cutoff - highScore3DotZero15.time) / 3) * 2;
-    //   highScoreName.innerHTML = highScore3DotZero15.name;
-    //   highScoreTime.innerHTML = highScore3DotZero15.time;
-    //   highScoreMistakes.innerHTML = highScore3DotZero15.mistake;
-    //   document.querySelector("#user-input").setAttribute("type", "text");
-    //   displayProblem.style.fontSize = "25px";
-    //   displayProblem.style.marginTop = "0";
-    //   instructions.textContent =
-    //     "Take note of the repeated pattern and use it to find the position of the other pattern";
-    //   break;
 
     case "Level 3.16":
       level = 3.16;
@@ -28544,9 +28428,7 @@ function buttonLevelSetting() {
       level = 3.17;
       scoreNeeded = 20;
       gold = highScore3DotZero17.time;
-      highScoreName.innerHTML = highScore3DotZero17.name;
-      highScoreTime.innerHTML = highScore3DotZero17.time;
-      highScoreMistakes.innerHTML = highScore3DotZero17.mistake;
+
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -28561,9 +28443,7 @@ function buttonLevelSetting() {
       bronze =
         highScore3DotZero18.time +
         ((cutoff - highScore3DotZero18.time) / 3) * 2;
-      highScoreName.innerHTML = highScore3DotZero18.name;
-      highScoreTime.innerHTML = highScore3DotZero18.time;
-      highScoreMistakes.innerHTML = highScore3DotZero18.mistake;
+
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -28580,9 +28460,7 @@ function buttonLevelSetting() {
       bronze =
         highScore3DotZero19.time +
         ((cutoff - highScore3DotZero19.time) / 3) * 2;
-      highScoreName.innerHTML = highScore3DotZero19.name;
-      highScoreTime.innerHTML = highScore3DotZero19.time;
-      highScoreMistakes.innerHTML = highScore3DotZero19.mistake;
+
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       break;
@@ -28594,9 +28472,7 @@ function buttonLevelSetting() {
       silver = highScore4DotZero.time + (cutoff - highScore4DotZero.time) / 3;
       bronze =
         highScore4DotZero.time + ((cutoff - highScore4DotZero.time) / 3) * 2;
-      highScoreName.innerHTML = highScore4DotZero.name;
-      highScoreTime.innerHTML = highScore4DotZero.time;
-      highScoreMistakes.innerHTML = highScore4DotZero.mistake;
+
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "25px";
       instructions.innerHTML = `List the factors in pairs</br>
@@ -28608,9 +28484,7 @@ function buttonLevelSetting() {
       level = "4.01";
       scoreNeeded = 30;
       gold = 229;
-      highScoreName.innerHTML = highScore4DotZero1.name;
-      highScoreTime.innerHTML = highScore4DotZero1.time;
-      highScoreMistakes.innerHTML = highScore4DotZero1.mistake;
+
       document.querySelector("#user-input").setAttribute("max", "100000");
       break;
 
@@ -28618,9 +28492,7 @@ function buttonLevelSetting() {
       level = "4.02";
       scoreNeeded = 30;
       gold = highScore4DotZero1.time;
-      highScoreName.innerHTML = highScore4DotZero1.name;
-      highScoreTime.innerHTML = highScore4DotZero1.time;
-      highScoreMistakes.innerHTML = highScore4DotZero1.mistake;
+
       displayProblem.style.fontSize = "25px";
       arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
       break;
@@ -28629,9 +28501,7 @@ function buttonLevelSetting() {
       level = "4.03";
       scoreNeeded = 30;
       gold = 264;
-      highScoreName.innerHTML = highScore4DotZero3.name;
-      highScoreTime.innerHTML = highScore4DotZero3.time;
-      highScoreMistakes.innerHTML = highScore4DotZero3.mistake;
+
       document.querySelector("#user-input").setAttribute("step", "0.000001");
       break;
 
@@ -28639,9 +28509,7 @@ function buttonLevelSetting() {
       level = 4.04;
       scoreNeeded = 30;
       gold = 310;
-      highScoreName.innerHTML = highScore4DotZero4.name;
-      highScoreTime.innerHTML = highScore4DotZero4.time;
-      highScoreMistakes.innerHTML = highScore4DotZero4.mistake;
+
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
@@ -28652,33 +28520,9 @@ function buttonLevelSetting() {
       silver = highScore4DotZero5.time + (cutoff - highScore4DotZero5.time) / 3;
       bronze =
         highScore4DotZero5.time + ((cutoff - highScore4DotZero5.time) / 3) * 2;
-      highScoreName.innerHTML = highScore4DotZero5.name;
-      highScoreTime.innerHTML = highScore4DotZero5.time;
-      highScoreMistakes.innerHTML = highScore4DotZero5.mistake;
+
       document.querySelector("#user-input").setAttribute("step", "0.000001");
       break;
-
-    // case "Level 4.06":
-    //   level = 4.06;
-    //   scoreNeeded = 30;
-    //   gold = highScore4DotZero6.time;
-    //   silver = highScore4DotZero6.time + (cutoff - highScore4DotZero6.time) / 3;
-    //   bronze =
-    //     highScore4DotZero6.time + ((cutoff - highScore4DotZero6.time) / 3) * 2;
-    //   highScoreName.innerHTML = highScore4DotZero6.name;
-    //   highScoreTime.innerHTML = highScore4DotZero6.time;
-    //   highScoreMistakes.innerHTML = highScore4DotZero6.mistake;
-    //   document.querySelector("#user-input").setAttribute("step", "0.000001");
-    //   break;
-
-    // case "Level 4.07":
-    //   level = 4.07;
-    //   scoreNeeded = 30;
-    //   highScoreName.innerHTML = highScore4DotZero7.name;
-    //   highScoreTime.innerHTML = highScore4DotZero7.time;
-    //   highScoreMistakes.innerHTML = highScore4DotZero7.mistake;
-    //   document.querySelector("#user-input").setAttribute("step", "0.000001");
-    //   break;
 
     case "Level 4.08":
       setting = prompt(
@@ -28689,9 +28533,7 @@ function buttonLevelSetting() {
       level = 4.08;
       scoreNeeded = 30;
       gold = 207;
-      highScoreName.innerHTML = highScore4DotZero8.name;
-      highScoreTime.innerHTML = highScore4DotZero8.time;
-      highScoreMistakes.innerHTML = highScore4DotZero8.mistake;
+
       document.querySelector("#user-input").setAttribute("step", "0.000001");
       break;
 
@@ -28724,9 +28566,7 @@ function buttonLevelSetting() {
       bronze =
         highScore4DotZero11.time +
         ((cutoff - highScore4DotZero11.time) / 3) * 2;
-      highScoreName.innerHTML = highScore4DotZero11.name;
-      highScoreTime.innerHTML = highScore4DotZero11.time;
-      highScoreMistakes.innerHTML = highScore4DotZero11.mistake;
+
       wholeNumberContainer.classList.add("hidden");
       fractionsContainerTwo.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -28744,9 +28584,7 @@ function buttonLevelSetting() {
       );
       gold = 134;
       silver = 153;
-      highScoreName.innerHTML = highScore4DotZero12.name;
-      highScoreTime.innerHTML = highScore4DotZero12.time;
-      highScoreMistakes.innerHTML = highScore4DotZero12.mistake;
+
       instructions.textContent = "";
       displayProblem.style.fontSize = "25px";
       displayProblem.style.marginBottom = "150px";
@@ -28757,9 +28595,7 @@ function buttonLevelSetting() {
       scoreNeeded = 20;
       gold = 297;
       silver = 376;
-      highScoreName.innerHTML = highScore4DotZero13.name;
-      highScoreTime.innerHTML = highScore4DotZero13.time;
-      highScoreMistakes.innerHTML = highScore4DotZero13.mistake;
+
       instructions.textContent = "";
       displayProblem.style.fontSize = "25px";
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -28769,9 +28605,7 @@ function buttonLevelSetting() {
       level = 4.14;
       scoreNeeded = 30;
       gold = 49;
-      highScoreName.innerHTML = highScore4DotZero14.name;
-      highScoreTime.innerHTML = highScore4DotZero14.time;
-      highScoreMistakes.innerHTML = highScore4DotZero14.mistake;
+
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       fractionsContainerTwo.classList.remove("hidden");
@@ -28785,32 +28619,9 @@ function buttonLevelSetting() {
       threeNumerator.classList.remove("line");
       break;
 
-    // case "Level 4.15":
-    //   level = 4.15;
-    //   scoreNeeded = 30;
-    //   gold = 49;
-    //   highScoreName.innerHTML = highScore4DotZero14.name;
-    //   highScoreTime.innerHTML = highScore4DotZero14.time;
-    //   highScoreMistakes.innerHTML = highScore4DotZero14.mistake;
-    //   document.querySelector("#user-input").setAttribute("type", "text");
-    //   wholeNumberContainer.classList.add("hidden");
-    //   fractionsContainerTwo.classList.remove("hidden");
-    //   equalSymbol.innerHTML = "";
-    //   instructions.innerHTML = `Answer using</br>
-    //       r, f, v
-    //       `;
-    //   threeWholeNumber.textContent = "";
-    //   threeNumerator.textContent = "";
-    //   threeDenominator.textContent = "";
-    //   threeNumerator.classList.remove("line");
-    //   break;
-
     case "Level 4.15":
       level = 4.15;
       scoreNeeded = 10;
-      // highScoreName.innerHTML = highScore4DotZero15.name;
-      // highScoreTime.innerHTML = highScore4DotZero15.time;
-      // highScoreMistakes.innerHTML = highScore4DotZero15.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       document.querySelector("#user-input").style.width = "250px";
       displayProblem.style.textAlign = "left";
@@ -28828,9 +28639,6 @@ function buttonLevelSetting() {
       bronze =
         highScore4DotZero16.time +
         ((cutoff - highScore4DotZero16.time) / 3) * 2;
-      highScoreName.innerHTML = highScore4DotZero16.name;
-      highScoreTime.innerHTML = highScore4DotZero16.time;
-      highScoreMistakes.innerHTML = highScore4DotZero16.mistake;
       displayProblem.style.fontSize = "25px";
       helpMe.style.fontSize = "18px";
       helpMe.style.textAlign = "left";
@@ -28846,9 +28654,6 @@ function buttonLevelSetting() {
       bronze =
         highScore4DotZero17.time +
         ((cutoff - highScore4DotZero17.time) / 3) * 2;
-      highScoreName.innerHTML = highScore4DotZero17.name;
-      highScoreTime.innerHTML = highScore4DotZero17.time;
-      highScoreMistakes.innerHTML = highScore4DotZero17.mistake;
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       arr = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
@@ -28859,9 +28664,6 @@ function buttonLevelSetting() {
       level = 4.18;
       scoreNeeded = 20;
       gold = highScore4DotZero18.time;
-      highScoreName.innerHTML = highScore4DotZero18.name;
-      highScoreTime.innerHTML = highScore4DotZero18.time;
-      highScoreMistakes.innerHTML = highScore4DotZero18.mistake;
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       arr = ["A", "B", "C", "D", "O", "F", "G", "H", "I"];
@@ -28877,9 +28679,6 @@ function buttonLevelSetting() {
         highScore4DotZero19.time + (cutoff - highScore4DotZero19.time) / 3;
       bronze =
         highScore4DotZero.time + ((cutoff - highScore4DotZero19.time) / 3) * 2;
-      highScoreName.innerHTML = highScore4DotZero19.name;
-      highScoreTime.innerHTML = highScore4DotZero19.time;
-      highScoreMistakes.innerHTML = highScore4DotZero19.mistake;
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -28892,9 +28691,6 @@ function buttonLevelSetting() {
       silver = highScore4Dot2Zero.time + (cutoff - highScore4Dot2Zero.time) / 3;
       bronze =
         highScore4DotZero.time + ((cutoff - highScore4Dot2Zero.time) / 3) * 2;
-      highScoreName.innerHTML = highScore4Dot2Zero.name;
-      highScoreTime.innerHTML = highScore4Dot2Zero.time;
-      highScoreMistakes.innerHTML = highScore4Dot2Zero.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -28909,30 +28705,9 @@ function buttonLevelSetting() {
       gold = highScore4Dot21.time;
       silver = highScore4Dot21.time + (cutoff - highScore4Dot21.time) / 3;
       bronze = highScore4Dot21.time + ((cutoff - highScore4Dot21.time) / 3) * 2;
-      highScoreName.innerHTML = highScore4Dot21.name;
-      highScoreTime.innerHTML = highScore4Dot21.time;
-      highScoreMistakes.innerHTML = highScore4Dot21.mistake;
       displayProblem.style.fontSize = "20px";
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
-
-    // case "Level 4.22":
-    //   level = 4.22;
-    //   scoreNeeded = 10;
-    //   gold = highScore4DotZero22.time;
-    //   silver =
-    //     highScore4DotZero22.time + (cutoff - highScore4DotZero22.time) / 3;
-    //   bronze =
-    //     highScore4DotZero22.time +
-    //     ((cutoff - highScore4DotZero22.time) / 3) * 2;
-    //   highScoreName.innerHTML = highScore4DotZero22.name;
-    //   highScoreTime.innerHTML = highScore4DotZero22.time;
-    //   highScoreMistakes.innerHTML = highScore4DotZero22.mistake;
-    //   wholeNumberContainer.classList.add("hidden");
-    //   fractionsContainerTwo.classList.remove("hidden");
-    //   document.querySelector("#user-input").setAttribute("type", "text");
-    //   instructions.textContent = "";
-    //   break;
 
     case "Level 4.22":
       level = 4.22;
@@ -28983,13 +28758,6 @@ function buttonLevelSetting() {
     case "Level 5.0":
       level = 5.0;
       scoreNeeded = 20;
-      // gold = highScore5DotZero.time;
-      // silver = highScore5DotZero.time + (cutoff - highScore5DotZero.time) / 3;
-      // bronze =
-      //   highScore5DotZero.time + ((cutoff - highScore5DotZero.time) / 3) * 2;
-      // highScoreName.innerHTML = highScore5DotZero.name;
-      // highScoreTime.innerHTML = highScore5DotZero.time;
-      // highScoreMistakes.innerHTML = highScore5DotZero.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "20px";
       displayProblem.style.textAlign = "left";
@@ -29005,9 +28773,6 @@ function buttonLevelSetting() {
       level = 5.01;
       scoreNeeded = 10;
       gold = 80;
-      highScoreName.innerHTML = highScore5DotZero1.name;
-      highScoreTime.innerHTML = highScore5DotZero1.time;
-      highScoreMistakes.innerHTML = highScore5DotZero1.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -29019,9 +28784,6 @@ function buttonLevelSetting() {
       level = 5.02;
       scoreNeeded = 10;
       gold = highScore5DotZero2.time;
-      highScoreName.innerHTML = highScore5DotZero2.name;
-      highScoreTime.innerHTML = highScore5DotZero2.time;
-      highScoreMistakes.innerHTML = highScore5DotZero2.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "25px";
       instructions.innerHTML = "Form an equation using in fraction";
@@ -29031,9 +28793,6 @@ function buttonLevelSetting() {
       level = 5.03;
       scoreNeeded = 20;
       gold = highScore5DotZero3.time;
-      highScoreName.innerHTML = highScore5DotZero3.name;
-      highScoreTime.innerHTML = highScore5DotZero3.time;
-      highScoreMistakes.innerHTML = highScore5DotZero3.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "25px";
       instructions.innerHTML = `
@@ -29048,9 +28807,6 @@ function buttonLevelSetting() {
       silver = highScore5DotZero4.time + (cutoff - highScore5DotZero4.time) / 3;
       bronze =
         highScore5DotZero4.time + ((cutoff - highScore5DotZero4.time) / 3) * 2;
-      highScoreName.innerHTML = highScore5DotZero4.name;
-      highScoreTime.innerHTML = highScore5DotZero4.time;
-      highScoreMistakes.innerHTML = highScore5DotZero4.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "25px";
       instructions.innerHTML =
@@ -29062,9 +28818,6 @@ function buttonLevelSetting() {
       level = 5.05;
       scoreNeeded = 10;
       gold = 79;
-      highScoreName.innerHTML = highScore5DotZero5.name;
-      highScoreTime.innerHTML = highScore5DotZero5.time;
-      highScoreMistakes.innerHTML = highScore5DotZero5.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "25px";
       break;
@@ -29080,9 +28833,6 @@ function buttonLevelSetting() {
       silver = highScore5DotZero6.time + (cutoff - highScore5DotZero6.time) / 3;
       bronze =
         highScore5DotZero6.time + ((cutoff - highScore5DotZero6.time) / 3) * 2;
-      highScoreName.innerHTML = highScore5DotZero6.name;
-      highScoreTime.innerHTML = highScore5DotZero6.time;
-      highScoreMistakes.innerHTML = highScore5DotZero6.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -29095,9 +28845,6 @@ function buttonLevelSetting() {
       silver = highScore5DotZero7.time + (cutoff - highScore5DotZero7.time) / 3;
       bronze =
         highScore5DotZero7.time + ((cutoff - highScore5DotZero7.time) / 3) * 2;
-      highScoreName.innerHTML = highScore5DotZero7.name;
-      highScoreTime.innerHTML = highScore5DotZero7.time;
-      highScoreMistakes.innerHTML = highScore5DotZero7.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -29110,9 +28857,6 @@ function buttonLevelSetting() {
       silver = highScore5DotZero8.time + (cutoff - highScore5DotZero8.time) / 3;
       bronze =
         highScore5DotZero8.time + ((cutoff - highScore5DotZero8.time) / 3) * 2;
-      highScoreName.innerHTML = highScore5DotZero8.name;
-      highScoreTime.innerHTML = highScore5DotZero8.time;
-      highScoreMistakes.innerHTML = highScore5DotZero8.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -29125,9 +28869,6 @@ function buttonLevelSetting() {
       silver = highScore5DotZero9.time + (cutoff - highScore5DotZero9.time) / 3;
       bronze =
         highScore5DotZero9.time + ((cutoff - highScore5DotZero9.time) / 3) * 2;
-      highScoreName.innerHTML = highScore5DotZero9.name;
-      highScoreTime.innerHTML = highScore5DotZero9.time;
-      highScoreMistakes.innerHTML = highScore5DotZero9.mistake;
       instructions.innerHTML = `
         discount/original x 100
         increase/original x 100
@@ -29146,9 +28887,6 @@ function buttonLevelSetting() {
       bronze =
         highScore5DotZero10.time +
         ((cutoff - highScore5DotZero10.time) / 3) * 2;
-      highScoreName.innerHTML = highScore5DotZero10.name;
-      highScoreTime.innerHTML = highScore5DotZero10.time;
-      highScoreMistakes.innerHTML = highScore5DotZero10.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -29163,9 +28901,6 @@ function buttonLevelSetting() {
       bronze =
         highScore5DotZero11.time +
         ((cutoff - highScore5DotZero11.time) / 3) * 2;
-      highScoreName.innerHTML = highScore5DotZero11.name;
-      highScoreTime.innerHTML = highScore5DotZero11.time;
-      highScoreMistakes.innerHTML = highScore5DotZero11.mistake;
       instructions.innerHTML = `
         Calculate the value via percentage
         `;
@@ -29184,9 +28919,6 @@ function buttonLevelSetting() {
       bronze =
         highScore5DotZero12.time +
         ((cutoff - highScore5DotZero12.time) / 3) * 2;
-      highScoreName.innerHTML = highScore5DotZero12.name;
-      highScoreTime.innerHTML = highScore5DotZero12.time;
-      highScoreMistakes.innerHTML = highScore5DotZero12.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
 
       instructions.innerHTML = `
@@ -29204,9 +28936,6 @@ function buttonLevelSetting() {
       bronze =
         highScore5DotZero13.time +
         ((cutoff - highScore5DotZero13.time) / 3) * 2;
-      highScoreName.innerHTML = highScore5DotZero13.name;
-      highScoreTime.innerHTML = highScore5DotZero13.time;
-      highScoreMistakes.innerHTML = highScore5DotZero13.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -29221,9 +28950,6 @@ function buttonLevelSetting() {
       bronze =
         highScore5DotZero14.time +
         ((cutoff - highScore5DotZero14.time) / 3) * 2;
-      highScoreName.innerHTML = highScore5DotZero14.name;
-      highScoreTime.innerHTML = highScore5DotZero14.time;
-      highScoreMistakes.innerHTML = highScore5DotZero14.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -29232,12 +28958,6 @@ function buttonLevelSetting() {
     case "Level 5.15":
       level = 5.15;
       scoreNeeded = 10;
-      // gold = highScore5DotZero14.time;
-      // silver = highScore5DotZero14.time+((cutoff-highScore5DotZero14.time)/3)
-      // bronze = highScore5DotZero14.time+((cutoff-highScore5DotZero14.time)/3)*2
-      // highScoreName.innerHTML = highScore5DotZero14.name
-      // highScoreTime.innerHTML = highScore5DotZero14.time
-      // highScoreMistakes.innerHTML = highScore5DotZero14.mistake
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -29271,9 +28991,6 @@ function buttonLevelSetting() {
       silver = highScore6DotZero.time + (cutoff - highScore6DotZero.time) / 3;
       bronze =
         highScore6DotZero.time + ((cutoff - highScore6DotZero.time) / 3) * 2;
-      highScoreName.innerHTML = highScore6DotZero.name;
-      highScoreTime.innerHTML = highScore6DotZero.time;
-      highScoreMistakes.innerHTML = highScore6DotZero.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "25px";
       break;
@@ -29299,9 +29016,6 @@ function buttonLevelSetting() {
       silver = highScore6DotZero1.time + (cutoff - highScore6DotZero1.time) / 3;
       bronze =
         highScore6DotZero1.time + ((cutoff - highScore6DotZero1.time) / 3) * 2;
-      highScoreName.innerHTML = highScore6DotZero1.name;
-      highScoreTime.innerHTML = highScore6DotZero1.time;
-      highScoreMistakes.innerHTML = highScore6DotZero1.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -29322,19 +29036,9 @@ function buttonLevelSetting() {
       silver = highScore6DotZero2.time + (cutoff - highScore6DotZero2.time) / 3;
       bronze =
         highScore6DotZero2.time + ((cutoff - highScore6DotZero2.time) / 3) * 2;
-      highScoreName.innerHTML = highScore6DotZero2.name;
-      highScoreTime.innerHTML = highScore6DotZero2.time;
-      highScoreMistakes.innerHTML = highScore6DotZero2.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
-      // instructions.innerHTML =
-      // `
-      // Area of Circle<br>
-      // π x r x r</br>
-      // Circumference of Circle</br>
-      // 2 x π x r OR π x d
-      // `
       break;
 
     case "Level 6.03":
@@ -29344,9 +29048,6 @@ function buttonLevelSetting() {
       silver = highScore6DotZero3.time + (cutoff - highScore6DotZero3.time) / 3;
       bronze =
         highScore6DotZero3.time + ((cutoff - highScore6DotZero3.time) / 3) * 2;
-      highScoreName.innerHTML = highScore6DotZero3.name;
-      highScoreTime.innerHTML = highScore6DotZero3.time;
-      highScoreMistakes.innerHTML = highScore6DotZero3.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "25px";
       break;
@@ -29358,49 +29059,12 @@ function buttonLevelSetting() {
       silver = highScore6DotZero5.time + (cutoff - highScore6DotZero5.time) / 3;
       bronze =
         highScore6DotZero5.time + ((cutoff - highScore6DotZero5.time) / 3) * 2;
-      highScoreName.innerHTML = highScore6DotZero5.name;
-      highScoreTime.innerHTML = highScore6DotZero5.time;
-      highScoreMistakes.innerHTML = highScore6DotZero5.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "20px";
       instructions.innerHTML = `
         Distance = Speed x Time
         `;
       break;
-
-    // case "Level 6.06":
-    //   level = 6.06;
-    //   scoreNeeded = 10;
-    //   gold = highScore6DotZero6.time;
-    //   silver = highScore6DotZero6.time + (cutoff - highScore6DotZero6.time) / 3;
-    //   bronze =
-    //     highScore6DotZero6.time + ((cutoff - highScore6DotZero6.time) / 3) * 2;
-    //   highScoreName.innerHTML = highScore6DotZero6.name;
-    //   highScoreTime.innerHTML = highScore6DotZero6.time;
-    //   highScoreMistakes.innerHTML = highScore6DotZero6.mistake;
-    //   document.querySelector("#user-input").setAttribute("type", "text");
-    //   displayProblem.style.fontSize = "18px";
-    //   instructions.innerHTML = `
-    //     Average Speed of Whole Journey = Total Distance/Total Time
-    //     `;
-    //   break;
-
-    // case "Level 6.07":
-    //   level = 6.07;
-    //   scoreNeeded = 10;
-    //   gold = highScore6DotZero7.time;
-    //   silver = highScore6DotZero7.time + (cutoff - highScore6DotZero7.time) / 3;
-    //   bronze =
-    //     highScore6DotZero7.time + ((cutoff - highScore6DotZero7.time) / 3) * 2;
-    //   highScoreName.innerHTML = highScore6DotZero7.name;
-    //   highScoreTime.innerHTML = highScore6DotZero7.time;
-    //   highScoreMistakes.innerHTML = highScore6DotZero7.mistake;
-    //   document.querySelector("#user-input").setAttribute("type", "text");
-    //   displayProblem.style.fontSize = "18px";
-    //   instructions.innerHTML = `
-    //     Meet Up =</br> (Distance / Total Speed)</br> or</br> (Left over Distance / Total Speed)
-    //     `;
-    //   break;
 
     case "Level 7":
       level = 7;
@@ -29464,17 +29128,6 @@ function buttonLevelSetting() {
         99
       );
 
-      // if (
-      //   ![Array.from(Array(19)).map((e, i) => i + 1), 99].includes(
-      //     setting * 1
-      //   ) &&
-      //   !setting.split("").includes("-")
-      // )
-      // console.log(
-      //   ![...Array.from({ length: 18 }, (_, i) => i + 1), 99].includes(
-      //     setting * 1
-      //   )
-      // );
       if (
         ![...Array.from({ length: 21 }, (_, i) => i + 1), 99].includes(
           setting * 1
@@ -29594,8 +29247,6 @@ function buttonLevelSetting() {
       gold = heuOne.time;
       silver = heuOne.time + (cutoff - heuOne.time) / 3;
       bronze = heuOne.time + ((cutoff - heuOne.time) / 3) * 2;
-      highScoreName.innerHTML = heuOne.name;
-      highScoreTime.innerHTML = heuOne.time;
       instructions.style.fontSize = "16px";
       instructions.innerHTML = `
         A comparison statement tells us the difference.</p>
@@ -29907,10 +29558,102 @@ function buttonLevelSetting() {
       console.log(this.innerHTML);
   }
   attemptSetting.value = setting;
+  range = setting;
   if (hardcore == 1) {
     scoreNeeded /= 2;
   }
 }
+//FOR TIMINGS AND HIGHSCORE
+const allLevelButtons = [...settingButton].concat([...heuristics], [...calBtn]);
+console.log(allLevelButtons);
+allLevelButtons.forEach((item, index) => {
+  item.addEventListener("dblclick", function (e) {
+    console.log(e);
+    console.log(e.target.innerText);
+    let level = e.target.innerText;
+
+    if (level.startsWith("Level")) {
+      console.log("Normal level selected");
+      level = level.split(" ")[1];
+    }
+    if (level.startsWith("Cal")) {
+      console.log("Calculation selected");
+      level = level.split(".")[1];
+      if (level == 1) level = "calOne";
+      if (level == 2) level = "calTwo";
+      if (level == 3) level = "calThree";
+      if (level == 4) level = "calFour";
+      if (level == 5) level = "calFive";
+      if (level == "5b") level = "calFiveb";
+      if (level == 6) level = "calSix";
+      if (level == "6b") level = "calSixb";
+    }
+    if (level.startsWith("Heu")) {
+      console.log("Heuristics selected");
+      level = level.split(".")[1];
+      if (level == 1) level = "heuOne";
+      if (level == 2) level = "heuTwo";
+      if (level == "2b") level = "heuTwo";
+      if (level == 3) level = "heuThree";
+      if (level == "3b") level = "heuThreeb";
+      if (level == 4) level = "heuFour";
+      if (level == "4b") level = "heuFourb";
+      if (level == 5) level = "heuFive";
+      if (level == "5b") level = "heuFiveb";
+      if (level == 6) level = "heuSix";
+      if (level == "6b") level = "heuSixb";
+    }
+    console.log(level, range);
+    console.log("AJAXXX");
+
+    let attempt = {
+      level: level,
+      setting: range,
+      mode: mode,
+    };
+    e.preventDefault();
+    // data = JSON.stringify({ data });
+    $.ajax({
+      url: "/attempts/previousAttempts",
+      method: "POST",
+      // data: JSON.stringify(attempt),
+      data: attempt,
+      // contentType: "application/json; charset=utf-8",
+      success: function (res) {
+        // setTimeout(function () {
+        console.log(`Response from the control is ${res}`);
+        // console.log(`Ajax: ${res}`);
+        // const data = JSON.parse(res);
+        const data = res;
+        console.log(data);
+        // highScoreName.textContent = data.highscore.user;
+        // highScoreTime.textContent = data.highscore.time;
+        // highScoreMistakes.textContent = data.highscore.mistake;
+        if (data.highscore) {
+          highscore.textContent = `
+            ${data.highscore.user}, ${data.highscore.time}s and ${data.highscore.mistake} mistakes.
+            `;
+        } else {
+          highscore.textContent = `No highscore has been set.`;
+        }
+        // }, 1000);
+        modeSetting.textContent = `${data.mode}`;
+        goldSetting.textContent = `${Math.floor(
+          data.gold.upper
+        )} - ${Math.floor(data.gold.lower)}`;
+        silverSetting.textContent = `${Math.floor(
+          data.silver.upper
+        )} - ${Math.floor(data.silver.lower)}`;
+        bronzeSetting.textContent = `${Math.floor(
+          data.bronze.upper
+        )} - ${Math.floor(data.bronze.lower)}`;
+      },
+      error: function (res) {
+        console.log(`Some error. ${res}.`);
+      },
+    });
+  });
+});
 
 reviewAnswer.addEventListener("click", function () {
   if (confirm("Are you sure? Your score will drop to 0.")) {

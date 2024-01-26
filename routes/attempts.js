@@ -16,6 +16,8 @@ router
     attemptController.newAttempt
   );
 
+router.route("/previousAttempts").post(attemptController.previousAttempts);
+
 router
   .route("/edit/:id")
   .get(authController.adminCheck, attemptController.getAttempt);

@@ -385,6 +385,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         level: level,
         mode: mode,
         setting: setting,
+        age: age,
       }).sort({ time: 1 });
       console.log(`high score holder: ${highscoreholder}`);
       data.highscore = highscoreholder;
@@ -697,7 +698,95 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
   //   console.log(e);
   // }
 });
+exports.previousAttempts = async (req, res) => {
+  try {
+    let data = {};
+    const user = req.user;
+    const level = req.body.level;
+    const mode = req.body.mode;
+    const setting = req.body.setting;
+    const age = new Date().getFullYear() - req.user.DOB.getFullYear();
+    console.log(
+      `User: ${user} Age: ${age}, Level: ${level}, Mode: ${mode}, Setting: ${setting}`
+    );
+    const highscore = await Highscore.findOne({
+      level: level,
+      mode: mode,
+      setting: setting,
+      age: age,
+    }).sort({ time: 1 });
+    console.log(highscore);
+    data.highscore = highscore;
 
+    //STANDARD DEVIATION
+    const queryMean = await Attempt.find({
+      level: level,
+      mode: mode,
+      tries: "1",
+      setting: setting,
+      skip: "",
+      age: age,
+    }).sort({ time: 1 });
+    let sum = 0;
+    let allTheTiming = [];
+
+    queryMean.forEach((item) => allTheTiming.push(item.time));
+    console.log(`Timing: ${allTheTiming}`);
+    const percentile25 =
+      allTheTiming[Math.ceil(allTheTiming.length * 0.25) - 1];
+    const percentile75 =
+      allTheTiming[Math.ceil(allTheTiming.length * 0.75) - 1];
+    console.log(allTheTiming);
+    console.log(`25% = ${percentile25}, 75%=${percentile75}`);
+    const interquartileRange = percentile75 - percentile25;
+    let activeTimings = [];
+    allTheTiming.forEach((item) => {
+      if (
+        item < percentile25 - interquartileRange * 1.5 ||
+        item > percentile75 + 1.5 * interquartileRange
+      ) {
+        console.log("Outlier");
+      } else {
+        console.log(item);
+        sum += item;
+        activeTimings.push(item);
+      }
+    });
+    const mean = sum / activeTimings.length;
+    console.log(`Sum: ${sum}, Length: ${activeTimings.length} Mean: ${mean}, `);
+
+    let xSquare = 0;
+    activeTimings.forEach((item) => {
+      xSquare += (item - mean) ** 2;
+    });
+    const variance = xSquare / activeTimings.length;
+    const standardDev = Math.sqrt(variance);
+    console.log(`x2: ${xSquare}, Variance: ${variance}, Sd: ${standardDev}`);
+
+    data.bronze = {
+      lower: mean + standardDev,
+      upper: mean - standardDev,
+    };
+    data.silver = {
+      lower: mean - standardDev,
+      upper: mean - standardDev * 2,
+    };
+    data.gold = {
+      lower: mean - standardDev * 2,
+      upper: mean - standardDev * 3,
+    };
+    data.platinum = {
+      lower: mean - standardDev * 3,
+    };
+    console.log(mode);
+    console.log(data);
+    data.mode = mode;
+    res.send(data);
+  } catch (e) {
+    console.log("error");
+    res.send();
+  }
+};
 exports.monthlyHighscore = catchAsync(async (req, res) => {
   // try {
   const allLevels = await Attempt.distinct("level");
