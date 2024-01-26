@@ -188,6 +188,8 @@ const highScoreTime = document.querySelector(".highScoreTime");
 const highScoreMistakes = document.querySelector(".highScoreMistakes");
 const highscore = document.querySelector("#highscore");
 const modeStarter = document.querySelector("#mode");
+const parent = document.querySelector("#modeSet");
+
 const platinumStarter = document.querySelector("#platinum");
 const goldStarter = document.querySelector("#gold");
 const silverStarter = document.querySelector("#silver");
@@ -29637,8 +29639,33 @@ allLevelButtons.forEach((item, index) => {
         } else {
           highscore.textContent = `No highscore has been set.`;
         }
-        // }, 1000);
-        modeStarter.textContent = `${mode}`;
+        console.log(parent);
+        const elements = parent.getElementsByTagName("td");
+        console.log(elements);
+        parent.removeChild(elements[0]);
+        if (mode == "Easy") {
+          document
+            .querySelector("#modeSet")
+            .insertAdjacentHTML(
+              "afterbegin",
+              `<td><btn class="btn btn-success">Easy</td>`
+            );
+        } else if (mode == "Hardcore") {
+          document
+            .querySelector("#modeSet")
+            .insertAdjacentHTML(
+              "afterbegin",
+              `<td><btn class="btn btn-danger">Hardcore</td>`
+            );
+        } else {
+          document
+            .querySelector("#modeSet")
+            .insertAdjacentHTML(
+              "afterbegin",
+              `<td><btn class="btn btn-secondary">Normal</td>`
+            );
+        }
+
         if (data.gold) {
           platinumStarter.textContent = `< ${Math.floor(data.gold.upper)}`;
           goldStarter.textContent = `< ${Math.floor(data.gold.lower)}`;
