@@ -187,10 +187,11 @@ const highScoreName = document.querySelector(".highScoreName");
 const highScoreTime = document.querySelector(".highScoreTime");
 const highScoreMistakes = document.querySelector(".highScoreMistakes");
 const highscore = document.querySelector("#highscore");
-const modeSetting = document.querySelector("#mode");
-const goldSetting = document.querySelector("#gold");
-const silverSetting = document.querySelector("#silver");
-const bronzeSetting = document.querySelector("#bronze");
+const modeStarter = document.querySelector("#mode");
+const platinumStarter = document.querySelector("#platinum");
+const goldStarter = document.querySelector("#gold");
+const silverStarter = document.querySelector("#silver");
+const bronzeStarter = document.querySelector("#bronze");
 const fractionChoice = document.querySelector(".fraction-choice");
 const wholeNumberContainer = document.querySelector(".whole-numbers-container");
 const fractionsContainer = document.querySelector(".fractions-container");
@@ -29637,16 +29638,11 @@ allLevelButtons.forEach((item, index) => {
           highscore.textContent = `No highscore has been set.`;
         }
         // }, 1000);
-        modeSetting.textContent = `${data.mode}`;
-        goldSetting.textContent = `${Math.floor(
-          data.gold.upper
-        )} - ${Math.floor(data.gold.lower)}`;
-        silverSetting.textContent = `${Math.floor(
-          data.silver.upper
-        )} - ${Math.floor(data.silver.lower)}`;
-        bronzeSetting.textContent = `${Math.floor(
-          data.bronze.upper
-        )} - ${Math.floor(data.bronze.lower)}`;
+        modeStarter.textContent = `${data.mode}`;
+        platinumStarter.textContent = `< ${data.gold.upper.toFixed(1)}`;
+        goldStarter.textContent = `< ${data.gold.lower.toFixed(1)}`;
+        silverStarter.textContent = `< ${data.silver.lower.toFixed(1)}`;
+        bronzeStarter.textContent = `< ${data.bronze.lower.toFixed(1)}`;
       },
       error: function (res) {
         console.log(`Some error. ${res}.`);
