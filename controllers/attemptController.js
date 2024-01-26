@@ -709,14 +709,28 @@ exports.previousAttempts = async (req, res) => {
     console.log(
       `User: ${user} Age: ${age}, Level: ${level}, Mode: ${mode}, Setting: ${setting}`
     );
-    const highscore = await Highscore.findOne({
+    data.highscore = await Highscore.findOne({
       level: level,
       mode: mode,
       setting: setting,
       age: age,
     }).sort({ time: 1 });
-    console.log(highscore);
-    data.highscore = highscore;
+
+    let firstName = user.username.split(" ")[0];
+    let surName = user.username.split(" ")[1];
+    firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+    surName = surName.charAt(0).toUpperCase() + surName.slice(1);
+    const name = `${firstName} ${surName}`;
+
+    data.previous = await Attempt.findOne({
+      user: name,
+      level: level,
+      mode: mode,
+      tries: "1",
+      setting: setting,
+      skip: "",
+      age: age,
+    }).sort({ time: -1 });
 
     //STANDARD DEVIATION
     const queryMean = await Attempt.find({

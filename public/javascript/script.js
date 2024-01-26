@@ -192,6 +192,7 @@ const platinumStarter = document.querySelector("#platinum");
 const goldStarter = document.querySelector("#gold");
 const silverStarter = document.querySelector("#silver");
 const bronzeStarter = document.querySelector("#bronze");
+const previousAttempt = document.querySelector("#previousAttempt");
 const fractionChoice = document.querySelector(".fraction-choice");
 const wholeNumberContainer = document.querySelector(".whole-numbers-container");
 const fractionsContainer = document.querySelector(".fractions-container");
@@ -29632,17 +29633,26 @@ allLevelButtons.forEach((item, index) => {
         // highScoreMistakes.textContent = data.highscore.mistake;
         if (data.highscore) {
           highscore.textContent = `
-            ${data.highscore.user}, ${data.highscore.time}s and ${data.highscore.mistake} mistakes.
+            ${data.highscore.user}, ${data.highscore.time}s, ${data.highscore.mistake} mistakes.
             `;
         } else {
           highscore.textContent = `No highscore has been set.`;
         }
         // }, 1000);
         modeStarter.textContent = `${data.mode}`;
-        platinumStarter.textContent = `< ${data.gold.upper.toFixed(1)}`;
-        goldStarter.textContent = `< ${data.gold.lower.toFixed(1)}`;
-        silverStarter.textContent = `< ${data.silver.lower.toFixed(1)}`;
-        bronzeStarter.textContent = `< ${data.bronze.lower.toFixed(1)}`;
+        platinumStarter.textContent = `< ${Math.floor(data.gold.upper)}`;
+        goldStarter.textContent = `< ${Math.floor(data.gold.lower)}`;
+        silverStarter.textContent = `< ${Math.floor(data.silver.lower)}`;
+        bronzeStarter.textContent = `< ${Math.floor(data.bronze.lower)}`;
+        if (data.previous) {
+          previousAttempt.textContent = `Previous: ${Math.floor(
+            data.previous.time
+          )}s, ${data.previous.mistake} mistakes`;
+        } else {
+          previousAttempt.textContent = `This is your 1st Attempt.`;
+        }
+
+        // previousAttempt.textContent = `Age`;
       },
       error: function (res) {
         console.log(`Some error. ${res}.`);
