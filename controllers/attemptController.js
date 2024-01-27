@@ -709,12 +709,23 @@ exports.previousAttempts = async (req, res) => {
     console.log(
       `User: ${user} Age: ${age}, Level: ${level}, Mode: ${mode}, Setting: ${setting}`
     );
-    data.highscore = await Highscore.findOne({
-      level: level,
-      mode: mode,
-      setting: setting,
-      age: age,
-    }).sort({ time: 1 });
+    // data.highscore = await Highscore.findOne({
+    //   level: level,
+    //   mode: mode,
+    //   setting: setting,
+    //   age: age,
+    // }).sort({ time: 1 });
+
+    const getHighscore = async (req, res) => {
+      return await Highscore.findOne({
+        level: level,
+        mode: mode,
+        setting: setting,
+        age: age,
+      }).sort({ time: 1 });
+    };
+
+    // data.highscore = await getHighscore();
 
     let firstName = user.username.split(" ")[0];
     let surName = user.username.split(" ")[1];
@@ -731,20 +742,49 @@ exports.previousAttempts = async (req, res) => {
       skip: "",
       age: age,
     }).sort({ date: -1 });
+    const getPrevious = async (req, res) => {
+      return await Attempt.findOne({
+        user: name,
+        level: level,
+        mode: mode,
+        tries: "1",
+        setting: setting,
+        skip: "",
+        age: age,
+      }).sort({ date: -1 });
+    };
 
     data.daysAgo = Math.floor(
       (new Date() - data.previous.date) / (1000 * 60 * 60 * 24)
     );
 
     //STANDARD DEVIATION
-    const queryMean = await Attempt.find({
-      level: level,
-      mode: mode,
-      tries: "1",
-      setting: setting,
-      skip: "",
-      age: age,
-    }).sort({ time: 1 });
+    // const queryMean = await Attempt.find({
+    //   level: level,
+    //   mode: mode,
+    //   tries: "1",
+    //   setting: setting,
+    //   skip: "",
+    //   age: age,
+    // }).sort({ time: 1 });
+
+    const getMean = async (req, res) => {
+      return await Attempt.find({
+        level: level,
+        mode: mode,
+        tries: "1",
+        setting: setting,
+        skip: "",
+        age: age,
+      }).sort({ time: 1 });
+    };
+    let queryMean;
+    [data.highscore, data.previous, queryMean] = await Promise.all([
+      getHighscore(),
+      getPrevious(),
+      getMean(),
+    ]);
+
     let sum = 0;
     let allTheTiming = [];
 
@@ -796,13 +836,15 @@ exports.previousAttempts = async (req, res) => {
     data.platinum = {
       lower: mean - standardDev * 3,
     };
-    console.log(mode);
-    console.log(data);
+
     data.mode = mode;
     res.send(data);
   } catch (e) {
     console.log("error");
-    res.send();
+    // res.sendStatus(400).json({
+    //   message: e,
+    // });
+    res.sendStatus(400);
   }
 };
 exports.monthlyHighscore = catchAsync(async (req, res) => {
@@ -893,7 +935,7 @@ exports.getHighscore = catchAsync(async (req, res, next) => {
   //   }
   // }
 
-  const highscoreHolder = await Highscore.find().sort({ level: 1, time: 1 });
+  // const highscoreHolder = await Highscore.find().sort({ level: 1, time: 1 });
 
   const [
     highscoreAge7,
@@ -929,14 +971,12 @@ exports.getHighscore = catchAsync(async (req, res, next) => {
     highscoreAge12,
   ];
   let arr = [sevenArr, eightArr, nineArr, tenArr, elevenArr, twelveArr];
-  console.log(highscoreAge7);
-  console.log(ageArr[0]);
   ageArr.forEach((ageAttempts, index) => {
     console.log(index);
-    // console.log(ageAttempts);
+    let level = [];
     ageAttempts.forEach((item) => {
       // console.log(item);
-      let level = [];
+
       highscoreModes.forEach((mode) => {
         if (
           highscoreLevels.includes(item.level) &&
@@ -950,111 +990,6 @@ exports.getHighscore = catchAsync(async (req, res, next) => {
     });
     console.log(`Primary ${index + 1} done.`);
   });
-  // highscoreAge7.forEach((item) => {
-  //   let level = [];
-  //   highscoreModes.forEach((mode) => {
-  //     if (
-  //       highscoreLevels.includes(item.level) &&
-  //       item.mode == mode &&
-  //       !level.includes(item.level)
-  //     ) {
-  //       sevenArr.push(item);
-  //       level.push(item.level);
-  //     }
-  //   });
-  // });
-  // //8
-  // highscoreAge8.forEach((item) => {
-  //   let level = [];
-  //   highscoreModes.forEach((mode) => {
-  //     if (
-  //       highscoreLevels.includes(item.level) &&
-  //       item.mode == mode &&
-  //       !level.includes(item.level)
-  //     ) {
-  //       eightArr.push(item);
-  //       level.push(item.level);
-  //     }
-  //   });
-  // });
-  // //9
-  // highscoreAge9.forEach((item) => {
-  //   let level = [];
-  //   highscoreModes.forEach((mode) => {
-  //     if (
-  //       highscoreLevels.includes(item.level) &&
-  //       item.mode == mode &&
-  //       !level.includes(item.level)
-  //     ) {
-  //       nineArr.push(item);
-  //       level.push(item.level);
-  //     }
-  //   });
-  // });
-  // //10
-  // highscoreAge10.forEach((item) => {
-  //   let level = [];
-  //   highscoreModes.forEach((mode) => {
-  //     if (
-  //       highscoreLevels.includes(item.level) &&
-  //       item.mode == mode &&
-  //       !level.includes(item.level)
-  //     ) {
-  //       tenArr.push(item);
-  //       level.push(item.level);
-  //     }
-  //   });
-  // });
-  // //11
-  // highscoreAge11.forEach((item) => {
-  //   let level = [];
-  //   highscoreModes.forEach((mode) => {
-  //     if (
-  //       highscoreLevels.includes(item.level) &&
-  //       item.mode == mode &&
-  //       !level.includes(item.level)
-  //     ) {
-  //       elevenArr.push(item);
-  //       level.push(item.level);
-  //     }
-  //   });
-  // });
-  // //12
-  // highscoreAge12.forEach((item) => {
-  //   let level = [];
-  //   highscoreModes.forEach((mode) => {
-  //     if (
-  //       highscoreLevels.includes(item.level) &&
-  //       item.mode == mode &&
-  //       !level.includes(item.level)
-  //     ) {
-  //       twelveArr.push(item);
-  //       level.push(item.level);
-  //     }
-  //   });
-  // });
-  // console.log(twelveArr);
-  for (let a = 0; a < highscoreLevels.length; a++) {
-    for (let m = 0; m < highscoreModes.length; m++) {
-      let genesis = 0;
-      for (let b = 0; b < highscoreHolder.length; b++) {
-        if (
-          highscoreHolder[b].mode == highscoreModes[m] &&
-          highscoreHolder[b].level == highscoreLevels[a]
-        ) {
-          if (genesis == 0) {
-            highscoreHoldersArr.push(highscoreHolder[b]);
-            genesis += 1;
-            // genesisTwo += 1;
-          }
-        }
-      }
-    }
-  }
-  // console.log(highscoreHolder);
-  // username = req.user.username;
-  // authenticate = req.auth;
-  // currentUser = req.user;
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
