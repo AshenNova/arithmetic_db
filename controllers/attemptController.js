@@ -721,6 +721,7 @@ exports.previousAttempts = async (req, res) => {
     // }).sort({ time: 1 });
 
     const getHighscore = async (req, res) => {
+      console.log("Searching for highscore");
       return await Highscore.findOne({
         level: level,
         mode: mode,
@@ -731,22 +732,24 @@ exports.previousAttempts = async (req, res) => {
 
     // data.highscore = await getHighscore();
 
+    console.log("Finding name");
     let firstName = user.username.split(" ")[0];
     let surName = user.username.split(" ")[1];
     firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
     surName = surName.charAt(0).toUpperCase() + surName.slice(1);
     const name = `${firstName} ${surName}`;
 
-    data.previous = await Attempt.findOne({
-      user: name,
-      level: level,
-      mode: mode,
-      tries: "1",
-      setting: setting,
-      skip: "",
-      age: age,
-    }).sort({ date: -1 });
+    // data.previous = await Attempt.findOne({
+    //   user: name,
+    //   level: level,
+    //   mode: mode,
+    //   tries: "1",
+    //   setting: setting,
+    //   skip: "",
+    //   age: age,
+    // }).sort({ date: -1 });
     const getPrevious = async (req, res) => {
+      console.log("Finding previous Attempt");
       return await Attempt.findOne({
         user: name,
         level: level,
@@ -758,21 +761,10 @@ exports.previousAttempts = async (req, res) => {
       }).sort({ date: -1 });
     };
 
-    data.daysAgo = Math.floor(
-      (new Date() - data.previous.date) / (1000 * 60 * 60 * 24)
-    );
-
     //STANDARD DEVIATION
-    // const queryMean = await Attempt.find({
-    //   level: level,
-    //   mode: mode,
-    //   tries: "1",
-    //   setting: setting,
-    //   skip: "",
-    //   age: age,
-    // }).sort({ time: 1 });
 
     const getMean = async (req, res) => {
+      console.log("Finding Mean");
       return await Attempt.find({
         level: level,
         mode: mode,
@@ -788,6 +780,13 @@ exports.previousAttempts = async (req, res) => {
       getPrevious(),
       getMean(),
     ]);
+    if (data.previous) {
+      data.daysAgo = Math.floor(
+        (new Date() - data.previous.date) / (1000 * 60 * 60 * 24)
+      );
+    } else {
+      data.daysAgo = "Nil";
+    }
 
     let sum = 0;
     let allTheTiming = [];
