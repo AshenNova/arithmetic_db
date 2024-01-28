@@ -385,7 +385,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         level: level,
         mode: mode,
         setting: setting,
-        age: age,
+        age: currentAge,
       }).sort({ time: 1 });
       console.log(`high score holder: ${highscoreholder}`);
       data.highscore = highscoreholder;
@@ -556,6 +556,9 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
       const platinum = {
         lower: mean - standardDev * 3,
       };
+      console.log(bronze);
+      console.log(silver);
+      console.log(gold);
       if (time >= bronze.lower) {
         award = "Try harder";
       } else if (time <= bronze.lower && time > bronze.upper) {
@@ -585,7 +588,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
   };
 
   await standardDeviation();
-
+  // console.log(`The standard Deviation is ${standardDeviation}`);
   // LAST: SAVE ATTEMPT
   let pointsAwarded = 0;
   const pointSystem = async (req, res) => {
@@ -698,6 +701,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
   //   console.log(e);
   // }
 });
+
 exports.previousAttempts = async (req, res) => {
   try {
     let data = {};

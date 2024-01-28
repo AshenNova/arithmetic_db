@@ -190,10 +190,10 @@ const highscore = document.querySelector("#highscore");
 const modeStarter = document.querySelector("#mode");
 const parent = document.querySelector("#modeSet");
 
-const platinumStarter = document.querySelector("#platinum");
-const goldStarter = document.querySelector("#gold");
-const silverStarter = document.querySelector("#silver");
-const bronzeStarter = document.querySelector("#bronze");
+const platinumStarter = document.querySelector("#platinumStart");
+const goldStarter = document.querySelector("#goldStart");
+const silverStarter = document.querySelector("#silverStart");
+const bronzeStarter = document.querySelector("#bronzeStart");
 const previousAttempt = document.querySelector("#previousAttempt");
 const fractionChoice = document.querySelector(".fraction-choice");
 const wholeNumberContainer = document.querySelector(".whole-numbers-container");
@@ -28068,7 +28068,7 @@ function buttonLevelSetting() {
 
     case "Level 1.01":
       level = 1.01;
-      scoreNeeded = 5;
+      scoreNeeded = 50;
 
       gold = highScore1DotZero1.time;
       silver = highScore1DotZero1.time + (cutoff - highScore1DotZero1.time) / 3;
@@ -29859,7 +29859,7 @@ $("#attemptAjex").on("submit", function (event) {
           document.getElementById("highscore-table-mistake").innerHTML = "Nil";
           document.getElementById("highscore-table-score").innerHTML = "Nil";
         }
-
+        console.log(`${data} ❕`);
         // if (data.medals.gold.lower == null) {
         if (data.medals.gold.lower == null) {
           $("#gold").html(`Nil`);
