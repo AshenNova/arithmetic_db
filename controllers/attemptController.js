@@ -347,6 +347,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
   const tries = req.body.tries;
   const attemptNum = req.body.attemptNum;
   const summary = req.body.summary;
+
   const ip = req.headers["x-forwarded-for"] || req.ip;
   console.log(`This is ${req.body.user}'s attempt number ${attemptNum}.`);
 
@@ -405,7 +406,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         mode,
         age: currentAge,
       }).count();
-      if (checkMin > 5) {
+      if (checkMin > 5 && tries == "1" && extra == "") {
         console.log("Minimum met");
         console.log("Highscore check running");
         const checkExist = await Highscore.findOne({
