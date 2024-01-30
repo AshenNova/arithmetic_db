@@ -36,7 +36,11 @@
                                <ul>
                                 <% exams.forEach(exam => { %>
                                     <% if (exam.year == thisYear-i && typing == exam.type && exam.subject == subject) { %>
-                                        <li><a href="<%= exam.link %>" target="_blank"><%= exam.school %> (<%= exam.paper %>)</a></li>
+                                        <li><a href="<%= exam.link %>" target="_blank"><%= exam.school %>
+                                            <% if (exam.paper) { %>
+                                                (<%= exam.paper %>)
+                                        <% } %>
+                                    </a></li>
                                     <% } %>
                                 <% }) %>
                             </ul>

@@ -40,9 +40,9 @@
            <div class="mb-3">
             <label class="form-label">Subject</label>
             <select class="form-select" name="subject2">
-              <option selected>Existing</option>
+              <option selected>Choose</option>
             <% subjects.forEach(item => { %>
-              <option value=<%= item %><%= item %></option>
+              <option><%= item %></option>
             <% }) %>
             </select>
           </div>
@@ -91,9 +91,9 @@
            <div class="mb-3">
             <label class="form-label">School</label>
             <select class="form-select" name="school2">
-              <option selected>Existing</option>
+              <option selected>Choose</option>
             <% schools.forEach(item => { %>
-              <option value=<%= item %><%= item %></option>
+              <option><%= item %></option>
             <% }) %>
             </select>
           </div>

@@ -23,6 +23,7 @@
      <table class="table">
          <thead>
              <tr>
+                <td>Subject</td>
                  <td>Year</td>
                  <td>Level</td>
                  <td>Type</td>
@@ -36,6 +37,7 @@
          </thead>
          <% exams.forEach( item => { %>
             <tr>
+                <td><%= item.subject %></td>
                 <td><%= item.year %></td>
                 <td><%= item.level %></td>
                 <td><%= item.type %></td>

@@ -596,7 +596,7 @@ function normalDisplay() {
   displayProblem.style.textAlign = "left";
 }
 function drawingDisplay() {
-  // canvasTextId.classList.remove("hidden")
+  canvasTextId.textContent = "";
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.clearRect(0, 0, 1000, 1000);
   firstCanvas.classList.remove("hidden");
@@ -26741,8 +26741,7 @@ function genProblems() {
     setting = calArrAll(4, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
 
-    if (
-      setting == 1) {
+    if (setting == 1) {
       return {
         rollObject: ["tree", "lamppost", "fire hydrant"][genNumbers(3)],
         rollPositionTwoArr: ["4th", "5th", "6th"],
@@ -26761,8 +26760,7 @@ function genProblems() {
         rollz: 1,
       };
     }
-    if (
-      setting == 2 ) {
+    if (setting == 2) {
       return {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
@@ -26772,8 +26770,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 3 ) {
+    if (setting == 3) {
       return {
         objectOne: ["B", "C", "D"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
@@ -26783,8 +26780,7 @@ function genProblems() {
     }
 
     // WORKING SETTING
-    if (
-      setting == 4 ) {
+    if (setting == 4) {
       let genOnePos = genNumbers(5);
       let genTwoPos = genNumbers(5);
       return {
