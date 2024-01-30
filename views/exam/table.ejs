@@ -17,26 +17,37 @@
  <div class="container mt-3">
 
     <% const thisYear = new Date().getFullYear() %>
-    <div class="row">
-    <% for(let i = 0; i < 5; i++){ %>
-        <% if (exams.forEach(item => { %>
-            <% if (item.year == thisYear-i) { %>
-                    <h1><%= thisYear %></h1>
-                    <% const type = ["CA1", "SA1", "CA2", "SA2"] %>
-                    <div class="col-2">
-                   <% type.forEach(typing => { %>
-                       <ul>
-                       <% if (typing == item.type){ %>
-                        <li><%= item.school %></li>
-                       <% } %>
-                    </ul>
-                   <% }) %>
-                </div>
+    <% const subjects = ["Math", "Science"] %>
+    <% subjects.forEach(subject => { %>
+        <% if (subject == "Math") { %>
+            <btn class="btn btn-primary">Math</btn>
+        <% } %>
+        <% if (subject == "Science") { %>
+            <btn class="btn btn-success">Science</btn>
+        <% } %>
+        <div class="row">
+            <% for(let i = 0; i < 5; i++){ %>
+                <h1><%= thisYear-i %></h1>
+                <hr>
+                        <% const type = ["CA1", "SA1", "CA2", "SA2"] %>  
+                        <% type.forEach(typing => { %>
+                            <div class="col-2">
+                            <h3><%= typing %></h3>
+                               <ul>
+                                <% exams.forEach(exam => { %>
+                                    <% if (exam.year == thisYear-i && typing == exam.type && exam.subject == subject) { %>
+                                        <li><a href="<%= exam.link %>" target="_blank"><%= exam.school %> (<%= exam.paper %>)</a></li>
+                                    <% } %>
+                                <% }) %>
+                            </ul>
+                        </div>
+                        <% }) %>
+                  
             <% } %>
-       <% })) %>
-    <% } %>
-      
-</div>
+              
+        </div>
+    <%}) %>
+   
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </html>

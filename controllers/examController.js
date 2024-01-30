@@ -11,10 +11,11 @@ const AppError = require("../utils/appError");
 const User = require("../models/userModel");
 
 exports.new = catchAsync(async (req, res, next) => {
+  let existing;
   const schools = await Exam.distinct("school");
   const subjects = await Exam.distinct("subject");
   console.log("New exam paper");
-  res.render("./exam/new", { schools, subjects });
+  res.render("./exam/new", { schools, subjects, existing });
 });
 
 exports.save = catchAsync(async (req, res, next) => {
@@ -31,7 +32,7 @@ exports.save = catchAsync(async (req, res, next) => {
   for (let [key, value] of Object.entries(exam)) {
     console.log(`${key}, ${value}`);
     if (arrays.includes(key)) {
-      value = value.toUpperCase();
+      exam[key] = value.toUpperCase();
     }
   }
   req.body.subject = req.body.subject1;
