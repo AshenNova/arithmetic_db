@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+  <link rel="stylesheet" href="/css/navbar-styles.css">
+   <link rel="icon" href="/images/favicon.ico?v=1.1">
+  
+  <title>New Exam Paper</title>
+</head>
+<body>
+ <div class="container">
+     <h1>New Exam Paper</h1>
+     <form action="/exam/new" method="post">
+      <div class="mb-3">
+        <label class="form-label">ID</label>
+        <input type="text" class="form-control" name="id" value="<%= existing._id %>" readonly>
+      </div>
+      
+      <div class="row">
+        <div class="col-6">
+          <div class="mb-3">
+            <label class="form-label">Subject</label>
+            <% if (existing) { %>
+              <input type="text" class="form-control" name="subject1" value="<%= existing.subject %>">
+            <% }  else {%>
+              <input type="text" class="form-control" name="subject1">
+            <% } %>
+          
+          </div>
+       </div>
+        <div class="col-6">
+           <div class="mb-3">
+            <label class="form-label">Subject</label>
+            <select class="form-select" name="subject2">
+              <option selected>Existing</option>
+            <% subjects.forEach(item => { %>
+              <option value=<%= item %><%= item %></option>
+            <% }) %>
+            </select>
+          </div>
+        </div>
+    </div>
+  
+      <div class="mb-3">
+        <label class="form-label">Year</label>
+        <% if (existing) { %>
+          <input type="text" class="form-control" name="year" value="<%= existing.year %>">
+        <% }  else {%>
+          <input type="text" class="form-control" name="year">
+        <% } %>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Level</label>
+        <% if (existing) { %>
+          <input type="text" class="form-control" name="level" value="<%= existing.level %>">
+        <% }  else {%>
+          <input type="text" class="form-control" name="level">
+        <% } %>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="mb-3">
+            <label class="form-label">School</label>
+            <% if (existing) { %>
+              <input type="text" class="form-control" name="school1" value="<%= existing.school %>">
+            <% }  else {%>
+              <input type="text" class="form-control" name="school1">
+            <% } %>
+          </div>
+       </div>
+        <div class="col-6">
+           <div class="mb-3">
+            <label class="form-label">School</label>
+            <select class="form-select" name="school2">
+              <option selected>Existing</option>
+            <% schools.forEach(item => { %>
+              <option value=<%= item %><%= item %></option>
+            <% }) %>
+            </select>
+          </div>
+        </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Paper</label>
+      <% if (existing) { %>
+        <input type="text" class="form-control" name="paper" value="<%= existing.paper %>">
+      <% }  else {%>
+        <input type="text" class="form-control" name="paper">
+      <% } %>
+    </div>
+      <div class="mb-3">
+        <label class="form-label">Comment</label>
+        <% if (existing) { %>
+          <input type="text" class="form-control" name="comment" value="<%= existing.comment %>">
+        <% }  else {%>
+          <input type="text" class="form-control" name="comment">
+        <% } %>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Link</label>
+        <% if (existing) { %>
+          <input type="text" class="form-control" name="link" value="<%= existing.link %>">
+        <% }  else {%>
+          <input type="text" class="form-control" name="link">
+        <% } %>
+      </div>
+      <% if (existing) { %>
+        <button type="submit" class="btn btn-primary">Save</button>
+      <% } else { %>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      <% } %>
+       
+     </form>
+ </div>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</html>

@@ -14211,11 +14211,7 @@ How far is apart is Town A and Town B?
   // HEUTWO DISPLAY
   if (level == "heuTwo") {
     normalDisplay();
-    if (
-      setting == 1 ||
-      (setting == 9 && p.rollz == 1) ||
-      (range == 1 && p.rollz == 1)
-    ) {
+    if (setting == 1) {
       p.positionTwo = p.rollPositionTwoArr[genNumbers(3)];
       p.positionOne = p.rollPositionOneArr[genNumbers(3)];
       p.positionThree = p.rollPositionOneArr[genNumbers(3)];
@@ -14255,11 +14251,7 @@ How far is apart is Town A and Town B?
       What is the distance between the ${p.positionThree} and ${p.positionFour} ${p.rollObject}?
       `;
     }
-    if (
-      setting == 2 ||
-      (setting == 9 && p.rollz == 2) ||
-      (range == 1 && p.rollz == 2)
-    ) {
+    if (setting == 2) {
       p.numOne = p.numTwo + (genNumbers(3) + 2) * 2;
 
       displayProblem.innerHTML = `
@@ -14269,22 +14261,14 @@ How far is apart is Town A and Town B?
       `;
     }
 
-    if (
-      setting == 3 ||
-      (setting == 9 && p.rollz == 3) ||
-      (range == 1 && p.rollz == 3)
-    ) {
+    if (setting == 3) {
       displayProblem.innerHTML = `
       ${p.objectOne} must give ${p.difference} to ${p.objectTwo} to be the same.</br>
       What is their difference at first?
       `;
     }
     //  WORKING DISPLAY HEUTWO
-    if (
-      setting == 4 ||
-      (setting == 9 && p.rollz == 4) ||
-      (range == 1 && p.rollz == 4)
-    ) {
+    if (setting == 4) {
       if (p.version == 1) {
         let things = ["people", "objects"][genNumbers(2)];
         displayProblem.innerHTML = `
@@ -21397,11 +21381,7 @@ function handleSubmit(e) {
     }
     // answers
     if (level == "heuTwo") {
-      if (
-        setting == 1 ||
-        (setting == 9 && p.rollz == 1) ||
-        (range == 1 && p.rollz == 1)
-      ) {
+      if (setting == 1) {
         let interval = p.distance / (p.indexTwo - p.indexOne);
         correctAnswer = `${p.indexTwo + 1}-${p.indexOne + 1}=${
           p.indexTwo - p.indexOne
@@ -21412,29 +21392,17 @@ function handleSubmit(e) {
         }=${p.rollDistance * (p.indexFour - p.indexThree)}`;
         correctAnswerTwo = p.rollDistance * (p.indexFour - p.indexThree);
       }
-      if (
-        setting == 2 ||
-        (setting == 9 && p.rollz == 2) ||
-        (range == 1 && p.rollz == 2)
-      ) {
+      if (setting == 2) {
         correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne - p.numTwo}\n${
           p.numOne - p.numTwo
         }/2=${(p.numOne - p.numTwo) / 2}`;
         correctAnswerTwo = (p.numOne - p.numTwo) / 2;
       }
-      if (
-        setting == 3 ||
-        (setting == 9 && p.rollz == 3) ||
-        (range == 1 && p.rollz == 3)
-      ) {
+      if (setting == 3) {
         correctAnswer = `${p.difference}x2=${p.difference * 2}`;
         correctAnswerTwo = p.difference * 2;
       }
-      if (
-        setting == 4 ||
-        (setting == 9 && p.rollz == 4) ||
-        (range == 1 && p.rollz == 4)
-      ) {
+      if (setting == 4) {
         if (p.version == 1 || p.version == 2) {
           const intervals = p.twoPos + 6 - (p.onePos + 1);
           const lineOne = `${p.twoPos + 6}-${p.onePos + 1}=${intervals}`;
@@ -26774,10 +26742,7 @@ function genProblems() {
     setting = checkRange(setting, calArr, skipArr);
 
     if (
-      (setting == 1 && range == 0) ||
-      (setting == 9 && roll == 1) ||
-      (range == 1 && roll == 1)
-    ) {
+      setting == 1) {
       return {
         rollObject: ["tree", "lamppost", "fire hydrant"][genNumbers(3)],
         rollPositionTwoArr: ["4th", "5th", "6th"],
@@ -26797,10 +26762,7 @@ function genProblems() {
       };
     }
     if (
-      (setting == 2 && range == 0) ||
-      (setting == 9 && roll == 2) ||
-      (range == 1 && roll == 2)
-    ) {
+      setting == 2 ) {
       return {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
@@ -26811,10 +26773,7 @@ function genProblems() {
     }
 
     if (
-      (setting == 3 && range == 0) ||
-      (setting == 9 && roll == 3) ||
-      (range == 1 && roll == 3)
-    ) {
+      setting == 3 ) {
       return {
         objectOne: ["B", "C", "D"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
@@ -26825,10 +26784,7 @@ function genProblems() {
 
     // WORKING SETTING
     if (
-      (setting == 4 && range == 0) ||
-      (setting == 9 && roll == 4) ||
-      (range == 1 && roll == 4)
-    ) {
+      setting == 4 ) {
       let genOnePos = genNumbers(5);
       let genTwoPos = genNumbers(5);
       return {

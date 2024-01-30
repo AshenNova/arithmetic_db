@@ -2,7 +2,6 @@ const Attempt = require("../models/attemptModel");
 const Highscore = require("../models/highscoreModel");
 const User = require("../models/userModel");
 const RewardLog = require("../models/rewardLogModel");
-const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -14,23 +13,6 @@ const { exists } = require("../models/attemptModel");
 const { findById } = require("../models/userModel");
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// let username;
-// let authenticate;
-// let currentUser;
-// authenticate.login = false;
-
-// let someDate = Date.now();
-// schedule.scheduleJob(someDate + 5000, () => {
-//   console.log("RUN FOREST RUN!");
-// });
-// console.log(`Date: ${Date.now()}`);
-// schedule.scheduleJob("0 0 1 * *", async (req, res) => {
-//   const admin = await User.findOne({ username: "kenneth lin" });
-//   console.log(admin.points);
-//   const newPoints = admin.points + 100;
-//   await User.findByIdAndUpdate(admin._id, { points: newPoints });
-// });
 
 function paginate(stuff, totalItems, perPage, currentPage) {
   console.log(totalItems);

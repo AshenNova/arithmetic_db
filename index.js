@@ -10,6 +10,7 @@ const scienceRoute = require("./routes/sciences");
 const trialRoute = require("./routes/trials");
 const lessonRoute = require("./routes/lessons");
 const homeworkRoute = require("./routes/homeworks");
+const examRoute = require("./routes/exams");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const cookieParser = require("cookie-parser");
@@ -96,6 +97,7 @@ app.get("/arithmetic", authController.authenticate, (req, res) => {
 });
 
 app.use("/lesson", authController.authenticate, lessonRoute);
+app.use("/exam", authController.authenticate, examRoute);
 app.use("/trial", authController.authenticate, trialRoute);
 app.use("/homework", authController.authenticate, homeworkRoute);
 app.use("/attempts", authController.authenticate, attemptRoute);
