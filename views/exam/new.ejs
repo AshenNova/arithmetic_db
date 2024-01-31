@@ -24,7 +24,7 @@
       </div>
       <% } %>
       
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-6">
           <div class="mb-3">
             <label class="form-label">Subject</label>
@@ -47,8 +47,23 @@
             </select>
           </div>
         </div>
-    </div>
+    </div> -->
   
+    <!-- <div class="col-6"> -->
+      <div class="mb-3">
+        <label class="form-label">Subject</label>
+        <% if (existing) { %>
+          <input type="text" class="form-control" name="subject" value="<%= existing.subject %>" list="subject">
+        <% }  else {%>
+          <input type="text" class="form-control" name="subject" list="subject">
+        <% } %>
+        <datalist id="subject">
+          <% subjects.forEach(item => { %>
+            <option value="<%= item %>"></option>
+          <% }) %>
+        </datalist>
+      </div>
+
       <div class="mb-3">
         <label class="form-label">Year</label>
         <% if (existing) { %>
@@ -75,7 +90,7 @@
         <% } %>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-6">
           <div class="mb-3">
             <label class="form-label">School</label>
@@ -98,7 +113,23 @@
             </select>
           </div>
         </div>
+    </div> -->
+
+    <div class="mb-3">
+      <label class="form-label">School</label>
+      <% if (existing) { %>
+        <input type="text" class="form-control" name="school" value="<%= existing.school %>" list="school">
+      <% }  else {%>
+        <input type="text" class="form-control" name="school" list="school">
+      <% } %>
+      <datalist id="school">
+        <% schools.forEach(item => { %>
+          <option value="<%= item %>"></option>
+        <% }) %>
+      </datalist>
+    
     </div>
+
     <div class="mb-3">
       <label class="form-label">Paper</label>
       <% if (existing) { %>

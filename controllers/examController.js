@@ -21,10 +21,11 @@ exports.new = catchAsync(async (req, res, next) => {
 
 exports.save = catchAsync(async (req, res, next) => {
   const exam = req.body;
-  req.body.school = req.body.school1;
-  if (req.body.school1 == "") {
-    req.body.school = req.body.school2;
-  }
+  console.log(req.body);
+  // req.body.school = req.body.school1;
+  // if (req.body.school1 == "") {
+  //   req.body.school = req.body.school2;
+  // }
   //   req.body.level = req.body.level.toUpperCase();
   //   req.body.type = req.body.type.toUpperCase();
   //   req.body.school = req.body.school.toUpperCase();
@@ -35,10 +36,10 @@ exports.save = catchAsync(async (req, res, next) => {
     }
     exam[key] = exam[key].trim();
   }
-  req.body.subject = req.body.subject1;
-  if (req.body.subject1 == "") {
-    req.body.subject = req.body.subject2;
-  }
+  // req.body.subject = req.body.subject1;
+  // if (req.body.subject1 == "") {
+  //   req.body.subject = req.body.subject2;
+  // }
   if (req.body.id) {
     console.log("Saving");
     const editSave = await Exam.findByIdAndUpdate(req.body.id, exam);

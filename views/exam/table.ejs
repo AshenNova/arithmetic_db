@@ -31,7 +31,7 @@
                 <hr>
                         <% const type = ["CA1", "SA1", "CA2", "SA2"] %>  
                         <% type.forEach(typing => { %>
-                            <div class="col-2">
+                            <div class="col">
                             <h3><%= typing %></h3>
                                <ul>
                                 <% exams.forEach(exam => { %>
@@ -43,10 +43,23 @@
                                     </a></li>
                                     <% } %>
                                 <% }) %>
-                            </ul>
+                                </ul>
                         </div>
                         <% }) %>
-                  
+                        <div class="col">
+                        <h3>Others</h3>
+                        <ul>
+                        <% exams.forEach(exam => { %>
+                            <% if (exam.year == thisYear-i && !type.includes(exam.type) && exam.subject == subject) { %>
+                                <li><a href="<%= exam.link %>" target="_blank"><%= exam.school %>
+                                    <% if (exam.paper) { %>
+                                        (<%= exam.paper %>)
+                                <% } %>
+                            </a></li>
+                            <% } %>
+                        <% }) %>
+                        </ul>
+                        </div>
             <% } %>
               
         </div>

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/attempts-styles.css">
     <link rel="stylesheet" href="/css/navbar-styles.css">
      <link rel="icon" href="/images/favicon.ico?v=1.1">
+
      <% if (filteredUser == undefined || filteredUser == "") { %>
       <title> Results </title>
   <% } else { %>
@@ -245,7 +246,7 @@
                   <td colspan=6>Science</td>
                   <td><%= item.score %></td>
                   <td></td>
-                  <td><%= item.date.toLocaleTimeString('en-US') + " " + item.date.toLocaleDateString('en-GB') %></td>
+                  <td><%= item.date.toLocaleTimeString('en-US') %></br><%= item.date.toLocaleDateString('en-GB') %></td>
                   <!-- <td><%= item.date.getHours() %></td> -->
                   <% if (new Date().toLocaleDateString('en-US') == item.date.toLocaleDateString('en-US')) { %>
                     <td><%= "Today" %></td>

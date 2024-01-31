@@ -11,7 +11,7 @@ const examSchema = new mongoose.Schema({
   paper: String,
   date: {
     type: Date,
-    default: new Date(),
+    default: Date.now,
   },
 });
 
