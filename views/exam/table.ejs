@@ -30,12 +30,16 @@
                 <h1><%= thisYear-i %></h1>
                 <hr>
                         <% const type = ["CA1", "SA1", "CA2", "SA2"] %>  
+                        <% const level = ["P1", "P2", "P3", "P4", "P5", "P6"] %>
                         <% type.forEach(typing => { %>
                             <div class="col">
                             <h3><%= typing %></h3>
+                            <% level.forEach(itemLevel => { %>
+                                <h2><%= itemLevel %></h2>
+                           
                                <ul>
                                 <% exams.forEach(exam => { %>
-                                    <% if (exam.year == thisYear-i && typing == exam.type && exam.subject == subject) { %>
+                                    <% if (exam.year == thisYear-i && typing == exam.type && exam.subject == subject && itemLevel == exam.level) { %>
                                         <li><a href="<%= exam.link %>" target="_blank"><%= exam.school %>
                                             <% if (exam.paper) { %>
                                                 (<%= exam.paper %>)
@@ -44,6 +48,7 @@
                                     <% } %>
                                 <% }) %>
                                 </ul>
+                            <% }) %>
                         </div>
                         <% }) %>
                         <div class="col">
