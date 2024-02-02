@@ -408,8 +408,10 @@ exports.deleteRewardLog = catchAsync(async (req, res, next) => {
   //   res.status(404).json({ err });
   // }
 });
+
 function settings(level, age, allAttempts) {
   if (level == 2.02 || level == 2.05) {
+    console.log(`The level is ${level}. Age is ${age}.`);
     if (age == 8 || age <= 7) {
       return 3;
     } else if (age == 9) {
@@ -1123,51 +1125,9 @@ const generateRec = async (nameTemp) => {
                   age,
                   latestAttempt
                 );
-                //Level 2.02
-                // if (recommendObj.level == 2.02) {
-                //   if (age == 8 || age <= 7) {
-                //     recommendObj.setting = 3;
-                //   } else if (age == 9) {
-                //     recommendObj.setting = 4;
-                //   } else if (age == 10) {
-                //     recommendObj.setting = 5;
-                //   } else if (age == 11) {
-                //     recommendObj.setting = 6;
-                //   } else if (age == 12) {
-                //     recommendObj.setting = 7;
-                //   } else {
-                //     recommendObj.setting = 7;
-                //   }
-                // }
-
-                //Level 3.16
-                // if (recommendObj.level == 3.16) {
-                //   let countNine = 0;
-                //   let countOne = 0;
-                //   let countTwo = 0;
-                //   let countThree = 0;
-                //   latestAttempt.forEach((item) => {
-                //     if (item.level == 3.16) {
-                //       if (item.setting == 1) countOne += 1;
-                //       if (item.setting == 2 || item.setting == "1-2") {
-                //         countTwo += 1;
-                //       }
-                //       if (item.setting == 3 || item.setting == "1-3") {
-                //         countThree += 1;
-                //       }
-                //       if (item.setting == 9) countNine += 1;
-                //     }
-                //   });
-                //   if (countNine > 0) {
-                //     recommendObj.setting = 9;
-                //   } else if (countThree > 0) {
-                //     recommendObj.setting = "1-3";
-                //   } else if (countTwo > 0) {
-                //     recommendObj.setting = "1-2";
-                //   } else {
-                //     recommendObj.setting = "1";
-                //   }
-                // }
+                console.log(
+                  `The recommended settings is ${recommendObj.setting}`
+                );
 
                 // recommendObj.level = attempt.level;
                 recommendObj.time = "";
@@ -1183,7 +1143,6 @@ const generateRec = async (nameTemp) => {
                 !recommendList.includes(recommendObj.level)
               ) {
                 console.log("PUSHHHH!");
-                console.log(recommendObj);
                 recommend.push(recommendObj);
                 recommendList.push(recommendObj.level);
                 uniqLevel.push(attempt.level);

@@ -12,11 +12,25 @@ const User = require("../models/userModel");
 
 exports.new = catchAsync(async (req, res, next) => {
   console.log("New exam paper");
-  let existing;
+  let existing = {};
   const schools = await Exam.distinct("school");
   const subjects = await Exam.distinct("subject");
 
-  res.render("./exam/new", { schools, subjects, existing });
+  console.log(req.url);
+
+  if (req.url.startsWith("/clone")) {
+    console.log("Cloning");
+    const id = req.params.id;
+    const exam = await Exam.findById(id);
+    console.log(exam);
+    existing.subject = exam.subject;
+    existing.year = exam.year;
+    existing.level = exam.level;
+    existing.type = exam.type;
+    res.render("./exam/new", { schools, subjects, existing });
+  } else {
+    res.render("./exam/new", { schools, subjects, existing });
+  }
 });
 
 exports.save = catchAsync(async (req, res, next) => {
@@ -36,19 +50,21 @@ exports.save = catchAsync(async (req, res, next) => {
     }
     exam[key] = exam[key].trim();
   }
-  // req.body.subject = req.body.subject1;
-  // if (req.body.subject1 == "") {
-  //   req.body.subject = req.body.subject2;
-  // }
   if (req.body.id) {
     console.log("Saving");
-    const editSave = await Exam.findByIdAndUpdate(req.body.id, exam);
+    let saveExam = await Exam.findByIdAndUpdate(req.body.id, exam);
+    res.redirect(`/exam/view/${saveExam._id}`);
   } else {
     let saveExam = new Exam(exam);
     saveExam = await saveExam.save();
+    res.redirect(`/exam/view/${saveExam._id}`);
   }
+});
 
-  res.redirect("/exam/list");
+exports.view = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+  const exam = await Exam.findById(id);
+  res.render("./exam/view", { exam });
 });
 exports.edit = catchAsync(async (req, res, next) => {
   const id = req.params.id;

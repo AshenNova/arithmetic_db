@@ -10,6 +10,8 @@ const router = express.Router();
 
 router.route("/new").get(examController.new).post(examController.save);
 router.route("/edit/:id").get(examController.edit);
+router.route("/view/:id").get(examController.view);
+router.route("/clone/:id").get(examController.new);
 router.route("/list").get(examController.list);
 router.route("/table").get(examController.table);
 router.route("/delete/:id").get(examController.delete);

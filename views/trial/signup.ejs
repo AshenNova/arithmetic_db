@@ -442,7 +442,7 @@
   })
 
   slct1.onchange = function () {
-    slct2.innerHTML = "<option></option>"
+    // slct2.innerHTML = "<option></option>"
       if (this.value == "Toa Payoh"){
         addToSlct2(toapayoh)
       }
@@ -502,7 +502,6 @@
       questionD:$("#questionD").val(),
       questionE:$("#questionE").val(),
       questionF:$("#questionF").val(),
-
     }
     console.log("Submitting trial form")
     console.log(newTrial)

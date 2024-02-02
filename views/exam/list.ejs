@@ -15,11 +15,11 @@
           display: inline-block;
       }
   </style>
-  <title>List Exam Papers</title>
+  <title>Exam Papers [ List ]</title>
 </head>
 <body>
  <div class="container mt-3">
-     <h1>List</h1><a href="/exam/new" target="_blank"><btn class="btn btn-primary">New Paper</btn></a>
+     <h1>List</h1><a href="/exam/new"><btn class="btn btn-primary">New Paper</btn></a>
      <table class="table">
          <thead>
              <tr>
@@ -32,7 +32,7 @@
                  <td>link</td>
                  <td>Comment</td>
                  <td>Date</td>
-                 <td colspan="2">Action</td>
+                 <td colspan="3">Action</td>
              </tr>
          </thead>
          <% exams.forEach( item => { %>
@@ -46,6 +46,7 @@
                 <td><a href="<%= item.link %>" target="_blank">Link</a></td>
                 <td><%= item.comment %></td>
                 <td><%= item.date.toLocaleDateString("en-GB") %></td>
+                <td><a href="/exam/view/<%= item._id %>" target="_blank">View</a></td>
                 <td><a href="/exam/edit/<%= item._id %>" target="_blank">Edit</a></td>
                 <td>Delete</td>
             </tr>
