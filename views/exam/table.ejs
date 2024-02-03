@@ -11,19 +11,29 @@
   <link rel="stylesheet" href="/css/navbar-styles.css">
    <link rel="icon" href="/images/favicon.ico?v=1.1">
 
-  <title>Table Exam Papers</title>
+  <title>Exam Papers [ Table ]</title>
 </head>
+<style>
+    .sticky {
+        position: sticky;
+        top: 1%;
+    }
+</style>
 <body>
- <div class="container mt-3">
+<%- include("../partials/navbar") %>
 
+ <div class="container my-3">
+    <a href="/exam/list" class="btn btn-secondary">List</a>
+    <a href="#Math" class="btn btn-primary sticky">Math</a>
+    <a href="#Science" class="btn btn-success sticky">Science</a>
     <% const thisYear = new Date().getFullYear() %>
     <% const subjects = ["Math", "Science"] %>
     <% subjects.forEach(subject => { %>
         <% if (subject == "Math") { %>
-            <btn class="btn btn-primary">Math</btn>
+            <h1 id="Math"><u>Math</u></h1>
         <% } %>
         <% if (subject == "Science") { %>
-            <btn class="btn btn-success">Science</btn>
+            <h1 id="Science"><u>Science</u></h1>
         <% } %>
         <div class="row">
             <% for(let i = 0; i < 5; i++){ %>

@@ -11,12 +11,17 @@ const AppError = require("../utils/appError");
 const User = require("../models/userModel");
 
 exports.new = catchAsync(async (req, res, next) => {
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+
+  if (!currentUser.admin) {
+    return res.redirect("/exam/table");
+  }
   console.log("New exam paper");
   let existing = {};
   const schools = await Exam.distinct("school");
   const subjects = await Exam.distinct("subject");
-
-  console.log(req.url);
 
   if (req.url.startsWith("/clone")) {
     console.log("Cloning");
@@ -27,10 +32,15 @@ exports.new = catchAsync(async (req, res, next) => {
     existing.year = exam.year;
     existing.level = exam.level;
     existing.type = exam.type;
-    res.render("./exam/new", { schools, subjects, existing });
-  } else {
-    res.render("./exam/new", { schools, subjects, existing });
   }
+  res.render("./exam/new", {
+    schools,
+    subjects,
+    existing,
+    username,
+    authenticate,
+    currentUser,
+  });
 });
 
 exports.save = catchAsync(async (req, res, next) => {
@@ -79,14 +89,37 @@ exports.edit = catchAsync(async (req, res, next) => {
 });
 
 exports.list = catchAsync(async (req, res, next) => {
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  const params = req.query;
+  console.log(params);
+  // let exams = {};
+
+  for (const [key, value] of Object.entries(params)) {
+    if (value == "") delete params[key];
+  }
+  // console.log(params);
+
   console.log("Viewing exam paper (List)");
-  const exams = await Exam.find().sort({ date: -1 });
-  res.render("./exam/list", { exams });
+  if (params) {
+    console.log("Params detected");
+    exams = await Exam.find(params).sort({ date: -1 });
+    console.log(exams);
+  } else {
+    console.log("No params");
+    exams = await Exam.find().sort({ date: -1 });
+  }
+
+  res.render("./exam/list", { exams, username, authenticate, currentUser });
 });
 exports.table = catchAsync(async (req, res, next) => {
   console.log("Table");
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
   const exams = await Exam.find().sort({ date: -1 });
-  res.render("./exam/table", { exams });
+  res.render("./exam/table", { exams, username, authenticate, currentUser });
 });
 exports.delete = catchAsync(async (req, res, next) => {
   console.log("Deleting");

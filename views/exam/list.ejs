@@ -18,8 +18,36 @@
   <title>Exam Papers [ List ]</title>
 </head>
 <body>
- <div class="container mt-3">
-     <h1>List</h1><a href="/exam/new"><btn class="btn btn-primary">New Paper</btn></a>
+    <%- include("../partials/navbar") %>
+ <div class="container my-3">
+     <h1>List</h1>
+     <a href="/exam/new" class="btn btn-primary">New Paper</a>
+     <a href="/exam/table" class="btn btn-secondary">Table</a>
+     <form action="/exam/list" method="get">
+        <div class="row mt-3">
+            <div class="mb-3 col-1">
+                <label class="form-label">Subject</label>
+                <input type="text" class="form-control" name="subject">
+            </div>
+            <div class="col-1">
+                <label class="form-label">Year</label>
+                <input type="text" class="form-control" name="year">
+            </div>
+            <div class="col-1">
+                <label class="form-label">Level</label>
+                <input type="text" class="form-control" name="level">
+            </div>
+            <div class="col-1">
+                <label class="form-label">Type</label>
+                <input type="text" class="form-control" name="type">
+            </div>
+            <div class="col-1">
+                <label class="form-label">School</label>
+                <input type="text" class="form-control" name="school">
+            </div>
+        </div>
+            <button type="submit" class="btn btn-primary mt-1">Filter</button>
+     </form>
      <table class="table">
          <thead>
              <tr>
@@ -29,7 +57,6 @@
                  <td>Type</td>
                  <td>School</td>
                  <td>Paper</td>
-                 <td>link</td>
                  <td>Comment</td>
                  <td>Date</td>
                  <td colspan="3">Action</td>
@@ -41,9 +68,8 @@
                 <td><%= item.year %></td>
                 <td><%= item.level %></td>
                 <td><%= item.type %></td>
-                <td><%= item.school %></td>
+                <td><a href="<%= item.link %>" target="_blank"><%= item.school %></a></td>
                 <td><%= item.paper %></td>
-                <td><a href="<%= item.link %>" target="_blank">Link</a></td>
                 <td><%= item.comment %></td>
                 <td><%= item.date.toLocaleDateString("en-GB") %></td>
                 <td><a href="/exam/view/<%= item._id %>" target="_blank">View</a></td>

@@ -14,41 +14,18 @@
   <title>New Exam Paper</title>
 </head>
 <body>
- <div class="container">
+  <%- include("../partials/navbar") %>
+
+ <div class="container my-3">
      <h1>New Exam Paper</h1>
      <form action="/exam/new" method="post">
-      <% if (existing) { %>
+      <% if (existing && existing.id) { %>
         <div class="mb-3">
         <label class="form-label">ID</label>
         <input type="text" class="form-control" name="id" value="<%= existing._id %>" readonly>
       </div>
       <% } %>
       
-      <!-- <div class="row">
-        <div class="col-6">
-          <div class="mb-3">
-            <label class="form-label">Subject</label>
-            <% if (existing) { %>
-              <input type="text" class="form-control" name="subject1" value="<%= existing.subject %>">
-            <% }  else {%>
-              <input type="text" class="form-control" name="subject1">
-            <% } %>
-          
-          </div>
-       </div>
-        <div class="col-6">
-           <div class="mb-3">
-            <label class="form-label">Subject</label>
-            <select class="form-select" name="subject2">
-              <option selected>Choose</option>
-            <% subjects.forEach(item => { %>
-              <option><%= item %></option>
-            <% }) %>
-            </select>
-          </div>
-        </div>
-    </div> -->
-  
     <!-- <div class="col-6"> -->
       <div class="mb-3">
         <label class="form-label">Subject</label>
