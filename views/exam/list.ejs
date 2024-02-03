@@ -27,23 +27,48 @@
         <div class="row mt-3">
             <div class="mb-3 col-1">
                 <label class="form-label">Subject</label>
-                <input type="text" class="form-control" name="subject">
+                <select class="form-select" name="subject">
+                    <option select></option>
+                    <% unique.subject.forEach(item => { %>
+                        <option><%= item %></option>
+                    <% }) %>
+                </select>
             </div>
             <div class="col-1">
                 <label class="form-label">Year</label>
-                <input type="text" class="form-control" name="year">
+                <select class="form-select" name="year">
+                    <option select></option>
+                    <% unique.year.forEach(item => { %>
+                        <option><%= item %></option>
+                    <% }) %>
+                </select>
             </div>
             <div class="col-1">
                 <label class="form-label">Level</label>
-                <input type="text" class="form-control" name="level">
+                <select class="form-select" name="level">
+                    <option select></option>
+                    <% unique.level.forEach(item => { %>
+                        <option><%= item %></option>
+                    <% }) %>
+                </select>
             </div>
             <div class="col-1">
                 <label class="form-label">Type</label>
-                <input type="text" class="form-control" name="type">
+                <select class="form-select" name="type">
+                    <option select></option>
+                    <% unique.type.forEach(item => { %>
+                        <option><%= item %></option>
+                    <% }) %>
+                </select>
             </div>
             <div class="col-1">
                 <label class="form-label">School</label>
-                <input type="text" class="form-control" name="school">
+                <select class="form-select" name="school">
+                    <option select></option>
+                    <% unique.school.forEach(item => { %>
+                        <option><%= item %></option>
+                    <% }) %>
+                </select>
             </div>
         </div>
             <button type="submit" class="btn btn-primary mt-1">Filter</button>

@@ -93,9 +93,17 @@ exports.list = catchAsync(async (req, res, next) => {
   let authenticate = req.auth;
   let currentUser = req.user;
   const params = req.query;
-  console.log(params);
-  // let exams = {};
 
+  let unique = {};
+  [unique.year, unique.subject, unique.level, unique.type, unique.school] =
+    await Promise.all([
+      Exam.distinct("year"),
+      Exam.distinct("subject"),
+      Exam.distinct("level"),
+      Exam.distinct("type"),
+      Exam.distinct("school"),
+    ]);
+  console.log(`Unique: ${unique}`);
   for (const [key, value] of Object.entries(params)) {
     if (value == "") delete params[key];
   }
@@ -105,13 +113,19 @@ exports.list = catchAsync(async (req, res, next) => {
   if (params) {
     console.log("Params detected");
     exams = await Exam.find(params).sort({ date: -1 });
-    console.log(exams);
+    // console.log(exams);
   } else {
     console.log("No params");
     exams = await Exam.find().sort({ date: -1 });
   }
 
-  res.render("./exam/list", { exams, username, authenticate, currentUser });
+  res.render("./exam/list", {
+    exams,
+    username,
+    authenticate,
+    currentUser,
+    unique,
+  });
 });
 exports.table = catchAsync(async (req, res, next) => {
   console.log("Table");
@@ -119,7 +133,12 @@ exports.table = catchAsync(async (req, res, next) => {
   let authenticate = req.auth;
   let currentUser = req.user;
   const exams = await Exam.find().sort({ date: -1 });
-  res.render("./exam/table", { exams, username, authenticate, currentUser });
+  res.render("./exam/table", {
+    exams,
+    username,
+    authenticate,
+    currentUser,
+  });
 });
 exports.delete = catchAsync(async (req, res, next) => {
   console.log("Deleting");
