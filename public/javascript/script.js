@@ -20389,7 +20389,7 @@ function handleSubmit(e) {
       }
 
       if (setting == 21) {
-        correctAnswer = p.start + p.eachInterval * p.arrow;
+        correctAnswer = accDecimal(p.start + p.eachInterval * p.arrow);
       }
     }
 
