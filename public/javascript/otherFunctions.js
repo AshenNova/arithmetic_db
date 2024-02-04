@@ -1340,11 +1340,11 @@ export function drawForFraction(object, type) {
     adjustCanvasBreadth(side, side + 100);
   }
   const startPoint = fillTextSplit(
-    `What is the ${type} of the ${
+    `What ${type} is the ${
       p.want == "shaded" ? "shaded" : "unshaded"
-    } part to the ${
-      p.secondVar == "unshaded" ? "unshaded part" : "total"
-    } of the\n${p.shapes}?`
+    } part of the ${p.secondVar == "unshaded" ? "unshaded part" : "total"}\n${
+      p.shapes
+    }?`
   );
 
   let displayHeight = 275 + 20;
