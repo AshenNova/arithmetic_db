@@ -318,6 +318,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
   const { recommend } = res;
 
   // RECEIVE DATA (MUST BE ON TOP)
+
   const user = req.body.user;
   const mode = req.body.mode;
   const level = req.body.level;
@@ -326,12 +327,15 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
   const mistake = req.body.mistake;
   const setting = req.body.setting;
   const score = req.body.score;
-  const tries = req.body.tries;
+  const tries = req.body.attemptNum;
+  const extra = req.body.extra;
   const attemptNum = req.body.attemptNum;
   const summary = req.body.summary;
 
   const ip = req.headers["x-forwarded-for"] || req.ip;
   console.log(`This is ${req.body.user}'s attempt number ${attemptNum}.`);
+  console.log(req.body);
+  console.log(tries, extra);
 
   // QUERY PREVIOUS ATTEMPT (USER, LEVEL, MODE, SETTING)
   let previousAttempt;
@@ -388,6 +392,8 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         mode,
         age: currentAge,
       }).count();
+      console.log("The number of attempts so far is " + checkMin);
+      console.log(tries, extra);
       if (checkMin > 5 && tries == "1" && extra == "") {
         console.log("Minimum met");
         console.log("Highscore check running");
@@ -416,8 +422,6 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
           });
         } else {
           console.log("Comparing");
-          // data.eligible = 0;
-          // console.log(checkExist.time, newAttempt.time);
           console.log(`Age: ${DOB}`);
           if (checkExist.time > time) {
             data.eligible = 1;
@@ -1097,8 +1101,20 @@ const update = catchAsync(async (req, res, next) => {
 
 const updateMany = catchAsync(async (req, res, next) => {
   // try {
-  const updating = await Attempt.updateMany({}, { $set: { subject: "Math" } });
-  console.log(updating);
+  const query = {
+    level: "4.58",
+  };
+
+  const set = {
+    $set: {
+      level: "4.11",
+    },
+  };
+
+  const updateAttempt = await Attempt.updateMany(query, set);
+  const updateHighscore = await Highscore.updateMany(query, set);
+  console.log(updateAttempt, updateHighscore);
+  // console.log(updating);
   // const updating = await Attempt.updateMany(
   // { summary: { $exists: false } },
   // { $set: { summary: "test" } }
@@ -1111,7 +1127,7 @@ const updateMany = catchAsync(async (req, res, next) => {
   //   { user: "Travis" },
   //   { $set: { user: "Travis Scott" } }
   // );
-  console.log(updating);
+  // console.log(updating);
   // } catch (e) {
   //   console.log(`Error ${e}`);
   // }

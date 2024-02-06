@@ -451,7 +451,14 @@ function settings(level, age, allAttempts) {
     } else {
       return "1";
     }
-  } else if (level == 3.19 || level == 4.11) {
+    // 2 settings
+  } else if (
+    level == 3.19 ||
+    level == 4.03 ||
+    level == 4.04 ||
+    level == 4.05 ||
+    level == 4.11
+  ) {
     let countNine = 0;
     let countOne = 0;
     let countTwo = 0;
@@ -462,9 +469,6 @@ function settings(level, age, allAttempts) {
         if (item.setting == 2 || item.setting == "1-2") {
           countTwo += 1;
         }
-        // if (item.setting == 3 || item.setting == "1-3") {
-        //   countThree += 1;
-        // }
         if (item.setting == 9) countNine += 1;
       }
     });
@@ -951,10 +955,11 @@ const generateRec = async (nameTemp) => {
                     "4.03",
                     "4.04",
                     "4.05",
+                    "4.07",
                     "4.08",
+                    "4.09",
                     "4.1",
                     "4.11",
-                    "4.12",
                     "4.13",
                     "4.15",
                     "4.16",

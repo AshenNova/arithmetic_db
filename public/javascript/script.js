@@ -2891,375 +2891,62 @@ function updateProblems() {
   }
 
   if (level == 4.02) {
-    for (let i = 0; i < 7; i++) {
-      const chosenNumber = arr[genNumbers(arr.length - 1)];
-      arr2.push(chosenNumber);
-      const index = arr.indexOf(chosenNumber);
-      arr.splice(index, 1);
+    if (p.placeValue == "tens" && p.numOne < 100) {
+      while (p.numOne > 100) {
+        p.numOne += 10;
+      }
     }
-    console.log(arr, arr2);
-    if (arr2[arr2.length - 1] == 0) {
-      [arr2[arr2.length - 1], arr2[1]] = [arr2[1], arr2[arr2.length - 1]];
+    if (p.placeValue == "hundreds" && p.numOne < 1000) {
+      while (p.numOne > 1000) {
+        p.numOne += 100;
+      }
+    }
+    if (p.placeValue == "thousands" && p.numOne < 10000) {
+      while (p.numOne > 10000) {
+        p.numOne += 1000;
+      }
     }
 
-    let b = 0.001;
-    for (let a = 0; a < arr2.length; a++) {
-      p.holdingNumber = arr2[a] * b;
-      b = b * 10;
-      p.totalNumber += p.holdingNumber;
+    if (p.placeValue == "tens") {
+      p.numOne = Math.round(p.numOne / 10) * 10;
+    }
+    if (p.placeValue == "hundreds") {
+      p.numOne = Math.round(p.numOne / 100) * 100;
+    }
+    if (p.placeValue == "thousands") {
+      p.numOne = Math.round(p.numOne / 1000) * 1000;
     }
 
     displayProblem.innerHTML = `
-    Which digit is in the</br>
-    <u>${p.placeValue}</u> place? <br>
-    ${p.totalNumber.toLocaleString("en-US")}
-    `;
+    <u>${p.choice}</u> value before rounding off to the</br> 
+    <u>${p.placeValue}</u> place?</br>
+    <br>
+    _______ ≈ ${p.numOne}`;
+
+    if (p.choice == "Smallest") {
+      if (p.placeValue == "tens") {
+        p.numOne = p.numOne - 10 + 5;
+      }
+      if (p.placeValue == "hundreds") {
+        p.numOne = p.numOne - 100 + 50;
+      }
+      if (p.placeValue == "thousands") {
+        p.numOne = p.numOne - 1000 + 500;
+      }
+    }
+    if (p.choice == "Largest") {
+      if (p.placeValue == "tens") {
+        p.numOne = p.numOne + 4;
+      }
+      if (p.placeValue == "hundreds") {
+        p.numOne = p.numOne + 49;
+      }
+      if (p.placeValue == "thousands") {
+        p.numOne = p.numOne + 499;
+      }
+    }
   }
-
-  // if (level == 4.03) {
-  //   if (p.numOne % 10 == 0) {
-  //     p.numOne += 1;
-  //   }
-  //   if (p.placeValue == "Whole Number") {
-  //     p.numTwo = [10, 100, 1000][genNumbers(3)];
-  //   }
-  //   if (p.placeValue == "1 decimal place" || p.placeValue == "tenth place") {
-  //     p.numTwo = [100, 1000][genNumbers(2)];
-  //   }
-  //   if (
-  //     p.placeValue == "2 decimal place" ||
-  //     p.placeValue == "hundredth place"
-  //   ) {
-  //     p.numTwo = 1000;
-  //   }
-  //   // p.numFinal = Math.floor((p.numOne / (p.numTwo * 1)) * p.numTwo) / p.numTwo;
-  //   p.numFinal = p.numOne / p.numTwo;
-
-  //   while (p.numFinal > 1000) {
-  //     p.numFinal -= 1000;
-  //   }
-  //   console.log(p.numOne, p.numTwo, p.numFinal);
-  //   helpMe.textContent = `${p.placeValue}`;
-  //   displayProblem.textContent = `${p.numFinal} ≈ `;
-  // }
   if (level == 4.03) {
-    helpMe.textContent = `${p.placeValue}`;
-    let activateOne = genNumbers(2);
-    let activateTwo = genNumbers(2);
-    let activateThree = genNumbers(2);
-    p.wholeNum = p.wholeNum * genNumbers(2);
-    if (p.pos == 0) {
-      activateOne = 1;
-      p.wholeNum = genNumbers(999) + 1;
-    }
-    if (p.pos == 1) activateTwo = 1;
-    if (p.pos == 2) activateThree = 1;
-    p.decOne = p.decOne * activateOne;
-    p.decTwo = p.decTwo * activateTwo;
-    p.decThree = p.decThree * activateThree;
-    //bug?
-    if (p.decTwo == 5) p.decTwo += 1;
-    if (p.decThree == 5) p.decThree += 1;
-
-    // p.num = p.wholeNum + p.decOne + p.decTwo + p.decThree;
-    // const displayDec = accDecimal(p.num);
-    console.log(p.num, p.wholeNum, p.decOne, p.decTwo, p.decThree);
-    // console.log(`Display: ${displayDec}`);
-    p.num = `${p.wholeNum}.${p.decOne}${p.decTwo}${p.decThree}`;
-    console.log(typeof p.num);
-    p.num = p.num * 1;
-    console.log(typeof p.num);
-    if (p.num < 1) p.num += 1;
-    displayProblem.textContent = `${accDecimal(p.num)} ≈ ?`;
-  }
-  if (level == 4.04) {
-    if (p.numOne % 10 == 0) {
-      p.numOne += p.numOne + 1;
-    }
-    displayProblem.textContent = `${accDecimal(p.numOne) / p.numTwo} =`;
-  }
-
-  if (level == 4.05) {
-    if (p.numOne == 1000) {
-      p.numThree = 10;
-    }
-    if (p.numOne / p.numTwo <= 10) {
-      p.numThree = 10;
-    }
-
-    if (p.numTwo == 1 || (p.numOne / p.numTwo) % 1 == 0) {
-      p.operator = "÷";
-    }
-    displayProblem.innerHTML = `${p.numOne / p.numTwo} ${p.operator} ${
-      p.numThree
-    }`;
-  }
-
-  // if (level == 4.06) {
-  //   if (
-  //     (p.unitMeasurement == "m" || p.unitMeasurement == "$") &&
-  //     p.option == "2"
-  //   ) {
-  //     p.numOne = p.numSix;
-  //   }
-  //   if (p.unitMeasurement == "m") {
-  //     p.secondUnitMeasurement = "cm";
-  //     displayProblem.innerHTML = `${p.numOne + p.numThree / 100} ${
-  //       p.unitMeasurement
-  //     }`;
-  //   }
-  //   if (p.unitMeasurement == "$") {
-  //     p.secondUnitMeasurement = "¢";
-  //     if (p.numThree % 10 == 0) {
-  //       displayProblem.innerHTML = ` ${p.unitMeasurement}${
-  //         p.numOne + p.numThree / 100
-  //       }0`;
-  //     } else {
-  //       displayProblem.innerHTML = ` ${p.unitMeasurement}${
-  //         p.numOne + p.numThree / 100
-  //       }`;
-  //     }
-  //   }
-
-  //   if (
-  //     (p.unitMeasurement == "ℓ" ||
-  //       p.unitMeasurement == "kg" ||
-  //       p.unitMeasurement == "kg") &&
-  //     p.option == "2"
-  //   ) {
-  //     p.numTwo = p.numSix;
-  //   }
-  //   if (p.unitMeasurement == "ℓ") {
-  //     p.secondUnitMeasurement = "ml";
-  //     displayProblem.innerHTML = `${
-  //       p.numOne + Math.floor((p.numTwo / 1000) * 1000) / 1000
-  //     } ${p.unitMeasurement}`;
-  //   }
-  //   if (p.unitMeasurement == "km") {
-  //     p.secondUnitMeasurement = "m";
-  //     displayProblem.innerHTML = `${
-  //       p.numOne + Math.floor((p.numTwo / 1000) * 1000) / 1000
-  //     } ${p.unitMeasurement}`;
-  //   }
-  //   if (p.unitMeasurement == "kg") {
-  //     p.secondUnitMeasurement = "g";
-  //     displayProblem.innerHTML = `${
-  //       p.numOne + Math.floor((p.numTwo / 1000) * 1000) / 1000
-  //     } ${p.unitMeasurement}`;
-  //   }
-  //   secondUnitMeasurement.textContent = `${p.secondUnitMeasurement}`;
-  // }
-
-  // if (level == 4.07) {
-  //   if (
-  //     (p.unitMeasurement == "m" || p.unitMeasurement == "$") &&
-  //     p.option == "2"
-  //   ) {
-  //     p.numOne = p.numFive;
-  //   }
-  //   if (
-  //     (p.unitMeasurement == "m" || p.unitMeasurement == "$") &&
-  //     p.optionTwo == "2"
-  //   ) {
-  //     p.numThree = p.numFour;
-  //   }
-  //   if (p.unitMeasurement == "m") {
-  //     p.secondUnitMeasurement = "cm";
-  //     displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numThree} ${p.secondUnitMeasurement}`;
-  //   }
-  //   if (p.unitMeasurement == "$") {
-  //     p.secondUnitMeasurement = "¢";
-  //     displayProblem.innerHTML = `${p.numOne * 100 + p.numThree}${
-  //       p.secondUnitMeasurement
-  //     }`;
-  //   }
-
-  //   if (
-  //     (p.unitMeasurement == "ℓ" ||
-  //       p.unitMeasurement == "kg" ||
-  //       p.unitMeasurement == "kg") &&
-  //     p.option == "2"
-  //   ) {
-  //     p.numTwo = p.numSix;
-  //   }
-  //   if (
-  //     (p.unitMeasurement == "ℓ" ||
-  //       p.unitMeasurement == "kg" ||
-  //       p.unitMeasurement == "kg") &&
-  //     p.optionTwo == "2"
-  //   ) {
-  //     p.numOne = p.numFive;
-  //   }
-  //   if (p.unitMeasurement == "ℓ") {
-  //     p.secondUnitMeasurement = "ml";
-  //     displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numTwo}${p.secondUnitMeasurement}`;
-  //   }
-  //   if (p.unitMeasurement == "km") {
-  //     p.secondUnitMeasurement = "m";
-  //     displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numTwo}${p.secondUnitMeasurement}`;
-  //   }
-  //   if (p.unitMeasurement == "kg") {
-  //     p.secondUnitMeasurement = "g";
-  //     displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numTwo}${p.secondUnitMeasurement}`;
-  //   }
-  //   secondUnitMeasurement.textContent = `${p.unitMeasurement}`;
-  // }
-
-  // if (level == 4.08) {
-  //   // level 4.06
-  //   if (p.optionFinal == "1") {
-  //     if (
-  //       (p.unitMeasurement == "m" || p.unitMeasurement == "$") &&
-  //       p.option == "2"
-  //     ) {
-  //       p.numOne = p.numSix;
-  //     }
-  //     if (p.unitMeasurement == "m") {
-  //       p.secondUnitMeasurement = "cm";
-  //       displayProblem.innerHTML = `${p.numOne + p.numThree / 100} ${
-  //         p.unitMeasurement
-  //       }`;
-  //     }
-  //     if (p.unitMeasurement == "$") {
-  //       p.secondUnitMeasurement = "¢";
-  //       if (p.numThree % 10 == 0) {
-  //         displayProblem.innerHTML = ` ${p.unitMeasurement}${
-  //           p.numOne + p.numThree / 100
-  //         }0`;
-  //       } else {
-  //         displayProblem.innerHTML = ` ${p.unitMeasurement}${
-  //           p.numOne + p.numThree / 100
-  //         }`;
-  //       }
-  //     }
-
-  //     if (
-  //       (p.unitMeasurement == "ℓ" ||
-  //         p.unitMeasurement == "kg" ||
-  //         p.unitMeasurement == "kg") &&
-  //       p.option == "2"
-  //     ) {
-  //       p.numTwo = p.numSix;
-  //     }
-  //     if (p.unitMeasurement == "ℓ") {
-  //       p.secondUnitMeasurement = "ml";
-  //       displayProblem.innerHTML = `${
-  //         p.numOne + Math.floor((p.numTwo / 1000) * 1000) / 1000
-  //       } ${p.unitMeasurement}`;
-  //     }
-  //     if (p.unitMeasurement == "km") {
-  //       p.secondUnitMeasurement = "m";
-  //       displayProblem.innerHTML = `${
-  //         p.numOne + Math.floor((p.numTwo / 1000) * 1000) / 1000
-  //       } ${p.unitMeasurement}`;
-  //     }
-  //     if (p.unitMeasurement == "kg") {
-  //       p.secondUnitMeasurement = "g";
-  //       displayProblem.innerHTML = `${
-  //         p.numOne + Math.floor((p.numTwo / 1000) * 1000) / 1000
-  //       } ${p.unitMeasurement}`;
-  //     }
-  //     secondUnitMeasurement.textContent = `${p.secondUnitMeasurement}`;
-  //   }
-  //   // level 4.07
-  //   if (p.optionFinal == "2") {
-  //     if (
-  //       (p.unitMeasurement == "m" || p.unitMeasurement == "$") &&
-  //       p.option == "2"
-  //     ) {
-  //       p.numOne = p.numFive;
-  //     }
-  //     if (
-  //       (p.unitMeasurement == "m" || p.unitMeasurement == "$") &&
-  //       p.optionTwo == "2"
-  //     ) {
-  //       p.numThree = p.numFour;
-  //     }
-  //     if (p.unitMeasurement == "m") {
-  //       p.secondUnitMeasurement = "cm";
-  //       displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numThree} ${p.secondUnitMeasurement}`;
-  //     }
-  //     if (p.unitMeasurement == "$") {
-  //       p.secondUnitMeasurement = "¢";
-  //       displayProblem.innerHTML = `${p.numOne * 100 + p.numThree}${
-  //         p.secondUnitMeasurement
-  //       }`;
-  //     }
-
-  //     if (
-  //       (p.unitMeasurement == "ℓ" ||
-  //         p.unitMeasurement == "kg" ||
-  //         p.unitMeasurement == "kg") &&
-  //       p.option == "2"
-  //     ) {
-  //       p.numTwo = p.numSix;
-  //     }
-  //     if (
-  //       (p.unitMeasurement == "ℓ" ||
-  //         p.unitMeasurement == "kg" ||
-  //         p.unitMeasurement == "kg") &&
-  //       p.optionTwo == "2"
-  //     ) {
-  //       p.numOne = p.numFive;
-  //     }
-  //     if (p.unitMeasurement == "ℓ") {
-  //       p.secondUnitMeasurement = "ml";
-  //       displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numTwo}${p.secondUnitMeasurement}`;
-  //     }
-  //     if (p.unitMeasurement == "km") {
-  //       p.secondUnitMeasurement = "m";
-  //       displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numTwo}${p.secondUnitMeasurement}`;
-  //     }
-  //     if (p.unitMeasurement == "kg") {
-  //       p.secondUnitMeasurement = "g";
-  //       displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numTwo}${p.secondUnitMeasurement}`;
-  //     }
-  //     secondUnitMeasurement.textContent = `${p.unitMeasurement}`;
-  //   }
-  // }
-
-  if (level == 4.08) {
-    if (p.wholeNum == 0 && p.deciOne == 0 && p.deciTwo == 0 && p.deciThree == 0)
-      return updateCalc();
-    if (p.deciOne == 0 && p.deciTwo == 0) p.deciTwo += 0.01;
-    p.firstUnit = p.unitMeasurementPair[0];
-    p.secondUnit = p.unitMeasurementPair[1];
-    if (p.firstUnit == "m" || p.firstUnit == "$") p.deciThree = 0;
-    console.log(p.wholeNum, p.deciOne, p.deciTwo, p.deciThree);
-    p.sumOfNum = p.wholeNum + p.deciOne + p.deciTwo + p.deciThree;
-    console.log(p.sumOfNum);
-    p.sumOfNum = accDecimal(p.wholeNum + p.deciOne + p.deciTwo + p.deciThree);
-
-    if (setting == 1) {
-      displayProblem.textContent = `${p.sumOfNum} ${p.firstUnit}  = ? ${p.secondUnit} `;
-      if (p.firstUnit == "$") {
-        displayProblem.textContent = `${p.firstUnit} ${p.sumOfNum.toFixed(
-          2
-        )} = ? ${p.secondUnit} `;
-      }
-    }
-    if (setting == 2) {
-      let question = p.sumOfNum * 1000;
-      if (p.firstUnit == "m" || p.firstUnit == "$") {
-        question = p.sumOfNum * 100;
-      }
-      question = accDecimal(question);
-      displayProblem.textContent = `${question} ${p.secondUnit} = ? ${p.firstUnit}`;
-      if (p.firstUnit == "$") {
-        // if (p.deciTwo != 0) {
-        //   displayProblem.textContent = `${question.toFixed(2)} ${
-        //     p.secondUnit
-        //   } = $ ?`;
-        // } else {
-        //   displayProblem.textContent = `${question} ${p.secondUnit} = $ ?`;
-        // }
-        displayProblem.textContent = `${accDecimal(question)} ${
-          p.secondUnit
-        } = $ ?`;
-      }
-    }
-  }
-  if (level == 4.1) {
     if (setting == 1) {
       const halfOne = Math.floor(p.denoOne / 2);
       const halfTwo = Math.floor(p.denoTwo / 2);
@@ -3291,35 +2978,7 @@ function updateProblems() {
     }
   }
 
-  if (level == 4.11) {
-    // level 4.09
-    // if (p.optionFinal == "1") {
-    //   threeWholeNumber.textContent = "";
-    //   threeNumerator.textContent = "?";
-    //   threeDenominator.textContent = "?";
-    //   if (p.numTwo >= p.numThree) {
-    //     p.numTwo = p.numTwo - 1 - (p.numTwo - p.numThree);
-    //   }
-    //   twoWholeNumber.textContent = p.numOne;
-    //   twoNumerator.textContent = p.numTwo;
-    //   twoDenominator.textContent = p.numThree;
-    //   arr.push(p.numThree);
-    // }
-    // // level 4.11
-    // if (p.optionFinal == "2") {
-    //   threeWholeNumber.textContent = "?";
-    //   threeNumerator.textContent = "?";
-    //   threeDenominator.textContent = "?";
-    //   if (p.numTwo >= p.numThree) {
-    //     p.numTwo = p.numTwo - 1 - (p.numTwo - p.numThree);
-    //   }
-    //   twoWholeNumber.textContent = "";
-    //   arr.push(p.numTwo);
-    //   p.numTwo = p.numOne * p.numThree + p.numTwo;
-    //   twoNumerator.textContent = p.numTwo;
-    //   twoDenominator.textContent = p.numThree;
-    //   arr.push(p.numThree);
-    // }
+  if (level == 4.04) {
     if (setting == 1) {
       threeWholeNumber.textContent = "";
       threeNumerator.textContent = "?";
@@ -3348,7 +3007,7 @@ function updateProblems() {
     }
   }
 
-  if (level == 4.12) {
+  if (level == 4.05) {
     if (setting == 1 || (setting == 9 && p.rollChoice == 1)) {
       if (p.numOne == p.numTwo) {
         p.numOne += 1;
@@ -3390,25 +3049,126 @@ function updateProblems() {
     }
   }
 
-  // if (level == 4.13) {
-  //   if (p.numOne == p.numTwo) {
-  //     p.numOne += 1;
-  //   }
-  //   if (p.numOne > p.numTwo) {
-  //     [p.numOne, p.numTwo] = [p.numTwo, p.numOne];
-  //   }
-  //   for (let i = p.numTwo; i > 1; i--) {
-  //     if (p.numOne % i == 0 && p.numTwo % i == 0) {
-  //       p.numOne /= i;
-  //       p.numTwo /= i;
-  //     }
-  //   }
-  //   displayProblem.innerHTML = `
-  //   A has ${p.numTwo * p.numMulti} of something.</br>
-  //   A used ${p.numOne}/${p.numTwo} of it.</br>
-  //   How much did A ${p.options}?
-  //   `;
-  // }
+  if (level == 4.07) {
+    for (let i = 0; i < 7; i++) {
+      const chosenNumber = arr[genNumbers(arr.length - 1)];
+      arr2.push(chosenNumber);
+      const index = arr.indexOf(chosenNumber);
+      arr.splice(index, 1);
+    }
+    console.log(arr, arr2);
+    if (arr2[arr2.length - 1] == 0) {
+      [arr2[arr2.length - 1], arr2[1]] = [arr2[1], arr2[arr2.length - 1]];
+    }
+
+    let b = 0.001;
+    for (let a = 0; a < arr2.length; a++) {
+      p.holdingNumber = arr2[a] * b;
+      b = b * 10;
+      p.totalNumber += p.holdingNumber;
+    }
+
+    displayProblem.innerHTML = `
+    Which digit is in the</br>
+    <u>${p.placeValue}</u> place? <br>
+    ${p.totalNumber.toLocaleString("en-US")}
+    `;
+  }
+  if (level == 4.08) {
+    helpMe.textContent = `${p.placeValue}`;
+    let activateOne = genNumbers(2);
+    let activateTwo = genNumbers(2);
+    let activateThree = genNumbers(2);
+    p.wholeNum = p.wholeNum * genNumbers(2);
+    if (p.pos == 0) {
+      activateOne = 1;
+      p.wholeNum = genNumbers(999) + 1;
+    }
+    if (p.pos == 1) activateTwo = 1;
+    if (p.pos == 2) activateThree = 1;
+    p.decOne = p.decOne * activateOne;
+    p.decTwo = p.decTwo * activateTwo;
+    p.decThree = p.decThree * activateThree;
+    //bug?
+    if (p.decTwo == 5) p.decTwo += 1;
+    if (p.decThree == 5) p.decThree += 1;
+
+    // p.num = p.wholeNum + p.decOne + p.decTwo + p.decThree;
+    // const displayDec = accDecimal(p.num);
+    console.log(p.num, p.wholeNum, p.decOne, p.decTwo, p.decThree);
+    // console.log(`Display: ${displayDec}`);
+    p.num = `${p.wholeNum}.${p.decOne}${p.decTwo}${p.decThree}`;
+    console.log(typeof p.num);
+    p.num = p.num * 1;
+    console.log(typeof p.num);
+    if (p.num < 1) p.num += 1;
+    displayProblem.textContent = `${accDecimal(p.num)} ≈ ?`;
+  }
+  if (level == 4.09) {
+    if (p.numOne % 10 == 0) {
+      p.numOne += p.numOne + 1;
+    }
+    displayProblem.textContent = `${accDecimal(p.numOne) / p.numTwo} =`;
+  }
+
+  if (level == 4.1) {
+    if (p.numOne == 1000) {
+      p.numThree = 10;
+    }
+    if (p.numOne / p.numTwo <= 10) {
+      p.numThree = 10;
+    }
+
+    if (p.numTwo == 1 || (p.numOne / p.numTwo) % 1 == 0) {
+      p.operator = "÷";
+    }
+    displayProblem.innerHTML = `${p.numOne / p.numTwo} ${p.operator} ${
+      p.numThree
+    }`;
+  }
+
+  if (level == 4.11) {
+    if (p.wholeNum == 0 && p.deciOne == 0 && p.deciTwo == 0 && p.deciThree == 0)
+      return updateCalc();
+    if (p.deciOne == 0 && p.deciTwo == 0) p.deciTwo += 0.01;
+    p.firstUnit = p.unitMeasurementPair[0];
+    p.secondUnit = p.unitMeasurementPair[1];
+    if (p.firstUnit == "m" || p.firstUnit == "$") p.deciThree = 0;
+    console.log(p.wholeNum, p.deciOne, p.deciTwo, p.deciThree);
+    p.sumOfNum = p.wholeNum + p.deciOne + p.deciTwo + p.deciThree;
+    console.log(p.sumOfNum);
+    p.sumOfNum = accDecimal(p.wholeNum + p.deciOne + p.deciTwo + p.deciThree);
+
+    if (setting == 1) {
+      displayProblem.textContent = `${p.sumOfNum} ${p.firstUnit}  = ? ${p.secondUnit} `;
+      if (p.firstUnit == "$") {
+        displayProblem.textContent = `${p.firstUnit} ${p.sumOfNum.toFixed(
+          2
+        )} = ? ${p.secondUnit} `;
+      }
+    }
+    if (setting == 2) {
+      let question = p.sumOfNum * 1000;
+      if (p.firstUnit == "m" || p.firstUnit == "$") {
+        question = p.sumOfNum * 100;
+      }
+      question = accDecimal(question);
+      displayProblem.textContent = `${question} ${p.secondUnit} = ? ${p.firstUnit}`;
+      if (p.firstUnit == "$") {
+        // if (p.deciTwo != 0) {
+        //   displayProblem.textContent = `${question.toFixed(2)} ${
+        //     p.secondUnit
+        //   } = $ ?`;
+        // } else {
+        //   displayProblem.textContent = `${question} ${p.secondUnit} = $ ?`;
+        // }
+        displayProblem.textContent = `${accDecimal(question)} ${
+          p.secondUnit
+        } = $ ?`;
+      }
+    }
+  }
+
   if (level == 4.13) {
     if (p.type == 24) {
       displayProblem.innerHTML = `
@@ -3665,63 +3425,6 @@ function updateProblems() {
       );
     }
   }
-  if (level == 4.16) {
-    if (p.placeValue == "tens" && p.numOne < 100) {
-      while (p.numOne > 100) {
-        p.numOne += 10;
-      }
-    }
-    if (p.placeValue == "hundreds" && p.numOne < 1000) {
-      while (p.numOne > 1000) {
-        p.numOne += 100;
-      }
-    }
-    if (p.placeValue == "thousands" && p.numOne < 10000) {
-      while (p.numOne > 10000) {
-        p.numOne += 1000;
-      }
-    }
-
-    if (p.placeValue == "tens") {
-      p.numOne = Math.round(p.numOne / 10) * 10;
-    }
-    if (p.placeValue == "hundreds") {
-      p.numOne = Math.round(p.numOne / 100) * 100;
-    }
-    if (p.placeValue == "thousands") {
-      p.numOne = Math.round(p.numOne / 1000) * 1000;
-    }
-
-    displayProblem.innerHTML = `
-    <u>${p.choice}</u> value before rounding off to the</br> 
-    <u>${p.placeValue}</u> place?</br>
-    <br>
-    _______ ≈ ${p.numOne}`;
-
-    if (p.choice == "Smallest") {
-      if (p.placeValue == "tens") {
-        p.numOne = p.numOne - 10 + 5;
-      }
-      if (p.placeValue == "hundreds") {
-        p.numOne = p.numOne - 100 + 50;
-      }
-      if (p.placeValue == "thousands") {
-        p.numOne = p.numOne - 1000 + 500;
-      }
-    }
-    if (p.choice == "Largest") {
-      if (p.placeValue == "tens") {
-        p.numOne = p.numOne + 4;
-      }
-      if (p.placeValue == "hundreds") {
-        p.numOne = p.numOne + 49;
-      }
-      if (p.placeValue == "thousands") {
-        p.numOne = p.numOne + 499;
-      }
-    }
-  }
-
   if (level == 4.17) {
     const gridX = 380;
     const gridY = 210;
@@ -18441,8 +18144,10 @@ function handleSubmit(e) {
         correctAnswer = Math.round(p.numOne / 10000) * 10000;
       }
     }
-
     if (level == 4.02) {
+      correctAnswer = p.numOne;
+    }
+    if (level == 4.161) {
       if (p.placeValue == "thousandths") correctAnswer = arr2[0];
       if (p.placeValue == "hundredths") correctAnswer = arr2[1];
       if (p.placeValue == "tenths") correctAnswer = arr2[2];
@@ -18483,152 +18188,8 @@ function handleSubmit(e) {
     //   }
     //   decimalCheck(correctAnswer);
     // }
+
     if (level == 4.03) {
-      correctAnswer = p.num.toFixed(p.pos);
-    }
-
-    if (level == 4.04) {
-      if (p.numOne / p.numTwo < 1) {
-        correctAnswer = `${p.numOne}/${p.numTwo}`;
-      } else {
-        correctAnswer =
-          Math.floor(p.numOne / p.numTwo) +
-          " " +
-          (p.numOne % p.numTwo) +
-          "/" +
-          p.numTwo;
-      }
-    }
-
-    if (level == 4.05) {
-      if (p.operator == "x") {
-        correctAnswer =
-          Math.round((p.numOne / p.numTwo) * p.numThree * 10000) / 10000;
-      } else {
-        correctAnswer =
-          Math.round((p.numOne / p.numTwo / p.numThree) * 10000) / 10000;
-      }
-    }
-
-    // if (level == 4.06) {
-    //   if (p.unitMeasurement == "m" || p.unitMeasurement == "$") {
-    //     correctAnswer = Math.round(p.numOne * 100 + p.numThree);
-    //   }
-    //   if (
-    //     p.unitMeasurement == "ℓ" ||
-    //     p.unitMeasurement == "kg" ||
-    //     p.unitMeasurement == "km"
-    //   ) {
-    //     correctAnswer = Math.round(p.numOne * 1000 + p.numTwo);
-    //   }
-    // }
-
-    // if (level == 4.07) {
-    //   if (p.unitMeasurement == "m") {
-    //     correctAnswer = Math.round((p.numOne + p.numThree / 100) * 100) / 100;
-    //   }
-    //   if (p.unitMeasurement == "$") {
-    //     if (p.numThree % 10 == 0) {
-    //       correctAnswer = p.numOne + p.numThree / 100 + "0";
-    //     } else {
-    //       correctAnswer = Math.round((p.numOne + p.numThree / 100) * 100) / 100;
-    //     }
-    //   }
-    //   if (
-    //     p.unitMeasurement == "ℓ" ||
-    //     p.unitMeasurement == "kg" ||
-    //     p.unitMeasurement == "km"
-    //   ) {
-    //     correctAnswer = Math.round((p.numOne + p.numTwo / 1000) * 1000) / 1000;
-    //   }
-    // }
-    // if (level == 4.08) {
-    //   // level 4.06
-    //   if (p.optionFinal == "1") {
-    //     if (p.unitMeasurement == "m" || p.unitMeasurement == "$") {
-    //       correctAnswer = Math.round(p.numOne * 100 + p.numThree);
-    //     }
-    //     if (
-    //       p.unitMeasurement == "ℓ" ||
-    //       p.unitMeasurement == "kg" ||
-    //       p.unitMeasurement == "km"
-    //     ) {
-    //       correctAnswer = Math.round(p.numOne * 1000 + p.numTwo);
-    //     }
-    //   }
-    //   // level 4.07
-    //   if (p.optionFinal == "2") {
-    //     if (p.unitMeasurement == "m") {
-    //       correctAnswer = Math.round((p.numOne + p.numThree / 100) * 100) / 100;
-    //     }
-    //     if (p.unitMeasurement == "$") {
-    //       if (p.numThree % 10 == 0) {
-    //         correctAnswer = p.numOne + p.numThree / 100 + "0";
-    //       } else {
-    //         correctAnswer =
-    //           Math.round((p.numOne + p.numThree / 100) * 100) / 100;
-    //       }
-    //     }
-    //     if (
-    //       p.unitMeasurement == "ℓ" ||
-    //       p.unitMeasurement == "kg" ||
-    //       p.unitMeasurement == "km"
-    //     ) {
-    //       correctAnswer =
-    //         Math.round((p.numOne + p.numTwo / 1000) * 1000) / 1000;
-    //     }
-    //   }
-    // }
-    if (level == 4.08) {
-      if (setting == 1) {
-        correctAnswer = p.sumOfNum * 1000;
-        if (p.firstUnit == "m" || p.firstUnit == "$") {
-          correctAnswer = p.sumOfNum * 100;
-        }
-        console.log(correctAnswer);
-      }
-      if (setting == 2) {
-        correctAnswer = p.sumOfNum;
-      }
-      correctAnswer = accDecimal(correctAnswer);
-      console.log(typeof correctAnswer);
-    }
-    // if (level == 4.09) {
-    //   for (let i = p.numThree; i > 1; i--) {
-    //     if (p.numTwo % i == 0 && p.numThree % i == 0) {
-    //       p.numTwo /= i;
-    //       p.numThree /= i;
-    //     }
-    //   }
-    //   console.log(p.numThree, arr[0]);
-    //   p.numFour = p.numOne * p.numThree + p.numTwo;
-    //   if (p.numThree != arr[0]) {
-    //     correctAnswer = `${p.numOne} ${p.numTwo}/${p.numThree}=${p.numFour}/${p.numThree}`;
-    //   } else if (p.numTwo == 1) {
-    //     p.numFour = p.numOne * p.numThree + p.numTwo;
-    //     correctAnswer = p.numFour + "/" + p.numThree;
-    //   } else {
-    //     correctAnswer = p.numFour + "/" + p.numThree;
-    //   }
-    // }
-
-    // if (level == 4.1) {
-    //   for (let i = p.numTwo; i > 1; i--) {
-    //     if (p.numTwo % i == 0 && p.numThree % i == 0) {
-    //       p.numTwo /= i;
-    //       p.numThree /= i;
-    //     }
-    //   }
-    //   if (p.numThree != arr[1]) {
-    //     correctAnswer = `${p.numOne} ${arr[0]}/${arr[1]}=${p.numOne} ${
-    //       p.numTwo % p.numThree
-    //     }/${p.numThree}`;
-    //   } else {
-    //     correctAnswer =
-    //       p.numOne + " " + (p.numTwo % p.numThree) + "/" + p.numThree;
-    //   }
-    // }
-    if (level == 4.1) {
       if (setting == 1) {
         console.log(p.chosen, p.size);
         if (p.chosen == 0 && p.size == "Smaller") {
@@ -18664,7 +18225,7 @@ function handleSubmit(e) {
         console.log(min, max);
       }
     }
-    if (level == 4.11) {
+    if (level == 4.04) {
       if (setting == 1) {
         for (let i = p.numThree; i > 1; i--) {
           if (p.numTwo % i == 0 && p.numThree % i == 0) {
@@ -18701,7 +18262,7 @@ function handleSubmit(e) {
         }
       }
     }
-    if (level == 4.12) {
+    if (level == 4.05) {
       if (setting == 1 || (setting == 9 && p.rollChoice == 1)) {
         correctAnswer = `${p.numMulti * p.numTwo}`;
       }
@@ -18710,16 +18271,57 @@ function handleSubmit(e) {
       }
     }
 
-    // if (level == 4.13) {
-    //   if (p.options == "use") {
-    //     correctAnswer = `${p.numTwo * p.numMulti}x${p.numOne}/${p.numTwo}`;
-    //   }
-    //   if (p.options == "have left") {
-    //     correctAnswer = `${p.numTwo * p.numMulti}x${p.numTwo - p.numOne}/${
-    //       p.numTwo
-    //     }`;
-    //   }
-    // }
+    if (level == 4.07) {
+      if (p.placeValue == "thousandths") correctAnswer = arr2[0];
+      if (p.placeValue == "hundredths") correctAnswer = arr2[1];
+      if (p.placeValue == "tenths") correctAnswer = arr2[2];
+      if (p.placeValue == "ones") correctAnswer = arr2[3];
+      if (p.placeValue == "tens") correctAnswer = arr2[4];
+      if (p.placeValue == "hundreds") correctAnswer = arr2[5];
+      if (p.placeValue == "thousands") correctAnswer = arr2[6];
+    }
+
+    if (level == 4.08) {
+      correctAnswer = p.num.toFixed(p.pos);
+    }
+
+    if (level == 4.09) {
+      if (p.numOne / p.numTwo < 1) {
+        correctAnswer = `${p.numOne}/${p.numTwo}`;
+      } else {
+        correctAnswer =
+          Math.floor(p.numOne / p.numTwo) +
+          " " +
+          (p.numOne % p.numTwo) +
+          "/" +
+          p.numTwo;
+      }
+    }
+
+    if (level == 4.1) {
+      if (p.operator == "x") {
+        correctAnswer =
+          Math.round((p.numOne / p.numTwo) * p.numThree * 10000) / 10000;
+      } else {
+        correctAnswer =
+          Math.round((p.numOne / p.numTwo / p.numThree) * 10000) / 10000;
+      }
+    }
+
+    if (level == 4.11) {
+      if (setting == 1) {
+        correctAnswer = p.sumOfNum * 1000;
+        if (p.firstUnit == "m" || p.firstUnit == "$") {
+          correctAnswer = p.sumOfNum * 100;
+        }
+        console.log(correctAnswer);
+      }
+      if (setting == 2) {
+        correctAnswer = p.sumOfNum;
+      }
+      correctAnswer = accDecimal(correctAnswer);
+      console.log(typeof correctAnswer);
+    }
 
     if (level == 4.13) {
       console.log(p.type, p.hours);
@@ -18843,9 +18445,6 @@ function handleSubmit(e) {
           }
         }
       }
-    }
-    if (level == 4.16) {
-      correctAnswer = p.numOne;
     }
 
     if (level == 4.17) {
@@ -22902,7 +22501,7 @@ function handleSubmit(e) {
       commonMultipleArrTwo.length = 0;
       console.log(arr, commonMultipleArr, commonMultipleArrTwo);
       ctx.clearRect(0, 0, 400, 275);
-      if (level == 2.02 || level == 2.05 || level == 4.02) {
+      if (level == 2.02 || level == 2.05 || level == 4.07) {
         arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
         arr2.length = 0;
         console.log("Array reset", arr, arr2);
@@ -22929,10 +22528,10 @@ function handleSubmit(e) {
         3.04,
         3.05,
         3.06,
+        4.02,
         4.06,
-        4.16,
-        4.07,
-        4.08,
+        // 4.07,
+        4.11,
         4.26,
         6.05,
         "heuThree",
@@ -23030,19 +22629,7 @@ function handleSubmit(e) {
         "calSixb",
       ];
       const levelDoNotClearNum = [
-        2.05,
-        2.09,
-        2.08,
-        2.09,
-        3.09,
-        3.12,
-        3.13,
-        3.14,
-        3.16,
-        4.0,
-        ,
-        4.11,
-        5.11,
+        2.05, 2.09, 2.08, 2.09, 3.09, 3.12, 3.13, 3.14, 3.16, 4.0, 4.03, 5.11,
         6.01,
       ];
       if (
@@ -23141,8 +22728,7 @@ function handleSubmit(e) {
         level == 3.05 ||
         level == 3.06 ||
         level == 4.06 ||
-        level == 4.07 ||
-        level == 4.08
+        level == 4.11
       ) {
         if (p.firstUnit == "$" || p.unitMeasurement == "$") {
           helpMe.textContent = `$1 = 100¢`;
@@ -23163,7 +22749,7 @@ function handleSubmit(e) {
           helpMe.textContent = `1 ℓ  = 1000 mℓ`;
         }
       }
-      if (level == 4.16) {
+      if (level == 4.02) {
         let str = p.numOne.toString();
         const length = str.length;
         console.log(str, length);
@@ -23999,6 +23585,98 @@ function genProblems() {
 
   if (level == 4.02) {
     return {
+      placeValue: ["tens", "hundreds", "thousands"][genNumbers(3)],
+      numOne: genNumbers(99998) + 1,
+      choice: ["Smallest", "Largest"][genNumbers(2)],
+    };
+  }
+
+  if (level == 4.03) {
+    if (setting != 1 && setting != 2 && setting != 9) setting = 9;
+    setting = calArrAll(2, calArr, setting, 9);
+    if (setting == 1) {
+      const one = genNumbers(10) + 3;
+      const two = genNumbers(10) + 3;
+      return {
+        chosen: genNumbers(2),
+        numOne: genNumbers(one - 1) + 1,
+        denoOne: one,
+        numTwo: genNumbers(two - 1) + 1,
+        denoTwo: two,
+        size: ["Smaller", "Bigger"][genNumbers(2)],
+      };
+    }
+    if (setting == 2) {
+      const denoOne = genNumbers(7) + 4;
+      const denoTwo = genNumbers(7) + 4;
+      return {
+        numOne: denoOne - 1,
+        denoOneUse: denoOne,
+        numTwo: denoTwo - 1,
+        denoTwoUse: denoTwo,
+        size: ["Smaller", "Bigger"][genNumbers(2)],
+      };
+    }
+  }
+  if (level == 4.04) {
+    setting = calArrAll(2, calArr, setting, 9);
+    if (setting == 1) {
+      return {
+        numOne: genNumbers(9) + 1,
+        numTwo: genNumbers(9) + 2,
+        numThree: genNumbers(10) + 2,
+        numFour: 0,
+      };
+    }
+
+    if (setting == 2) {
+      return {
+        numOne: genNumbers(9) + 1,
+        numTwo: genNumbers(9) + 2,
+        numThree: genNumbers(10) + 2,
+        numFour: 0,
+      };
+    }
+    // return {
+    //   numOne: genNumbers(9) + 1,
+    //   numTwo: genNumbers(9) + 2,
+    //   numThree: genNumbers(10) + 2,
+    //   numFour: 0,
+    //   optionFinal: ["1", "2"][genNumbers(2)],
+    // };
+  }
+
+  if (level == 4.05) {
+    let roll = undefined;
+
+    if ((setting != 1 && setting != 2) || isNaN(setting)) {
+      setting = 9;
+    }
+
+    if (setting == 9) {
+      roll = genNumbers(2) + 1;
+    }
+
+    if (setting == 1 || (setting == 9 && roll == 1)) {
+      return {
+        rollChoice: 1,
+        numOne: genNumbers(8) + 1,
+        numTwo: genNumbers(8) + 2,
+        numMulti: genNumbers(8) + 2,
+      };
+    }
+    if (setting == 2 || (setting == 9 && roll == 2)) {
+      return {
+        rollChoice: 2,
+        nume: genNumbers(8) + 1,
+        deno: genNumbers(8) + 2,
+        numMulti: genNumbers(8) + 2,
+      };
+    }
+  }
+
+  if (level == 4.07) {
+    return {
       holdingNumber: 0,
       finalNumber: 0,
       totalNumber: 0,
@@ -24013,22 +23691,7 @@ function genProblems() {
       ][genNumbers(7)],
     };
   }
-
-  // if (level == 4.03) {
-  //   return {
-  //     numOne: genNumbers(9999) + 1,
-  //     numTwo: 0,
-  //     placeValue: [
-  //       "1 decimal place",
-  //       "tenth place",
-  //       "2 decimal place",
-  //       "hundredth place",
-  //       "Whole Number",
-  //     ][genNumbers(5)],
-  //     numFinal: 0,
-  //   };
-  // }
-  if (level == 4.03) {
+  if (level == 4.08) {
     let position = genNumbers(3);
     return {
       pos: position,
@@ -24045,14 +23708,14 @@ function genProblems() {
       num: undefined,
     };
   }
-  if (level == 4.04) {
+  if (level == 4.09) {
     return {
       numOne: genNumbers(999) + 1,
       numTwo: [10, 100, 1000][genNumbers(3)],
     };
   }
 
-  if (level == 4.05) {
+  if (level == 4.1) {
     return {
       numOne: genNumbers(999) + 1,
       numTwo: [1, 10, 100][genNumbers(3)],
@@ -24061,51 +23724,7 @@ function genProblems() {
     };
   }
 
-  // if (level == 4.06) {
-  //   return {
-  //     numOne: genNumbers(98) + 1,
-  //     numTwo: genNumbers(998) + 1,
-  //     numThree: genNumbers(98) + 1,
-  //     numFour: genNumbers(58) + 1,
-  //     numMulti: 1000,
-  //     numSix: genNumbers(98) + 1,
-  //     option: ["1", "2"][genNumbers(2)],
-  //     unitMeasurement: ["ℓ", "kg", "km", "$", "m"][genNumbers(5)],
-  //     secondUnitMeasurement: 0,
-  //   };
-  // }
-
-  // if (level == 4.07) {
-  //   return {
-  //     numOne: genNumbers(98) + 1,
-  //     numTwo: genNumbers(998) + 1,
-  //     numThree: genNumbers(98) + 1,
-  //     numFour: genNumbers(8) + 1,
-  //     numFive: genNumbers(8) + 1,
-  //     numSix: genNumbers(98) + 1,
-  //     option: ["1", "2"][genNumbers(2)],
-  //     optionTwo: ["1", "2"][genNumbers(2)],
-  //     unitMeasurement: ["m", "$", "ℓ", "km", "kg"][genNumbers(5)],
-  //     secondUnitMeasurement: 0,
-  //   };
-  // }
-
-  // if (level == 4.08) {
-  //   return {
-  //     numOne: genNumbers(98) + 1,
-  //     numTwo: genNumbers(998) + 1,
-  //     numThree: genNumbers(98) + 1,
-  //     numFour: genNumbers(8) + 1,
-  //     numFive: genNumbers(8) + 1,
-  //     numSix: genNumbers(98) + 1,
-  //     option: ["1", "2"][genNumbers(2)],
-  //     optionTwo: ["1", "2"][genNumbers(2)],
-  //     optionFinal: ["1", "2"][genNumbers(2)],
-  //     unitMeasurement: ["m", "$", "ℓ", "km", "kg"][genNumbers(5)],
-  //     secondUnitMeasurement: 0,
-  //   };
-  // }
-  if (level == 4.08) {
+  if (level == 4.11) {
     //Bigger unit to smaller unit
     setting = calArrAll(2, calArr, setting, 9);
     if (setting == 1) {
@@ -24147,116 +23766,6 @@ function genProblems() {
     }
   }
 
-  // if (level == 4.09) {
-  //   return {
-  //     numOne: genNumbers(9) + 1,
-  //     numTwo: genNumbers(9) + 2,
-  //     numThree: genNumbers(10) + 2,
-  //     numFour: 0,
-  //   };
-  // }
-
-  // if (level == 4.1) {
-  //   return {
-  //     numOne: genNumbers(9) + 1,
-  //     numTwo: genNumbers(9) + 2,
-  //     numThree: genNumbers(10) + 2,
-  //     numFour: 0,
-  //   };
-  // }
-  if (level == 4.1) {
-    if (setting != 1 && setting != 2 && setting != 9) setting = 9;
-    setting = calArrAll(2, calArr, setting, 9);
-    if (setting == 1) {
-      const one = genNumbers(10) + 3;
-      const two = genNumbers(10) + 3;
-      return {
-        chosen: genNumbers(2),
-        numOne: genNumbers(one - 1) + 1,
-        denoOne: one,
-        numTwo: genNumbers(two - 1) + 1,
-        denoTwo: two,
-        size: ["Smaller", "Bigger"][genNumbers(2)],
-      };
-    }
-    if (setting == 2) {
-      const denoOne = genNumbers(7) + 4;
-      const denoTwo = genNumbers(7) + 4;
-      return {
-        numOne: denoOne - 1,
-        denoOneUse: denoOne,
-        numTwo: denoTwo - 1,
-        denoTwoUse: denoTwo,
-        size: ["Smaller", "Bigger"][genNumbers(2)],
-      };
-    }
-  }
-  if (level == 4.11) {
-    setting = calArrAll(2, calArr, setting, 9);
-    if (setting == 1) {
-      return {
-        numOne: genNumbers(9) + 1,
-        numTwo: genNumbers(9) + 2,
-        numThree: genNumbers(10) + 2,
-        numFour: 0,
-      };
-    }
-
-    if (setting == 2) {
-      return {
-        numOne: genNumbers(9) + 1,
-        numTwo: genNumbers(9) + 2,
-        numThree: genNumbers(10) + 2,
-        numFour: 0,
-      };
-    }
-    // return {
-    //   numOne: genNumbers(9) + 1,
-    //   numTwo: genNumbers(9) + 2,
-    //   numThree: genNumbers(10) + 2,
-    //   numFour: 0,
-    //   optionFinal: ["1", "2"][genNumbers(2)],
-    // };
-  }
-
-  if (level == 4.12) {
-    let roll = undefined;
-
-    if ((setting != 1 && setting != 2) || isNaN(setting)) {
-      setting = 9;
-    }
-
-    if (setting == 9) {
-      roll = genNumbers(2) + 1;
-    }
-
-    if (setting == 1 || (setting == 9 && roll == 1)) {
-      return {
-        rollChoice: 1,
-        numOne: genNumbers(8) + 1,
-        numTwo: genNumbers(8) + 2,
-        numMulti: genNumbers(8) + 2,
-      };
-    }
-    if (setting == 2 || (setting == 9 && roll == 2)) {
-      return {
-        rollChoice: 2,
-        nume: genNumbers(8) + 1,
-        deno: genNumbers(8) + 2,
-        numMulti: genNumbers(8) + 2,
-      };
-    }
-  }
-
-  // if (level == 4.13) {
-  //   return {
-  //     numOne: genNumbers(8) + 2,
-  //     numTwo: genNumbers(8) + 2,
-  //     numMulti: genNumbers(99) + 2,
-  //     options: ["have left", "use"][genNumbers(2)],
-  //   };
-  // }
-
   if (level == 4.13) {
     return {
       type: [12, 24][genNumbers(2)],
@@ -24278,33 +23787,6 @@ function genProblems() {
     };
   }
 
-  // if (level == 4.15) {
-  //   return {
-  //     // numerator: genNumbers(9)+1,
-  //     // denominator: genNumbers(9)+1,
-  //     numerator: genNumbers(9) + 1,
-  //     denominator: genNumbers(9) + 1,
-  //     firstSelection: genNumbers(2),
-  //     secondSelection: genNumbers(4),
-  //     // secondSelection: 3,
-  //     lastSelection: genNumbers(3),
-  //     firstUnit: undefined,
-  //     secondUnit: undefined,
-  //     totalUnit: undefined,
-  //     differenceUnit: undefined,
-  //     lastUnits: undefined,
-  //     identity: genNumbers(4),
-  //     // identity: 1,
-  //     value: undefined,
-  //     type: [
-  //       ["boys", "girls", "pupils"],
-  //       ["green marbles", "blue marbles", "total marbles"],
-  //       ["saved", "spent", "total money"],
-  //       ["spent", "left", "total money"],
-  //     ],
-  //   };
-  // }
-
   //POSITION PATTERN
   if (level == 4.15) {
     return {
@@ -24315,14 +23797,6 @@ function genProblems() {
       column: ["A", "B", "C", "D"][genNumbers(4)],
       row: genNumbers(5) + 10,
       number: genNumbers(50) + 50,
-    };
-  }
-
-  if (level == 4.16) {
-    return {
-      placeValue: ["tens", "hundreds", "thousands"][genNumbers(3)],
-      numOne: genNumbers(99998) + 1,
-      choice: ["Smallest", "Largest"][genNumbers(2)],
     };
   }
 
@@ -28445,56 +27919,22 @@ function buttonLevelSetting() {
       break;
 
     case "Level 4.02":
-      level = "4.02";
-      scoreNeeded = 30;
-      gold = highScore4DotZero1.time;
-
+      level = 4.02;
+      scoreNeeded = 20;
+      gold = highScore4DotZero16.time;
+      silver =
+        highScore4DotZero16.time + (cutoff - highScore4DotZero16.time) / 3;
+      bronze =
+        highScore4DotZero16.time +
+        ((cutoff - highScore4DotZero16.time) / 3) * 2;
       displayProblem.style.fontSize = "25px";
-      arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      helpMe.style.fontSize = "18px";
+      helpMe.style.textAlign = "left";
+      document.querySelector("#user-input").setAttribute("max", "200000");
       break;
 
     case "Level 4.03":
-      level = "4.03";
-      scoreNeeded = 30;
-      gold = 264;
-
-      document.querySelector("#user-input").setAttribute("step", "0.000001");
-      break;
-
-    case "Level 4.04":
-      level = 4.04;
-      scoreNeeded = 30;
-      gold = 310;
-
-      document.querySelector("#user-input").setAttribute("type", "text");
-      break;
-
-    case "Level 4.05":
-      level = 4.05;
-      scoreNeeded = 30;
-      gold = highScore4DotZero5.time;
-      silver = highScore4DotZero5.time + (cutoff - highScore4DotZero5.time) / 3;
-      bronze =
-        highScore4DotZero5.time + ((cutoff - highScore4DotZero5.time) / 3) * 2;
-
-      document.querySelector("#user-input").setAttribute("step", "0.000001");
-      break;
-
-    case "Level 4.08":
-      setting = prompt(
-        "1. Decimal Conversion: Big to Small\n2. Decimal Conversion: Small to Big\n\n9. All",
-        9
-      );
-      if (setting != 1 && setting != 2 && setting != 9) setting = 9;
-      level = 4.08;
-      scoreNeeded = 30;
-      gold = 207;
-
-      document.querySelector("#user-input").setAttribute("step", "0.000001");
-      break;
-
-    case "Level 4.10":
-      level = 4.1;
+      level = 4.03;
       setting = prompt("1. Halfing\n2. Opposite\n\n9. All");
       if (setting != 1 && setting != 2) setting = 9;
       scoreNeeded = 20;
@@ -28509,12 +27949,12 @@ function buttonLevelSetting() {
 
       break;
 
-    case "Level 4.11":
+    case "Level 4.04":
       setting = prompt(
         "1. Mixed to improper fraction\n2. Improper to Mixed fraction\n\n9. All",
         9
       );
-      level = 4.11;
+      level = 4.04;
       scoreNeeded = 20;
       gold = highScore4DotZero11.time;
       silver =
@@ -28529,8 +27969,8 @@ function buttonLevelSetting() {
       instructions.textContent = "";
       break;
 
-    case "Level 4.12":
-      level = 4.12;
+    case "Level 4.05":
+      level = 4.05;
       scoreNeeded = 30;
       setting = Math.abs(
         prompt(
@@ -28544,6 +27984,55 @@ function buttonLevelSetting() {
       instructions.textContent = "";
       displayProblem.style.fontSize = "25px";
       displayProblem.style.marginBottom = "150px";
+      break;
+
+    case "Level 4.07":
+      level = "4.07";
+      scoreNeeded = 30;
+      gold = highScore4DotZero1.time;
+
+      displayProblem.style.fontSize = "25px";
+      arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      break;
+
+    case "Level 4.08":
+      level = "4.08";
+      scoreNeeded = 30;
+      gold = 264;
+
+      document.querySelector("#user-input").setAttribute("step", "0.000001");
+      break;
+
+    case "Level 4.09":
+      level = 4.09;
+      scoreNeeded = 30;
+      gold = 310;
+
+      document.querySelector("#user-input").setAttribute("type", "text");
+      break;
+
+    case "Level 4.1":
+      level = 4.1;
+      scoreNeeded = 30;
+      gold = highScore4DotZero5.time;
+      silver = highScore4DotZero5.time + (cutoff - highScore4DotZero5.time) / 3;
+      bronze =
+        highScore4DotZero5.time + ((cutoff - highScore4DotZero5.time) / 3) * 2;
+
+      document.querySelector("#user-input").setAttribute("step", "0.000001");
+      break;
+
+    case "Level 4.11":
+      setting = prompt(
+        "1. Decimal Conversion: Big to Small\n2. Decimal Conversion: Small to Big\n\n9. All",
+        9
+      );
+      if (setting != 1 && setting != 2 && setting != 9) setting = 9;
+      level = 4.11;
+      scoreNeeded = 30;
+      gold = 207;
+
+      document.querySelector("#user-input").setAttribute("step", "0.000001");
       break;
 
     case "Level 4.13":
@@ -28584,21 +28073,6 @@ function buttonLevelSetting() {
       displayProblem.style.fontSize = "20px";
       instructions.innerHTML = `Give your final answer.
         `;
-      break;
-
-    case "Level 4.16":
-      level = 4.16;
-      scoreNeeded = 20;
-      gold = highScore4DotZero16.time;
-      silver =
-        highScore4DotZero16.time + (cutoff - highScore4DotZero16.time) / 3;
-      bronze =
-        highScore4DotZero16.time +
-        ((cutoff - highScore4DotZero16.time) / 3) * 2;
-      displayProblem.style.fontSize = "25px";
-      helpMe.style.fontSize = "18px";
-      helpMe.style.textAlign = "left";
-      document.querySelector("#user-input").setAttribute("max", "200000");
       break;
 
     case "Level 4.17":

@@ -34,9 +34,9 @@
         <% subtopic_p3.forEach(item => { %>
             <div class="form-check">
                 <% if (userScienceSetting.p3 && userScienceSetting.p3.includes(item)){ %>
-                    <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p3" checked>
+                    <input class="form-check-input p3_topic" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p3" checked>
                 <% } else {%>
-                    <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p3">
+                    <input class="form-check-input p3_topic" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p3">
                 <% } %>
                     
                      <label class="form-check-label">
@@ -44,6 +44,7 @@
                     </label>
             </div>
         <% }) %>
+        <btn class="btn btn-secondary p3_topic_btn">Toggle</btn>
     </div>
         </div>
         <hr>
@@ -55,15 +56,16 @@
     <% subtopic_p4.forEach(item => { %>
         <div class="form-check">
             <% if (userScienceSetting.p4 && userScienceSetting.p4.includes(item)){ %>
-                <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p4" checked>
+                <input class="form-check-input p4_topic" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p4" checked>
             <% } else {%>
-                <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p4">
+                <input class="form-check-input p4_topic" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p4">
             <% } %>
             <label class="form-check-label">
                 <%= item %>
             </label>
             </div>
     <% }) %>
+    <btn class="btn btn-secondary p4_topic_btn">Toggle</btn>
 </div>
 </div>
 <hr>
@@ -75,15 +77,16 @@
         <% subtopic_p5.forEach(item => { %>
             <div class="form-check">
                 <% if (userScienceSetting.p5 && userScienceSetting.p5.includes(item)){ %>
-                    <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p5" checked>
+                    <input class="form-check-input p5_topic" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p5" checked>
                 <% } else {%>
-                    <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p5">
+                    <input class="form-check-input p5_topic" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p5">
                 <% } %>
                 <label class="form-check-label" for="flexCheckChecked">
                   <%= item %>
                 </label>
               </div>
         <% }) %>
+        <btn class="btn btn-secondary p5_topic_btn">Toggle</btn>
     </div>
     </div>
     <hr>
@@ -95,15 +98,16 @@
         <% subtopic_p6.forEach(item => { %>
             <div class="form-check">
                 <% if (userScienceSetting.p6 && userScienceSetting.p6.includes(item)){ %>
-                    <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p6" checked>
+                    <input class="form-check-input p6_topic" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p6" checked>
                 <% } else {%>
-                    <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p6">
+                    <input class="form-check-input p6_topic" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="subtopic_p6">
                 <% } %>
                 <label class="form-check-label" for="flexCheckChecked">
                     <%= item %>
                 </label>
                 </div>
         <% }) %>
+        <btn class="btn btn-secondary p6_topic_btn">Toggle</btn>
     </div>
     </div>
     <hr>
@@ -113,5 +117,30 @@
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script>
+    let btnP3 = 0
+    let btnP4 = 0
+    let btnP5 = 0
+    let btnP6 = 0
+
+    const levels = ["p3", "p4", "p5", "p6"]
+    levels.forEach(item => {
+        document.querySelector(`.${item}_topic_btn`).addEventListener( "click", function(e){
+            console.log("click")
+            const checkbox = document.querySelectorAll(`.${item}_topic`)
+            
+            if (checkbox[0].checked == true){
+                for(let i = 0; i< checkbox.length; i++){
+                    checkbox[i].checked = false
+                }
+            } else {
+                for(let i = 0; i< checkbox.length; i++){
+                    checkbox[i].checked = true
+                }
+            }
+        })
+    })
+ 
+</script>
 
 </html>
