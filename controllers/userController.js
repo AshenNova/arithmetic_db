@@ -464,13 +464,19 @@ function settings(level, age, allAttempts) {
     let countTwo = 0;
     let countThree = 0;
     allAttempts.forEach((item) => {
-      if (item.level == 3.19) {
-        if (item.setting == 1) countOne += 1;
-        if (item.setting == 2 || item.setting == "1-2") {
-          countTwo += 1;
-        }
-        if (item.setting == 9) countNine += 1;
+      // if (
+      //   item.level == 3.19 ||
+      //   level == 4.03 ||
+      //   level == 4.04 ||
+      //   level == 4.05 ||
+      //   level == 4.11
+      // ) {
+      if (item.setting == 1) countOne += 1;
+      if (item.setting == 2 || item.setting == "1-2") {
+        countTwo += 1;
       }
+      if (item.setting == 9) countNine += 1;
+      // }
     });
     if (countNine > 0) {
       return 9;
