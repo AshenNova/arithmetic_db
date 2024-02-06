@@ -1592,13 +1592,7 @@ function updateProblems() {
     }
   }
   if (level == 2.02) {
-    if (digit < 3) {
-      digit = 3;
-    }
-    if (digit > 7) {
-      digit = 7;
-    }
-    for (let i = 0; i < digit; i++) {
+    for (let i = 0; i < setting * 1 + 1; i++) {
       const chosenNumber = arr[genNumbers(arr.length - 1)];
       arr2.push(chosenNumber);
       const index = arr.indexOf(chosenNumber);
@@ -1655,16 +1649,9 @@ function updateProblems() {
   }
 
   if (level == 2.05) {
-    if (digit < 3) {
-      digit = 3;
-    }
-    if (digit > 7) {
-      digit = 7;
-    }
-
     // counting odd or even in array
     let oddEvenCount = [0, 0];
-    for (let i = arr2.length; arr2.length < digit; i++) {
+    for (let i = arr2.length; arr2.length < setting * 1 + 1; i++) {
       const chosenNumber = arr[genNumbers(arr.length - 1)];
       arr2.push(chosenNumber);
       const index = arr.indexOf(chosenNumber);
@@ -23224,6 +23211,8 @@ function genProblems() {
   }
 
   if (level == 2.02) {
+    // setting = calArrAll(5, calArr, setting, 9);
+    // setting = checkRange(setting, calArr, skipArr);
     return {
       totalNumber: 0,
       holdingNumber: undefined,
@@ -23251,9 +23240,6 @@ function genProblems() {
   }
 
   if (level == 2.05) {
-    if (digit == "") {
-      digit = 5;
-    }
     return {
       choice: ["smallest", "greatest"][genNumbers(2)],
       landingNumber: undefined,
@@ -27598,15 +27584,13 @@ function buttonLevelSetting() {
     case "Level 2.02":
       level = 2.02;
       scoreNeeded = 30;
-      gold = highScore2DotZero2.time;
-      silver = highScore2DotZero2.time + (cutoff - highScore2DotZero2.time) / 3;
-      bronze =
-        highScore2DotZero2.time + ((cutoff - highScore2DotZero2.time) / 3) * 2;
-
       displayProblem.style.fontSize = "25px";
-      digit = prompt(
-        "How many digits?\n3. Primary 2\n4. Primary 3\n5. Primary 4\n6. Primary 5\n7. Primary 6"
+      setting = prompt(
+        "How many digits?\n2. Primary 2\n3. Primary 3\n4. Primary 4\n5. Primary 5\n6. Primary 6"
       );
+      if (![2, 3, 4, 5, 6].includes(setting * 1)) {
+        setting = 6;
+      }
       arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
       break;
 
@@ -27630,13 +27614,12 @@ function buttonLevelSetting() {
     case "Level 2.05":
       level = 2.05;
       scoreNeeded = 20;
-      gold = highScore2DotZero5.time;
-      silver = highScore2DotZero5.time + (cutoff - highScore2DotZero5.time) / 3;
-      bronze =
-        highScore2DotZero5.time + ((cutoff - highScore2DotZero5.time) / 3) * 2;
-      digit = prompt(
-        "How many digits?\n3. Primary 2\n4. Primary 3\n5. Primary 4\n6. Primary 5\n7. Primary 6"
+      setting = prompt(
+        "How many digits?\n2. Primary 2\n3. Primary 3\n4. Primary 4\n5. Primary 5\n6. Primary 6"
       );
+      if (![2, 3, 4, 5, 6].includes(setting * 1)) {
+        setting = 6;
+      }
       arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
       instructions.textContent = "Form the Number";

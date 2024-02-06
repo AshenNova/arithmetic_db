@@ -413,17 +413,17 @@ function settings(level, age, allAttempts) {
   if (level == 2.02 || level == 2.05) {
     console.log(`The level is ${level}. Age is ${age}.`);
     if (age == 8 || age <= 7) {
-      return 3;
+      return 2;
     } else if (age == 9) {
-      return 4;
+      return 3;
     } else if (age == 10) {
-      return 5;
+      return 4;
     } else if (age == 11) {
-      return 6;
+      return 5;
     } else if (age == 12) {
-      return 7;
+      return 6;
     } else {
-      return 7;
+      return 6;
     }
   } else if (level == 3.16) {
     let countNine = 0;
