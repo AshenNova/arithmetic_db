@@ -73,7 +73,7 @@
         </div>
             <button type="submit" class="btn btn-primary mt-1">Filter</button>
      </form>
-     <table class="table">
+     <table class="table text-center">
          <thead>
              <tr>
                 <td>Subject</td>
@@ -84,7 +84,7 @@
                  <td>Paper</td>
                  <td>Comment</td>
                  <td>Date</td>
-                 <td colspan="3">Action</td>
+                 <td colspan="4">Action</td>
              </tr>
          </thead>
          <% exams.forEach( item => { %>
@@ -97,8 +97,9 @@
                 <td><%= item.paper %></td>
                 <td><%= item.comment %></td>
                 <td><%= item.date.toLocaleDateString("en-GB") %></td>
-                <td><a href="/exam/view/<%= item._id %>" target="_blank">View</a></td>
-                <td><a href="/exam/edit/<%= item._id %>" target="_blank">Edit</a></td>
+                <td><a href="/homework/new/exam/<%= item._id %>">🪚</a></td>
+                <td><a href="/exam/view/<%= item._id %>" target="_blank">👁️</a></td>
+                <td><a href="/exam/edit/<%= item._id %>" target="_blank">📝</a></td>
                 <td>Delete</td>
             </tr>
          <% }) %>

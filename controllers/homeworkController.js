@@ -1,4 +1,5 @@
 const Homework = require("../models/homeworkModel");
+const Exam = require("../models/examModel");
 const User = require("../models/userModel");
 
 // try {
@@ -12,16 +13,26 @@ exports.getHomework = async (req, res) => {
     let username = req.user.username;
     let authenticate = req.auth;
     let currentUser = req.user;
-    let editHomework;
+    let editHomework = {};
     const getAllUsers = await User.distinct("username").sort();
     console.log(getAllUsers);
-    console.log("Something");
     if (req.params.id) {
       console.log(req.params);
       editHomework = await Homework.findById(req.params.id);
-      // editHomework.comment = editHomework.comment.trim();
-      console.log(editHomework);
+      console.log(`The comment is ${editHomework.comment}`);
+      // editHomework.comment.replace("p1", "</br>");
+      // console.log(editHomework);
     }
+    if (req.params.hw) {
+      console.log(req.params);
+      const exam = await Exam.findById(req.params.hw);
+      console.log(exam);
+      editHomework.subject = exam.subject;
+      editHomework.description = `${exam.year}.${exam.level}.${exam.type}.${exam.school}`;
+      editHomework.linkA = exam.link;
+      editHomework.dateIssue = new Date();
+    }
+
     res.render("homework/new", {
       username,
       authenticate,

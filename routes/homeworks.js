@@ -8,6 +8,7 @@ router
   .post(homeworkController.createHomework);
 
 router.route("/new/:id").get(homeworkController.getHomework);
+router.route("/new/exam/:hw").get(homeworkController.getHomework);
 router.route("/delete/:id/:user").get(homeworkController.deleteHomework);
 
 module.exports = router;

@@ -16522,6 +16522,12 @@ How many items are there in each bag?
       } else {
         sentenceA = `The ratio of the number of students to ${object}s is ${p.totalQuantity} : ${p.totalValue}`;
       }
+      const theOther = p.totalQuantity*p.valueB
+      const bigDiff = p.totalValue-theOther
+      const smallDiff = p.valueB-p.valueA
+      if (bigDiff/smallDiff < 0) {
+        console.log("Too Small")
+        return updateCalc()}
       displayProblem.innerHTML = `
       ${sentenceA}.</br>
       Each student receives either ${p.valueA} or ${p.valueB} ${object}s.</br>

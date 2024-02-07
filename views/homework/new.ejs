@@ -21,7 +21,7 @@
   <h1>New homework</h1>
  
   <form action="/homework/new" method="post">
-    <% if (editHomework) { %>
+    <% if (editHomework.id) { %>
       <div class="mb-3">
         <div class="form-group required">
           <label class="form-label" for="id">ID</label>
@@ -32,7 +32,7 @@
 
     <p>Status</p>
     <select class="form-select mb-3" aria-label="Default select example" name="status">
-      <% if (editHomework) { %>
+      <% if (editHomework.id) { %>
         <option value="<%= editHomework.status %>"><%= editHomework.status %></option>
       <% } else { %>
         <option selected value="Incomplete">Incomplete</option>
@@ -95,7 +95,7 @@
       <div class="mb-3">
         <div class="form-group required">
           <label class="form-label" for="comment">Comment</label>
-          <textarea type="text" class="form-control" name="comment"><% if (editHomework) { %><%= editHomework.comment %><% } %></textarea>
+          <textarea type="text" class="form-control" name="comment"><% if (editHomework) { %><%- editHomework.comment %><% } %></textarea>
         </div>
       </div>
       <div class="row mb-3">
