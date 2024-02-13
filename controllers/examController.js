@@ -76,12 +76,20 @@ exports.view = catchAsync(async (req, res, next) => {
   const exam = await Exam.findById(id);
   res.render("./exam/view", { exam });
 });
+
 exports.edit = catchAsync(async (req, res, next) => {
+  console.log("Editing paper");
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
   const id = req.params.id;
   const schools = await Exam.distinct("school");
   const subjects = await Exam.distinct("subject");
   const existing = await Exam.findById(id);
   res.render("./exam/new", {
+    username,
+    authenticate,
+    currentUser,
     schools,
     subjects,
     existing,

@@ -14,6 +14,9 @@
       .single_file {
           display: inline-block;
       }
+      .no-line{
+          text-decoration: none;
+      }
   </style>
   <title>Exam Papers [ List ]</title>
 </head>
@@ -97,9 +100,9 @@
                 <td><%= item.paper %></td>
                 <td><%= item.comment %></td>
                 <td><%= item.date.toLocaleDateString("en-GB") %></td>
-                <td><a href="/homework/new/exam/<%= item._id %>">🪚</a></td>
-                <td><a href="/exam/view/<%= item._id %>" target="_blank">👁️</a></td>
-                <td><a href="/exam/edit/<%= item._id %>" target="_blank">📝</a></td>
+                <td><a href="/homework/new/exam/<%= item._id %>"  class="no-line">🪚</a></td>
+                <td><a href="/exam/view/<%= item._id %>"  class="no-line"target="_blank">👁️</a></td>
+                <td><a href="/exam/edit/<%= item._id %>"  class="no-line"target="_blank">📝</a></td>
                 <td>Delete</td>
             </tr>
          <% }) %>
