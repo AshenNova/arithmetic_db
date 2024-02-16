@@ -15758,18 +15758,10 @@ How many items are there in each bag?
         console.log("Different denominators");
         return updateCalc();
       }
-      // const commonDenoA = commonDeno(totalAOne, totalATwo)
-      // const multiplierA = commonDenoA/totalAOne
-      // const commonDenoB = commonDeno(totalBOne, totalBTwo)
-      // const multiplierA = commonDenoB/totalBOne
       let firstScene = p.sceneAOne * p.unitA + p.sceneBOne * p.unitB;
       let secondScene = p.sceneATwo * p.unitA + p.sceneBTwo * p.unitB;
       if (p.type == "A") {
-        // if (firstScene == secondScene) {
-        //   console.log("Clashing total");
-        //   return updateCalc();
-        // }
-        if (p.sceneAOne == p.sceneBOne && p.sceneATwo == p.sceneBTwo) {
+        if ((p.sceneAOne == p.sceneATwo && p.sceneBOne == p.sceneBTwo) || firstScene == secondScene ) {
           return updateCalc();
         }
 
@@ -16527,7 +16519,8 @@ How many items are there in each bag?
       const smallDiff = p.valueB-p.valueA
       if (bigDiff/smallDiff < 0) {
         console.log("Too Small")
-        return updateCalc()}
+        return updateCalc()
+      }
       displayProblem.innerHTML = `
       ${sentenceA}.</br>
       Each student receives either ${p.valueA} or ${p.valueB} ${object}s.</br>
