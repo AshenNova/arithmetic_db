@@ -15777,7 +15777,10 @@ How many items are there in each bag?
         p.varB = totalBOne;
       }
       if (p.type == "B") {
-        if ((totalATwo == totalBTwo && totalATwo == 2) || p.sceneATwo == p.sceneBTwo) {
+        if (
+          (totalATwo == totalBTwo && totalATwo == 2) ||
+          p.sceneATwo == p.sceneBTwo
+        ) {
           return updateCalc();
         }
         firstScene = totalATwo * p.unitA + totalBTwo * p.unitB;
@@ -17506,6 +17509,7 @@ function handleSubmit(e) {
         } else {
           console.log("Choice 2");
           correctAnswer = `${p.landingNumber} ${p.finalNumber}`;
+          correctAnswerTwo = `${p.finalNumber}`;
         }
       }
 
