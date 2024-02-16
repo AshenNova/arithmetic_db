@@ -17520,6 +17520,7 @@ function handleSubmit(e) {
         } else {
           console.log("Choice 4");
           correctAnswer = `${p.landingNumber} ${p.finalNumber}`;
+          correctAnswerTwo = `${p.finalNumber}`;
         }
       }
     }
