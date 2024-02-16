@@ -15761,7 +15761,11 @@ How many items are there in each bag?
       let firstScene = p.sceneAOne * p.unitA + p.sceneBOne * p.unitB;
       let secondScene = p.sceneATwo * p.unitA + p.sceneBTwo * p.unitB;
       if (p.type == "A") {
-        if ((p.sceneAOne == p.sceneATwo && p.sceneBOne == p.sceneBTwo) || firstScene == secondScene ) {
+        if (
+          (p.sceneAOne == p.sceneATwo && p.sceneBOne == p.sceneBTwo) ||
+          firstScene == secondScene ||
+          (p.sceneAOne == p.sceneBOne && p.sceneATwo == p.sceneBTwo)
+        ) {
           return updateCalc();
         }
 
@@ -16514,12 +16518,12 @@ How many items are there in each bag?
       } else {
         sentenceA = `The ratio of the number of students to ${object}s is ${p.totalQuantity} : ${p.totalValue}`;
       }
-      const theOther = p.totalQuantity*p.valueB
-      const bigDiff = p.totalValue-theOther
-      const smallDiff = p.valueB-p.valueA
-      if (bigDiff/smallDiff < 0) {
-        console.log("Too Small")
-        return updateCalc()
+      const theOther = p.totalQuantity * p.valueB;
+      const bigDiff = p.totalValue - theOther;
+      const smallDiff = p.valueB - p.valueA;
+      if (bigDiff / smallDiff < 0) {
+        console.log("Too Small");
+        return updateCalc();
       }
       displayProblem.innerHTML = `
       ${sentenceA}.</br>
