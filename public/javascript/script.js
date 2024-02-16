@@ -15777,7 +15777,7 @@ How many items are there in each bag?
         p.varB = totalBOne;
       }
       if (p.type == "B") {
-        if (totalATwo == totalBTwo && totalATwo == 2) {
+        if ((totalATwo == totalBTwo && totalATwo == 2) || p.sceneATwo == p.sceneBTwo) {
           return updateCalc();
         }
         firstScene = totalATwo * p.unitA + totalBTwo * p.unitB;
