@@ -1133,7 +1133,7 @@ const updateMany = catchAsync(async (req, res, next) => {
   // }
 });
 
-updateMany();
+// updateMany();
 
 const deleteMany = async (req, res) => {
   const deleteNow = { user: "Kenneth Lin" };

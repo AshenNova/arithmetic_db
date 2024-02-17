@@ -10717,6 +10717,7 @@ function updateProblems() {
       `;
       }
       if (p.version == 2) {
+        console.log(p.situation);
         p.answer = p.numThree + p.situation;
         displayProblem.innerHTML = `
       There are 3 people in a group.</p>
@@ -20315,32 +20316,6 @@ function handleSubmit(e) {
             correctAnswer = `${accDecimal(p.nume / p.deno)}`;
           }
         }
-        // if (p.version == "units") {
-        //   let conversion = 1000;
-        //   if (p.smallUnit == "cm") conversion = 100;
-        //   if (p.smallUnit == "mins" || p.smallUnit == "secs") conversion = 60;
-        //   let tempAnswer = (p.nume / (p.deno * conversion)) * 100;
-        //   console.log(tempAnswer);
-        //   correctAnswer = `${accDecimal(tempAnswer)}%`;
-        //   let str = tempAnswer;
-        //   str = str.toString().split(".")[1];
-        //   console.log(typeof str, str);
-        //   if (str) {
-        //     if (
-        //       (str.toString().length > 6 && !str.toString().includes("0000")) ||
-        //       (str.toString().length > 6 && !str.toString().includes("9999"))
-        //     ) {
-        //       let numerator = p.nume * 100;
-        //       let denominator = p.deno * conversion;
-        //       let wholeNum = Math.floor(numerator / denominator);
-        //       let remainder = numerator % denominator;
-        //       [remainder, denominator] = simplify(remainder, denominator);
-        //       if (wholeNum == 0) correctAnswer = `${remainder}/${denominator}%`;
-        //       if (wholeNum != 0)
-        //         correctAnswer = `${wholeNum} ${remainder}/${denominator}%`;
-        //     }
-        //   }
-        // }
       }
       //PERCENRAGE: PERCENTAGE CHANGE
       if (setting == 21) {
