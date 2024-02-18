@@ -18523,12 +18523,14 @@ function handleSubmit(e) {
     if (level == 4.2) {
       if (p.rollType == 1) {
         correctAnswer = `(${p.lengthTotal}+${p.topOne})x2`;
+        correctAnswerTwo = `(${p.topOne}+${p.lengthTotal})x2`;
       }
       if (p.rollType == 2) {
         correctAnswer = `${p.bigSquare}x4`;
       }
       if (p.rollType == 3) {
         correctAnswer = `(${p.rectangle}+${p.bigSquare})x2`;
+        correctAnswerTwo = `(${p.bigSquare}+${p.rectangle})x2`;
       }
     }
 
