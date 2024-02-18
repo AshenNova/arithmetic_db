@@ -14,6 +14,9 @@ exports.getHomework = async (req, res) => {
     let authenticate = req.auth;
     let currentUser = req.user;
     let editHomework = {};
+    if (!currentUser.admin) {
+      return res.redirect("/user/login");
+    }
     const getAllUsers = await User.distinct("username").sort();
     console.log(getAllUsers);
     if (req.params.id) {
