@@ -20,7 +20,7 @@ const rateLimit = require("express-rate-limit");
 
 let username;
 let currentUser;
-let authenticate = {};
+// let authenticate = {};
 
 //HAVE TO PLACE THIS AT THE TOP AS WE WANT TO START LISTENING FROM THE START
 //eg CONSOLE.LOG(X -> Logging a variable that has not been defined)
@@ -81,23 +81,24 @@ app.get("/", (req, res) => {
 });
 
 app.get("/online", authController.authenticate, (req, res) => {
-  // let authenticate = req.auth;
+  let authenticate = req.auth;
   currentUser = req.user;
   username = req.user.username;
   res.render("./pages/online", {
     username,
-    // authenticate,
+    authenticate,
     currentUser,
   });
 });
 
 // app.use("/arithmetic", express.static("./javascript/script.js"));
 app.get("/arithmetic", authController.authenticate, (req, res) => {
+  let authenticate = req.auth;
   console.log(req.auth);
   if (authenticate.login == false) {
     return res.redirect("user/login");
   }
-  authenticate = req.auth;
+
   currentUser = req.user;
   username = req.user.username;
   console.log(authenticate);
