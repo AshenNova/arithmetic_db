@@ -20,7 +20,7 @@ const rateLimit = require("express-rate-limit");
 
 let username;
 let currentUser;
-// let authenticate;
+let authenticate = {};
 
 //HAVE TO PLACE THIS AT THE TOP AS WE WANT TO START LISTENING FROM THE START
 //eg CONSOLE.LOG(X -> Logging a variable that has not been defined)
@@ -79,13 +79,14 @@ mongoose
 app.get("/", (req, res) => {
   res.send(fs.readFileSync("index.html", "utf8"));
 });
+
 app.get("/online", authController.authenticate, (req, res) => {
-  let authenticate = req.auth;
+  // let authenticate = req.auth;
   currentUser = req.user;
   username = req.user.username;
   res.render("./pages/online", {
     username,
-    authenticate,
+    // authenticate,
     currentUser,
   });
 });
@@ -96,7 +97,7 @@ app.get("/arithmetic", authController.authenticate, (req, res) => {
   if (authenticate.login == false) {
     return res.redirect("user/login");
   }
-  let authenticate = req.auth;
+  authenticate = req.auth;
   currentUser = req.user;
   username = req.user.username;
   console.log(authenticate);
