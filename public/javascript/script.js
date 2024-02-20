@@ -20705,11 +20705,13 @@ function handleSubmit(e) {
         [nume, deno] = simplify(nume, deno);
         const whole = Math.floor(nume / deno);
         const remainder = nume % deno;
-        if (remainder == 0) {
-          correctAnswer = whole;
+       if (remainder == 0) {
+         correctAnswer = whole
+        } else if (whole == 0) {
+          correctAnswer = `${nume}/${deno}`
         } else {
-          correctAnswer = `${whole} ${remainder}/${deno}`;
-        }
+        correctAnswer = `${whole} ${nume}/${deno}`
+       }
       }
       // CIRCLES
       if (setting == 3) {

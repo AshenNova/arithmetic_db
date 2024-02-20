@@ -40,7 +40,10 @@
           <% const school = item.school.split(" ").join("+") %>
           <% if (item.trialSession != true) { %>
               <tr>
-                <td><%= item.filledIn.toLocaleTimeString('en-US') %></td>
+                <td>
+                  <%= item.filledIn.toLocaleDateString('en-US') %></br>
+                  <%= item.filledIn.toLocaleTimeString('en-US') %></br>
+                </td>
                 <td><%= item.outlet %></br>
                   <%= item.address %></br>
                   <a href="https://www.google.com/maps/place/Singapore+<%= item.postal %>" target="_blank"><%= item.postal %></a></br>
@@ -97,7 +100,10 @@
             <% const school = item.school.split(" ").join("+") %>
             <% if (item.trialSession == true) { %>
                 <tr class="table-secondary">
-                  <td><%= item.filledIn.toLocaleTimeString('en-US') %></td>
+                  <td>
+                    <%= item.filledIn.toLocaleDateString('en-US') %></br>
+                    <%= item.filledIn.toLocaleTimeString('en-US') %></br>
+                  </td>
                   <td><%= item.outlet %></br>
                     <%= item.address %></br>
                     <a href="https://www.google.com/maps/place/Singapore+<%= item.postal %>" target="_blank"><%= item.postal %></a></br>
