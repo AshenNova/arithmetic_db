@@ -4,14 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
     
-    <link rel="icon" href="images/favicon.jpg">
+    <link rel="icon" href="/images/favicon.ico?v=1.1">
     <!-- Bootstrap -->
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <!-- CSS   -->
-      <link rel="stylesheet" href="css/styles.css">
+      <!-- <link rel="stylesheet" href="css/styles.css"> -->
+      <link rel="stylesheet" href="/css/navbar-styles.css">
     <!-- html style   -->
       <style>
         ul.a {list-style-type: circle;}
@@ -21,38 +19,15 @@
   <title>Online</title>
 </head>
 <body>
-  <section id="online">
-    <nav class="navbar navbar-expand-lg navbar-light bg-danger rules-navbar">
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav flex-column">
-            <a class="navbar-brand" href="index.html" target="_blank">Shoheuken</a>
-            <li class="nav-item">
-              <a class="nav-link" href="https://us02web.zoom.us/j/6596626547" target="_blank">Kenneth's<br>Zoom</a></button>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#FAQ">F.A.Q</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#online-ideas">Other setups</a>
-            </li>
-          </ul>
-        </div>
-    </nav>
-  </div>
-
-
+  <%- include("../partials/navbar") %>
 
   <div class="container">
     <h1 id="setup">Set up</h1>
-
+    <p>Website: <a href="https://www.epicmindarithmetic.com/login">Epicmind Arithmetic</a></p>
     <p>Meeting ID: <a id="zoomlink" href="https://us02web.zoom.us/j/6596626547" target="_blank">6596626547</a><-- Key in or just click on the link</p>
-    <h5>General idea:</h5>
+    <h5>Requirements:</h5>
       <p>Student would need <u>2 to 3 devices each</u> to connected to <a href="https://zoom.us/" target="_blank">Zoom</a>.
-        <p>All devices will be logged into the same meeting (No account creation is needed)</p>
+        <p><b>All devices will be logged into the same meeting</b> (No account creation is needed)</p>
         <p>Please setup at a location with <b>good internet connection and relatively conducive environment</b></p> 
         <ol>
           <div class="online-list"><li>Device A: </div>Acting as a <a href="https://www.indiamart.com/proddetail/classroom-desktop-visualizer-19142933055.html" target="_blank">visualizer</a></li>
@@ -66,7 +41,7 @@
                 <li>Set screen brightness to the lowest setting</li>
                 <li><b>Turn on</b> airplane mode and <b>turn on</b> wifi</li>
               </ul>
-            <img class="img-online" src="https://drive.google.com/uc?id=1NmLszw_KFaD9N5fajC-QUsFkxjmCFZxd"></a>
+            <img class="img-online" src="https://drive.google.com/thumbnail?id=1NmLszw_KFaD9N5fajC-QUsFkxjmCFZxd"></a>
           </ul>
           <ul>
             <li>The above example is about 23cm tall. <i>(The height may differ on quality of the camera.)</i></li> 
@@ -78,12 +53,12 @@
               <p>Place the phone <b>horizontally</b> (Landscape) to change its orientation before leaving it on the platform.</p>
               <p>If the view does not rotate, check that the rotate lock is removed</p>
               <p>Please also use the back camera (Screen facing upwards) (Usually better quality)</p>
-              <img class="img-online" src="https://drive.google.com/uc?id=1g8aM6ls85hFwjN1CL3EH0pyl8nooojkn"></a>
+              <img class="img-online" src="https://drive.google.com/thumbnail?id=1g8aM6ls85hFwjN1CL3EH0pyl8nooojkn"></a>
             </li>
           <li>May consider putting a heavy object on the other end of the phone to make it stick out even more.</li>
-          <img class="img-online" src="https://drive.google.com/uc?id=1669V9T54HwpdeKVgL_yrvBoRHLGRLaMR"></a>
+          <img class="img-online" src="https://drive.google.com/thumbnail?id=1669V9T54HwpdeKVgL_yrvBoRHLGRLaMR"></a>
           <p>Should be able to at least see:</p>
-          <img class="img-online" src="https://drive.google.com/uc?id=1_UKafraZZqx9HawpH_DgzNXHroUSFyKo"></a>
+          <img class="img-online" src="https://drive.google.com/thumbnail?id=1_UKafraZZqx9HawpH_DgzNXHroUSFyKo"></a>
         
           <li>Table lamp might be necessary to brighten up the place and get rid of some shadows.</li>
           </ul>
@@ -91,27 +66,31 @@
         <div class="online-list" id="deviceB"><li>Device B:</div>Desktop/Laptop + earpiece/headphone with a microphone: Will be used for viewing work and communicating<br></li>
         <br>
           <ol>
-            <li>Open <a href="https://ashennova.github.io/shoheuken-arithmetic/" target="_blank">Shoheuken-arithmetic</a></li>
+            <li>Login <a href="https://epicmindarithmetic.com/login" target="_blank">Epicmind Arithmetic</a></li>
             <li>Join Zoom meeting ID: <a href="https://us02web.zoom.us/j/6596626547" target="_blank">6596626547</a><-- Key in or just click on the link</li>
             <li> Wait to be accepted</li>
             <li>Sharescreen</li>
-              <ol>
-                <li><img class="img-online" src="https://drive.google.com/uc?id=1hn86Mu_Ksi4ZvPRXZMm_8LdDnPP649BV"></a></li>
-                <li><img class="img-online" src="https://drive.google.com/uc?id=1oSH6G07yTMt0FR29SNBOQLnHJqKP9aCN"></a></li>
-              </ol>
-            <li>Isolating the "Ipad view".</li>
+              <!-- <ol> -->
+                <!-- <li> -->
+                  <img class="img-online" src="https://drive.google.com/thumbnail?id=1hn86Mu_Ksi4ZvPRXZMm_8LdDnPP649BV"></a>
+                <!-- </li> -->
+                <!-- <li> -->
+                  <img class="img-online" src="https://drive.google.com/thumbnail?id=1oSH6G07yTMt0FR29SNBOQLnHJqKP9aCN"></a>
+                <!-- </li> -->
+              <!-- </ol> -->
+            <!-- <li>Isolating the "Ipad view".</li>
               <ol>
                 <li>Locate the "ipad view" with the ipad in it and double click on it to pin it.</li>
-                <img class="img-online" src="https://drive.google.com/uc?id=11V0GTZA0ADjmQU3JMX8lhArMfkWYz-nD"></a>
+                <img class="img-online" src="https://drive.google.com/thumbnail?id=11V0GTZA0ADjmQU3JMX8lhArMfkWYz-nD"></a>
                 <li>If there are too many views (Scroll down via the down arrow button)</li>
-                <img class="img-online" src="https://drive.google.com/uc?id=1gNPx8QuN4GDpck6CFpzkUg_P5tHzfgG6"></a>
+                <img class="img-online" src="https://drive.google.com/thumbnail?id=1gNPx8QuN4GDpck6CFpzkUg_P5tHzfgG6"></a>
                 <li>Once you have pinned the "ipad", click on the button below to isolate the view.</li>
                 <p>Hover over the corners of the "ipad view" to enlarge it</p>
-                <img class="img-online" src="https://drive.google.com/uc?id=1URTYa83p9ioR3ROEpLXOSOFXFBhRtw8O"></a>
+                <img class="img-online" src="https://drive.google.com/thumbnail?id=1URTYa83p9ioR3ROEpLXOSOFXFBhRtw8O"></a>
                 <li>Enlarge it to a suitable size</li>
-                <img class="img-online" src="https://drive.google.com/uc?id=1OFEGMMJcgeBVRfGAAcFNvZl1IvkvJ28Y"></a>
-              </ol>
-            <li>Turn on front-camera when ready.</li>
+                <img class="img-online" src="https://drive.google.com/thumbnail?id=1OFEGMMJcgeBVRfGAAcFNvZl1IvkvJ28Y"></a>
+              </ol> -->
+            <li>Turn on web-cam.</li>
           </ol>
           <div class="online-list"><li>Device C <i><u>(Optional):</u></div></u></i>Device C facing the screen of Device B so we know what is on the screen</li>
         </ol>
@@ -142,22 +121,22 @@
         <tr>
           <td><span class="FAQstyle">Answer:</span></td>
           <td>Yes, but instead of sharing "screen", you have to share via "website url" so that i can have the annotate function on my end<br>
-              Any device less than <a href="https://drive.google.com/uc?id=1hbSeFfu90r1BaIWG3LsUcE74g7b7cwDJ" target="_blank">11 inch</a> would probably be excruciating to use.</td>
+              Any device less than <a href="https://drive.google.com/thumbnail?id=1hbSeFfu90r1BaIWG3LsUcE74g7b7cwDJ" target="_blank">11 inch</a> would probably be excruciating to use.</td>
         </tr>
       </table>
 
     </section>
     <section id="Others">
       <h1 id="online-ideas">Other Setups</h1>
-        <img class="img-online" src="https://drive.google.com/uc?id=16N1pMN1C4aNDbxf0cOZmKbysSiKNf3Fe"></a>
-        <img class="img-online" src="https://drive.google.com/uc?id=1MoqSAMlNBGTYlBQ62MHCt8It1WPtmHKF"></a>
-        <img class="img-online" src="https://drive.google.com/uc?id=1SQl1FsBXZvNWayzQKRmCjs9U3HjY5Vgf"></a>
-        <!-- <img class="img-online mt-2 mb-2" src="https://drive.google.com/uc?id=17PuE_4Z_GKi7EcAcmLk01wNEFO2dYLX-"></a> -->
-        <img class="img-online" src="https://drive.google.com/uc?id=1HPtGOpC6xzRRUYop4fobQkAhLxcwTXt1"></a>
-        <img class="img-online" src="https://drive.google.com/uc?id=1KtWPcM7UnRbpwpyC9rKGJhUehPbhv1Lc"></a>
-        <img class="img-online" src="https://drive.google.com/uc?id=1aymT_o5K0ji4Y1C-9MkZi2AZtfa80OCm"></a>
-        <img class="img-online" src="https://drive.google.com/uc?id=1El0O73-PdCVC7BMH6jjIv8gN_pV_HNrB"></a>
+        <img class="img-online" src="https://drive.google.com/thumbnail?id=16N1pMN1C4aNDbxf0cOZmKbysSiKNf3Fe"></a>
+        <img class="img-online" src="https://drive.google.com/thumbnail?id=1MoqSAMlNBGTYlBQ62MHCt8It1WPtmHKF"></a>
+        <img class="img-online" src="https://drive.google.com/thumbnail?id=1SQl1FsBXZvNWayzQKRmCjs9U3HjY5Vgf"></a>
+        <img class="img-online" src="https://drive.google.com/thumbnail?id=1HPtGOpC6xzRRUYop4fobQkAhLxcwTXt1"></a>
+        <img class="img-online" src="https://drive.google.com/thumbnail?id=1KtWPcM7UnRbpwpyC9rKGJhUehPbhv1Lc"></a>
+        <img class="img-online" src="https://drive.google.com/thumbnail?id=1aymT_o5K0ji4Y1C-9MkZi2AZtfa80OCm"></a>
+        <img class="img-online" src="https://drive.google.com/thumbnail?id=1El0O73-PdCVC7BMH6jjIv8gN_pV_HNrB"></a>
     </section>
   </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </html>

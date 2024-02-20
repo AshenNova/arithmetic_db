@@ -79,13 +79,24 @@ mongoose
 app.get("/", (req, res) => {
   res.send(fs.readFileSync("index.html", "utf8"));
 });
+app.get("/online", authController.authenticate, (req, res) => {
+  let authenticate = req.auth;
+  currentUser = req.user;
+  username = req.user.username;
+  res.render("./pages/online", {
+    username,
+    authenticate,
+    currentUser,
+  });
+});
+
 // app.use("/arithmetic", express.static("./javascript/script.js"));
 app.get("/arithmetic", authController.authenticate, (req, res) => {
-  let authenticate = req.auth;
   console.log(req.auth);
   if (authenticate.login == false) {
     return res.redirect("user/login");
   }
+  let authenticate = req.auth;
   currentUser = req.user;
   username = req.user.username;
   console.log(authenticate);
