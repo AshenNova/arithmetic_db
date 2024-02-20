@@ -168,7 +168,7 @@ const summarySettingCl = document.querySelector(".summary-setting");
 const summaryItemLeft = document.querySelector(".summary-item-left");
 const summaryItemRight = document.querySelector(".summary-item-right");
 let summarySettingDisplay = undefined;
-
+let accepted;
 //EXTRA PRACTICE
 const extraPracticeBtn = document.querySelector(".extra-practice");
 
@@ -8772,29 +8772,26 @@ function updateProblems() {
 
   //DISPLAY
   if (level == "calFour") {
-    console.log(setting);
     // WORKING DISPLAY
-    if (setting == 4) {
-      wholeNumberContainer.classList.add("hidden");
-      workingContainer.classList.remove("hidden");
-      fractionsContainerTwo.classList.add("hidden");
-    }
-
+    // if (setting == 4) {
+    //   wholeNumberContainer.classList.add("hidden");
+    //   workingContainer.classList.remove("hidden");
+    //   fractionsContainerTwo.classList.add("hidden");
+    // }
     // NORMAL DISPLAY
-
-    if ([1, 2, 3, 5, 8, 9, 10, 11, 12, 13, 14, 15].includes(setting * 1)) {
-      displayProblem.style.fontSize = "20px";
-      wholeNumberContainer.classList.remove("hidden");
-      fractionsContainerTwo.classList.add("hidden");
-      workingContainer.classList.add("hidden");
-    }
-    //MIXED FRACTIONS DISPLAY
-    if (setting == 6 || setting == 7) {
-      wholeNumberContainer.classList.add("hidden");
-      workingContainer.classList.add("hidden");
-      fractionsContainerTwo.classList.remove("hidden");
-      equalSymbolTwo.classList.remove("hidden");
-    }
+    // if ([1, 2, 3, 5, 8, 9, 10, 11, 12, 13, 14, 15].includes(setting * 1)) {
+    //   displayProblem.style.fontSize = "20px";
+    //   wholeNumberContainer.classList.remove("hidden");
+    //   fractionsContainerTwo.classList.add("hidden");
+    //   workingContainer.classList.add("hidden");
+    // }
+    // //MIXED FRACTIONS DISPLAY
+    // if (setting == 6 || setting == 7) {
+    //   wholeNumberContainer.classList.add("hidden");
+    //   workingContainer.classList.add("hidden");
+    //   fractionsContainerTwo.classList.remove("hidden");
+    //   equalSymbolTwo.classList.remove("hidden");
+    // }
     if (setting != 6 && setting != 7) {
       equalSymbolTwo.classList.add("hidden");
       equalSymbol.textContent = "=";
@@ -9333,10 +9330,48 @@ function updateProblems() {
     }
 
     // DECIMALS: PARTS AND INTERVAL
-
     if (setting == 21) {
       drawingDisplay();
       drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
+    }
+    // FRACTIONS: PARTS OF A FRACTION
+    if (setting == 22) {
+      normalDisplay();
+      console.log(p.nume, p.deno);
+      [p.nume, p.deno] = simplify(p.nume, p.deno);
+      // if (p.nume == p.deno) return updateCalc();
+      const pieces = p.nume * p.multiplier;
+      const whole = Math.floor(pieces / p.deno);
+      let remainder = pieces % p.deno;
+      if (remainder == 0) {
+        displayProblem.innerHTML = `
+        How many
+        <div class="frac">
+        <span>${p.nume}</span>
+        <span class="symbol">/</span>
+        <span class="bottom">${p.deno}</span>
+        </div>
+        are there in ${whole}?
+        `;
+      } else {
+        [remainder, p.deno] = simplify(remainder, p.deno);
+        displayProblem.innerHTML = `
+        How many
+        <div class="frac">
+        <span>${p.nume}</span>
+        <span class="symbol">/</span>
+        <span class="bottom">${p.deno}</span>
+        </div>
+        are there in
+        ${whole}
+        <div class="frac">
+        <span>${remainder}</span>
+        <span class="symbol">/</span>
+        <span class="bottom">${p.deno}</span>
+        </div>
+        ?
+        `;
+      }
     }
   }
   // DISPLAY
@@ -12607,7 +12642,11 @@ function updateProblems() {
 
   // DISPLAY
   if (level == "calSix") {
-    calculatorSymbol.classList.remove("hidden");
+    if (setting == 2) {
+      calculatorSymbol.classList.add("hidden");
+    } else {
+      calculatorSymbol.classList.remove("hidden");
+    }
 
     if (setting == 1) {
       normalDisplay();
@@ -12678,8 +12717,36 @@ function updateProblems() {
         );
       }
     }
-    // CIRCLES
+    // FRACTIONS: NUMERTOR OF A VALUE
     if (setting == 2) {
+      [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      normalDisplay();
+      let item;
+      if (p.unit == "kg") {
+        item = "packet";
+      }
+      if (p.unit == "ℓ") {
+        item = "bottle";
+      }
+      displayProblem.innerHTML = `
+      <div class="frac">
+      <span>${p.numeA}</span>
+      <span class="symbol">/</span>
+      <span class="bottom">${p.denoA}</span>
+      </div>
+      of a ${item} is
+      <div class="frac">
+      <span>${p.numeB}</span>
+      <span class="symbol">/</span>
+      <span class="bottom">${p.denoB}</span>
+      </div> ${p.unit}.</br>
+      How many ${p.unit} are ${p.question} ${item}s?
+      `;
+    }
+
+    // CIRCLES
+    if (setting == 3) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, 400, 275);
       drawingDisplay();
@@ -12760,7 +12827,7 @@ function updateProblems() {
       }
     }
     //CIRCLES: INNER SQUARE
-    if (setting == 3) {
+    if (setting == 4) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, 400, 275);
       drawingDisplay();
@@ -12810,7 +12877,7 @@ function updateProblems() {
       ctx.restore();
     }
 
-    if (setting == 4) {
+    if (setting == 5) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, 400, 275);
       drawingDisplay();
@@ -13055,7 +13122,7 @@ function updateProblems() {
       ctx.restore();
     }
     //SPEED: AVERAGE SPEED OF WHOLE JOURNEY
-    if (setting == 5) {
+    if (setting == 6) {
       normalDisplay();
       if (p.roll == "A") {
         displayProblem.innerHTML = `
@@ -13100,7 +13167,7 @@ function updateProblems() {
       );
     }
     // SPEED: MOVING APART
-    if (setting == 6) {
+    if (setting == 7) {
       normalDisplay();
       const position = genNumbers(3);
       p.distance = p.speedA * p.time + p.speedB * p.time;
@@ -13168,7 +13235,7 @@ function updateProblems() {
     }
 
     //SPEED: DIFFERENCE IN SPEED (MID)
-    if (setting == 7) {
+    if (setting == 8) {
       normalDisplay();
       const personA = boyNames[genNumbers(boyNames.length)];
       const personB = girlNames[genNumbers(girlNames.length)];
@@ -13244,7 +13311,7 @@ How far is apart is Town A and Town B?
     }
 
     // SPEED: SURROGATE
-    if (setting == 8) {
+    if (setting == 9) {
       normalDisplay();
       const personA = boyNames[genNumbers(boyNames.length)];
       const personB = girlNames[genNumbers(girlNames.length)];
@@ -13267,7 +13334,7 @@ How far is apart is Town A and Town B?
     }
 
     // PIECHART
-    if (setting == 9) {
+    if (setting == 10) {
       drawingDisplay();
       let types = ["fraction", "decimal", "ratio", "percentage", "angle"];
       const index = types.indexOf(p.choice);
@@ -19829,9 +19896,14 @@ function handleSubmit(e) {
         correctAnswer = oneUnit * p.lastUnits;
       }
 
+      // FRACTIONS: PARTS OF A FRACTION
+      if (setting == 10) {
+        correctAnswer = p.multiplier;
+      }
+
       // FORM FRACTION
 
-      if (setting == 10) {
+      if (setting == 11) {
         let big = p.biggerValue;
         if (p.bigUnit == "km" || p.bigUnit == "kg" || p.bigUnit == "ℓ") {
           big = p.biggerValue * 1000;
@@ -19849,7 +19921,7 @@ function handleSubmit(e) {
         if (p.version == 1 || p.version == 2) correctAnswer = `${big}/${small}`;
       }
       // FRACTIONS: CONVERSION
-      if (setting == 11) {
+      if (setting == 12) {
         let quotient;
         let remainder;
         let denominator;
@@ -19877,7 +19949,7 @@ function handleSubmit(e) {
         correctAnswer = `${quotient} ${remainder}/${denominator}`;
       }
 
-      if (setting == 12) {
+      if (setting == 13) {
         // correctAnswer =
         //   p.numOne / p.convenientNumOne + p.numTwo / p.convenientNumTwo;
         // decimalCheck(correctAnswer);
@@ -19886,13 +19958,13 @@ function handleSubmit(e) {
         ];
         correctAnswer = accDecimal(answer[0]);
       }
-      if (setting == 13) {
+      if (setting == 14) {
         correctAnswer = p.numOne - p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
 
       // DECIMALS: OVERLAPPING PLACE VALUE
-      if (setting == 14) {
+      if (setting == 15) {
         let sumArr = [];
         for (let i = 0; i < p.sentenceArr.length; i++) {
           console.log(p.sentenceArr[i]);
@@ -19933,22 +20005,22 @@ function handleSubmit(e) {
         // }
       }
 
-      if (setting == 15) {
-        correctAnswer = p.numOne * p.numTwo;
-        correctAnswer = accDecimal(correctAnswer);
-      }
       if (setting == 16) {
         correctAnswer = p.numOne * p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 17) {
-        correctAnswer = p.numOne / p.numTwo;
+        correctAnswer = p.numOne * p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 18) {
-        correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+        correctAnswer = p.numOne / p.numTwo;
+        correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 19) {
+        correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+      }
+      if (setting == 20) {
         if (p.operator == "x") {
           correctAnswer = p.comparison * p.divisor;
           correctAnswer = accDecimal(correctAnswer);
@@ -19959,7 +20031,7 @@ function handleSubmit(e) {
         }
         decimalCheck(correctAnswer);
       }
-      if (setting == 20) {
+      if (setting == 21) {
         console.log(p.sums, p.numOne, p.version);
 
         if (p.version == 4 || p.version == 8) {
@@ -19985,7 +20057,7 @@ function handleSubmit(e) {
         }
       }
 
-      if (setting == 21) {
+      if (setting == 22) {
         correctAnswer = accDecimal(p.start + p.eachInterval * p.arrow);
       }
     }
@@ -20626,8 +20698,21 @@ function handleSubmit(e) {
         }
       }
 
-      // CIRCLES
+      // FRACTIONS: NUMERTOR OF A VALUE
       if (setting == 2) {
+        let nume = p.numeB * p.denoA * p.question;
+        let deno = p.denoB * p.numeA;
+        [nume, deno] = simplify(nume, deno);
+        const whole = Math.floor(nume / deno);
+        const remainder = nume % deno;
+        if (remainder == 0) {
+          correctAnswer = whole;
+        } else {
+          correctAnswer = `${whole} ${remainder}/${deno}`;
+        }
+      }
+      // CIRCLES
+      if (setting == 3) {
         if (p.type == "area") {
           let pi = 3.14;
           if (p.radius % 7 == 0) pi = 22 / 7;
@@ -20668,7 +20753,7 @@ function handleSubmit(e) {
       }
 
       // CIRCLES: INNER SQUARE
-      if (setting == 3) {
+      if (setting == 4) {
         if (p.given == "radius") {
           correctAnswer = 2 * p.radius * p.radius;
         }
@@ -20677,7 +20762,7 @@ function handleSubmit(e) {
         }
       }
       //CIRCLES: OTHERS
-      if (setting == 4) {
+      if (setting == 5) {
         if (p.rollType == "triangle") {
           correctAnswer = ((1 / 2) * p.triangleSide * p.triangleSide) / 2;
         }
@@ -20699,7 +20784,7 @@ function handleSubmit(e) {
         correctAnswer = accDecimal(correctAnswer);
       }
       // SPEED: AVERAGE SPEED OF WHOLE JOURNEY
-      if (setting == 5) {
+      if (setting == 6) {
         // average speed whole journey
         if (p.roll == "A") {
           correctAnswer =
@@ -20746,7 +20831,7 @@ function handleSubmit(e) {
         }
       }
       // SPEED: MOVING APART
-      if (setting == 6) {
+      if (setting == 7) {
         if (p.version == "A") {
           correctAnswer = p.distance;
         }
@@ -20766,7 +20851,7 @@ function handleSubmit(e) {
       }
 
       //SPEED: DIFFERENCE IN SPEED (MID)
-      if (setting == 7) {
+      if (setting == 8) {
         if (p.question == "A") correctAnswer = (p.speedA * p.time) / 60;
         if (p.question == "B") correctAnswer = (p.speedB * p.time) / 60;
         if (p.question == "total")
@@ -20774,12 +20859,12 @@ function handleSubmit(e) {
       }
 
       // SPEED: SURROGATE
-      if (setting == 8) {
+      if (setting == 9) {
         if (p.question == "A") correctAnswer = p.speedA;
         if (p.question == "B") correctAnswer = p.speedB;
       }
       //PIE CHART
-      if (setting == 9) {
+      if (setting == 10) {
         if (p.choice == "fraction") correctAnswer = p.fractions;
         if (p.choice == "decimal") correctAnswer = p.decimals;
         if (p.choice == "ratio") correctAnswer = p.ratio;
@@ -24988,7 +25073,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(20, calArr, setting, 99);
+    setting = calArrAll(21, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
@@ -25090,8 +25175,18 @@ function genProblems() {
       };
     }
 
-    // FORM FRACTIONS
+    // FRACTIONS: PARTS OF A FRACTION
     if (setting == 10) {
+      const gen_deno = genNumbers(5) + 2;
+      return {
+        deno: gen_deno,
+        nume: genNumbers(gen_deno - 1) + 1,
+        multiplier: genNumbers(10) + 5,
+      };
+    }
+
+    // FORM FRACTIONS
+    if (setting == 11) {
       const position = genNumbers(6);
       return {
         smallUnit: ["cm", "m", "ml", "g", "mins", "secs"][position],
@@ -25103,7 +25198,7 @@ function genProblems() {
     }
 
     // FRACTIONS: CONVERSION
-    if (setting == 11) {
+    if (setting == 12) {
       const position = genNumbers(4);
       return {
         unitA: ["secs", "mins", "hrs", "month"][position],
@@ -25112,7 +25207,7 @@ function genProblems() {
       };
     }
     //DECIMALS
-    if (setting == 12 || setting == 13) {
+    if (setting == 13 || setting == 14) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [1, 10, 100][genNumbers(3)],
@@ -25122,7 +25217,7 @@ function genProblems() {
     }
 
     // DECIMALS: OVERLAPPING PLACE VALUE
-    if (setting == 14) {
+    if (setting == 15) {
       return {
         ones: genNumbers(99) + 1,
         tens: genNumbers(99) + 1,
@@ -25133,35 +25228,35 @@ function genProblems() {
       };
     }
 
-    if (setting == 15) {
+    if (setting == 16) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [10, 100, 1000][genNumbers(3)],
         numTwo: genNumbers(8) + 2,
       };
     }
-    if (setting == 16) {
+    if (setting == 17) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [10, 100, 1000][genNumbers(3)],
         numTwo: genNumbers(89) + 11,
       };
     }
-    if (setting == 17) {
+    if (setting == 18) {
       return {
         numOne: genNumbers(7) + 2,
         multiplier: genNumbers(989) + 11,
         divisor: [10, 100, 1000][genNumbers(3)],
       };
     }
-    if (setting == 18) {
+    if (setting == 19) {
       return {
         numOne: genNumbers(10) + 1,
         numTwo: [3, 7, 9, 11][genNumbers(4)],
         roundOff: genNumbers(3) + 1,
       };
     }
-    if (setting == 19) {
+    if (setting == 20) {
       return {
         operator: ["x", "÷"][genNumbers(2)],
         numOne: undefined,
@@ -25173,7 +25268,7 @@ function genProblems() {
       };
     }
     // Multiplication in sets
-    if (setting == 20) {
+    if (setting == 21) {
       const sum = genNumbers(89) + 10;
       const genNumOne = genNumbers(50) + 10;
       return {
@@ -25186,7 +25281,7 @@ function genProblems() {
       };
     }
     //  DECIMALS: PARTS AND INTERVALS
-    if (setting == 21) {
+    if (setting == 22) {
       const gen_intervals = [5, 8, 10][genNumbers(3)];
       const gen_eachIntervals = [0.1, 0.01, 0.2, 0.02, 0.5, 0.05][
         genNumbers(6)
@@ -25915,7 +26010,7 @@ function genProblems() {
   }
   //SETTINGS
   if (level == "calSix") {
-    setting = calArrAll(9, calArr, setting, 99);
+    setting = calArrAll(10, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 1) {
@@ -25932,9 +26027,21 @@ function genProblems() {
         question: ["quotient", "remainder"][genNumbers(2)],
       };
     }
-
-    // CIRCLES: AREA AND PERIMETER
+    // FRACTIONS: NUMERTOR OF A VALUE
     if (setting == 2) {
+      const gen_denoA = genNumbers(9) + 2;
+      const gen_denoB = genNumbers(9) + 2;
+      return {
+        denoA: gen_denoA,
+        numeA: genNumbers(gen_denoA - 1) + 1,
+        denoB: gen_denoB,
+        numeB: genNumbers(gen_denoB - 1) + 1,
+        unit: ["kg", "ℓ"][genNumbers(2)],
+        question: genNumbers(10) + 1,
+      };
+    }
+    // CIRCLES: AREA AND PERIMETER
+    if (setting == 3) {
       return {
         radius: (genNumbers(7) + 5) * 10,
         // radius: 70,
@@ -25959,7 +26066,7 @@ function genProblems() {
 
     // CIRCLES: INNER SQUARE
 
-    if (setting == 3) {
+    if (setting == 4) {
       return {
         given: ["square", "radius"][genNumbers(2)],
         radius: genNumbers(10) + 5,
@@ -25967,7 +26074,7 @@ function genProblems() {
       };
     }
     //CIRCLES: OTHERS
-    if (setting == 4) {
+    if (setting == 5) {
       return {
         rotation: genNumbers(7) * 45,
         rollType: ["square2", "square", "angle", "radius", "triangle"][
@@ -25985,7 +26092,7 @@ function genProblems() {
       };
     }
     //AVERAGE SPEED OF WHOLE JOURNEY
-    if (setting == 5) {
+    if (setting == 6) {
       return {
         roll: ["A", "B", "C"][genNumbers(2)],
         speedA: genNumbers(5) + 2,
@@ -26003,7 +26110,7 @@ function genProblems() {
     }
     // SPEED: MOVING APART
 
-    if (setting == 6) {
+    if (setting == 7) {
       return {
         version: ["E", "D", "C", "B", "A"][genNumbers(5)],
         which: ["A", "B"][genNumbers(2)],
@@ -26015,7 +26122,7 @@ function genProblems() {
     }
 
     //SPEED: DIFFERENCE IN SPEED (MID)
-    if (setting == 7) {
+    if (setting == 8) {
       return {
         type: ["A", "B", "C"][genNumbers(3)],
         speedA: genNumbers(50) + 50,
@@ -26027,7 +26134,7 @@ function genProblems() {
     }
 
     // SPEED: SURROGATE
-    if (setting == 8) {
+    if (setting == 9) {
       return {
         speedA: (genNumbers(5) + 5) * 10,
         speedB: undefined,
@@ -26038,7 +26145,7 @@ function genProblems() {
     }
 
     // PIECHART
-    if (setting == 9) {
+    if (setting == 10) {
       return {
         fractions: (genNumbers(10) + 1) * 4,
         decimals: (genNumbers(10) + 1) * 4,
@@ -27447,7 +27554,34 @@ easyMode.addEventListener("click", function () {
 });
 
 // LEVEL SETTINGS
-
+function settingCheck(inputSetting, acceptedValues, level) {
+  const split = inputSetting.split("");
+  if (split.includes("-")) {
+    const array = inputSetting.split("-");
+    if (
+      !acceptedValues.includes(array[0] * 1) ||
+      !acceptedValues.includes(array[1] * 1)
+    ) {
+      if (level.startsWith("heu")) return 9;
+      if (level.startsWith("cal")) return 99;
+    } else {
+      if ((level.startsWith("heu") && array[1] == 9) || (level.startsWith("heu") && acceptedValues[acceptedValues.length - 2] == array[1])) {
+        return 9;
+      } else if ((level.startsWith("cal") && array[1] == 99) || (level.startsWith("cal") && acceptedValues[acceptedValues.length - 2] == array[1])) {
+        return 99;
+      } else {
+        return `${array[0]}-${array[1]}`;
+      }
+    }
+  } else {
+    if (!acceptedValues.includes(inputSetting * 1)) {
+      if (level.startsWith("heu")) return 9;
+      if (level.startsWith("cal")) return 99;
+    } else {
+      return inputSetting;
+    }
+  }
+}
 function buttonLevelSetting() {
   // if (levelArr.length != 0){
   //   buttonLevel = `Level ${levelArr[0]}`
@@ -28450,6 +28584,13 @@ function buttonLevelSetting() {
       displayProblem.style.fontSize = "25px";
       break;
 
+    case "Level 6.04":
+      level = 6.04;
+      scoreNeeded = 20;
+      document.querySelector("#user-input").setAttribute("type", "text");
+      displayProblem.style.fontSize = "25px";
+      break;
+
     case "Level 6.05":
       level = 6.05;
       scoreNeeded = 20;
@@ -28475,6 +28616,8 @@ function buttonLevelSetting() {
       setting = prompt(
         "What level?\n1. Addition (1-100) (No carrying)\n2. Subtraction (1-100) (No Borrowing)\n3. Addition (1-100) (Carrying)\n4. Subtraction (1-100) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Left Side Right Side + - x /\n\n99. Everything"
       );
+      accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9, 99];
+      setting = settingCheck(setting, accepted, level);
       break;
     case "Cal.2":
       level = "calTwo";
@@ -28483,13 +28626,8 @@ function buttonLevelSetting() {
         "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Left Side Right Side + - x /\n10. Parts and Intervals\n11. Time: Timeline\n12. Fractions: Identification\n13. Fractions: Addition and Subtraction\n\n99. Everything",
         99
       );
-      if (
-        ![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 99].includes(
-          setting * 1
-        ) &&
-        !setting.split("").includes("-")
-      )
-        setting = 99;
+      accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 99];
+      setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
     case "Cal.3":
@@ -28502,14 +28640,11 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
-      if (
-        ![
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-          21, 22, 23, 24, 25, 26, 99,
-        ].includes(setting * 1) &&
-        !setting.split("").includes("-")
-      )
-        setting = 99;
+      accepted = [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        21, 22, 23, 24, 25, 26, 99,
+      ];
+      setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "1em";
       displayProblem.style.textAlign = "left";
@@ -28526,13 +28661,15 @@ function buttonLevelSetting() {
         99
       );
 
-      if (
-        ![...Array.from({ length: 21 }, (_, i) => i + 1), 99].includes(
-          setting * 1
-        ) &&
-        !setting.split("").includes("-")
-      )
-        setting = 99;
+      // if (
+      //   ![...Array.from({ length: 22 }, (_, i) => i + 1), 99].includes(
+      //     setting * 1
+      //   ) &&
+      //   !setting.split("").includes("-")
+      // )
+      //   setting = 99;
+      accepted = [...Array.from({ length: 22 }, (_, i) => i + 1), 99];
+      setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -28551,12 +28688,13 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
-      if (
-        ![...Array(27).keys(), 99].includes(setting * 1) &&
-        !setting.split("").includes("-")
-      )
-        setting = 99;
-      console.log(setting);
+      // if (
+      //   ![...Array(27).keys(), 99].includes(setting * 1) &&
+      //   !setting.split("").includes("-")
+      // )
+      //   setting = 99;
+      accepted = [...Array(27).keys(), 99];
+      setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
@@ -28571,13 +28709,15 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
-      if (
-        ![...Array.from({ length: 22 }, (_, i) => i + 1), 99].includes(
-          setting * 1
-        ) &&
-        !setting.split("").includes("-")
-      )
-        setting = 99;
+      // if (
+      //   ![...Array.from({ length: 22 }, (_, i) => i + 1), 99].includes(
+      //     setting * 1
+      //   ) &&
+      //   !setting.split("").includes("-")
+      // )
+      //   setting = 99;
+      accepted = [...Array.from({ length: 22 }, (_, i) => i + 1), 99];
+      setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -28599,13 +28739,15 @@ function buttonLevelSetting() {
         99
       );
       //IF THERE ARE 7 TYPES, PUT 6. SINCE THE MAP FUNCTION WILL +1
-      if (
-        ![...Array.from(Array(9)).map((e, i) => i + 1), 99].includes(
-          setting * 1
-        ) &&
-        !setting.split("").includes("-")
-      )
-        setting = 99;
+      accepted = [...Array.from(Array(10)).map((e, i) => i + 1), 99];
+      setting = settingCheck(setting, accepted, level);
+      // if (
+      //   ![...Array.from(Array(10)).map((e, i) => i + 1), 99].includes(
+      //     setting * 1
+      //   ) &&
+      //   !setting.split("").includes("-")
+      // )
+      //   setting = 99;
       // console.log(...Array.from(Array(6)).map((e, i) => i + 1), 99);
       // console.log(...[...Array(6).keys()].map((i) => i + 1), 99);
       // console.log(...Array(6).keys().map((e, i) => i + 1), 99);
@@ -28621,11 +28763,13 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
-      if (
-        ![1, 2, 3, 4, 5, 6, 7, 99].includes(setting * 1) &&
-        !setting.split("").includes("-")
-      )
-        setting = 99;
+      accepted = [1, 2, 3, 4, 5, 6, 7, 99];
+      // if (
+      //   ![1, 2, 3, 4, 5, 6, 7, 99].includes(setting * 1) &&
+      //   !setting.split("").includes("-")
+      // )
+      //   setting = 99;
+      setting = settingCheck(setting, accepted, level);
       optionsBox.classList.remove("hidden");
       optionsBox.textContent = `Available settings:`;
       optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
@@ -28637,8 +28781,7 @@ function buttonLevelSetting() {
     case "Heu.1":
       level = "heuOne";
       setting = prompt("What level?\n1.More than / less than");
-      if (![1, 9].includes(setting * 1) && !setting.split("").includes("-"))
-        setting = 9;
+      setting = settingCheck(setting, [1, 9], level);
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -28656,12 +28799,14 @@ function buttonLevelSetting() {
       setting = prompt(
         "What level?\n1. Parts and Interval\n2. Internal Transfer (Same)\n3. Internal Transfer ( Same reverse )\n4. Parts and Intervals ( Others )\n\n9.All"
       );
-      if (
-        ![1, 2, 3, 4, 9].includes(setting * 1) &&
-        !setting.split("").includes("-")
-      )
-        setting = 9;
+      // if (
+      //   ![1, 2, 3, 4, 9].includes(setting * 1) &&
+      //   !setting.split("").includes("-")
+      // )
+      // setting = 9;
       level = "heuTwo";
+      accepted = [1, 2, 3, 4, 9];
+      setting = settingCheck(setting, accepted, level);
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -28676,6 +28821,8 @@ function buttonLevelSetting() {
         9
       );
       level = "heuTwob";
+      accepted = [1, 2, 3, 4, 5, 6, 9];
+      setting = settingCheck(setting, accepted, level);
       range = 0;
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
@@ -28685,9 +28832,6 @@ function buttonLevelSetting() {
       break;
 
     case "Heu.3":
-      // setting = prompt(
-      //   "What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n6. Round up/down\n7. Double Effect\n8. Grouping ( Bonus )\n\n9. All"
-      // );
       level = "heuThree";
       optionsBox.classList.remove("hidden");
       optionsBox.textContent = `Available settings:`;
@@ -28696,7 +28840,8 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-
+      accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+      setting = settingCheck(setting, accepted, level);
       scoreNeeded = 10;
       range = 0;
       displayProblem.style.fontSize = "18px";
@@ -28720,11 +28865,8 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (
-        ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
-        !setting.split("").includes("-")
-      )
-        setting = 9;
+      accepted = [1, 2, 3, 4, 5, 9];
+      setting = settingCheck(setting, accepted, level);
       range = 0;
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
@@ -28745,6 +28887,8 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
+      accepted = [1, 2, 3, 4, 5, 6, 7, 9];
+      setting = settingCheck(setting, accepted, level);
       scoreNeeded = 10;
       range = 0;
       displayProblem.style.fontSize = "18px";
@@ -28769,12 +28913,8 @@ function buttonLevelSetting() {
         9
       );
 
-      if (
-        ![1, 2, 3, 4, 5, 6, 9].includes(setting * 1) &&
-        !setting.split("").includes("-")
-      )
-        setting = 9;
-
+      accepted = [1, 2, 3, 4, 5, 6, 9];
+      setting = settingCheck(setting, accepted, level);
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -28794,11 +28934,8 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9].includes(setting * 1) &&
-        !setting.split("").includes("-")
-      )
-        setting = 9;
+      accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+      setting = settingCheck(setting, accepted, level);
       range = 0;
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
@@ -28819,11 +28956,8 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (
-        ![1, 2, 3, 4, 5, 6, 9].includes(setting * 1) &&
-        !setting.split("").includes("-")
-      )
-        setting = 9;
+      accepted = [1, 2, 3, 4, 5, 6, 9];
+      setting = settingCheck(setting, accepted, level);
       scoreNeeded = 5;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -28842,12 +28976,8 @@ function buttonLevelSetting() {
         9
       );
 
-      if (
-        ![1, 2, 3, 4, 5, 6, 9].includes(setting * 1) &&
-        !setting.split("").includes("-")
-      ) {
-        setting = 9;
-      }
+      accepted = [1, 2, 3, 4, 5, 6, 9];
+      setting = settingCheck(setting, accepted, level);
       scoreNeeded = 5;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -28866,12 +28996,8 @@ function buttonLevelSetting() {
         9
       );
 
-      if (
-        ![1, 2, 3, 4, 5, 6, 7, 9].includes(setting * 1) &&
-        !setting.split("").includes("-")
-      ) {
-        setting = 9;
-      }
+      accepted = [1, 2, 3, 4, 5, 6, 7, 9];
+      setting = settingCheck(setting, accepted, level);
       scoreNeeded = 5;
       normalDisplay();
       displayProblem.style.fontSize = "18px";

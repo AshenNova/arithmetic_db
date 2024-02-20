@@ -161,20 +161,21 @@ export const displayContent = (level) => {
       7. Fractions: Subtraction: Mixed Fractions</br>
       8. Fractions: Numberline</br>
       9. Fractions: Unit with a Value</br>
-      10. Fractions: Form</br>
-      11. Fractions: Conversion</br>
+      10. Fractions: Parts of a fraction</br>
+      11. Fractions: Form</br>
+      12. Fractions: Conversion</br>
       <hr>
-      12. Decimals: Addition</br>
-      13. Decimals: Subtraction</br>
-      14. Decimals: Overlapping Place Value</br>
-      15. Decimals: Multiplication (Single)</br>
-      16. Decimals: Multiplication (Double)</br>
-      17. Decimals: Division </br>
-      18. Fractions to Decimal (Limit)</br>
-      19. Decimals: Division and Multiplication with splitting</br>
+      13. Decimals: Addition</br>
+      14. Decimals: Subtraction</br>
+      15. Decimals: Overlapping Place Value</br>
+      16. Decimals: Multiplication (Single)</br>
+      17. Decimals: Multiplication (Double)</br>
+      18. Decimals: Division </br>
+      19. Fractions to Decimal (Limit)</br>
+      20. Decimals: Division and Multiplication with splitting</br>
       <hr>
-      20. Multiplication in Sets</br>
-      21. Decimals: Parts and Intervals</br>
+      21. Multiplication in Sets</br>
+      22. Decimals: Parts and Intervals</br>
       <hr>
       99. All
       `;
@@ -261,17 +262,18 @@ export const displayContent = (level) => {
     return `
     </p>
     1. Fractions: Finding remainder</br>
+    2. Fractions: Numerator with a Value</br>
     <hr>
-    2. Circles: Area and Perimeter</br>
-    3. Circles: Inner Square</br>
-    4. Circles: Others</br>
+    3. Circles: Area and Perimeter</br>
+    4. Circles: Inner Square</br>
+    5. Circles: Others</br>
     <hr>
-    5. Speed: Average Speed</br>
-    6. Speed: Moving Apart</br>
-    7. Speed: Difference in speed (Mid)</br>
-    8. Speed: Surrogate</br>
+    6. Speed: Average Speed</br>
+    7. Speed: Moving Apart</br>
+    8. Speed: Difference in speed (Mid)</br>
+    9. Speed: Surrogate</br>
     <hr>
-    9. Pie Chart</br>
+    10. Pie Chart</br>
     <hr>
     99. All
     `;
