@@ -71,6 +71,10 @@ exports.save = catchAsync(async (req, res, next) => {
   }
 });
 
+exports.upload = (req, res) => {
+  res.render("./exam/upload");
+};
+
 exports.view = catchAsync(async (req, res, next) => {
   const id = req.params.id;
   const exam = await Exam.findById(id);

@@ -8939,6 +8939,7 @@ function updateProblems() {
     }
 
     if (setting == 6) {
+      mixedFractionDisplay();
       if (p.numOne > p.denoOne) [p.numOne, p.denoOne] = [p.denoOne, p.numOne];
       if (p.numOne == p.denoOne) p.denoOne += 1;
       if (p.numTwo > p.denoTwo) [p.numTwo, p.denoTwo] = [p.denoTwo, p.numTwo];
@@ -8956,6 +8957,7 @@ function updateProblems() {
       equalSymbol.textContent = "+";
     }
     if (setting == 7) {
+      mixedFractionDisplay();
       if (p.wholeTwo > p.wholeOne)
         [p.wholeOne, p.wholeTwo] = [p.wholeTwo, p.wholeOne];
       if (p.wholeOne == p.wholeTwo) p.wholeOne += 1;
@@ -9090,8 +9092,48 @@ function updateProblems() {
       }
     }
 
-    //FORM FRACTIONS
+    // FRACTIONS: PARTS OF A FRACTION
     if (setting == 10) {
+      normalDisplay();
+      console.log(p.nume, p.deno);
+      [p.nume, p.deno] = simplify(p.nume, p.deno);
+      // if (p.nume == p.deno) return updateCalc();
+      const pieces = p.nume * p.multiplier;
+      const whole = Math.floor(pieces / p.deno);
+      let remainder = pieces % p.deno;
+      if (remainder == 0) {
+        displayProblem.innerHTML = `
+        How many
+        <div class="frac">
+        <span>${p.nume}</span>
+        <span class="symbol">/</span>
+        <span class="bottom">${p.deno}</span>
+        </div>
+        are there in ${whole}?
+        `;
+      } else {
+        [remainder, p.deno] = simplify(remainder, p.deno);
+        displayProblem.innerHTML = `
+        How many
+        <div class="frac">
+        <span>${p.nume}</span>
+        <span class="symbol">/</span>
+        <span class="bottom">${p.deno}</span>
+        </div>
+        are there in
+        ${whole}
+        <div class="frac">
+        <span>${remainder}</span>
+        <span class="symbol">/</span>
+        <span class="bottom">${p.deno}</span>
+        </div>
+        ?
+        `;
+      }
+    }
+
+    //FORM FRACTIONS
+    if (setting == 11) {
       normalDisplay();
       if (p.version == 0) {
         displayProblem.innerHTML = `
@@ -9115,7 +9157,7 @@ function updateProblems() {
       }
     }
     // FRACTIONS: CONVERSION
-    if (setting == 11) {
+    if (setting == 12) {
       normalDisplay();
       if ((p.unitB == "mins" || p.unitB == "hrs") && p.value % 60 == 0) {
         return updateCalc();
@@ -9133,7 +9175,8 @@ function updateProblems() {
     }
 
     //DECIMALS
-    if (setting == 12) {
+    if (setting == 13) {
+      normalDisplay();
       console.log("The current setting is: " + setting);
       const oneDisplay = p.numOne / p.convenientNumOne;
       const twoDisplay = p.numTwo / p.convenientNumTwo;
@@ -9143,7 +9186,8 @@ function updateProblems() {
       decimalCheck(twoDisplay);
     }
 
-    if (setting == 13) {
+    if (setting == 14) {
+      normalDisplay();
       console.log("The current setting is: " + setting);
       p.numOne = p.numOne / p.convenientNumOne;
       p.numTwo = p.numTwo / p.convenientNumTwo;
@@ -9155,7 +9199,7 @@ function updateProblems() {
     }
 
     // DECIMALS: OVERLAPPING PLACE VALUE
-    if (setting == 14) {
+    if (setting == 15) {
       normalDisplay();
       let overlappingArr = [
         `${p.hundreds} hundreds`,
@@ -9180,7 +9224,7 @@ function updateProblems() {
       ${p.sentenceArr.join(", ")}.`;
     }
 
-    if (setting == 15) {
+    if (setting == 16) {
       normalDisplay();
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
@@ -9188,14 +9232,14 @@ function updateProblems() {
       ${p.numOne} x ${p.numTwo} = ?`;
       decimalCheck(p.numOne * p.numTwo);
     }
-    if (setting == 16) {
+    if (setting == 17) {
       normalDisplay();
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
     }
-    if (setting == 17) {
+    if (setting == 18) {
       normalDisplay();
       p.numTwo = p.numOne;
       p.numOne = (p.numOne * p.multiplier) / p.divisor;
@@ -9204,7 +9248,7 @@ function updateProblems() {
       ${p.numOne} ÷ ${p.numTwo} = ?`;
       decimalCheck(p.numOne / p.numTwo);
     }
-    if (setting == 18) {
+    if (setting == 19) {
       normalDisplay();
       // START CHANGE DISPLAY
       if (p.numOne == p.numTwo) {
@@ -9225,7 +9269,7 @@ function updateProblems() {
             `;
       }
     }
-    if (setting == 19) {
+    if (setting == 20) {
       normalDisplay();
       p.numOne = p.numTwo * (genNumbers(99) + 2);
       if (p.operator == "x") {
@@ -9242,7 +9286,7 @@ function updateProblems() {
       ${p.comparison} ${p.operator} ${p.divisor} = ?
       `;
     }
-    if (setting == 20) {
+    if (setting == 21) {
       normalDisplay();
       let arrOne = [p.sets, "x", p.sums];
       let arrTwo = [p.sets, "x", p.numOne];
@@ -9330,49 +9374,11 @@ function updateProblems() {
     }
 
     // DECIMALS: PARTS AND INTERVAL
-    if (setting == 21) {
+    if (setting == 22) {
       drawingDisplay();
       drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
     }
-    // FRACTIONS: PARTS OF A FRACTION
-    if (setting == 22) {
-      normalDisplay();
-      console.log(p.nume, p.deno);
-      [p.nume, p.deno] = simplify(p.nume, p.deno);
-      // if (p.nume == p.deno) return updateCalc();
-      const pieces = p.nume * p.multiplier;
-      const whole = Math.floor(pieces / p.deno);
-      let remainder = pieces % p.deno;
-      if (remainder == 0) {
-        displayProblem.innerHTML = `
-        How many
-        <div class="frac">
-        <span>${p.nume}</span>
-        <span class="symbol">/</span>
-        <span class="bottom">${p.deno}</span>
-        </div>
-        are there in ${whole}?
-        `;
-      } else {
-        [remainder, p.deno] = simplify(remainder, p.deno);
-        displayProblem.innerHTML = `
-        How many
-        <div class="frac">
-        <span>${p.nume}</span>
-        <span class="symbol">/</span>
-        <span class="bottom">${p.deno}</span>
-        </div>
-        are there in
-        ${whole}
-        <div class="frac">
-        <span>${remainder}</span>
-        <span class="symbol">/</span>
-        <span class="bottom">${p.deno}</span>
-        </div>
-        ?
-        `;
-      }
-    }
+    
   }
   // DISPLAY
   if (level == "calFive") {
@@ -20705,13 +20711,13 @@ function handleSubmit(e) {
         [nume, deno] = simplify(nume, deno);
         const whole = Math.floor(nume / deno);
         const remainder = nume % deno;
-       if (remainder == 0) {
-         correctAnswer = whole
+        if (remainder == 0) {
+          correctAnswer = whole;
         } else if (whole == 0) {
-          correctAnswer = `${nume}/${deno}`
+          correctAnswer = `${nume}/${deno}`;
         } else {
-        correctAnswer = `${whole} ${nume}/${deno}`
-       }
+          correctAnswer = `${whole} ${nume}/${deno}`;
+        }
       }
       // CIRCLES
       if (setting == 3) {
@@ -27567,9 +27573,17 @@ function settingCheck(inputSetting, acceptedValues, level) {
       if (level.startsWith("heu")) return 9;
       if (level.startsWith("cal")) return 99;
     } else {
-      if ((level.startsWith("heu") && array[1] == 9) || (level.startsWith("heu") && acceptedValues[acceptedValues.length - 2] == array[1])) {
+      if (
+        (level.startsWith("heu") && array[1] == 9) ||
+        (level.startsWith("heu") &&
+          acceptedValues[acceptedValues.length - 2] == array[1])
+      ) {
         return 9;
-      } else if ((level.startsWith("cal") && array[1] == 99) || (level.startsWith("cal") && acceptedValues[acceptedValues.length - 2] == array[1])) {
+      } else if (
+        (level.startsWith("cal") && array[1] == 99) ||
+        (level.startsWith("cal") &&
+          acceptedValues[acceptedValues.length - 2] == array[1])
+      ) {
         return 99;
       } else {
         return `${array[0]}-${array[1]}`;

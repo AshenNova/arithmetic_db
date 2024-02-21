@@ -13,7 +13,7 @@ router.route("/edit/:id").get(examController.edit);
 router.route("/view/:id").get(examController.view);
 router.route("/clone/:id").get(examController.new);
 router.route("/list").get(examController.list);
-// router.route("/list").get(examController.list);
+router.route("/upload").get(examController.upload);
 router.route("/table").get(examController.table);
 router.route("/delete/:id").get(examController.delete);
 

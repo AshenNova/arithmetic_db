@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/favicon.ico?v=1.1">
+    <title>Upload</title>
+
+    <!-- pdf-lib link -->
+    <script src="https://unpkg.com/pdf-lib"></script>
+
+    <!-- downloadjs link -->
+    <script type="text/javascript" src="https://unpkg.com/downloadjs@1.4.7/download.js"></script>
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .nav {
+      padding: 0.5rem 1rem;
+      background: white;
+      border-bottom: 1px solid rgb(245, 244, 244);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+        font-size: 2rem;
+        color: rgb(182, 34, 34);
+    }
+
+    #convertBtn, #upload-msg {
+        border: none;
+        outline: none;
+        background: rgb(89, 150, 248);
+        color: white;
+        border-radius: 0.2rem;
+        padding: 0.5rem 1rem;
+        font-size: 1.2rem;
+        margin-right: 0.5rem;
+    }
+
+    #convertBtn {
+        display: none;
+    }
+
+    /* input page */
+
+    .input-page {
+        display: flex;
+        justify-content: center;
+        height: 90%;
+        align-items: center;
+        min-height: 90vh;
+    }
+
+    .add-more-files {
+        width: 50vw;
+        border-radius: 0.3rem;
+        padding: 3rem;
+        text-align: center;
+        background: rgba(230, 230, 250, 0.13);
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+</style>
+<body>
+    <div class="nav">
+        <span class="logo">
+            <i class="fa fa-file-pdf-o"></i>
+        </span>    
+            <div>
+                <button id="convertBtn" onclick = {embedImages()}>
+                    SAVE AS PDF
+                </button>
+                <button id="upload-msg" onclick = {embedImages()}>
+                    UPLOAD FILES
+                </button>
+            </div>
+    </div>
+
+    <!-- Input page -->
+    <div class="input-page" id="input-page">
+        <div class="choose-file">
+            <div class="add-more-files">
+                <div class="inp-container">
+                    <input type="file" id="upload-file" onchange={encodeImageFileURL(this)} multiple accept="image/"><h4 class="drop">DRAG & DROP OR </h4>
+                    <p><i class="fa fa-file-image-o fa-4x img-icon"></i></p>
+                    <label for='upload-file' id="custom-file">CHOOSE FILES</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
