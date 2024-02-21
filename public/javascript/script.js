@@ -9378,7 +9378,6 @@ function updateProblems() {
       drawingDisplay();
       drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
     }
-    
   }
   // DISPLAY
   if (level == "calFive") {
@@ -20716,7 +20715,7 @@ function handleSubmit(e) {
         } else if (whole == 0) {
           correctAnswer = `${nume}/${deno}`;
         } else {
-          correctAnswer = `${whole} ${nume}/${deno}`;
+          correctAnswer = `${whole} ${remainder}/${deno}`;
         }
       }
       // CIRCLES
