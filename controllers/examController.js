@@ -44,15 +44,11 @@ exports.new = catchAsync(async (req, res, next) => {
 });
 
 exports.save = catchAsync(async (req, res, next) => {
+  if (!currentUser.admin) {
+    return res.redirect("/exam/table");
+  }
   const exam = req.body;
   console.log(req.body);
-  // req.body.school = req.body.school1;
-  // if (req.body.school1 == "") {
-  //   req.body.school = req.body.school2;
-  // }
-  //   req.body.level = req.body.level.toUpperCase();
-  //   req.body.type = req.body.type.toUpperCase();
-  //   req.body.school = req.body.school.toUpperCase();
   const arrays = ["level", "type", "school"];
   for (let [key, value] of Object.entries(exam)) {
     if (arrays.includes(key)) {
@@ -82,6 +78,9 @@ exports.view = catchAsync(async (req, res, next) => {
 });
 
 exports.edit = catchAsync(async (req, res, next) => {
+  if (!currentUser.admin) {
+    return res.redirect("/exam/table");
+  }
   console.log("Editing paper");
   let username = req.user.username;
   let authenticate = req.auth;
@@ -153,5 +152,8 @@ exports.table = catchAsync(async (req, res, next) => {
   });
 });
 exports.delete = catchAsync(async (req, res, next) => {
+  if (!currentUser.admin) {
+    return res.redirect("/exam/table");
+  }
   console.log("Deleting");
 });

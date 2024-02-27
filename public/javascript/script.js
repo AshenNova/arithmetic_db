@@ -3008,9 +3008,12 @@ function updateProblems() {
           p.numTwo /= i;
         }
       }
-      displayProblem.innerHTML = `${p.numOne}/${p.numTwo} of a number is ${
-        p.numOne * p.numMulti
-      }.<br>
+      displayProblem.innerHTML = `
+      <div class="frac">
+      <span>${p.numOne}</span>
+      <span class="symbol">/</span>
+      <span class="bottom">${p.numTwo}</span>
+      </div> of a number is ${p.numOne * p.numMulti}.<br>
       What is the number?`;
     }
     if (setting == 2 || (setting == 9 && p.rollChoice == 2)) {
@@ -3030,7 +3033,11 @@ function updateProblems() {
 
       let value = p.deno * p.numMulti;
       displayProblem.innerHTML = `
-      ${p.nume}/${p.deno} of ${value} is ?</br>
+      <div class="frac">
+      <span>${p.numOne}</span>
+      <span class="symbol">/</span>
+      <span class="bottom">${p.numTwo}</span>
+      </div> of ${value} is ?</br>
       What is that value?
       `;
     }
@@ -4272,7 +4279,13 @@ function updateProblems() {
     if (p.rollTypeClue == "11") {
       if (p.rollTypeQnSyn == "isof") {
         displayProblem.innerHTML = `
-      ${p.objectOne} is ${p.oneValue}/${p.twoValue} of ${p.objectTwo}.</br>
+      ${p.objectOne} is
+      <div class="frac">
+      <span>${p.oneValue}</span>
+      <span class="symbol">/</span>
+      <span class="bottom">${p.twoValue}</span>
+      </div>
+      of ${p.objectTwo}.</br>
       What fraction is ${
         p.rollTypeQn11 == "1T"
           ? `${p.objectOne} of ${p.objectOne} and ${p.objectTwo}.`
@@ -4282,7 +4295,13 @@ function updateProblems() {
       }
       if (p.rollTypeQnSyn == "ofis") {
         displayProblem.innerHTML = `
-        ${p.objectOne} is ${p.oneValue}/${p.twoValue} of ${p.objectTwo}.</br>
+        ${p.objectOne} is
+        <div class="frac">
+        <span>${p.oneValue}</span>
+        <span class="symbol">/</span>
+        <span class="bottom">${p.twoValue}</span>
+        </div>
+        of ${p.objectTwo}.</br>
         What fraction of ${
           p.rollTypeQn11 == "1T"
             ? `${p.objectOne} is ${p.objectOne} and ${p.objectTwo}.`
@@ -4294,9 +4313,13 @@ function updateProblems() {
     if (p.rollTypeClue == "1T") {
       if (p.rollTypeQnSyn == "isof") {
         displayProblem.innerHTML = `
-        ${p.objectOne} is ${p.oneValue}/${p.twoValue + p.oneValue} of ${
-          p.objectOne
-        } and ${p.objectTwo}.</br>
+        ${p.objectOne} is 
+        <div class="frac">
+        <span>${p.oneValue}</span>
+        <span class="symbol">/</span>
+        <span class="bottom">${p.twoValue + p.oneValue}</span>
+        </div>
+         of ${p.objectOne} and ${p.objectTwo}.</br>
         What fraction is ${
           p.rollTypeQn1T == "AB"
             ? `${p.objectOne} of ${p.objectTwo}.`
@@ -4306,9 +4329,13 @@ function updateProblems() {
       }
       if (p.rollTypeQnSyn == "ofis") {
         displayProblem.innerHTML = `
-        ${p.objectOne} is ${p.oneValue}/${p.twoValue + p.oneValue} of ${
-          p.objectOne
-        } and ${p.objectTwo}.</br>
+        ${p.objectOne} is 
+        <div class="frac">
+        <span>${p.oneValue}</span>
+        <span class="symbol">/</span>
+        <span class="bottom">${p.twoValue + p.oneValue}</span>
+        </div>
+       of ${p.objectOne} and ${p.objectTwo}.</br>
         What fraction of ${
           p.rollTypeQn1T == "AB"
             ? `${p.objectOne} is ${p.objectTwo}.`
@@ -9259,7 +9286,11 @@ function updateProblems() {
       // END CHANGE DISPLAY
       if (genNumbers(2) == 0) {
         displayProblem.innerHTML = `
-      ${p.numOne}/${p.numTwo} ≈ ?</p>
+        <div class="frac">
+        <span>${p.numOne}</span>
+        <span class="symbol">/</span>
+        <span class="bottom">${p.numTwo}</span>
+        </div> ≈ ?</p>
       Round off your answer to ${p.roundOff} decimal place.
       `;
       } else {
@@ -24304,7 +24335,8 @@ function genProblems() {
 
   if (level == 5.14) {
     return {
-      roll: ["rectangle", "updown", "down", "up"][genNumbers(4)],
+      // roll: ["rectangle", "updown", "down", "up"][genNumbers(4)],
+      roll: ["rectangle", "down", "up"][genNumbers(3)],
       triX1: (genNumbers(5) + 5) * 20,
 
       triX2: (genNumbers(5) + 5) * 10,
