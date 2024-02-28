@@ -7,6 +7,9 @@
     <link rel="icon" href="/images/favicon.ico?v=1.1">
     <title>Upload</title>
 
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
     <!-- pdf-lib link -->
     <script src="https://unpkg.com/pdf-lib"></script>
 
@@ -251,9 +254,12 @@
             <i class="fa fa-file-pdf-o"></i> PDF 
         </span>    
             <div>
+                <!-- <form action="/exam/upload/save" method="post"> -->
                 <button id="convertBtn" onclick = {embedImages()}>
+                    <!-- <button id="convertBtn" type="submit"> -->
                     SAVE AS PDF
                 </button>
+                 <!-- </FORM> -->
                 <button id="upload-msg">
                     UPLOAD FILES
                 </button>
@@ -302,6 +308,17 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Upload file to googledrive -->
+    <div class="container m-3">
+        <form action="/exam/upload/save" method="POST">
+            <div class="form-group m-2">
+                <label class="form-label" for="customFile" id="customFileInput">Upload pdf file to drive</label>
+                <input type="file" class="form-control" id="customFile" name="imageFile" required multiple/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
 </body>
 
@@ -490,5 +507,27 @@
             addMoreFile.appendChild(addFile);
             createPDF.appendChild(addMoreFile);
     }
+        // SUMMIT BRAND NEW REWARD FORM
+    const formElem = document.querySelector("form");
+    formElem.addEventListener("submit", async (e) => {
+    console.log("form submitting");
+    e.preventDefault();
+    await fetch("/exam/upload/save", {
+        method: "POST",
+        body: new FormData(formElem),
+    })
+        .then((response) => {
+        if (response.status == 200) {
+            alert("File has been successfully added!");
+            // window.location.replace("/user/points/rewards");
+        } else {
+            alert("Sorry! Failed to add file.");
+        }
+        })
+        .catch((error) => {
+        console.error(error);
+        });
+    });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </html>

@@ -10,6 +10,13 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const User = require("../models/userModel");
 
+const fs = require("fs");
+const multer = require("multer");
+const upload = multer();
+const stream = require("stream");
+const path = require("path");
+const { google } = require("googleapis");
+
 exports.new = catchAsync(async (req, res, next) => {
   let username = req.user.username;
   let authenticate = req.auth;
@@ -69,6 +76,56 @@ exports.save = catchAsync(async (req, res, next) => {
 
 exports.upload = (req, res) => {
   res.render("./exam/upload");
+};
+
+const GOOGLE_API_FOLDER_ID = process.env.GOOGLE_API_EXAM_FOLDER_ID;
+// console.log(`Environment: ${process.env.NODE_ENV}`);
+
+let auth;
+if (process.env.NODE_ENV == "DEVELOPMENT") {
+  auth = new google.auth.GoogleAuth({
+    keyFile: "./googlekey.json",
+    scopes: ["https://www.googleapis.com/auth/drive"],
+  });
+} else {
+  auth = new google.auth.GoogleAuth({
+    keyFile: "./google-credentials.json",
+    scopes: ["https://www.googleapis.com/auth/drive"],
+  });
+}
+
+async function uploadFile(imagePath) {
+  const bufferStream = new stream.PassThrough();
+  bufferStream.end(imagePath.buffer);
+  const { data } = await google.drive({ version: "v3", auth }).files.create({
+    media: {
+      mimeType: imagePath.mimeType,
+      body: bufferStream,
+    },
+    requestBody: {
+      name: imagePath.originalname,
+      parents: [GOOGLE_API_FOLDER_ID],
+    },
+    fields: "id,name",
+  });
+  console.log(`Uploaded file ${data.name} ${data.id}`);
+  return data.id;
+}
+
+exports.uploadSave = async (req, res) => {
+  // try {
+  console.log(`Request: ${req}`);
+
+  // try {
+  const { files } = req;
+  console.log(files);
+
+  const imageID = await uploadFile(files[0]);
+  console.log(imageID);
+  // req.body.link = imageID;
+  // const newReward = await Reward.create(req.body);
+  // console.log(newReward);
+  res.send("Success");
 };
 
 exports.view = catchAsync(async (req, res, next) => {

@@ -290,10 +290,6 @@ exports.postNewReward = catchAsync(async (req, res, next) => {
 
   // res.redirect("/user/points/rewards");
   res.send("Success");
-  // } catch (err) {
-  //   console.log(err);
-  //   return res.send("Failed");
-  // }
 });
 
 exports.saveReward = catchAsync(async (req, res, next) => {
@@ -541,17 +537,6 @@ const generateRec = async (nameTemp) => {
     User.findOne({ username: nameTemp.toLowerCase() }),
   ]);
   let distinctLevels = await Attempt.distinct("level", { user: nameTemp });
-  // console.log(`THESE ARE THE LATEST ATTEMPTS ${latestAttempt}`);
-  // const latestAttempt = await Attempt.find({
-  //   user: nameTemp,
-  //   date: { $lt: today },
-  //   tries: "1",
-  // }).sort({
-  //   level: -1,
-  //   date: -1,
-  // });
-
-  // const { DOB } = await User.findOne({ username: nameTemp.toLowerCase() });
   const age = new Date().getFullYear() - DOB.getFullYear();
   // console.log(age);
 

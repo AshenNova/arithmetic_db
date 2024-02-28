@@ -3034,9 +3034,9 @@ function updateProblems() {
       let value = p.deno * p.numMulti;
       displayProblem.innerHTML = `
       <div class="frac">
-      <span>${p.numOne}</span>
+      <span>${p.nume}</span>
       <span class="symbol">/</span>
-      <span class="bottom">${p.numTwo}</span>
+      <span class="bottom">${p.deno}</span>
       </div> of ${value} is ?</br>
       What is that value?
       `;
