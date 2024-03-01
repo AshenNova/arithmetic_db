@@ -836,16 +836,16 @@ const generateRec = async (nameTemp) => {
         console.log(attempt);
       } else {
         if (attempt.mode == "Easy") {
+          console.log("Easy to Normal");
           attempt.mode = "Normal";
           recommend.push(attempt);
           existingLevel.push(attempt.level);
-        }
-        if (attempt.mode == "Normal") {
+        } else if (attempt.mode == "Normal") {
+          console.log("Normal to Hardcore");
           attempt.mode = "Hardcore";
           recommend.push(attempt);
           existingLevel.push(attempt.level);
-        }
-        if (attempt.mode == "Hardcore") {
+        } else if (attempt.mode == "Hardcore") {
           console.log("COMPLETED IN HARDCORE MODE", attempt.level);
           const levelOne = [
             "1",
@@ -1038,6 +1038,8 @@ const generateRec = async (nameTemp) => {
           //Select new level
           if (index == ageLevel.length - 1) {
             recommendObj.level = ageLevel[0];
+          } else if (index == -1) {
+            recommendObj.level = ageLevel[Math.floor(ageLevel.length / 2)];
           } else {
             index += 1;
             while (existingLevel.includes(ageLevel[index])) {
@@ -1051,7 +1053,6 @@ const generateRec = async (nameTemp) => {
 
           console.log(`Previous: ${attempt.level}, New: ${recommendObj.level}`);
           recommendObj.time = "";
-
           recommendObj.mistake = "";
           recommendObj.score = "";
           recommendObj.award = "";

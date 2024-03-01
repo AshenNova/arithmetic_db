@@ -356,6 +356,11 @@ justify-content: center; */
     <div class="container m-3">
         <form action="/exam/upload/save" method="POST">
             <div class="form-group m-2">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" name="name" placeholder="2022.p4.sa2.acsj" required>
+            </div>
+
+            <div class="form-group m-2">
                 <label class="form-label" for="customFile" id="customFileInput">Upload pdf file to drive</label>
                 <input type="file" class="form-control" id="customFile" name="imageFile" required multiple/>
             </div>

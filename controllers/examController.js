@@ -55,6 +55,8 @@ exports.new = catchAsync(async (req, res, next) => {
 });
 
 exports.save = catchAsync(async (req, res, next) => {
+  let currentUser = req.user;
+
   if (!currentUser.admin) {
     return res.redirect("/exam/table");
   }
@@ -113,23 +115,25 @@ exports.queryupdate = async (req, res) => {
     if (value == "") delete params[key];
   }
 
-  if (params.length == 0) {
-    return res.send();
-  }
   const exam = await Exam.find(params);
   console.log(exam);
 
-  if (exam.length < 1) {
-  }
-  if (exam[0] && exam.length == 1) {
-    exam.link = `https://drive.google.com/file/d/${driveid}/view?usp=sharing`;
-    Exam.findByIdAndUpdate(exam._id);
-    res.redirect("/exam/upload");
+  if (exam && exam.length == 1) {
+    const target = exam[0];
+    console.log("Updating exam paper with new link");
+    target.link = `https://drive.google.com/file/d/${driveid}/view?usp=sharing`;
+    const newExam = await Exam.findByIdAndUpdate(target._id, {
+      link: target.link,
+    });
+    console.log(newExam);
+    req.message = `Exam paper was updated successful.`;
+    return exports.upload(req, res);
   } else {
-    if (exam.length > 1) {
+    if (exam.length == 0) req.message = "No such exam paper exist";
+    if (exam.length < 1)
       req.message = `More than 1 exam paper has been found. Please narrow down your filter.`;
-    }
-    exports.upload(req, res);
+
+    return exports.upload(req, res);
   }
 };
 
@@ -149,7 +153,7 @@ if (process.env.NODE_ENV == "DEVELOPMENT") {
   });
 }
 
-async function uploadFile(imagePath) {
+async function uploadFile(imagePath, name) {
   const bufferStream = new stream.PassThrough();
   bufferStream.end(imagePath.buffer);
   const { data } = await google.drive({ version: "v3", auth }).files.create({
@@ -158,7 +162,7 @@ async function uploadFile(imagePath) {
       body: bufferStream,
     },
     requestBody: {
-      name: imagePath.originalname,
+      name: name,
       parents: [GOOGLE_API_FOLDER_ID],
     },
     fields: "id,name",
@@ -170,12 +174,13 @@ async function uploadFile(imagePath) {
 exports.uploadSave = async (req, res) => {
   // try {
   console.log(`Request: ${req}`);
+  console.log(req.body.name);
 
   // try {
   const { files } = req;
   console.log(files);
   let data = {};
-  const imageID = await uploadFile(files[0]);
+  const imageID = await uploadFile(files[0], req.body.name.toUpperCase());
   data.driveid = imageID;
   console.log(imageID);
   res.send(data);
