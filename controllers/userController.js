@@ -1044,6 +1044,9 @@ const generateRec = async (nameTemp) => {
               index += 1;
             }
             recommendObj.level = ageLevel[index];
+            if (index == ageLevel.length - 1) {
+              index = 0;
+            }
           }
 
           console.log(`Previous: ${attempt.level}, New: ${recommendObj.level}`);
