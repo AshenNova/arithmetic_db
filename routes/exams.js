@@ -11,8 +11,10 @@ const examController = require("../controllers/examController");
 const router = express.Router();
 
 router.route("/new").get(examController.new).post(examController.save);
+router.route("/new/:driveid").get(examController.new);
 
 router.route("/edit/:id").get(examController.edit);
+router.route("/queryupdate/:driveid").get(examController.queryupdate);
 router.route("/view/:id").get(examController.view);
 router.route("/clone/:id").get(examController.new);
 router.route("/list").get(examController.list);

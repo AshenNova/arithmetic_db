@@ -1033,13 +1033,17 @@ const generateRec = async (nameTemp) => {
           console.log(`History: ${ageLevel}`);
           console.log(`Unique Levels: ${existingLevel}`);
           console.log(attempt.level);
-          const index = ageLevel.indexOf(attempt.level);
+          let index = ageLevel.indexOf(attempt.level);
           console.log("The index is " + index);
           //Select new level
           if (index == ageLevel.length - 1) {
             recommendObj.level = ageLevel[0];
           } else {
-            recommendObj.level = ageLevel[index + 1];
+            index += 1;
+            while (existingLevel.includes(ageLevel[index])) {
+              index += 1;
+            }
+            recommendObj.level = ageLevel[index];
           }
 
           console.log(`Previous: ${attempt.level}, New: ${recommendObj.level}`);

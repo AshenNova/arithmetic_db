@@ -21,6 +21,9 @@
 
 </head>
 <style>
+    .hidden{
+        display: none;
+    }
     body {
         margin: 0;
         padding: 0;
@@ -247,6 +250,41 @@
     position: relative;
     top: -3.5rem
 }
+
+#afterUpload {
+/* display: flex;
+justify-content: center; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    background: white;
+    border: 2px solid black;
+    border-radius: 0.2rem;
+    align-items: center;         
+    width: 600px;
+    height: 250px;
+    z-index: 9;
+    margin: auto;
+}
+.options{
+    padding: 5px;
+    text-align: center;
+}
+
+#message {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 60px;
+    z-index: 2;
+    text-align: center;
+}
+
+.message-input {
+    color: red;
+}
 </style>
 <body>
     <div class="nav">
@@ -266,6 +304,10 @@
             </div>
     </div>
 
+    <!-- message -->
+    <div class="container" id="message">
+        <h3 class="message-input"><%= message %></h3>
+    </div>
     <!-- Input page -->
     <div class="input-page" id="input-page">
         <div class="choose-file">
@@ -319,6 +361,66 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+    </div>
+
+    <!-- After upload (Update or New) -->
+
+    <div id="afterUpload" class='hidden'>
+        <div class="options">
+            <h6>Then what?</h1>
+                <form method="get" id="form_query_update">
+                    <div class="row mt-3">
+                        <div class="col">
+                            <label class="form-label">Subject</label>
+                            <select class="form-select" name="subject">
+                                <option select></option>
+                                <% unique.subject.forEach(item => { %>
+                                    <option><%= item %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Year</label>
+                            <select class="form-select" name="year">
+                                <option select></option>
+                                <% unique.year.forEach(item => { %>
+                                    <option><%= item %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Level</label>
+                            <select class="form-select" name="level">
+                                <option select></option>
+                                <% unique.level.forEach(item => { %>
+                                    <option><%= item %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Type</label>
+                            <select class="form-select" name="type">
+                                <option select></option>
+                                <% unique.type.forEach(item => { %>
+                                    <option><%= item %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">School</label>
+                            <select class="form-select" name="school">
+                                <option select></option>
+                                <% unique.school.forEach(item => { %>
+                                    <option><%= item %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                    </div>
+                        <button type="submit" class="btn btn-warning my-3">Update</button>
+                 </form>
+           
+                 <a href="#" id="new-exam"><button class="btn btn-primary">New</button></a>
+        </div>
     </div>
 </body>
 
@@ -518,8 +620,19 @@
     })
         .then((response) => {
         if (response.status == 200) {
-            alert("File has been successfully added!");
-            // window.location.replace("/user/points/rewards");
+            // const data = Promise.all([response.json()])
+            // console.log(data.toString())
+            let data = {}
+            Promise.all([response.json()]).then((values)=> {
+                //values are returned as an array
+                console.log(values[0].driveid)
+                data = values[0].driveid
+            const afterUpload = document.querySelector("#afterUpload").classList.remove("hidden")
+            const formQueryUpdate = document.querySelector("#form_query_update").action = `/exam/queryupdate/${data}`
+
+            document.querySelector("#new-exam").href= `/exam/new/${data}`
+            })
+           
         } else {
             alert("Sorry! Failed to add file.");
         }

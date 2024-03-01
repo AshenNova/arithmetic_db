@@ -18,6 +18,7 @@ const path = require("path");
 const { google } = require("googleapis");
 
 exports.new = catchAsync(async (req, res, next) => {
+  console.log(req.params);
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
@@ -30,6 +31,9 @@ exports.new = catchAsync(async (req, res, next) => {
   const schools = await Exam.distinct("school");
   const subjects = await Exam.distinct("subject");
 
+  if (req.params.driveid) {
+    existing.link = `https://drive.google.com/file/d/${req.params.driveid}/view?usp=sharing`;
+  }
   if (req.url.startsWith("/clone")) {
     console.log("Cloning");
     const id = req.params.id;
@@ -74,8 +78,59 @@ exports.save = catchAsync(async (req, res, next) => {
   }
 });
 
-exports.upload = (req, res) => {
-  res.render("./exam/upload");
+exports.upload = async (req, res) => {
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  let message = req.message;
+  if (!currentUser.admin) {
+    return res.redirect("/exam/table");
+  }
+  let unique = {};
+  [unique.year, unique.subject, unique.level, unique.type, unique.school] =
+    await Promise.all([
+      Exam.distinct("year"),
+      Exam.distinct("subject"),
+      Exam.distinct("level"),
+      Exam.distinct("type"),
+      Exam.distinct("school"),
+    ]);
+  console.log(`Unique: ${unique}`);
+  res.render("./exam/upload", { unique, message });
+};
+
+exports.queryupdate = async (req, res) => {
+  let currentUser = req.user;
+  if (!currentUser.admin) {
+    return res.redirect("/exam/table");
+  }
+  console.log(req.body);
+  let driveid = req.params.driveid;
+  let params = req.query;
+  let message;
+  console.log(driveid, params);
+  for (const [key, value] of Object.entries(params)) {
+    if (value == "") delete params[key];
+  }
+
+  if (params.length == 0) {
+    return res.send();
+  }
+  const exam = await Exam.find(params);
+  console.log(exam);
+
+  if (exam.length < 1) {
+  }
+  if (exam[0] && exam.length == 1) {
+    exam.link = `https://drive.google.com/file/d/${driveid}/view?usp=sharing`;
+    Exam.findByIdAndUpdate(exam._id);
+    res.redirect("/exam/upload");
+  } else {
+    if (exam.length > 1) {
+      req.message = `More than 1 exam paper has been found. Please narrow down your filter.`;
+    }
+    exports.upload(req, res);
+  }
 };
 
 const GOOGLE_API_FOLDER_ID = process.env.GOOGLE_API_EXAM_FOLDER_ID;
@@ -119,13 +174,11 @@ exports.uploadSave = async (req, res) => {
   // try {
   const { files } = req;
   console.log(files);
-
+  let data = {};
   const imageID = await uploadFile(files[0]);
+  data.driveid = imageID;
   console.log(imageID);
-  // req.body.link = imageID;
-  // const newReward = await Reward.create(req.body);
-  // console.log(newReward);
-  res.send("Success");
+  res.send(data);
 };
 
 exports.view = catchAsync(async (req, res, next) => {
@@ -135,13 +188,14 @@ exports.view = catchAsync(async (req, res, next) => {
 });
 
 exports.edit = catchAsync(async (req, res, next) => {
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
   if (!currentUser.admin) {
     return res.redirect("/exam/table");
   }
   console.log("Editing paper");
-  let username = req.user.username;
-  let authenticate = req.auth;
-  let currentUser = req.user;
+
   const id = req.params.id;
   const schools = await Exam.distinct("school");
   const subjects = await Exam.distinct("subject");
