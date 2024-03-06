@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/images/favicon.ico?v=1.1">
+    <link rel="stylesheet" href="/css/navbar-styles.css">
     <title>Upload</title>
 
     <!-- bootstrap -->
@@ -287,6 +288,7 @@ justify-content: center; */
 }
 </style>
 <body>
+    <%- include("../partials/navbar") %>
     <div class="nav">
         <span class="logo">
             <i class="fa fa-file-pdf-o"></i> PDF 
@@ -357,7 +359,7 @@ justify-content: center; */
         <form action="/exam/upload/save" method="POST">
             <div class="form-group m-2">
                 <label class="form-label">Name</label>
-                <input type="text" class="form-control" name="name" placeholder="2022.p4.sa2.acsj" required>
+                <input type="text" class="form-control" name="name" placeholder="eg. 2022.p4.sa2.acsj" required>
             </div>
 
             <div class="form-group m-2">

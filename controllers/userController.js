@@ -123,7 +123,10 @@ exports.saveEditUser = catchAsync(async (req, res, next) => {
     delete req.body.gift;
     delete req.body.freeze;
     delete req.body.freezeEndDate;
+    delete req.body.admin;
+    delete req.body.subject_admin;
   }
+
   console.log(req.body.password, req.body.confirmPassword);
   if (req.body.password == "" || req.body.confirmPassword == "") {
     delete req.body.password;
@@ -1051,6 +1054,14 @@ const generateRec = async (nameTemp) => {
             }
           }
 
+          if (!recommendObj.level) {
+            console.log("UNDEFINED!");
+            let index = 0;
+            while (existingLevel.includes(ageLevel[index])) {
+              index += 1;
+            }
+            recommendObj.level = ageLevel[index];
+          }
           console.log(`Previous: ${attempt.level}, New: ${recommendObj.level}`);
           recommendObj.time = "";
           recommendObj.mistake = "";

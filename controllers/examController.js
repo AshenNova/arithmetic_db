@@ -57,7 +57,7 @@ exports.new = catchAsync(async (req, res, next) => {
 exports.save = catchAsync(async (req, res, next) => {
   let currentUser = req.user;
 
-  if (!currentUser.admin) {
+  if (!currentUser.admin || !currentUser.subject_admin) {
     return res.redirect("/exam/table");
   }
   const exam = req.body;
@@ -85,7 +85,7 @@ exports.upload = async (req, res) => {
   let authenticate = req.auth;
   let currentUser = req.user;
   let message = req.message;
-  if (!currentUser.admin) {
+  if (!currentUser.admin || !currentUser.subject_admin) {
     return res.redirect("/exam/table");
   }
   let unique = {};
@@ -98,12 +98,18 @@ exports.upload = async (req, res) => {
       Exam.distinct("school"),
     ]);
   console.log(`Unique: ${unique}`);
-  res.render("./exam/upload", { unique, message });
+  res.render("./exam/upload", {
+    username,
+    authenticate,
+    currentUser,
+    unique,
+    message,
+  });
 };
 
 exports.queryupdate = async (req, res) => {
   let currentUser = req.user;
-  if (!currentUser.admin) {
+  if (!currentUser.admin || !currentUser.subject_admin) {
     return res.redirect("/exam/table");
   }
   console.log(req.body);
@@ -137,7 +143,7 @@ exports.queryupdate = async (req, res) => {
   }
 };
 
-const GOOGLE_API_FOLDER_ID = process.env.GOOGLE_API_EXAM_FOLDER_ID;
+let GOOGLE_API_FOLDER_ID = process.env.GOOGLE_API_EXAM_FOLDER_ID;
 // console.log(`Environment: ${process.env.NODE_ENV}`);
 
 let auth;
@@ -176,6 +182,18 @@ exports.uploadSave = async (req, res) => {
   console.log(`Request: ${req}`);
   console.log(req.body.name);
 
+  // let GOOGLE_API_FOLDER_ID;
+  // if (["P1", "P2", "P3", "P4", "P5", "P6"].includes(req.body.level)) {
+  //   GOOGLE_API_FOLDER_ID = process.env.GOOGLE_API_PRIMARY_EXAM_FOLDER_ID;
+  // } else if (
+  //   ["SEC1", "SEC2", "SEC3", "SEC4", "SEC5"].includes(req.body.level)
+  // ) {
+  //   GOOGLE_API_FOLDER_ID = process.env.GOOGLE_API_SECONDARY_EXAM_FOLDER_ID;
+  // } else {
+  //   GOOGLE_API_FOLDER_ID = process.env.GOOGLE_API_EXAM_FOLDER_ID;
+  // }
+  // const address = GOOGLE_API_FOLDER_ID;
+  // console.log(address);
   // try {
   const { files } = req;
   console.log(files);
@@ -268,8 +286,12 @@ exports.table = catchAsync(async (req, res, next) => {
   });
 });
 exports.delete = catchAsync(async (req, res, next) => {
+  currentUser = req.user;
   if (!currentUser.admin) {
-    return res.redirect("/exam/table");
+    return res.redirect("./exam/table");
   }
+
+  const exam = await Exam.findByIdAndDelete(req.params.id);
   console.log("Deleting");
+  res.redirect("./exam/list");
 });

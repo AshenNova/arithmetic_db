@@ -18893,7 +18893,7 @@ function handleSubmit(e) {
 
     if (level == 5.03) {
       if (p.rollA == "decimal") {
-        correctAnswer = p.numerator / (p.denominator / 100);
+        correctAnswer = accDecimal(p.numerator / (p.denominator / 100));
       }
       if (p.rollA == "fraction") {
         correctAnswer = `${p.numerator}/${p.denominator}x100`;

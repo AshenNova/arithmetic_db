@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
     validate: [validator.isEmail, "Please provide a valid email."],
   },
   admin: { type: Boolean, default: false },
+  subject_admin: { type: Boolean, default: false },
   password: {
     type: String,
     required: [true, "Please provide a password."],
