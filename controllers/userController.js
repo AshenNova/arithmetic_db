@@ -127,7 +127,9 @@ exports.saveEditUser = catchAsync(async (req, res, next) => {
     delete req.body.subject_admin;
   }
 
-  console.log(req.body.password, req.body.confirmPassword);
+  if (!req.body.subject_admin) req.body.subject_admin = "false";
+  if (!req.body.admin) req.body.admin = "false";
+
   if (req.body.password == "" || req.body.confirmPassword == "") {
     delete req.body.password;
     delete req.body.confirmPassword;
@@ -840,7 +842,16 @@ const generateRec = async (nameTemp) => {
       } else {
         if (attempt.mode == "Easy" && !existingLevel.includes(attempt.level)) {
           console.log("Easy to Normal");
-          attempt.mode = "Normal";
+          if (attempt.time <= 600 || attempt.mistake > 5) {
+            attempt.mode = "Normal";
+          } else {
+            console.log("Back to Easy");
+            attempt.mode = "Easy";
+            attempt.time = "";
+            attempt.mistake = "";
+            attemt.score = "";
+          }
+
           recommend.push(attempt);
           existingLevel.push(attempt.level);
         } else if (
