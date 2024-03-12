@@ -1131,7 +1131,8 @@ exports.generateRecommendMiddleware = catchAsync(async (req, res, next) => {
     nameTemp.push(item.charAt(0).toUpperCase() + item.slice(1, item.length));
   });
   nameTemp = nameTemp.join(" ");
-  // console.log(nameTemp);
+  console.log(nameTemp);
+  // const summaryUser = req.params.username;
 
   const recommend = await generateRec(nameTemp);
   console.log(`Middleware: ${recommend}`);
@@ -1145,7 +1146,7 @@ exports.generateRecommendMiddleware = catchAsync(async (req, res, next) => {
 
 exports.recommend = catchAsync(async (req, res, next) => {
   // try {
-  let username = req.user.username.trim();
+  let username = req.params.username.trim();
   const usernameStr = username.split(" ");
   let nameTemp = [];
   usernameStr.forEach((item) => {

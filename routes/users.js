@@ -61,7 +61,7 @@ router
   .route("/rewardLog/delete/:id")
   .get(authController.adminCheck, userController.deleteRewardLog);
 
-router.route("/recommend").get(
+router.route("/recommend/:username").get(
   // authController.authenticate,
   authController.loginCheck,
   userController.recommend

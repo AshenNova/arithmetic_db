@@ -85,7 +85,7 @@ exports.upload = async (req, res) => {
   let authenticate = req.auth;
   let currentUser = req.user;
   let message = req.message;
-  if (!currentUser.admin || !currentUser.subject_admin) {
+  if (!currentUser.admin && !currentUser.subject_admin) {
     return res.redirect("/exam/table");
   }
   let unique = {};
