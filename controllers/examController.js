@@ -56,8 +56,8 @@ exports.new = catchAsync(async (req, res, next) => {
 
 exports.save = catchAsync(async (req, res, next) => {
   let currentUser = req.user;
-
-  if (!currentUser.admin || !currentUser.subject_admin) {
+  console.log(currentUser);
+  if (!currentUser.admin && !currentUser.subject_admin) {
     return res.redirect("/exam/table");
   }
   const exam = req.body;
@@ -109,7 +109,7 @@ exports.upload = async (req, res) => {
 
 exports.queryupdate = async (req, res) => {
   let currentUser = req.user;
-  if (!currentUser.admin || !currentUser.subject_admin) {
+  if (!currentUser.admin && !currentUser.subject_admin) {
     return res.redirect("/exam/table");
   }
   console.log(req.body);
@@ -270,6 +270,7 @@ exports.list = catchAsync(async (req, res, next) => {
     authenticate,
     currentUser,
     unique,
+    params,
   });
 });
 exports.table = catchAsync(async (req, res, next) => {
