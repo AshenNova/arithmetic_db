@@ -1,6 +1,6 @@
 const helpMe = document.querySelector(".help-me-text");
 
-export function helpMeFunc(level, state) {
+export function helpMeFunc(level, state, setting) {
   const p = state.currentProblem;
   console.log(state);
 
