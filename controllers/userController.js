@@ -849,7 +849,7 @@ const generateRec = async (nameTemp) => {
             attempt.mode = "Easy";
             attempt.time = "";
             attempt.mistake = "";
-            attemt.score = "";
+            attempt.score = "";
           }
 
           recommend.push(attempt);

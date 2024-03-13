@@ -30,21 +30,19 @@
                             <!-- <div class="form-group required"> -->
                             <p>Special Access</p>
                             <div class="form-group form-check">
-                                <% if (currentUser.admin == true) { %>
-                                    <input class="form-check-input" type="checkbox" name="admin" value="true" checked>
-                                <% } else { %>
-                                    <input class="form-check-input" type="checkbox" name="admin">
-                                <% } %>
+                                <input class="form-check-input" type="checkbox" name="admin" value="true"
+                                <% if (editUser.admin) { %>
+                                     checked
+                                <% } %>> 
                                 <label class="form-check-label" for="flexCheckDefault">
                                   Super Admin
                                 </label>
                             </div>  
                             <div class="form-group form-check">  
-                                <% if ( currentUser.subject_admin == true) { %>
-                                    <input class="form-check-input" type="checkbox" name="subject_admin" value="true" checked>
-                                <% } else { %>
-                                    <input class="form-check-input" type="checkbox" name="subject_admin">
-                                <% } %>
+                                <input class="form-check-input" type="checkbox" name="subject_admin" value="true"
+                                <% if ( editUser.subject_admin) { %>
+                                    checked 
+                                <% } %>>
                                 <label class="form-check-label" for="flexCheckDefault">
                                   Subject Admin
                                 </label>
