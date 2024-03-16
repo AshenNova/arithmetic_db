@@ -858,14 +858,20 @@ const generateRec = async (nameTemp) => {
           attempt.mode == "Normal" &&
           !existingLevel.includes(attempt.level)
         ) {
-          console.log("Normal to Hardcore");
-          attempt.mode = "Hardcore";
-          recommend.push(attempt);
-          existingLevel.push(attempt.level);
-          attempt.time = "";
-          attempt.mistake = "";
-          attempt.score = "";
-          attempt.award = "";
+          if (attempt.time < 600) {
+            console.log("Normal to Hardcore");
+            attempt.mode = "Hardcore";
+            recommend.push(attempt);
+            existingLevel.push(attempt.level);
+            attempt.time = "";
+            attempt.mistake = "";
+            attempt.score = "";
+            attempt.award = "";
+          } else {
+            attempt.award = "";
+            recommend.push(attempt);
+            existingLevel.push(attempt.level);
+          }
         } else if (attempt.mode == "Hardcore" && attempt.time == 600) {
           attempt.mode = "Normal";
           attempt.time = "";
