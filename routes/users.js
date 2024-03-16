@@ -63,7 +63,7 @@ router
 
 router.route("/recommend/:username").get(
   // authController.authenticate,
-  authController.loginCheck,
+  // authController.loginCheck,
   userController.recommend
 );
 // router.route("/trial").post(userController.trial);
