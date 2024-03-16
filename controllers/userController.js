@@ -847,11 +847,11 @@ const generateRec = async (nameTemp) => {
           } else {
             console.log("Back to Easy");
             attempt.mode = "Easy";
-            attempt.time = "";
-            attempt.mistake = "";
-            attempt.score = "";
           }
-
+          attempt.time = "";
+          attempt.mistake = "";
+          attempt.score = "";
+          attempt.award = "";
           recommend.push(attempt);
           existingLevel.push(attempt.level);
         } else if (
@@ -862,7 +862,17 @@ const generateRec = async (nameTemp) => {
           attempt.mode = "Hardcore";
           recommend.push(attempt);
           existingLevel.push(attempt.level);
-        } else if (attempt.mode == "Hardcore") {
+          attempt.time = "";
+          attempt.mistake = "";
+          attempt.score = "";
+          attempt.award = "";
+        } else if (attempt.mode == "Hardcore" && attempt.time == 600) {
+          attempt.mode = "Normal";
+          attempt.time = "";
+          attempt.mistake = "";
+          attempt.score = "";
+          attempt.award = "";
+        } else if (attempt.mode == "Hardcore" && attempt.time < 600) {
           console.log("COMPLETED IN HARDCORE MODE", attempt.level);
           const levelOne = [
             "1",
