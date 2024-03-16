@@ -18903,7 +18903,7 @@ function handleSubmit(e) {
           correctAnswer = `${p.percentageDisplay}/100`;
         }
         if (p.rollB == "decimal") {
-          correctAnswer = `${p.percentageDisplay / 100}`;
+          correctAnswer = `${accDecimal(p.percentageDisplay / 100)}`;
         }
         if (p.rollB == "ratio") {
           correctAnswer = `${p.percentageDisplay}:100`;
@@ -22655,7 +22655,7 @@ function handleSubmit(e) {
     } else {
       // WHEN INCORRECT
       console.log("incorrect");
-      helpMeFunc(level, state);
+      helpMeFunc(level, state, setting);
       state.mistake++;
       summaryPush("❌");
 
