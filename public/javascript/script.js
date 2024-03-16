@@ -26680,8 +26680,17 @@ function genProblems() {
   }
   // SETTINGS
   if (level == "heuFiveb") {
-    setting = calArrAll(6, calArr, setting, 9);
-    setting = checkRange(setting, calArr, skipArr);
+    if (regen > 20) {
+      console.log("⭐️Regen activated!⭐️");
+      skipGlobalUpdateProblem = 0;
+      //   calArr.pop()
+      normalDisplay();
+      setting = 1;
+      console.log("Whats the regen?");
+    } else {
+      setting = calArrAll(6, calArr, setting, 9);
+      setting = checkRange(setting, calArr, skipArr);
+    }
 
     if (setting == 1) {
       const gen_denoOne = genNumbers(4) + 2;
