@@ -842,11 +842,8 @@ const generateRec = async (nameTemp) => {
       } else {
         if (attempt.mode == "Easy" && !existingLevel.includes(attempt.level)) {
           console.log("Easy to Normal");
-          if (attempt.time <= 600 || attempt.mistake > 5) {
+          if (attempt.time <= 600 && attempt.mistake > 5) {
             attempt.mode = "Normal";
-          } else {
-            console.log("Back to Easy");
-            attempt.mode = "Easy";
           }
           attempt.time = "";
           attempt.mistake = "";
@@ -867,7 +864,14 @@ const generateRec = async (nameTemp) => {
             attempt.mistake = "";
             attempt.score = "";
             attempt.award = "";
+          } else if (attempt.time == 600) {
+            // console.log("Demoted");
+            attempt.mode == "Easy";
+            attempt.award = "";
+            recommend.push(attempt);
+            existingLevel.push(attempt.level);
           } else {
+            // console.log("Try Again");
             attempt.award = "";
             recommend.push(attempt);
             existingLevel.push(attempt.level);
