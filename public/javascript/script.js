@@ -7938,40 +7938,40 @@ function updateProblems() {
   //DISPLAY
   if (level == "calThree") {
     // WORKING DISPLAY
-    if (
-      setting == 1 ||
-      setting == 2 ||
-      setting == 3 ||
-      setting == 4 ||
-      setting == 5 ||
-      setting == 6 ||
-      setting == 9 ||
-      setting == 13
-    ) {
-      workingDisplay();
-    }
+    // if (
+    //   setting == 1 ||
+    //   setting == 2 ||
+    //   setting == 3 ||
+    //   setting == 4 ||
+    //   setting == 5 ||
+    //   setting == 6 ||
+    //   setting == 9 ||
+    //   setting == 13
+    // ) {
+    //   workingDisplay();
+    // }
     // NORMAL DISPLAY
-    if (
-      setting == 7 ||
-      setting == 8 ||
-      setting == 11 ||
-      setting == 12 ||
-      setting == 14 ||
-      setting == 15 ||
-      setting == 16 ||
-      setting == 17 ||
-      setting == 19 ||
-      setting == 22
-    ) {
-      normalDisplay();
+    // if (
+    //   setting == 7 ||
+    //   setting == 8 ||
+    //   setting == 11 ||
+    //   setting == 12 ||
+    //   setting == 14 ||
+    //   setting == 15 ||
+    //   setting == 16 ||
+    //   setting == 17 ||
+    //   setting == 19 ||
+    //   setting == 22
+    // ) {
+    //   normalDisplay();
 
       if (setting == 16 || setting == 19) {
         displayProblem.style.fontSize = "20px";
         displayProblem.style.textAlign = "left";
       }
-    }
 
     if (setting == 1) {
+      workingDisplay();
       const numOneStr = p.numOne.toString();
       let numTwoStr = p.numTwo.toString();
       // if (countA != countB) {
@@ -7993,6 +7993,7 @@ function updateProblems() {
       workingAnswer.textContent = "?";
     }
     if (setting == 2) {
+      workingDisplay();
       // if (p.numTwo > p.numOne) {
       //   [p.numTwo, p.numOne] = [p.numOne, p.numTwo];
       // }
@@ -8015,6 +8016,7 @@ function updateProblems() {
       workingAnswer.textContent = "?";
     }
     if (setting == 3) {
+      workingDisplay();
       while (p.numOne + p.numTwo >= 10000) {
         if (p.numOne > p.numTwo) p.numOne -= 1000;
         if (p.numTwo > p.numOne) p.numTwo -= 1000;
@@ -8026,6 +8028,7 @@ function updateProblems() {
     }
 
     if (setting == 4) {
+      workingDisplay();
       if (p.numTwo > p.numOne) {
         [p.numTwo, p.numOne] = [p.numOne, p.numTwo];
       }
@@ -8046,6 +8049,7 @@ function updateProblems() {
     }
 
     if (setting == 5) {
+      workingDisplay();
       let arrOne = p.numOne.toString().split("");
       let arrTwo = p.numTwo.toString().split("");
       let join = [...arrOne, ...arrTwo];
@@ -8109,6 +8113,7 @@ function updateProblems() {
     }
 
     if (setting == 6) {
+      workingDisplay();
       if (p.operator == "+") {
         operator.textContent = p.operator;
         while (p.numOne + p.numTwo > 10000) {
@@ -8151,6 +8156,7 @@ function updateProblems() {
     }
 
     if (setting == 7) {
+      normalDisplay();
       for (let i = 0; i < 6; i++) {
         arr.push(p.startNum);
         p.startNum += p.difference;
@@ -8166,6 +8172,7 @@ function updateProblems() {
     }
 
     if (setting == 8) {
+      normalDisplay();
       for (let i = 0; i < 6; i++) {
         arr.push(p.startNum);
         i++;
@@ -8185,6 +8192,7 @@ function updateProblems() {
     }
 
     if (setting == 9) {
+      workingDisplay();
       firstNum.textContent = p.numOne;
       secondNum.textContent = p.multiple;
       operator.textContent = "x";
@@ -8217,11 +8225,13 @@ function updateProblems() {
     }
 
     if (setting == 11) {
+      normalDisplay();
       let num = p.multiplier * p.divisor;
       displayProblem.innerHTML = `${num} ÷ ${p.divisor} = ?`;
     }
 
     if (setting == 12) {
+      normalDisplay();
       let num = p.multiplier * p.divisor + p.remainder;
       if (p.remainder == 0) return updateCalc();
       const symbol = genNumbers(2) == 0 ? "÷" : "divided by";
@@ -8234,6 +8244,7 @@ function updateProblems() {
       }
     }
     if (setting == 13) {
+      workingDisplay();
       let num = genUniqNum(3);
       let str = num.toString();
       console.log(str);
@@ -8248,6 +8259,7 @@ function updateProblems() {
     }
 
     if (setting == 14) {
+      normalDisplay();
       let arrOne = [p.sets, "x", p.sums];
       let arrTwo = [p.sets, "x", p.numOne];
       let arrThree = [p.sets, "x", "?"];
@@ -8334,6 +8346,7 @@ function updateProblems() {
     }
 
     if (setting == 15) {
+      normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
       p.num = p.quotient * p.divisor + p.remainder;
@@ -8355,6 +8368,7 @@ function updateProblems() {
 
     // LEFT SIDE RIGHT SIDE
     if (setting == 16) {
+      normalDisplay();
       let leftSide = resultSide(p.limit, p.multiMin, p.multiMax);
 
       // console.log(leftSide);
@@ -8387,6 +8401,7 @@ function updateProblems() {
     }
     // MULTIPLICATION AND DIVISION WHILE BREAKING UP CONVENIENT NUMBERS
     if (setting == 17) {
+      normalDisplay();
       p.numOne = p.numOne * p.convenientOne;
       p.numTwo = p.numTwo * p.convenientTwo;
       if (p.numOne * p.numTwo > 10000) return updateCalc();
