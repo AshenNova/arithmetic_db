@@ -156,26 +156,26 @@ export const displayContent = (level) => {
       3. Common Factors</br>
       4. Double Digit Multiplication</br>
       5. Left Side Right Side + - x /</br>
+      6. Multiplication in Sets</br>
+      7. Multiplication in Sets (Further Breaking)</br>
       <hr>
-      6. Fractions: Addition: Mixed Fractions</br>
-      7. Fractions: Subtraction: Mixed Fractions</br>
-      8. Fractions: Numberline</br>
-      9. Fractions: Unit with a Value</br>
-      10. Fractions: Parts of a fraction</br>
-      11. Fractions: Form</br>
-      12. Fractions: Conversion</br>
+      8. Fractions: Addition: Mixed Fractions</br>
+      9. Fractions: Subtraction: Mixed Fractions</br>
+      10. Fractions: Numberline</br>
+      11. Fractions: Unit with a Value</br>
+      12. Fractions: Parts of a fraction</br>
+      13. Fractions: Form</br>
+      14. Fractions: Conversion</br>
       <hr>
-      13. Decimals: Addition</br>
-      14. Decimals: Subtraction</br>
-      15. Decimals: Overlapping Place Value</br>
-      16. Decimals: Multiplication (Single)</br>
-      17. Decimals: Multiplication (Double)</br>
-      18. Decimals: Division </br>
-      19. Fractions to Decimal (Limit)</br>
-      20. Decimals: Division and Multiplication with splitting</br>
-      <hr>
-      21. Multiplication in Sets</br>
-      22. Decimals: Parts and Intervals</br>
+      15. Decimals: Addition</br>
+      16. Decimals: Subtraction</br>
+      17. Decimals: Overlapping Place Value</br>
+      18. Decimals: Multiplication (Single)</br>
+      19. Decimals: Multiplication (Double)</br>
+      20. Decimals: Division </br>
+      21. Fractions to Decimal (Limit)</br>
+      22. Decimals: Division and Multiplication with splitting</br>
+      23. Decimals: Parts and Intervals</br>
       <hr>
       99. All
       `;

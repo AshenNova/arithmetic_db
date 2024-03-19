@@ -2414,78 +2414,6 @@ function updateProblems() {
   }
 
   if (level == 3.16) {
-    // // level 3.12
-    // if (p.optionFinal == 5) {
-    //   displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne - 2} + ${
-    //     p.numOne - 1
-    //   } + ${p.numOne}</br> = ?`;
-    // }
-    // if (p.optionFinal == 1) {
-    //   displayProblem.innerHTML = `
-    //   Pattern 1: 1</br>
-    //   Pattern 2: 3</br>
-    //   Pattern 3: 6</br>
-    //   Pattern 4: 10</br>
-    //   ...</br>
-    //   Pattern ${p.numOne}: ?
-    //   `;
-    // }
-    // // level 3.13
-    // if (p.optionFinal == 2) {
-    //   displayProblem.innerHTML = `
-    //   Pattern 1: ${p.numTwo}</br>
-    //   Pattern 2: ${p.numTwo + p.numThree}</br>
-    //   Pattern 3: ${p.numTwo + p.numThree * 2}</br>
-    //   ...</br>
-    //   Pattern ${p.numFour}: ?
-    //   `;
-    // }
-    // // level 3.14
-    // if (p.optionFinal == 3) {
-    //   displayProblem.innerHTML = `
-    //   Pattern 1: 1</br>
-    //   Pattern 2: 4</br>
-    //   Pattern 3: 9</br>
-    //   ...</br>
-    //   Pattern ${p.numFive}: ?</br>
-    //   Pattern ?: ${(p.numFive + p.numSix) * (p.numFive + p.numSix)}
-    //   `;
-    // }
-    // // level 3.15
-    // if (p.optionFinal == 4) {
-    //   if (p.rollType == "A") {
-    //     for (let i = 0; i < p.rollTimes; i++) {
-    //       p.rollA = genNumbers(5);
-    //       arr.push(p.rollA);
-    //     }
-    //     while (arr[2] == arr[1] && arr[2] == arr[0]) {
-    //       arr.pop(arr[3]);
-    //       arr.push(genNumbers(5));
-    //     }
-    //   }
-    //   if (p.rollType == "B") {
-    //     for (let i = 0; i < p.rollTimes; i++) {
-    //       p.rollB = ["A", "B", "C", "D", "E"][genNumbers(5)];
-    //       arr.push(p.rollB);
-    //     }
-    //     while (arr[2] == arr[1] && arr[2] == arr[0]) {
-    //       arr.pop(arr[2]);
-    //       p.rollB = ["A", "B", "C", "D", "E"][genNumbers(5)];
-    //       arr.push(p.rollB);
-    //     }
-    //   }
-    //   console.log(arr);
-    //   for (let i = 0; arr2.length < 13; i++) {
-    //     arr2.push(arr[i % p.rollTimes]);
-    //   }
-    //   console.log(arr2);
-    //   arr2.push("...");
-    //   displayProblem.innerHTML = `
-    //   What is in position ${p.position}?</br>
-    //   ${arr2.toString()}
-    //   `;
-    // }
-    // level 3.12
     console.log(setting);
     if (setting == 5) {
       displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne - 2} + ${
@@ -4055,31 +3983,26 @@ function updateProblems() {
   }
 
   if (level == 4.21) {
-    if (difficulty > 9) {
-      difficulty = 9;
-    }
-    if (difficulty == 9) {
-      p.rollType = genNumbers(4);
+    normalDisplay();
+    if (setting == 9) {
+      setting = genNumbers(3) + 1;
     }
 
-    if ((p.rollType > 2 && difficulty == 9) || difficulty >= 2) {
+    if (setting >= 2) {
       calculatorSymbol.classList.remove("hidden");
     } else {
       calculatorSymbol.classList.add("hidden");
     }
 
+    // if (setting == 1) {
     p.length =
       (genNumbers(10) + 1) * p.dimension + (genNumbers(p.dimension) + 1);
     p.breadth = (genNumbers(10) + 1) * p.dimension + genNumbers(p.dimension);
     p.height = (genNumbers(10) + 1) * p.dimension + genNumbers(p.dimension);
     console.log(p.dimension, p.length, p.breadth, p.height);
+    // }
 
-    if (
-      difficulty == 0 ||
-      difficulty == 1 ||
-      p.rollType == 0 ||
-      p.rollType == 1
-    ) {
+    if (setting == 2 || setting == 1) {
       p.length =
         (genNumbers(10) + 1) * p.dimension +
         (genNumbers(p.dimension) + 1) * difficulty;
@@ -4091,13 +4014,13 @@ function updateProblems() {
       ${p.length} cm by ${p.breadth} cm?
       `;
     }
-    if (difficulty == 2 || p.rollType == 2) {
+    if (setting == 3) {
       displayProblem.innerHTML = `
       How many ${p.dimension} cm <u>cubes</u> can be cut out from a cuboid with a dimension of </br>
       ${p.length} cm by ${p.breadth} cm by ${p.height}cm?
       `;
     }
-    if (difficulty == 3 || p.rollType == 3) {
+    if (setting == 4) {
       p.dimension = genNumbers(5) + 1;
       p.length =
         ((genNumbers(10) + 1) * p.dimension + (genNumbers(p.dimension) + 1)) *
@@ -4111,37 +4034,6 @@ function updateProblems() {
     }
   }
 
-  // if (level == 4.22) {
-  //   for (let i = p.numThree; i > 1; i--) {
-  //     if (p.numTwo % i == 0 && p.numThree % i == 0) {
-  //       p.numTwo /= i;
-  //       p.numThree /= i;
-  //     }
-  //   }
-  //   console.log(p.options);
-  //   if (p.options == 1) {
-  //     twoNumerator.classList.add("line");
-  //     twoWholeNumber.textContent = p.numOne;
-  //     twoNumerator.textContent = p.numTwo;
-  //     twoDenominator.textContent = p.numThree;
-  //     equalSymbol.textContent = "x";
-  //     threeWholeNumber.textContent = p.numFour;
-  //     threeNumerator.textContent = "";
-  //     threeDenominator.textContent = "";
-  //     threeNumerator.classList.remove("line");
-  //   }
-  //   if (p.options == 2) {
-  //     threeNumerator.classList.add("line");
-  //     threeWholeNumber.textContent = p.numOne;
-  //     threeNumerator.textContent = p.numTwo;
-  //     threeDenominator.textContent = p.numThree;
-  //     equalSymbol.textContent = "x";
-  //     twoWholeNumber.textContent = p.numFour;
-  //     twoNumerator.textContent = "";
-  //     twoDenominator.textContent = "";
-  //     twoNumerator.classList.remove("line");
-  //   }
-  // }
   if (level == 4.22) {
     ctx.save();
     ctx.font = "1em serif";
@@ -7965,10 +7857,10 @@ function updateProblems() {
     // ) {
     //   normalDisplay();
 
-      if (setting == 16 || setting == 19) {
-        displayProblem.style.fontSize = "20px";
-        displayProblem.style.textAlign = "left";
-      }
+    if (setting == 16 || setting == 19) {
+      displayProblem.style.fontSize = "20px";
+      displayProblem.style.textAlign = "left";
+    }
 
     if (setting == 1) {
       workingDisplay();
@@ -8814,27 +8706,7 @@ function updateProblems() {
 
   //DISPLAY
   if (level == "calFour") {
-    // WORKING DISPLAY
-    // if (setting == 4) {
-    //   wholeNumberContainer.classList.add("hidden");
-    //   workingContainer.classList.remove("hidden");
-    //   fractionsContainerTwo.classList.add("hidden");
-    // }
-    // NORMAL DISPLAY
-    // if ([1, 2, 3, 5, 8, 9, 10, 11, 12, 13, 14, 15].includes(setting * 1)) {
-    //   displayProblem.style.fontSize = "20px";
-    //   wholeNumberContainer.classList.remove("hidden");
-    //   fractionsContainerTwo.classList.add("hidden");
-    //   workingContainer.classList.add("hidden");
-    // }
-    // //MIXED FRACTIONS DISPLAY
-    // if (setting == 6 || setting == 7) {
-    //   wholeNumberContainer.classList.add("hidden");
-    //   workingContainer.classList.add("hidden");
-    //   fractionsContainerTwo.classList.remove("hidden");
-    //   equalSymbolTwo.classList.remove("hidden");
-    // }
-    if (setting != 6 && setting != 7) {
+    if (setting != 8 && setting != 9) {
       equalSymbolTwo.classList.add("hidden");
       equalSymbol.textContent = "=";
     }
@@ -8980,7 +8852,159 @@ function updateProblems() {
       displayProblem.innerHTML = tempStatementArr;
     }
 
+    //MULTIPLICATION IN SETS
     if (setting == 6) {
+      normalDisplay();
+      let arrOne = [p.sets, "x", p.sums];
+      let arrTwo = [p.sets, "x", p.numOne];
+      let arrThree = [p.sets, "x", "?"];
+      genNumbers[2] == 0
+        ? ([arrOne[0], arrOne[2]] = [arrOne[2], arrOne[0]])
+        : null;
+      arrOne = arrOne.join(" ");
+      genNumbers[2] == 0
+        ? ([arrTwo[0], arrTwo[2]] = [arrTwo[2], arrTwo[0]])
+        : null;
+      arrTwo = arrTwo.join(" ");
+      genNumbers[2] == 0
+        ? ([arrThree[0], arrThree[2]] = [arrThree[2], arrThree[0]])
+        : null;
+      arrThree = arrThree.join(" ");
+      let arrDisplay = [arrOne];
+      const equalPosition = [0, 2][genNumbers(2)];
+      arrDisplay.splice(equalPosition, 0, "=");
+      if (equalPosition == 0) {
+        // console.log(p.sums, p.numOne);
+        let tempLeft = [];
+        if (genNumbers(2) == 0) {
+          tempLeft = [arrThree, arrTwo];
+          if (p.sums > p.numOne) {
+            tempLeft.splice(1, 0, "+");
+            p.version = 1;
+          }
+          if (p.sums <= p.numOne) {
+            tempLeft.splice(1, 0, "-");
+            p.version = 2;
+          }
+          if (p.blank == 1 || p.blank == 2) {
+            tempLeft[0] = "_____";
+          }
+          tempLeft = tempLeft.join(" ");
+        } else {
+          tempLeft = [arrTwo, arrThree];
+          if (p.sums > p.numOne) {
+            tempLeft.splice(1, 0, "+");
+            p.version = 3;
+          }
+          if (p.sums <= p.numOne) {
+            tempLeft.splice(1, 0, "-");
+            p.version = 4;
+          }
+          if (p.blank == 1 || p.blank == 2) {
+            tempLeft[2] = "_____";
+          }
+          tempLeft = tempLeft.join(" ");
+        }
+        arrDisplay.unshift(tempLeft);
+      }
+      if (equalPosition == 2) {
+        let tempRight = [];
+        if (genNumbers(2) == 0) {
+          tempRight = [arrThree, arrTwo];
+          if (p.sums > p.numOne) {
+            tempRight.splice(1, 0, "+");
+            p.version = 5;
+          }
+          if (p.sums <= p.numOne) {
+            tempRight.splice(1, 0, "-");
+            p.version = 6;
+          }
+          if (p.blank == 1 || p.blank == 2) tempRight[0] = "_____";
+          tempRight = tempRight.join(" ");
+        } else {
+          tempRight = [arrTwo, arrThree];
+          if (p.sums > p.numOne) {
+            tempRight.splice(1, 0, "+");
+            p.version = 7;
+          }
+          if (p.sums <= p.numOne) {
+            tempRight.splice(1, 0, "-");
+            p.version = 8;
+          }
+          if (p.blank == 1 || p.blank == 2) tempRight[2] = "_____";
+          tempRight = tempRight.join(" ");
+        }
+        arrDisplay.push(tempRight);
+      }
+      arrDisplay = arrDisplay.join(" ");
+      displayProblem.textContent = `${arrDisplay}`;
+    }
+
+    //MULTIPLICATION IN SETS: FURTHER BREAKING
+    if (setting == 7) {
+      normalDisplay();
+      let factors = [];
+      const newNum = p.multiple + p.adjustment;
+      if (newNum <= 0) return updateCalc();
+      for (let x = 1; x <= Math.abs(p.adjustment); x++) {
+        if (Math.abs(p.adjustment) % x == 0) {
+          factors.push(x);
+        }
+        console.log(p.multiple, x);
+        console.log(factors);
+      }
+      if (factors.length <= 2) return updateCalc();
+
+      p.factor = factors[genNumbers(factors.length)];
+      while (p.factor == 1 || p.factor == Math.abs(p.adjustment)) {
+        p.factor = factors[genNumbers(factors.length)];
+      }
+
+      let symbol;
+      if (p.adjustment < 0) {
+        symbol = "-";
+      } else {
+        symbol = "+";
+      }
+
+      p.answer = Math.abs(p.adjustment / p.factor);
+
+      let display = [];
+      let container = [newNum, p.sets];
+      while (display.length != 3) {
+        if (display.length == 1) display.push(" x ");
+        const index = genNumbers(container.length);
+        display.push(container[index]);
+        container.splice(index, 1);
+        console.log(display);
+      }
+      // display = [...display.slice(0, 1), " x "];
+      display.push(" = ");
+      container = [p.multiple, p.sets];
+
+      while (display.length != 7) {
+        if (display.length == 5) display.push(" x ");
+        const index = genNumbers(container.length);
+        display.push(container[index]);
+        container.splice(index, 1);
+        console.log(display);
+      }
+      display.push(` ${symbol} `);
+
+      container = ["____", p.sets, p.factor];
+      while (display.length != 13) {
+        const index = genNumbers(container.length);
+        display.push(container[index]);
+        container.splice(index, 1);
+        if (display.length == 9) display.push(" x "); //10th
+        if (display.length == 11) display.push(" x ");
+        console.log(display);
+      }
+      console.log(display.join(" "));
+      displayProblem.innerHTML = `
+    ${display.join(" ")}`;
+    }
+    if (setting == 8) {
       mixedFractionDisplay();
       if (p.numOne > p.denoOne) [p.numOne, p.denoOne] = [p.denoOne, p.numOne];
       if (p.numOne == p.denoOne) p.denoOne += 1;
@@ -8998,7 +9022,7 @@ function updateProblems() {
       threeDenominator.textContent = p.denoTwo;
       equalSymbol.textContent = "+";
     }
-    if (setting == 7) {
+    if (setting == 9) {
       mixedFractionDisplay();
       if (p.wholeTwo > p.wholeOne)
         [p.wholeOne, p.wholeTwo] = [p.wholeTwo, p.wholeOne];
@@ -9022,14 +9046,14 @@ function updateProblems() {
     }
 
     //FRACTIONS: NUMBERLINE
-    if (setting == 8) {
+    if (setting == 10) {
       drawingDisplay();
       canvasTextId.textContent = `What is the fraction below?`;
       drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
     }
 
     // FRACTIONS: UNIT SENTENCE
-    if (setting == 9) {
+    if (setting == 11) {
       normalDisplay();
       // content
 
@@ -9135,7 +9159,7 @@ function updateProblems() {
     }
 
     // FRACTIONS: PARTS OF A FRACTION
-    if (setting == 10) {
+    if (setting == 12) {
       normalDisplay();
       console.log(p.nume, p.deno);
       [p.nume, p.deno] = simplify(p.nume, p.deno);
@@ -9175,7 +9199,7 @@ function updateProblems() {
     }
 
     //FORM FRACTIONS
-    if (setting == 11) {
+    if (setting == 13) {
       normalDisplay();
       if (p.version == 0) {
         displayProblem.innerHTML = `
@@ -9199,7 +9223,7 @@ function updateProblems() {
       }
     }
     // FRACTIONS: CONVERSION
-    if (setting == 12) {
+    if (setting == 14) {
       normalDisplay();
       if ((p.unitB == "mins" || p.unitB == "hrs") && p.value % 60 == 0) {
         return updateCalc();
@@ -9217,7 +9241,7 @@ function updateProblems() {
     }
 
     //DECIMALS
-    if (setting == 13) {
+    if (setting == 15) {
       normalDisplay();
       console.log("The current setting is: " + setting);
       const oneDisplay = p.numOne / p.convenientNumOne;
@@ -9228,7 +9252,7 @@ function updateProblems() {
       decimalCheck(twoDisplay);
     }
 
-    if (setting == 14) {
+    if (setting == 16) {
       normalDisplay();
       console.log("The current setting is: " + setting);
       p.numOne = p.numOne / p.convenientNumOne;
@@ -9241,7 +9265,7 @@ function updateProblems() {
     }
 
     // DECIMALS: OVERLAPPING PLACE VALUE
-    if (setting == 15) {
+    if (setting == 17) {
       normalDisplay();
       let overlappingArr = [
         `${p.hundreds} hundreds`,
@@ -9266,7 +9290,7 @@ function updateProblems() {
       ${p.sentenceArr.join(", ")}.`;
     }
 
-    if (setting == 16) {
+    if (setting == 18) {
       normalDisplay();
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
@@ -9274,14 +9298,14 @@ function updateProblems() {
       ${p.numOne} x ${p.numTwo} = ?`;
       decimalCheck(p.numOne * p.numTwo);
     }
-    if (setting == 17) {
+    if (setting == 19) {
       normalDisplay();
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
     }
-    if (setting == 18) {
+    if (setting == 20) {
       normalDisplay();
       p.numTwo = p.numOne;
       p.numOne = (p.numOne * p.multiplier) / p.divisor;
@@ -9290,7 +9314,7 @@ function updateProblems() {
       ${p.numOne} ÷ ${p.numTwo} = ?`;
       decimalCheck(p.numOne / p.numTwo);
     }
-    if (setting == 19) {
+    if (setting == 21) {
       normalDisplay();
       // START CHANGE DISPLAY
       if (p.numOne == p.numTwo) {
@@ -9315,7 +9339,7 @@ function updateProblems() {
             `;
       }
     }
-    if (setting == 20) {
+    if (setting == 22) {
       normalDisplay();
       p.numOne = p.numTwo * (genNumbers(99) + 2);
       if (p.operator == "x") {
@@ -9332,95 +9356,9 @@ function updateProblems() {
       ${p.comparison} ${p.operator} ${p.divisor} = ?
       `;
     }
-    if (setting == 21) {
-      normalDisplay();
-      let arrOne = [p.sets, "x", p.sums];
-      let arrTwo = [p.sets, "x", p.numOne];
-      let arrThree = [p.sets, "x", "?"];
-      genNumbers[2] == 0
-        ? ([arrOne[0], arrOne[2]] = [arrOne[2], arrOne[0]])
-        : null;
-      arrOne = arrOne.join(" ");
-      genNumbers[2] == 0
-        ? ([arrTwo[0], arrTwo[2]] = [arrTwo[2], arrTwo[0]])
-        : null;
-      arrTwo = arrTwo.join(" ");
-      genNumbers[2] == 0
-        ? ([arrThree[0], arrThree[2]] = [arrThree[2], arrThree[0]])
-        : null;
-      arrThree = arrThree.join(" ");
-      let arrDisplay = [arrOne];
-      const equalPosition = [0, 2][genNumbers(2)];
-      arrDisplay.splice(equalPosition, 0, "=");
-      if (equalPosition == 0) {
-        // console.log(p.sums, p.numOne);
-        let tempLeft = [];
-        if (genNumbers(2) == 0) {
-          tempLeft = [arrThree, arrTwo];
-          if (p.sums > p.numOne) {
-            tempLeft.splice(1, 0, "+");
-            p.version = 1;
-          }
-          if (p.sums <= p.numOne) {
-            tempLeft.splice(1, 0, "-");
-            p.version = 2;
-          }
-          if (p.blank == 1 || p.blank == 2) {
-            tempLeft[0] = "_____";
-          }
-          tempLeft = tempLeft.join(" ");
-        } else {
-          tempLeft = [arrTwo, arrThree];
-          if (p.sums > p.numOne) {
-            tempLeft.splice(1, 0, "+");
-            p.version = 3;
-          }
-          if (p.sums <= p.numOne) {
-            tempLeft.splice(1, 0, "-");
-            p.version = 4;
-          }
-          if (p.blank == 1 || p.blank == 2) {
-            tempLeft[2] = "_____";
-          }
-          tempLeft = tempLeft.join(" ");
-        }
-        arrDisplay.unshift(tempLeft);
-      }
-      if (equalPosition == 2) {
-        let tempRight = [];
-        if (genNumbers(2) == 0) {
-          tempRight = [arrThree, arrTwo];
-          if (p.sums > p.numOne) {
-            tempRight.splice(1, 0, "+");
-            p.version = 5;
-          }
-          if (p.sums <= p.numOne) {
-            tempRight.splice(1, 0, "-");
-            p.version = 6;
-          }
-          if (p.blank == 1 || p.blank == 2) tempRight[0] = "_____";
-          tempRight = tempRight.join(" ");
-        } else {
-          tempRight = [arrTwo, arrThree];
-          if (p.sums > p.numOne) {
-            tempRight.splice(1, 0, "+");
-            p.version = 7;
-          }
-          if (p.sums <= p.numOne) {
-            tempRight.splice(1, 0, "-");
-            p.version = 8;
-          }
-          if (p.blank == 1 || p.blank == 2) tempRight[2] = "_____";
-          tempRight = tempRight.join(" ");
-        }
-        arrDisplay.push(tempRight);
-      }
-      arrDisplay = arrDisplay.join(" ");
-      displayProblem.textContent = `${arrDisplay}`;
-    }
 
     // DECIMALS: PARTS AND INTERVAL
-    if (setting == 22) {
+    if (setting == 23) {
       drawingDisplay();
       drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
     }
@@ -18658,18 +18596,13 @@ function handleSubmit(e) {
       const numSquareHeight = Math.floor(p.height / p.dimension);
       const totalSquare = numSquareLength * numSquareBreadth;
       const totalCube = numSquareLength * numSquareBreadth * numSquareHeight;
-      if (
-        difficulty == 0 ||
-        difficulty == 1 ||
-        p.rollType == 0 ||
-        p.rollType == 1
-      ) {
+      if (setting == 1 || setting == 2) {
         correctAnswer = `${numSquareLength}x${numSquareBreadth}=${totalSquare}`;
       }
-      if (difficulty == 2 || p.rollType == 2) {
+      if (setting == 3) {
         correctAnswer = `${numSquareLength}x${numSquareBreadth}x${numSquareHeight}=${totalCube}`;
       }
-      if (difficulty == 3 || p.rollType == 3) {
+      if (setting == 4) {
         correctAnswer = `${Math.floor(
           p.length / (p.dimension * 2)
         )}x${Math.floor(p.breadth / (p.dimension * 2))}=${
@@ -19879,7 +19812,38 @@ function handleSubmit(e) {
       if (setting == 5) {
         correctAnswer = p.answer;
       }
+      //MULTIPLICATION IN SETS
       if (setting == 6) {
+        console.log(p.sums, p.numOne, p.version);
+
+        if (p.version == 4 || p.version == 8) {
+          if (p.numTwo < 0) {
+            p.numTwo = p.numTwo * -1;
+          }
+          correctAnswer = p.numTwo;
+        }
+
+        if (
+          p.version == 1 ||
+          p.version == 3 ||
+          p.version == 5 ||
+          p.version == 7
+        ) {
+          correctAnswer = p.numTwo;
+        }
+        if (p.version == 2 || p.version == 6) {
+          correctAnswer = p.sums + p.numOne;
+        }
+        if (p.blank == 1 || p.blank == 2) {
+          correctAnswer = correctAnswer * p.sets;
+        }
+      }
+
+      //MULTIPLICATION IN SETS: FURTHER SPLITTING
+      if (setting == 7) {
+        correctAnswer = p.answer;
+      }
+      if (setting == 8) {
         let max = p.denoOne;
         let min = p.denoTwo;
         if (p.denoTwo > p.denoOne) [max, min] = [p.denoTwo, p.denoOne];
@@ -19904,7 +19868,7 @@ function handleSubmit(e) {
 
         correctAnswer = `${lastWhole} ${remainder}/${totalDeno}`;
       }
-      if (setting == 7) {
+      if (setting == 9) {
         let common = commonDeno(p.denoOne, p.denoTwo);
         console.log(common);
         const multiOne = common / p.denoOne;
@@ -19922,13 +19886,13 @@ function handleSubmit(e) {
       }
 
       //FRACTIONS: NUMBERLINE
-      if (setting == 8) {
+      if (setting == 10) {
         [p.arrow, p.intervals] = simplify(p.arrow, p.intervals);
         correctAnswer = `${p.start} ${p.arrow}/${p.intervals}`;
       }
 
       // FRACTIONS: UNIT SENTENCE
-      if (setting == 9) {
+      if (setting == 11) {
         let index = p.type[p.identity].indexOf(p.secondSelection);
         let oneUnit = undefined;
         if (index == 0) {
@@ -19948,13 +19912,13 @@ function handleSubmit(e) {
       }
 
       // FRACTIONS: PARTS OF A FRACTION
-      if (setting == 10) {
+      if (setting == 12) {
         correctAnswer = p.multiplier;
       }
 
       // FORM FRACTION
 
-      if (setting == 11) {
+      if (setting == 13) {
         let big = p.biggerValue;
         if (p.bigUnit == "km" || p.bigUnit == "kg" || p.bigUnit == "ℓ") {
           big = p.biggerValue * 1000;
@@ -19972,7 +19936,7 @@ function handleSubmit(e) {
         if (p.version == 1 || p.version == 2) correctAnswer = `${big}/${small}`;
       }
       // FRACTIONS: CONVERSION
-      if (setting == 12) {
+      if (setting == 14) {
         let quotient;
         let remainder;
         let denominator;
@@ -20000,7 +19964,7 @@ function handleSubmit(e) {
         correctAnswer = `${quotient} ${remainder}/${denominator}`;
       }
 
-      if (setting == 13) {
+      if (setting == 15) {
         // correctAnswer =
         //   p.numOne / p.convenientNumOne + p.numTwo / p.convenientNumTwo;
         // decimalCheck(correctAnswer);
@@ -20009,13 +19973,13 @@ function handleSubmit(e) {
         ];
         correctAnswer = accDecimal(answer[0]);
       }
-      if (setting == 14) {
+      if (setting == 16) {
         correctAnswer = p.numOne - p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
 
       // DECIMALS: OVERLAPPING PLACE VALUE
-      if (setting == 15) {
+      if (setting == 17) {
         let sumArr = [];
         for (let i = 0; i < p.sentenceArr.length; i++) {
           console.log(p.sentenceArr[i]);
@@ -20056,22 +20020,22 @@ function handleSubmit(e) {
         // }
       }
 
-      if (setting == 16) {
-        correctAnswer = p.numOne * p.numTwo;
-        correctAnswer = accDecimal(correctAnswer);
-      }
-      if (setting == 17) {
-        correctAnswer = p.numOne * p.numTwo;
-        correctAnswer = accDecimal(correctAnswer);
-      }
       if (setting == 18) {
-        correctAnswer = p.numOne / p.numTwo;
+        correctAnswer = p.numOne * p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 19) {
-        correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+        correctAnswer = p.numOne * p.numTwo;
+        correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 20) {
+        correctAnswer = p.numOne / p.numTwo;
+        correctAnswer = accDecimal(correctAnswer);
+      }
+      if (setting == 21) {
+        correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+      }
+      if (setting == 22) {
         if (p.operator == "x") {
           correctAnswer = p.comparison * p.divisor;
           correctAnswer = accDecimal(correctAnswer);
@@ -20082,33 +20046,8 @@ function handleSubmit(e) {
         }
         decimalCheck(correctAnswer);
       }
-      if (setting == 21) {
-        console.log(p.sums, p.numOne, p.version);
 
-        if (p.version == 4 || p.version == 8) {
-          if (p.numTwo < 0) {
-            p.numTwo = p.numTwo * -1;
-          }
-          correctAnswer = p.numTwo;
-        }
-
-        if (
-          p.version == 1 ||
-          p.version == 3 ||
-          p.version == 5 ||
-          p.version == 7
-        ) {
-          correctAnswer = p.numTwo;
-        }
-        if (p.version == 2 || p.version == 6) {
-          correctAnswer = p.sums + p.numOne;
-        }
-        if (p.blank == 1 || p.blank == 2) {
-          correctAnswer = correctAnswer * p.sets;
-        }
-      }
-
-      if (setting == 22) {
+      if (setting == 23) {
         correctAnswer = accDecimal(p.start + p.eachInterval * p.arrow);
       }
     }
@@ -23553,6 +23492,8 @@ function genProblems() {
   }
 
   if (level == 4.21) {
+    setting = calArrAll(5, calArr, setting, 9);
+    setting = checkRange(setting, calArr, skipArr);
     return {
       rollType: undefined,
       dimension: genNumbers(3) + 2,
@@ -23561,16 +23502,6 @@ function genProblems() {
       height: undefined,
     };
   }
-
-  // if (level == 4.22) {
-  //   return {
-  //     options: [1, 2][genNumbers(2)],
-  //     numOne: genNumbers(10) + 1,
-  //     numTwo: genNumbers(5) + 1,
-  //     numThree: genNumbers(5) + 6,
-  //     numFour: genNumbers(20) + 1,
-  //   };
-  // }
 
   if (level == 4.22) {
     return {
@@ -24704,7 +24635,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(21, calArr, setting, 99);
+    setting = calArrAll(23, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
@@ -24742,7 +24673,32 @@ function genProblems() {
         multiMax: 10,
       };
     }
+
+    // Multiplication in sets
     if (setting == 6) {
+      const sum = genNumbers(89) + 10;
+      const genNumOne = genNumbers(50) + 10;
+      return {
+        sums: sum,
+        sets: genNumbers(89) + 10,
+        numOne: genNumOne,
+        numTwo: sum - genNumOne,
+        version: undefined,
+        blank: genNumbers(3),
+      };
+    }
+
+    //MULTIPLICATION IN SETS: FURTHER BREAKING
+    if (setting == 7) {
+      return {
+        multiple: genNumbers(30) + 5,
+        sets: genNumbers(30) + 10,
+        adjustment: (genNumbers(20) + 2) * [1, -1][genNumbers(2)],
+        factor: undefined,
+        answer: undefined,
+      };
+    }
+    if (setting == 8) {
       return {
         wholeOne: genNumbers(9) + 1,
         numOne: genNumbers(9) + 1,
@@ -24752,7 +24708,7 @@ function genProblems() {
         denoTwo: genNumbers(9) + 1,
       };
     }
-    if (setting == 7) {
+    if (setting == 9) {
       return {
         wholeOne: genNumbers(9) + 1,
         numOne: genNumbers(9) + 1,
@@ -24764,7 +24720,7 @@ function genProblems() {
     }
 
     //FRACTIONS: NUMBERLINE
-    if (setting == 8) {
+    if (setting == 10) {
       const gen_intervals = genNumbers(10) + 2;
       // const gen_eachIntervals = [0.1, 0.01, 0.2, 0.02, 0.5, 0.05][
       //   genNumbers(6)
@@ -24779,7 +24735,7 @@ function genProblems() {
     }
 
     // FRACTIONS: UNIT SENTENCE
-    if (setting == 9) {
+    if (setting == 11) {
       return {
         // numerator: genNumbers(9)+1,
         // denominator: genNumbers(9)+1,
@@ -24807,7 +24763,7 @@ function genProblems() {
     }
 
     // FRACTIONS: PARTS OF A FRACTION
-    if (setting == 10) {
+    if (setting == 12) {
       const gen_deno = genNumbers(5) + 2;
       return {
         deno: gen_deno,
@@ -24817,7 +24773,7 @@ function genProblems() {
     }
 
     // FORM FRACTIONS
-    if (setting == 11) {
+    if (setting == 13) {
       const position = genNumbers(6);
       return {
         smallUnit: ["cm", "m", "ml", "g", "mins", "secs"][position],
@@ -24829,7 +24785,7 @@ function genProblems() {
     }
 
     // FRACTIONS: CONVERSION
-    if (setting == 12) {
+    if (setting == 14) {
       const position = genNumbers(4);
       return {
         unitA: ["secs", "mins", "hrs", "month"][position],
@@ -24838,7 +24794,7 @@ function genProblems() {
       };
     }
     //DECIMALS
-    if (setting == 13 || setting == 14) {
+    if (setting == 15 || setting == 16) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [1, 10, 100][genNumbers(3)],
@@ -24848,7 +24804,7 @@ function genProblems() {
     }
 
     // DECIMALS: OVERLAPPING PLACE VALUE
-    if (setting == 15) {
+    if (setting == 17) {
       return {
         ones: genNumbers(99) + 1,
         tens: genNumbers(99) + 1,
@@ -24859,35 +24815,35 @@ function genProblems() {
       };
     }
 
-    if (setting == 16) {
+    if (setting == 18) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [10, 100, 1000][genNumbers(3)],
         numTwo: genNumbers(8) + 2,
       };
     }
-    if (setting == 17) {
+    if (setting == 19) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [10, 100, 1000][genNumbers(3)],
         numTwo: genNumbers(89) + 11,
       };
     }
-    if (setting == 18) {
+    if (setting == 20) {
       return {
         numOne: genNumbers(7) + 2,
         multiplier: genNumbers(989) + 11,
         divisor: [10, 100, 1000][genNumbers(3)],
       };
     }
-    if (setting == 19) {
+    if (setting == 21) {
       return {
         numOne: genNumbers(10) + 1,
         numTwo: [3, 7, 9, 11][genNumbers(4)],
         roundOff: genNumbers(3) + 1,
       };
     }
-    if (setting == 20) {
+    if (setting == 22) {
       return {
         operator: ["x", "÷"][genNumbers(2)],
         numOne: undefined,
@@ -24898,21 +24854,9 @@ function genProblems() {
         comparison: undefined,
       };
     }
-    // Multiplication in sets
-    if (setting == 21) {
-      const sum = genNumbers(89) + 10;
-      const genNumOne = genNumbers(50) + 10;
-      return {
-        sums: sum,
-        sets: genNumbers(89) + 10,
-        numOne: genNumOne,
-        numTwo: sum - genNumOne,
-        version: undefined,
-        blank: genNumbers(3),
-      };
-    }
+
     //  DECIMALS: PARTS AND INTERVALS
-    if (setting == 22) {
+    if (setting == 23) {
       const gen_intervals = [5, 8, 10][genNumbers(3)];
       const gen_eachIntervals = [0.1, 0.01, 0.2, 0.02, 0.5, 0.05][
         genNumbers(6)
@@ -27877,9 +27821,11 @@ function buttonLevelSetting() {
       break;
 
     case "Level 4.21":
-      difficulty = prompt(
-        "0. Perfect Cutting\n1. Rectangle\n2. Cuboid\n3. Circles\n\n9. Everything"
+      setting = prompt(
+        "1. Perfect Cutting\n2. Rectangle\n3. Cuboid\n4. Circles\n\n9. Everything"
       );
+      accepted = [1, 2, 3, 4, 9];
+      setting = settingCheck(setting, accepted, level);
       level = 4.21;
       scoreNeeded = 10;
       gold = highScore4Dot21.time;
@@ -28309,14 +28255,7 @@ function buttonLevelSetting() {
         99
       );
 
-      // if (
-      //   ![...Array.from({ length: 22 }, (_, i) => i + 1), 99].includes(
-      //     setting * 1
-      //   ) &&
-      //   !setting.split("").includes("-")
-      // )
-      //   setting = 99;
-      accepted = [...Array.from({ length: 22 }, (_, i) => i + 1), 99];
+      accepted = [...Array.from({ length: 23 }, (_, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
