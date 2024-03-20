@@ -8996,7 +8996,7 @@ function updateProblems() {
         const index = genNumbers(container.length);
         display.push(container[index]);
         container.splice(index, 1);
-        if (display.length == 9) display.push(" x "); //10th
+        if (display.length == 9) display.push(" x ");
         if (display.length == 11) display.push(" x ");
         console.log(display);
       }
@@ -12625,6 +12625,79 @@ function updateProblems() {
       The total in the end is ${p.end}.</br>
       What was the total at first?
       `;
+    }
+
+    // PATTERN: CONTINUOUS PATTERN (SETS)
+    if (setting == 23) {
+      normalDisplay();
+      p.second = p.first + p.secondDiff;
+      displayProblem.innerHTML = `
+      Solve for the pattern below:
+      <table class="table table-bordered tableEnd">
+        <thead>
+          <tr>
+            <th>Pattern</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>1</td>
+          <td>${p.start}</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>${p.start + p.first}</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>${p.start + p.first + p.second}</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>${p.start + p.first * 2 + p.second}</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>${p.start + p.first * 2 + p.second * 2}</td>
+        </tr>
+        <tr>
+           <td colspan="2">...</td> 
+        </tr>
+        </table>
+      `;
+
+      const sets = Math.floor((p.pattern - 1) / 2);
+      const remainder = (p.pattern - 1) % 2;
+      p.value = sets * (p.first + p.second);
+      p.value = p.value + p.start;
+      if (remainder == 1) p.value += p.first;
+      if (p.question == "pattern") {
+        document.querySelector(".tableEnd").insertAdjacentHTML(
+          "beforeend",
+          `
+        <tr>
+          <td>${p.pattern}</td>
+          <td>?</td>
+        </tr>`
+        );
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What is the value for pattern 64?`
+        );
+      } else {
+        document.querySelector(".tableEnd").insertAdjacentHTML(
+          "beforeend",
+          `
+        <tr>
+          <td>?</td>
+          <td>${p.value}</td>
+        </tr>`
+        );
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `Which pattern gives a value of ${p.value}?`
+        );
+      }
     }
     // BOTTOM OF CALFIVEB
   }
@@ -20659,6 +20732,12 @@ function handleSubmit(e) {
       if (setting == 22) {
         correctAnswer = p.total;
       }
+
+      // PATTERN: CONTINUOUS PATTERN (SETS)
+      if (setting == 23) {
+        if (p.question == "pattern") correctAnswer = p.value;
+        if (p.question == "number") correctAnswer = p.pattern;
+      }
     }
 
     //ANSWERS
@@ -25267,7 +25346,7 @@ function genProblems() {
       setting = 10;
       console.log("Whats the regen?");
     } else {
-      setting = calArrAll(21, calArr, setting, 99);
+      setting = calArrAll(23, calArr, setting, 99);
       setting = checkRange(setting, calArr, skipArr);
     }
 
@@ -25580,6 +25659,19 @@ function genProblems() {
         valueB: [-1, 1][genNumbers(2)] * (genNumbers(899) + 100),
         total: undefined,
         end: undefined,
+      };
+    }
+
+    // PATTERN: CONTINUOUS PATTERN (SETS)
+    if (setting == 23) {
+      return {
+        start: genNumbers(8) + 2,
+        first: genNumbers(5) + 1,
+        second: undefined,
+        secondDiff: genNumbers(4) + 1,
+        pattern: genNumbers(50) + 50,
+        question: ["pattern", "number"][genNumbers(2)],
+        value: undefined,
       };
     }
   }
@@ -28296,14 +28388,7 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
-      // if (
-      //   ![...Array.from({ length: 22 }, (_, i) => i + 1), 99].includes(
-      //     setting * 1
-      //   ) &&
-      //   !setting.split("").includes("-")
-      // )
-      //   setting = 99;
-      accepted = [...Array.from({ length: 22 }, (_, i) => i + 1), 99];
+      accepted = [...Array.from({ length: 23 }, (_, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
