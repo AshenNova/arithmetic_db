@@ -7830,33 +7830,6 @@ function updateProblems() {
   //DISPLAY
   if (level == "calThree") {
     // WORKING DISPLAY
-    // if (
-    //   setting == 1 ||
-    //   setting == 2 ||
-    //   setting == 3 ||
-    //   setting == 4 ||
-    //   setting == 5 ||
-    //   setting == 6 ||
-    //   setting == 9 ||
-    //   setting == 13
-    // ) {
-    //   workingDisplay();
-    // }
-    // NORMAL DISPLAY
-    // if (
-    //   setting == 7 ||
-    //   setting == 8 ||
-    //   setting == 11 ||
-    //   setting == 12 ||
-    //   setting == 14 ||
-    //   setting == 15 ||
-    //   setting == 16 ||
-    //   setting == 17 ||
-    //   setting == 19 ||
-    //   setting == 22
-    // ) {
-    //   normalDisplay();
-
     if (setting == 16 || setting == 19) {
       displayProblem.style.fontSize = "20px";
       displayProblem.style.textAlign = "left";
@@ -12494,7 +12467,7 @@ function updateProblems() {
       ${
         genNumbers(2) == 0
           ? `The amount ${genderB} saves would become $${newSave}.`
-          : `Thea amount ${genderB} saves would ${
+          : `The amount ${genderB} saves would ${
               p.change > 0 ? "increase" : "decrease"
             } by $${Math.abs(accDecimal(changeSaving))}.`
       }
@@ -12682,7 +12655,7 @@ function updateProblems() {
         );
         displayProblem.insertAdjacentHTML(
           "beforeend",
-          `What is the value for pattern 64?`
+          `What is the value for pattern ${p.pattern}?`
         );
       } else {
         document.querySelector(".tableEnd").insertAdjacentHTML(
