@@ -835,14 +835,22 @@ const generateRec = async (nameTemp) => {
         attempt.award == "Try harder" &&
         !existingLevel.includes(attempt.level)
       ) {
+        if (attempt.mode == "Hardcore" || attempt.mode == "Normal") {
+          if (attempt.time == 600) {
+            let mode = ["Easy", "Normal", "Hardcore"];
+            let index = mode.indexOf(attempt.mode);
+            attempt.mode = mode[index - 1];
+          }
+        }
         console.log("Please try again");
         recommend.push(attempt);
         existingLevel.push(attempt.level);
         console.log(attempt);
       } else {
+        //EASY MODE
         if (attempt.mode == "Easy" && !existingLevel.includes(attempt.level)) {
-          console.log("Easy to Normal");
-          if (attempt.time <= 600 && attempt.mistake > 5) {
+          if (attempt.time <= 600 && attempt.mistake <= 5) {
+            console.log("Easy to Normal");
             attempt.mode = "Normal";
           }
           attempt.time = "";
@@ -852,6 +860,7 @@ const generateRec = async (nameTemp) => {
           recommend.push(attempt);
           existingLevel.push(attempt.level);
         } else if (
+          // NORMAL MODE
           attempt.mode == "Normal" &&
           !existingLevel.includes(attempt.level)
         ) {
@@ -865,23 +874,27 @@ const generateRec = async (nameTemp) => {
             attempt.score = "";
             attempt.award = "";
           } else if (attempt.time == 600) {
-            // console.log("Demoted");
-            attempt.mode == "Easy";
+            console.log("Demoted from Normal to Easy");
+            attempt.mode = "Easy";
             attempt.award = "";
             recommend.push(attempt);
             existingLevel.push(attempt.level);
           } else {
-            // console.log("Try Again");
             attempt.award = "";
             recommend.push(attempt);
             existingLevel.push(attempt.level);
           }
+
+          // HARDCORE MODE
         } else if (attempt.mode == "Hardcore" && attempt.time == 600) {
+          console.log("Demoted from Hardcore to Normal");
           attempt.mode = "Normal";
           attempt.time = "";
           attempt.mistake = "";
           attempt.score = "";
           attempt.award = "";
+          recommend.push(attempt);
+          existingLevel.push(attempt.level);
         } else if (attempt.mode == "Hardcore" && attempt.time < 600) {
           console.log("COMPLETED IN HARDCORE MODE", attempt.level);
           const levelOne = [

@@ -11,11 +11,20 @@
     <link rel="stylesheet" href="/css/navbar-styles.css">
      <link rel="icon" href="/images/favicon.ico?v=1.1">
 
+
+     <!-- FONT AWESOME -->
+     <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+
      <% if (filteredUser == undefined || filteredUser == "") { %>
       <title> Results </title>
   <% } else { %>
     <title><%= filteredUser %>'s Results</title>
   <% } %>
+<style>
+  .no-line{
+    text-decoration: none;
+}
+</style>
 </head>
 <body>
   <!-- <div class="container"> -->
@@ -257,9 +266,9 @@
 
                 <td class="click-summary"><%= "📜" %></td>
                 <% if (currentUser.admin) { %>
-                  <td><a href="/user/summary/?username=<%= item.user %>" target="_blank">⛩️</a></td>
-                  <td><a href="/attempts/edit/<%= item._id %>">Edit</a></td>
-                  <td><a href="/attempts/delete/<%= item._id %>">Delete</a></td>
+                  <td><a href="/user/summary/?username=<%= item.user %>" class="no-line" target="_blank">⛩️</a></td>
+                  <td><a href="/attempts/edit/<%= item._id %>" class="no-line"><i class="fa-solid fa-eye"></i></a></td>
+                  <td><a href="/attempts/delete/<%= item._id %>" class="no-line">❌</a></td>
                 <% } %>
             </tr>
             <% });%>
