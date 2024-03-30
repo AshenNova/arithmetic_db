@@ -1085,12 +1085,15 @@ const generateRec = async (nameTemp) => {
           console.log(attempt.level);
           let index = ageLevel.indexOf(attempt.level);
 
-          console.log("The index is " + index);
           //Select new level
           if (index == ageLevel.length - 1) {
             recommendObj.level = ageLevel[0];
           } else if (index == -1) {
-            recommendObj.level = ageLevel[Math.floor(ageLevel.length / 2)];
+            let temp = Math.floor(ageLevel.length / 2);
+            while (existingLevel.includes(ageLevel[temp])) {
+              temp += 1;
+            }
+            recommendObj.level = ageLevel[temp];
           } else {
             index += 1;
             while (existingLevel.includes(ageLevel[index])) {
@@ -1110,6 +1113,7 @@ const generateRec = async (nameTemp) => {
             }
             recommendObj.level = ageLevel[index];
           }
+          console.log("The index is " + index);
           console.log(`Previous: ${attempt.level}, New: ${recommendObj.level}`);
           recommendObj.time = "";
           recommendObj.mistake = "";
@@ -1203,7 +1207,11 @@ exports.recommend = catchAsync(async (req, res, next) => {
   // console.log(todayAttempts);
   recommend.forEach((item, index) => {
     todayAttempts.forEach((todayItem) => {
-      if (item.level == todayItem.level && item.mode == todayItem.mode) {
+      if (
+        item.level == todayItem.level &&
+        item.mode == todayItem.mode &&
+        item.setting == todayItem.setting
+      ) {
         console.log("YES! " + index);
         item.accomplish = true;
       }

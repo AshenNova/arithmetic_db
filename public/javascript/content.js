@@ -211,7 +211,7 @@ export const displayContent = (level) => {
       19. Rates: Taps</br>
       <hr></hr>
       20. Percentage: Percentage of</br>
-      21. Percentage: Perchange change</br>
+      21. Percentage: Percentage change</br>
       22. Percentage: Repeated Identity</br>
       
       23. Percentage: Remainder Concept</br>
@@ -253,7 +253,8 @@ export const displayContent = (level) => {
     20. Average: External Change</br>
     21. Average: Odd consecutive days</br>
     <hr>
-    22. Ratio: Manipulation of units with value
+    22. Ratio: Manipulation of units with value</br>
+    23. Pattern: Continuous Pattern (Sets) </br>
     <hr>
     99. All
     `;

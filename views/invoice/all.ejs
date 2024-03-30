@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+  <link rel="stylesheet" href="/css/navbar-styles.css">
+   <link rel="icon" href="/images/favicon.ico?v=1.1">
+
+  
+  <title>All users</title>
+</head>
+<body>
+  <%- include("../partials/navbar"); %>
+
+  <div class="container">
+  <h1>Invoices</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Subject</th>
+        <th>Day</th>
+        <th>Dates</th>
+        <th>Per Lesson</th>
+        <th>Month</th>
+        <th>Balance</th>
+        <th>Status</th>
+        <!-- <th>QR</th> -->
+        <th colspan="3">Action</th>
+      </tr>
+    </thead>
+        <% const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] %>
+        <% invoices.forEach(item => { %>
+          <tr>
+            <td><%= item.student %></td>
+            <td><%= item.subject.join(" ") %></td>
+            <td><%= item.day.join(" ") %></td>
+            <td><% item.date.forEach(date => { %>
+              <%= date %> [<%= date.length %>]
+            <% }) %>
+          </td>
+            <!-- <td><%= item.date.join(" ") %> [<%= item.date.length %>]</td> -->
+            <td>$<%= item.perSession %></td>
+            <td>
+              <%= month[item.daySent.getMonth()] %>
+              <%= item.daySent.toLocaleDateString("en-GB") %>
+            </td>
+            <td>$<%= item.amount %></td>
+            <td><%= item.balance %></td>
+            <td><a href="/invoice/view/<%= item._id %>">View</a></td>
+            <td>Edit</td>
+            <td>Delete</td>
+
+            <!-- <td><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<%= item.QR %>"></td> -->
+        </tr>
+        <% }) %>
+     
+   
+  </table>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script src="/javascript/confirmation.js"></script>
+</html>

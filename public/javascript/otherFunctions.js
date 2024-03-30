@@ -1285,7 +1285,11 @@ function drawIntervals(start, intervals, eachInterval, question) {
   //BEGIN
   ctx.beginPath();
   ctx.moveTo(0, -largeIntervals);
-  ctx.fillText(`${start}`, -adjustment, -largeIntervals - adjustment);
+  ctx.fillText(
+    `${accDecimal(start)}`,
+    -adjustment,
+    -largeIntervals - adjustment
+  );
   ctx.lineTo(0, largeIntervals);
   ctx.stroke();
 
@@ -1293,7 +1297,11 @@ function drawIntervals(start, intervals, eachInterval, question) {
   const end = start + eachInterval * intervals;
   ctx.beginPath();
   ctx.moveTo(300, -largeIntervals);
-  ctx.fillText(`${end}`, 300 - adjustment, -largeIntervals - adjustment);
+  ctx.fillText(
+    `${accDecimal(end)}`,
+    300 - adjustment,
+    -largeIntervals - adjustment
+  );
   ctx.lineTo(300, largeIntervals);
   ctx.stroke();
 

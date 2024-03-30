@@ -9565,6 +9565,8 @@ function updateProblems() {
         threeNumerator.textContent = p.numeratorTwo;
         threeDenominator.textContent = p.denominatorTwo;
       }
+
+      if (p.denominatorTwo == 1) return updateCalc()
       twoWholeNumber.textContent = p.wholeOne;
       twoNumerator.textContent = p.numeratorOne;
       twoDenominator.textContent = p.denominatorOne;

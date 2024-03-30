@@ -58,6 +58,8 @@ const userSchema = new mongoose.Schema({
   scienceSetting: Object,
   freeze: { type: Boolean, default: false },
   freezeEndDate: { type: Date },
+  perSession: Number,
+  day: Array,
 });
 
 userSchema.pre("save", async function (next) {
