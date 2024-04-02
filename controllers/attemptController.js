@@ -2,6 +2,7 @@ const Attempt = require("../models/attemptModel");
 const Highscore = require("../models/highscoreModel");
 const User = require("../models/userModel");
 const RewardLog = require("../models/rewardLogModel");
+const Intervention = require("../models/interventionModel");
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -655,6 +656,14 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     }
   };
 
+  // UPDATE INTERVENTION
+  const intervention = await Intervention.findOne({
+    student: req.body.user.toLowerCase(),
+    level: req.body.level,
+    setting: req.body.setting,
+    mode: req.body.mode,
+  });
+
   await pointSystem();
   const newAttempt = new Attempt({
     user: req.body.user,
@@ -672,13 +681,10 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     award: data.award,
     points: pointsAwarded,
     age: new Date().getFullYear() - DOB.getFullYear(),
+    interventionID: intervention._id,
   });
 
-  // try {
-  // await newAttempt.save().then((doc) => {
-  //   console.log(doc);
-  // });
-
+  //SAVING NEW ATTEMPT
   await newAttempt.save().then(() => {
     console.log(`Highscore?: ${data.eligible}`);
     res.send(JSON.stringify(data));
@@ -1114,23 +1120,6 @@ const updateMany = catchAsync(async (req, res, next) => {
   const updateAttempt = await Attempt.updateMany(query, set);
   const updateHighscore = await Highscore.updateMany(query, set);
   console.log(updateAttempt, updateHighscore);
-  // console.log(updating);
-  // const updating = await Attempt.updateMany(
-  // { summary: { $exists: false } },
-  // { $set: { summary: "test" } }
-  // { user: "Travis" },
-  // { $set: { user: "Travis Scott" } }
-  // );
-  // const updatingPlayer = await Highscore.updateMany(
-  //   // { skip: { $exists: false } },
-  //   // { $set: { skip: "" } }
-  //   { user: "Travis" },
-  //   { $set: { user: "Travis Scott" } }
-  // );
-  // console.log(updating);
-  // } catch (e) {
-  //   console.log(`Error ${e}`);
-  // }
 });
 
 // updateMany();

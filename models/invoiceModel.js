@@ -5,12 +5,13 @@ const invoiceSchema = new mongoose.Schema({
   subject: Array,
   day: Array,
   date: Array,
-  daySent: {
+  dateSent: {
     type: Date,
     default: Date.now,
   },
   perSession: Number,
   amount: Number,
+  email: String,
   status: { type: String, default: "Incomplete" },
   balance: Number,
 });

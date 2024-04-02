@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+  <link rel="stylesheet" href="/css/navbar-styles.css">
+   <link rel="icon" href="/images/favicon.ico?v=1.1">
+
+  
+  <title>All users</title>
+</head>
+<body>
+  <%- include("../partials/navbar"); %>
+
+  <!-- <div class="container"> -->
+  <h1>Invoices</h1>
+  <div class="container">
+    <form action="/invoice/save/<%= invoice._id %>" method="post">
+
+      <div class="form-group mb-3`">
+        <label for="exampleFormControlSelect1">Status</label>
+        <select class="form-control" name="status">
+            <option value="<%= invoice.status %>"><%= invoice.status %></option>
+          <option value="Completed">Completed</option>
+          <option value="Incomplete">Incomplete</option>
+        </select>
+      </div>
+        <div class="form-group mb-3`">
+          <label>Subject</label>
+          <input type="string" class="form-control" name="subject" value="<%= invoice.subject %>">
+        </div>
+        <div class="form-group mb-3`">
+            <label>Day</label>
+            <input type="string" class="form-control" name="day" value="<%= invoice.day %>">
+          </div>
+          <div class="form-group mb-3`">
+            <label>View Dates</label>
+            <input type="date"></input>
+          </div>
+          <div class="form-group mb-3`">
+            <label>Dates</label>
+            <% invoice.date.forEach(item => { %>
+                <input type="string" class="form-control" name="date" value="<%= item %>"></br>
+            <% }) %>
+            <Label>Extra Lessons</Label>
+            <input type="string" class="form-control" name="date">
+          </div>
+          <!-- <btn class="btn btn-warning mb-3" onclick="moreLessons()">Extra</btn> -->
+          <div class="form-group mb-3`">
+            <label>Per Session</label>
+            <input type="number" class="form-control" name="perSession" value="<%= invoice.perSession %>">
+          </div>
+          <div class="form-group mb-3`">
+            <label>Amount</label>
+            <input type="number" class="form-control" name="amount" value="<%= invoice.amount %>">
+          </div>
+        
+        </br>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+</div>
+</body>
+<script>
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> -->
+<script src="/javascript/confirmation.js"></script>
+</html>

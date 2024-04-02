@@ -3,6 +3,7 @@ const Reward = require("../models/rewardModel");
 const RewardLog = require("../models/rewardLogModel");
 const Attempt = require("../models/attemptModel");
 const Homework = require("../models/homeworkModel");
+const Intervention = require("../models/interventionModel");
 const bcrypt = require("bcryptjs");
 const catchAsync = require("../utils/catchAsync");
 const fs = require("fs");
@@ -527,6 +528,13 @@ function settings(level, age, allAttempts) {
 const generateRec = async (nameTemp) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+
+  // SEARCH FOR INTERVENTION
+  const interventions = await Intervention.find({
+    student: nameTemp.toLowerCase(),
+  });
+  console.log(`Student name is ${nameTemp}`);
+  console.log(`The list of interventions is/are: ${interventions}`);
   const [latestAttempt, { DOB }] = await Promise.all([
     Attempt.find({
       user: nameTemp,
@@ -587,6 +595,20 @@ const generateRec = async (nameTemp) => {
     // calRecommend.forEach((calLevel) => {
     latestAttempt.forEach((attempt) => {
       let recommendObj = { ...attempt };
+      if (interventions && recommend.length == 0) {
+        interventions.forEach((item) => {
+          if (item.level.startsWith("cal")) {
+            recommendObj.level = item.level;
+            recommendObj.setting = item.setting;
+            recommendObj.mode = item.mode;
+            recommendObj.time = "";
+            recommendObj.score = "";
+            recommendObj.mistake = "";
+            recommend.push(recommendObj);
+            // uniqLevel.push(attempt.level);
+          }
+        });
+      }
       if (calRecommend.includes(attempt.level) && recommend.length < 1) {
         if (
           !uniqLevel.includes(attempt.level) &&
@@ -675,6 +697,7 @@ const generateRec = async (nameTemp) => {
                   recommendObj.setting = `1-${maximum}`;
                 }
               }
+
               recommendObj.mode = "Easy";
               recommendObj.time = "";
               recommendObj.mistake = "";
@@ -717,6 +740,21 @@ const generateRec = async (nameTemp) => {
     // heuRecommend.forEach(heuRecommendl) => {
     latestAttempt.forEach((attempt) => {
       let recommendObj = { ...attempt };
+      if (interventions && recommend.length == 1) {
+        interventions.forEach((item) => {
+          if (item.level.startsWith("heu")) {
+            recommendObj.level = item.level;
+            recommendObj.setting = item.setting;
+            recommendObj.mode = item.mode;
+            recommendObj.time = "";
+            recommendObj.score = "";
+            recommendObj.mistake = "";
+            recommend.push(recommendObj);
+            // uniqLevel.push(attempt.level);
+          }
+        });
+      }
+
       if (heuRecommend.includes(attempt.level) && recommend.length < 2) {
         console.log(`In heuristics: ${attempt.level} 🌞`);
         if (
@@ -824,6 +862,23 @@ const generateRec = async (nameTemp) => {
   // IF NO, CHECK ANOTHER LEVEL.
 
   //NORMAL LEVELS
+
+  let recommendObj = {};
+  if (interventions && recommend.length < 2) {
+    interventions.forEach((item) => {
+      if (!item.level.startsWith("heu") && !item.level.startsWith("cal")) {
+        recommendObj.level = item.level;
+        recommendObj.setting = item.setting;
+        recommendObj.mode = item.mode;
+        recommendObj.time = "";
+        recommendObj.score = "";
+        recommendObj.mistake = "";
+        recommend.push(recommendObj);
+        // uniqLevel.push(attempt.level);
+      }
+    });
+  }
+
   let existingLevel = [];
   const levelOne = [
     "1",
@@ -1080,187 +1135,7 @@ const generateRec = async (nameTemp) => {
           existingLevel.push(attempt.level);
         } else if (attempt.mode == "Hardcore" && attempt.time < 600) {
           console.log("COMPLETED IN HARDCORE MODE", attempt.level);
-          // const levelOne = [
-          //   "1",
-          //   "1.01",
-          //   "1.02",
-          //   "1.03",
-          //   "1.04",
-          //   "1.05",
-          //   "1.06",
-          //   "1.07",
-          //   "1.08",
-          // ];
-          // const levelTwo = [
-          //   "2",
-          //   "2.01",
-          //   "2.02",
-          //   "2.03",
-          //   "2.04",
-          //   "2.05",
-          //   "2.06",
-          //   "2.07",
-          // ];
-          // const levelThree = [
-          //   "3",
-          //   "3.01",
-          //   "3.02",
-          //   "3.03",
-          //   "3.06",
-          //   "3.07",
-          //   "3.11",
-          //   "3.12",
-          //   "3.16",
-          //   "3.17",
-          //   "3.18",
-          //   "3.19",
-          // ];
-          // const levelFour = [
-          //   "4.01",
-          //   "4.02",
-          //   "4.03",
-          //   "4.04",
-          //   "4.05",
-          //   "4.07",
-          //   "4.08",
-          //   "4.09",
-          //   "4.1",
-          //   "4.11",
-          //   "4.13",
-          //   "4.15",
-          //   // "4.16",
-          //   "4.17",
-          //   "4.18",
-          //   "4.19",
-          //   "4.2",
-          //   "4.21",
-          //   "4.22",
-          //   "4.23",
-          //   "4.24",
-          //   "4.25",
-          //   "4.26",
-          // ];
-          // const levelFive = [
-          //   "5",
-          //   "5.01",
-          //   "5.02",
-          //   "5.03",
-          //   "5.04",
-          //   "5.05",
-          //   "5.06",
-          //   "5.07",
-          //   "5.08",
-          //   "5.09",
-          //   "5.1",
-          //   "5.11",
-          //   "5.12",
-          //   "5.13",
-          //   "5.14",
-          //   "5.15",
-          //   "5.16",
-          //   "5.17",
-          //   "5.18",
-          // ];
-          // const levelSix = ["6", "6.01", "6.02", "6.03"];
-
-          // let ageLevel;
-          // if (age <= 7) ageLevel = [];
-          // if (age == 8) {
-          //   ageLevel = levelOne;
-          //   const removeList = ["1", "1.02"];
-          //   removeList.forEach((item) => {
-          //     if (ageLevel.includes(item)) {
-          //       const index = ageLevel.indexOf(item);
-          //       ageLevel.splice(index, 1);
-          //     }
-          //   });
-          // }
-          // // p3
-          // if (age == 9) {
-          //   ageLevel = levelOne.concat(levelTwo);
-          //   const removeList = ["1", "1.01", "1.02", "2.01"];
-          //   removeList.forEach((item) => {
-          //     if (ageLevel.includes(item)) {
-          //       const index = ageLevel.indexOf(item);
-          //       ageLevel.splice(index, 1);
-          //     }
-          //   });
-          // }
-          // //p4
-          // if (age == 10) {
-          //   ageLevel = levelOne.concat(levelTwo, levelThree);
-          // }
-          // if (age == 11)
-          //   ageLevel = levelOne.concat(levelTwo, levelThree, levelFour);
-
-          // if (age == 12)
-          //   ageLevel = levelOne.concat(
-          //     levelTwo,
-          //     levelThree,
-          //     levelFour,
-          //     levelFive
-          //     // levelSix
-          //   );
-          // //Delete list for age 10, 11 and 12
-          // if (age == 10 || age == 11 || age == 12) {
-          //   const removeList = [
-          //     "1",
-          //     "1.01",
-          //     "1.02",
-          //     "1.03",
-          //     "1.06",
-          //     "2",
-          //     "2.01",
-          //     "2.03",
-          //     "3",
-          //     "3.04",
-          //     "3.05",
-          //     "3.09",
-          //     "3.1",
-          //   ];
-          //   // Removing certain level
-          //   removeList.forEach((item) => {
-          //     if (ageLevel.includes(item)) {
-          //       const index = ageLevel.indexOf(item);
-          //       ageLevel.splice(index, 1);
-          //     }
-          //   });
-          // }
-          // distinctLevels.forEach((item) => {
-          //   if (age <= 7) {
-          //     if (item.startsWith("1")) {
-          //       ageLevel.push(item);
-          //     }
-          //   }
-          //   if (age == 8) {
-          //     if (item.startsWith("2")) {
-          //       ageLevel.push(item);
-          //     }
-          //   }
-          //   if (age == 9) {
-          //     if (item.startsWith("3")) {
-          //       ageLevel.push(item);
-          //     }
-          //   }
-          //   if (age == 10) {
-          //     if (item.startsWith("4")) {
-          //       ageLevel.push(item);
-          //     }
-          //   }
-          //   if (age == 11) {
-          //     if (item.startsWith("5")) {
-          //       ageLevel.push(item);
-          //     }
-          //   }
-          //   if (age == 12) {
-          //     if (item.startsWith("6")) {
-          //       ageLevel.push(item);
-          //     }
-          //   }
-          // });
-
           let recommendObj = {};
-
           // Get rid of those levels are already has been pushed
           existingLevel.push(attempt.level);
           console.log(`Unique Levels: ${existingLevel}`);

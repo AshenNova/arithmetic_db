@@ -17,44 +17,58 @@
 <body>
   <%- include("../partials/navbar"); %>
 
-  <div class="container">
+  <!-- <div class="container"> -->
   <h1>Invoices</h1>
+  <div class="container">
   <table class="table">
     <thead>
       <tr>
+        <!-- <th>Id</th> -->
         <th>Student</th>
         <th>Subject</th>
         <th>Day</th>
         <th>Dates</th>
         <th>Per Lesson</th>
         <th>Month</th>
+        <th>Amount</th>
         <th>Balance</th>
         <th>Status</th>
+        <!-- <th>Date Sent</th> -->
         <!-- <th>QR</th> -->
-        <th colspan="3">Action</th>
+        <th style="text-align: center;" colspan="4">Action</th>
       </tr>
     </thead>
         <% const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] %>
         <% invoices.forEach(item => { %>
           <tr>
+            <td style="display: none;" class="id-invoice"><%= item._id %></td>
             <td><%= item.student %></td>
             <td><%= item.subject.join(" ") %></td>
             <td><%= item.day.join(" ") %></td>
-            <td><% item.date.forEach(date => { %>
-              <%= date %> [<%= date.length %>]
-            <% }) %>
-          </td>
-            <!-- <td><%= item.date.join(" ") %> [<%= item.date.length %>]</td> -->
+       
+            <td>
+              <ul>
+              <% item.date.forEach( x => { %>
+                <li>
+                <%= x %>
+                [<%= x.length %>]
+              </li>
+              <% }) %>
+            </ul>
+            </td>
             <td>$<%= item.perSession %></td>
             <td>
-              <%= month[item.daySent.getMonth()] %>
-              <%= item.daySent.toLocaleDateString("en-GB") %>
+              <%= month[item.dateSent.getMonth()] %>
+              <%= item.dateSent.toLocaleDateString("en-GB") %>
             </td>
             <td>$<%= item.amount %></td>
             <td><%= item.balance %></td>
-            <td><a href="/invoice/view/<%= item._id %>">View</a></td>
-            <td>Edit</td>
-            <td>Delete</td>
+            <td><%= item.status %></td>
+            <!-- <td><%= item.dateSent %></td> -->
+            <!-- <td><a href="/invoice/view/<%= item._id %>">View</a></td> -->
+            <td><a href="/invoice/edit/<%= item._id %>">Edit</a></td>
+            <td><a href="#" class="delete-invoice">Delete</a></td>
+            <td><a href="/invoice/resend/<%= item._id %>"><button class="btn btn-primary">Resend</button></a></td>
 
             <!-- <td><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<%= item.QR %>"></td> -->
         </tr>
@@ -62,7 +76,39 @@
      
    
   </table>
+</div>
 </body>
+<script>
+  const deleteInvoice = document.querySelectorAll(".delete-invoice")
+  const idInvoice = document.querySelectorAll(".id-invoice")
+  deleteInvoice.forEach((item, index) => {
+    console.log(index)
+    console.log(idInvoice)
+    const student = {
+      id: idInvoice[index].innerText
+    }
+    const id = idInvoice[index].innerText
+    console.log(id)
+    item.addEventListener("click", function(){
+      confirm("Are you sure you want to delete?")
+    $.ajax({
+      url: "/invoice/delete/:id",
+      method: "Delete",
+      data: student,
+      success: function(res){
+        if(res == "success"){
+          location.reload()
+        }
+      },
+      error: function(e){
+        alert("Something went wrong. Please try again.")
+      }
+    })
+    })
+  })
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="/javascript/confirmation.js"></script>
 </html>

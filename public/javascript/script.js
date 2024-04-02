@@ -52,15 +52,6 @@ import { cutOffCheck } from "./cut_off.js";
 import { displayContent } from "./content.js";
 import { helpMeFunc } from "./helpMe.js";
 
-// let user = document.querySelector("#userName").textContent || "";
-// if (user == "") {
-//   user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
-//   // console.log(typeof user);
-//   while (user == null || user.length < 2) {
-//     user = prompt("Please enter your name.\n 3 to 20 characters.", "Player");
-//   }
-//   document.querySelector("#userName").textContent = user;
-// }
 let user = document.querySelector("#userName").textContent;
 user = user.trim();
 if (user.split(" ").length > 1) {
@@ -696,6 +687,7 @@ function questionTimer() {
 function timer2() {
   time = 0;
   const countDownTwo = setInterval(function () {
+    let newStartTime = Date.now;
     time++;
     document.getElementById("timer").innerHTML = time;
     console.log(state.score);
@@ -777,8 +769,11 @@ function timer2() {
         console.log("Completed image");
       }
 
+      let newEndTime = Date.now;
+      const newDuration = newEndTime - newStartTime;
       const now = new Date();
       const duration = now - startTime;
+      // const duration = newDuration
       console.log(duration);
       const durationMilli = duration;
       const durationSecs = durationMilli / 1000;
@@ -9566,7 +9561,7 @@ function updateProblems() {
         threeDenominator.textContent = p.denominatorTwo;
       }
 
-      if (p.denominatorTwo == 1) return updateCalc()
+      if (p.denominatorTwo == 1) return updateCalc();
       twoWholeNumber.textContent = p.wholeOne;
       twoNumerator.textContent = p.numeratorOne;
       twoDenominator.textContent = p.denominatorOne;

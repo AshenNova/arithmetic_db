@@ -2,118 +2,8 @@ const schedule = require("node-schedule");
 const { listIndexes } = require("../models/invoiceModel");
 const Invoice = require("../models/invoiceModel");
 const User = require("../models/userModel");
+const { sendInvoice } = require("../utils/email");
 // const PaynowQR = require("paynowqr");
-
-// String.prototype.padLeft = function (n, str) {
-//   if (n < String(this).length) {
-//     return this.toString();
-//   } else {
-//     return Array(n - String(this).length + 1).join(str || "0") + this;
-//   }
-// };
-
-// function crc16(s) {
-//   var crcTable = [
-//     0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50a5, 0x60c6, 0x70e7, 0x8108,
-//     0x9129, 0xa14a, 0xb16b, 0xc18c, 0xd1ad, 0xe1ce, 0xf1ef, 0x1231, 0x0210,
-//     0x3273, 0x2252, 0x52b5, 0x4294, 0x72f7, 0x62d6, 0x9339, 0x8318, 0xb37b,
-//     0xa35a, 0xd3bd, 0xc39c, 0xf3ff, 0xe3de, 0x2462, 0x3443, 0x0420, 0x1401,
-//     0x64e6, 0x74c7, 0x44a4, 0x5485, 0xa56a, 0xb54b, 0x8528, 0x9509, 0xe5ee,
-//     0xf5cf, 0xc5ac, 0xd58d, 0x3653, 0x2672, 0x1611, 0x0630, 0x76d7, 0x66f6,
-//     0x5695, 0x46b4, 0xb75b, 0xa77a, 0x9719, 0x8738, 0xf7df, 0xe7fe, 0xd79d,
-//     0xc7bc, 0x48c4, 0x58e5, 0x6886, 0x78a7, 0x0840, 0x1861, 0x2802, 0x3823,
-//     0xc9cc, 0xd9ed, 0xe98e, 0xf9af, 0x8948, 0x9969, 0xa90a, 0xb92b, 0x5af5,
-//     0x4ad4, 0x7ab7, 0x6a96, 0x1a71, 0x0a50, 0x3a33, 0x2a12, 0xdbfd, 0xcbdc,
-//     0xfbbf, 0xeb9e, 0x9b79, 0x8b58, 0xbb3b, 0xab1a, 0x6ca6, 0x7c87, 0x4ce4,
-//     0x5cc5, 0x2c22, 0x3c03, 0x0c60, 0x1c41, 0xedae, 0xfd8f, 0xcdec, 0xddcd,
-//     0xad2a, 0xbd0b, 0x8d68, 0x9d49, 0x7e97, 0x6eb6, 0x5ed5, 0x4ef4, 0x3e13,
-//     0x2e32, 0x1e51, 0x0e70, 0xff9f, 0xefbe, 0xdfdd, 0xcffc, 0xbf1b, 0xaf3a,
-//     0x9f59, 0x8f78, 0x9188, 0x81a9, 0xb1ca, 0xa1eb, 0xd10c, 0xc12d, 0xf14e,
-//     0xe16f, 0x1080, 0x00a1, 0x30c2, 0x20e3, 0x5004, 0x4025, 0x7046, 0x6067,
-//     0x83b9, 0x9398, 0xa3fb, 0xb3da, 0xc33d, 0xd31c, 0xe37f, 0xf35e, 0x02b1,
-//     0x1290, 0x22f3, 0x32d2, 0x4235, 0x5214, 0x6277, 0x7256, 0xb5ea, 0xa5cb,
-//     0x95a8, 0x8589, 0xf56e, 0xe54f, 0xd52c, 0xc50d, 0x34e2, 0x24c3, 0x14a0,
-//     0x0481, 0x7466, 0x6447, 0x5424, 0x4405, 0xa7db, 0xb7fa, 0x8799, 0x97b8,
-//     0xe75f, 0xf77e, 0xc71d, 0xd73c, 0x26d3, 0x36f2, 0x0691, 0x16b0, 0x6657,
-//     0x7676, 0x4615, 0x5634, 0xd94c, 0xc96d, 0xf90e, 0xe92f, 0x99c8, 0x89e9,
-//     0xb98a, 0xa9ab, 0x5844, 0x4865, 0x7806, 0x6827, 0x18c0, 0x08e1, 0x3882,
-//     0x28a3, 0xcb7d, 0xdb5c, 0xeb3f, 0xfb1e, 0x8bf9, 0x9bd8, 0xabbb, 0xbb9a,
-//     0x4a75, 0x5a54, 0x6a37, 0x7a16, 0x0af1, 0x1ad0, 0x2ab3, 0x3a92, 0xfd2e,
-//     0xed0f, 0xdd6c, 0xcd4d, 0xbdaa, 0xad8b, 0x9de8, 0x8dc9, 0x7c26, 0x6c07,
-//     0x5c64, 0x4c45, 0x3ca2, 0x2c83, 0x1ce0, 0x0cc1, 0xef1f, 0xff3e, 0xcf5d,
-//     0xdf7c, 0xaf9b, 0xbfba, 0x8fd9, 0x9ff8, 0x6e17, 0x7e36, 0x4e55, 0x5e74,
-//     0x2e93, 0x3eb2, 0x0ed1, 0x1ef0,
-//   ];
-
-//   var crc = 0xffff;
-//   var j, i;
-
-//   for (i = 0; i < s.length; i++) {
-//     c = s.charCodeAt(i);
-//     if (c > 255) {
-//       throw new RangeError();
-//     }
-//     j = (c ^ (crc >> 8)) & 0xff;
-//     crc = crcTable[j] ^ (crc << 8);
-//   }
-
-//   return ((crc ^ 0) & 0xffff).toString(16).toUpperCase().padStart(4, "0");
-// }
-
-// function generatePayNowStr(opts) {
-//   const p = [
-//     { id: "00", value: "01" }, // ID 00: Payload Format Indicator (Fixed to '01')
-//     { id: "01", value: "12" }, // ID 01: Point of Initiation Method 11: static, 12: dynamic
-//     {
-//       id: "26",
-//       // ID 26: Merchant Account Info Template
-//       value: [
-//         { id: "00", value: "SG.PAYNOW" },
-//         { id: "01", value: "2" }, // 0 for mobile, 2 for UEN. 1 is not used.
-//         { id: "02", value: opts.uen }, // PayNow UEN (Company Unique Entity Number)
-//         { id: "03", value: opts.editable.toString() }, // 1 = Payment amount is editable, 0 = Not Editable
-//         { id: "04", value: opts.expiry },
-//       ], // Expiry date (YYYYMMDD)
-//     },
-//     { id: "52", value: "0000" }, // ID 52: Merchant Category Code (not used)
-//     { id: "53", value: "702" }, // ID 53: Currency. SGD is 702
-//     { id: "54", value: opts.amount.toString() }, // ID 54: Transaction Amount
-//     { id: "58", value: "SG" }, // ID 58: 2-letter Country Code (SG)
-//     { id: "59", value: "COMPANY NAME" }, // ID 59: Company Name
-//     { id: "60", value: "Singapore" }, // ID 60: Merchant City
-//     {
-//       id: "62",
-//       value: [
-//         {
-//           // ID 62: Additional data fields
-//           id: "01",
-//           value: opts.refNumber, // ID 01: Bill Number
-//         },
-//       ],
-//     },
-//   ];
-
-//   let str = p.reduce((final, current) => {
-//     if (Array.isArray(current.value)) {
-//       //nest loop
-//       current.value = current.value.reduce((f, c) => {
-//         f += c.id + c.value.length.toString().padLeft(2) + c.value;
-//         return f;
-//       }, "");
-//     }
-//     final +=
-//       current.id + current.value.length.toString().padLeft(2) + current.value;
-//     return final;
-//   }, "");
-
-//   // Here we add "6304" to the previous string
-//   // ID 63 (Checksum) 04 (4 characters)
-//   // Do a CRC16 of the whole string including the "6304"
-//   // then append it to the end.
-//   str += "6304" + crc16(str + "6304");
-
-//   return str;
-// }
 
 const months = [
   "January",
@@ -132,10 +22,12 @@ const months = [
 
 function generateInvoice() {
   let QR;
-  schedule.scheduleJob("*/5 * * * * *", async function () {
+  // schedule.scheduleJob("*/5 * * * * *", async function () {
+  schedule.scheduleJob("0 0 1 * *", async function () {
     console.count("Run");
     let event = new Date();
     event.setDate(1);
+    console.log(event);
     const index = event.getMonth();
     const month = months[index];
     console.log(`This month is ${month}`);
@@ -147,13 +39,13 @@ function generateInvoice() {
     let saturday = [];
     let sunday = [];
     const days = [
-      "monday",
-      "tuesday",
-      "wednesday",
-      "thursday",
-      "friday",
-      "saturday",
-      "sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
     ];
     while (event.getMonth() == index) {
       if (event.getDay() == 1) {
@@ -173,11 +65,20 @@ function generateInvoice() {
       } else if (event.getDay() == 0) {
         sunday.push(event.toLocaleDateString("en-GB"));
       }
+      console.log(event);
       event.setDate(event.getDate() + 1);
     }
 
+    console.log(monday);
+    console.log(tuesday);
+    console.log(wednesday);
+    console.log(thursday);
+    console.log(friday);
+    console.log(saturday);
+    console.log(sunday);
+
     const students = await User.find({ private: true });
-    console.log(students);
+    // console.log(students);
 
     students.forEach(async (student) => {
       let studentDate = [];
@@ -190,18 +91,44 @@ function generateInvoice() {
       if (student.day.includes("Sunday")) studentDate.push(sunday);
       // console.log(studentDate.join(",").split(",").length);
 
+      console.log(studentDate);
+      // const newDateArr = Array.prototype.concat(...studentDate);
+      // studentDate = studentDate.flat();
+      // console.log(newDateArr);
+
       const newInvoice = new Invoice({
         student: student.username,
         subject: student.subject,
         day: student.day,
         date: studentDate,
         perSession: student.perSession,
+        email: student.email,
         amount: student.perSession * studentDate.join(",").split(",").length,
       });
       await newInvoice
         .save()
-        .then(() => {
-          console.log(newInvoice);
+        .then(async () => {
+          await sendInvoice({
+            email: student.email,
+            // email: "kennerve14@gmail.com",
+            subject: `Tuition Fees for ${student.username} [${month}] from Kenneth.`,
+            message: `
+          Hi, this is Kenneth.
+          This is an auto generated message, please ignore if you have already sent in the fees.
+
+          Student: ${student.username}
+          Subject: ${student.subject}
+          Day: ${student.day}
+          Dates: ${studentDate.join(",").split(", ")}
+          Fees: $${student.perSession} x ${
+              studentDate.join(",").split(",").length
+            } = $${newInvoice.amount}
+
+          Please let me know when the amount has been sent!
+          If you have any queries regarding the fees, do let me know!
+          Thank you and have a great day!
+          `,
+          });
         })
         .catch((e) => {
           console.log(e);
@@ -209,7 +136,22 @@ function generateInvoice() {
     });
   });
 }
-// generateInvoice();
+generateInvoice();
+
+exports.getAllInvoices = async (req, res) => {
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+  const invoices = await Invoice.find().sort({ dateSent: -1 });
+  // console.log(invoices[1].date[0].toLocaleDateString("en-GB"));
+
+  res.render("./invoice/all", {
+    username,
+    authenticate,
+    currentUser,
+    invoices,
+  });
+};
 
 exports.view = async (req, res) => {
   let username = req.user.username;
@@ -217,41 +159,61 @@ exports.view = async (req, res) => {
   let currentUser = req.user;
   const id = req.params.id;
   const invoice = await Invoice.findById(id);
-  // let qrcode = new PaynowQR({
-  //   uen: "+6596626547",
-  //   amount: invoice.amount,
-  //   // editable: 0,
-  //   expiry: "",
-  //   refNumber: invoice.student,
-  // });
-  // QR = qrcode.output();
-  // const opts = {
-  //   uen: "+6596626547",
-  //   editable: 1,
-  //   expiry: "20241231",
-  //   amount: 1,
-  //   refNumber: "",
-  // };
-  // const QR = generatePayNowStr(opts);
 
   console.log(id);
   res.render("./invoice/view", {
     username,
     authenticate,
     currentUser,
-    QR,
+    invoice,
   });
 };
 
-exports.getAllInvoices = async (req, res) => {
+exports.edit = async (req, res) => {
+  console.log("Editing invoice");
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
-  const invoices = await Invoice.find();
-  res.render("./invoice/all", {
+  const id = req.params.id;
+  let invoice = await Invoice.findById(id);
+
+  // invoice.date = invoice.date.join(",").split(",");
+
+  // console.log(date);
+  res.render("./invoice/edit", {
     username,
     authenticate,
     currentUser,
-    invoices,
+    invoice,
   });
+};
+
+exports.save = async (req, res) => {
+  console.log(req.body);
+  const id = req.params.id;
+  // const invoice = await Invoice.findById(id)
+
+  req.body.date.forEach((item, index) => {
+    if (!item) {
+      req.body.date.splice(index, 1);
+    } else {
+      req.body.date[index] = item.split(",");
+    }
+
+    console.log(req.body);
+  });
+  const update = await Invoice.findByIdAndUpdate(id, req.body);
+  res.redirect("/invoice");
+};
+
+exports.delete = async (req, res) => {
+  console.log(req.body);
+  const id = req.body.id;
+  try {
+    const deleteInvoice = await Invoice.findByIdAndDelete(id);
+    res.send("success");
+  } catch (e) {
+    console.log(e);
+  }
+  console.log("Deleting");
 };

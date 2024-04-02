@@ -12,6 +12,7 @@ const lessonRoute = require("./routes/lessons");
 const homeworkRoute = require("./routes/homeworks");
 const examRoute = require("./routes/exams");
 const invoiceRoute = require("./routes/invoices");
+const interventionRoute = require("./routes/interventions");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const cookieParser = require("cookie-parser");
@@ -118,6 +119,7 @@ app.use("/attempts", authController.authenticate, attemptRoute);
 app.use("/user", authController.authenticate, userRoute);
 app.use("/science", authController.authenticate, scienceRoute);
 app.use("/invoice", authController.authenticate, invoiceRoute);
+app.use("/intervention", authController.authenticate, interventionRoute);
 app.get("*", function (req, res, next) {
   // res.redirect("./pages/arithmetic");
   // const err = new Error(`Can't find${req.originalUrl} on this server!`);
