@@ -22,7 +22,7 @@ exports.create = async (req, res) => {
 };
 
 function updateIntervention() {
-  schedule.scheduleJob("23 59 * * *", async function () {
+  schedule.scheduleJob("50 23 * * *", async function () {
     let start = new Date();
     start.setHours(0, 0, 0, 0);
     let end = new Date();
@@ -31,16 +31,19 @@ function updateIntervention() {
       date: { $gte: start, $lt: end },
       interventionID: { $exists: true },
     });
+    console.log(today);
     if (today) {
       today.forEach(async (item) => {
-        const intervention = await Intervention.findById(item.interventionID);
-        if (intervention.quantity == 1) {
-          await Intervention.findByIdAndDelete(item.interventionID);
-        } else {
+        if (item.interventionID != "x" && item.interventionID != "") {
+          const intervention = await Intervention.findById(item.interventionID);
+          if (intervention.quantity == 1) {
+            await Intervention.findByIdAndDelete(item.interventionID);
+          } else {
+          }
+          await Intervention.findByIdAndUpdate(item.interventionID, {
+            quantity: intervention.quantity - 1,
+          });
         }
-        await Intervention.findByIdAndUpdate(item.interventionID, {
-          quantity: intervention.quantity - 1,
-        });
       });
     }
   });
