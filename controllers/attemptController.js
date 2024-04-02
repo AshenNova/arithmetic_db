@@ -657,12 +657,20 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
   };
 
   // UPDATE INTERVENTION
-  const intervention = await Intervention.findOne({
+  // let intervention = {};
+  let intervention = await Intervention.findOne({
     student: req.body.user.toLowerCase(),
     level: req.body.level,
     setting: req.body.setting,
     mode: req.body.mode,
   });
+  console.log(intervention);
+  console.log("Made it here.");
+  // if (intervention == null) {
+  //   console.log("here?");
+  //   intervention.id = "";
+  // }
+  // console.log(`${intervention} 🔆`);
 
   await pointSystem();
   const newAttempt = new Attempt({
@@ -681,7 +689,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     award: data.award,
     points: pointsAwarded,
     age: new Date().getFullYear() - DOB.getFullYear(),
-    interventionID: intervention._id,
+    // interventionID: intervention._id,
   });
 
   //SAVING NEW ATTEMPT
