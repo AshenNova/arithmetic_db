@@ -862,24 +862,25 @@ const generateRec = async (nameTemp) => {
   // IF NO, CHECK ANOTHER LEVEL.
 
   //NORMAL LEVELS
-
+  let existingLevel = [];
   let recommendObj = {};
-  if (interventions && recommend.length < 2) {
+  if (interventions && recommend.length <= 2) {
     interventions.forEach((item) => {
       if (!item.level.startsWith("heu") && !item.level.startsWith("cal")) {
         recommendObj.level = item.level;
         recommendObj.setting = item.setting;
         recommendObj.mode = item.mode;
         recommendObj.time = "";
+        recommendObj.date = new Date();
         recommendObj.score = "";
         recommendObj.mistake = "";
         recommend.push(recommendObj);
+        existingLevel.push(recommendObj.level);
         // uniqLevel.push(attempt.level);
       }
     });
   }
 
-  let existingLevel = [];
   const levelOne = [
     "1",
     "1.01",
