@@ -5,6 +5,6 @@ const router = express.Router();
 router.route("/").get(interventionController.all);
 router.route("/create").get(interventionController.create);
 router.route("/save").post(interventionController.save);
-// router.route("/delete/:id/:user").get(homeworkController.deleteHomework);
+router.route("/delete").delete(interventionController.delete);
 
 module.exports = router;

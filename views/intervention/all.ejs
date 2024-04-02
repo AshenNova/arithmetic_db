@@ -27,34 +27,67 @@
                 <th>Setting</th>
                 <th>Mode</th>
                 <th>Quantity</th>
+                <th>Date Start</th>
                 <th>Date</th>
                 <th colspan="2">Quantity</th>
             </tr>
         </thead>
         <% interventions.forEach(item => { %>
             <tr>
+                <td style="display: none;" class="id-intervention"><%= item._id %></td>
                 <td><%= item.student %></td>
                 <td><%= item.level %></td>
                 <td><%= item.setting %></td>
                 <td>
                     <% if (item.mode == "Easy") { %>
-                        <btn class="btn btn-success">Easy</btn>
+                        <btn class="btn btn-success btn-sm">Easy</btn>
                     <% } else if (item.mode == "Normal") { %>
-                        <btn class="btn btn-secondary">Normal</btn>
+                        <btn class="btn btn-secondary btn-sm">Normal</btn>
                     <% } else { %>
-                        <btn class="btn btn-danger">Hardcore</btn>
+                        <btn class="btn btn-danger btn-sm">Hardcore</btn>
                     <% } %> 
                    </td>
                 <td><%= item.quantity %></td>
+                <td><%= item.dateStart.toLocaleDateString("en-GB") %></td>
                 <td><%= item.date.toLocaleDateString("en-GB") %></td>
                 <td>Edit</td>
-                <td>Delete</td>
+                <td><a href="#" class="delete-intervention">Delete</a></td>
             </tr>
         <% }) %>
 
       </table>
 
 </body>
+<script>
+    const deleteIntervention = document.querySelectorAll(".delete-intervention")
+  const idIntervention = document.querySelectorAll(".id-intervention")
+  deleteIntervention.forEach((item, index) => {
+    // console.log(index)
+    // console.log(idInvoice)
+    const intervention = {
+      id: idIntervention[index].innerText
+    }
+    const id = idIntervention[index].innerText
+    console.log(id)
+    item.addEventListener("click", function(){
+      confirm("Are you sure you want to delete?")
+    $.ajax({
+      url: "/intervention/delete",
+      method: "Delete",
+      data: intervention,
+      success: function(res){
+        if(res == "success"){
+          location.reload()
+        }
+      },
+      error: function(e){
+        alert("Something went wrong. Please try again.")
+      }
+    })
+    })
+  })
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="/javascript/confirmation.js"></script>
 </html>

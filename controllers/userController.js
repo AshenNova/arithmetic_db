@@ -597,7 +597,10 @@ const generateRec = async (nameTemp) => {
       let recommendObj = { ...attempt };
       if (interventions && recommend.length == 0) {
         interventions.forEach((item) => {
-          if (item.level.startsWith("cal")) {
+          if (item.dateStart)
+            item.dateStart = item.dateStart.setHours(0, 0, 0, 0);
+          console.log(item.dateStart);
+          if (item.level.startsWith("cal") && new Date() > item.dateStart) {
             recommendObj.level = item.level;
             recommendObj.setting = item.setting;
             recommendObj.mode = item.mode;
@@ -742,15 +745,18 @@ const generateRec = async (nameTemp) => {
       let recommendObj = { ...attempt };
       if (interventions && recommend.length == 1) {
         interventions.forEach((item) => {
-          if (item.level.startsWith("heu")) {
-            recommendObj.level = item.level;
-            recommendObj.setting = item.setting;
-            recommendObj.mode = item.mode;
-            recommendObj.time = "";
-            recommendObj.score = "";
-            recommendObj.mistake = "";
-            recommend.push(recommendObj);
-            // uniqLevel.push(attempt.level);
+          if (item.dateStart)
+            item.dateStart = item.dateStart.setHours(0, 0, 0, 0);
+          console.log(item.dateStart);
+          if (item.level.startsWith("heu") && new Date() > item.dateStart) {
+            // recommendObj.level = item.level;
+            // recommendObj.setting = item.setting;
+            // recommendObj.mode = item.mode;
+            // recommendObj.time = "";
+            // recommendObj.score = "";
+            // recommendObj.mistake = "";
+            recommend.push(item);
+            uniqLevel.push(item.level);
           }
         });
       }
@@ -866,7 +872,13 @@ const generateRec = async (nameTemp) => {
   // let recommendObj = {};
   if (interventions) {
     interventions.forEach((item) => {
-      if (!item.level.startsWith("heu") && !item.level.startsWith("cal")) {
+      if (item.dateStart) item.dateStart = item.dateStart.setHours(0, 0, 0, 0);
+      console.log(item.dateStart);
+      if (
+        !item.level.startsWith("heu") &&
+        !item.level.startsWith("cal") &&
+        new Date() > item.dateStart
+      ) {
         recommend.push(item);
         existingLevel.push(item.level);
         console.log("Pushed Intervention");

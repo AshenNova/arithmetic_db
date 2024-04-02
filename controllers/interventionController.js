@@ -49,6 +49,14 @@ updateIntervention();
 exports.save = async (req, res) => {
   console.log("Saving intervention");
   try {
+    console.log(req.body);
+    for (const key in req.body) {
+      if (req.body[key] == "") {
+        console.log(key);
+        delete req.body[key];
+      }
+    }
+    console.log(req.body);
     const intervention = new Intervention(req.body);
     await intervention.save();
     console.log(intervention);
@@ -74,4 +82,11 @@ exports.all = async (req, res) => {
     currentUser,
     interventions,
   });
+};
+
+exports.delete = async (req, res) => {
+  console.log("Deleting intervention");
+  const id = req.body.id;
+  await Intervention.findByIdAndDelete(id);
+  res.send("success");
 };
