@@ -601,14 +601,8 @@ const generateRec = async (nameTemp) => {
             item.dateStart = item.dateStart.setHours(0, 0, 0, 0);
           console.log(item.dateStart);
           if (item.level.startsWith("cal") && new Date() > item.dateStart) {
-            recommendObj.level = item.level;
-            recommendObj.setting = item.setting;
-            recommendObj.mode = item.mode;
-            recommendObj.time = "";
-            recommendObj.score = "";
-            recommendObj.mistake = "";
-            recommend.push(recommendObj);
-            // uniqLevel.push(attempt.level);
+            recommend.push(item);
+            uniqLevel.push(item.level);
           }
         });
       }

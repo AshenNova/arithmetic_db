@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+  <link rel="stylesheet" href="/css/navbar-styles.css">
+   <link rel="icon" href="/images/favicon.ico?v=1.1">
+
+  
+  <title>Creating Intervention</title>
+</head>
+<body>
+  <%- include("../partials/navbar"); %>
+
+  <div class="container mt-3">
+      <form action="/intervention/save/<%= intervention._id %>" method="post">
+        <div class="mb-3">
+            <label class="form-label">Student</label>
+            <select class="form-select" name="student">
+              <option value="<%= intervention.student %>"><%= intervention.student %></option>
+              <% users.forEach(user => { %>
+                <option value="<%= user %>"><%= user %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Level</label>
+            <input type="text" class="form-control" name="level" value="<%= intervention.level %>">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Setting</label>
+            <input type="text" class="form-control" name="setting" value="<%= intervention.setting %>">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Quantity</label>
+            <input type="number" class="form-control" name="quantity" value="<%= intervention.quantity %>">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Mode</label>
+            <select class="form-select" name="mode">
+              <option value="<%= intervention.mode %>"><%= intervention.mode %></option>
+                <option value="Easy">Easy</option>
+                <option value="Normal">Normal</option>
+                <option value="Hardcore">Hardcore</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Date Start</label>
+            <input type="date" class="form-control" name="dateStart" value="<%= intervention.dateStart.getFullYear().toString() %>-<%= (intervention.dateStart.getMonth()+1).toString().padStart(2, 0) %>-<%= intervention.dateStart.getDay().toString().padStart(2, 0) %>">
+          </div>
+        </br>
+          <button type="submit" class="btn btn-primary">Submit</button>
+
+      </form>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script src="/javascript/confirmation.js"></script>
+</html>
