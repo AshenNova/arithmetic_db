@@ -69,16 +69,7 @@ function generateInvoice() {
       event.setDate(event.getDate() + 1);
     }
 
-    console.log(monday);
-    console.log(tuesday);
-    console.log(wednesday);
-    console.log(thursday);
-    console.log(friday);
-    console.log(saturday);
-    console.log(sunday);
-
     const students = await User.find({ private: true });
-    console.log(students);
 
     students.forEach(async (student) => {
       let studentDate = [];

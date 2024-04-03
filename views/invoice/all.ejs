@@ -43,8 +43,21 @@
           <tr>
             <td style="display: none;" class="id-invoice"><%= item._id %></td>
             <td><%= item.student %></td>
-            <td><%= item.subject.join(" ") %></td>
-            <td><%= item.day.join(" ") %></td>
+            <!-- <td><%= item.subject.join(" ") %></td> -->
+            <td>
+              <ul>
+              <% item.subject.forEach(sub => { %>
+                <li><%= sub %></li>
+              <% }) %>
+              </ul>
+            </td>
+            <td>
+              <ul>
+              <% item.day.forEach(day => { %>
+                <li><%= day %></li>
+              <% }) %>
+              </ul>
+            </td>
        
             <td>
               <ul>
@@ -68,7 +81,11 @@
             <!-- <td><a href="/invoice/view/<%= item._id %>">View</a></td> -->
             <td><a href="/invoice/edit/<%= item._id %>">Edit</a></td>
             <td><a href="#" class="delete-invoice">Delete</a></td>
-            <td><a href="/invoice/resend/<%= item._id %>"><button class="btn btn-primary">Resend</button></a></td>
+            <td>
+              <a href="/invoice/recalculate/<%= item._id %>"><button class="btn btn-warning">Recalculate</button></a>
+              <hr>
+              <a href="/invoice/resend/<%= item._id %>"><button class="btn btn-primary">Resend</button></a>
+            </td>
 
             <!-- <td><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<%= item.QR %>"></td> -->
         </tr>

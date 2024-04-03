@@ -22,7 +22,7 @@
   <div class="container">
     <form action="/invoice/save/<%= invoice._id %>" method="post">
 
-      <div class="form-group mb-3`">
+      <div class="form-group mb-3">
         <label for="exampleFormControlSelect1">Status</label>
         <select class="form-control" name="status">
             <option value="<%= invoice.status %>"><%= invoice.status %></option>
@@ -30,14 +30,41 @@
           <option value="Incomplete">Incomplete</option>
         </select>
       </div>
-        <div class="form-group mb-3`">
+      
+          <% const subjects = ["Primary Science", "Primary Math"] %>
+          <div class="row mt-3">
+            <div class="col">
           <label>Subject</label>
-          <input type="string" class="form-control" name="subject" value="<%= invoice.subject %>">
-        </div>
-        <div class="form-group mb-3`">
-            <label>Day</label>
-            <input type="string" class="form-control" name="day" value="<%= invoice.day %>">
+          <% subjects.forEach(item => { %>
+            <div class="form-group form-check">
+            <% if (invoice.subject.includes(item)) { %>
+              <input type="checkbox" class="form-check-input" name="subject" value="<%= item %>" checked>
+            <% } else { %>
+              <input type="checkbox" class="form-check-input" name="subject" value="<%= item %>">
+            <% } %>
+            <label class="form-check-label" for="flexCheckDefault">
+              <%= item %>
+            </label>
           </div>
+          <% }) %>
+        </div>
+          <% const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %>
+          <div class="col">
+          <label>Day</label>
+          <% days.forEach(item => { %>
+            <div class="form-group form-check">
+            <% if (invoice.day.includes(item)) { %>
+              <input type="checkbox" class="form-check-input" name="day" value="<%= item %>" checked>
+            <% } else { %>
+              <input type="checkbox" class="form-check-input" name="day" value="<%= item %>">
+            <% } %>
+            <label class="form-check-label" for="flexCheckDefault">
+              <%= item %>
+            </label>
+          </div>
+          <% }) %>
+        </div>
+        </div>
           <div class="form-group mb-3`">
             <label>View Dates</label>
             <input type="date"></input>
