@@ -40,7 +40,7 @@
                             </div>  
                             <div class="form-group form-check">  
                                 <input class="form-check-input" type="checkbox" name="subject_admin" value="true"
-                                <% if ( editUser.subject_admin) { %>
+                                <% if (editUser.subject_admin) { %>
                                     checked 
                                 <% } %>>
                                 <label class="form-check-label" for="flexCheckDefault">
@@ -48,6 +48,17 @@
                                 </label>
                               </div>
                               <!-- </div> -->
+                              <div class="form-check form-group">
+                                 
+                                  <% if (editUser.private) { %>
+                                    <input class="form-check-input" type="checkbox" id="flexCheckChecked" name="private" value="true" checked>
+                                  <% } else { %>
+                                    <input class="form-check-input" type="checkbox" id="flexCheckChecked" name="private">
+                                  <% } %>
+                                  <label class="form-check-label" for="flexCheckChecked">
+                                    Private
+                                </label>
+                              </div>
                         <% } %>
                          <div class="form-group required">
                             <label for="username">Username</label>
@@ -65,6 +76,28 @@
                             <label for="DOB">Gift</label>
                             <input type="number" class="form-control" id="gift" required="" name="gift" value="<%= editUser.gift %>">
                         </div> 
+                        <div class="row">
+                            <div class="col">
+                        <div>Days</div>
+                        <% days.forEach(item => { %>
+                            <% if (editUser.day.includes(item)  ) { %>
+                                <div class="form-group form-check">
+                                    <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckChecked" name="day" checked>
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                        <%= item %>
+                                    </label>
+                                </div> 
+                            <% } else { %>
+                                <div class="form-group form-check">
+                                    <input class="form-check-input" type="checkbox" value="<%= item %>" id="flexCheckDefault" name="day">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        <%= item %>
+                                    </label>
+                                </div>
+                            <% } %>
+                        <% }) %> 
+                    </div>
+                    <div class="col">
                         <div>Subject</div>
                             <% subjects.forEach(item => { %>
                                 <% if (editUser.subject.includes(item)  ) { %>
@@ -83,7 +116,8 @@
                                     </div>
                                 <% } %>
                             <% }) %> 
-                                 
+                        </div>
+                        </div>       
                     <div class="form-group required">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" required="" name="password">

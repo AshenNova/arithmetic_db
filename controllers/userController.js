@@ -64,13 +64,22 @@ exports.editUser = catchAsync(async (req, res, next) => {
   }
 
   let subjects = ["Primary Math", "Primary Science"];
-  console.log(editUser.subject);
+  let days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
   res.render("pages/edit-user", {
     authenticate,
     username,
     currentUser,
     editUser,
     subjects,
+    days,
   });
 });
 

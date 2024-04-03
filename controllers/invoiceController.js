@@ -78,7 +78,7 @@ function generateInvoice() {
     console.log(sunday);
 
     const students = await User.find({ private: true });
-    // console.log(students);
+    console.log(students);
 
     students.forEach(async (student) => {
       let studentDate = [];
