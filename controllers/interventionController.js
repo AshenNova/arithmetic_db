@@ -60,7 +60,7 @@ exports.save = async (req, res) => {
     } else {
       // console.log(req);
       for (const key in req.body) {
-        if (req.body[key] == "") {
+        if (req.body[key] == "" && key != "setting") {
           console.log(key);
           delete req.body[key];
         }

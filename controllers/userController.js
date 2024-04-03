@@ -1269,7 +1269,8 @@ exports.recommend = catchAsync(async (req, res, next) => {
     user: nameTemp,
     date: { $gte: start, $lt: end },
   });
-
+  console.log(recommend);
+  console.log(todayAttempts);
   // console.log(todayAttempts);
   recommend.forEach((item, index) => {
     todayAttempts.forEach((todayItem) => {
