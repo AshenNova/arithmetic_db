@@ -14805,7 +14805,8 @@ How many items are there in each bag?
           (p.situationOne - p.situationTwo) / (p.unitSentence - 1);
         while (
           (p.situationOne - p.situationTwo) % (p.unitSentence - 1) != 0 ||
-          valueOfOneUnit <= p.situationTwo
+          valueOfOneUnit <= p.situationTwo ||
+          p.situationTwo >= p.situationOne
         ) {
           p.situationOne = genNumbers(100) + 1;
           p.situationTwo = genNumbers(100) + 1;
@@ -14818,7 +14819,10 @@ How many items are there in each bag?
       if (p.situationOne < 0 && p.situationTwo < 0) {
         valueOfOneUnit =
           (p.situationTwo + p.situationOne) / (p.unitSentence - 1);
-        while ((p.situationTwo - p.situationOne) % (p.unitSentence - 1) != 0) {
+        while (
+          (p.situationTwo - p.situationOne) % (p.unitSentence - 1) != 0 ||
+          Math.abs(p.situationOne) >= Math.abs(p.situationTwo)
+        ) {
           p.situationOne = genNumbers(100) - 200;
           p.situationTwo = genNumbers(100) - 200;
           (p.unitSentence = genNumbers(4) + 2),
