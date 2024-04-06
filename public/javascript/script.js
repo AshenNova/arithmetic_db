@@ -9129,13 +9129,13 @@ function updateProblems() {
     // FRACTIONS: PARTS OF A FRACTION
     if (setting == 12) {
       normalDisplay();
-      console.log(p.nume, p.deno);
+      console.log(p.nume, p.deno, p.multiplier);
       [p.nume, p.deno] = simplify(p.nume, p.deno);
       // if (p.nume == p.deno) return updateCalc();
       const pieces = p.nume * p.multiplier;
-      const whole = Math.floor(pieces / p.deno);
-      let remainder = pieces % p.deno;
-      if (remainder == 0) {
+      p.whole = Math.floor(pieces / p.deno);
+      p.remainder = pieces % p.deno;
+      if (p.remainder == 0) {
         displayProblem.innerHTML = `
         How many
         <div class="frac">
@@ -9143,10 +9143,10 @@ function updateProblems() {
         <span class="symbol">/</span>
         <span class="bottom">${p.deno}</span>
         </div>
-        are there in ${whole}?
+        are there in ${p.whole}?
         `;
       } else {
-        [remainder, p.deno] = simplify(remainder, p.deno);
+        [p.remainder, p.deno] = simplify(p.remainder, p.deno);
         displayProblem.innerHTML = `
         How many
         <div class="frac">
@@ -9155,9 +9155,9 @@ function updateProblems() {
         <span class="bottom">${p.deno}</span>
         </div>
         are there in
-        ${whole}
+        ${p.whole}
         <div class="frac">
-        <span>${remainder}</span>
+        <span>${p.remainder}</span>
         <span class="symbol">/</span>
         <span class="bottom">${p.deno}</span>
         </div>
@@ -19960,7 +19960,9 @@ function handleSubmit(e) {
 
       // FRACTIONS: PARTS OF A FRACTION
       if (setting == 12) {
-        correctAnswer = p.multiplier;
+        correctAnswer = Math.round(
+          (p.whole + p.remainder / p.deno) / (p.nume / p.deno)
+        );
       }
 
       // FORM FRACTION
@@ -24822,6 +24824,8 @@ function genProblems() {
         deno: gen_deno,
         nume: genNumbers(gen_deno - 1) + 1,
         multiplier: genNumbers(10) + 5,
+        whole: undefined,
+        remainder: undefined,
       };
     }
 
