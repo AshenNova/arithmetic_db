@@ -35,7 +35,7 @@
         <% interventions.forEach(item => { %>
             <tr>
                 <td style="display: none;" class="id-intervention"><%= item._id %></td>
-                <td><%= item.student %></td>
+                <td><a href="/user/recommend/<%= item.student %>" target="_blank"><%= item.student %></a></td>
                 <td><%= item.level %></td>
                 <td><%= item.setting %></td>
                 <td>

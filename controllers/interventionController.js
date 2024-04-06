@@ -22,7 +22,7 @@ exports.create = async (req, res) => {
 };
 
 function updateIntervention() {
-  schedule.scheduleJob("50 23 * * *", async function () {
+  schedule.scheduleJob("42 00 * * *", async function () {
     let start = new Date();
     start.setHours(0, 0, 0, 0);
     let end = new Date();
