@@ -775,7 +775,6 @@ function timer2() {
       const now = new Date();
       const duration = now - startTime;
       console.log(duration);
-      console.log(`${newDuration}/1000 ⏰`);
       time = newDuration;
       const durationMilli = duration;
       const durationSecs = durationMilli / 1000;

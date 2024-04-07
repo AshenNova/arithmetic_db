@@ -86,7 +86,7 @@ exports.edit = async (req, res) => {
   const id = req.params.id;
   const users = await User.distinct("username");
   const intervention = await Intervention.findById(id);
-
+  console.log(intervention);
   res.render("./intervention/edit", {
     username,
     authenticate,
