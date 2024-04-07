@@ -686,8 +686,9 @@ function questionTimer() {
 // Timer2
 function timer2() {
   time = 0;
+  let newStartTime = new Date();
+  console.log("Start " + newStartTime);
   const countDownTwo = setInterval(function () {
-    let newStartTime = Date.now;
     time++;
     document.getElementById("timer").innerHTML = time;
     console.log(state.score);
@@ -769,12 +770,13 @@ function timer2() {
         console.log("Completed image");
       }
 
-      let newEndTime = Date.now;
-      const newDuration = newEndTime - newStartTime;
+      let newEndTime = new Date();
+      let newDuration = Math.round((newEndTime - newStartTime) / 1000);
       const now = new Date();
       const duration = now - startTime;
-      // const duration = newDuration
       console.log(duration);
+      console.log(`${newDuration}/1000 ⏰`);
+      time = newDuration;
       const durationMilli = duration;
       const durationSecs = durationMilli / 1000;
       let durationHours = Math.floor(durationSecs / 60 / 60);
