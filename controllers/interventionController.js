@@ -22,28 +22,41 @@ exports.create = async (req, res) => {
 };
 
 function updateIntervention() {
-  schedule.scheduleJob("42 00 * * *", async function () {
+  schedule.scheduleJob("59 23 * * *", async function () {
     let start = new Date();
+    // start.setDate(start.getDate() - 1);
     start.setHours(0, 0, 0, 0);
+    console.log(start);
     let end = new Date();
     end.setHours(23, 59, 59, 999);
+    console.log(end);
+
     const today = await Attempt.find({
-      date: { $gte: start, $lt: end },
-      interventionID: { $exists: true },
+      date: { $gte: start },
+      subject: "Math",
+      // date: { $gte: ISOdate("2024-04-07") },
+      interventionID: { $ne: "x" },
     });
     console.log(today);
     if (today) {
       today.forEach(async (item) => {
-        if (item.interventionID != "x" && item.interventionID != "") {
-          const intervention = await Intervention.findById(item.interventionID);
+        console.log(item);
+        // if (item.interventionID != "x") {
+        const intervention = await Intervention.findById(item.interventionID);
+        console.log(intervention);
+        if (intervention) {
           if (intervention.quantity == 1) {
+            console.log("ONE");
             await Intervention.findByIdAndDelete(item.interventionID);
           } else {
+            console.log("MORE THAN 1");
+            await Intervention.findByIdAndUpdate(item.interventionID, {
+              quantity: intervention.quantity - 1,
+            });
           }
-          await Intervention.findByIdAndUpdate(item.interventionID, {
-            quantity: intervention.quantity - 1,
-          });
         }
+
+        // }
       });
     }
   });
