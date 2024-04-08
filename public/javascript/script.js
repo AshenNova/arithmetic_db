@@ -12724,7 +12724,7 @@ function updateProblems() {
       if (p.type == "mixed fractions") {
         const numeTotal = p.whole * p.denominator + p.numerator;
         if (
-          (numeTotal / p.denominator) % (p.numeratorTwo / p.denominatorTwo) ==
+          (numeTotal * p.denominatorTwo) % (p.denominator * p.numeratorTwo) ==
           0
         ) {
           return updateCalc();
