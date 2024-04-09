@@ -99,12 +99,22 @@ exports.editSingleUser = catchAsync(async (req, res, next) => {
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
+  let days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
   res.render("pages/edit-user", {
     authenticate,
     username,
     currentUser,
     editUser,
     subjects,
+    days,
   });
 });
 
