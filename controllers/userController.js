@@ -145,6 +145,7 @@ exports.saveEditUser = catchAsync(async (req, res, next) => {
     delete req.body.freezeEndDate;
     delete req.body.admin;
     delete req.body.subject_admin;
+    delete req.body.day;
   }
 
   if (!req.body.subject_admin) req.body.subject_admin = "false";
