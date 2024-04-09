@@ -18708,7 +18708,20 @@ function handleSubmit(e) {
         const extraTwo = extraShapes(cR, dR, p.smallLength, p.smallBreadth);
         const B = standardTwo + extraTwo;
 
-        correctAnswer = A >= B ? A : B;
+        if (A >= B){
+          if (extraOne!= 0){
+            correctAnswer = `${a}x${b}+${extraOne}=${A}`
+          } else {
+
+            correctAnswer = `${a}x${b}=${A}`
+          }
+        } else {
+          if (extraTwo != 0){
+            correctAnswer =`${c}x${d}+${extraTwo}=${B}`
+          } else {
+            correctAnswer =`${c}x${d}=${B}`
+          }
+        }
       }
     }
 
