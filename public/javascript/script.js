@@ -3980,9 +3980,6 @@ function updateProblems() {
 
   if (level == 4.21) {
     normalDisplay();
-    if (setting == 9) {
-      setting = genNumbers(3) + 1;
-    }
 
     if (setting >= 2) {
       calculatorSymbol.classList.remove("hidden");
@@ -4025,6 +4022,24 @@ function updateProblems() {
         ((genNumbers(10) + 1) * p.dimension + genNumbers(p.dimension)) * 2;
       displayProblem.innerHTML = `
       How many <u>circles</u> with a radius of ${p.dimension} cm can be cut out from a rectangle with a dimension of </br>
+      ${p.length} cm by ${p.breadth} cm?
+      `;
+    }
+
+    if (setting == 5) {
+      const min = 3;
+
+      p.smallLength = genNumbers(min) + 5;
+      p.smallBreadth = genNumbers(3) + 1;
+      p.length = genNumbers(30) + 40;
+      p.breadth = genNumbers(20) + 40;
+
+      while (p.smallLength == p.smallBreadth) {
+        p.length = genNumbers(30) + 40;
+        p.breadth = genNumbers(20) + 40;
+      }
+      displayProblem.innerHTML = `
+      How many <u>rectangles</u> of dimension ${p.smallLength} and ${p.smallBreadth} cm can be cut out from a rectangle with a dimension of </br>
       ${p.length} cm by ${p.breadth} cm?
       `;
     }
@@ -6599,14 +6614,14 @@ function updateProblems() {
   }
 
   if (level == 6.01) {
-    if (difficulty <= 0) {
-      difficulty = 0;
-    } else {
-      difficulty = 1;
-    }
+    // if (difficulty <= 0) {
+    //   difficulty = 0;
+    // } else {
+    //   difficulty = 1;
+    // }
     ctx.save();
     ctx.font = "1em serif";
-    if (difficulty == 0) {
+    if (setting == 1) {
       if (p.rollType == "area") {
         ctx.fillText(`Find the ${p.rollType} of the Circle`, 20, 20);
       }
@@ -6673,7 +6688,7 @@ function updateProblems() {
         ctx.fillText(`${p.radius * 2}cm`, 0 - 10, -3);
       }
     }
-    if (difficulty == 1) {
+    if (setting == 2) {
       if (p.rollType == "area") {
         ctx.fillText(`Find the ${p.rollType} of the figure`, 20, 20);
       }
@@ -18658,6 +18673,43 @@ function handleSubmit(e) {
           Math.floor(p.breadth / (p.dimension * 2))
         }`;
       }
+      //RECTANGLES
+      if (setting == 5) {
+        function extraShapes(remainder1, remainder2, side1, side2) {
+          let A = 0;
+          let B = 0;
+          if (remainder1 >= side1 && remainder2 >= side2) {
+            const a = Math.floor(remainder1 / side1);
+            const b = Math.floor(remainder2 / side2);
+            A = a * b;
+          }
+          if (remainder2 >= side1 && remainder1 >= side2) {
+            const a = Math.floor(remainder2 / side1);
+            const b = Math.floor(remainder1 / side2);
+            B = a * b;
+          }
+          return A >= B ? A : B;
+        }
+        // One scenario
+        const a = Math.floor(p.length / p.smallLength);
+        const aR = p.length % p.smallLength;
+        const b = Math.floor(p.breadth / p.smallBreadth);
+        const bR = p.breadth % p.smallBreadth;
+        const standardOne = a * b;
+        const extraOne = extraShapes(aR, bR, p.smallLength, p.smallBreadth);
+        const A = standardOne + extraOne;
+
+        // Second scenario
+        const c = Math.floor(p.breadth / p.smallLength);
+        const cR = p.breadth % p.smallLength;
+        const d = Math.floor(p.length / p.smallBreadth);
+        const dR = p.length % p.smallBreadth;
+        const standardTwo = c * d;
+        const extraTwo = extraShapes(cR, dR, p.smallLength, p.smallBreadth);
+        const B = standardTwo + extraTwo;
+
+        correctAnswer = A >= B ? A : B;
+      }
     }
 
     // if (level == 4.22) {
@@ -19244,7 +19296,7 @@ function handleSubmit(e) {
       }
     }
     if (level == 6.01) {
-      if (difficulty == 0) {
+      if (setting == 1) {
         if (p.rollType == "area") {
           if (p.rollPi != "π") {
             correctAnswer = `${p.rollPi}x${p.radius}x${p.radius}`;
@@ -19260,7 +19312,7 @@ function handleSubmit(e) {
           }
         }
       }
-      if (difficulty == 1) {
+      if (setting == 2) {
         if (p.rollType == "area") {
           if (p.rollPi != "π") {
             if (p.rollType2 == "semicircle") {
@@ -19288,22 +19340,28 @@ function handleSubmit(e) {
           if (p.rollPi != "π") {
             if (p.rollType2 == "semicircle") {
               correctAnswer = `2x${p.rollPi}x${p.radius}x1/2+2x${p.radius}`;
+              correctAnswerTwo = `2x${p.rollPi}x${p.radius}x1/2+${p.radius}x2`;
             }
             if (p.rollType2 == "quadrant") {
               correctAnswer = `2x${p.rollPi}x${p.radius}x1/4+2x${p.radius}`;
+              correctAnswerTwo = `2x${p.rollPi}x${p.radius}x1/4+${p.radius}x2`;
             }
             if (p.rollType2 == "others") {
               correctAnswer = `2x${p.rollPi}x${p.radius}x${p.rollOthers}/360+2x${p.radius}`;
+              correctAnswerTwo = `2x${p.rollPi}x${p.radius}x${p.rollOthers}/360+${p.radius}x2`;
             }
           } else {
             if (p.rollType2 == "semicircle") {
               correctAnswer = `2xpix${p.radius}x1/2+2x${p.radius}`;
+              correctAnswerTwo = `2xpix${p.radius}x1/2+${p.radius}x2`;
             }
             if (p.rollType2 == "quadrant") {
               correctAnswer = `2xpix${p.radius}x1/4+2x${p.radius}`;
+              correctAnswerTwo = `2xpix${p.radius}x1/4+${p.radius}x2`;
             }
             if (p.rollType2 == "others") {
               correctAnswer = `2xpix${p.radius}x${p.rollOthers}/360+2x${p.radius}`;
+              correctAnswerTwo = `2xpix${p.radius}x${p.rollOthers}/360+${p.radius}x2`;
             }
           }
         }
@@ -23556,6 +23614,8 @@ function genProblems() {
       length: undefined,
       breadth: undefined,
       height: undefined,
+      smallBreadth: undefined,
+      smallLength: undefined,
     };
   }
 
@@ -24008,6 +24068,8 @@ function genProblems() {
   }
 
   if (level == 6.01) {
+    setting = calArrAll(2, calArr, setting, 9);
+    setting = checkRange(setting, calArr, skipArr);
     return {
       rollType: ["area", "circumference"][genNumbers(2)],
       rollRD: ["r", "d"][genNumbers(2)],
@@ -27893,9 +27955,9 @@ function buttonLevelSetting() {
 
     case "Level 4.21":
       setting = prompt(
-        "1. Perfect Cutting\n2. Rectangle\n3. Cuboid\n4. Circles\n\n9. Everything"
+        "1. Perfect Cutting\n2. Rectangle\n3. Cuboid\n4. Circles\n5. Rectangles\n\n9. Everything"
       );
-      accepted = [1, 2, 3, 4, 9];
+      accepted = [1, 2, 3, 4, 5, 9];
       setting = settingCheck(setting, accepted, level);
       level = 4.21;
       scoreNeeded = 10;
@@ -28201,18 +28263,16 @@ function buttonLevelSetting() {
       break;
 
     case "Level 6.01":
-      difficulty = prompt("Enter 0 or 1");
-      console.log(difficulty);
+      setting = prompt("1. Basic\n2. Intermediate", 2);
+      // difficulty = prompt("Enter 0 or 1");
+      // console.log(difficulty);
       level = 6.01;
-      if (difficulty == 1) {
-        scoreNeeded = 10;
-      } else {
-        scoreNeeded = 20;
-      }
-      gold = highScore6DotZero1.time;
-      silver = highScore6DotZero1.time + (cutoff - highScore6DotZero1.time) / 3;
-      bronze =
-        highScore6DotZero1.time + ((cutoff - highScore6DotZero1.time) / 3) * 2;
+      // if (difficulty == 1) {
+      //   scoreNeeded = 10;
+      // } else {
+      //   scoreNeeded = 20;
+      // }
+      scoreNeeded = 20;
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
