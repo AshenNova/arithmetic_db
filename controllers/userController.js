@@ -504,24 +504,38 @@ function settings(level, age, allAttempts) {
     let countTwo = 0;
     let countThree = 0;
     let countFour = 0;
+    let countFive = 0;
 
     allAttempts.forEach((item) => {
       if (item.level == 4.21) {
         if (item.setting == 1) countOne += 1;
-        if (item.setting == 2 || item.setting == "1-2") {
+        if (item.setting == 2 || item.setting == "1-2" || age >= 10) {
           countTwo += 1;
         }
-        if (item.setting == 3 || item.setting == "1-3") {
+        if (item.setting == 3 || item.setting == "1-3" || age >= 11) {
           countThree += 1;
         }
-        if (item.setting == 4 || item.setting == "1-4") {
+        if (
+          item.setting == 4 ||
+          item.setting == "1-4" ||
+          (age >= 12 && new Date().getMonth() >= 3)
+        ) {
           countFour += 1;
+        }
+        if (
+          item.setting == 5 ||
+          item.setting == "1-5" ||
+          (age >= 12 && new Date().getMonth() >= 5)
+        ) {
+          countFive += 1;
         }
         if (item.setting == 9) countNine += 1;
       }
     });
     if (countNine > 0) {
       return 9;
+    } else if (countFour > 0) {
+      return "1-4";
     } else if (countThree > 0) {
       return "1-3";
     } else if (countTwo > 0) {
