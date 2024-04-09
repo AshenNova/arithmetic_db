@@ -4027,17 +4027,18 @@ function updateProblems() {
     }
 
     if (setting == 5) {
-      const min = 3;
-
-      p.smallLength = genNumbers(min) + 5;
-      p.smallBreadth = genNumbers(3) + 1;
-      p.length = genNumbers(30) + 40;
-      p.breadth = genNumbers(20) + 40;
-
+      const min = 5;
+      const a = genNumbers(10) + 2;
+      const b = genNumbers(10) + 2;
+      p.smallLength = [2, 3, 5, 7][genNumbers(3)];
+      p.smallBreadth = [2, 3, 5, 9][genNumbers(3)];
       while (p.smallLength == p.smallBreadth) {
-        p.length = genNumbers(30) + 40;
-        p.breadth = genNumbers(20) + 40;
+        p.smallLength = [2, 3, 5, 7][genNumbers(3)];
+        p.smallBreadth = [2, 3, 5, 9][genNumbers(3)];
       }
+      p.length = a * p.smallLength + p.smallBreadth;
+      p.breadth = b * p.smallBreadth + p.smallLength;
+
       displayProblem.innerHTML = `
       How many <u>rectangles</u> of dimension ${p.smallLength} and ${p.smallBreadth} cm can be cut out from a rectangle with a dimension of </br>
       ${p.length} cm by ${p.breadth} cm?
@@ -18708,18 +18709,21 @@ function handleSubmit(e) {
         const extraTwo = extraShapes(cR, dR, p.smallLength, p.smallBreadth);
         const B = standardTwo + extraTwo;
 
-        if (A >= B){
-          if (extraOne!= 0){
-            correctAnswer = `${a}x${b}+${extraOne}=${A}`
+        if (A >= B) {
+          if (extraOne != 0) {
+            correctAnswer = `${a}x${b}+${extraOne}=${A}`;
+            correctAnswerTwo = `${b}x${a}+${extraOne}=${A}`;
           } else {
-
-            correctAnswer = `${a}x${b}=${A}`
+            correctAnswer = `${a}x${b}=${A}`;
+            correctAnswerTwo = `${b}x${a}=${A}`;
           }
         } else {
-          if (extraTwo != 0){
-            correctAnswer =`${c}x${d}+${extraTwo}=${B}`
+          if (extraTwo != 0) {
+            correctAnswer = `${c}x${d}+${extraTwo}=${B}`;
+            correctAnswerTwo = `${d}x${c}+${extraTwo}=${B}`;
           } else {
-            correctAnswer =`${c}x${d}=${B}`
+            correctAnswer = `${c}x${d}=${B}`;
+            correctAnswerTwo = `${d}x${c}=${B}`;
           }
         }
       }
