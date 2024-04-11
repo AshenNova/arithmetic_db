@@ -627,7 +627,6 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
           checkLimit.forEach((today) => {
             if (today.level == item.level && today.mode == item.mode) {
               accomplish += 1;
-              recCount += 1;
             }
           });
         });
@@ -646,6 +645,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
           // console.log(`After: ${pointsAwarded}`);
         }
       }
+      recCount = accomplish;
     });
     console.log(`Attempts today: ${checkLimit.length}`);
     checkLimit.forEach((today) => {
