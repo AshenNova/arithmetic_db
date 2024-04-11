@@ -618,7 +618,6 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         checkLimit.forEach((today) => {
           if (today.level == level && today.mode == mode) {
             count += 1;
-            recCount += 1;
             console.log(`------> Count: ${count}`);
           }
         });
@@ -628,6 +627,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
           checkLimit.forEach((today) => {
             if (today.level == item.level && today.mode == item.mode) {
               accomplish += 1;
+              recCount += 1;
             }
           });
         });
