@@ -333,6 +333,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
   const attemptNum = req.body.attemptNum;
   const summary = req.body.summary;
   let recCheck = false;
+  let recCount = 0;
 
   const ip = req.headers["x-forwarded-for"] || req.ip;
   console.log(`This is ${req.body.user}'s attempt number ${attemptNum}.`);
@@ -617,6 +618,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         checkLimit.forEach((today) => {
           if (today.level == level && today.mode == mode) {
             count += 1;
+            recCount += 1;
             console.log(`------> Count: ${count}`);
           }
         });
@@ -634,6 +636,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
           console.log("BONUS!: " + accomplish);
           pointsAwarded += accomplish;
           userNow.points += accomplish;
+
           //IF ALL RECOMMENDED HAS BEEN COMPLETED, AWARD MORE!
           if (recommend.length == accomplish) {
             console.log("Complete bonus!: 15");
@@ -695,6 +698,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     age: new Date().getFullYear() - DOB.getFullYear(),
     interventionID: intervention._id,
     recommendCheck: recCheck,
+    recommendCount: recCount,
   });
 
   //SAVING NEW ATTEMPT

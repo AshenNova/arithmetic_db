@@ -203,14 +203,14 @@
                   <td><button class="btn btn-outline-dark btn-sm"><%= "Normal" %></button></td>
                   <% } %>
                 <!-- <td><%= item.mode %></td> -->
+                <% const genesisDate = new Date(2024, 3, 11, 0) %>
                 <td>
-                  <% const genesisDate = new Date(2024, 3, 11, 0) %>
-                  <% if (item.recommendCheck) { %>
-                   <%= item.level %>
-                 <% } else if (!item.recommendCheck && (item.date > genesisDate)){ %>
-                 <%= item.level %> <i class="fa-solid fa-circle-exclamation" style="color:red"></i>
-                <% }  else { %>
-                  <%= item.level %>
+                  <%= item.level %> 
+                 <% if (!item.recommendCheck && (item.date > genesisDate)){ %>
+                   <i class="fa-solid fa-circle-exclamation" style="color:red"></i>
+                 <% } %>
+                 <% if (item.recommendCount == 6){ %>
+                  <i class="fa-slid fa-crown" style="color:goldenrod"></i>
                 <% } %>
               </td>
                 <% if (item.setting == "0" || item.setting == " "){ %>
