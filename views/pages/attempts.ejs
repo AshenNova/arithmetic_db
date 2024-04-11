@@ -205,9 +205,9 @@
                 <!-- <td><%= item.mode %></td> -->
                 <td>
                   <% const genesisDate = new Date(2024, 3, 11, 0) %>
-                  <% if (item.recommend) { %>
+                  <% if (item.recommendCheck) { %>
                    <%= item.level %>
-                 <% } else if (!item.recommend && (item.date > genesisDate)){ %>
+                 <% } else if (!item.recommendCheck && (item.date > genesisDate)){ %>
                  <%= item.level %> <i class="fa-solid fa-circle-exclamation" style="color:red"></i>
                 <% }  else { %>
                   <%= item.level %>
