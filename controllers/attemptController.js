@@ -606,10 +606,10 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     });
 
     //BONUS POINTS FOR DOING RECOMMENDATION
-
+    let accomplish = 0;
     recommend.forEach((item) => {
       // CHECK IF THE ATTEMPT IS ON THE RECOMMENDED LIST
-      let accomplish = 0;
+
       if (item.level == level && item.mode == mode) {
         let count = 0;
         accomplish += 1;
