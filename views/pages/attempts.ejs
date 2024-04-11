@@ -58,11 +58,6 @@
             <input type='text' name="mode" <% if (queryObj && queryObj.mode) { %>
               value="<%= queryObj.mode %>"
             <% } %>></input>
-            <!-- <select class="form-select" data-bs-toggle="dropdown">
-              <options>Normal</options>
-              <options>Easy</options>
-              <options>Hardcore</options>
-            </select> -->
            </div> 
 
       </div>
@@ -208,7 +203,16 @@
                   <td><button class="btn btn-outline-dark btn-sm"><%= "Normal" %></button></td>
                   <% } %>
                 <!-- <td><%= item.mode %></td> -->
-                <td><%= item.level %></td>
+                <td>
+                  <% const genesisDate = new Date(2024, 3, 11, 0) %>
+                  <% if (item.recommend) { %>
+                   <%= item.level %>
+                 <% } else if (!item.recommend && (item.date > genesisDate)){ %>
+                 <%= item.level %> <i class="fa-solid fa-circle-exclamation" style="color:red"></i>
+                <% }  else { %>
+                  <%= item.level %>
+                <% } %>
+              </td>
                 <% if (item.setting == "0" || item.setting == " "){ %>
                   <td><%= " " %></td>
                 <% }  else { %>
@@ -333,7 +337,13 @@
                   <td class="btn btn-outline-dark btn-sm"> <%= "Normal" %></td>
                   <% } %>
                 <!-- <td><%= item.mode %></td> -->
-                <td><%= item.level %></td>
+                <td>
+                  <% if (item.recommend) { %>
+                    <%= item.level %>
+                  <% } else { %>
+                    <span style="background-color: red;">Hi</span>
+                  <% } %>
+                </td>
                 <% if (item.setting == "0" || item.setting == " "){ %>
                   <td><%= " " %></td>
                 <% }  else { %>

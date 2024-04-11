@@ -610,6 +610,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
       if (item.level == level && item.mode == mode) {
         let count = 0;
         accomplish += 1;
+        req.body.recommend = true;
         // IF YES, CHECK IF IT IS THE FIRST ATTEMPT
         checkLimit.forEach((today) => {
           if (today.level == level && today.mode == mode) {
@@ -693,6 +694,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     points: pointsAwarded,
     age: new Date().getFullYear() - DOB.getFullYear(),
     interventionID: intervention._id,
+    recommend: req.body.recommend,
   });
 
   //SAVING NEW ATTEMPT
@@ -927,22 +929,6 @@ exports.getHighscore = catchAsync(async (req, res, next) => {
   const highscoreLevels = await Highscore.distinct("level");
   const highscoreModes = await Highscore.distinct("mode");
   let highscoreHoldersArr = [];
-  // console.log(highscoreLevels);
-
-  // for (let i = 0; i < highscoreLevels.length; i++) {
-  //   for (let x = 0; x < highscoreModes.length; x++) {
-  //     const highscoreHolder = await Highscore.find({
-  //       level: highscoreLevels[i],
-  //       mode: highscoreModes[x],
-  //     })
-  //       .sort({ time: 1 })
-  //       .limit(1);
-  //     // console.log(highscoreHolder);
-  //     if (highscoreHolder[0]) highscoreHoldersArr.push(highscoreHolder[0]);
-  //   }
-  // }
-
-  // const highscoreHolder = await Highscore.find().sort({ level: 1, time: 1 });
 
   const [
     highscoreAge7,

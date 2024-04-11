@@ -633,7 +633,7 @@ const generateRec = async (nameTemp) => {
         interventions.forEach((item) => {
           if (item.dateStart)
             item.dateStart = item.dateStart.setHours(0, 0, 0, 0);
-          console.log(item.dateStart);
+          // console.log(item.dateStart);
           if (item.level.startsWith("cal") && new Date() > item.dateStart) {
             recommend.push(item);
             uniqLevel.push(item.level);
@@ -669,7 +669,7 @@ const generateRec = async (nameTemp) => {
                   calculationsArr.push(item);
                 }
               });
-              console.log(calculationsArr + " 💯");
+              // console.log(calculationsArr + " 💯");
               const index = calculationsArr.indexOf(attempt.level);
               recommendObj.level = calculationsArr[index + 1];
               if (index + 1 == calculationsArr.length) {
@@ -686,29 +686,26 @@ const generateRec = async (nameTemp) => {
               console.log(`The maximum is ${maximum}`);
               latestAttempt.forEach((item) => {
                 if (item.level.startsWith(recommendObj.level)) {
-                  // console.log("Rabbit 1");
                   if (item.setting == 99) {
-                    // console.log("Rabbit 1-1");
                     console.log("99 exist");
                     count += 1;
                   } else {
-                    // console.log("Rabbit 1-2");
                     console.log(
                       `Checking if setting is integer: ${item.setting} for Level: ${item.level}`
                     );
                     // console.log(Number.isInteger(item.setting * 1));
                     if (Number.isInteger(item.setting * 1)) {
-                      console.log("Yes Integer");
+                      // console.log("Yes Integer");
                       console.log(item.setting);
                       if (item.setting * 1 > maximum) {
                         maximum = item.setting;
                       }
                     } else {
-                      console.log("No integer, splitting");
-                      console.log(item.setting);
+                      // console.log("No integer, splitting");
+                      // console.log(item.setting);
                       const split = item.setting.split("-");
-                      console.log(split);
-                      console.log(`The level is ${item.level}`);
+                      // console.log(split);
+                      // console.log(`The level is ${item.level}`);
                       const largest = split[split.length - 1];
                       if (largest > maximum) {
                         maximum = largest;
@@ -775,7 +772,7 @@ const generateRec = async (nameTemp) => {
         interventions.forEach((item) => {
           if (item.dateStart)
             item.dateStart = item.dateStart.setHours(0, 0, 0, 0);
-          console.log(item.dateStart);
+          // console.log(item.dateStart);
           if (item.level.startsWith("heu") && new Date() > item.dateStart) {
             // recommendObj.level = item.level;
             // recommendObj.setting = item.setting;
@@ -816,7 +813,7 @@ const generateRec = async (nameTemp) => {
                   heuristicsArr.push(item);
                 }
               });
-              console.log(heuristicsArr + " 💯");
+              // console.log(heuristicsArr + " 💯");
               const index = heuristicsArr.indexOf(attempt.level);
               recommendObj.level = heuristicsArr[index + 1];
               if (index + 1 == heuristicsArr.length) {
@@ -841,13 +838,13 @@ const generateRec = async (nameTemp) => {
                     );
                     // console.log(Number.isInteger(item.setting * 1));
                     if (Number.isInteger(item.setting * 1)) {
-                      console.log("Yes Integer");
-                      console.log(item.setting);
+                      // console.log("Yes Integer");
+                      // console.log(item.setting);
                       if (item.setting > maximum) {
                         maximum = item.setting;
                       }
                     } else {
-                      console.log("No integer, splitting");
+                      // console.log("No integer, splitting");
                       console.log(item.setting);
                       const split = item.setting.split("-");
                       console.log(split);
@@ -901,7 +898,7 @@ const generateRec = async (nameTemp) => {
   if (interventions) {
     interventions.forEach((item) => {
       if (item.dateStart) item.dateStart = item.dateStart.setHours(0, 0, 0, 0);
-      console.log(item.dateStart);
+      // console.log(item.dateStart);
       if (
         !item.level.startsWith("heu") &&
         !item.level.startsWith("cal") &&
