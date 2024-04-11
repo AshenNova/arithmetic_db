@@ -12778,8 +12778,7 @@ function updateProblems() {
       if (p.unit == "ℓ") {
         item = "bottle";
       }
-
-      const displayA = `
+      displayProblem.innerHTML = `
       <div class="frac">
       <span>${p.numeA}</span>
       <span class="symbol">/</span>
@@ -12793,22 +12792,6 @@ function updateProblems() {
       </div> ${p.unit}.</br>
       How many ${p.unit} are ${p.question} ${item}s?
       `;
-
-      const displayB = `
-      <div class="frac">
-        <span>${p.numeB}</span>
-        <span class="symbol">/</span>
-        <span class="bottom">${p.denoB}</span>
-      </div> ${p.unit} is
-      <div class="frac">
-        <span>${p.numeA}</span>
-        <span class="symbol">/</span>
-        <span class="bottom">${p.denoA}</span>
-        </div>
-      of a ${item}.</br>
-      How many ${p.unit} are ${p.question} ${item}s?
-      `;
-      displayProblem.innerHTML = genNumbers(2) == 1 ? displayA : displayB;
     }
 
     // CIRCLES

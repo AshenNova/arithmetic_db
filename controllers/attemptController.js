@@ -604,13 +604,14 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     });
 
     //BONUS POINTS FOR DOING RECOMMENDATION
+    // let recommendCheck = false;
     recommend.forEach((item) => {
       // CHECK IF THE ATTEMPT IS ON THE RECOMMENDED LIST
       let accomplish = 0;
       if (item.level == level && item.mode == mode) {
         let count = 0;
         accomplish += 1;
-        req.body.recommend = true;
+        // recommendCheck = true;
         // IF YES, CHECK IF IT IS THE FIRST ATTEMPT
         checkLimit.forEach((today) => {
           if (today.level == level && today.mode == mode) {
@@ -657,11 +658,8 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     }
   };
 
-  // UPDATE INTERVENTION
-  // let intervention = {
-  //   id: undefined,
-  // };
-  intervention = await Intervention.findOne({
+  console.log(`Searching Intervention`);
+  let intervention = await Intervention.findOne({
     student: req.body.user.toLowerCase(),
     level: req.body.level,
     setting: req.body.setting,
@@ -694,7 +692,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     points: pointsAwarded,
     age: new Date().getFullYear() - DOB.getFullYear(),
     interventionID: intervention._id,
-    recommend: req.body.recommend,
+    recommend: recommendCheck,
   });
 
   //SAVING NEW ATTEMPT
