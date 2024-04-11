@@ -332,6 +332,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
   const extra = req.body.extra;
   const attemptNum = req.body.attemptNum;
   const summary = req.body.summary;
+  let recCheck = false;
 
   const ip = req.headers["x-forwarded-for"] || req.ip;
   console.log(`This is ${req.body.user}'s attempt number ${attemptNum}.`);
@@ -604,14 +605,14 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     });
 
     //BONUS POINTS FOR DOING RECOMMENDATION
-    // let recommendCheck = false;
+
     recommend.forEach((item) => {
       // CHECK IF THE ATTEMPT IS ON THE RECOMMENDED LIST
       let accomplish = 0;
       if (item.level == level && item.mode == mode) {
         let count = 0;
         accomplish += 1;
-        // recommendCheck = true;
+        recCheck = true;
         // IF YES, CHECK IF IT IS THE FIRST ATTEMPT
         checkLimit.forEach((today) => {
           if (today.level == level && today.mode == mode) {
@@ -657,6 +658,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
       pointsAwarded = 0;
     }
   };
+  console.log("Done checking limit");
 
   console.log(`Searching Intervention`);
   let intervention = await Intervention.findOne({
@@ -692,6 +694,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     points: pointsAwarded,
     age: new Date().getFullYear() - DOB.getFullYear(),
     interventionID: intervention._id,
+    recommendCheck: recCheck,
   });
 
   //SAVING NEW ATTEMPT

@@ -25,7 +25,7 @@ const attemptSchema = new mongoose.Schema({
   },
   age: Number,
   interventionID: { type: String, default: "" },
-  // recommend: { type: Boolean, default: false },
+  recommendCheck: { type: Boolean },
 });
 
 const Attempt = mongoose.model("attempts", attemptSchema);
