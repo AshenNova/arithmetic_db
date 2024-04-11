@@ -692,7 +692,6 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     points: pointsAwarded,
     age: new Date().getFullYear() - DOB.getFullYear(),
     interventionID: intervention._id,
-    recommend: recommendCheck,
   });
 
   //SAVING NEW ATTEMPT
