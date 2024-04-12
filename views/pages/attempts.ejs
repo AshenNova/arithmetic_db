@@ -205,13 +205,14 @@
                 <!-- <td><%= item.mode %></td> -->
                 <% const genesisDate = new Date(2024, 3, 11, 0) %>
                 <td>
+                 
+                  <% if (item.recommendCount == 6){ %>
+                    <i class="fa-solid fa-crown" style="color:goldenrod"></i></br>
+                  <% } %>
                   <%= item.level %> 
-                 <% if (!item.recommendCheck && (item.date > genesisDate)){ %>
-                   <i class="fa-solid fa-circle-exclamation" style="color:red"></i>
-                 <% } %>
-                 <% if (item.recommendCount == 6){ %>
-                  <i class="fa-solid fa-crown" style="color:goldenrod"></i>
-                <% } %>
+                  <% if (!item.recommendCheck && (item.date > genesisDate)){ %>
+                  <i class="fa-solid fa-circle-exclamation" style="color:red"></i>
+                  <% } %>
               </td>
                 <% if (item.setting == "0" || item.setting == " "){ %>
                   <td><%= " " %></td>
