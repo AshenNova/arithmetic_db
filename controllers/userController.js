@@ -447,7 +447,7 @@ function settings(level, age, allAttempts) {
     } else {
       return 6;
     }
-  } else if (level == 3.16) {
+  } else if (level == 3.16 || level == 5.01) {
     let countNine = 0;
     let countOne = 0;
     let countTwo = 0;
