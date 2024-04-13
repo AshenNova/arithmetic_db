@@ -2967,6 +2967,80 @@ function updateProblems() {
     }
   }
 
+  if (level == 4.06) {
+    if (p.oneValue == p.twoValue) {
+      p.twoValue += 1;
+    }
+    if (p.rollTypeClue == "11") {
+      if (p.rollTypeQnSyn == "isof") {
+        displayProblem.innerHTML = `
+      ${p.objectOne} is
+      <div class="frac">
+      <span>${p.oneValue}</span>
+      <span class="symbol">/</span>
+      <span class="bottom">${p.twoValue}</span>
+      </div>
+      of ${p.objectTwo}.</br>
+      What fraction is ${
+        p.rollTypeQn11 == "1T"
+          ? `${p.objectOne} of ${p.objectOne} and ${p.objectTwo}.`
+          : `${p.objectOne} and ${p.objectTwo} of ${p.objectOne}.`
+      }
+      `;
+      }
+      if (p.rollTypeQnSyn == "ofis") {
+        displayProblem.innerHTML = `
+        ${p.objectOne} is
+        <div class="frac">
+        <span>${p.oneValue}</span>
+        <span class="symbol">/</span>
+        <span class="bottom">${p.twoValue}</span>
+        </div>
+        of ${p.objectTwo}.</br>
+        What fraction of ${
+          p.rollTypeQn11 == "1T"
+            ? `${p.objectOne} is ${p.objectOne} and ${p.objectTwo}.`
+            : `${p.objectOne} and ${p.objectTwo} is ${p.objectOne}.`
+        }
+        `;
+      }
+    }
+    if (p.rollTypeClue == "1T") {
+      if (p.rollTypeQnSyn == "isof") {
+        displayProblem.innerHTML = `
+        ${p.objectOne} is 
+        <div class="frac">
+        <span>${p.oneValue}</span>
+        <span class="symbol">/</span>
+        <span class="bottom">${p.twoValue + p.oneValue}</span>
+        </div>
+         of ${p.objectOne} and ${p.objectTwo}.</br>
+        What fraction is ${
+          p.rollTypeQn1T == "AB"
+            ? `${p.objectOne} of ${p.objectTwo}.`
+            : `${p.objectTwo} of ${p.objectOne}.`
+        }
+        `;
+      }
+      if (p.rollTypeQnSyn == "ofis") {
+        displayProblem.innerHTML = `
+        ${p.objectOne} is 
+        <div class="frac">
+        <span>${p.oneValue}</span>
+        <span class="symbol">/</span>
+        <span class="bottom">${p.twoValue + p.oneValue}</span>
+        </div>
+       of ${p.objectOne} and ${p.objectTwo}.</br>
+        What fraction of ${
+          p.rollTypeQn1T == "AB"
+            ? `${p.objectOne} is ${p.objectTwo}.`
+            : `${p.objectTwo} is ${p.objectOne}.`
+        }
+        `;
+      }
+    }
+  }
+
   if (level == 4.07) {
     for (let i = 0; i < 7; i++) {
       const chosenNumber = arr[genNumbers(arr.length - 1)];
@@ -18387,6 +18461,41 @@ function handleSubmit(e) {
       }
     }
 
+    if (level == 4.06) {
+      if (p.rollTypeClue == "11") {
+        if (p.rollTypeQnSyn == "isof") {
+          if (p.rollTypeQn11 == "1T") {
+            correctAnswer = `${p.oneValue}/${p.oneValue + p.twoValue}`;
+          } else {
+            correctAnswer = `${p.oneValue + p.twoValue}/${p.oneValue}`;
+          }
+        }
+        if (p.rollTypeQnSyn == "ofis") {
+          if (p.rollTypeQn11 != "1T") {
+            correctAnswer = `${p.oneValue}/${p.oneValue + p.twoValue}`;
+          } else {
+            correctAnswer = `${p.oneValue + p.twoValue}/${p.oneValue}`;
+          }
+        }
+      }
+      if (p.rollTypeClue == "1T") {
+        if (p.rollTypeQnSyn == "isof") {
+          if (p.rollTypeQn1T == "AB") {
+            correctAnswer = `${p.oneValue}/${p.twoValue}`;
+          } else {
+            correctAnswer = `${p.twoValue}/${p.oneValue}`;
+          }
+        }
+        if (p.rollTypeQnSyn == "ofis") {
+          if (p.rollTypeQn1T == "AB") {
+            correctAnswer = `${p.twoValue}/${p.oneValue}`;
+          } else {
+            correctAnswer = `${p.oneValue}/${p.twoValue}`;
+          }
+        }
+      }
+    }
+
     if (level == 4.07) {
       if (p.placeValue == "thousandths") correctAnswer = arr2[0];
       if (p.placeValue == "hundredths") correctAnswer = arr2[1];
@@ -23431,6 +23540,19 @@ function genProblems() {
     }
   }
 
+  if (level == 4.06) {
+    return {
+      objectOne: ["A", "B", "C"][genNumbers(3)],
+      objectTwo: ["X", "Y", "Z"][genNumbers(3)],
+      oneValue: genNumbers(5) + 1,
+      twoValue: genNumbers(5) + 1,
+      rollTypeClue: ["11", "1T"][genNumbers(2)],
+      rollTypeQnSyn: ["isof", "ofis"][genNumbers(2)],
+      rollTypeQn1T: ["AB", "BA"][genNumbers(2)],
+      rollTypeQn11: ["1T", "T1"][genNumbers(2)],
+    };
+  }
+
   if (level == 4.07) {
     return {
       holdingNumber: 0,
@@ -27828,6 +27950,17 @@ function buttonLevelSetting() {
       instructions.textContent = "";
       displayProblem.style.fontSize = "25px";
       displayProblem.style.marginBottom = "150px";
+      break;
+
+    case "Level 4.06":
+      level = 4.06;
+      scoreNeeded = 20;
+      document.querySelector("#user-input").setAttribute("type", "text");
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
+      instructions.innerHTML = `
+          Do not need to simplify.
+          `;
       break;
 
     case "Level 4.07":
