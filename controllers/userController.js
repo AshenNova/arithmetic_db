@@ -554,6 +554,23 @@ function settings(level, age, allAttempts) {
     } else {
       return "1";
     }
+  } else if (level == "6.01") {
+    let countOne = 0;
+    let countTwo = 0;
+
+    allAttempts.forEach((item) => {
+      if (item.level == "6.01" && item.setting == 1) {
+        countOne += 1;
+      }
+      if (item.level == "6.01" && item.setting == 2) {
+        countTwo += 1;
+      }
+    });
+    if (countTwo > 0) {
+      return "2";
+    } else {
+      return "1";
+    }
   } else {
     return "";
   }

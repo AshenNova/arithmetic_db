@@ -623,10 +623,16 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         });
 
         // CHECK HOW MANY DAILY RECOMMENDATIONS HAS BEEN DONE.
+        let uniqueRecommend = [];
         recommend.forEach((item) => {
           checkLimit.forEach((today) => {
-            if (today.level == item.level && today.mode == item.mode) {
+            if (
+              today.level == item.level &&
+              today.mode == item.mode &&
+              !uniqueRecommend.includes(item.level)
+            ) {
               accomplish += 1;
+              uniqueRecommend.push(item.level);
             }
           });
         });
@@ -1123,7 +1129,7 @@ const updateMany = catchAsync(async (req, res, next) => {
   console.log(updateAttempt, updateHighscore);
 });
 
-updateMany();
+// updateMany();
 
 const deleteMany = async (req, res) => {
   const deleteNow = { user: "Kenneth Lin" };
