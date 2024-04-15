@@ -985,6 +985,7 @@ function calArrAll(max, arr, setting, maxSetting, level) {
 }
 
 const updateCalc = function () {
+  displayProblem.innerHTML = ``;
   skipGlobalUpdateProblem = 1;
   regen += 1;
   console.log(`Regen: ${regen}`);
@@ -995,8 +996,6 @@ const updateCalc = function () {
   ctx.clearRect(0, 0, 400, 275);
 
   updateProblems();
-
-  // return skipGlobalUpdateProblem;
 };
 
 function checkRange(setting, arr, skipArr) {
@@ -3246,104 +3245,6 @@ function updateProblems() {
     }
   }
 
-  // if (level == 4.15) {
-  //   // content
-
-  //   while (p.numerator == p.denominator) {
-  //     p.numerator = genNumbers(9) + 1;
-  //     p.denominator = genNumbers(9) + 1;
-  //   }
-
-  //   if (p.numerator > p.denominator) {
-  //     [p.numerator, p.denominator] = swap(p.numerator, p.denominator);
-  //   }
-
-  //   [p.numerator, p.denominator] = simplify(p.numerator, p.denominator);
-  //   console.log(p.numerator, p.denominator);
-
-  //   p.firstUnit = p.numerator;
-  //   p.secondUnit = p.denominator - p.numerator;
-  //   p.totalUnit = p.denominator;
-  //   p.differenceUnit = Math.abs(p.numerator - p.secondUnit);
-
-  //   if (p.firstUnit == p.secondUnit) {
-  //     console.log("Updated");
-  //     return updateProblems();
-  //   }
-  //   if (p.secondSelection == 3) {
-  //     p.identity = genNumbers(2);
-  //   }
-  //   // let second = type[identity][p.secondSelection]
-  //   while (p.lastSelection == p.secondSelection)
-  //     p.lastSelection = [genNumbers(3)];
-
-  //   let last = p.type[p.identity][p.lastSelection];
-  //   if (p.lastSelection == 0) p.lastUnits = p.firstUnit;
-  //   if (p.lastSelection == 1) p.lastUnits = p.secondUnit;
-  //   if (p.lastSelection == 2) p.lastUnits = p.totalUnit;
-
-  //   if (p.secondSelection == 0) {
-  //     p.value = p.firstUnit * (genNumbers(5) + 5);
-  //   } else if (p.secondSelection == 1) {
-  //     p.value = p.secondUnit * (genNumbers(5) + 5);
-  //   } else if (p.secondSelection == 2) {
-  //     p.value = p.totalUnit * (genNumbers(5) + 5);
-  //   } else {
-  //     p.value = p.differenceUnit * (genNumbers(5) + 5);
-  //   }
-  //   if (p.secondSelection != 3) {
-  //     p.secondSelection = p.type[p.identity][p.secondSelection];
-  //   }
-  //   console.log(`First Selection: ${p.firstSelection}, ${p.numerator} units`);
-  //   console.log(`Second Selection: ${p.secondSelection}, ${p.value}`);
-  //   console.log(`Last Selection: ${p.lastSelection}, ${p.denominator}`);
-
-  //   if ((p.identity == 0 || p.identity == 1) && p.secondSelection != 3) {
-  //     displayProblem.innerHTML = `
-  //    ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${
-  //       p.denominator
-  //     } of the ${p.type[p.identity][2]} are ${
-  //       p.type[p.identity][p.firstSelection]
-  //     }.</br>
-  //    There are ${p.value} ${p.secondSelection}.</br>
-  //    How many ${last} are there?
-  //   `;
-  //   } else if ((p.identity == 2 || p.identity == 3) && p.secondSelection != 3) {
-  //     displayProblem.innerHTML = `
-  //    ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${
-  //       p.denominator
-  //     } of the ${p.type[p.identity][2]} was ${
-  //       p.type[p.identity][p.firstSelection]
-  //     }.</br>
-  //    ${
-  //      p.secondSelection == "total money"
-  //        ? `There were $${p.value} at first.`
-  //        : `$${p.value} was ${p.secondSelection}.`
-  //    }</br>
-  //    ${
-  //      p.lastSelection == 2
-  //        ? `How much were there at first?`
-  //        : `How much was ${last}?`
-  //    }
-  //   `;
-  //   } else if ((p.identity == 0 || p.identity == 1) && p.secondSelection == 3) {
-  //     console.log("here");
-  //     displayProblem.innerHTML = `
-  //      ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${
-  //       p.denominator
-  //     } of the ${p.type[p.identity][2]} are ${
-  //       p.type[p.identity][p.firstSelection]
-  //     }.</br>
-  //      There are ${p.value} ${p.firstUnit > p.secondUnit ? "more" : "less"} ${
-  //       p.type[p.identity][0]
-  //     } than ${p.type[p.identity][1]} </br>
-  //      How many ${last} are there?
-  //     `;
-  //   } else {
-  //     return updateProblems();
-  //   }
-  // }
-
   if (level == 4.15) {
     normalDisplay();
     displayProblem.innerHTML = `
@@ -4551,31 +4452,31 @@ function updateProblems() {
 
     // first line
     if (p.firstVar == "whole" && p.secondVar == "whole") {
-      return updateProblems();
+      return updateCalc();
     }
     if (
       (p.firstVar == "whole" && p.secondVar == "real" && p.operator == "+") ||
       (p.firstVar == "whole" && p.secondVar == "real" && p.operator == "-")
     ) {
-      return updateProblems();
+      return updateCalc();
     }
     if (
       (p.firstVar == "fake" && p.secondVar == "real" && p.operator == "+") ||
       (p.firstVar == "fake" && p.secondVar == "real" && p.operator == "-")
     ) {
-      return updateProblems();
+      return updateCalc();
     }
     if (
       (p.firstVar == "fake" && p.secondVar == "fake" && p.operator == "x") ||
       (p.firstVar == "fake" && p.secondVar == "fake" && p.operator == "/")
     ) {
-      return updateProblems();
+      return updateCalc();
     }
     if (
       (p.firstVar == "whole" && p.secondVar == "fake" && p.operator == "x") ||
       (p.firstVar == "whole" && p.secondVar == "fake" && p.operator == "/")
     ) {
-      return updateProblems();
+      return updateCalc();
     }
     if (p.numThree > p.numFour) {
       [p.numThree, p.numFour] = [p.numFour, p.numThree];
@@ -4598,7 +4499,7 @@ function updateProblems() {
       lineOne = `${p.firstPerson} has ${p.numOne} ${measurement} of ${object}.`;
     if (p.firstVar == "fake") {
       if (p.numOne == p.numTwo) {
-        return updateProblems();
+        return updateCalc();
       }
       lineOne = `${p.firstPerson} has ${p.numOne}/${p.numTwo} ${measurement} of ${object}.`;
     }
@@ -4654,7 +4555,7 @@ function updateProblems() {
     // if fake
     if (p.secondVar == "fake" && p.operator == "/") {
       console.log("Updated");
-      return updateProblems();
+      return updateCalc();
     }
     // Last line
     let lineThree = "";
@@ -7299,7 +7200,7 @@ function updateProblems() {
       p.numThree = p.numThree + p.numFour;
       if (p.numOne == p.numThree) {
         skipGlobalUpdateProblem = 1;
-        return updateProblems();
+        return updateCalc();
       }
       firstNum.textContent = p.numOne;
       secondNum.textContent = p.numThree;
@@ -7309,7 +7210,7 @@ function updateProblems() {
     if (setting == 3) {
       if (p.numTwo + p.numFour < 10) {
         skipGlobalUpdateProblem = 1;
-        return updateProblems();
+        return updateCalc();
       }
       p.numOne = p.numOne + p.numTwo;
       p.numThree = p.numThree + p.numFour;
@@ -7318,7 +7219,7 @@ function updateProblems() {
       }
       if (p.numOne + p.numThree > 100) {
         skipGlobalUpdateProblem = 1;
-        return updateProblems();
+        return updateCalc();
       }
       firstNum.textContent = p.numOne;
       secondNum.textContent = p.numThree;
@@ -7330,7 +7231,7 @@ function updateProblems() {
       p.numThree = p.numThree + p.numFour;
       if (p.numOne % 10 == 0 && p.numThree % 10 == 0) {
         skipGlobalUpdateProblem = 1;
-        return updateProblems();
+        return updateCalc();
       }
       firstNum.textContent = p.numOne;
       secondNum.textContent = p.numThree;
@@ -7341,14 +7242,14 @@ function updateProblems() {
     if (setting == 5) {
       if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
         skipGlobalUpdateProblem = 1;
-        return updateProblems();
+        return updateCalc();
       }
       if (p.version == "+") {
         p.numOne = genNumbers(4) + 1;
         p.numTwo = genNumbers(4) + 1;
         if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
           skipGlobalUpdateProblem = 1;
-          return updateProblems();
+          return updateCalc();
         }
         p.rowOneValue = p.numOne * 10 + p.numTwo;
         p.rowTwoValue = p.numTwo * 10 + p.numFour;
@@ -7364,7 +7265,7 @@ function updateProblems() {
       if (p.version == "-") {
         if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
           skipGlobalUpdateProblem = 1;
-          return updateProblems();
+          return updateCalc();
         }
         p.rowOneValue = p.numOne * 10 + p.numTwo;
         p.rowTwoValue = p.numTwo * 10 + p.numFour;
@@ -7433,7 +7334,7 @@ function updateProblems() {
       if (arr[5] > 100 || arr[5] < 0 || p.difference == 0) {
         arr = [];
         skipGlobalUpdateProblem = 1;
-        return updateProblems();
+        return updateCalc();
       }
       p.answer = arr[p.position];
       arr[p.position] = "____";
@@ -7452,7 +7353,7 @@ function updateProblems() {
         console.log(arr[5]);
         arr = [];
         skipGlobalUpdateProblem = 1;
-        return updateProblems();
+        return updateCalc();
       }
       p.answer = arr[p.position];
       arr[p.position] = "____";
@@ -7520,7 +7421,7 @@ function updateProblems() {
         console.log(numOneStr[i] * 1 + numTwoStr[i] * 1);
         if (numOneStr[i] * 1 + numTwoStr[i] * 1 >= 10) {
           skipGlobalUpdateProblem = 1;
-          return updateProblems();
+          return updateCalc();
         } else {
           console.log(numOneStr[i], numTwoStr[i]);
         }
@@ -7543,7 +7444,7 @@ function updateProblems() {
       for (let i = 0; i < numOneStr.length; i++) {
         if (numOneStr[i] * 1 - numTwoStr[i] * 1 < 0) {
           skipGlobalUpdateProblem = 1;
-          return updateProblems();
+          return updateCalc();
         } else {
           console.log(numOneStr[i], numTwoStr[i]);
         }
@@ -7573,7 +7474,7 @@ function updateProblems() {
         }
         if (i == 4) {
           // updateProblem = 1;
-          return updateProblems();
+          return updateCalc();
         }
       }
       console.log(arr, arr2);
@@ -7933,7 +7834,7 @@ function updateProblems() {
         console.log(numOneStr[i] * 1 + numTwoStr[i] * 1);
         if (numOneStr[i] * 1 + numTwoStr[i] * 1 >= 10) {
           skipGlobalUpdateProblem = 1;
-          return updateProblems();
+          return updateCalc();
         } else {
           console.log(numOneStr[i], numTwoStr[i]);
         }
@@ -7956,7 +7857,7 @@ function updateProblems() {
       // console.log(numTwoStr);
       for (let i = 0; i < numOneStr.length; i++) {
         if (numOneStr[i] * 1 - numTwoStr[i] * 1 < 0) {
-          return updateProblems();
+          return updateCalc();
         } else {
           console.log(numOneStr[i], numTwoStr[i]);
         }
@@ -8772,7 +8673,7 @@ function updateProblems() {
     if (setting == 1) {
       normalDisplay();
       if (p.numOne == p.numTwo) {
-        return updateProblems();
+        return updateCalc();
       }
       let multiplePos = [
         "",
@@ -8809,7 +8710,7 @@ function updateProblems() {
       let exclude = [7, 11, 13, 17, 19, 23, 29, 31];
       if (exclude.includes(p.numOne)) {
         console.log("Prime number detected!");
-        return updateProblems();
+        return updateCalc();
       }
       for (let i = 1; i <= p.numOne; i++) {
         if (p.numOne % i == 0) {
@@ -9135,7 +9036,7 @@ function updateProblems() {
 
       if (p.firstUnit == p.secondUnit) {
         console.log("Updated");
-        return updateProblems();
+        return updateCalc();
       }
       if (p.secondSelection == 3) {
         p.identity = genNumbers(2);
@@ -9213,7 +9114,7 @@ function updateProblems() {
        How many ${last} are there?
       `;
       } else {
-        return updateProblems();
+        return updateCalc();
       }
     }
 
@@ -9600,7 +9501,7 @@ function updateProblems() {
           p.numeratorOne == p.denominatorOne ||
           p.numeratorTwo == p.denominatorTwo
         ) {
-          return updateProblems();
+          return updateCalc();
         }
         numeratorOne.textContent = p.numeratorOne;
         denominatorOne.textContent = p.denominatorOne;
@@ -9614,7 +9515,7 @@ function updateProblems() {
     if (setting == 2) {
       mixedFractionDisplay();
       if (p.numeratorOne == p.denominatorOne) {
-        return updateProblems();
+        return updateCalc();
       }
       [p.numeratorOne, p.denominatorOne] = simplify(
         p.numeratorOne,
@@ -13479,7 +13380,7 @@ How far is apart is Town A and Town B?
         } else {
           skipGlobalUpdateProblem = 0;
           console.log("TOO MANY RESETS!");
-          updateProblems();
+          updateCalc();
         }
       }
     }
@@ -14433,7 +14334,7 @@ How many items are there in each bag?
       (range == 1 && p.rollz == 2)
     ) {
       if (p.numOne + p.numThree < 4) {
-        return updateProblems();
+        return updateCalc();
       }
       p.legOne = parseInt(p.objects[p.rollObj][2]);
       p.legTwo = parseInt(p.objects[p.rollObj][3]);
@@ -15104,7 +15005,7 @@ How many items are there in each bag?
       p.situationTwo = p.situationTwo * genNumbers(p.startTwo);
 
       if (p.situationOne == 0 || p.situationTwo == 0) {
-        return updateProblems();
+        return updateCalc();
       }
 
       let lineTwo = undefined;
@@ -15304,7 +15205,7 @@ How many items are there in each bag?
 
       p.objectOneS = p.totalValue - p.objectOneQ * p.price;
       p.objectTwoS = p.totalValue - p.objectTwoQ * p.price;
-      if (p.objectOneS == 0 || p.objectTwoS == 0) return updateProblems();
+      if (p.objectOneS == 0 || p.objectTwoS == 0) return updateCalc();
 
       if (p.rollType == "A") {
         displayProblem.innerHTML = `
@@ -15364,7 +15265,7 @@ How many items are there in each bag?
         let smallDifference = p.sceneTwo - p.sceneOne;
         if (bigDifference % smallDifference != 0) {
           console.log("Question changed!");
-          return updateProblems();
+          return updateCalc();
         }
       }
 
@@ -15500,7 +15401,7 @@ How many items are there in each bag?
       p.leftTwo = p.total % p.groupTwo;
 
       if (p.leftOne == 0 && p.leftTwo == 0) {
-        return updateProblems();
+        return updateCalc();
       }
       let extraOrExcess = ["extra", "excess"][genNumbers(2)];
       p.min = p.total - 10;
@@ -15561,7 +15462,7 @@ How many items are there in each bag?
 
       // for ( let i = 1; i < p.arrFirstNum.length-2; i++){
       //   if (p.arrSecondNum.includes(p.arrFirstNum[i])){
-      //     return updateProblems()
+      //     return updateCalc()
       //   }
       // }
 
@@ -15571,7 +15472,7 @@ How many items are there in each bag?
           p.arrSecondNum.includes(p.arrFirstNum[i]) &&
           p.arrFirstNum[i] != p.total
         ) {
-          return updateProblems();
+          return updateCalc();
         }
       }
 
@@ -15580,7 +15481,7 @@ How many items are there in each bag?
           p.arrFirstNum.includes(p.arrSecondNum[i]) &&
           p.arrSecondNum[i] != p.total
         ) {
-          return updateProblems();
+          return updateCalc();
         }
       }
 
@@ -16075,7 +15976,7 @@ How many items are there in each bag?
       p.group = p.adjustedTotal / p.groupTotal;
 
       if (p.group % 1 != 0) {
-        updateProblems();
+        updateCalc();
         return console.log("Question changed!");
       }
 
@@ -16101,14 +16002,14 @@ How many items are there in each bag?
       p.allRight = p.questions * p.marks;
       p.bDifference = p.allRight - p.total;
       if (p.bDifference <= 0 || p.total <= 0) {
-        updateProblems();
+        updateCalc();
         return console.log("Question changed!");
       }
       p.sDifference = p.marks + p.deduct;
       p.wrong = p.bDifference / p.sDifference;
       p.correct = p.questions - p.wrong;
       // if (p.wrong % 1 != 0 || p.wrong < 0){
-      //   updateProblems()
+      //   updateCalc()
       //   return console.log("Question changed!")
       // }
 
@@ -16140,8 +16041,8 @@ How many items are there in each bag?
       p.totalTwo = p.chosenTwoQ * p.chosenTwoN;
       p.difference = p.totalOne - p.totalTwo;
       if (p.difference == 0) {
-        updateProblems();
-        return console.log("Question change");
+        console.log("Question change");
+        return updateCalc();
       }
 
       displayProblem.innerHTML = `
@@ -16271,7 +16172,7 @@ How many items are there in each bag?
       normalDisplay();
       if (p.version == 1) {
         if (p.bonus > p.set) {
-          return updateProblems();
+          return updateCalc();
         }
 
         p.groups = p.groups[p.dice];
@@ -16282,7 +16183,7 @@ How many items are there in each bag?
         p.remainder = p.totalItems % p.oneGroup;
 
         if (p.remainder == 0 || p.remainder * p.cost >= p.oneGroupCost) {
-          return updateProblems();
+          return updateCalc();
         }
         p.totalCost = p.oneGroupCost * p.quotient + p.remainder * p.cost;
         displayProblem.innerHTML = `
@@ -21823,7 +21724,7 @@ function handleSubmit(e) {
           }
         }
         while (correctAnswer <= 0) {
-          updateProblems();
+          updateCalc();
           return console.log("negative answer detected");
         }
       }
