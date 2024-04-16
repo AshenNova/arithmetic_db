@@ -629,10 +629,10 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
             if (
               today.level == item.level &&
               today.mode == item.mode &&
-              !uniqueRecommend.includes(item.level)
+              !uniqueRecommend.includes(today.level)
             ) {
               accomplish += 1;
-              uniqueRecommend.push(item.level);
+              uniqueRecommend.push(today.level);
             }
           });
         });

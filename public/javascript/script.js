@@ -16738,8 +16738,8 @@ How many items are there in each bag?
       displayProblem.innerHTML = `
   Students have 2 activities to choose from.</p>
   ${p.actA.charAt(0).toUpperCase() + p.actA.slice(1)} and ${p.actB}.</p>
-  ${p.numeA}/${p.denoA} chose ${p.actA}.</p>
-  ${p.numeB}/${p.denoB} chose ${p.actB}.</p>
+  ${p.numeA}/${p.denoA} of the students chose ${p.actA}.</p>
+  ${p.numeB}/${p.denoB} of the students chose ${p.actB}.</p>
   `;
       // if (p.question == "A")
       //   displayProblem.insertAdjacentHTML(
@@ -16754,7 +16754,7 @@ How many items are there in each bag?
       if (p.question == "Both")
         displayProblem.insertAdjacentHTML(
           "beforeend",
-          `What fraction of students choose both activities?`
+          `What fraction of the students choose both activities?`
         );
     }
 
