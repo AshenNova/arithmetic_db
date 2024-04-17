@@ -629,11 +629,11 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
             if (
               today.level == item.level &&
               today.mode == item.mode &&
-              !uniqueRecommend.includes(today.level)
+              !uniqueRecommend.includes(level)
             ) {
               accomplish += 1;
-              uniqueRecommend.push(today.level);
             }
+            uniqueRecommend.push(today.level);
           });
         });
         // ONLY AWARD THE FIRST ATTEMPT OF THE RECOMMENDED THE BONUS POINT
