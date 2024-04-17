@@ -1049,14 +1049,37 @@ const generateRec = async (nameTemp) => {
       levelFive
       // levelSix
     );
-  //Delete list for age 10, 11 and 12
-  if (age == 10 || age == 11 || age == 12) {
+  //Delete list for age 10
+  if (age == 10) {
     const removeList = [
       "1",
       "1.01",
       "1.02",
       "1.03",
       "1.06",
+      "2",
+      "2.01",
+      "2.03",
+      "3",
+      "3.04",
+      "3.05",
+      "3.09",
+      "3.1",
+    ];
+  }
+
+  //Delete list for age 10, 11 and 12
+  if (age == 11 || age == 12) {
+    const removeList = [
+      "1",
+      "1.01",
+      "1.02",
+      "1.03",
+      "1.04",
+      "1.05",
+      "1.06",
+      "1.07",
+      "1.08",
       "2",
       "2.01",
       "2.03",
