@@ -11972,12 +11972,13 @@ function updateProblems() {
         canvas.setAttribute("height", 275);
       }
 
+      canvasTextId.classList.remove("hidden");
       ctx.clearRect(0, 0, 400, 275);
       ctx.save();
       const xFirst = p.rectLength * 10;
       const yFirst = p.rectBreadth * 10;
       ctx.beginPath();
-      ctx.rect(20, 140, p.rectLength * 10, p.rectBreadth * 10);
+      ctx.rect(20, 0, p.rectLength * 10, p.rectBreadth * 10);
       ctx.stroke();
       const firstArea = xFirst * yFirst;
       console.log(firstArea);
@@ -11996,7 +11997,7 @@ function updateProblems() {
         p.secRectBreadth = p.secRectLength;
       }
       if (p.secRecLength == p.secRectBreadth) secondShape = "square";
-      ctx.translate(20, 140);
+      ctx.translate(20, 0);
       if (secondShape == "rectangle" || secondShape == "square") {
         xOverLapStart = xFirst / 2 + genNumbers(xFirst / 2) - 10;
         yOverLapStart = yFirst / 2 + genNumbers(yFirst / 2) - 10;
@@ -12094,127 +12095,72 @@ function updateProblems() {
       }
 
       // FIRST UNIT SENTENCE
+
+      let firstClue;
       const unitSentenceOne = genNumbers(3);
-      //SET 1
       if (unitSentenceOne == 0) {
-        ctx.fillText(
-          `The ratio of the unshaded part of the ${
-            secondShape == "rectangle" ? "top " : ""
-          }rectangle to shaded part`,
-          10,
-          0
-        );
-        ctx.fillText(
-          ` of the ${
-            secondShape == "rectangle" ? "top " : ""
-          }rectangle is ${unshadedFirst} : ${overFirst}.`,
-          10,
-          30
-        );
+        firstClue = `The ratio of the unshaded part of the ${
+          secondShape == "rectangle" ? "top " : ""
+        }rectangle to shaded part of the ${
+          secondShape == "rectangle" ? "top " : ""
+        }rectangle is ${unshadedFirst} : ${overFirst}.`;
       }
       //SET 2
+
       if (unitSentenceOne == 1) {
-        ctx.fillText(
-          `The ratio of the unshaded part of the ${
-            secondShape == "rectangle" ? "top " : ""
-          }rectangle to the`,
-          10,
-          0
-        );
-        ctx.fillText(
-          `${
-            secondShape == "rectangle" ? "top " : ""
-          }rectangle is ${unshadedFirst} : ${unshadedFirst + overFirst}.`,
-          10,
-          30
-        );
+        firstClue = `The ratio of the unshaded part of the ${
+          secondShape == "rectangle" ? "top " : ""
+        } rectangle to the ${
+          secondShape == "rectangle" ? "top " : ""
+        }rectangle is ${unshadedFirst} : ${unshadedFirst + overFirst}.`;
       }
       //SET 3
       if (unitSentenceOne == 2) {
-        ctx.fillText(
-          `The ratio of the shaded part to the unshaded part`,
-          10,
-          0
-        );
-        ctx.fillText(
-          ` of the ${
-            secondShape == "rectangle" ? "top " : ""
-          }rectangle is ${overFirst} : ${unshadedFirst}.`,
-          10,
-          30
-        );
+        firstClue = `The ratio of the shaded part to the unshaded part of the ${
+          secondShape == "rectangle" ? "top " : ""
+        }rectangle is ${overFirst} : ${unshadedFirst}.`;
       }
 
       // SECOND UNIT SENTENCE
+      let secondClue;
       const unitSentenceTwo = genNumbers(3);
       if (unitSentenceTwo == 0) {
-        ctx.fillText(
-          `The ratio of the unshaded part of the ${
-            secondShape == "rectangle" ? "bottom" : ""
-          } ${secondShape} to `,
-          10,
-          50
-        );
-        ctx.fillText(
-          `shaded part of the ${
-            secondShape == "rectangle" ? "bottom" : ""
-          } ${secondShape} is ${unshadedSecond} : ${overSecond}.`,
-          10,
-          70
-        );
+        secondClue = `The ratio of the unshaded part of the ${
+          secondShape == "rectangle" ? "bottom" : ""
+        } ${secondShape} to shaded part of the ${
+          secondShape == "rectangle" ? "bottom" : ""
+        } ${secondShape} is ${unshadedSecond} : ${overSecond}.`;
       }
       if (unitSentenceTwo == 1) {
-        ctx.fillText(
-          `The ratio of the unshaded part of the ${
-            secondShape == "rectangle" ? "bottom" : ""
-          } ${secondShape} to the area`,
-          10,
-          50
-        );
-        ctx.fillText(
-          ` of the ${
-            secondShape == "rectangle" ? "bottom" : ""
-          } ${secondShape} is ${unshadedSecond} : ${
-            unshadedSecond + overSecond
-          }.`,
-          10,
-          70
-        );
+        secondClue = `The ratio of the unshaded part of the ${
+          secondShape == "rectangle" ? "bottom" : ""
+        } ${secondShape} to the area of the ${
+          secondShape == "rectangle" ? "bottom" : ""
+        } ${secondShape} is ${unshadedSecond} : ${
+          unshadedSecond + overSecond
+        }.`;
       }
       if (unitSentenceTwo == 2) {
-        ctx.fillText(
-          `The ratio of the shaded part of the ${
-            secondShape == "rectangle" ? "bottom" : ""
-          } ${secondShape} to`,
-          10,
-          50
-        );
-        ctx.fillText(
-          `unshaded part of the ${
-            secondShape == "rectangle" ? "bottom" : ""
-          } ${secondShape} is ${overSecond} : ${unshadedSecond}.`,
-          10,
-          70
-        );
+        secondClue = `The ratio of the shaded part of the ${
+          secondShape == "rectangle" ? "bottom" : ""
+        } ${secondShape} to unshaded part of the ${
+          secondShape == "rectangle" ? "bottom" : ""
+        } ${secondShape} is ${overSecond} : ${unshadedSecond}.`;
       }
 
       //  QUESTION
-      ctx.fillText(
-        `What is the ratio of the ${
-          secondShape == "rectangle" ? "top" : ""
-        } unshaded part in the rectangle`,
-        10,
-        90
-      );
-      ctx.fillText(
-        `to the unshaded part in the ${
-          secondShape == "rectangle" ? "bottom" : ""
-        } ${secondShape}?`,
-        10,
-        110
-      );
+      let question = `What is the ratio of the ${
+        secondShape == "rectangle" ? "top" : ""
+      } unshaded part in the rectangle to the unshaded part in the ${
+        secondShape == "rectangle" ? "bottom" : ""
+      } ${secondShape}?`;
       ctx.restore();
 
+      canvasTextId.innerHTML = `
+      ${firstClue}</br>
+      ${secondClue}</br>
+      ${question}</br>
+      `;
       const commonArea = commonDeno(overFirst, overSecond);
       let newUnshadedFirst = (commonArea / overFirst) * unshadedFirst;
       let newUnshadedSecond = (commonArea / overSecond) * unshadedSecond;
