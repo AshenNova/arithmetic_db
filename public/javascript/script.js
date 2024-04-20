@@ -2519,41 +2519,41 @@ function updateProblems() {
   }
 
   if (level == 3.18) {
+    canvasTextId.classList.remove("hidden");
     ctx.font = "1em serif";
     ctx.save();
 
     if (p.parallelorPerpendicular == "parallel") {
       if (p.roll == 1) {
-        ctx.fillText(
-          `Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`,
-          20,
-          20
-        );
+        canvasTextId.textContent = `Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`;
+        // ctx.fillText(
+        //   `Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`,
+        //   20,
+        //   20
+        // );
       } else {
-        ctx.fillText(
-          `Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`,
-          20,
-          20
-        );
+        canvasTextId.textContent = `Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`;
+        // ctx.fillText(
+        //   `Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`,
+        //   20,
+        //   20
+        // );
       }
-      // if ( p.roll == 1){
-      //   ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}?`, 20, 20)
-      // } else {
-      //   ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}?`, 20, 20)
-      // }
     } else {
       if (p.roll == 1) {
-        ctx.fillText(
-          `Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`,
-          20,
-          20
-        );
+        canvasTextId.textContent = `Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`;
+        // ctx.fillText(
+        //   `Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`,
+        //   20,
+        //   20
+        // );
       } else {
-        ctx.fillText(
-          `Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`,
-          20,
-          20
-        );
+        canvasTextId.textContent = `Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`;
+        // ctx.fillText(
+        //   `Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`,
+        //   20,
+        //   20
+        // );
       }
       // if ( p.roll == 1){
       //   ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}?`, 20, 20)
@@ -2832,6 +2832,8 @@ function updateProblems() {
     <u>${p.placeValue}</u> place?</br>
     <br>
     _______ ≈ ${p.numOne}`;
+
+    if (p.numOne >= 0) return updateCalc()
 
     if (p.choice == "Smallest") {
       if (p.placeValue == "tens") {
