@@ -2833,7 +2833,7 @@ function updateProblems() {
     <br>
     _______ ≈ ${p.numOne}`;
 
-    if (p.numOne >= 0) return updateCalc();
+    if (p.numOne <= 0) return updateCalc();
 
     if (p.choice == "Smallest") {
       if (p.placeValue == "tens") {
