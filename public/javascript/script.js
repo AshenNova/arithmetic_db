@@ -2833,7 +2833,7 @@ function updateProblems() {
     <br>
     _______ ≈ ${p.numOne}`;
 
-    if (p.numOne >= 0) return updateCalc()
+    if (p.numOne >= 0) return updateCalc();
 
     if (p.choice == "Smallest") {
       if (p.placeValue == "tens") {
@@ -17356,6 +17356,7 @@ function handleSubmit(e) {
     // if (userInput.value == "") alert("Please input a value")
     let correctAnswer;
     let correctAnswerTwo;
+    let correctAnswerArr = [];
     console.log(userInput2.value);
     const p = state.currentProblem;
 
@@ -19282,8 +19283,9 @@ function handleSubmit(e) {
         if (p.rollType == "circumference") {
           if (p.rollPi != "π") {
             correctAnswer = `2x${p.rollPi}x${p.radius}`;
+            correctAnswerTwo = `${p.rollPi}x${p.radius * 2}`;
           } else {
-            correctAnswer = `2xpix${p.radius}`;
+            correctAnswer = `pix${p.radius * 2}`;
           }
         }
       }
@@ -19316,27 +19318,55 @@ function handleSubmit(e) {
             if (p.rollType2 == "semicircle") {
               correctAnswer = `2x${p.rollPi}x${p.radius}x1/2+2x${p.radius}`;
               correctAnswerTwo = `2x${p.rollPi}x${p.radius}x1/2+${p.radius}x2`;
+              correctAnswerArr.push(
+                `${p.rollPi}x${p.radius * 2}x1/2+${p.radius}x2`
+              );
+              correctAnswerArr.push(
+                `${p.rollPi}x${p.radius * 2}x1/2+2x${p.radius}`
+              );
             }
             if (p.rollType2 == "quadrant") {
               correctAnswer = `2x${p.rollPi}x${p.radius}x1/4+2x${p.radius}`;
               correctAnswerTwo = `2x${p.rollPi}x${p.radius}x1/4+${p.radius}x2`;
+              correctAnswerArr.push(
+                `${p.rollPi}x${p.radius * 2}x1/4+${p.radius}x2`
+              );
+              correctAnswerArr.push(
+                `${p.rollPi}x${p.radius * 2}x1/4+2x${p.radius}`
+              );
             }
             if (p.rollType2 == "others") {
               correctAnswer = `2x${p.rollPi}x${p.radius}x${p.rollOthers}/360+2x${p.radius}`;
               correctAnswerTwo = `2x${p.rollPi}x${p.radius}x${p.rollOthers}/360+${p.radius}x2`;
+              correctAnswerArr.push(
+                `${p.rollPi}x${p.radius * 2}x${p.rollOthers}/360+2x${p.radius}`
+              );
+              correctAnswerArr.push(
+                `${p.rollPi}x${p.radius * 2}x${p.rollOthers}/360+${p.radius}x2`
+              );
             }
           } else {
             if (p.rollType2 == "semicircle") {
               correctAnswer = `2xpix${p.radius}x1/2+2x${p.radius}`;
               correctAnswerTwo = `2xpix${p.radius}x1/2+${p.radius}x2`;
+              correctAnswerArr.push(`pix${p.radius * 2}x1/2+2x${p.radius}`);
+              correctAnswerArr.push(`pix${p.radius * 2}x1/2+${p.radius}x2`);
             }
             if (p.rollType2 == "quadrant") {
               correctAnswer = `2xpix${p.radius}x1/4+2x${p.radius}`;
               correctAnswerTwo = `2xpix${p.radius}x1/4+${p.radius}x2`;
+              correctAnswerArr.push(`pix${p.radius * 2}x1/4+2x${p.radius}`);
+              correctAnswerArr.push(`pix${p.radius * 2}x1/4+${p.radius}x2`);
             }
             if (p.rollType2 == "others") {
               correctAnswer = `2xpix${p.radius}x${p.rollOthers}/360+2x${p.radius}`;
               correctAnswerTwo = `2xpix${p.radius}x${p.rollOthers}/360+${p.radius}x2`;
+              correctAnswerArr = `pix${p.radius * 2}x${
+                p.rollOthers
+              }/360+p.radius}`;
+              correctAnswerArr = `pix${p.radius * 2}x${p.rollOthers}/360+${
+                p.radius
+              }x2`;
             }
           }
         }
@@ -22588,7 +22618,9 @@ function handleSubmit(e) {
       userInput.value.trim() == correctAnswerTwo ||
       userInput2.value.trim() == correctAnswerTwo ||
       permutationAnswer(userInput2.value, correctAnswer) ==
-        "From permutation: Correct"
+        "From permutation: Correct" ||
+      correctAnswerArr.includes(userInput.value.trim()) ||
+      correctAnswerArr.includes(userInput2.value.trim())
     ) {
       console.log("correct");
       //RESTART QUESTION TIME
