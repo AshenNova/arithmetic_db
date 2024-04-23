@@ -1,6 +1,29 @@
 const helpMe = document.querySelector(".help-me-text");
 
+export function helpList(level) {
+  const helpArr = [
+    "1.01",
+    // "2.09",
+    "3.04",
+    "3.05",
+    "3.05",
+    "3.06",
+    "4.02",
+    "4.06",
+    "4.11",
+    "4.26",
+    "6.05",
+    "heuThree",
+    "heuFour",
+    "heuFive",
+  ];
+  if (helpArr.includes(level.toString())) {
+    console.log("Help is available");
+    document.querySelector(".help-btn").classList.remove("hidden");
+  }
+}
 export function helpMeFunc(level, state, setting) {
+  document.querySelector("#help").classList.remove("hidden");
   const p = state.currentProblem;
   console.log(state);
 

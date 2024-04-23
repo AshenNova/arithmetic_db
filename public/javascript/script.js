@@ -50,7 +50,7 @@ import {
 // import { resetStuff } from "./reset.js";
 import { cutOffCheck } from "./cut_off.js";
 import { displayContent } from "./content.js";
-import { helpMeFunc } from "./helpMe.js";
+import { helpList, helpMeFunc } from "./helpMe.js";
 
 let user = document.querySelector("#userName").textContent;
 user = user.trim();
@@ -22622,11 +22622,15 @@ function handleSubmit(e) {
       correctAnswerArr.includes(userInput.value.trim()) ||
       correctAnswerArr.includes(userInput2.value.trim())
     ) {
+      // WHEN CORRECT
       console.log("correct");
+      //HIDE HELP
+      document.querySelector(".help-btn").classList.add("hidden");
       //RESTART QUESTION TIME
       clearInterval(questionTime);
       questionTimer();
       // EXTRA PRACTICE CHECK
+
       regen = 0;
       questionsCorrectArr.push(setting);
       const extra = cutOffCheck(level, setting, questionSecs);
@@ -22730,7 +22734,14 @@ function handleSubmit(e) {
     } else {
       // WHEN INCORRECT
       console.log("incorrect");
-      helpMeFunc(level, state, setting);
+
+      helpList(level);
+      document
+        .querySelector(".help-btn")
+        .addEventListener("click", function () {
+          console.log("Seeking help");
+          helpMeFunc(level, state, setting);
+        });
       state.mistake++;
       summaryPush("❌");
 
@@ -27218,6 +27229,11 @@ function levelBox() {
 
 //////////////////////////// SET CLICK ///////////////////////////////
 
+document
+  .querySelector(".help-close-btn")
+  .addEventListener("click", function () {
+    document.querySelector("#help").classList.add("hidden");
+  });
 for (let i = 0; i < settingButton.length; i++) {
   settingButton[i].addEventListener("dblclick", function (e) {
     buttonLevel = this.innerHTML;

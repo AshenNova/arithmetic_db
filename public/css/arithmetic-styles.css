@@ -277,6 +277,33 @@ table {
   margin: 30px 0;
   letter-spacing: 2px;
 }
+
+#help {
+  z-index: 999;
+  position: absolute;
+  margin: auto;
+  top: 33.3%;
+  /* max-height: 100%; */
+  max-width: 95%;
+  /* height: 95%; */
+  height: auto;
+  width: 500px;
+  border-radius: 10px;
+  background-color: white;
+  text-align: left;
+  border-style: solid;
+  overflow: auto;
+  /* padding-left: 10px; */
+  padding: 10px;
+}
+.help-btn {
+  color: red;
+  /* border-radius: 50%; */
+  font-size: 20px;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
 .help-me-text {
   text-align: center;
   font-size: 30px;
