@@ -13238,9 +13238,15 @@ function updateProblems() {
         }
       }
       if (p.type == "C") {
-        middleClue = `${personB} made a U-turn at Town B and met ${personA} ${Math.abs(
-          diffDistance
-        )} km from Town B.`;
+        if (p.speedA > p.speedB) {
+          middleClue = `${personA} made a U-turn at Town B and met ${personB} ${Math.abs(
+            diffDistance
+          )} km from Town B.`;
+        } else {
+          middleClue = `${personB} made a U-turn at Town B and met ${personA} ${Math.abs(
+            diffDistance
+          )} km from Town B.`;
+        }
       }
 
       //MAIN PASSAGE
