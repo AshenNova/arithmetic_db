@@ -4775,7 +4775,7 @@ function updateProblems() {
   }
 
   if (level == 5.06) {
-    if (choice == 1) {
+    if (setting == 1) {
       let alignXText = 15;
       ctx.font = "1em serif";
       ctx.save();
@@ -4856,7 +4856,7 @@ function updateProblems() {
       ctx.restore();
     }
 
-    if (choice == 2) {
+    if (setting == 2) {
       ctx.save();
       ctx.font = "1em serif";
 
@@ -15897,6 +15897,36 @@ How many items are there in each bag?
       How much was transferred?
       `;
     }
+
+    if (setting == 7) {
+      if (p.denoA == p.denoB) {
+        p.denoB -= 1;
+      }
+      let statement;
+      let diff = p.valueA - p.valueB;
+      let total = p.valueA * p.denoA + p.valueB * p.denoB;
+      if (p.valueA > p.valueB) statement = "more";
+      if (p.valueB > p.valueA) statement = "less";
+      if (p.type == "before") {
+        displayProblem.innerHTML = `
+        1/${p.denoA} of A is ${Math.abs(diff)} ${statement} than 1/${
+          p.denoB
+        } of B.</br>
+        Their total is ${total}.</br>
+        What is the value of ${p.question}?
+        `;
+      }
+      if (p.type == "after") {
+        displayProblem.innerHTML = `
+        ${p.denoA - 1}/${p.denoA} of A and ${p.denoB - 1}/${
+          p.denoB
+        } of B were ${genNumbers(2) == 0 ? "removed" : "sold"}.</br>
+        A is ${Math.abs(diff)} ${statement} than B in the end.</br>
+        Their total was ${total} at first.</br>
+        What is the value of ${p.question} at first?
+        `;
+      }
+    }
   }
   // Display
   if (level == "heuFive") {
@@ -18982,7 +19012,7 @@ function handleSubmit(e) {
     }
 
     if (level == 5.06) {
-      if (choice == 1) {
+      if (setting == 1) {
         if (p.sidesBH == "base") {
           correctAnswer = `${p.labelABC}${p.labelGHI}`;
         } else if (p.sidesBH == "height") {
@@ -18993,7 +19023,7 @@ function handleSubmit(e) {
           correctAnswer = `${p.labelDEF}${p.labelGHI}`;
         }
       }
-      if (choice == 2) {
+      if (setting == 2) {
         if (p.question == "base") {
           correctAnswer = `${p.labelDEF}${p.labelGHI}`;
           correctAnswerTwo = `${p.labelGHI}${p.labelDEF}`;
@@ -22129,6 +22159,11 @@ function handleSubmit(e) {
       if (setting == 6) {
         correctAnswer = Math.abs(p.transfer);
       }
+
+      if (setting == 7) {
+        if (p.question == "A") correctAnswer = p.valueA * p.denoA;
+        if (p.question == "B") correctAnswer = p.valueB * p.denoB;
+      }
     }
     // Answers
     if (level == "heuFive") {
@@ -23838,7 +23873,9 @@ function genProblems() {
   }
 
   if (level == 5.06) {
-    if (choice == 1) {
+    setting = calArrAll(2, calArr, setting, 2);
+    setting = checkRange(setting, calArr, skipArr);
+    if (setting == 1) {
       return {
         pointX1: genNumbers(70) + 50,
         pointY1: genNumbers(40) + 40,
@@ -23854,7 +23891,7 @@ function genProblems() {
         sidesBH: ["base", "height", "base2", "height2"][genNumbers(4)],
       };
     }
-    if (choice == 2) {
+    if (setting == 2) {
       canvas.setAttribute("height", "300px");
       return {
         // triangle A
@@ -26555,7 +26592,7 @@ function genProblems() {
   }
   //SETTINGS
   if (level == "heuFourb") {
-    setting = calArrAll(6, calArr, setting, 9);
+    setting = calArrAll(7, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 1) {
@@ -26650,6 +26687,21 @@ function genProblems() {
         unitA: genNumbers(5) + 1,
         unitB: genNumbers(5) + 1,
         version: ["more than half", "more than diff"][genNumbers(2)],
+      };
+    }
+    //FRACTION: UNDER THE SAME UNIT: DIFFERENCE
+    if (setting == 7) {
+      const gen_denoA = genNumbers(3) + 3;
+      const gen_denoB = genNumbers(3) + 3;
+      return {
+        denoA: gen_denoA,
+        numeA: genNumbers(gen_denoA) + 1,
+        valueA: genNumbers(200) + 50,
+        denoB: gen_denoB,
+        numeB: genNumbers(gen_denoB) + 1,
+        valueB: genNumbers(200) + 50,
+        type: ["before", "after"][genNumbers(2)],
+        question: ["A", "B"][genNumbers(2)],
       };
     }
   }
@@ -28129,9 +28181,9 @@ function buttonLevelSetting() {
       break;
 
     case "Level 5.06":
-      choice = prompt("1. Right-angled Triangle\n2. Obtuse-triangle", 2);
-      if (choice != 1 && choice != 2) {
-        choice = 2;
+      setting = prompt("1. Right-angled Triangle\n2. Obtuse-triangle", 2);
+      if (setting != 1 && setting != 2) {
+        setting = 2;
       }
       level = 5.06;
       scoreNeeded = 20;
@@ -28671,7 +28723,7 @@ function buttonLevelSetting() {
         9
       );
 
-      accepted = [1, 2, 3, 4, 5, 6, 9];
+      accepted = [1, 2, 3, 4, 5, 6, 7, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";

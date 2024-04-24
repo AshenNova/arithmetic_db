@@ -52,6 +52,7 @@ export const displayContent = (level) => {
     4. Unchanged Total</br>
     5. Simultaneous Equation</br>
     6. Internal Transfer: Double Effect</br>
+    7. Fractions: Under the same unit (Difference)</br>
     <hr>
     9. All`;
   }
