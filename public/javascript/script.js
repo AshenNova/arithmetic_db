@@ -13247,13 +13247,13 @@ function updateProblems() {
       if (p.type == "A" || p.typr == "B") {
         displayProblem.innerHTML = `
         Town M is between Town A and Town B.</br>
-        ${personA} set off from Town A towards Town B at ${p.speedA} km/h and vice versa for ${personB} at ${p.speedB} km/h.</br>
+        ${personA} and ${personB} set off from Town A towards Town B at ${p.speedA} km/h and vice versa for ${personB} at ${p.speedB} km/h.</br>
         ${middleClue}</br>
         `;
       }
       if (p.type == "C") {
         displayProblem.innerHTML = `
-        ${personA} set off from Town A towards Town B at ${p.speedA} km/h and vice versa for ${personB} at ${p.speedB} km/h.</br>
+        ${personA} and ${personB} set off from Town A towards Town B at ${p.speedA} km/h and ${p.speedB} km/h.</br>
         ${middleClue}</br>
         `;
       }
