@@ -2476,10 +2476,34 @@ function updateProblems() {
       }
       console.log(arr2);
       arr2.push("...");
-      displayProblem.innerHTML = `
-      What is in position ${p.position}?</br>
-      ${arr2.toString()}
-      `;
+      if (p.question == "A") {
+        displayProblem.innerHTML = `
+        What is in position ${p.position}?</br>
+        ${arr2.toString()}
+        `;
+      }
+      if (p.question == "B") {
+        //Numbers
+        if (p.rollType == "A") {
+          displayProblem.innerHTML = `
+          ${arr2.toString()}</br>
+          <hr>
+          What is the sum of all the numbers up to position ${p.position}?</br>
+         
+          `;
+        }
+
+        //Alphabets
+        if (p.rollType == "B") {
+          p.alphabet = arr[genNumbers(arr.length)];
+          displayProblem.innerHTML = `
+          ${arr2.toString()}</br>
+          <hr>
+          How many ${p.alphabet} are there up to position ${p.position}?</br>
+         
+          `;
+        }
+      }
     }
   }
 
@@ -18117,12 +18141,40 @@ function handleSubmit(e) {
       }
       // level 3.15
       if (setting == 4) {
-        let remainder = (p.position % arr.length) - 1;
-        if (remainder < 0) {
-          remainder = arr.length - 1;
+        if (p.question == "A") {
+          let remainder = (p.position % arr.length) - 1;
+          if (remainder < 0) {
+            remainder = arr.length - 1;
+          }
+          console.log(remainder);
+          correctAnswer = arr[remainder];
         }
-        console.log(remainder);
-        correctAnswer = arr[remainder];
+        if (p.question == "B") {
+          if (p.rollType == "A") {
+            let sum = 0;
+            let a = 0;
+            for (let i = 0; i < p.position; i++) {
+              sum += arr[a];
+              a += 1;
+              if (a == arr.length) a = 0;
+            }
+            correctAnswer = sum;
+          }
+          if (p.rollType == "B") {
+            let count = 0;
+            arr.forEach((item) => {
+              if (item == p.alphabet) count += 1;
+            });
+
+            const remainder = p.position % arr.length;
+            const sets = Math.floor(p.position / arr.length);
+            let countTwo = 0;
+            for (let i = 0; i < remainder; i++) {
+              if (arr[i] == p.alphabet) countTwo += 1;
+            }
+            correctAnswer = sets * count + countTwo;
+          }
+        }
       }
     }
 
@@ -23293,6 +23345,8 @@ function genProblems() {
         rollB: undefined,
         rollTimes: genNumbers(3) + 3,
         position: genNumbers(30) + 20,
+        question: ["A", "B"][genNumbers(2)],
+        alphabet: undefined,
       };
     }
   }
