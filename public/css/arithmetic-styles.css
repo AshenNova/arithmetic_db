@@ -11,6 +11,16 @@ body {
   width: 100vw;
 }
 
+#prompt-box {
+  z-index: 999;
+  background-color: white;
+  position: absolute;
+  width: 400px;
+  height: auto;
+  padding: 10px;
+  border-radius: 10px;
+  border: solid 1px;
+}
 #epicmind {
   background-color: black;
   color: orange;

@@ -1,6 +1,40 @@
 export const displayContent = (level) => {
   //   let html = undefined;
 
+  if (level == "heuOne") {
+    return `
+    </p>
+    1. More than / Less than</br>
+    <hr>
+    9.All
+    `;
+  }
+
+  if (level == "heuTwo") {
+    return `
+    </p>
+    1. Parts and Interval</br>
+    2. Internal Transfer (Same)</br>
+    3. Internal Transfer ( Same reverse )</br>
+    4. Parts and Intervals ( Others ) </br>
+    <hr>
+    9.All
+    `;
+  }
+  if (level == "heuTwob") {
+    return `
+    </p>
+    1. Comparison Model</br>
+    2. Parts of a Whole</br>
+    3. Whole and Parts</br>
+    4. Looking for Difference</br>
+    5. Unit Sentence</br>
+    6. Parts of a whole ( Unitary )
+    <hr>
+    9.All
+    `;
+  }
+
   if (level == "heuThree") {
     return `
     </p>
@@ -113,6 +147,18 @@ export const displayContent = (level) => {
     `;
   }
 
+  if (level == "calOne") {
+    return `
+    </p>
+    1. Addition (1-100) (No carrying)</br>2. Subtraction (1-100) (No Borrowing)</br>3. Addition (1-100) (Carrying)</br>4. Subtraction (1-100) (Borrowing)</br>5. Single blank</br>6. Working (Other sequence)</br>7. Arithmetic Constant</br>8. Arithmetic Stagger</br>9. Left Side Right Side + - x /</hr>99. Everything
+    `;
+  }
+
+  if (level == "calTwo") {
+    return `
+    </p>
+    1. Addition (to 1000) No carry<br>2. Subtraction (to 1000) No borrowing<br>3. Addition (to-1000) (Carrying)<br>4. Subtraction (to 1000) (Borrowing)<br>5. Single blank<br>6. Working (Other sequence)<br>7. Arithmetic Constant<br>8. Arithmetic Stagger<br>9. Left Side Right Side + - x /<br>10. Parts and Intervals<br>11. Time: Timeline<br>12. Fractions: Identification<br>13. Fractions: Addition and Subtraction</hr>99. Everything`;
+  }
   if (level == "calThree") {
     return `
     </p>

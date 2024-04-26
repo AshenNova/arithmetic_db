@@ -114,6 +114,19 @@ const reviewAnswer = document.querySelector(".fa-hire-a-helper");
 const inputBoxCl = document.querySelector(".input-box");
 const optionsBox = document.querySelector(".optionsBox");
 const calculator = document.createElement("div");
+
+const promptBox = document.querySelector("#prompt-box");
+const promptBoxInput = document.querySelector("#prompt-box-input");
+// promptBox.addEventListener("submit", function (e) {
+//   console.log(e);
+//   e.preventDefault();
+//   console.log(promptBoxInput.value);
+//   promptBoxInput.value = "";
+//   promptBox.classList.add("hidden");
+//   // buttonLevelSetting();
+// });
+// promptBox.classList.add("hidden");
+
 // calculator.innerHTML = `id="calculator"`;
 // calculator.innerHTML = `<i class="fa-solid fa-calculator hidden"></i>`;
 // ourForm.prepend(calculator);
@@ -27341,7 +27354,33 @@ function levelBox() {
 // }
 
 //////////////////////////// SET CLICK ///////////////////////////////
-
+function display() {
+  if (buttonLevel == "Heu.1") level = "heuOne";
+  if (buttonLevel == "Heu.2") level = "heuTwo";
+  if (buttonLevel == "Heu.2b") level = "heuTwob";
+  if (buttonLevel == "Heu.3") level = "heuThree";
+  if (buttonLevel == "Heu.3b") level = "heuThreeb";
+  if (buttonLevel == "Heu.4") level = "heuFour";
+  if (buttonLevel == "Heu.4b") level = "heuFourb";
+  if (buttonLevel == "Heu.5") level = "heuFive";
+  if (buttonLevel == "Heu.5b") level = "heuFiveb";
+  if (buttonLevel == "Heu.6") level = "heuSix";
+  if (buttonLevel == "Heu.6b") level = "heuSixb";
+  //CALCULATIONS
+  if (buttonLevel == "Cal.1") level = "calOne";
+  if (buttonLevel == "Cal.2") level = "calTwo";
+  if (buttonLevel == "Cal.3") level = "calThree";
+  // if (buttonLevel == "Cal.3b") level = "calThreeb";
+  if (buttonLevel == "Cal.4") level = "calFour";
+  // if (buttonLevel == "Cal.4b") level = "calFourb";
+  if (buttonLevel == "Cal.5") level = "calFive";
+  if (buttonLevel == "Cal.5b") level = "calFiveb";
+  if (buttonLevel == "Cal.6") level = "calSix";
+  if (buttonLevel == "Cal.6b") level = "calSixb";
+  optionsBox.classList.remove("hidden");
+  optionsBox.textContent = `Available settings:`;
+  optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
+}
 document
   .querySelector(".help-close-btn")
   .addEventListener("click", function () {
@@ -27353,9 +27392,12 @@ for (let i = 0; i < settingButton.length; i++) {
     // console.log(e);
     mulLevel = "nil";
 
-    buttonLevelSetting();
-    levelBox();
-    workingContainer.classList.add("hidden");
+    display();
+    setTimeout(function () {
+      buttonLevelSetting();
+      levelBox();
+      workingContainer.classList.add("hidden");
+    }, 100);
   });
 }
 
@@ -27364,11 +27406,17 @@ for (let i = 0; i < heuristics.length; i++) {
   heuristics[i].addEventListener("dblclick", function () {
     buttonLevel = this.innerHTML;
     mulLevel = "nil";
-    buttonLevelSetting();
-    levelBox();
-    // if (this.textContent != "Heu.6") {
-    document.querySelector(".input-box").classList.add("hidden");
-    ourForm2.classList.remove("hidden");
+
+    console.log(buttonLevel);
+    display();
+    setTimeout(function () {
+      buttonLevelSetting();
+      levelBox();
+      // if (this.textContent != "Heu.6") {
+      document.querySelector(".input-box").classList.add("hidden");
+      ourForm2.classList.remove("hidden");
+    }, 100);
+
     // }
   });
 }
@@ -27378,12 +27426,15 @@ calBtn.forEach((item) => {
     buttonLevel = this.innerHTML;
     mulLevel = "nil";
 
-    buttonLevelSetting();
-    levelBox();
-    if (buttonLevel != "Cal.6") {
-      wholeNumberContainer.classList.toggle("hidden");
-      workingContainer.classList.toggle("hidden");
-    }
+    display();
+    setTimeout(function () {
+      buttonLevelSetting();
+      levelBox();
+      if (buttonLevel != "Cal.6") {
+        wholeNumberContainer.classList.toggle("hidden");
+        workingContainer.classList.toggle("hidden");
+      }
+    }, 2000);
   });
 });
 
@@ -28499,8 +28550,10 @@ function buttonLevelSetting() {
       level = "calOne";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (1-100) (No carrying)\n2. Subtraction (1-100) (No Borrowing)\n3. Addition (1-100) (Carrying)\n4. Subtraction (1-100) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Left Side Right Side + - x /\n\n99. Everything"
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
+        99
       );
+      if (!setting) optionsBox.classList.add("hidden");
       accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9, 99];
       setting = settingCheck(setting, accepted, level);
       break;
@@ -28508,9 +28561,10 @@ function buttonLevelSetting() {
       level = "calTwo";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Left Side Right Side + - x /\n10. Parts and Intervals\n11. Time: Timeline\n12. Fractions: Identification\n13. Fractions: Addition and Subtraction\n\n99. Everything",
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
+      if (!setting) optionsBox.classList.add("hidden");
       accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -28518,13 +28572,11 @@ function buttonLevelSetting() {
     case "Cal.3":
       level = "calThree";
       scoreNeeded = 10;
-      optionsBox.classList.remove("hidden");
-      optionsBox.textContent = `Available settings:`;
-      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
+      if (!setting) optionsBox.classList.add("hidden");
       accepted = [
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
         21, 22, 23, 24, 25, 26, 99,
@@ -28538,13 +28590,11 @@ function buttonLevelSetting() {
     case "Cal.4":
       level = "calFour";
       scoreNeeded = 10;
-      optionsBox.classList.remove("hidden");
-      optionsBox.textContent = `Available settings:`;
-      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
+      if (!setting) optionsBox.classList.add("hidden");
 
       accepted = [...Array.from({ length: 23 }, (_, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
@@ -28557,15 +28607,11 @@ function buttonLevelSetting() {
       level = "calFive";
 
       scoreNeeded = 10;
-      optionsBox.classList.remove("hidden");
-      optionsBox.textContent = `Available settings:`;
-      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
-      // console.log(userInputOptions);
-      // calBtn[4].addEventListener("click", function () {
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
+      if (!setting) optionsBox.classList.add("hidden");
       // if (
       //   ![...Array(27).keys(), 99].includes(setting * 1) &&
       //   !setting.split("").includes("-")
@@ -28580,13 +28626,11 @@ function buttonLevelSetting() {
       level = "calFiveb";
       console.log(level);
       scoreNeeded = 10;
-      optionsBox.classList.remove("hidden");
-      optionsBox.textContent = `Available settings:`;
-      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
+      if (!setting) optionsBox.classList.add("hidden");
       accepted = [...Array.from({ length: 23 }, (_, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -28598,17 +28642,11 @@ function buttonLevelSetting() {
     case "Cal.6":
       level = "calSix";
       scoreNeeded = 10;
-      // setting = prompt(
-      //   "What level?\n1. Fractions: Finding remainder\n2. Circles: Area and Perimeter\n3. Speed: Average Speed\n4. Speed: Moving Apart\n7. Pie Chart\n\n99",
-      //   7
-      // );
-      optionsBox.classList.remove("hidden");
-      optionsBox.textContent = `Available settings:`;
-      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
+      if (!setting) optionsBox.classList.add("hidden");
       //IF THERE ARE 7 TYPES, PUT 6. SINCE THE MAP FUNCTION WILL +1
       accepted = [...Array.from(Array(10)).map((e, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
@@ -28634,6 +28672,7 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
+      if (!setting) optionsBox.classList.add("hidden");
       accepted = [1, 2, 3, 4, 5, 6, 7, 99];
       // if (
       //   ![1, 2, 3, 4, 5, 6, 7, 99].includes(setting * 1) &&
@@ -28651,7 +28690,11 @@ function buttonLevelSetting() {
 
     case "Heu.1":
       level = "heuOne";
-      setting = prompt("What level?\n1.More than / less than");
+      setting = prompt(
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
+        9
+      );
+      if (!setting) optionsBox.classList.add("hidden");
       setting = settingCheck(setting, [1, 9], level);
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
@@ -28668,13 +28711,10 @@ function buttonLevelSetting() {
 
     case "Heu.2":
       setting = prompt(
-        "What level?\n1. Parts and Interval\n2. Internal Transfer (Same)\n3. Internal Transfer ( Same reverse )\n4. Parts and Intervals ( Others )\n\n9.All"
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
+        9
       );
-      // if (
-      //   ![1, 2, 3, 4, 9].includes(setting * 1) &&
-      //   !setting.split("").includes("-")
-      // )
-      // setting = 9;
+      if (!setting) optionsBox.classList.add("hidden");
       level = "heuTwo";
       accepted = [1, 2, 3, 4, 9];
       setting = settingCheck(setting, accepted, level);
@@ -28688,9 +28728,10 @@ function buttonLevelSetting() {
 
     case "Heu.2b":
       setting = prompt(
-        "What level?\n1. Comparison Model\n2. Parts of a Whole\n3. Whole and Parts\n4. Looking for Difference\n5. Unit Sentence\n6. Parts of a whole ( Unitary )\n\n9.All",
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
+      if (!setting) optionsBox.classList.add("hidden");
       level = "heuTwob";
       accepted = [1, 2, 3, 4, 5, 6, 9];
       setting = settingCheck(setting, accepted, level);
@@ -28703,14 +28744,11 @@ function buttonLevelSetting() {
       break;
 
     case "Heu.3":
-      level = "heuThree";
-      optionsBox.classList.remove("hidden");
-      optionsBox.textContent = `Available settings:`;
-      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
+      if (!setting) optionsBox.classList.add("hidden");
       accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 10;
@@ -28724,18 +28762,11 @@ function buttonLevelSetting() {
       break;
 
     case "Heu.3b":
-      // setting = prompt(
-      //   "What level?\n\n 1. Repeated Identity\n2. Equal Beginning\n3. Equal End\n4. Unchanged Object\n5. Working Backwards Straightline\n\n9. All",
-      //   9
-      // );
-      level = "heuThreeb";
-      optionsBox.classList.remove("hidden");
-      optionsBox.textContent = `Available settings:`;
-      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
+      if (!setting) optionsBox.classList.add("hidden");
       accepted = [1, 2, 3, 4, 5, 9];
       setting = settingCheck(setting, accepted, level);
       range = 0;
@@ -28747,17 +28778,11 @@ function buttonLevelSetting() {
       break;
 
     case "Heu.4":
-      level = "heuFour";
-      // setting = prompt(
-      //   "What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n4.Repeated Identity ( Type 2 )\n5. Uneven Grouping\n6. Grouping Rows\n7. Systematic Listing\n\n9. All"
-      // );
-      optionsBox.classList.remove("hidden");
-      optionsBox.textContent = `Available settings:`;
-      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
+      if (!setting) optionsBox.classList.add("hidden");
       accepted = [1, 2, 3, 4, 5, 6, 7, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 10;
@@ -28770,20 +28795,11 @@ function buttonLevelSetting() {
       break;
 
     case "Heu.4b":
-      // setting = prompt(
-      //   "What level?\n1. Lowest Common Multiples ( Indirect )\n2. Highest Common Factor ( Indirect )\n3. Unchanged Difference\n4. Unchanged Total\n5. Simultaneous Equation\n\n9. All",
-      //   9
-      // );
-      level = "heuFourb";
-
-      optionsBox.classList.remove("hidden");
-      optionsBox.textContent = `Available settings:`;
-      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-
+      if (!setting) optionsBox.classList.add("hidden");
       accepted = [1, 2, 3, 4, 5, 6, 7, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 10;
@@ -28795,16 +28811,11 @@ function buttonLevelSetting() {
 
     case "Heu.5":
       level = "heuFive";
-      // setting = prompt(
-      //   "What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n6. Shaking Hands\n7. Bonus\n8. Different Quantity with Difference\n\n9. All"
-      // );
-      optionsBox.classList.remove("hidden");
-      optionsBox.textContent = `Available settings:`;
-      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
+      if (!setting) optionsBox.classList.add("hidden");
       accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       setting = settingCheck(setting, accepted, level);
       range = 0;
@@ -28818,15 +28829,11 @@ function buttonLevelSetting() {
 
     case "Heu.5b":
       level = "heuFiveb";
-      optionsBox.classList.remove("hidden");
-      optionsBox.textContent = `Available settings:`;
-      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
-      // console.log(userInputOptions);
-      // calBtn[4].addEventListener("click", function () {
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
+      if (!setting) optionsBox.classList.add("hidden");
       accepted = [1, 2, 3, 4, 5, 6, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 5;
@@ -28839,14 +28846,11 @@ function buttonLevelSetting() {
 
     case "Heu.6":
       level = "heuSix";
-      optionsBox.classList.remove("hidden");
-      optionsBox.textContent = `Available settings:`;
-      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-
+      if (!setting) optionsBox.classList.add("hidden");
       accepted = [1, 2, 3, 4, 5, 6, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 5;
@@ -28859,14 +28863,11 @@ function buttonLevelSetting() {
 
     case "Heu.6b":
       level = "heuSixb";
-      optionsBox.classList.remove("hidden");
-      optionsBox.textContent = `Available settings:`;
-      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-
+      if (!setting) optionsBox.classList.add("hidden");
       accepted = [1, 2, 3, 4, 5, 6, 7, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 5;
