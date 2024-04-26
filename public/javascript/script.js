@@ -2499,7 +2499,7 @@ function updateProblems() {
           displayProblem.innerHTML = `
           ${arr2.toString()}</br>
           <hr>
-          How many ${p.alphabet} are there up to position ${p.position}?</br>
+          How many ${p.alphabet}'s are there up to position ${p.position}?</br>
          
           `;
         }
