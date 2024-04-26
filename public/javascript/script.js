@@ -2453,7 +2453,7 @@ function updateProblems() {
           p.rollA = genNumbers(5);
           arr.push(p.rollA);
         }
-        while (arr[2] == arr[1] && arr[2] == arr[0]) {
+        if (arr[2] == arr[1] && arr[2] == arr[0]) {
           return updateCalc();
         }
       }
@@ -2462,7 +2462,7 @@ function updateProblems() {
           p.rollB = ["A", "B", "C", "D", "E"][genNumbers(5)];
           arr.push(p.rollB);
         }
-        while (arr[2] == arr[1] && arr[2] == arr[0]) {
+        if (arr[2] == arr[1] && arr[2] == arr[0]) {
           return updateCalc();
         }
       }
@@ -23284,7 +23284,7 @@ function genProblems() {
     }
     if (setting == 4) {
       return {
-        rollType: ["B", "A", "B"][genNumbers(1)],
+        rollType: ["A", "B"][genNumbers(2)],
         rollA: undefined,
         rollB: undefined,
         rollTimes: genNumbers(3) + 3,
