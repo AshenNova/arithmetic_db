@@ -2410,6 +2410,8 @@ function updateProblems() {
 
   if (level == 3.16) {
     console.log(setting);
+    arr = [];
+    arr2 = [];
     if (setting == 5) {
       displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne - 2} + ${
         p.numOne - 1
@@ -2454,6 +2456,7 @@ function updateProblems() {
           arr.push(p.rollA);
         }
         if (arr[2] == arr[1] && arr[2] == arr[0]) {
+          console.log("Refreshing");
           return updateCalc();
         }
       }
@@ -2463,6 +2466,7 @@ function updateProblems() {
           arr.push(p.rollB);
         }
         if (arr[2] == arr[1] && arr[2] == arr[0]) {
+          console.log("Refreshing");
           return updateCalc();
         }
       }
