@@ -1066,6 +1066,15 @@ const generateRec = async (nameTemp) => {
       "3.09",
       "3.1",
     ];
+    // Removing certain level
+    removeList.forEach((item) => {
+      // console.log(item);
+      if (ageLevel.includes(item)) {
+        console.log("Removing " + item);
+        const index = ageLevel.indexOf(item);
+        ageLevel.splice(index, 1);
+      }
+    });
   }
 
   //Delete list for age 10, 11 and 12
@@ -1091,12 +1100,15 @@ const generateRec = async (nameTemp) => {
     ];
     // Removing certain level
     removeList.forEach((item) => {
+      // console.log(item);
       if (ageLevel.includes(item)) {
+        console.log("Removing " + item);
         const index = ageLevel.indexOf(item);
         ageLevel.splice(index, 1);
       }
     });
   }
+
   distinctLevels.forEach((item) => {
     if (age <= 7) {
       if (item.startsWith("1")) {
