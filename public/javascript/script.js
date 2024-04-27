@@ -2834,8 +2834,9 @@ function updateProblems() {
     if (p.value == "ten thousands" && p.numOne > 10000) {
       p.numOne = p.numOne + 10000;
     }
-    displayProblem.innerHTML = `${p.numOne} ≈ `;
-    helpMe.textContent = `${p.placeValue}`;
+    displayProblem.innerHTML = `
+    ${p.placeValue}</br>
+    ${p.numOne} ≈ `;
   }
 
   if (level == 4.02) {
@@ -27414,13 +27415,13 @@ function display() {
     x = 1;
   }
   // if (buttonLevel == "Cal.3b") level = "calThreeb";
-  x = 1;
+
   if (buttonLevel == "Cal.4") {
     level = "calFour";
     x = 1;
   }
   // if (buttonLevel == "Cal.4b") level = "calFourb";
-  x = 1;
+
   if (buttonLevel == "Cal.5") {
     level = "calFive";
     x = 1;
