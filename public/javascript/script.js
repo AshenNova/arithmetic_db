@@ -27355,31 +27355,93 @@ function levelBox() {
 
 //////////////////////////// SET CLICK ///////////////////////////////
 function display() {
-  if (buttonLevel == "Heu.1") level = "heuOne";
-  if (buttonLevel == "Heu.2") level = "heuTwo";
-  if (buttonLevel == "Heu.2b") level = "heuTwob";
-  if (buttonLevel == "Heu.3") level = "heuThree";
-  if (buttonLevel == "Heu.3b") level = "heuThreeb";
-  if (buttonLevel == "Heu.4") level = "heuFour";
-  if (buttonLevel == "Heu.4b") level = "heuFourb";
-  if (buttonLevel == "Heu.5") level = "heuFive";
-  if (buttonLevel == "Heu.5b") level = "heuFiveb";
-  if (buttonLevel == "Heu.6") level = "heuSix";
-  if (buttonLevel == "Heu.6b") level = "heuSixb";
+  let x = 0;
+  if (buttonLevel == "Heu.1") {
+    level = "heuOne";
+    x = 1;
+  }
+  if (buttonLevel == "Heu.2") {
+    level = "heuTwo";
+    x = 1;
+  }
+  if (buttonLevel == "Heu.2b") {
+    level = "heuTwob";
+    x = 1;
+  }
+  if (buttonLevel == "Heu.3") {
+    level = "heuThree";
+    x = 1;
+  }
+  if (buttonLevel == "Heu.3b") {
+    level = "heuThreeb";
+    x = 1;
+  }
+  if (buttonLevel == "Heu.4") {
+    level = "heuFour";
+    x = 1;
+  }
+  if (buttonLevel == "Heu.4b") {
+    level = "heuFourb";
+    x = 1;
+  }
+  if (buttonLevel == "Heu.5") {
+    level = "heuFive";
+    x = 1;
+  }
+  if (buttonLevel == "Heu.5b") {
+    level = "heuFiveb";
+    x = 1;
+  }
+  if (buttonLevel == "Heu.6") {
+    level = "heuSix";
+    x = 1;
+  }
+  if (buttonLevel == "Heu.6b") {
+    level = "heuSixb";
+    x = 1;
+  }
   //CALCULATIONS
-  if (buttonLevel == "Cal.1") level = "calOne";
-  if (buttonLevel == "Cal.2") level = "calTwo";
-  if (buttonLevel == "Cal.3") level = "calThree";
+  if (buttonLevel == "Cal.1") {
+    level = "calOne";
+    x = 1;
+  }
+  if (buttonLevel == "Cal.2") {
+    level = "calTwo";
+    x = 1;
+  }
+  if (buttonLevel == "Cal.3") {
+    level = "calThree";
+    x = 1;
+  }
   // if (buttonLevel == "Cal.3b") level = "calThreeb";
-  if (buttonLevel == "Cal.4") level = "calFour";
+  x = 1;
+  if (buttonLevel == "Cal.4") {
+    level = "calFour";
+    x = 1;
+  }
   // if (buttonLevel == "Cal.4b") level = "calFourb";
-  if (buttonLevel == "Cal.5") level = "calFive";
-  if (buttonLevel == "Cal.5b") level = "calFiveb";
-  if (buttonLevel == "Cal.6") level = "calSix";
-  if (buttonLevel == "Cal.6b") level = "calSixb";
-  optionsBox.classList.remove("hidden");
-  optionsBox.textContent = `Available settings:`;
-  optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
+  x = 1;
+  if (buttonLevel == "Cal.5") {
+    level = "calFive";
+    x = 1;
+  }
+  if (buttonLevel == "Cal.5b") {
+    level = "calFiveb";
+    x = 1;
+  }
+  if (buttonLevel == "Cal.6") {
+    level = "calSix";
+    x = 1;
+  }
+  if (buttonLevel == "Cal.6b") {
+    level = "calSixb";
+    x = 1;
+  }
+  if (x == 1) {
+    optionsBox.classList.remove("hidden");
+    optionsBox.textContent = `Available settings:`;
+    optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
+  }
 }
 document
   .querySelector(".help-close-btn")
