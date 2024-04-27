@@ -990,11 +990,11 @@ function calArrAll(max, arr, setting, maxSetting, level) {
         //     arr.splice(index, 1);
         //   }
         // });
-        arr.map((item, index)=> {
-          if (skipArr.includes(item)){
-            arr.splice(index, 1)
+        arr.map((item, index) => {
+          if (skipArr.includes(item)) {
+            arr.splice(index, 1);
           }
-        })
+        });
         console.log(arr);
       }
       console.log(`Current available questions is/are ${arr}`);
@@ -1065,7 +1065,7 @@ document.querySelector("#skipBtn").addEventListener("click", function (e) {
   console.log(setting);
   const isNotNumber = calRange[0] * 1;
   // if (calArr.length == 0) {
-  if (questionSecs < 5) {
+  if (questionSecs < 300) {
     alert("Keep trying for 5 mins...");
   } else {
     if (skipArr.length == state.max - state.min) {
