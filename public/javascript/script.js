@@ -3107,7 +3107,7 @@ function updateProblems() {
     `;
   }
   if (level == 4.08) {
-    helpMe.textContent = `${p.placeValue}`;
+    // helpMe.textContent = `${p.placeValue}`;
     let activateOne = genNumbers(2);
     let activateTwo = genNumbers(2);
     let activateThree = genNumbers(2);
@@ -3134,7 +3134,9 @@ function updateProblems() {
     p.num = p.num * 1;
     console.log(typeof p.num);
     if (p.num < 1) p.num += 1;
-    displayProblem.textContent = `${accDecimal(p.num)} ≈ ?`;
+    displayProblem.innerHTML = `
+    ${p.placeValue}</br>
+    ${accDecimal(p.num)} ≈ ?`;
   }
   if (level == 4.09) {
     if (p.numOne % 10 == 0) {
