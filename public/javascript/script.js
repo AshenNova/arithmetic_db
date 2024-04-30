@@ -6831,7 +6831,7 @@ function updateProblems() {
     let y = 137.5;
     ctx.font = "1em serif";
     if (p.rollType == "triangle") {
-      ctx.fillText(`What is the area of the isosceles Triangle?`, 20, 20);
+      ctx.fillText(`What is the area of the right-angled isosceles Triangle?`, 20, 20);
     }
     if (p.rollType == "radius") {
       ctx.fillText(`What is the area of the Circle?`, 20, 20);
