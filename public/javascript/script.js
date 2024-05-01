@@ -6831,7 +6831,11 @@ function updateProblems() {
     let y = 137.5;
     ctx.font = "1em serif";
     if (p.rollType == "triangle") {
-      ctx.fillText(`What is the area of the right-angled isosceles Triangle?`, 20, 20);
+      ctx.fillText(
+        `What is the area of the right-angled isosceles Triangle?`,
+        20,
+        20
+      );
     }
     if (p.rollType == "radius") {
       ctx.fillText(`What is the area of the Circle?`, 20, 20);
@@ -13307,7 +13311,7 @@ function updateProblems() {
       if (p.type == "A" || p.typr == "B") {
         displayProblem.innerHTML = `
         Town M is between Town A and Town B.</br>
-        ${personA} and ${personB} set off from Town A towards Town B at ${p.speedA} km/h and vice versa for ${personB} at ${p.speedB} km/h.</br>
+        ${personA} set off from Town A towards Town B at ${p.speedA} km/h and vice versa for ${personB} from Town B at ${p.speedB} km/h.</br>
         ${middleClue}</br>
         `;
       }
