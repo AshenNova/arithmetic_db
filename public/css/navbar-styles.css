@@ -12,11 +12,20 @@
   position: relative;
 }
 
+.submenu1 {
+  position: absolute;
+  width: 140px;
+  left: 100%;
+  top: 43%;
+  background-color: white;
+  display: none;
+}
+
 .submenu2 {
   position: absolute;
   width: 140px;
   left: 100%;
-  top: 45%;
+  top: 53%;
   background-color: white;
   display: none;
 }
@@ -25,7 +34,7 @@
   position: absolute;
   width: 140px;
   left: 100%;
-  top: 50%;
+  top: 60%;
   background-color: white;
   display: none;
 }
@@ -34,7 +43,7 @@
   position: absolute;
   width: 140px;
   left: 100%;
-  top: 70%;
+  top: 80%;
   background-color: white;
   display: none;
 }
@@ -43,6 +52,7 @@
   display: block;
 }
 
+.submenu li:hover > .submenu1,
 .submenu li:hover > .submenu2,
 .submenu li:hover > .submenu3,
 .submenu li:hover > .submenu4 {

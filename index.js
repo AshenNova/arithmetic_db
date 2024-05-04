@@ -118,7 +118,12 @@ app.use("/homework", authController.authenticate, homeworkRoute);
 app.use("/attempts", authController.authenticate, attemptRoute);
 app.use("/user", authController.authenticate, userRoute);
 app.use("/science", authController.authenticate, scienceRoute);
-app.use("/invoice", authController.authenticate, invoiceRoute);
+app.use(
+  "/invoice",
+  authController.authenticate,
+  authController.adminCheck,
+  invoiceRoute
+);
 app.use("/intervention", authController.authenticate, interventionRoute);
 app.get("*", function (req, res, next) {
   // res.redirect("./pages/arithmetic");

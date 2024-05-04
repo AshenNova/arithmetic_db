@@ -17041,11 +17041,17 @@ How many items are there in each bag?
       const endB = (p.varB / p.denoB) * (p.denoB - p.numeB);
       const comparisonEnd = endA > endB ? "more than" : "less than";
       const differenceEnd = Math.abs(endA - endB);
+      const total = endA + endB;
       displayProblem.innerHTML = `
       A is ${difference} ${comparison} B.</p>
       A gave away ${unitA}.</p>
       B gave away ${unitB}.</p>
-      A is ${differenceEnd} ${comparisonEnd} B in the end.</p>
+      ${
+        p.backEnd == "diff"
+          ? `A is ${differenceEnd} ${comparisonEnd} B in the end.`
+          : `A and B is left with ${total}.`
+      } </p>
+     
       What is ${p.question} at first?
 
       `;
@@ -27145,7 +27151,6 @@ function genProblems() {
         unitsB: genNumbers(10) + 1,
         situationA: undefined,
         situationB: undefined,
-
         question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
       };
     }
@@ -27180,6 +27185,7 @@ function genProblems() {
         varBMul: genNumbers(10) + 10,
         varA: undefined,
         varB: undefined,
+        backEnd: ["diff", "total"][genNumbers(2)],
         question: ["A", "B"][genNumbers(2)],
       };
     }
