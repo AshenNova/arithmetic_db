@@ -718,15 +718,13 @@ const generateRec = async (nameTemp) => {
                         maximum = item.setting;
                       }
                     } else {
-                      // console.log("No integer, splitting");
-                      // console.log(item.setting);
                       const split = item.setting.split("-");
-                      // console.log(split);
-                      // console.log(`The level is ${item.level}`);
                       const largest = split[split.length - 1];
-                      if (largest > maximum) {
+                      if (largest > maximum * 1) {
+                        console.log("Switching maximum");
                         maximum = largest;
                       }
+                      console.log(`The maximum is now! ${maximum}`);
                     }
                   }
                 }
