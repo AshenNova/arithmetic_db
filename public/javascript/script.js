@@ -883,6 +883,7 @@ function timer2() {
 }
 
 function resetStuff() {
+  extraPractice = 0;
   player = 1;
   attempt = 1;
   clearInterval(questionTime);
@@ -29208,7 +29209,7 @@ summaryBtn.addEventListener("click", function () {
 });
 
 extraPracticeBtn.addEventListener("click", function () {
-  if (extraPratice == 1){
+  if (extraPractice == 1) {
     attempt += 1;
     withinStart();
     ctx.clearRect(0, 0, 1000, 1000);
@@ -29231,7 +29232,6 @@ extraPracticeBtn.addEventListener("click", function () {
     console.log(scoreNeeded);
     console.log(`calArr: ${calArr}`);
   }
- 
 });
 
 closeBtn.addEventListener("click", function () {
