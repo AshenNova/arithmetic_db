@@ -259,6 +259,7 @@ let noAnswer = 0;
 let reviewCount = 0;
 let level = 0;
 let player = 1;
+let extraPractice = 0;
 let levelArr = [];
 let arr = [];
 let arr2 = [];
@@ -717,6 +718,7 @@ function timer2() {
 
     // 1. SCORE REACHED OR TIME CUT
     if (state.score >= scoreNeeded || time == cutoff) {
+      extraPractice = 1;
       document.querySelector(".loader").classList.remove("hidden");
       // document.querySelector(".overlay");
       // .setAttribute("backdrop-filter", "none");
@@ -29206,27 +29208,30 @@ summaryBtn.addEventListener("click", function () {
 });
 
 extraPracticeBtn.addEventListener("click", function () {
-  attempt += 1;
-  withinStart();
-  ctx.clearRect(0, 0, 1000, 1000);
-  scoreNeeded = extraPracticeArr.length * 3;
-  console.log(`Extra: ${extraPracticeArr}. Score needed: ${scoreNeeded}`);
-  finalBox.classList.add("hidden");
-  state.score = 0;
-  state.mistake = 0;
-  currentScore.textContent = 0;
-  currentMistake.textContent = 0;
-  calArr = [];
-  console.log(
-    `Extra: ${extraPracticeArr}. Score needed: ${scoreNeeded}. calArr: ${calArr}`
-  );
-  const cloneArr = extraPracticeArr;
-  calArr.push(...cloneArr, ...cloneArr, ...cloneArr);
-  console.log(calArr);
-  extraPracticeArr = [];
-  player = 1;
-  console.log(scoreNeeded);
-  console.log(`calArr: ${calArr}`);
+  if (extraPratice == 1){
+    attempt += 1;
+    withinStart();
+    ctx.clearRect(0, 0, 1000, 1000);
+    scoreNeeded = extraPracticeArr.length * 3;
+    console.log(`Extra: ${extraPracticeArr}. Score needed: ${scoreNeeded}`);
+    finalBox.classList.add("hidden");
+    state.score = 0;
+    state.mistake = 0;
+    currentScore.textContent = 0;
+    currentMistake.textContent = 0;
+    calArr = [];
+    console.log(
+      `Extra: ${extraPracticeArr}. Score needed: ${scoreNeeded}. calArr: ${calArr}`
+    );
+    const cloneArr = extraPracticeArr;
+    calArr.push(...cloneArr, ...cloneArr, ...cloneArr);
+    console.log(calArr);
+    extraPracticeArr = [];
+    player = 1;
+    console.log(scoreNeeded);
+    console.log(`calArr: ${calArr}`);
+  }
+ 
 });
 
 closeBtn.addEventListener("click", function () {
