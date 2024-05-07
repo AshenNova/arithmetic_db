@@ -142,6 +142,7 @@ export const displayContent = (level) => {
     5. Identical Quantity with difference (Level 2) Type 1 Multiples</br>
     6. Identical Quantity with difference (Level 2) Type 1 Difference</br>
     7. Identical Quantity with difference (Level 2) Type 2</br>
+    8. More Than / Less Than ( Numerator )</br>
     <hr>
     9. All
     `;

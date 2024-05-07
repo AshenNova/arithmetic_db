@@ -7410,13 +7410,15 @@ function updateProblems() {
         i++;
         p.startNum += p.diffOne;
         if (p.startNum < 0) {
-          arr = []
-          return updateCalc()}
+          arr = [];
+          return updateCalc();
+        }
         arr.push(p.startNum);
         p.startNum += p.diffTwo;
         if (p.startNum < 0) {
-          arr = []
-          return updateCalc()}
+          arr = [];
+          return updateCalc();
+        }
       }
       if (arr[5] > 100 || p.diffOne == 0 || p.diffTwo == 0) {
         console.log(arr[5]);
@@ -17437,6 +17439,36 @@ How many items are there in each bag?
         `;
       }
     }
+
+    if (setting == 8) {
+      [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      [p.situationA, p.deno_situationA] = simplify(
+        p.situationA,
+        p.deno_situationA
+      );
+      [p.situationB, p.deno_situationB] = simplify(
+        p.situationB,
+        p.deno_situationB
+      );
+      const diffA = p.valueA * p.numeA - p.valueB * p.numeB;
+      const endA = p.denoA - p.situationA;
+      const endB = p.denoB - p.situationB;
+      const diffB = p.valueA * endA - p.valueB * endB;
+      displayProblem.innerHTML = `
+      ${p.numeA}/${p.denoA} of A is ${Math.abs(diffA)} ${
+        diffA < 0 ? "less" : "more"
+      } than ${p.numeB}/${p.denoB} of B.</br>
+      ${p.situationA}/${p.denoA} of A and ${p.situationB}/${
+        p.denoB
+      } of B were removed.</br>
+      A is ${Math.abs(diffB)} ${
+        diffB < 0 ? "less" : "more"
+      } than B in the end</br>
+      What is the value of ${p.question} at first?
+
+      `;
+    }
   }
   // MULTIPLES
   if (mulLevel == "multiples") {
@@ -22734,6 +22766,13 @@ function handleSubmit(e) {
             correctAnswer = commonDistance * p.groups;
         }
       }
+
+      if (setting == 8) {
+        const A = p.valueA * p.denoA;
+        const B = p.valueB * p.denoB;
+        if (p.question == "A") correctAnswer = A;
+        if (p.question == "B") correctAnswer = B;
+      }
     }
     if (mulLevel == "multiples") {
       correctAnswer = p.numFive * (multiplesArr.length - 1);
@@ -27149,7 +27188,7 @@ function genProblems() {
   }
 
   if (level == "heuSixb") {
-    setting = calArrAll(7, calArr, setting, 9);
+    setting = calArrAll(8, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
 
     // SIMULTANEOUS EQUATION (PARTS AND UNITS) TYPE 1
@@ -27253,6 +27292,25 @@ function genProblems() {
         question: ["VA", "VB", "QA", "QB", "T"][genNumbers(5)],
         type: ["diff", "total"][genNumbers(2)],
         question: ["QA", "QB", "VA", "VB"][genNumbers(4)],
+      };
+    }
+
+    // MORE THAN LESS THAN (NUMERATOR)
+    if (setting == 8) {
+      const gen_denoA = genNumbers(5) + 3;
+      const gen_denoB = genNumbers(5) + 3;
+      return {
+        numeA: genNumbers(gen_denoA - 1) + 1,
+        denoA: gen_denoA,
+        numeB: genNumbers(gen_denoB - 1) + 1,
+        denoB: gen_denoB,
+        situationA: genNumbers(gen_denoA - 1) + 1,
+        situationB: genNumbers(gen_denoB - 1) + 1,
+        deno_situationA: gen_denoA,
+        deno_situationB: gen_denoB,
+        valueA: genNumbers(500) + 50,
+        valueB: genNumbers(500) + 50,
+        question: ["A", "B"][genNumbers(2)],
       };
     }
   }
@@ -28965,7 +29023,7 @@ function buttonLevelSetting() {
         9
       );
       if (!setting) optionsBox.classList.add("hidden");
-      accepted = [1, 2, 3, 4, 5, 6, 7, 9];
+      accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 5;
       normalDisplay();
