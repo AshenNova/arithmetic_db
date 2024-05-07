@@ -7409,10 +7409,16 @@ function updateProblems() {
         arr.push(p.startNum);
         i++;
         p.startNum += p.diffOne;
+        if (p.startNum < 0) {
+          arr = []
+          return updateCalc()}
         arr.push(p.startNum);
         p.startNum += p.diffTwo;
+        if (p.startNum < 0) {
+          arr = []
+          return updateCalc()}
       }
-      if (arr[5] > 100 || arr[5] < 0 || p.diffOne == 0 || p.diffTwo == 0) {
+      if (arr[5] > 100 || p.diffOne == 0 || p.diffTwo == 0) {
         console.log(arr[5]);
         arr = [];
         skipGlobalUpdateProblem = 1;
