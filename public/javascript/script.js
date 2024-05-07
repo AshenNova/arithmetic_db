@@ -17294,7 +17294,12 @@ How many items are there in each bag?
       const diffStatementA =
         p.quantityA > p.quantityB ? "more coins than" : "less coins than";
       const diffValueA = p.quantityA - p.quantityB;
-      const valueA = accDecimal((p.quantityA * p.priceA) / 100);
+      let valueA = accDecimal((p.quantityA * p.priceA) / 100);
+      if (p.situation == 1) {
+        valueA = accDecimal(
+          ((p.quantityA - p.situationQuantity) * p.priceA) / 100
+        );
+      }
       const valueB = accDecimal((p.quantityB * p.priceB) / 100);
       const diffStatementB = valueA - valueB > 0 ? "more than" : "less than";
       const diffValueB = valueA - valueB;
@@ -17325,19 +17330,23 @@ How many items are there in each bag?
       displayProblem.innerHTML = `
       Box A contains only ${
         p.priceA == 100 ? "$1" : `${p.priceA} cent`
-      }  coins.</p>
+      }  coins.</br>
       Box B contains only ${
         p.priceB == 100 ? "$1" : `${p.priceB} cent`
-      } coins.</p>
-      Box A has ${Math.abs(diffValueA)} ${diffStatementA} Box B.</p>
+      } coins.</br>
+      Box A has ${Math.abs(diffValueA)} ${diffStatementA} Box B.</br>
+      ${
+        p.situation == 1
+          ? `
+          ${p.situationQuantity} coins were used from Box A.<br>`
+          : ""
+      }
       Box A is $${
         diffValueB % 1 == 0
           ? Math.abs(diffValueB)
           : Math.abs(diffValueB).toFixed(2)
-      } ${diffStatementB} than Box B.</p>
-      ${finalStatement}
-
-      `;
+      } ${diffStatementB} than Box B.</br>
+      ${finalStatement}`;
     }
     // IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 2 SETS
     if (setting == 7) {
@@ -27274,7 +27283,8 @@ function genProblems() {
         quantityB: genNumbers(90) + 10,
         priceA: [10, 20, 50, 100][genNumbers(4)],
         priceB: [10, 20, 50, 100][genNumbers(4)],
-
+        situation: genNumbers(2),
+        situationQuantity: genNumbers(5) + 5,
         // groups: genNumbers(89) + 10,
         question: ["VA", "VB", "QA", "QB", "T"][genNumbers(5)],
       };
