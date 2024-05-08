@@ -1,4 +1,38 @@
 export function instructionsContent(level) {
+  const book = [
+    3.12,
+    3.16,
+    3.19,
+    4.15,
+    4.17,
+    4.18,
+    4.21,
+    4.23,
+    4.26,
+    5.12,
+    "calOne",
+    "caTwo",
+    "calThree",
+    "calFour",
+    "calFive",
+    "calFiveb",
+    "calSix",
+    "calSixb",
+    "heuOne",
+    "heuTwo",
+    "heuTwob",
+    "heuThree",
+    "heuThreeb",
+    "heuFour",
+    "heuFourb",
+    "heuFive",
+    "heuFiveb",
+    "heuSix",
+    "heuSixb",
+  ];
+  if (book.includes(level)) {
+    document.querySelector(".fa-book").classList.remove("hidden");
+  }
   console.log("CHECKING FOR INSTRUCTIONS FOR " + level);
   const list = [
     1.04, 1.05, 2.05, 2.07, 4.03, 3.06, 3.07, 3.09, 3.16, 4.0, 4.06, 4.21, 4.24,

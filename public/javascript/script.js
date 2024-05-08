@@ -922,6 +922,7 @@ function resetStuff() {
   // INSTRUCTIONS
   instructions.innerHTML = "";
   document.querySelector(".fa-pencil").classList.add("hidden");
+  document.querySelector(".fa-book").classList.add("hidden");
 
   //STYLES
   document.querySelector("#user-input").setAttribute("type", "number");
