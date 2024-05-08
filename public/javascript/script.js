@@ -50,6 +50,7 @@ import {
 // import { resetStuff } from "./reset.js";
 import { cutOffCheck } from "./cut_off.js";
 import { displayContent } from "./content.js";
+import { instructionsContent } from "./instruction-content.js";
 import { helpList, helpMeFunc } from "./helpMe.js";
 
 let user = document.querySelector("#userName").textContent;
@@ -85,6 +86,7 @@ let startTime = undefined;
 let mode = "Normal";
 const displayProblem = document.querySelector(".display-problems");
 const helpMe = document.querySelector(".help-me-text");
+
 const ourForm = document.querySelector(".our-form");
 const ourForm2 = document.querySelector(".our-form2");
 const userInput = document.getElementById("user-input");
@@ -107,7 +109,13 @@ const secondUnitMeasurement = document.querySelector(".secondUnitMeasurement");
 const inputBox = document.querySelector(".input.box");
 const resetButton = document.getElementById("reset");
 const backButton = document.querySelectorAll(".back-button");
+
+//INSTRUCTIONS
 const instructions = document.querySelector(".instructions");
+const instructionPencilIcon = document.querySelector(".fa-pencil");
+const instructionBox = document.querySelector(".instructions-box");
+
+//MODES
 const hardcoreMode = document.querySelector(".hardcore-mode");
 const easyMode = document.querySelector(".easy-mode");
 const reviewAnswer = document.querySelector(".fa-hire-a-helper");
@@ -910,11 +918,14 @@ function resetStuff() {
   fractionChoice.textContent = "Choices...";
 
   secondUnitMeasurement.textContent = "";
+
+  // INSTRUCTIONS
   instructions.innerHTML = "";
+  document.querySelector(".fa-pencil").classList.add("hidden");
+
+  //STYLES
   document.querySelector("#user-input").setAttribute("type", "number");
   document.querySelector("#user-input").setAttribute("step", "1");
-  displayProblem.style.fontSize = "50px";
-  instructions.style.fontSize = "revert";
   userInput.style.width = "175px";
   document.querySelector("#user-input").style.marginTop = "0";
   document.querySelector("#user-input").setAttribute("max", "99999");
@@ -27586,6 +27597,16 @@ for (let i = 0; i < heuristics.length; i++) {
   });
 }
 
+instructionPencilIcon.addEventListener("click", function () {
+  instructionBox.classList.remove("hidden");
+});
+
+document
+  .querySelector(".instructions-close-btn")
+  .addEventListener("click", function () {
+    instructionBox.classList.add("hidden");
+  });
+
 calBtn.forEach((item) => {
   item.addEventListener("dblclick", function () {
     buttonLevel = this.innerHTML;
@@ -27680,88 +27701,46 @@ function buttonLevelSetting() {
     case "Level 1.0":
       level = 1.0;
       scoreNeeded = 50;
-      gold = highScore1DotZero.time;
-      silver = highScore1DotZero.time + (cutoff - highScore1DotZero.time) / 3;
-      bronze =
-        highScore1DotZero.time + ((cutoff - highScore1DotZero.time) / 3) * 2;
-
       break;
 
     case "Level 1.01":
       level = 1.01;
       scoreNeeded = 50;
-
-      gold = highScore1DotZero1.time;
-      silver = highScore1DotZero1.time + (cutoff - highScore1DotZero1.time) / 3;
-      bronze =
-        highScore1DotZero1.time + ((cutoff - highScore1DotZero1.time) / 3) * 2;
-
       break;
 
     case "Level 1.02":
       level = 1.02;
       scoreNeeded = 50;
-
       helpMe.style.fontSize = "1.5em";
       break;
 
     case "Level 1.03":
       level = 1.03;
       scoreNeeded = 50;
-      gold = highScore1DotZero3.time;
-      silver = highScore1DotZero3.time + (cutoff - highScore1DotZero.time3) / 3;
-      bronze =
-        highScore1DotZero3.time + ((cutoff - highScore1DotZero.time3) / 3) * 2;
-
       break;
 
     case "Level 1.04":
       level = 1.04;
       scoreNeeded = 30;
-      gold = highScore1DotZero4.time;
-      silver = highScore1DotZero4.time + (cutoff - highScore1DotZero.time4) / 3;
-      bronze =
-        highScore1DotZero4.time + ((cutoff - highScore1DotZero.time4) / 3) * 2;
-
       document.querySelector("#user-input").setAttribute("type", "text");
-      instructions.innerHTML = `
-        1 + 2 = 3 or 3 = 2 + 1</br>
-        c ± d = r or r = c ± d</br>
-        Use: 'c+', 'c-', 'd-', 'r+' or 'r-' `;
+
       break;
 
     case "Level 1.05":
       level = 1.05;
       scoreNeeded = 30;
-      gold = highScore1DotZero5.time;
-      silver = highScore1DotZero5.time + (cutoff - highScore1DotZero5.time) / 3;
-      bronze =
-        highScore1DotZero5.time + ((cutoff - highScore1DotZero5.time) / 3) * 2;
-
       document.querySelector("#user-input").setAttribute("type", "text");
-      instructions.innerHTML =
-        "Answer using</br> 'c+', 'c-', 'd-', 'r+' or 'r-' ";
+
       break;
 
     case "Level 1.06":
       level = 1.06;
       scoreNeeded = 30;
-      gold = highScore1DotZero6.time;
-      silver = highScore1DotZero6.time + (cutoff - highScore1DotZero6.time) / 3;
-      bronze =
-        highScore1DotZero6.time + ((cutoff - highScore1DotZero6.time) / 3) * 2;
-
-      instructions.textContent = "";
       break;
 
     case "Level 1.07":
       level = 1.07;
       scoreNeeded = 30;
-      gold = highScore1DotZero7.time;
-      silver = highScore1DotZero7.time + (cutoff - highScore1DotZero7.time) / 3;
-      bronze =
-        highScore1DotZero7.time + ((cutoff - highScore1DotZero7.time) / 3) * 2;
-
       displayProblem.style.fontSize = "25px";
       document.querySelector("#user-input").style.marginTop = "100px";
       break;
@@ -27769,9 +27748,6 @@ function buttonLevelSetting() {
     case "Level 1.08":
       level = 1.08;
       scoreNeeded = 20;
-      instructions.textContent = "Give the answer.";
-      displayProblem.style.textAlign = "left";
-      displayProblem.style.fontSize = "25px";
       break;
 
     case "Level 2.0":
@@ -27783,17 +27759,11 @@ function buttonLevelSetting() {
     case "Level 2.01":
       level = 2.01;
       scoreNeeded = 50;
-      gold = highScore2DotZero1.time;
-      silver = highScore2DotZero1.time + (cutoff - highScore2DotZero1.time) / 3;
-      bronze =
-        highScore2DotZero1.time + ((cutoff - highScore2DotZero1.time) / 3) * 2;
-
       break;
 
     case "Level 2.02":
       level = 2.02;
       scoreNeeded = 30;
-      displayProblem.style.fontSize = "25px";
       setting = prompt(
         "How many digits?\n2. Primary 2\n3. Primary 3\n4. Primary 4\n5. Primary 5\n6. Primary 6"
       );
@@ -27806,18 +27776,12 @@ function buttonLevelSetting() {
     case "Level 2.03":
       level = 2.03;
       scoreNeeded = 50;
-      gold = highScore2DotZero3.time;
 
       break;
 
     case "Level 2.04":
       level = 2.04;
       scoreNeeded = 30;
-      gold = highScore2DotZero4.time;
-      silver = highScore2DotZero4.time + (cutoff - highScore2DotZero4.time) / 3;
-      bronze =
-        highScore2DotZero4.time + ((cutoff - highScore2DotZero4.time) / 3) * 2;
-
       break;
 
     case "Level 2.05":
@@ -27831,33 +27795,21 @@ function buttonLevelSetting() {
       }
       arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-      instructions.textContent = "Form the Number";
-      displayProblem.style.fontSize = "25px";
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
     case "Level 2.06":
       level = 2.06;
       scoreNeeded = 20;
-      gold = highScore2DotZero6.time;
-      silver = highScore2DotZero6.time + (cutoff - highScore2DotZero6.time) / 3;
-      bronze =
-        highScore2DotZero6.time + ((cutoff - highScore2DotZero6.time) / 3) * 2;
-
-      displayProblem.style.fontSize = "25px";
       break;
 
     case "Level 2.07":
       level = 2.07;
       scoreNeeded = 50;
-      gold = highScore2DotZero7.time;
-      silver = highScore2DotZero7.time + (cutoff - highScore2DotZero7.time) / 3;
-      bronze =
-        highScore2DotZero7.time + ((cutoff - highScore2DotZero7.time) / 3) * 2;
-
       wholeNumberContainer.classList.add("hidden");
       fractionsContainer.classList.remove("hidden");
-      instructions.textContent = "Answer using '1' or '2' only";
+      // instructions.textContent = "Answer using '1' or '2' only";
+
       document.querySelector("#user-input").setAttribute("type", "number");
       document.querySelector("#user-input").setAttribute("min", "1");
       document.querySelector("#user-input").setAttribute("max", "2");
@@ -27866,9 +27818,6 @@ function buttonLevelSetting() {
     case "Level 2.08":
       level = 2.08;
       scoreNeeded = 10;
-      gold = highScore2DotZero8.time;
-
-      displayProblem.style.fontSize = "25px";
       document.querySelector("#user-input").setAttribute("type", "text");
       document.querySelector("#user-input").style.width = "300px";
       break;
@@ -27876,11 +27825,6 @@ function buttonLevelSetting() {
     case "Level 2.09":
       level = 2.09;
       scoreNeeded = 10;
-      gold = highScore2DotZero9.time;
-      silver = highScore2DotZero9.time + (cutoff - highScore2DotZero9.time) / 3;
-      bronze =
-        highScore2DotZero9.time + ((cutoff - highScore2DotZero9.time) / 3) * 2;
-
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -27902,9 +27846,6 @@ function buttonLevelSetting() {
     case "Level 3.02":
       level = 3.02;
       scoreNeeded = 30;
-      gold = 141;
-      silver = 230;
-
       document.querySelector("#user-input").setAttribute("max", "9999999");
       break;
 
@@ -27931,31 +27872,21 @@ function buttonLevelSetting() {
     case "Level 3.06":
       level = 3.06;
       scoreNeeded = 30;
-      gold = highScore3DotZero6.time;
-
       document.querySelector("#user-input").setAttribute("type", "text");
-      instructions.innerHTML = `Do not leave any spaces.</br>
-        Answer using capital 'L' and 'ml' for volume`;
+
       helpMe.textContent = `Include units`;
       break;
 
     case "Level 3.07":
       level = 3.07;
       scoreNeeded = 30;
-      gold = highScore3DotZero7.time;
 
-      instructions.innerHTML = `Lowest Common Multiple</br>
-        5, 3, 2 => 15</br>
-        5, 3, 5 => 5,15</br>
-        `;
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
     case "Level 3.08":
       level = 3.08;
       scoreNeeded = 20;
-      gold = highScore3DotZero8.time;
-
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -27964,53 +27895,32 @@ function buttonLevelSetting() {
     case "Level 3.09":
       level = 3.09;
       scoreNeeded = 30;
-      gold = highScore3DotZero9.time;
-
       wholeNumberContainer.classList.add("hidden");
       fractionsContainerTwo.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
-      instructions.textContent = "Formate: 2/3";
+
       break;
 
     case "Level 3.10":
       level = 3.1;
       scoreNeeded = 30;
-      gold = highScore3DotZero10.time;
-      silver =
-        highScore3DotZero10.time + (cutoff - highScore3DotZero10.time) / 3;
-      bronze =
-        highScore3DotZero10.time +
-        ((cutoff - highScore3DotZero10.time) / 3) * 2;
-
       wholeNumberContainer.classList.add("hidden");
       fractionsContainerTwo.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
-      instructions.textContent = "";
       break;
 
     case "Level 3.11":
       level = 3.11;
       scoreNeeded = 30;
-      gold = highScore3DotZero11.time;
-      silver =
-        highScore3DotZero11.time + (cutoff - highScore3DotZero11.time) / 3;
-      bronze =
-        highScore3DotZero11.time +
-        ((cutoff - highScore3DotZero11.time) / 3) * 2;
-
       wholeNumberContainer.classList.add("hidden");
       fractionsContainerTwo.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
-      instructions.textContent = "";
       break;
 
     case "Level 3.12":
       level = 3.12;
       scoreNeeded = 20;
-      gold = 72;
       document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "25px";
-      displayProblem.style.marginTop = "0";
       // instructions.textContent = "Form an Equation from the pattern";
       break;
 
@@ -28022,35 +27932,12 @@ function buttonLevelSetting() {
       );
       scoreNeeded = 20;
       document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "25px";
-      displayProblem.style.marginTop = "0";
-      if (setting == 1) {
-        instructions.textContent =
-          "Form an Equation using 'n' from the pattern and provide an answer";
-      }
-      if (setting == 2) {
-        instructions.textContent =
-          "Form an Equation from the pattern and provide an answer";
-      }
-      if (setting == 3) {
-        instructions.textContent =
-          "Take note of the repeated pattern and use it to find the position of the other pattern";
-      }
-      if (setting == 4) {
-        instructions.textContent =
-          "Form an Equation using 'n' from the pattern and provide an answer";
-      }
-      if (setting == 9) {
-        instructions.innerHTML =
-          "Continuous Pattern:</p>Form an Equation using 'n' from the pattern and provide an answer";
-      }
+
       break;
 
     case "Level 3.17":
       level = 3.17;
       scoreNeeded = 20;
-      gold = highScore3DotZero17.time;
-
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -28059,13 +27946,6 @@ function buttonLevelSetting() {
     case "Level 3.18":
       level = 3.18;
       scoreNeeded = 20;
-      gold = highScore3DotZero18.time;
-      silver =
-        highScore3DotZero18.time + (cutoff - highScore3DotZero18.time) / 3;
-      bronze =
-        highScore3DotZero18.time +
-        ((cutoff - highScore3DotZero18.time) / 3) * 2;
-
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -28076,13 +27956,6 @@ function buttonLevelSetting() {
       if (![1, 2, 9].includes(setting)) setting = 9;
       level = 3.19;
       scoreNeeded = 20;
-      gold = highScore3DotZero19.time;
-      silver =
-        highScore3DotZero19.time + (cutoff - highScore3DotZero19.time) / 3;
-      bronze =
-        highScore3DotZero19.time +
-        ((cutoff - highScore3DotZero19.time) / 3) * 2;
-
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       break;
@@ -28090,36 +27963,19 @@ function buttonLevelSetting() {
     case "Level 4.0":
       level = 4.0;
       scoreNeeded = 10;
-      gold = highScore4DotZero.time;
-      silver = highScore4DotZero.time + (cutoff - highScore4DotZero.time) / 3;
-      bronze =
-        highScore4DotZero.time + ((cutoff - highScore4DotZero.time) / 3) * 2;
-
       document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "25px";
-      instructions.innerHTML = `List the factors in pairs</br>
-        in ascending order.
-        `;
+
       break;
 
     case "Level 4.01":
       level = "4.01";
       scoreNeeded = 30;
-      gold = 229;
-
       document.querySelector("#user-input").setAttribute("max", "100000");
       break;
 
     case "Level 4.02":
       level = 4.02;
       scoreNeeded = 20;
-      gold = highScore4DotZero16.time;
-      silver =
-        highScore4DotZero16.time + (cutoff - highScore4DotZero16.time) / 3;
-      bronze =
-        highScore4DotZero16.time +
-        ((cutoff - highScore4DotZero16.time) / 3) * 2;
-      displayProblem.style.fontSize = "25px";
       helpMe.style.fontSize = "18px";
       helpMe.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("max", "200000");
@@ -28132,9 +27988,7 @@ function buttonLevelSetting() {
       scoreNeeded = 20;
       wholeNumberContainer.classList.add("hidden");
       fractionsContainer.classList.remove("hidden");
-      instructions.innerHTML = `
-        Answer using 1 or 2.
-        `;
+
       document.querySelector("#user-input").setAttribute("type", "number");
       document.querySelector("#user-input").setAttribute("min", "1");
       document.querySelector("#user-input").setAttribute("max", "2");
@@ -28148,17 +28002,9 @@ function buttonLevelSetting() {
       );
       level = 4.04;
       scoreNeeded = 20;
-      gold = highScore4DotZero11.time;
-      silver =
-        highScore4DotZero11.time + (cutoff - highScore4DotZero11.time) / 3;
-      bronze =
-        highScore4DotZero11.time +
-        ((cutoff - highScore4DotZero11.time) / 3) * 2;
-
       wholeNumberContainer.classList.add("hidden");
       fractionsContainerTwo.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
-      instructions.textContent = "";
       break;
 
     case "Level 4.05":
@@ -28170,58 +28016,36 @@ function buttonLevelSetting() {
           9
         )
       );
-      gold = 134;
-      silver = 153;
-
-      instructions.textContent = "";
-      displayProblem.style.fontSize = "25px";
-      displayProblem.style.marginBottom = "150px";
       break;
 
     case "Level 4.06":
       level = 4.06;
       scoreNeeded = 20;
       document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "18px";
-      displayProblem.style.textAlign = "left";
-      instructions.innerHTML = `
-          Do not need to simplify.
-          `;
+
       break;
 
     case "Level 4.07":
       level = "4.07";
       scoreNeeded = 30;
-      gold = highScore4DotZero1.time;
-
-      displayProblem.style.fontSize = "25px";
       arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
       break;
 
     case "Level 4.08":
       level = "4.08";
       scoreNeeded = 30;
-      gold = 264;
-
       document.querySelector("#user-input").setAttribute("step", "0.000001");
       break;
 
     case "Level 4.09":
       level = 4.09;
       scoreNeeded = 30;
-      gold = 310;
-
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
     case "Level 4.1":
       level = 4.1;
       scoreNeeded = 30;
-      gold = highScore4DotZero5.time;
-      silver = highScore4DotZero5.time + (cutoff - highScore4DotZero5.time) / 3;
-      bronze =
-        highScore4DotZero5.time + ((cutoff - highScore4DotZero5.time) / 3) * 2;
-
       document.querySelector("#user-input").setAttribute("step", "0.000001");
       break;
 
@@ -28233,27 +28057,18 @@ function buttonLevelSetting() {
       if (setting != 1 && setting != 2 && setting != 9) setting = 9;
       level = 4.11;
       scoreNeeded = 30;
-      gold = 207;
-
       document.querySelector("#user-input").setAttribute("step", "0.000001");
       break;
 
     case "Level 4.13":
       level = 4.13;
       scoreNeeded = 20;
-      gold = 297;
-      silver = 376;
-
-      instructions.textContent = "";
-      displayProblem.style.fontSize = "25px";
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
     case "Level 4.14":
       level = 4.14;
       scoreNeeded = 30;
-      gold = 49;
-
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       fractionsContainerTwo.classList.remove("hidden");
@@ -28272,21 +28087,11 @@ function buttonLevelSetting() {
       scoreNeeded = 10;
       document.querySelector("#user-input").setAttribute("type", "text");
       document.querySelector("#user-input").style.width = "250px";
-      displayProblem.style.textAlign = "left";
-      displayProblem.style.fontSize = "20px";
-      instructions.innerHTML = `Give your final answer.
-        `;
       break;
 
     case "Level 4.17":
       level = 4.17;
       scoreNeeded = 20;
-      gold = highScore4DotZero17.time;
-      silver =
-        highScore4DotZero17.time + (cutoff - highScore4DotZero17.time) / 3;
-      bronze =
-        highScore4DotZero17.time +
-        ((cutoff - highScore4DotZero17.time) / 3) * 2;
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       arr = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
@@ -28296,7 +28101,6 @@ function buttonLevelSetting() {
     case "Level 4.18":
       level = 4.18;
       scoreNeeded = 20;
-      gold = highScore4DotZero18.time;
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       arr = ["A", "B", "C", "D", "O", "F", "G", "H", "I"];
@@ -28307,11 +28111,6 @@ function buttonLevelSetting() {
     case "Level 4.19":
       level = 4.19;
       scoreNeeded = 20;
-      gold = highScore4DotZero19.time;
-      silver =
-        highScore4DotZero19.time + (cutoff - highScore4DotZero19.time) / 3;
-      bronze =
-        highScore4DotZero.time + ((cutoff - highScore4DotZero19.time) / 3) * 2;
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -28320,10 +28119,6 @@ function buttonLevelSetting() {
     case "Level 4.20":
       level = 4.2;
       scoreNeeded = 10;
-      gold = highScore4Dot2Zero.time;
-      silver = highScore4Dot2Zero.time + (cutoff - highScore4Dot2Zero.time) / 3;
-      bronze =
-        highScore4DotZero.time + ((cutoff - highScore4Dot2Zero.time) / 3) * 2;
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -28331,17 +28126,15 @@ function buttonLevelSetting() {
 
     case "Level 4.21":
       setting = prompt(
-        "1. Perfect Cutting\n2. Rectangle\n3. Cuboid\n4. Circles\n5. Rectangles\n\n9. Everything"
+        "1. Perfect Cutting\n2. Rectangle\n3. Cuboid\n4. Circles\n5. Rectangles\n\n9. Everything",
+        9
       );
       accepted = [1, 2, 3, 4, 5, 9];
       setting = settingCheck(setting, accepted, level);
       level = 4.21;
       scoreNeeded = 10;
-      gold = highScore4Dot21.time;
-      silver = highScore4Dot21.time + (cutoff - highScore4Dot21.time) / 3;
-      bronze = highScore4Dot21.time + ((cutoff - highScore4Dot21.time) / 3) * 2;
-      displayProblem.style.fontSize = "20px";
       document.querySelector("#user-input").setAttribute("type", "text");
+
       break;
 
     case "Level 4.22":
@@ -28354,20 +28147,13 @@ function buttonLevelSetting() {
     case "Level 4.23":
       level = 4.23;
       scoreNeeded = 6;
-      displayProblem.style.fontSize = "18px";
-      displayProblem.style.textAlign = "left";
-
       break;
 
     case "Level 4.24":
       level = 4.24;
       scoreNeeded = 20;
       document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "18px";
-      displayProblem.style.textAlign = "left";
-      instructions.innerHTML = `
-        Do not need to simplify.
-        `;
+
       break;
 
     case "Level 4.25":
@@ -28382,8 +28168,6 @@ function buttonLevelSetting() {
     case "Level 4.26":
       level = 4.26;
       scoreNeeded = 10;
-      displayProblem.style.fontSize = "20px";
-      displayProblem.style.textAlign = "left";
       helpMe.style.fontSize = "10px";
       helpMe.style.lineHeight = "0";
       helpMe.style.letterSpacing = "4px";
@@ -28394,8 +28178,6 @@ function buttonLevelSetting() {
       level = 5.0;
       scoreNeeded = 20;
       document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "20px";
-      displayProblem.style.textAlign = "left";
       break;
 
     case "Level 5.01":
@@ -28407,12 +28189,7 @@ function buttonLevelSetting() {
         setting = 9;
       level = 5.01;
       scoreNeeded = 10;
-      gold = 80;
       document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "18px";
-      displayProblem.style.textAlign = "left";
-      instructions.innerHTML =
-        "Form an equation using</br> multiplication of fraction </br> RC = from x want";
       break;
 
     case "Level 5.02":
@@ -29123,6 +28900,7 @@ function buttonLevelSetting() {
   if (hardcore == 1) {
     scoreNeeded /= 2;
   }
+  instructions.innerHTML = instructionsContent(level);
 }
 //FOR TIMINGS AND HIGHSCORE
 const allLevelButtons = [...settingButton].concat([...heuristics], [...calBtn]);

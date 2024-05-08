@@ -40,9 +40,25 @@ body {
 }
 
 .instructions {
-  font-size: 2em;
-  color: red;
+  font-size: 1em;
+  /* color: black; */
 }
+
+.instructions-box {
+  text-align: left;
+  background-color: white;
+  position: absolute;
+  overflow: auto;
+  /* top: 1; */
+  max-width: 400px;
+  height: 95%;
+  max-height: 95%;
+  /* height: auto; */
+  border: solid 2px;
+  z-index: 10;
+  padding: 10px 10px;
+}
+
 .overlay {
   position: absolute;
   top: 1;
