@@ -28159,7 +28159,6 @@ function buttonLevelSetting() {
     case "Level 4.25":
       level = 4.25;
       scoreNeeded = 10;
-      displayProblem.style.fontSize = "20px";
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
@@ -28195,30 +28194,18 @@ function buttonLevelSetting() {
     case "Level 5.02":
       level = 5.02;
       scoreNeeded = 10;
-      gold = highScore5DotZero2.time;
       document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "25px";
-      instructions.innerHTML = "Form an equation using in fraction";
       break;
 
     case "Level 5.03":
       level = 5.03;
       scoreNeeded = 20;
-      gold = highScore5DotZero3.time;
       document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "25px";
-      instructions.innerHTML = `
-        Calculate the results for decimals and leave the rest in equation form.
-        `;
       break;
 
     case "Level 5.04":
       level = 5.04;
       scoreNeeded = 10;
-      gold = highScore5DotZero4.time;
-      silver = highScore5DotZero4.time + (cutoff - highScore5DotZero4.time) / 3;
-      bronze =
-        highScore5DotZero4.time + ((cutoff - highScore5DotZero4.time) / 3) * 2;
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "25px";
       instructions.innerHTML =
