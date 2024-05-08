@@ -4518,6 +4518,7 @@ function updateProblems() {
   // }
 
   if (level == 5.0) {
+    normalDisplay();
     let object = p.groups[p.object][0];
     let measurement = p.groups[p.object][1];
 
@@ -4643,6 +4644,7 @@ function updateProblems() {
     displayProblem.innerHTML = `${lineOne}</p>${lineTwo}</p>${lineThree}`;
   }
   if (level == 5.01) {
+    normalDisplay();
     if (setting == 1) {
       [p.numOne, p.denoOne] = simplify(p.numOne, p.denoOne);
       [p.numTwo, p.denoTwo] = simplify(p.numTwo, p.denoTwo);
@@ -4734,6 +4736,7 @@ function updateProblems() {
   }
 
   if (level == 5.02) {
+    normalDisplay();
     if (p.numThree == p.numFour) {
       p.numFour = p.numThree + [1, 2][genNumbers(2)];
     }
