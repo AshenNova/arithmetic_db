@@ -1778,6 +1778,7 @@ function updateProblems() {
   }
 
   if (level == 2.06) {
+    normalDisplay();
     arr.push(p.figure);
     while (arr[0] == p.figureTwo) {
       p.figureTwo = ["🏀", "⚽️", "🏈", "🎾", "🍎", "🍏", "🌭"][genNumbers(7)];

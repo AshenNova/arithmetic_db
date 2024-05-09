@@ -1,6 +1,6 @@
 const Trial = require("../models/trialModel");
 const Lesson = require("../models/lessonModel");
-const sendEmail = require("../utils/email");
+const { sendEmail } = require("../utils/email");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
