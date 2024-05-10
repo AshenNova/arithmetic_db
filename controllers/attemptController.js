@@ -608,16 +608,16 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     //BONUS POINTS FOR DOING RECOMMENDATION
     let accomplish = 0;
     recommend.forEach((item) => {
-      // CHECK IF THE ATTEMPT IS ON THE RECOMMENDED LIST
-
-      if (
-        item.level == level &&
-        item.mode == mode &&
-        item.setting == setting &&
-        extra == ""
-      ) {
+      // CHECK IF THE CURRENT ATTEMPT IS ON THE RECOMMENDED LIST
+      if (item.level == level && item.mode == mode && item.setting == setting) {
         let count = 0;
-        accomplish += 1;
+        if (
+          (level.startsWith("cal") || level.startsWith("heu")) &&
+          extra == ""
+        ) {
+          accomplish += 1; // PLUS ONE IF THIS HAS BEEN COMPLETED
+        }
+
         recCheck = true;
         // IF YES, CHECK IF IT IS THE FIRST ATTEMPT
         checkLimit.forEach((today) => {
@@ -636,7 +636,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
               today.mode == item.mode &&
               !uniqueRecommend.includes(level)
             ) {
-              accomplish += 1;
+              accomplish += 1; // CHECK IF THE MORE RECOMMENDED WERE PREVIOUSLY ALREADY COMPLETED.
             }
             uniqueRecommend.push(today.level);
           });
