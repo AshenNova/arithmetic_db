@@ -2988,6 +2988,7 @@ function updateProblems() {
   }
 
   if (level == 4.05) {
+    normalDisplay();
     if (setting == 1 || (setting == 9 && p.rollChoice == 1)) {
       if (p.numOne == p.numTwo) {
         p.numOne += 1;

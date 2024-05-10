@@ -610,7 +610,12 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     recommend.forEach((item) => {
       // CHECK IF THE ATTEMPT IS ON THE RECOMMENDED LIST
 
-      if (item.level == level && item.mode == mode && item.setting == setting) {
+      if (
+        item.level == level &&
+        item.mode == mode &&
+        item.setting == setting &&
+        item.extra == ""
+      ) {
         let count = 0;
         accomplish += 1;
         recCheck = true;
