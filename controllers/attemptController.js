@@ -611,11 +611,10 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
       // CHECK IF THE CURRENT ATTEMPT IS ON THE RECOMMENDED LIST
       if (item.level == level && item.mode == mode && item.setting == setting) {
         let count = 0;
-        if (
-          (level.startsWith("cal") || level.startsWith("heu")) &&
-          extra == ""
-        ) {
-          accomplish += 1; // PLUS ONE IF THIS HAS BEEN COMPLETED
+        if (level.startsWith("cal") || level.startsWith("heu")) {
+          if (extra == "") accomplish += 1; // PLUS ONE IF THIS HAS BEEN COMPLETED
+        } else {
+          accomplish += 1;
         }
 
         recCheck = true;
