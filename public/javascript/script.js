@@ -3038,6 +3038,7 @@ function updateProblems() {
   }
 
   if (level == 4.06) {
+    normalDisplay();
     if (p.oneValue == p.twoValue) {
       p.twoValue += 1;
     }
@@ -3112,6 +3113,7 @@ function updateProblems() {
   }
 
   if (level == 4.07) {
+    normalDisplay();
     for (let i = 0; i < 7; i++) {
       const chosenNumber = arr[genNumbers(arr.length - 1)];
       arr2.push(chosenNumber);
@@ -3137,6 +3139,7 @@ function updateProblems() {
     `;
   }
   if (level == 4.08) {
+    normalDisplay();
     // helpMe.textContent = `${p.placeValue}`;
     let activateOne = genNumbers(2);
     let activateTwo = genNumbers(2);
@@ -3234,6 +3237,7 @@ function updateProblems() {
   }
 
   if (level == 4.13) {
+    normalDisplay();
     if (p.type == 24) {
       displayProblem.innerHTML = `
       What is the time below in 12 hour clock?</p>
@@ -4763,7 +4767,18 @@ function updateProblems() {
       arr.unshift(p.numThree * i);
     }
     displayProblem.innerHTML = `
-    ${p.numOne}/${p.numTwo} of A ${p.sentenceChoice} ${p.numThree}/${p.numFour} of B.
+    <div class="frac">
+    <span>${p.numOne}</span>
+    <span class="symbol">/</span>
+    <span class="bottom">${p.numTwo}</span>
+    </div>
+    of A ${p.sentenceChoice}
+    <div class="frac">
+    <span>${p.numThree}</span>
+    <span class="symbol">/</span>
+    <span class="bottom">${p.numFour}</span>
+    </div>
+    of B.
     `;
   }
 

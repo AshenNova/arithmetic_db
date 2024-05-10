@@ -614,7 +614,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         item.level == level &&
         item.mode == mode &&
         item.setting == setting &&
-        item.extra == ""
+        extra == ""
       ) {
         let count = 0;
         accomplish += 1;
