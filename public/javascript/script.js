@@ -1628,6 +1628,7 @@ function updateProblems() {
     }
   }
   if (level == 2.02) {
+    normalDisplay()
     for (let i = 0; i < setting * 1 + 1; i++) {
       const chosenNumber = arr[genNumbers(arr.length - 1)];
       arr2.push(chosenNumber);

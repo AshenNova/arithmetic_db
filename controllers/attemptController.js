@@ -637,7 +637,18 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
             ) {
               accomplish += 1; // CHECK IF THE MORE RECOMMENDED WERE PREVIOUSLY ALREADY COMPLETED.
             }
-            uniqueRecommend.push(today.level);
+
+            //PUSH
+            if (
+              today.level.startsWith("cal") ||
+              today.level.startsWith("heu")
+            ) {
+              if (today.extra == "") {
+                uniqueRecommend.push(today.level);
+              }
+            } else {
+              uniqueRecommend.push(today.level);
+            }
           });
         });
         // ONLY AWARD THE FIRST ATTEMPT OF THE RECOMMENDED THE BONUS POINT
