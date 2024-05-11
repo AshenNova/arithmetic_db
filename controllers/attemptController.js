@@ -602,7 +602,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     const checkLimit = await Attempt.find({
       user,
       date: { $gte: start, $lt: end },
-      tries: "1",
+      // tries: "1",
     });
 
     //BONUS POINTS FOR DOING RECOMMENDATION
@@ -612,9 +612,12 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
       if (item.level == level && item.mode == mode && item.setting == setting) {
         let count = 0;
         if (level.startsWith("cal") || level.startsWith("heu")) {
-          if (extra == "") accomplish += 1; // PLUS ONE IF THIS HAS BEEN COMPLETED
+          if (extra == "") {
+            accomplish += 1;
+          } // PLUS ONE IF THIS HAS BEEN COMPLETED
         } else {
           accomplish += 1;
+          console.log(`${accomplish} 💰`);
         }
 
         recCheck = true;
@@ -627,29 +630,25 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         });
 
         // CHECK HOW MANY DAILY RECOMMENDATIONS HAS BEEN DONE.
-        let uniqueRecommend = [];
-        recommend.forEach((item) => {
-          checkLimit.forEach((today) => {
+        console.log("Checking through the recommended list");
+        let uniqueLevel = [];
+        checkLimit.forEach((today) => {
+          console.log("Checking " + today);
+          if (today.recommendCheck && !uniqueLevel.includes(today.level)) {
             if (
-              today.level == item.level &&
-              today.mode == item.mode &&
-              !uniqueRecommend.includes(level)
-            ) {
-              accomplish += 1; // CHECK IF THE MORE RECOMMENDED WERE PREVIOUSLY ALREADY COMPLETED.
-            }
-
-            //PUSH
-            if (
-              today.level.startsWith("cal") ||
-              today.level.startsWith("heu")
+              today.level.startsWith("heu") ||
+              today.level.startsWith("cal")
             ) {
               if (today.extra == "") {
-                uniqueRecommend.push(today.level);
+                console.log("EMPTY!!!");
+                accomplish += 1;
+                uniqueLevel.push(today.level);
               }
             } else {
-              uniqueRecommend.push(today.level);
+              accomplish += 1;
+              uniqueLevel.push(today.level);
             }
-          });
+          }
         });
         // ONLY AWARD THE FIRST ATTEMPT OF THE RECOMMENDED THE BONUS POINT
         if (count == 0) {
@@ -691,8 +690,6 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     setting: req.body.setting,
     mode: req.body.mode,
   });
-  console.log(intervention);
-  console.log("Made it here.");
   if (intervention == null) {
     intervention = {
       _id: "x",
