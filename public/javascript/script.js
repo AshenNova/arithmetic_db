@@ -1686,6 +1686,7 @@ function updateProblems() {
   }
 
   if (level == 2.05) {
+    normalDisplay()
     // counting odd or even in array
     let oddEvenCount = [0, 0];
     for (let i = arr2.length; arr2.length < setting * 1 + 1; i++) {
@@ -17731,6 +17732,7 @@ function handleSubmit(e) {
     }
 
     if (level == 2.05) {
+    
       if (p.evenOrOdd == "even") {
         if (p.landingNumber % 2 == 0) {
           console.log("Choice 1");
