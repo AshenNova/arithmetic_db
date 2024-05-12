@@ -432,7 +432,7 @@ exports.deleteRewardLog = catchAsync(async (req, res, next) => {
 });
 
 function settings(level, age, allAttempts) {
-  if (level == 2.02 || level == 2.05) {
+  if (level == 2.02) {
     console.log(`The level is ${level}. Age is ${age}.`);
     if (age == 8 || age <= 7) {
       return 2;
@@ -446,6 +446,14 @@ function settings(level, age, allAttempts) {
       return 6;
     } else {
       return 6;
+    }
+  } else if (level == 2.05) {
+    if (age == 8 || age <= 7) {
+      return 2;
+    } else if (age == 9) {
+      return 3;
+    } else if (age >= 10) {
+      return 4;
     }
   } else if (level == 3.16 || level == 5.01) {
     let countNine = 0;
