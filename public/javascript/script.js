@@ -4081,17 +4081,17 @@ function updateProblems() {
     }
 
     if (setting == 5) {
-      const min = 5;
+      
       const a = genNumbers(10) + 2;
       const b = genNumbers(10) + 2;
-      p.smallLength = [2, 3, 5, 7][genNumbers(3)];
-      p.smallBreadth = [2, 3, 5, 9][genNumbers(3)];
+      p.smallLength = [2, 3, 5, 7][genNumbers(4)];
+      p.smallBreadth = [2, 3, 5, 9][genNumbers(4)];
       while (p.smallLength == p.smallBreadth) {
         p.smallLength = [2, 3, 5, 7][genNumbers(3)];
-        p.smallBreadth = [2, 3, 5, 9][genNumbers(3)];
+        p.smallBreadth = [2, 3, 5, 9][genNumbers(1)];
       }
-      p.length = a * p.smallLength + p.smallBreadth;
-      p.breadth = b * p.smallBreadth + p.smallLength;
+      p.length = a * p.smallLength + genNumbers(p.smallLength);
+      p.breadth = b * p.smallBreadth + genNumbers(p.smallBreadth);
 
       displayProblem.innerHTML = `
       How many <u>rectangles</u> of dimension ${p.smallLength} and ${p.smallBreadth} cm can be cut out from a rectangle with a dimension of </br>
@@ -18921,17 +18921,34 @@ function handleSubmit(e) {
       }
       //RECTANGLES
       if (setting == 5) {
-        function extraShapes(remainder1, remainder2, side1, side2) {
+        function extraShapes(
+          remainder1,
+          remainder2,
+          side1,
+          side2,
+          length,
+          breadth
+        ) {
           let A = 0;
           let B = 0;
-          if (remainder1 >= side1 && remainder2 >= side2) {
-            const a = Math.floor(remainder1 / side1);
-            const b = Math.floor(remainder2 / side2);
+          // if (remainder1 >= side1 && remainder2 >= side2) {
+          //   const a = Math.floor(remainder1 / side1);
+          //   const b = Math.floor(remainder2 / side2);
+          //   A = a * b;
+          // }
+          // if (remainder2 >= side1 && remainder1 >= side2) {
+          //   const a = Math.floor(remainder2 / side1);
+          //   const b = Math.floor(remainder1 / side2);
+          //   B = a * b;
+          // }
+          if (remainder1 >= side2) {
+            const a = Math.floor(remainder1 / side2);
+            const b = Math.floor(breadth / side1);
             A = a * b;
           }
-          if (remainder2 >= side1 && remainder1 >= side2) {
+          if (remainder2 >= side1) {
             const a = Math.floor(remainder2 / side1);
-            const b = Math.floor(remainder1 / side2);
+            const b = Math.floor(length / side2);
             B = a * b;
           }
           return A >= B ? A : B;
@@ -18942,7 +18959,14 @@ function handleSubmit(e) {
         const b = Math.floor(p.breadth / p.smallBreadth);
         const bR = p.breadth % p.smallBreadth;
         const standardOne = a * b;
-        const extraOne = extraShapes(aR, bR, p.smallLength, p.smallBreadth);
+        const extraOne = extraShapes(
+          aR,
+          bR,
+          p.smallLength,
+          p.smallBreadth,
+          p.length,
+          p.breadth
+        );
         const A = standardOne + extraOne;
 
         // Second scenario
@@ -18951,21 +18975,26 @@ function handleSubmit(e) {
         const d = Math.floor(p.length / p.smallBreadth);
         const dR = p.length % p.smallBreadth;
         const standardTwo = c * d;
-        const extraTwo = extraShapes(cR, dR, p.smallLength, p.smallBreadth);
+        const extraTwo = extraShapes(
+          cR,
+          dR,
+          p.smallLength,
+          p.smallBreadth,
+          p.breadth,
+          p.length
+        );
         const B = standardTwo + extraTwo;
 
         if (A >= B) {
           if (extraOne != 0) {
-            correctAnswer = `${a}x${b}+${extraOne}=${A}`;
-            correctAnswerTwo = `${b}x${a}+${extraOne}=${A}`;
+            correctAnswer = `${A}`;
           } else {
             correctAnswer = `${a}x${b}=${A}`;
             correctAnswerTwo = `${b}x${a}=${A}`;
           }
         } else {
           if (extraTwo != 0) {
-            correctAnswer = `${c}x${d}+${extraTwo}=${B}`;
-            correctAnswerTwo = `${d}x${c}+${extraTwo}=${B}`;
+            correctAnswer = `${B}`;
           } else {
             correctAnswer = `${c}x${d}=${B}`;
             correctAnswerTwo = `${d}x${c}=${B}`;
