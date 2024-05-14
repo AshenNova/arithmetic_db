@@ -4081,7 +4081,6 @@ function updateProblems() {
     }
 
     if (setting == 5) {
-      
       const a = genNumbers(10) + 2;
       const b = genNumbers(10) + 2;
       p.smallLength = [2, 3, 5, 7][genNumbers(4)];
@@ -12763,7 +12762,7 @@ function updateProblems() {
       let orderB;
       const B = genNumbers(2);
       if (B == 0) {
-        orderB = `The ratio of the male to female students in group A is ${p.B1} : ${p.B2}.</br>`;
+        orderB = `The ratio of the male to female students in group B is ${p.B1} : ${p.B2}.</br>`;
       }
       if (B == 1) {
         orderB = `The ratio of the female to male students in group B is ${p.B2} : ${p.B1}.</br>`;
@@ -18931,16 +18930,6 @@ function handleSubmit(e) {
         ) {
           let A = 0;
           let B = 0;
-          // if (remainder1 >= side1 && remainder2 >= side2) {
-          //   const a = Math.floor(remainder1 / side1);
-          //   const b = Math.floor(remainder2 / side2);
-          //   A = a * b;
-          // }
-          // if (remainder2 >= side1 && remainder1 >= side2) {
-          //   const a = Math.floor(remainder2 / side1);
-          //   const b = Math.floor(remainder1 / side2);
-          //   B = a * b;
-          // }
           if (remainder1 >= side2) {
             const a = Math.floor(remainder1 / side2);
             const b = Math.floor(breadth / side1);
@@ -18985,20 +18974,33 @@ function handleSubmit(e) {
         );
         const B = standardTwo + extraTwo;
 
-        if (A >= B) {
+        if (A > B) {
           if (extraOne != 0) {
+            console.log(`A`)
             correctAnswer = `${A}`;
           } else {
+            console.log(`B`)
             correctAnswer = `${a}x${b}=${A}`;
             correctAnswerTwo = `${b}x${a}=${A}`;
           }
         } else {
           if (extraTwo != 0) {
+            console.log(`C`)
             correctAnswer = `${B}`;
-          } else {
+          } else {console.log(`D`)
+
             correctAnswer = `${c}x${d}=${B}`;
             correctAnswerTwo = `${d}x${c}=${B}`;
           }
+        }
+        if (A == B) {
+          console.log(`E`)
+          correctAnswerArr.push(`${A}`);
+          correctAnswerArr.push(`${a}x${b}=${A}`);
+          correctAnswerArr.push(`${b}x${a}=${A}`);
+          correctAnswerArr.push(`${B}`);
+          correctAnswerArr.push(`${c}x${d}=${B}`);
+          correctAnswerArr.push(`${d}x${c}=${B}`);
         }
       }
     }
@@ -27950,10 +27952,10 @@ function buttonLevelSetting() {
       level = 2.05;
       scoreNeeded = 20;
       setting = prompt(
-        "How many digits?\n2. Primary 2\n3. Primary 3\n4. Primary 4\n5. Primary 5\n6. Primary 6"
+        "How many digits?\n2. Primary 2\n3. Primary 3\n4. Primary 4, 5 ,6"
       );
-      if (![2, 3, 4, 5, 6].includes(setting * 1)) {
-        setting = 6;
+      if (![2, 3, 4].includes(setting * 1)) {
+        setting = 4;
       }
       arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
