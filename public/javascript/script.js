@@ -1686,7 +1686,7 @@ function updateProblems() {
   }
 
   if (level == 2.05) {
-    normalDisplay()
+    normalDisplay();
     // counting odd or even in array
     let oddEvenCount = [0, 0];
     for (let i = arr2.length; arr2.length < setting * 1 + 1; i++) {
@@ -2899,8 +2899,7 @@ function updateProblems() {
     }
 
     displayProblem.innerHTML = `
-    <u>${p.choice}</u> value before rounding off to the</br> 
-    <u>${p.placeValue}</u> place?</br>
+    <u>${p.choice}</u> value before rounding off to the <u>${p.placeValue}</u> place?</br>
     <br>
     _______ ≈ ${p.numOne}`;
 
@@ -12713,6 +12712,74 @@ function updateProblems() {
         );
       }
     }
+    // RATIO: UNIDENTICAL GROUP
+    if (setting == 24) {
+      normalDisplay();
+
+      [p.A1, p.A2] = simplify(p.A1, p.A2);
+      [p.B1, p.B2] = simplify(p.B1, p.B2);
+
+      p.totalA = [p.A1 + p.A2];
+      p.totalB = [p.B1 + p.B2];
+
+      while (
+        p.totalB[p.totalB.length - 1] * p.multiples !=
+        p.totalA[p.totalA.length - 1]
+      ) {
+        let lastA = p.totalA[p.totalA.length - 1];
+        let lastB = p.totalB[p.totalB.length - 1];
+        // console.log(lastA, lastB);
+        if (lastA / lastB < p.multiples) {
+          p.totalA.push(lastA + p.totalA[0]);
+        }
+        // if (lastB / p.multiples > lastA){
+        if (lastB * p.multiples < lastA) {
+          p.totalB.push(lastB + p.totalB[0]);
+        }
+
+        // }
+
+        if (lastA > 100 || lastB > 100) return updateCalc();
+      }
+      console.log(p.totalA, p.totalB);
+      let final;
+      if (p.question == "FM")
+        final = `What is the ratio of the females in group A and the males in group B?`;
+      if (p.question == "FF")
+        final = `What is the ratio of the females in group A and the female in group B?`;
+      if (p.question == "MF")
+        final = `What is the ratio of the males in group A and the females in group B?`;
+      if (p.question == "MM")
+        final = `What is the ratio of the males in group A and the males in group B?`;
+
+      let orderA;
+      const A = genNumbers(2);
+      if (A == 0) {
+        orderA = `The ratio of the male to female students in group A is ${p.A1} : ${p.A2}.</br>`;
+      }
+      if (A == 1) {
+        orderA = `The ratio of the female to male students in group A is ${p.A2} : ${p.A1}.</br>`;
+      }
+      let orderB;
+      const B = genNumbers(2);
+      if (B == 0) {
+        orderB = `The ratio of the male to female students in group A is ${p.B1} : ${p.B2}.</br>`;
+      }
+      if (B == 1) {
+        orderB = `The ratio of the female to male students in group B is ${p.B2} : ${p.B1}.</br>`;
+      }
+
+      displayProblem.innerHTML = `
+      Group A is ${p.multiples} times of group B.</br>
+      ${orderA}
+      ${orderB}
+      ${final}
+      `;
+      p.A1 = p.totalA.length * p.A1;
+      p.A2 = p.totalA.length * p.A2;
+      p.B1 = p.totalB.length * p.B1;
+      p.B2 = p.totalB.length * p.B2;
+    }
     // BOTTOM OF CALFIVEB
   }
 
@@ -16776,10 +16843,10 @@ How many items are there in each bag?
       const timeZone = genNumbers(2) == 0 ? "a.m" : "p.m";
       const hoursDuration = Math.floor(p.duration / 60);
       const minsDuration = p.duration % 60;
-      const endHours = p.startHour + hoursDuration;
-      const endMins = p.startMins + minsDuration;
+      let endHours = p.startHour + hoursDuration;
+      let endMins = p.startMins + minsDuration;
 
-      if (minsDuration >= 60) {
+      if (endMins >= 60) {
         endMins -= 60;
         endHours += 1;
       }
@@ -16791,7 +16858,13 @@ How many items are there in each bag?
 
       if (p.version == 0) {
         displayProblem.innerHTML = `
-      There are ${p.people} people playing a game from ${p.startHour}.${p.startMins}${timeZone} to ${endHours}.${endMins}${timeZone}.</p>
+      There are ${p.people} people playing a game from ${
+          p.startHour
+        }.${p.startMins
+          .toString()
+          .padStart(2, "0")}${timeZone} to ${endHours}.${endMins
+          .toString()
+          .padStart(2, "0")}${timeZone}.</p>
       Only ${p.active} of them can be playing each time.</p>
       How much time did each of them get to play?</p>
       `;
@@ -17732,7 +17805,6 @@ function handleSubmit(e) {
     }
 
     if (level == 2.05) {
-    
       if (p.evenOrOdd == "even") {
         if (p.landingNumber % 2 == 0) {
           console.log("Choice 1");
@@ -20804,6 +20876,7 @@ function handleSubmit(e) {
       }
     }
 
+    //ANSWERS
     if (level == "calFiveb") {
       // FRACTIONS: REMAINDER CONCEPT: BEFORE AND AFTER
       if (setting == 1) {
@@ -20991,6 +21064,27 @@ function handleSubmit(e) {
       if (setting == 23) {
         if (p.question == "pattern") correctAnswer = p.value;
         if (p.question == "number") correctAnswer = p.pattern;
+      }
+
+      // RATIO: UNIDENTICAL GROUP
+
+      if (setting == 24) {
+        if (p.question == "FM") {
+          [p.A2, p.B1] = simplify(p.A2, p.B1);
+          correctAnswer = `${p.A2}:${p.B1}`;
+        }
+        if (p.question == "FF") {
+          [p.A2, p.B2] = simplify(p.A2, p.B2);
+          correctAnswer = `${p.A2}:${p.B2}`;
+        }
+        if (p.question == "MF") {
+          [p.A1, p.B2] = simplify(p.A1, p.B2);
+          correctAnswer = `${p.A1}:${p.B2}`;
+        }
+        if (p.question == "MM") {
+          [p.A1, p.B1] = simplify(p.A1, p.B1);
+          correctAnswer = `${p.A1}:${p.B1}`;
+        }
       }
     }
 
@@ -25974,6 +26068,20 @@ function genProblems() {
         pattern: genNumbers(50) + 50,
         question: ["pattern", "number"][genNumbers(2)],
         value: undefined,
+        totalA: undefined,
+        totalB: undefined,
+      };
+    }
+
+    // RATIO: UNIDENTICAL GROUP
+    if (setting == 24) {
+      return {
+        A1: genNumbers(5) + 1,
+        A2: genNumbers(5) + 1,
+        B1: genNumbers(5) + 1,
+        B2: genNumbers(5) + 1,
+        multiples: genNumbers(4) + 2,
+        question: ["FM", "FF", "MF", "MM"][genNumbers(4)],
       };
     }
   }
@@ -27179,8 +27287,8 @@ function genProblems() {
         people: genPeople,
         courts: genNumbers(1) + 2,
         active: genNumbers(3) + 2,
-        // version: genNumbers(3),
-        version: 2,
+        version: genNumbers(3),
+        // version: 2,
       };
     }
     // REPEATED IDENTITY TYPE 3
@@ -28585,7 +28693,7 @@ function buttonLevelSetting() {
         99
       );
       if (!setting) optionsBox.classList.add("hidden");
-      accepted = [...Array.from({ length: 23 }, (_, i) => i + 1), 99];
+      accepted = [...Array.from({ length: 24 }, (_, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";

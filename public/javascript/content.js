@@ -303,6 +303,7 @@ export const displayContent = (level) => {
     <hr>
     22. Ratio: Manipulation of units with value</br>
     23. Pattern: Continuous Pattern (Sets) </br>
+    24. Ratio: Unidentical Group
     <hr>
     99. All
     `;
