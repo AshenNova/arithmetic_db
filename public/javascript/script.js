@@ -17470,6 +17470,7 @@ How many items are there in each bag?
       console.log(commonQuantity, valueAGroup, valueBGroup);
       const totalValue = valueAGroup + valueBGroup;
       const diffValue = valueAGroup - valueBGroup;
+      if (diffValue == 0) return updateCalc()
       let clue = undefined;
       if (p.version == "money") {
         if (p.type == "diff") {
