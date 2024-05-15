@@ -125,19 +125,6 @@ const calculator = document.createElement("div");
 
 const promptBox = document.querySelector("#prompt-box");
 const promptBoxInput = document.querySelector("#prompt-box-input");
-// promptBox.addEventListener("submit", function (e) {
-//   console.log(e);
-//   e.preventDefault();
-//   console.log(promptBoxInput.value);
-//   promptBoxInput.value = "";
-//   promptBox.classList.add("hidden");
-//   // buttonLevelSetting();
-// });
-// promptBox.classList.add("hidden");
-
-// calculator.innerHTML = `id="calculator"`;
-// calculator.innerHTML = `<i class="fa-solid fa-calculator hidden"></i>`;
-// ourForm.prepend(calculator);
 const calculatorSymbol = document.querySelector(".fa-calculator");
 const imageG = document.createElement("img");
 const imageS = document.createElement("img");
@@ -250,6 +237,15 @@ const mouse = {
   y: undefined,
 };
 
+function displaySimpleFraction(numerator, denominator) {
+  return `
+  <div class="frac">
+  <span>${numerator}</span>
+  <span class="symbol">/</span>
+  <span class="bottom">${denominator}</span>
+  </div>  
+  `;
+}
 function angles(x1, y1, x2, y2) {
   let dy = y2 - y1;
   let dx = x2 - x1;
@@ -17560,6 +17556,8 @@ How many items are there in each bag?
     if (setting == 8) {
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
       [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      const endA = p.denoA - p.situationA;
+      const endB = p.denoB - p.situationB;
       [p.situationA, p.deno_situationA] = simplify(
         p.situationA,
         p.deno_situationA
@@ -17569,17 +17567,17 @@ How many items are there in each bag?
         p.deno_situationB
       );
       const diffA = p.valueA * p.numeA - p.valueB * p.numeB;
-      const endA = p.denoA - p.situationA;
-      const endB = p.denoB - p.situationB;
       const diffB = p.valueA * endA - p.valueB * endB;
       if (diffA == diffB) return updateCalc();
       displayProblem.innerHTML = `
-      ${p.numeA}/${p.denoA} of A is ${Math.abs(diffA)} ${
-        diffA < 0 ? "less" : "more"
-      } than ${p.numeB}/${p.denoB} of B.</br>
-      ${p.situationA}/${p.deno_situationA} of A and ${p.situationB}/${
-        p.deno_situationB
-      } of B were removed.</br>
+      ${displaySimpleFraction(p.numeA, p.denoA)}
+        of A is ${Math.abs(diffA)} ${diffA < 0 ? "less" : "more"} than
+      ${displaySimpleFraction(p.numeB, p.denoB)}
+      of B.</br>
+      ${displaySimpleFraction(p.situationA, p.deno_situationA)}
+      of A and 
+      ${displaySimpleFraction(p.situationB, p.deno_situationB)}
+      of B were removed.</br>
       A is ${Math.abs(diffB)} ${
         diffB < 0 ? "less" : "more"
       } than B in the end</br>
