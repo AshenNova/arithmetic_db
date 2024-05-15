@@ -17470,7 +17470,7 @@ How many items are there in each bag?
       console.log(commonQuantity, valueAGroup, valueBGroup);
       const totalValue = valueAGroup + valueBGroup;
       const diffValue = valueAGroup - valueBGroup;
-      if (diffValue == 0) return updateCalc()
+      if (diffValue == 0) return updateCalc();
       let clue = undefined;
       if (p.version == "money") {
         if (p.type == "diff") {
@@ -17572,12 +17572,13 @@ How many items are there in each bag?
       const endA = p.denoA - p.situationA;
       const endB = p.denoB - p.situationB;
       const diffB = p.valueA * endA - p.valueB * endB;
+      if (diffA == diffB) return updateCalc();
       displayProblem.innerHTML = `
       ${p.numeA}/${p.denoA} of A is ${Math.abs(diffA)} ${
         diffA < 0 ? "less" : "more"
       } than ${p.numeB}/${p.denoB} of B.</br>
-      ${p.situationA}/${p.denoA} of A and ${p.situationB}/${
-        p.denoB
+      ${p.situationA}/${p.deno_situationA} of A and ${p.situationB}/${
+        p.deno_situationB
       } of B were removed.</br>
       A is ${Math.abs(diffB)} ${
         diffB < 0 ? "less" : "more"
@@ -18977,25 +18978,26 @@ function handleSubmit(e) {
 
         if (A > B) {
           if (extraOne != 0) {
-            console.log(`A`)
+            console.log(`A`);
             correctAnswer = `${A}`;
           } else {
-            console.log(`B`)
+            console.log(`B`);
             correctAnswer = `${a}x${b}=${A}`;
             correctAnswerTwo = `${b}x${a}=${A}`;
           }
         } else {
           if (extraTwo != 0) {
-            console.log(`C`)
+            console.log(`C`);
             correctAnswer = `${B}`;
-          } else {console.log(`D`)
+          } else {
+            console.log(`D`);
 
             correctAnswer = `${c}x${d}=${B}`;
             correctAnswerTwo = `${d}x${c}=${B}`;
           }
         }
         if (A == B) {
-          console.log(`E`)
+          console.log(`E`);
           correctAnswerArr.push(`${A}`);
           correctAnswerArr.push(`${a}x${b}=${A}`);
           correctAnswerArr.push(`${b}x${a}=${A}`);
