@@ -986,25 +986,41 @@ exports.getHighscore = catchAsync(async (req, res, next) => {
     highscoreAge12,
   ];
   let arr = [sevenArr, eightArr, nineArr, tenArr, elevenArr, twelveArr];
-  ageArr.forEach((ageAttempts, index) => {
-    console.log(index);
-    let level = [];
-    ageAttempts.forEach((item) => {
-      // console.log(item);
+  // ageArr.forEach((ageAttempts, index) => {
+  //   console.log(index);
+  //   let level = [];
+  //   ageAttempts.forEach((item) => {
+  //     // console.log(item);
 
-      highscoreModes.forEach((mode) => {
-        if (
-          highscoreLevels.includes(item.level) &&
-          item.mode == mode &&
-          !level.includes(item.level)
-        ) {
-          arr[index].push(item);
+  //     highscoreModes.forEach((mode) => {
+  //       if (
+  //         highscoreLevels.includes(item.level) &&
+  //         item.mode == mode &&
+  //         !level.includes(item.level)
+  //       ) {
+  //         arr[index].push(item);
+  //         level.push(item.level);
+  //       }
+  //     });
+  //   });
+  //   console.log(`Primary ${index + 1} done.`);
+  // });
+  const modes = ["Easy", "Normal", "Hardcore"];
+
+  modes.forEach((mode) => {
+    ageArr.forEach((ageAttempts, index) => {
+      let level = [];
+      ageAttempts.forEach((item) => {
+        if (!level.includes(item.level) && item.mode == mode) {
+          console.count(mode);
           level.push(item.level);
+          arr[index].push(item);
         }
       });
+      console.log(`Primary ${index + 1} done.`);
     });
-    console.log(`Primary ${index + 1} done.`);
   });
+
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
