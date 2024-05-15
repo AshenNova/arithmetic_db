@@ -13757,7 +13757,7 @@ How far is apart is Town A and Town B?
       }
       p.answer = transfer;
       let questionSentence = undefined;
-      const transferText = volumeA > volumeB ? `A to B` : `B to A`;
+      const transferText = volumeAFirst > volumeBFirst ? `A to B` : `B to A`;
       if (p.question == "transfer") {
         if (p.finalHeightUnitA == p.finalHeightUnitB) {
           questionSentence = `How much water must be poured from container ${transferText} for the height to be the same?</p>`;
