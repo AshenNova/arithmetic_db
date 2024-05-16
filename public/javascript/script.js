@@ -17013,23 +17013,14 @@ How many items are there in each bag?
       if (Math.abs(p.situationA) == Math.abs(p.situationB)) {
         return updateCalc();
       }
-      // console.log(
-      //   `A: ${valueAFirst}, unitA : ${p.unitsA}, multi: ${p.multiplier}, situationA: ${p.situationA}`
-      // );
-      // console.log(
-      //   `B: ${valueBFirst}, unitB : ${p.unitsB}, multi: ${p.multiplier}, situationB: ${p.situationB}`
-      // );
       let valueAEnd = valueAFirst + p.situationA;
       let valueBEnd = valueBFirst + p.situationB;
-      // console.log(valueAEnd);
-      // console.log(valueBEnd);
-      // console.log(`Before: ${p.partsA} : ${p.partsB}`);
       let partsA = valueAEnd;
       let partsB = valueBEnd;
       [partsA, partsB] = simplify(partsA, partsB);
 
       // if (partsA > 15 || partsB > 15 || partsA <= 0 || partsB <= 0) {
-      if (partsA > 15 || partsB > 15 || partsA == partsB) {
+      if (partsA > 15 || partsB > 15 || (p.unitsA == partsA && p.unitsB == partsB)) {
         console.log("Oops");
         return updateCalc();
       }
