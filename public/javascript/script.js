@@ -10377,6 +10377,7 @@ function updateProblems() {
             unshaded += 1;
           }
         }
+        if (p.version == "difference" && shaded == unshaded) return updateCalc()
         displayProblem.insertAdjacentHTML(
           "beforeend",
           `<p class="center">${lengthArr.join(" ")}`
