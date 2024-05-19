@@ -10377,13 +10377,14 @@ function updateProblems() {
             unshaded += 1;
           }
         }
-        if (p.version == "difference" && shaded == unshaded) return updateCalc()
+
         displayProblem.insertAdjacentHTML(
           "beforeend",
           `<p class="center">${lengthArr.join(" ")}`
         );
         lengthArr = [];
       }
+      if (p.version == "difference" && shaded == unshaded) return updateCalc();
       console.log("Shaded: " + shaded, "Unshaded: " + unshaded);
       p.shaded = shaded;
       p.unshaded = unshaded;
@@ -17021,7 +17022,11 @@ How many items are there in each bag?
       [partsA, partsB] = simplify(partsA, partsB);
 
       // if (partsA > 15 || partsB > 15 || partsA <= 0 || partsB <= 0) {
-      if (partsA > 15 || partsB > 15 || (p.unitsA == partsA && p.unitsB == partsB)) {
+      if (
+        partsA > 15 ||
+        partsB > 15 ||
+        (p.unitsA == partsA && p.unitsB == partsB)
+      ) {
         console.log("Oops");
         return updateCalc();
       }
