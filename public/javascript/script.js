@@ -237,6 +237,13 @@ const mouse = {
   y: undefined,
 };
 
+function findFactors(number) {
+  let factors = [];
+  for (let i = 1; i <= number; i++) {
+    if (number % i == 0) factors.push(i);
+  }
+  return factors;
+}
 function displaySimpleFraction(numerator, denominator) {
   return `
   <div class="frac">
@@ -17551,35 +17558,63 @@ How many items are there in each bag?
     }
 
     if (setting == 8) {
+      p.denoA = 3;
+      p.denoB = 3;
+      while (p.valueA % p.denoA != 0) {
+        p.denoA += 1;
+        if (p.denoA > 10) return updateCalc();
+      }
+      while (p.valueB % p.denoB != 0) {
+        p.denoB += 1;
+        if (p.denoB > 10) return updateCalc();
+      }
+      p.numeA = genNumbers(p.denoA - 1) + 1;
+      p.numeB = genNumbers(p.denoB - 1) + 1;
+      console.log(p.denoA, p.denoB);
+      console.log(p.numeA, p.numeB);
+      const valueAPartWay = (p.valueA / p.denoA) * p.numeA;
+      const valueBPartWay = (p.valueB / p.denoB) * p.numeB;
+      const diffA = valueAPartWay - valueBPartWay;
+      if (diffA == 0) {
+        return updateCalc();
+      }
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
       [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
-      const endA = p.denoA - p.situationA;
-      const endB = p.denoB - p.situationB;
-      [p.situationA, p.deno_situationA] = simplify(
-        p.situationA,
-        p.deno_situationA
-      );
-      [p.situationB, p.deno_situationB] = simplify(
-        p.situationB,
-        p.deno_situationB
-      );
-      const diffA = p.valueA * p.numeA - p.valueB * p.numeB;
-      const diffB = p.valueA * endA - p.valueB * endB;
-      if (diffA == diffB) return updateCalc();
+
+      const numerator = commonDeno(p.numeA, p.numeB);
+      const unitA = (numerator / p.numeA) * p.denoA;
+      const unitB = (numerator / p.numeB) * p.denoB;
+
+      const factorA = findFactors(unitA);
+      const factorB = findFactors(unitB);
+
+      console.log(factorA);
+      console.log(factorB);
+
+      let sitDenoA = factorA[genNumbers(factorA.length - 1) + 1];
+      let sitDenoB = factorB[genNumbers(factorB.length - 1) + 1];
+      let sitNumeA = genNumbers(sitDenoA - 1) + 1;
+      let sitNumeB = genNumbers(sitDenoB - 1) + 1;
+
+      const valueAEnd = (p.valueA / sitDenoA) * (sitDenoA - sitNumeA);
+      const valueBEnd = (p.valueB / sitDenoB) * (sitDenoB - sitNumeB);
+      const diffB = valueAEnd - valueBEnd;
+      if (diffB % 1 != 0 || diffB == 0 || diffA == diffB) return updateCalc();
+      [sitNumeA, sitDenoA] = simplify(sitNumeA, sitDenoA);
+      [sitNumeB, sitDenoB] = simplify(sitNumeB, sitDenoB);
       displayProblem.innerHTML = `
       ${displaySimpleFraction(p.numeA, p.denoA)}
         of A is ${Math.abs(diffA)} ${diffA < 0 ? "less" : "more"} than
       ${displaySimpleFraction(p.numeB, p.denoB)}
       of B.</br>
-      ${displaySimpleFraction(p.situationA, p.deno_situationA)}
-      of A and 
-      ${displaySimpleFraction(p.situationB, p.deno_situationB)}
+      ${displaySimpleFraction(sitNumeA, sitDenoA)}
+      of A and
+      ${displaySimpleFraction(sitNumeB, sitDenoB)}
       of B were removed.</br>
       A is ${Math.abs(diffB)} ${
         diffB < 0 ? "less" : "more"
       } than B in the end</br>
       What is the value of ${p.question} at first?
-
       `;
     }
   }
@@ -22936,10 +22971,12 @@ function handleSubmit(e) {
       }
 
       if (setting == 8) {
-        const A = p.valueA * p.denoA;
-        const B = p.valueB * p.denoB;
-        if (p.question == "A") correctAnswer = A;
-        if (p.question == "B") correctAnswer = B;
+        // const A = p.valueA * p.denoA;
+        // const B = p.valueB * p.denoB;
+        // if (p.question == "A") correctAnswer = A;
+        // if (p.question == "B") correctAnswer = B;
+        if (p.question == "A") correctAnswer = p.valueA;
+        if (p.question == "B") correctAnswer = p.valueB;
       }
     }
     if (mulLevel == "multiples") {
@@ -27480,20 +27517,26 @@ function genProblems() {
 
     // MORE THAN LESS THAN (NUMERATOR)
     if (setting == 8) {
-      const gen_denoA = genNumbers(5) + 3;
-      const gen_denoB = genNumbers(5) + 3;
+      // const gen_denoA = genNumbers(5) + 3;
+      // const gen_denoB = genNumbers(5) + 3;
       return {
-        numeA: genNumbers(gen_denoA - 1) + 1,
-        denoA: gen_denoA,
-        numeB: genNumbers(gen_denoB - 1) + 1,
-        denoB: gen_denoB,
-        situationA: genNumbers(gen_denoA - 1) + 1,
-        situationB: genNumbers(gen_denoB - 1) + 1,
-        deno_situationA: gen_denoA,
-        deno_situationB: gen_denoB,
-        valueA: genNumbers(500) + 50,
-        valueB: genNumbers(500) + 50,
+        // numeA: genNumbers(gen_denoA - 1) + 1,
+        // denoA: gen_denoA,
+        // numeB: genNumbers(gen_denoB - 1) + 1,
+        // denoB: gen_denoB,
+        // situationA: genNumbers(gen_denoA - 1) + 1,
+        // situationB: genNumbers(gen_denoB - 1) + 1,
+        // deno_situationA: gen_denoA,
+        // deno_situationB: gen_denoB,
+        // valueA: genNumbers(500) + 50,
+        // valueB: genNumbers(500) + 50,
         question: ["A", "B"][genNumbers(2)],
+        valueA: genNumbers(5000) + 1000,
+        valueB: genNumbers(5000) + 1000,
+        denoA: undefined,
+        denoB: undefined,
+        numeA: undefined,
+        numeB: undefined,
       };
     }
   }
