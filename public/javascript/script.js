@@ -13418,7 +13418,7 @@ function updateProblems() {
       }
 
       //MAIN PASSAGE
-      if (p.type == "A" || p.typr == "B") {
+      if (p.type == "A" || p.type == "B") {
         displayProblem.innerHTML = `
         Town M is between Town A and Town B.</br>
         ${personA} set off from Town A towards Town B at ${p.speedA} km/h and vice versa for ${personB} from Town B at ${p.speedB} km/h.</br>
@@ -14407,7 +14407,7 @@ How far is apart is Town A and Town B?
       if (p.type == 0) {
         displayProblem.innerHTML = `
         ${person} had $${total} at first.</br>
-        He spents $${p.situation} and shared the remaining amount with ${p.units} of his children.</br>
+        He spent $${p.situation} and shared the remaining amount with ${p.units} of his children.</br>
         How much did each children get?
         `;
       }
@@ -17276,29 +17276,29 @@ How many items are there in each bag?
       let secondScene = undefined;
       const statement = genNumbers(2) == 0 ? "ratio" : "sentence";
       if (statement == "ratio") {
-        firstScene = `If ${personA} and ${personB} spents their money in the ratio of ${p.unitAF} : ${p.unitBF},`;
-        secondScene = `If ${personA} and ${personB} spents their money in the ratio of ${p.unitAS} : ${p.unitBS},`;
+        firstScene = `If ${personA} and ${personB} spends their money in the ratio of ${p.unitAF} : ${p.unitBF},`;
+        secondScene = `If ${personA} and ${personB} spends their money in the ratio of ${p.unitAS} : ${p.unitBS},`;
       }
       if (statement == "sentence") {
         const multiplierA = genNumbers(4) + 2;
         const multiplierB = genNumbers(4) + 2;
         firstScene = `For every $${
           p.unitAF * multiplierA
-        } ${personA} spents, ${personB} also spents $${
+        } ${personA} spends, ${personB} also spends $${
           p.unitBF * multiplierA
         },`;
         secondScene = `For every $${
           p.unitAS * multiplierB
-        } ${personA} spents, ${personB} also spents $${
+        } ${personA} spends, ${personB} also spends $${
           p.unitBS * multiplierB
         },`;
       }
 
       displayProblem.innerHTML = `
       ${firstScene}
-      ${chosen} would still have $${p.amountLeftFirst} left when ${theBroke} spents all ${gender} money.</p>
+      ${chosen} would still have $${p.amountLeftFirst} left when ${theBroke} spends all ${gender} money.</p>
       ${secondScene}
-      ${chosen} would still have $${p.amountLeftSecond} left when ${theBroke} spents all ${gender} money.</p>
+      ${chosen} would still have $${p.amountLeftSecond} left when ${theBroke} spends all ${gender} money.</p>
       `;
       if (p.question == "A") {
         displayProblem.insertAdjacentHTML(
