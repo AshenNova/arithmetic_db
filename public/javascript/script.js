@@ -21407,12 +21407,26 @@ function handleSubmit(e) {
           const oneUnit = p.differenceTime / Math.abs(p.timeA - p.timeB);
           const actualTimeA = oneUnit * p.timeA;
           correctAnswer = (actualTimeA / 60) * p.speedA;
+          if (correctAnswer % 1 != 0){
+            let remainder = actualTimeA *p.speedA %60
+            let time = 60
+            let whole = Math.floor(correctAnswer)
+            [remainder, time] = simplify(remainder, time)
+            correctAnswer = `${whole} ${remainder}/${time}`
+          }
         }
         if (p.type == "normalTimeToSpeed") {
           const oneUnit = p.differenceSpeed / Math.abs(p.speedA - p.speedB);
           console.log(`one unit is ${oneUnit}`);
           if (p.question == 1) {
             correctAnswer = (oneUnit * p.speedA * p.timeA) / 60;
+            if (correctAnswer % 1 != 0){
+              let remainder = oneUnit * p.speedA * p.timeA %60
+              let time = 60
+              let whole = Math.floor(correctAnswer)
+              [remainder, time] = simplify(remainder, time)
+              correctAnswer = `${whole} ${remainder}/${time}`
+            }
           }
           if (p.question == 2) {
             correctAnswer = oneUnit * p.speedA;
