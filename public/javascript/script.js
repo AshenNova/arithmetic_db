@@ -10391,11 +10391,15 @@ function updateProblems() {
         );
         lengthArr = [];
       }
-      if (p.version == "difference" && shaded == unshaded) return updateCalc();
+      let difference = "added";
+      if (p.version == "difference") {;
+       
+        if (shaded == unshaded) return updateCalc()
       console.log("Shaded: " + shaded, "Unshaded: " + unshaded);
       p.shaded = shaded;
       p.unshaded = unshaded;
-      let difference = "added";
+      
+    }
 
       //UNCHANGED TOTAL
       if (p.version == "total") {
@@ -18920,13 +18924,16 @@ function handleSubmit(e) {
       if (p.rollType == 1) {
         correctAnswer = `(${p.lengthTotal}+${p.topOne})x2`;
         correctAnswerTwo = `(${p.topOne}+${p.lengthTotal})x2`;
+        correctAnswerArr.push((p.lengthTotal+p.topOne)*2)
       }
       if (p.rollType == 2) {
         correctAnswer = `${p.bigSquare}x4`;
+        correctAnswerArr.push(p.bigSquare*4)
       }
       if (p.rollType == 3) {
         correctAnswer = `(${p.rectangle}+${p.bigSquare})x2`;
         correctAnswerTwo = `(${p.bigSquare}+${p.rectangle})x2`;
+        correctAnswerArr.push((p.bigSquare+p.rectange)*2)
       }
     }
 
