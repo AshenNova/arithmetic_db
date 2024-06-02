@@ -9712,9 +9712,9 @@ function updateProblems() {
       A has ${p.partA} units, B has ${p.partB} units, C has ${
           p.partC
         } units.</p>
-      ${p.numA}/${p.denoA} of A is removed.</p>
-      ${p.numB}/${p.denoB} of B is removed.</p>
-      ${p.numC}/${p.denoC} of C is removed.</p>
+      ${displaySimpleFraction(p.numA, p.denoA)} of A is removed.</p>
+      ${displaySimpleFraction(p.numB, p.denoB)} of B is removed.</p>
+      ${displaySimpleFraction(p.numC, p.denoC)} of C is removed.</p>
       What fraction of the total from ${p.choiceVar} ${
           p.choice == "left" ? `is ${p.choice}` : `was ${p.choice}`
         }?
@@ -9781,24 +9781,24 @@ function updateProblems() {
       if (p.numA == p.numB && p.denoA == p.denoB) p.denoB += 1;
       if (p.version == 1) {
         displayProblem.innerHTML = `
-      ${p.numA}/${p.denoA} of A is ${
+      ${displaySimpleFraction(p.numA, p.denoA)} of A is ${
           genNumbers(2) == 0 ? "the same as" : "equal to"
-        } ${p.numB}/${p.denoB} of B.</p>
+        } ${displaySimpleFraction(p.numB, p.denoB)} of B.</p>
       What is the ratio of A : B?
       `;
       }
       if (p.version == 2) {
         displayProblem.innerHTML = `
-      ${p.numA}/${p.denoA} of A are ${p.colors}.</p>
-      ${p.numB}/${p.denoB} of B are ${p.colors}.</p>
+      ${displaySimpleFraction(p.numA, p.denoA)} of A are ${p.colors}.</p>
+      ${displaySimpleFraction(p.numB, p.denoB)} of B are ${p.colors}.</p>
       A and B have the same number of ${p.colors}.</p>
       What is the ratio of A : B?
       `;
       }
       if (p.version == 3) {
         displayProblem.innerHTML = `
-        ${p.numA}/${p.denoA} of A were ${p.choice}.</p>
-        ${p.numB}/${p.denoB} of B were ${p.choice}.</p>
+        ${displaySimpleFraction(p.numA, p.denoA)} of A were ${p.choice}.</p>
+        ${displaySimpleFraction(p.numB, p.denoB)} of B were ${p.choice}.</p>
         A and B has the same amount ${
           p.choice == "left" ? "removed" : "left"
         }.</p>
@@ -9812,8 +9812,8 @@ function updateProblems() {
       [p.numB, p.denoB] = simplify(p.numB, p.denoB);
       displayProblem.innerHTML = `
       A and B are the same.</p>
-      ${p.numA}/${p.denoA} of A was removed.</p>
-      ${p.numB}/${p.denoB} of B was removed.</p>
+      ${displaySimpleFraction(p.numA, p.denoA)} of A was removed.</p>
+      ${displaySimpleFraction(p.numB, p.denoB)} of B was removed.</p>
       What fraction of the total ${
         p.choice == "left" ? "is left" : "was removed"
       }? 
@@ -9844,8 +9844,18 @@ function updateProblems() {
         if (p.numeTwo / p.denoTwo + p.numeOne / p.denoOne >= 1)
           return updateCalc();
         displayProblem.innerHTML = `
-      Person ${p.person} wanted to buy something, but only had ${p.numeOne}/${p.denoOne} of the amount.</p>
-      After receiving another $${p.situation}, ${gender} is still short of ${p.numeTwo}/${p.denoTwo}.</p>
+      Person ${
+        p.person
+      } wanted to buy something, but only had ${displaySimpleFraction(
+          p.numOne,
+          p.denoOne
+        )} of the amount.</p>
+      After receiving another $${
+        p.situation
+      }, ${gender} is still short of ${displaySimpleFraction(
+          p.numeTwo,
+          p.denoTwo
+        )}.</p>
       How much is the item?
       `;
       }
@@ -9855,8 +9865,18 @@ function updateProblems() {
         while (p.situation % valueUnit != 0) p.situation -= 1;
         p.oneUnit = p.situation / valueUnit;
         displayProblem.innerHTML = `
-      Person ${p.person} wanted to buy something, but only had ${p.numeOne}/${p.denoOne} of the cost.</p>
-      After receiving another $${p.situation}, ${gender} has an extra of ${p.numeTwo}/${p.denoTwo} of the cost.</p>
+      Person ${
+        p.person
+      } wanted to buy something, but only had ${displaySimpleFraction(
+          p.numOne,
+          p.denoOne
+        )} of the cost.</p>
+      After receiving another $${
+        p.situation
+      }, ${gender} has an extra of ${displaySimpleFraction(
+          p.numeTwo,
+          p.denoTwo
+        )} of the cost.</p>
       How much is the item?
       `;
       }
@@ -9868,10 +9888,16 @@ function updateProblems() {
         displayProblem.innerHTML = `
       Person ${p.person} gave away some of ${
           gender == "she" ? "her" : "his"
-        } money and had ${p.numeOne}/${p.denoOne} of it left.</p>
-      ${gender} then spent another $${p.situation}, and now has ${p.numeTwo}/${
+        } money and had ${displaySimpleFraction(
+          p.numOne,
+          p.denoOne
+        )} of it left.</p>
+      ${gender} then spent another $${
+          p.situation
+        }, and now has ${displaySimpleFraction(
+          p.numeTwo,
           p.denoTwo
-        } of it left.</p>
+        )} of it left.</p>
       How much did ${gender} have at first?
       `;
       }
@@ -9881,12 +9907,18 @@ function updateProblems() {
         while (p.situation % valueUnit != 0) p.situation -= 1;
         p.oneUnit = p.situation / valueUnit;
         displayProblem.innerHTML = `
-      Person ${p.person} gave away ${p.denoOne - p.numeOne}/${p.denoOne} of ${
+      Person ${p.person} gave away ${displaySimpleFraction(
+          p.denoOne - p.numeOne,
+          p.denoOne
+        )}${p.denoOne - p.numeOne}/${p.denoOne} of ${
           gender == "she" ? "her" : "his"
         } money.</p>
-      ${gender} then spent another $${p.situation}, and now has ${p.numeTwo}/${
+      ${gender} then spent another $${
+          p.situation
+        }, and now has ${displaySimpleFraction(
+          p.numeTwo,
           p.denoTwo
-        } of it left.</p>
+        )} of it left.</p>
       How much did ${gender} have at first?
       `;
       }
@@ -10392,14 +10424,12 @@ function updateProblems() {
         lengthArr = [];
       }
       let difference = "added";
-      if (p.version == "difference") {;
-       
-        if (shaded == unshaded) return updateCalc()
-      console.log("Shaded: " + shaded, "Unshaded: " + unshaded);
-      p.shaded = shaded;
-      p.unshaded = unshaded;
-      
-    }
+      if (p.version == "difference") {
+        if (shaded == unshaded) return updateCalc();
+        console.log("Shaded: " + shaded, "Unshaded: " + unshaded);
+        p.shaded = shaded;
+        p.unshaded = unshaded;
+      }
 
       //UNCHANGED TOTAL
       if (p.version == "total") {
@@ -18924,16 +18954,16 @@ function handleSubmit(e) {
       if (p.rollType == 1) {
         correctAnswer = `(${p.lengthTotal}+${p.topOne})x2`;
         correctAnswerTwo = `(${p.topOne}+${p.lengthTotal})x2`;
-        correctAnswerArr.push((p.lengthTotal+p.topOne)*2)
+        correctAnswerArr.push((p.lengthTotal + p.topOne) * 2);
       }
       if (p.rollType == 2) {
         correctAnswer = `${p.bigSquare}x4`;
-        correctAnswerArr.push(p.bigSquare*4)
+        correctAnswerArr.push(p.bigSquare * 4);
       }
       if (p.rollType == 3) {
         correctAnswer = `(${p.rectangle}+${p.bigSquare})x2`;
         correctAnswerTwo = `(${p.bigSquare}+${p.rectangle})x2`;
-        correctAnswerArr.push((p.bigSquare+p.rectange)*2)
+        correctAnswerArr.push((p.bigSquare + p.rectange) * 2);
       }
     }
 
@@ -21414,12 +21444,12 @@ function handleSubmit(e) {
           const oneUnit = p.differenceTime / Math.abs(p.timeA - p.timeB);
           const actualTimeA = oneUnit * p.timeA;
           correctAnswer = (actualTimeA / 60) * p.speedA;
-          if (correctAnswer % 1 != 0){
-            let remainder = actualTimeA *p.speedA %60
-            let time = 60
-            let whole = Math.floor(correctAnswer)
-            [remainder, time] = simplify(remainder, time)
-            correctAnswer = `${whole} ${remainder}/${time}`
+          if (correctAnswer % 1 != 0) {
+            let remainder = (actualTimeA * p.speedA) % 60;
+            let time = 60;
+            let whole = (Math.floor(correctAnswer)[(remainder, time)] =
+              simplify(remainder, time));
+            correctAnswer = `${whole} ${remainder}/${time}`;
           }
         }
         if (p.type == "normalTimeToSpeed") {
@@ -21427,12 +21457,12 @@ function handleSubmit(e) {
           console.log(`one unit is ${oneUnit}`);
           if (p.question == 1) {
             correctAnswer = (oneUnit * p.speedA * p.timeA) / 60;
-            if (correctAnswer % 1 != 0){
-              let remainder = oneUnit * p.speedA * p.timeA %60
-              let time = 60
-              let whole = Math.floor(correctAnswer)
-              [remainder, time] = simplify(remainder, time)
-              correctAnswer = `${whole} ${remainder}/${time}`
+            if (correctAnswer % 1 != 0) {
+              let remainder = (oneUnit * p.speedA * p.timeA) % 60;
+              let time = 60;
+              let whole = (Math.floor(correctAnswer)[(remainder, time)] =
+                simplify(remainder, time));
+              correctAnswer = `${whole} ${remainder}/${time}`;
             }
           }
           if (p.question == 2) {
