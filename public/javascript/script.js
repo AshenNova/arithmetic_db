@@ -17363,6 +17363,7 @@ How many items are there in each bag?
 
       //UNITSENTENCE
       [p.quantityA, p.quantityB] = simplify(p.quantityA, p.quantityB);
+      if (p.quantityA == p.quantityB) return updateCalc();
       const unitType = ["fractions", "ratio", "percentage"][genNumbers(3)];
       let unitStatement = `He bought ${p.quantityA}/${p.quantityB} as many ${itemA} as ${itemB}.`;
       if (unitType == "ratio") {
