@@ -954,6 +954,7 @@ const generateRec = async (nameTemp) => {
     "2.05",
     "2.06",
     "2.07",
+    "2.1",
   ];
   const levelThree = [
     "3",

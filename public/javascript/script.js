@@ -1976,6 +1976,138 @@ function updateProblems() {
     ctx.restore();
   }
 
+  //READING ANALOG CLOCK
+  if (level == 2.1) {
+    drawingDisplay();
+    let radius = 200 / 2;
+    ctx.translate(400 / 2, radius);
+    radius = radius * 0.9;
+
+    function drawClock(hour, min) {
+      drawFace(ctx, radius);
+      drawMins(ctx, radius, 80, 1);
+      drawCenter(ctx, radius);
+      drawNumbers(ctx, radius);
+      drawTime(ctx, radius, hour, min);
+    }
+
+    function drawFace(ctx, radius) {
+      const grad = ctx.createRadialGradient(
+        0,
+        0,
+        radius * 0.95,
+        0,
+        0,
+        radius * 1.05
+      );
+      grad.addColorStop(0, "#333");
+      grad.addColorStop(0.5, "white");
+      grad.addColorStop(1, "#333");
+      ctx.beginPath();
+      ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+      ctx.fillStyle = "white";
+      ctx.fill();
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = radius * 0.1;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(0, 0, radius * 0.1, 0, 2 * Math.PI);
+      ctx.fillStyle = "#333";
+      ctx.fill();
+    }
+
+    function drawMins(ctx, pos, length, width) {
+      function drawMinsClock(ctx, num, length) {
+        // degree * Math PI / 180
+        let angle = ((360 / 60) * num * Math.PI) / 180;
+        ctx.beginPath();
+        ctx.rotate(angle);
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, length);
+        ctx.stroke();
+        ctx.rotate(-angle);
+      }
+      ctx.lineCap = "square";
+      ctx.lineWidth = 1;
+      for (let num = 1; num <= 60; num++) {
+        console.log(num);
+        drawMinsClock(ctx, num, length, width);
+        // }
+      }
+      ctx.beginPath();
+      ctx.arc(0, 0, length - 5, 0, Math.PI * 2);
+      ctx.fillStyle = "white";
+      ctx.fill();
+      for (let num = 5; num <= 60; num += 5) {
+        console.log(num);
+        drawMinsClock(ctx, num, length, width);
+        // }
+      }
+      ctx.beginPath();
+      ctx.arc(0, 0, length - 12, 0, Math.PI * 2);
+      ctx.fillStyle = "white";
+      ctx.fill();
+    }
+
+    function drawNumbers(ctx, radius) {
+      ctx.fillStyle = "black";
+      ctx.font = radius * 0.15 + "px arial";
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "center";
+      for (let num = 1; num < 13; num++) {
+        let ang = (num * Math.PI) / 6;
+        ctx.rotate(ang);
+        ctx.translate(0, -radius * 0.7);
+        ctx.rotate(-ang);
+        ctx.fillText(num.toString(), 0, 0);
+        ctx.rotate(ang);
+        ctx.translate(0, radius * 0.7);
+        ctx.rotate(-ang);
+      }
+    }
+
+    function drawTime(ctx, radius, hours, mins) {
+      // const now = new Date();
+      ctx.fillStyle = "black";
+      let hour = hours;
+      let minute = mins;
+      // let second = now.getSeconds();
+      //hour
+      hour = hour % 12;
+      hour = (hour * Math.PI) / 6 + (minute * Math.PI) / (6 * 60);
+      // +
+      // (second * Math.PI) / (360 * 60);
+      drawHand(ctx, hour, radius * 0.5, radius * 0.07);
+      //minute
+      minute = (minute * Math.PI) / 30;
+      //  + (second * Math.PI) / (30 * 60);
+      drawHand(ctx, minute, radius * 0.8, radius * 0.07);
+      // second
+      // second = (second * Math.PI) / 30;
+      // drawHand(ctx, second, radius * 0.9, radius * 0.02);
+    }
+
+    function drawHand(ctx, pos, length, width) {
+      ctx.beginPath();
+      ctx.lineWidth = width;
+      ctx.lineCap = "round";
+      ctx.moveTo(0, 0);
+      ctx.rotate(pos);
+      ctx.lineTo(0, -length);
+      ctx.stroke();
+      ctx.rotate(-pos);
+    }
+
+    function drawCenter(ctx, pos) {
+      ctx.fillStyle = "black";
+      ctx.beginPath();
+      ctx.arc(0, 0, radius * 0.1, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    canvasTextId.textContent = `What time is displayed on the clock?`;
+    drawClock(p.hour, p.min);
+  }
+
   if (level == 2.03 || level == 3.03 || level == 4.04 || level == 6.3) {
     console.log(p.operator);
     if (p.operator == "x")
@@ -18124,6 +18256,9 @@ function handleSubmit(e) {
       }
     }
 
+    if (level == 2.1) {
+      correctAnswer = `${p.hour}.${p.min.toString().padStart(2, "0")}`;
+    }
     if (level == 3.02) {
       if (p.option == "1") {
         correctAnswer = p.numOne * p.numMultiTwo * p.numMulti;
@@ -23504,6 +23639,13 @@ function genProblems() {
     };
   }
 
+  if (level == 2.1) {
+    return {
+      hour: genNumbers(12) + 1,
+      min: genNumbers(60),
+    };
+  }
+
   if (level == 3.0) {
     return {
       numOne: genNumbers(150) + 100,
@@ -28086,6 +28228,12 @@ function buttonLevelSetting() {
       firstCanvas.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
       document.querySelector("#user-input").style.width = "300px";
+      break;
+
+    case "Level 2.10":
+      level = 2.1;
+      scoreNeeded = 20;
+      document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
     case "Level 3.0":
