@@ -12556,6 +12556,7 @@ function updateProblems() {
       } ${stuff} than ${personA}.</br>
   ${personC} took the remaining ${personCValue} ${stuff}.</br>
   `;
+      if (personCValue <= 0) return updateCalc();
       if (p.question == "A")
         displayProblem.insertAdjacentHTML(
           "beforeend",
@@ -12585,19 +12586,20 @@ function updateProblems() {
         )}.</p>
       He has to also pay a GST of ${p.gst}%.</p>
       `;
+        if (p.optionTwo == "gst") {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            "How much is the GST?"
+          );
+        }
+        if (p.optionTwo == "cost") {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            "How much did he have to pay in the end?"
+          );
+        }
       }
-      if (p.optionTwo == "gst") {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          "How much is the cost of GST?"
-        );
-      }
-      if (p.optionTwo == "cost") {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          "How much did he have to pay in the end?"
-        );
-      }
+
       if (p.optionOne == "service") {
         // const serviceCharge = (p.value / 100) * 10;
         // if (serviceCharge.toString().split(".")[1] > 2) return updateCalc();
