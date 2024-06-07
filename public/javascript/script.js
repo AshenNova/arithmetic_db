@@ -4176,29 +4176,35 @@ function updateProblems() {
       calculatorSymbol.classList.add("hidden");
     }
 
-    // if (setting == 1) {
-    p.length =
-      (genNumbers(10) + 1) * p.dimension + (genNumbers(p.dimension) + 1);
-    p.breadth = (genNumbers(10) + 1) * p.dimension + genNumbers(p.dimension);
-    p.height = (genNumbers(10) + 1) * p.dimension + genNumbers(p.dimension);
-    console.log(p.dimension, p.length, p.breadth, p.height);
-    // }
-
-    if (setting == 2 || setting == 1) {
-      p.length =
-        (genNumbers(10) + 1) * p.dimension +
-        (genNumbers(p.dimension) + 1) * difficulty;
-      p.breadth =
-        (genNumbers(10) + 1) * p.dimension +
-        genNumbers(p.dimension) * difficulty;
+    if (setting == 1) {
+      p.length = (genNumbers(10) + 1) * p.dimension;
+      p.breadth = (genNumbers(10) + 1) * p.dimension;
+      p.height = (genNumbers(10) + 1) * p.dimension;
+      console.log(p.dimension, p.length, p.breadth, p.height);
       displayProblem.innerHTML = `
-      How many ${p.dimension} cm <u>squares</u> can be cut out from a rectangle with a dimension of </br>
+      How many ${p.dimension} cm <u>squares</u> can be cut out from a rectangle with a dimension of 
+      ${p.length} cm by ${p.breadth} cm?
+      `;
+    }
+
+    if (setting == 2) {
+      p.length =
+        (genNumbers(10) + 1) * p.dimension + (genNumbers(p.dimension - 1) + 1);
+      p.breadth =
+        (genNumbers(10) + 1) * p.dimension + genNumbers(p.dimension - 1) + 1;
+      displayProblem.innerHTML = `
+      How many ${p.dimension} cm <u>squares</u> can be cut out from a rectangle with a dimension of 
       ${p.length} cm by ${p.breadth} cm?
       `;
     }
     if (setting == 3) {
+      p.length =
+        (genNumbers(10) + 1) * p.dimension + (genNumbers(p.dimension) + 1);
+      p.breadth = (genNumbers(10) + 1) * p.dimension + genNumbers(p.dimension);
+      p.height = (genNumbers(10) + 1) * p.dimension + genNumbers(p.dimension);
+      console.log(p.dimension, p.length, p.breadth, p.height);
       displayProblem.innerHTML = `
-      How many ${p.dimension} cm <u>cubes</u> can be cut out from a cuboid with a dimension of </br>
+      How many ${p.dimension} cm <u>cubes</u> can be cut out from a cuboid with a dimension of
       ${p.length} cm by ${p.breadth} cm by ${p.height}cm?
       `;
     }
@@ -4210,7 +4216,7 @@ function updateProblems() {
       p.breadth =
         ((genNumbers(10) + 1) * p.dimension + genNumbers(p.dimension)) * 2;
       displayProblem.innerHTML = `
-      How many <u>circles</u> with a radius of ${p.dimension} cm can be cut out from a rectangle with a dimension of </br>
+      How many <u>circles</u> with a radius of ${p.dimension} cm can be cut out from a rectangle with a dimension of
       ${p.length} cm by ${p.breadth} cm?
       `;
     }
