@@ -2588,6 +2588,8 @@ function updateProblems() {
   }
 
   if (level == 3.16) {
+    normalDisplay();
+    displayProblem.style.textAlign = "center";
     console.log(setting);
     arr = [];
     arr2 = [];
@@ -11079,7 +11081,10 @@ function updateProblems() {
       //   endSituation = "thrice the amount she had at first.";
       // }
       displayProblem.innerHTML = `
-      ${person} spent ${p.numeA}/${p.denoA} of her money on something.</br>
+      ${person} spent ${displaySimpleFraction(
+        p.numeA,
+        p.denoA
+      )} of her money on something.</br>
       She then spent ${p.numeB}/${p.denoB} ${
         genNumbers(2) == 0 ? "of the remainder" : "of the amount left"
       } on something else.</br>
@@ -11131,15 +11136,22 @@ function updateProblems() {
         return updateCalc();
       }
       displayProblem.innerHTML = `
-      A ${p.objectA.slice(0, p.objectA.length - 1)} costs ${p.unitA}/${
+      A ${p.objectA.slice(
+        0,
+        p.objectA.length - 1
+      )} costs ${displaySimpleFraction(
+        p.unitA,
         p.unitB
-      } of a ${p.objectB.slice(0, p.objectB.length - 1)}.</br>
+      )} of a ${p.objectB.slice(0, p.objectB.length - 1)}.</br>
       ${person} bought ${p.quantityA} ${p.objectA} and ${p.quantityB} ${
         p.objectB
-      }  with ${p.numeA}/${p.denoA} of his money.</br>
+      }  with ${displaySimpleFraction(p.numeA, p.denoA)} of his money.</br>
       He then bought ${p.extraBought % 1 != 0 ? "as many" : "more"} ${
         p.chosen == "A" ? p.objectA : p.objectB
-      } with ${p.numeB}/${p.denoB} of his remaining money.</br>
+      } with ${displaySimpleFraction(
+        p.numeB,
+        p.denoB
+      )} of his remaining money.</br>
       How many ${
         p.chosen == "A" ? p.objectA : p.objectB
       } did he have in the end?
@@ -11207,12 +11219,12 @@ function updateProblems() {
       ${p.person} ${genNumbers(2) == 0 ? "used" : "spent"} $${
         p.numOne
       } on something.</p>
-      He then ${genNumbers(2) == 0 ? "used" : "spent"} another ${p.nume}/${
-        p.deno
-      } of ${genNumbers(2) == 0 ? "the remainder" : "the amount left"} on ${
-        p.somethingElse
-      }.</p>
-      He is left with ${p.numeTwo}/${p.denoTwo} of ${
+      He then ${
+        genNumbers(2) == 0 ? "used" : "spent"
+      } another ${displaySimpleFraction(p.nume, p.deno)} of ${
+        genNumbers(2) == 0 ? "the remainder" : "the amount left"
+      } on ${p.somethingElse}.</p>
+      He is left with ${displaySimpleFraction(p.numeTwo, p.denoTwo)} of ${
         genNumbers(2) == 0 ? "what he has at first" : "the total"
       }.</p>
       `;
