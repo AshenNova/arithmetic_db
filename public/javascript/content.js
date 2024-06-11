@@ -115,6 +115,7 @@ export const displayContent = (level) => {
     4. Either or</br>
     5. Unchanged Total (if)</br>
     6. Supposition (Units)</br>
+    7. Ratio: Continuous </br>
     <hr>9. All
     `;
   }

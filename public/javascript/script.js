@@ -16975,6 +16975,43 @@ How many items are there in each bag?
       What fraction of the total number of students received ${p.valueA} ${object}?
       `;
     }
+
+    if (setting == 7) {
+      if (p.situationA == 0 || p.situationB == 0) {
+        return updateCalc();
+      }
+
+      [p.firstUnitA, p.firstUnitB] = simplify(p.firstUnitA, p.firstUnitB);
+      [p.secondUnitA, p.secondUnitB] = simplify(p.secondUnitA, p.secondUnitB);
+      const common = commonDeno(p.firstUnitA, p.secondUnitA);
+      p.newUnitA = [p.firstUnitA, p.firstUnitB].map((list) => {
+        return (list * common) / p.firstUnitA;
+      });
+      p.newUnitB = [p.secondUnitA, p.secondUnitB].map((list) => {
+        return (list * common) / p.secondUnitA;
+      });
+      p.newUnitA.concat(p.newUnitB).forEach((x) => {
+        if (x > 50) {
+          return updateCalc();
+        }
+      });
+      const changeInUnits = p.newUnitB[1] - p.newUnitA[1];
+      if (changeInUnits == 0) return updateCalc();
+      p.secondSituation = p.oneUnit * changeInUnits;
+      if (p.oneUnit * p.newUnitA[0] - p.firstSituation <= 0)
+        return updateCalc();
+      console.log(p.newUnitA, p.newUnitB);
+      displayProblem.innerHTML = `
+      A ${p.firstSituation < 0 ? "gave away" : "received"} ${Math.abs(
+        p.firstSituation
+      )} and their ratio became ${p.firstUnitA} : ${p.firstUnitB}.</br>
+      B then ${p.secondSituation < 0 ? "gave away" : "received"} ${Math.abs(
+        p.secondSituation
+      )} and their ratio became ${p.secondUnitA} : ${p.secondUnitB}.</br>
+      What is the value of A at first?
+
+      `;
+    }
   }
 
   // DISPLAY
@@ -23011,6 +23048,10 @@ function handleSubmit(e) {
         let AB = p.totalQuantity - QB;
         correctAnswer = `${AB}/${p.totalQuantity}`;
       }
+
+      if (setting == 7) {
+        correctAnswer = p.oneUnit * p.newUnitA[0] - p.firstSituation;
+      }
     }
     //ANSWERS
     if (level == "heuSix") {
@@ -27539,6 +27580,21 @@ function genProblems() {
         totalQuantity: undefined,
       };
     }
+
+    //RATIO: CONTINUOUS
+    if (setting == 7) {
+      return {
+        firstSituation: genNumbers(500) - 250,
+        firstUnitA: genNumbers(10) + 1,
+        firstUnitB: genNumbers(10) + 1,
+        secondSituation: genNumbers(500) - 250,
+        secondUnitA: genNumbers(10) + 1,
+        secondUnitB: genNumbers(10) + 1,
+        oneUnit: genNumbers(100) + 1,
+        newUnitA: undefined,
+        newUnitB: undefined,
+      };
+    }
   }
 
   //SETTINGS
@@ -29188,7 +29244,7 @@ function buttonLevelSetting() {
         9
       );
       if (!setting) optionsBox.classList.add("hidden");
-      accepted = [1, 2, 3, 4, 5, 6, 9];
+      accepted = [1, 2, 3, 4, 5, 6, 7, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 5;
       displayProblem.style.fontSize = "18px";
