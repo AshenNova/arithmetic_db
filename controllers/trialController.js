@@ -267,3 +267,15 @@ exports.deleteTrial = async (req, res) => {
   await Trial.findByIdAndDelete(req.params.id);
   res.redirect("/trial");
 };
+
+exports.accepted = async (req, res) => {
+  console.log("Hi");
+  try {
+    console.log(req.params.id);
+    const id = req.params.id;
+    await Trial.findByIdAndUpdate(id, { accepted: true });
+    res.redirect("/trial");
+  } catch (e) {
+    res.status(404).json({ message: e });
+  }
+};

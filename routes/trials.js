@@ -18,4 +18,7 @@ router
   .route("/delete/:id")
   .get(authController.adminCheck, trialController.deleteTrial);
 
+router
+  .route("/accepted/:id")
+  .get(authController.adminCheck, trialController.accepted);
 module.exports = router;

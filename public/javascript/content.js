@@ -159,7 +159,21 @@ export const displayContent = (level) => {
   if (level == "calTwo") {
     return `
     </p>
-    1. Addition (to 1000) No carry<br>2. Subtraction (to 1000) No borrowing<br>3. Addition (to-1000) (Carrying)<br>4. Subtraction (to 1000) (Borrowing)<br>5. Single blank<br>6. Working (Other sequence)<br>7. Arithmetic Constant<br>8. Arithmetic Stagger<br>9. Left Side Right Side + - x /<br>10. Parts and Intervals<br>11. Time: Timeline<br>12. Fractions: Identification<br>13. Fractions: Addition and Subtraction</hr>99. Everything`;
+    1. Addition (to 1000) No carry<br>
+    2. Subtraction (to 1000) No borrowing<br>
+    3. Addition (to-1000) (Carrying)<br>
+    4. Subtraction (to 1000) (Borrowing)<br>
+    5. Single blank<br>
+    6. Working (Other sequence)<br>
+    7. Arithmetic Constant<br>
+    8. Arithmetic Stagger<br>
+    9. Left Side Right Side + - x /<br>
+    10. Parts and Intervals<br>
+    11. Time: Timeline<br>
+    12. Fractions: Identification<br>
+    13. Fractions: Addition and Subtraction</br>
+    </hr>
+    99. Everything`;
   }
   if (level == "calThree") {
     return `

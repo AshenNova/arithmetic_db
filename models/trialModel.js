@@ -92,7 +92,6 @@ const trialSchema = new mongoose.Schema({
     // minLength: [8, "The number you have provided is too short."],
     // required: [true, "Please tell us your contact number."],
   },
-
   questionA: String,
   questionB: { type: String, required: [true, "Please fill in the question."] },
   questionC: String,
@@ -100,6 +99,10 @@ const trialSchema = new mongoose.Schema({
   questionE: { type: String, required: [true, "Please fill in the question."] },
   questionF: { type: String, required: [true, "Please fill in the question."] },
   trialSession: {
+    type: Boolean,
+    default: false,
+  },
+  accepted: {
     type: Boolean,
     default: false,
   },

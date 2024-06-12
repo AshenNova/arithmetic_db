@@ -11085,7 +11085,7 @@ function updateProblems() {
         p.numeA,
         p.denoA
       )} of her money on something.</br>
-      She then spent ${p.numeB}/${p.denoB} ${
+      She then spent ${displaySimpleFraction(p.numeB, p.denoB)} ${
         genNumbers(2) == 0 ? "of the remainder" : "of the amount left"
       } on something else.</br>
       Her mother gave her another $${p.value} so she now has ${
@@ -26560,7 +26560,7 @@ function genProblems() {
   // SETTINGS
   if (level == "calSixb") {
     normalDisplay();
-    setting = calArrAll(6, calArr, setting, 99);
+    setting = calArrAll(7, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
 
     //MEET UP

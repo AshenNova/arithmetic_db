@@ -15,6 +15,9 @@
 </head>
 
 <style>
+  .hidden {
+    display: none;
+  }
  .center {
    /* display: flex; */
    max-width: 700px;
@@ -24,7 +27,7 @@
 <body>
   <%- include("../partials/navbar") %>
 
-  <div class="container">
+  <div class="container py-2">
   <% if (getAllTrials.length) { %>
     <table class="table">
         <th scope="col">Filled on</th>
@@ -95,10 +98,20 @@
                 </tr>
             <% } %> 
           <% }) %>
-          
+              </table>
+
+          <btn class="btn btn-warning trialBtn">Trial Sessions</btn>
+          <table class="table hidden trialTable">
+          <th scope="col">Filled on</th>
+          <th scope="col">Interest</th>
+           <th scope="col">Student</th>
+           <th scope="col">Parent / Guardian One</th>
+           <th scope="col">Parent / Guardian Two</th>
+           <th scope="col">Questions</th>
+           <th scope="col" colspan="3">Actions</th>
           <% getAllTrials.forEach(item => { %>
             <% const school = item.school.split(" ").join("+") %>
-            <% if (item.trialSession == true) { %>
+            <% if (item.trialSession == true && item.accepted == false) { %>
                 <tr class="table-secondary">
                   <td>
                     <%= item.filledIn.toLocaleDateString('en-US') %></br>
@@ -150,11 +163,80 @@
                     </td>
                     <td><a href="trial/edit/<%= item._id %>">Edit</a></td>
                     <td><a href="trial/delete/<%= item._id %>">Delete</a></td>
-                    <td><a href="user/signuptrial/<%= item.id %>">Trial</a></td>
+                    <td><a href="trial/accepted/<%= item.id %>">Accept</a></td>
                   </tr>
               <% } %> 
             <% }) %>
      </table>
+
+     <btn class="btn btn-primary acceptedBtn">Accepted</btn>
+     <table class="table hidden acceptedTable">
+     <th scope="col">Filled on</th>
+     <th scope="col">Interest</th>
+      <th scope="col">Student</th>
+      <th scope="col">Parent / Guardian One</th>
+      <th scope="col">Parent / Guardian Two</th>
+      <th scope="col">Questions</th>
+      <th scope="col" colspan="3">Actions</th>
+     <% getAllTrials.forEach(item => { %>
+       <% const school = item.school.split(" ").join("+") %>
+       <% if (item.accepted == true) { %>
+           <tr class="table-secondary">
+             <td>
+               <%= item.filledIn.toLocaleDateString('en-US') %></br>
+               <%= item.filledIn.toLocaleTimeString('en-US') %></br>
+             </td>
+             <td><%= item.outlet %></br>
+               <%= item.address %></br>
+               <a href="https://www.google.com/maps/place/Singapore+<%= item.postal %>" target="_blank"><%= item.postal %></a></br>
+               <%= item.timing %></br>
+               <% if (item.otherTiming) { %>
+                 <span class="text-danger">Other: <%= item.otherTiming %></span></br>
+               <% } %>
+             <% if (item.subject.length > 1) { %>
+           
+                 <ul>
+                     <% item.subject.forEach(item => { %>
+                       <li><%= item %></li>
+                     <% }) %>
+                 </ul>
+               </br>
+               <% } else { %>
+                 <%= item.subject %></br>
+               <% } %>
+               </td>
+             <td><%= item.childName %> <%= item.childSurname %> ( Age: <%= new Date().getFullYear() - item.DOB.getFullYear() %> )</br>
+               <%= item.level %></br>
+               <%= item.gender %></br>
+               <a href="https://www.google.com/maps/search/<%= school %>" target="_blank"><%= item.school %></a></br>
+             </td>
+             <td>
+               <%= item.parentOneName %> <%= item.parentOneSurname %> (<%= item.roleOne %>)</br>
+               <%= item.contactOne %></br>
+               <%= item.emailOne %></br>
+             </td>
+             <td>
+               <% if (item.parentTwoName) { %>
+                 <%= item.parentTwoName %> <%= item.parentTwoSurname %> (<%= item.roleTwo %>)</br>
+                 <%= item.contactTwo %></br>
+               <% } %>
+             </td>
+             <td>
+               Recent results: <%= item.questionA %></br>
+               Homework: <%= item.questionB %></br>
+               Learning Disabilities: <%= item.questionC %></br>
+               First time: <%= item.questionD %></br>
+               Discipline: <%= item.questionE %></br>
+               Physical Punishment: <%= item.questionF %></br>
+ 
+               </td>
+               <td><a href="trial/edit/<%= item._id %>">Edit</a></td>
+               <td><a href="trial/delete/<%= item._id %>">Delete</a></td>
+             </tr>
+         <% } %> 
+       <% }) %>
+</table>
+
   <% } else { %>
 <h1> Empty </h1>
   <% } %> 
@@ -163,5 +245,18 @@
  
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-
+<script>
+  document.querySelectorAll(".btn").forEach( x => {
+    x.addEventListener('click', function(e){
+      console.log(e.target)
+      if (e.target.classList.contains("trialBtn")){
+        document.querySelector(".trialTable").classList.toggle("hidden")
+      }
+      if (e.target.classList.contains("acceptedBtn")){
+        document.querySelector(".acceptedTable").classList.toggle("hidden")
+      }
+    })
+  })
+    // document.querySelector(".trialTable").classList.toggle("hidden")
+</script>
 </html>
