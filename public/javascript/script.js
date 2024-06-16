@@ -9987,7 +9987,7 @@ function updateProblems() {
       Person ${
         p.person
       } wanted to buy something, but only had ${displaySimpleFraction(
-          p.numOne,
+          p.numeOne,
           p.denoOne
         )} of the amount.</p>
       After receiving another $${
