@@ -645,8 +645,10 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
                 uniqueLevel.push(today.level);
               }
             } else {
-              accomplish += 1;
-              uniqueLevel.push(today.level);
+              if (today.level == level && today.mode == mode) {
+                accomplish += 1;
+                uniqueLevel.push(today.level);
+              }
             }
           }
         });

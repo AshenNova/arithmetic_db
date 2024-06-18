@@ -26410,8 +26410,18 @@ function genProblems() {
   }
   //SETTINGS
   if (level == "calSix") {
-    setting = calArrAll(10, calArr, setting, 99);
-    setting = checkRange(setting, calArr, skipArr);
+    if (regen > 20) {
+      console.log("⭐️Regen activated!⭐️");
+      skipGlobalUpdateProblem = 0;
+      //   calArr.pop()
+      normalDisplay();
+      setting = 1;
+      console.log("Whats the regen?");
+    } else {
+      setting = calArrAll(10, calArr, setting, 99);
+      setting = checkRange(setting, calArr, skipArr);
+    }
+
 
     if (setting == 1) {
       console.log("Finding Remainder");
