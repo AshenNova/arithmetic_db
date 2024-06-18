@@ -6732,12 +6732,14 @@ function updateProblems() {
   `;
     }
     if (p.version == 1) {
-      const unknownNum = averageList[genNumbers(averageList.length)];
+      const index = genNumbers(averageList.length);
+      const unknownNum = averageList[index];
       console.log(unknownNum, averageList);
       p.answer = unknownNum;
+      averageList[index] = "?";
       let str = averageList.join(", ");
       console.log(str);
-      str = str.replace(unknownNum, "? ");
+      // str = str.replace(unknownNum, "? ");
       displayProblem.innerHTML = `
     Find the missing number.</p>
     The average of the following numbers is ${sum / averageList.length}.</p>
@@ -24701,7 +24703,7 @@ function genProblems() {
   if (level == 5.17) {
     return {
       version: genNumbers(2),
-      // version: 0,
+      // version: 1,
       variables: genNumbers(5) + 2,
       answer: undefined,
     };
