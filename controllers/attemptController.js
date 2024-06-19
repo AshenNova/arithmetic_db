@@ -602,25 +602,31 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     const checkLimit = await Attempt.find({
       user,
       date: { $gte: start, $lt: end },
+      recommendCheck: true,
+      extra: "",
       // tries: "1",
     });
 
     //BONUS POINTS FOR DOING RECOMMENDATION
     let accomplish = 0;
+    let bump = 0;
     recommend.forEach((item) => {
       // CHECK IF THE CURRENT ATTEMPT IS ON THE RECOMMENDED LIST
       if (item.level == level && item.mode == mode && item.setting == setting) {
         let count = 0;
         if (level.startsWith("cal") || level.startsWith("heu")) {
+          recCheck = true;
           if (extra == "") {
             accomplish += 1;
+            bump = 1;
           } // PLUS ONE IF THIS HAS BEEN COMPLETED
         } else {
           accomplish += 1;
           console.log(`${accomplish} 💰`);
+          recCheck = true;
+          bump = 1;
         }
 
-        recCheck = true;
         // IF YES, CHECK IF IT IS THE FIRST ATTEMPT
         checkLimit.forEach((today) => {
           if (today.level == level && today.mode == mode) {
@@ -628,30 +634,30 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
             console.log(`------> Count: ${count}`);
           }
         });
-
+        if (count > 0) recCheck = false;
         // CHECK HOW MANY DAILY RECOMMENDATIONS HAS BEEN DONE.
-        console.log("Checking through the recommended list");
-        let uniqueLevel = [];
-        checkLimit.forEach((today) => {
-          console.log("Checking " + today);
-          if (today.recommendCheck && !uniqueLevel.includes(today.level)) {
-            if (
-              today.level.startsWith("heu") ||
-              today.level.startsWith("cal")
-            ) {
-              if (today.extra == "") {
-                console.log("EMPTY!!!");
-                accomplish += 1;
-                uniqueLevel.push(today.level);
-              }
-            } else {
-              if (today.level == level && today.mode == mode) {
-                accomplish += 1;
-                uniqueLevel.push(today.level);
-              }
-            }
-          }
-        });
+        // console.log("Checking through the recommended list");
+        // let uniqueLevel = [];
+        // checkLimit.forEach((today) => {
+        //   console.log("Checking " + today);
+        //   if (today.recommendCheck && !uniqueLevel.includes(today.level)) {
+        //     if (
+        //       today.level.startsWith("heu") ||
+        //       today.level.startsWith("cal")
+        //     ) {
+        //       if (today.extra == "") {
+        //         console.log("EMPTY!!!");
+        //         accomplish += 1;
+        //         uniqueLevel.push(today.level);
+        //       }
+        //     } else {
+        //       if (today.level == level && today.mode == mode) {
+        //         accomplish += 1;
+        //         uniqueLevel.push(today.level);
+        //       }
+        //     }
+        //   }
+        // });
         // ONLY AWARD THE FIRST ATTEMPT OF THE RECOMMENDED THE BONUS POINT
         if (count == 0) {
           console.log("BONUS!: " + accomplish);
@@ -667,7 +673,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
           // console.log(`After: ${pointsAwarded}`);
         }
       }
-      recCount = accomplish;
+      recCount = checkLimit.length + bump;
     });
     console.log(`Attempts today: ${checkLimit.length}`);
     checkLimit.forEach((today) => {
