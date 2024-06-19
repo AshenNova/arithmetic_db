@@ -29,7 +29,9 @@ export const displayContent = (level) => {
     3. Whole and Parts</br>
     4. Looking for Difference</br>
     5. Unit Sentence</br>
-    6. Parts of a whole ( Unitary )
+    6. Parts of a whole ( Unitary )</br>
+    7. Whole and parts ( Unitary )</br>
+    8. Comparison ( Situational )</br>
     <hr>
     9.All
     `;

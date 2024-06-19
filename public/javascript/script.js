@@ -14621,6 +14621,78 @@ How many items are there in each bag?
         `;
       }
     }
+
+    // COMPARISON ( SITUATIONAL)
+    if (setting == 8) {
+      normalDisplay();
+      const valueA = p.oneUnit * p.unitA;
+      const valueB = p.oneUnit * p.unitB;
+      while (
+        (p.situationA < 0 && Math.abs(p.situationA) > valueA) ||
+        p.situationA == 0
+      ) {
+        p.situationA = -genNumbers(5) + 1;
+      }
+      while (
+        (p.situationB < 0 && Math.abs(p.situationB) > valueB) ||
+        p.situationB == 0
+      ) {
+        p.situationB = -genNumbers(25) + 1;
+      }
+      const valueAEnd = valueA + p.situationA;
+      const valueBEnd = valueB + p.situationB;
+      const diffEnd = valueAEnd - valueBEnd;
+      if (p.type == "unit") {
+        displayProblem.innerHTML = `
+        A is ${p.unitA} times of B.</br>
+        A ${p.situationA < 0 ? "gave away" : "received"} ${Math.abs(
+          p.situationA
+        )}.</br>
+        B ${p.situationB < 0 ? "gave away" : "received"} ${Math.abs(
+          p.situationB
+        )}.</br>
+        A is ${Math.abs(diffEnd)} ${
+          diffEnd < 0 ? `less than` : `more than`
+        } B in the end.</br>
+        What is the value of ${p.choice} at first?
+        `;
+      }
+      if (p.type == "diff") {
+        let start = genNumbers(2);
+        if (start == 0) start = `A is ${valueA} and B is ${valueB} at first.`;
+        const diffStart = valueA - valueB;
+        if (start == 1)
+          start = `A is ${Math.abs(diffStart)} ${
+            diffStart < 0 ? "less than" : `more than`
+          } B at first.`;
+        displayProblem.innerHTML = `
+        ${start}</br>
+        A ${p.situationA < 0 ? "gave away" : "received"} ${Math.abs(
+          p.situationA
+        )}.</br>
+        B ${p.situationB < 0 ? "gave away" : "received"} ${Math.abs(
+          p.situationB
+        )}.</br>
+        `;
+
+        if (diffEnd < 0) {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `
+          How much less is A than B in the end?
+          `
+          );
+        }
+        if (diffEnd > 0) {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `
+          How much more is A than B in the end?
+          `
+          );
+        }
+      }
+    }
   }
   // display
   if (level == "heuThree") {
@@ -21894,6 +21966,21 @@ function handleSubmit(e) {
         if (p.type == 0 || p.type == 2) correctAnswer = p.eachUnit;
         if (p.type == 1) correctAnswer = p.units;
       }
+
+      if (setting == 8) {
+        const valueA = p.oneUnit * p.unitA;
+        const valueB = p.oneUnit * p.unitB;
+        const valueAEnd = valueA + p.situationA;
+        const valueBEnd = valueB + p.situationB;
+        const diffEnd = valueAEnd - valueBEnd;
+        if (p.type == "unit") {
+          if (p.choice == "A") correctAnswer = p.oneUnit * p.unitA;
+          if (p.choice == "B") correctAnswer = p.oneUnit * p.unitB;
+        }
+        if (p.type == "diff") {
+          correctAnswer = Math.abs(diffEnd);
+        }
+      }
     }
 
     //  answer
@@ -26422,7 +26509,6 @@ function genProblems() {
       setting = checkRange(setting, calArr, skipArr);
     }
 
-
     if (setting == 1) {
       console.log("Finding Remainder");
       const genDeno = genNumbers(9) + 2;
@@ -26769,7 +26855,7 @@ function genProblems() {
   }
   // settings
   if (level == "heuTwob") {
-    setting = calArrAll(7, calArr, setting, 9);
+    setting = calArrAll(8, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
     if (setting == 1) {
       return {
@@ -26868,6 +26954,19 @@ function genProblems() {
         units: genNumbers(3) + 2,
         situation: genNumbers(10) + 10,
         type: genNumbers(3),
+      };
+    }
+
+    //COMPARISON : SITUATIONAL
+    if (setting == 8) {
+      return {
+        type: ["unit", "diff"][genNumbers(2)],
+        unitA: genNumbers(5) + 2,
+        unitB: 1,
+        oneUnit: genNumbers(9) + 2,
+        situationA: genNumbers(50) - 25,
+        situationB: genNumbers(10) - 5,
+        choice: ["A", "B"][genNumbers(2)],
       };
     }
   }
@@ -29164,7 +29263,7 @@ function buttonLevelSetting() {
       );
       if (!setting) optionsBox.classList.add("hidden");
       level = "heuTwob";
-      accepted = [1, 2, 3, 4, 5, 6, 9];
+      accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       setting = settingCheck(setting, accepted, level);
       range = 0;
       scoreNeeded = 10;
