@@ -5,6 +5,10 @@ export const displayContent = (level) => {
     return `
     </p>
     1. More than / Less than</br>
+    2. Parts of a Whole</br>
+    3. Whole and Parts</br>
+    4. Looking for Difference</br>
+    5. Unit Sentence</br>
     <hr>
     9.All
     `;

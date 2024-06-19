@@ -95,7 +95,7 @@ export function cutOffCheck(level, setting, time) {
   }
   // HEURISTICS
 
-  if (level == "heuTwob") {
+  if (level == "heuOne" || level == "heuTwo" || level == "heuTwob") {
     if (time > 150) {
       push = "Yes";
     }

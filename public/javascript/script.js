@@ -14273,37 +14273,166 @@ How far is apart is Town A and Town B?
   }
 
   if (level == "heuOne") {
-    while (p.numOne == p.numTwo) {
-      p.numOne = genNumbers(9) + 1;
-    }
-    if (p.rollAB == "A") {
-      console.log("heuOne " + "Type " + p.rollAB + " Var " + p.rollVar);
-
-      if (p.numOne < p.numTwo) {
-        [p.numOne, p.numTwo] = [p.numTwo, p.numOne];
+    normalDisplay();
+    if (setting == 1) {
+      while (p.numOne == p.numTwo) {
+        p.numOne = genNumbers(9) + 1;
       }
+      if (p.rollAB == "A") {
+        console.log("heuOne " + "Type " + p.rollAB + " Var " + p.rollVar);
 
-      displayProblem.innerHTML = `
-      ${p.rollAB} is ${p.numOne} ${p.roll[p.rollPosition][2]}.</br>
-      A is ${p.numTwo} ${p.roll[p.rollPosition][2]} ${
-        p.roll[p.rollPosition][p.rollVar]
-      } than B.</br>
-      What is B?
+        if (p.numOne < p.numTwo) {
+          [p.numOne, p.numTwo] = [p.numTwo, p.numOne];
+        }
+
+        displayProblem.innerHTML = `
+        ${p.rollAB} is ${p.numOne} ${p.roll[p.rollPosition][2]}.</br>
+        A is ${p.numTwo} ${p.roll[p.rollPosition][2]} ${
+          p.roll[p.rollPosition][p.rollVar]
+        } than B.</br>
+        What is B?
+        `;
+      }
+      if (p.rollAB == "B") {
+        console.log("heuOne " + "Type " + p.rollAB + " Var " + p.rollVar);
+
+        if (p.numOne < p.numTwo) {
+          [p.numOne, p.numTwo] = [p.numTwo, p.numOne];
+        }
+
+        displayProblem.innerHTML = `
+        ${p.rollAB} is ${p.numOne} ${p.roll[p.rollPosition][2]}.</br>
+        A is ${p.numTwo} ${p.roll[p.rollPosition][2]} ${
+          p.roll[p.rollPosition][p.rollVar]
+        } than B.</br>
+        What is A?
+        `;
+      }
+    }
+
+    if (setting == 2) {
+      if (p.type == 1) {
+        displayProblem.innerHTML = `
+        A has ${p.numOne}.</br>
+        B has ${p.numTwo}.</br>
+        What is the total of A and B?
       `;
+      }
+      if (p.type == 2) {
+        displayProblem.innerHTML = `
+        Person A spent $${p.numOne} and has $${p.numTwo} left.</p>
+        How much did he have at first?
+        `;
+      }
     }
-    if (p.rollAB == "B") {
-      console.log("heuOne " + "Type " + p.rollAB + " Var " + p.rollVar);
 
-      if (p.numOne < p.numTwo) {
-        [p.numOne, p.numTwo] = [p.numTwo, p.numOne];
+    if (setting == 3) {
+      p.numTotal = p.numOne + p.numTwo;
+      if (p.type == 1) {
+        displayProblem.innerHTML = `
+        ${p.objectOne} and ${p.objectTwo} has a total of ${p.numTotal}.</br>
+        ${
+          p.rollChoice == 0
+            ? `${p.objectOne} is ${p.numOne}`
+            : `${p.objectTwo} is ${p.numTwo}`
+        }.</br>
+        What is ${p.rollChoice == 0 ? p.objectTwo : p.objectOne}?
+      `;
+      }
+      if (p.type == 2) {
+        displayProblem.innerHTML = `
+        Person A had $${p.numTotal} at first.</br>
+        `;
+        if (p.rollChoice == 0) {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `He spent $${p.numOne}</br>How much does he have left?`
+          );
+        }
+        if (p.rollChoice == 1) {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `He has $${p.numTwo} left after spending some money.</br>How much does he have spend?`
+          );
+        }
+      }
+    }
+
+    if (setting == 4) {
+      while (p.numOne == p.numTwo) {
+        p.numOne = genNumbers(400) + 100;
+      }
+
+      if (p.rollChoice2 == "A") {
+        displayProblem.innerHTML = `
+          ${p.objectOne} is ${p.numOne}.</br>
+          ${p.objectTwo} is ${p.numTwo}.</br>
+          What is the difference between ${p.objectOne} and ${p.objectTwo}?
+        `;
+      }
+
+      if (p.rollChoice2 == "B") {
+        p.numTotal = p.numOne + p.numTwo;
+        displayProblem.innerHTML = `
+          The total for ${p.objectOne} and ${p.objectTwo} is ${p.numTotal}.</br>
+          ${
+            p.rollChoice3 == 0
+              ? `${p.objectOne} is ${p.numOne}`
+              : `${p.objectTwo} is ${p.numTwo}`
+          }.</br>
+          How much ${p.numOne > p.numTwo ? "more" : "less"} is ${
+          p.objectOne
+        } than ${p.objectTwo}?
+        `;
+      }
+    }
+
+    if (setting == 5) {
+      let oneUnit = genNumbers(5) + 5;
+      p.total = (p.unitSentence + 1) * oneUnit;
+      p.varB = oneUnit;
+      p.varA = oneUnit * p.unitSentence;
+      let lineTwo = undefined;
+      let lineThree = undefined;
+
+      if (p.rollLineTwo == "A") {
+        lineTwo = `${p.objectOne} is ${p.varA}.`;
+        p.rollLineThree = ["B", "total"][genNumbers(2)];
+        if (p.rollLineThree == "B") {
+          lineThree = `What is ${p.objectTwo}`;
+        }
+        if (p.rollLineThree == "total") {
+          lineThree = `What is the total of ${p.objectOne} and ${p.objectTwo}?`;
+        }
+      }
+
+      if (p.rollLineTwo == "B") {
+        lineTwo = `${p.objectTwo} is ${p.varB}.`;
+        p.rollLineThree = ["A", "total"][genNumbers(2)];
+        if (p.rollLineThree == "A") {
+          lineThree = `What is ${p.objectOne}`;
+        }
+        if (p.rollLineThree == "total") {
+          lineThree = `What is the total of ${p.objectOne} and ${p.objectTwo}?`;
+        }
+      }
+
+      if (p.rollLineTwo == "total") {
+        lineTwo = `${p.objectOne} and ${p.objectTwo} is ${p.total}.`;
+        p.rollLineThree = ["A", "B"][genNumbers(2)];
+        if (p.rollLineThree == "A") {
+          lineThree = `What is ${p.objectOne}`;
+        }
+        if (p.rollLineThree == "B") {
+          lineThree = `What is ${p.objectTwo}?`;
+        }
       }
 
       displayProblem.innerHTML = `
-      ${p.rollAB} is ${p.numOne} ${p.roll[p.rollPosition][2]}.</br>
-      A is ${p.numTwo} ${p.roll[p.rollPosition][2]} ${
-        p.roll[p.rollPosition][p.rollVar]
-      } than B.</br>
-      What is A?
+      ${p.objectOne} is ${p.unitSentence} times of ${p.objectTwo}.</br>
+      ${lineTwo}</br>
+      ${lineThree}</br>
+
       `;
     }
   }
@@ -21819,21 +21948,52 @@ function handleSubmit(e) {
 
     // heuristics Answer
     if (level == "heuOne") {
-      if (p.rollAB == "A" && p.rollVar == 0) {
-        correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne - p.numTwo}`;
-        correctAnswerTwo = p.numOne - p.numTwo;
+      if (setting == 1) {
+        if (p.rollAB == "A" && p.rollVar == 0) {
+          correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne - p.numTwo}`;
+          correctAnswerTwo = p.numOne - p.numTwo;
+        }
+        if (p.rollAB == "A" && p.rollVar == 1) {
+          correctAnswer = `${p.numOne}+${p.numTwo}=${p.numOne + p.numTwo}`;
+          correctAnswerTwo = p.numOne + p.numTwo;
+        }
+        if (p.rollAB == "B" && p.rollVar == 0) {
+          correctAnswer = `${p.numOne}+${p.numTwo}=${p.numOne + p.numTwo}`;
+          correctAnswerTwo = p.numOne + p.numTwo;
+        }
+        if (p.rollAB == "B" && p.rollVar == 1) {
+          correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne - p.numTwo}`;
+          correctAnswerTwo = p.numOne - p.numTwo;
+        }
       }
-      if (p.rollAB == "A" && p.rollVar == 1) {
-        correctAnswer = `${p.numOne}+${p.numTwo}=${p.numOne + p.numTwo}`;
-        correctAnswerTwo = p.numOne + p.numTwo;
+
+      if (setting == 2) {
+        correctAnswer = p.numOne + p.numTwo;
       }
-      if (p.rollAB == "B" && p.rollVar == 0) {
-        correctAnswer = `${p.numOne}+${p.numTwo}=${p.numOne + p.numTwo}`;
-        correctAnswerTwo = p.numOne + p.numTwo;
+
+      if (setting == 3) {
+        if (p.rollChoice == 0) {
+          correctAnswer = p.numTwo;
+        }
+        if (p.rollChoice == 1) {
+          correctAnswer = p.numOne;
+        }
       }
-      if (p.rollAB == "B" && p.rollVar == 1) {
-        correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne - p.numTwo}`;
-        correctAnswerTwo = p.numOne - p.numTwo;
+
+      if (setting == 4) {
+        correctAnswer = Math.abs(p.numOne - p.numTwo);
+      }
+
+      if (setting == 5) {
+        if (p.rollLineThree == "A") {
+          correctAnswer = p.varA;
+        }
+        if (p.rollLineThree == "B") {
+          correctAnswer = p.varB;
+        }
+        if (p.rollLineThree == "total") {
+          correctAnswer = p.total;
+        }
       }
     }
     // answers
@@ -26779,20 +26939,73 @@ function genProblems() {
   // heuristics value
   // setting
   if (level == "heuOne") {
-    return {
-      roll: [
-        ["more", "less", "ml"],
-        ["greater", "smaller", ""],
-        ["taller", "shorter", "cm"],
-        ["longer", "shorter", "m"],
-        ["heavier", "lighter", "kg"],
-      ],
-      rollPosition: genNumbers(5),
-      rollAB: ["A", "B"][genNumbers(2)],
-      rollVar: [0, 1][genNumbers(2)],
-      numOne: genNumbers(9) + 1,
-      numTwo: genNumbers(9) + 1,
-    };
+    setting = calArrAll(5, calArr, setting, 9);
+    setting = checkRange(setting, calArr, skipArr);
+    if (setting == 1) {
+      return {
+        roll: [
+          ["more", "less", "ml"],
+          ["greater", "smaller", ""],
+          ["taller", "shorter", "cm"],
+          ["longer", "shorter", "m"],
+          ["heavier", "lighter", "kg"],
+        ],
+        rollPosition: genNumbers(5),
+        rollAB: ["A", "B"][genNumbers(2)],
+        rollVar: [0, 1][genNumbers(2)],
+        numOne: genNumbers(9) + 1,
+        numTwo: genNumbers(9) + 1,
+      };
+    }
+    if (setting == 2) {
+      return {
+        type: [1, 2][genNumbers(2)],
+        objectOne: ["A", "B", "C"][genNumbers(3)],
+        objectTwo: ["X", "Y", "Z"][genNumbers(3)],
+        numOne: genNumbers(90) + 10,
+        numTwo: genNumbers(90) + 10,
+      };
+    }
+
+    if (setting == 3) {
+      return {
+        type: [1, 2][genNumbers(2)],
+        objectOne: ["A", "B", "C"][genNumbers(3)],
+        objectTwo: ["X", "Y", "Z"][genNumbers(3)],
+        numOne: genNumbers(90) + 10,
+        numTwo: genNumbers(90) + 10,
+        numTotal: undefined,
+        rollChoice: genNumbers(2),
+      };
+    }
+
+    if (setting == 4) {
+      return {
+        rollz: 4,
+        objectOne: ["A", "B", "C"][genNumbers(3)],
+        objectTwo: ["X", "Y", "Z"][genNumbers(3)],
+        numOne: genNumbers(90) + 10,
+        numTwo: genNumbers(90) + 10,
+        numTotal: undefined,
+        rollChoice: genNumbers(2),
+        rollChoice2: ["A", "B"][genNumbers(2)],
+        rollChoice3: genNumbers(2),
+      };
+    }
+
+    if (setting == 5) {
+      return {
+        rollz: 5,
+        objectOne: ["A", "B", "C"][genNumbers(3)],
+        objectTwo: ["X", "Y", "Z"][genNumbers(3)],
+        unitSentence: genNumbers(5) + 2,
+        total: undefined,
+        varA: undefined,
+        varB: undefined,
+        rollLineTwo: ["A", "B", "total"][genNumbers(3)],
+        rollLineThree: ["A", "B", "total"][genNumbers(3)],
+      };
+    }
   }
   if (level == "heuTwo") {
     setting = calArrAll(4, calArr, setting, 9);
@@ -29225,13 +29438,10 @@ function buttonLevelSetting() {
         9
       );
       if (!setting) optionsBox.classList.add("hidden");
-      setting = settingCheck(setting, [1, 9], level);
+      setting = settingCheck(setting, [1, 2, 3, 4, 5, 9], level);
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
-      gold = heuOne.time;
-      silver = heuOne.time + (cutoff - heuOne.time) / 3;
-      bronze = heuOne.time + ((cutoff - heuOne.time) / 3) * 2;
       instructions.style.fontSize = "16px";
       instructions.innerHTML = `
         A comparison statement tells us the difference.</p>
