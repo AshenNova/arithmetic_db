@@ -617,12 +617,12 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         if (level.startsWith("cal") || level.startsWith("heu")) {
           recCheck = true;
           if (extra == "") {
-            accomplish += 1;
+            // accomplish += 1;
             bump = 1;
           } // PLUS ONE IF THIS HAS BEEN COMPLETED
         } else {
-          accomplish += 1;
-          console.log(`${accomplish} 💰`);
+          // accomplish += 1;
+          // console.log(`${accomplish} 💰`);
           recCheck = true;
           bump = 1;
         }
@@ -630,8 +630,14 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         // IF YES, CHECK IF IT IS THE FIRST ATTEMPT
         checkLimit.forEach((today) => {
           if (today.level == level && today.mode == mode) {
-            count += 1;
-            console.log(`------> Count: ${count}`);
+            if (level.startsWith("cal") || level.startsWith("heu")) {
+              if (extra == "") {
+                count += 1;
+              }
+            } else {
+              count += 1;
+              console.log(`------> Count: ${count}`);
+            }
           }
         });
         if (count > 0) recCheck = false;
@@ -660,12 +666,12 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         // });
         // ONLY AWARD THE FIRST ATTEMPT OF THE RECOMMENDED THE BONUS POINT
         if (count == 0) {
-          console.log("BONUS!: " + accomplish);
+          // console.log("BONUS!: " + accomplish);
           pointsAwarded += checkLimit.length + bump;
           userNow.points += checkLimit.length + bump;
 
           //IF ALL RECOMMENDED HAS BEEN COMPLETED, AWARD MORE!
-          if (recommend.length == accomplish) {
+          if (recommend.length == checkLimit.length + bump) {
             console.log("Complete bonus!: 15");
             pointsAwarded += 15;
             userNow.points += 15;
