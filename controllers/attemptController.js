@@ -661,8 +661,8 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         // ONLY AWARD THE FIRST ATTEMPT OF THE RECOMMENDED THE BONUS POINT
         if (count == 0) {
           console.log("BONUS!: " + accomplish);
-          pointsAwarded += accomplish;
-          userNow.points += accomplish;
+          pointsAwarded += checkLimit.length + bump;
+          userNow.points += checkLimit.length + bump;
 
           //IF ALL RECOMMENDED HAS BEEN COMPLETED, AWARD MORE!
           if (recommend.length == accomplish) {
