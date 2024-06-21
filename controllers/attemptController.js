@@ -670,9 +670,15 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         // });
         // ONLY AWARD THE FIRST ATTEMPT OF THE RECOMMENDED THE BONUS POINT
         if (count == 0) {
-            pointsAwarded += checkLimit.length + bump;
-            userNow.points += checkLimit.length + bump;
-          }
+          // if (level.startsWith("cal") || level.startsWith("heu")) {
+          // if (extra == "") {
+          pointsAwarded += checkLimit.length + bump;
+          userNow.points += checkLimit.length + bump;
+          // }
+          // } else {
+          pointsAwarded += checkLimit.length + bump;
+          userNow.points += checkLimit.length + bump;
+          // }
           // console.log("BONUS!: " + accomplish);
 
           //IF ALL RECOMMENDED HAS BEEN COMPLETED, AWARD MORE!
