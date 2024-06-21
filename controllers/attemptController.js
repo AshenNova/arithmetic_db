@@ -629,16 +629,6 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
 
         // IF YES, CHECK IF IT IS THE FIRST ATTEMPT
         checkLimit.forEach((today) => {
-          // if (today.level == level && today.mode == mode) {
-          //   if (level.startsWith("cal") || level.startsWith("heu")) {
-          //     if (extra == "") {
-          //       count += 1;
-          //     }
-          //   } else {
-          //     count += 1;
-          //     console.log(`------> Count: ${count}`);
-          //   }
-          // }
           if (today.level == level && today.mode == mode && extra == "") {
             count += 1;
             console.count(count);
@@ -647,43 +637,12 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         if (count > 0) {
           recCheck = false;
           bump = 0;
+          pointsAwarded = 1;
         }
-        // CHECK HOW MANY DAILY RECOMMENDATIONS HAS BEEN DONE.
-        // console.log("Checking through the recommended list");
-        // let uniqueLevel = [];
-        // checkLimit.forEach((today) => {
-        //   console.log("Checking " + today);
-        //   if (today.recommendCheck && !uniqueLevel.includes(today.level)) {
-        //     if (
-        //       today.level.startsWith("heu") ||
-        //       today.level.startsWith("cal")
-        //     ) {
-        //       if (today.extra == "") {
-        //         console.log("EMPTY!!!");
-        //         accomplish += 1;
-        //         uniqueLevel.push(today.level);
-        //       }
-        //     } else {
-        //       if (today.level == level && today.mode == mode) {
-        //         accomplish += 1;
-        //         uniqueLevel.push(today.level);
-        //       }
-        //     }
-        //   }
-        // });
         // ONLY AWARD THE FIRST ATTEMPT OF THE RECOMMENDED THE BONUS POINT
         if (count == 0) {
-          // if (level.startsWith("cal") || level.startsWith("heu")) {
-          // if (extra == "") {
           pointsAwarded += checkLimit.length + bump;
           userNow.points += checkLimit.length + bump;
-          // }
-          // } else {
-          // pointsAwarded += checkLimit.length + bump;
-          // userNow.points += checkLimit.length + bump;
-          // }
-          // console.log("BONUS!: " + accomplish);
-
           //IF ALL RECOMMENDED HAS BEEN COMPLETED, AWARD MORE!
           if (recommend.length == checkLimit.length + bump) {
             console.log("Complete bonus!: 15");
@@ -694,12 +653,6 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         }
       }
       recCount = checkLimit.length + bump;
-    });
-    console.log(`Attempts today: ${checkLimit.length}`);
-    checkLimit.forEach((today) => {
-      if (today.level == level) {
-        pointsAwarded = 1;
-      }
     });
     if (checkLimit.length <= 5) {
       const updatePoints = await User.findByIdAndUpdate(userNow._id, {
