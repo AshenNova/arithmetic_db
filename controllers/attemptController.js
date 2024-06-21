@@ -676,8 +676,8 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
           userNow.points += checkLimit.length + bump;
           // }
           // } else {
-          pointsAwarded += checkLimit.length + bump;
-          userNow.points += checkLimit.length + bump;
+          // pointsAwarded += checkLimit.length + bump;
+          // userNow.points += checkLimit.length + bump;
           // }
           // console.log("BONUS!: " + accomplish);
 
