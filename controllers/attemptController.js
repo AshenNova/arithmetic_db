@@ -629,15 +629,19 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
 
         // IF YES, CHECK IF IT IS THE FIRST ATTEMPT
         checkLimit.forEach((today) => {
-          if (today.level == level && today.mode == mode) {
-            if (level.startsWith("cal") || level.startsWith("heu")) {
-              if (extra == "") {
-                count += 1;
-              }
-            } else {
-              count += 1;
-              console.log(`------> Count: ${count}`);
-            }
+          // if (today.level == level && today.mode == mode) {
+          //   if (level.startsWith("cal") || level.startsWith("heu")) {
+          //     if (extra == "") {
+          //       count += 1;
+          //     }
+          //   } else {
+          //     count += 1;
+          //     console.log(`------> Count: ${count}`);
+          //   }
+          // }
+          if (today.level == level && today.mode == mode && extra == "") {
+            count += 1;
+            console.count(count);
           }
         });
         if (count > 0) recCheck = false;
@@ -666,9 +670,10 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         // });
         // ONLY AWARD THE FIRST ATTEMPT OF THE RECOMMENDED THE BONUS POINT
         if (count == 0) {
+            pointsAwarded += checkLimit.length + bump;
+            userNow.points += checkLimit.length + bump;
+          }
           // console.log("BONUS!: " + accomplish);
-          pointsAwarded += checkLimit.length + bump;
-          userNow.points += checkLimit.length + bump;
 
           //IF ALL RECOMMENDED HAS BEEN COMPLETED, AWARD MORE!
           if (recommend.length == checkLimit.length + bump) {
