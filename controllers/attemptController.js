@@ -644,7 +644,10 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
             console.count(count);
           }
         });
-        if (count > 0) recCheck = false;
+        if (count > 0) {
+          recCheck = false;
+          bump = 0;
+        }
         // CHECK HOW MANY DAILY RECOMMENDATIONS HAS BEEN DONE.
         // console.log("Checking through the recommended list");
         // let uniqueLevel = [];
@@ -1132,7 +1135,7 @@ exports.deleteAttempt = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ username });
   const currentPoints = user.points;
   const adjustedPoints = currentPoints - attempt.points;
-  const [updateUser, deleteAttempt] = await Promise.all([
+  const [updateUser, deleteAttempt, deleteHighscore] = await Promise.all([
     User.updateOne(
       { username },
       {
@@ -1140,6 +1143,11 @@ exports.deleteAttempt = catchAsync(async (req, res, next) => {
       }
     ),
     Attempt.findByIdAndDelete(id),
+    Highscore.deleteOne({
+      user: attempt.user,
+      level: attempt.level,
+      time: attempt.time,
+    }),
   ]);
   console.log(updateUser);
   return res.redirect("/attempts");
