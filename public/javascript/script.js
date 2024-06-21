@@ -14352,7 +14352,7 @@ How far is apart is Town A and Town B?
         if (p.rollChoice == 1) {
           displayProblem.insertAdjacentHTML(
             "beforeend",
-            `He has $${p.numTwo} left after spending some money.</br>How much does he have spend?`
+            `He has $${p.numTwo} left after spending some money.</br>How much did he have spend?`
           );
         }
       }
@@ -14605,7 +14605,7 @@ How far is apart is Town A and Town B?
         if (p.rollChoice == 1) {
           displayProblem.insertAdjacentHTML(
             "beforeend",
-            `He has $${p.numTwo} left after spending some money.</br>How much does he have spend?`
+            `He has $${p.numTwo} left after spending some money.</br>How much did he have spend?`
           );
         }
       }
