@@ -10010,7 +10010,7 @@ function updateProblems() {
       Person ${
         p.person
       } wanted to buy something, but only had ${displaySimpleFraction(
-          p.numOne,
+          p.numeOne,
           p.denoOne
         )} of the cost.</p>
       After receiving another $${
@@ -14771,6 +14771,8 @@ How many items are there in each bag?
       const valueAEnd = valueA + p.situationA;
       const valueBEnd = valueB + p.situationB;
       const diffEnd = valueAEnd - valueBEnd;
+      if (valueA == 0 || valueB == 0 || valueAEnd == 0 || valueBEnd == 0)
+        return updateCalc();
       if (p.type == "unit") {
         displayProblem.innerHTML = `
         A is ${p.unitA} times of B.</br>
@@ -17028,7 +17030,9 @@ How many items are there in each bag?
     }
     // EITHER OR
     if (setting == 4) {
-      if (p.quanB < p.quanA) [p.quanA, p.quanB] = [p.quanB, p.quanA];
+      if (p.quanB < p.quanA) {
+        [p.quanA, p.quanB] = [p.quanB, p.quanA];
+      }
       if (p.quanB == p.quanA) p.quanA += 1;
       const first = p.quanA * p.multiplierA;
       p.second = p.quanB * p.multiplierA;
