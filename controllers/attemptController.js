@@ -634,11 +634,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
             console.count(count);
           }
         });
-        if (count > 0) {
-          recCheck = false;
-          bump = 0;
-          pointsAwarded = 1;
-        }
+
         // ONLY AWARD THE FIRST ATTEMPT OF THE RECOMMENDED THE BONUS POINT
         if (count == 0) {
           pointsAwarded += checkLimit.length + bump;
@@ -650,6 +646,12 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
             userNow.points += 15;
           }
           // console.log(`After: ${pointsAwarded}`);
+        }
+
+        if (count > 0) {
+          recCheck = false;
+          bump = 0;
+          pointsAwarded = 1;
         }
       }
       recCount = checkLimit.length + bump;
