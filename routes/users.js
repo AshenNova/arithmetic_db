@@ -41,9 +41,7 @@ router
 router
   .route("/points/rewards/delete/:id")
   .get(authController.adminCheck, userController.deleteReward);
-router
-  .route("/edit/:id")
-  .get(authController.adminCheck, userController.editSingleUser);
+router.route("/edit/:id").get(userController.editSingleUser);
 router
   .route("/edit/save")
   .post(authController.adminCheck, userController.saveEditUser);

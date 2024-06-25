@@ -49,6 +49,7 @@ exports.editUser = catchAsync(async (req, res, next) => {
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
+  console.log("Trying to edit user profile");
   if (
     !authenticate ||
     (!currentUser.admin && currentUser.username != req.query.username)
