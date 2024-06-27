@@ -1,4 +1,5 @@
-import { updateProblems, genNumbers } from "./script.js";
+import { genNumbers } from "./script.js";
+import { updateProblems } from "./display.js";
 
 const resultSide = (plusLimit, multiMini, multiMax) => {
   const symbol = ["+", "-", "*", "/"][genNumbers(4)];
