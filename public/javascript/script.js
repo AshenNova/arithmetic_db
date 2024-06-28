@@ -619,7 +619,7 @@ function withinStart() {
       questionTimer();
 
       optionsBox.classList.add("hidden");
-      updateProblems(level, state, setting, regen, skipArr); // display.js
+      updateProblems(level, state, setting, regen, skipArr, heuArr); // display.js
     }
   }, 1000);
 }
@@ -1056,7 +1056,7 @@ document.querySelector("#skipBtn").addEventListener("click", function (e) {
         setting = calArr[genNumbers(calArr.length)];
 
         questionSecs = 0;
-        updateProblems(level, state, setting, regen, skipArr);
+        updateProblems(level, state, setting, regen, skipArr, heuArr);
       }
     }
   }

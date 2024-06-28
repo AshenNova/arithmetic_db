@@ -222,7 +222,7 @@ import {
   drawHorizontalLine,
 } from "./otherFunctions.js";
 
-export function updateProblems(level, state, setting, regen, skipArr) {
+export function updateProblems(level, state, setting, regen, skipArr, heuArr) {
   console.log(`The current state is ${state}. Regen is ${regen}.`);
   state.currentProblem = state.drawProblem = genProblems(
     level,
@@ -230,7 +230,8 @@ export function updateProblems(level, state, setting, regen, skipArr) {
     setting,
     state,
     skipGlobalUpdateProblem,
-    skipArr
+    skipArr,
+    heuArr
   );
   console.log(`GenProblem: ${state.currentProblem}`);
   // state.drawProblem = genProblems()

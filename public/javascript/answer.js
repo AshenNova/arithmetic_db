@@ -67,7 +67,8 @@ export function handleSubmit(
   scoreNeeded,
   reviewCount,
   attempt,
-  skipArr
+  skipArr,
+  heuArr
 ) {
   //   e.preventDefault();
 
@@ -4975,11 +4976,7 @@ export function handleSubmit(
     }
     // Answers
     if (level == "heuFive") {
-      if (
-        p.setting == 1 ||
-        (p.setting == 9 && p.rollz == 1) ||
-        (range == 1 && p.rollz == 1)
-      ) {
+      if (p.setting == 1) {
         let firstSentence = undefined;
         if (p.difference > 0) {
           firstSentence = `${p.difference}x${p.quantityOne}=${p.adjustment}`;
@@ -5019,11 +5016,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 2 ||
-        (p.setting == 9 && p.rollz == 2) ||
-        (range == 1 && p.rollz == 2)
-      ) {
+      if (p.setting == 2) {
         let firstSentence = `${p.questions}x${p.marks}=${p.allRight}`;
         let secondSentence = `${p.allRight}-${p.total}=${p.bDifference}`;
         let thirdSentence = `${p.marks}+${p.deduct}=${p.sDifference}`;
@@ -5038,11 +5031,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 3 ||
-        (p.setting == 9 && p.rollz == 3) ||
-        (range == 1 && p.rollz == 3)
-      ) {
+      if (p.setting == 3) {
         let firstSentence = undefined;
         let allTotal = undefined;
         if (p.totalOne > p.totalTwo) {
@@ -5086,11 +5075,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 4 ||
-        (p.setting == 9 && p.rollz == 4) ||
-        (range == 1 && p.rollz == 4)
-      ) {
+      if (p.setting == 4) {
         let firstSentence = undefined;
         if (p.objectOneV > p.objectTwoV) {
           firstSentence = `${p.objectOneV}-${p.objectTwoV}=${p.sDifference}`;
@@ -5134,29 +5119,17 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 5 ||
-        (p.setting == 9 && p.rollz == 5) ||
-        (range == 1 && p.rollz == 5)
-      ) {
+      if (p.setting == 5) {
         correctAnswer = `${p.objectOneQ}${p.objectOneC[0]}=${p.objectTwoQ}${p.objectTwoC[0]}\n${p.objectOneFQ}${p.objectOneC[0]}=${p.objectTwoAV}${p.objectTwoC[0]}\n${p.objectTwoAV}${p.objectTwoC[0]}+${p.objectTwoFQ}${p.objectTwoC[0]}=${p.objectTwoLQ}${p.objectTwoC[0]}\n${p.total}/${p.objectTwoLQ}=${p.oneUnit}`;
         correctAnswerTwo = p.oneUnit;
       }
-      if (
-        p.setting == 6 ||
-        (p.setting == 9 && p.rollz == 6) ||
-        (range == 1 && p.rollz == 6)
-      ) {
+      if (p.setting == 6) {
         correctAnswer = `${p.people}x${p.people - 1}/2=${
           (p.people * (p.people - 1)) / 2
         }`;
         correctAnswerTwo = (p.people * (p.people - 1)) / 2;
       }
-      if (
-        p.setting == 7 ||
-        (p.setting == 9 && p.rollz == 7) ||
-        (range == 1 && p.rollz == 7)
-      ) {
+      if (p.setting == 7) {
         if (p.version == 1) {
           let quantityOneGroup = p.set + p.bonus;
           let lineZero = `${p.set}+${p.bonus}=${quantityOneGroup}`;
@@ -5702,8 +5675,8 @@ export function handleSubmit(
         // HEURISTICS ASSIST AREA
 
         // / adds question back into array if wrong
-        if (!heuArr.includes(p.rollz)) {
-          heuArr.push(p.rollz);
+        if (!heuArr.includes(setting)) {
+          heuArr.push(setting);
           console.log(heuArr);
         }
       }
