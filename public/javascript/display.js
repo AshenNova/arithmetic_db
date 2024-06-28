@@ -632,11 +632,12 @@ export function updateProblems(level, state, setting, regen, skipArr) {
   }
   if (level == 2.02) {
     normalDisplay();
+    console.log(`Setting is ${setting}`);
     for (let i = 0; i < setting * 1 + 1; i++) {
-      const chosenNumber = arr[genNumbers(arr.length - 1)];
-      arr2.push(chosenNumber);
-      const index = arr.indexOf(chosenNumber);
-      arr.splice(index, 1);
+      const chosenNumber = p.arr[genNumbers(p.arr.length - 1)];
+      p.arr2.push(chosenNumber);
+      const index = p.arr.indexOf(chosenNumber);
+      p.arr.splice(index, 1);
     }
     p.place = [
       "ones",
@@ -646,14 +647,14 @@ export function updateProblems(level, state, setting, regen, skipArr) {
       "ten thousands",
       "hundred thousands",
       "millions",
-    ][genNumbers(arr2.length)];
+    ][genNumbers(p.arr2.length)];
 
-    if (arr2[0] == 0) {
-      [arr2[0], arr2[1]] = [arr2[1], arr2[0]];
+    if (p.arr2[0] == 0) {
+      [p.arr2[0], p.arr2[1]] = [p.arr2[1], p.arr2[0]];
     }
     let b = 1;
-    for (let a = 0; a < arr2.length; a++) {
-      p.holdingNumber = arr2[a] * b;
+    for (let a = 0; a < p.arr2.length; a++) {
+      p.holdingNumber = p.arr2[a] * b;
       b = b * 10;
       p.totalNumber += p.holdingNumber;
     }
@@ -666,6 +667,8 @@ export function updateProblems(level, state, setting, regen, skipArr) {
   }
 
   if (level == 2.04) {
+    arr = [];
+    // displayProblem.innerHTML = ``;
     if (p.operator == "x") {
       p.repeat = 2;
     }
@@ -693,11 +696,11 @@ export function updateProblems(level, state, setting, regen, skipArr) {
     // counting odd or even in array
     let oddEvenCount = [0, 0];
     for (let i = arr2.length; arr2.length < setting * 1 + 1; i++) {
-      const chosenNumber = arr[genNumbers(arr.length - 1)];
+      const chosenNumber = p.arr[genNumbers(p.arr.length - 1)];
       arr2.push(chosenNumber);
-      const index = arr.indexOf(chosenNumber);
-      arr.splice(index, 1);
-      console.log(arr, arr2);
+      const index = p.arr.indexOf(chosenNumber);
+      p.arr.splice(index, 1);
+      console.log(p.arr, arr2);
     }
     console.log(oddEvenCount[0], oddEvenCount[1]);
 
@@ -784,6 +787,8 @@ export function updateProblems(level, state, setting, regen, skipArr) {
 
   if (level == 2.06) {
     normalDisplay();
+    arr = [];
+    arr2 = [];
     arr.push(p.figure);
     while (arr[0] == p.figureTwo) {
       p.figureTwo = ["🏀", "⚽️", "🏈", "🎾", "🍎", "🍏", "🌭"][genNumbers(7)];
@@ -3986,16 +3991,17 @@ export function updateProblems(level, state, setting, regen, skipArr) {
       [p.numOne, p.numThree] = [p.numThree, p.numOne];
     }
 
-    arr.push(p.numOne, p.numThree);
-    arr.sort(function (a, b) {
+    p.arr.push(p.numOne, p.numThree);
+    p.arr.sort(function (a, b) {
       return b - a;
     });
     let i = 1;
-    while (arr[0] % arr[arr.length - 1] != 0) {
-      console.log(arr, i);
+    while (p.arr[0] % p.arr[p.arr.length - 1] != 0) {
+      console.log(p.arr, i);
       i++;
-      arr.unshift(p.numThree * i);
+      p.arr.unshift(p.numThree * i);
     }
+    console.log(`What is the ${p.arr}?`);
     displayProblem.innerHTML = `
       <div class="frac">
       <span>${p.numOne}</span>

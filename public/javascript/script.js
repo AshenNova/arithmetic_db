@@ -1166,6 +1166,7 @@ function drawVerticalLine(x, y, bottom, adjust) {
 // 2. Also to visual update the HTML
 // This used to be where updateProblems() is until is has been exported to display.js
 function allTheStuffToSubmit() {
+  console.log(arr);
   handleSubmit(
     player,
     state,
@@ -1189,7 +1190,8 @@ function allTheStuffToSubmit() {
     commonMultipleArrTwo,
     scoreNeeded,
     reviewCount,
-    attempt
+    attempt,
+    skipArr
   );
 }
 ourForm.addEventListener("submit", function (e) {
@@ -1593,7 +1595,7 @@ function buttonLevelSetting() {
       if (![2, 3, 4, 5, 6].includes(setting * 1)) {
         setting = 6;
       }
-      arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
       break;
 
     case "Level 2.03":

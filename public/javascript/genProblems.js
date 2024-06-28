@@ -136,6 +136,8 @@ export function genProblems(
     // setting = calArrAll(5, calArr, setting, 9);
     // setting = checkRange(setting, calArr, skipArr);
     return {
+      arr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      arr2: [],
       totalNumber: 0,
       holdingNumber: undefined,
       place: undefined,
@@ -163,6 +165,8 @@ export function genProblems(
 
   if (level == 2.05) {
     return {
+      arr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      arr2: [],
       choice: ["smallest", "greatest"][genNumbers(2)],
       landingNumber: undefined,
       finalNumber: undefined,
@@ -242,6 +246,8 @@ export function genProblems(
 
   if (level == 3.02) {
     return {
+      arr: [],
+      arr2: [],
       numOne: genNumbers(97) + 2,
       numMulti: [10, 100, 100][genNumbers(3)],
       numMultiTwo: [1, 10][genNumbers(2)],
@@ -950,6 +956,7 @@ export function genProblems(
 
   if (level == 5.02) {
     return {
+      arr: [],
       numOne: genNumbers(5) + 1,
       numTwo: genNumbers(5) + 1,
       numThree: genNumbers(5) + 1,
@@ -998,10 +1005,21 @@ export function genProblems(
   }
 
   if (level == 5.06) {
-    setting = calArrAll(2, calArr, setting, 2);
-    setting = checkRange(setting, calArr, skipArr);
+    // setting = calArrAll(2, calArr, setting, 2);
+    // setting = checkRange(setting, calArr, skipArr);
+    setting = calArrAll(
+      2,
+      calArr,
+      setting,
+      2,
+      level,
+      state,
+      skipGlobalUpdateProblem
+    );
+    setting = checkRange(setting, calArr, skipArr, skipGlobalUpdateProblem);
     if (setting == 1) {
       return {
+        setting: 1,
         pointX1: genNumbers(70) + 50,
         pointY1: genNumbers(40) + 40,
         // pointX2: genNumbers(3),
@@ -1020,6 +1038,7 @@ export function genProblems(
       canvas.setAttribute("height", "300px");
       return {
         // triangle A
+        setting: 2,
         triA1y: genNumbers(40) + 40,
 
         triA2y: undefined,

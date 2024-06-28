@@ -42,6 +42,7 @@ const currentScore = document.getElementById("current-score");
 const currentMistake = document.getElementById("current-mistake");
 const reviewAnswer = document.querySelector(".fa-hire-a-helper");
 const mainContainer = document.querySelector(".main-container");
+const helpMe = document.querySelector(".help-me-text");
 export function handleSubmit(
   player,
   state,
@@ -77,7 +78,7 @@ export function handleSubmit(
     let correctAnswerArr = [];
     console.log(userInput2.value);
     const p = state.currentProblem;
-
+    console.log(`Matching ${level}`);
     // Determining answer -> Turn this into a function!
     if (level == 1 || level == 3) {
       if (p.operator == "+") correctAnswer = p.numOne + p.numTwo;
@@ -251,13 +252,13 @@ export function handleSubmit(
     }
 
     if (level == 2.02) {
-      if (p.place == "ones") correctAnswer = arr2[0];
-      if (p.place == "tens") correctAnswer = arr2[1];
-      if (p.place == "hundreds") correctAnswer = arr2[2];
-      if (p.place == "thousands") correctAnswer = arr2[3];
-      if (p.place == "ten thousands") correctAnswer = arr2[4];
-      if (p.place == "hundred thousands") correctAnswer = arr2[5];
-      if (p.place == "millions") correctAnswer = arr2[6];
+      if (p.place == "ones") correctAnswer = p.arr2[0];
+      if (p.place == "tens") correctAnswer = p.arr2[1];
+      if (p.place == "hundreds") correctAnswer = p.arr2[2];
+      if (p.place == "thousands") correctAnswer = p.arr2[3];
+      if (p.place == "ten thousands") correctAnswer = p.arr2[4];
+      if (p.place == "hundred thousands") correctAnswer = p.arr2[5];
+      if (p.place == "millions") correctAnswer = p.arr2[6];
     }
 
     if (level == 2.04) {
@@ -1695,9 +1696,11 @@ export function handleSubmit(
     }
 
     if (level == 5.02) {
-      correctAnswer = `${arr[0]}/${(arr[0] / p.numOne) * p.numTwo}A=${arr[0]}/${
-        (arr[0] / p.numThree) * p.numFour
-      }B`;
+      console.log(`This is Level: ${level}`);
+      console.log(`arr: ${p.arr}`);
+      correctAnswer = `${p.arr[0]}/${(p.arr[0] / p.numOne) * p.numTwo}A=${
+        p.arr[0]
+      }/${(p.arr[0] / p.numThree) * p.numFour}B`;
     }
 
     if (level == 5.03) {
