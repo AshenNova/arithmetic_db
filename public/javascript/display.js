@@ -1,4 +1,5 @@
-import { genProblems, genNumbers } from "./script.js";
+import { genNumbers } from "./script.js";
+import { genProblems } from "./genProblems.js";
 const displayProblem = document.querySelector(".display-problems");
 const helpMe = document.querySelector(".help-me-text");
 const userInput = document.getElementById("user-input");
@@ -219,9 +220,16 @@ import {
   drawForFraction,
 } from "./otherFunctions.js";
 
-export function updateProblems(level, state, setting, regen) {
+export function updateProblems(level, state, setting, regen, skipArr) {
   console.log(`The current state is ${state}. Regen is ${regen}.`);
-  state.currentProblem = state.drawProblem = genProblems(level, regen);
+  state.currentProblem = state.drawProblem = genProblems(
+    level,
+    regen,
+    setting,
+    state,
+    skipGlobalUpdateProblem,
+    skipArr
+  );
   console.log(`GenProblem: ${state.currentProblem}`);
   // state.drawProblem = genProblems()
   console.log(
