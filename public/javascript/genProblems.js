@@ -571,12 +571,21 @@ export function genProblems(
   }
 
   if (level == 4.03) {
-    if (setting != 1 && setting != 2 && setting != 9) setting = 9;
-    setting = calArrAll(2, calArr, setting, 9);
+    setting = calArrAll(
+      2,
+      calArr,
+      setting,
+      9,
+      level,
+      state,
+      skipGlobalUpdateProblem
+    );
+    setting = checkRange(setting, calArr, skipArr, skipGlobalUpdateProblem);
     if (setting == 1) {
       const one = genNumbers(10) + 3;
       const two = genNumbers(10) + 3;
       return {
+        setting: 1,
         chosen: genNumbers(2),
         numOne: genNumbers(one - 1) + 1,
         denoOne: one,
@@ -589,6 +598,7 @@ export function genProblems(
       const denoOne = genNumbers(7) + 4;
       const denoTwo = genNumbers(7) + 4;
       return {
+        setting: 2,
         numOne: denoOne - 1,
         denoOneUse: denoOne,
         numTwo: denoTwo - 1,
@@ -598,9 +608,21 @@ export function genProblems(
     }
   }
   if (level == 4.04) {
-    setting = calArrAll(2, calArr, setting, 9);
+    // setting = calArrAll(2, calArr, setting, 9);
+    setting = calArrAll(
+      2,
+      calArr,
+      setting,
+      9,
+      level,
+      state,
+      skipGlobalUpdateProblem
+    );
+    setting = checkRange(setting, calArr, skipArr, skipGlobalUpdateProblem);
     if (setting == 1) {
       return {
+        arr: [],
+        setting: 1,
         numOne: genNumbers(9) + 1,
         numTwo: genNumbers(9) + 2,
         numThree: genNumbers(10) + 2,
@@ -610,6 +632,8 @@ export function genProblems(
 
     if (setting == 2) {
       return {
+        arr: [],
+        setting: 2,
         numOne: genNumbers(9) + 1,
         numTwo: genNumbers(9) + 2,
         numThree: genNumbers(10) + 2,
@@ -626,26 +650,28 @@ export function genProblems(
   }
 
   if (level == 4.05) {
-    let roll = undefined;
-
-    if ((setting != 1 && setting != 2) || isNaN(setting)) {
-      setting = 9;
-    }
-
-    if (setting == 9) {
-      roll = genNumbers(2) + 1;
-    }
-
-    if (setting == 1 || (setting == 9 && roll == 1)) {
+    setting = calArrAll(
+      2,
+      calArr,
+      setting,
+      9,
+      level,
+      state,
+      skipGlobalUpdateProblem
+    );
+    setting = checkRange(setting, calArr, skipArr, skipGlobalUpdateProblem);
+    if (setting == 1) {
       return {
+        setting: 1,
         rollChoice: 1,
         numOne: genNumbers(8) + 1,
         numTwo: genNumbers(8) + 2,
         numMulti: genNumbers(8) + 2,
       };
     }
-    if (setting == 2 || (setting == 9 && roll == 2)) {
+    if (setting == 2) {
       return {
+        setting: 2,
         rollChoice: 2,
         nume: genNumbers(8) + 1,
         deno: genNumbers(8) + 2,
@@ -669,6 +695,8 @@ export function genProblems(
 
   if (level == 4.07) {
     return {
+      arr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      arr2: [],
       holdingNumber: 0,
       finalNumber: 0,
       totalNumber: 0,
@@ -718,9 +746,20 @@ export function genProblems(
 
   if (level == 4.11) {
     //Bigger unit to smaller unit
-    setting = calArrAll(2, calArr, setting, 9);
+    // setting = calArrAll(2, calArr, setting, 9);
+    setting = calArrAll(
+      2,
+      calArr,
+      setting,
+      9,
+      level,
+      state,
+      skipGlobalUpdateProblem
+    );
+    setting = checkRange(setting, calArr, skipArr, skipGlobalUpdateProblem);
     if (setting == 1) {
       return {
+        setting: 1,
         wholeNum: [0, 1][genNumbers(2)] * (genNumbers(99 - 1) + 1),
         deciOne: ([0, 1][genNumbers(2)] * (genNumbers(10) + 1)) / 10,
         deciTwo: ([0, 1][genNumbers(2)] * (genNumbers(10) + 1)) / 100,
@@ -740,6 +779,7 @@ export function genProblems(
     //Smaller unit to bigger unit
     if (setting == 2) {
       return {
+        setting: 2,
         wholeNum: [0, 1][genNumbers(2)] * (genNumbers(99 - 1) + 1),
         deciOne: ([0, 1][genNumbers(2)] * (genNumbers(10) + 1)) / 10,
         deciTwo: ([0, 1][genNumbers(2)] * (genNumbers(10) + 1)) / 100,
@@ -794,6 +834,9 @@ export function genProblems(
 
   if (level == 4.17) {
     return {
+      arr: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
+      arr2: [],
+      arr3: [],
       choice: ["A", "B", "C", "D", "E", "F", "G", "H", "I"][genNumbers(9)],
       compass: [
         "north",
@@ -811,6 +854,8 @@ export function genProblems(
 
   if (level == 4.18) {
     return {
+      arr: ["A", "B", "C", "D", "O", "F", "G", "H", "I"],
+      arr2: ["B", "C", "F", "I", "H", "G", "D", "A"],
       choice: ["A", "B", "C", "D", "F", "G", "H", "I"][genNumbers(8)],
       roll: [2, 1][genNumbers(2)],
       angleTurn: (genNumbers(8) + 1) * 45,
@@ -859,9 +904,18 @@ export function genProblems(
   }
 
   if (level == 4.21) {
-    setting = calArrAll(5, calArr, setting, 9);
-    setting = checkRange(setting, calArr, skipArr);
+    setting = calArrAll(
+      5,
+      calArr,
+      setting,
+      9,
+      level,
+      state,
+      skipGlobalUpdateProblem
+    );
+    setting = checkRange(setting, calArr, skipArr, skipGlobalUpdateProblem);
     return {
+      setting,
       rollType: undefined,
       dimension: genNumbers(3) + 2,
       length: undefined,

@@ -2002,6 +2002,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
   }
 
   if (level == 4.0) {
+    normalDisplay();
     let arrayExclude = [3, 4, 5, 7, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59];
     // while (p.numOne == 17 || p.numOne == 19 || p.numOne == 23 || p.numOne == 29 || p.numOne == 31 || p.numOne == 37 || p.numOne == 41 || p.numOne == 43 || p.numOne == 47 || p.numOne == 53 || p.numOne == 59){
     //   console.log("while loop")
@@ -2089,7 +2090,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
     }
   }
   if (level == 4.03) {
-    if (setting == 1) {
+    if (p.setting == 1) {
       const halfOne = Math.floor(p.denoOne / 2);
       const halfTwo = Math.floor(p.denoTwo / 2);
       //left side less than half
@@ -2123,7 +2124,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
       denominatorTwo.textContent = p.denoTwo;
       fractionChoice.textContent = p.size;
     }
-    if (setting == 2) {
+    if (p.setting == 2) {
       if (p.denoOneUse == p.denoTwoUse)
         return updateCalc(
           level,
@@ -2141,7 +2142,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
   }
 
   if (level == 4.04) {
-    if (setting == 1) {
+    if (p.setting == 1) {
       threeWholeNumber.textContent = "";
       threeNumerator.textContent = "?";
       threeDenominator.textContent = "?";
@@ -2151,9 +2152,9 @@ export function updateProblems(level, state, setting, regen, skipArr) {
       twoWholeNumber.textContent = p.numOne;
       twoNumerator.textContent = p.numTwo;
       twoDenominator.textContent = p.numThree;
-      arr.push(p.numThree);
+      p.arr.push(p.numThree);
     }
-    if (setting == 2) {
+    if (p.setting == 2) {
       threeWholeNumber.textContent = "?";
       threeNumerator.textContent = "?";
       threeDenominator.textContent = "?";
@@ -2161,17 +2162,17 @@ export function updateProblems(level, state, setting, regen, skipArr) {
         p.numTwo = p.numTwo - 1 - (p.numTwo - p.numThree);
       }
       twoWholeNumber.textContent = "";
-      arr.push(p.numTwo);
+      p.arr.push(p.numTwo);
       p.numTwo = p.numOne * p.numThree + p.numTwo;
       twoNumerator.textContent = p.numTwo;
       twoDenominator.textContent = p.numThree;
-      arr.push(p.numThree);
+      p.arr.push(p.numThree);
     }
   }
 
   if (level == 4.05) {
     normalDisplay();
-    if (setting == 1 || (setting == 9 && p.rollChoice == 1)) {
+    if (p.setting == 1) {
       if (p.numOne == p.numTwo) {
         p.numOne += 1;
       }
@@ -2192,7 +2193,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
         </div> of a number is ${p.numOne * p.numMulti}.<br>
         What is the number?`;
     }
-    if (setting == 2 || (setting == 9 && p.rollChoice == 2)) {
+    if (p.setting == 2) {
       while (p.nume == p.deno) {
         p.nume = genNumbers(8) + 1;
       }
@@ -2297,19 +2298,22 @@ export function updateProblems(level, state, setting, regen, skipArr) {
   if (level == 4.07) {
     normalDisplay();
     for (let i = 0; i < 7; i++) {
-      const chosenNumber = arr[genNumbers(arr.length - 1)];
-      arr2.push(chosenNumber);
-      const index = arr.indexOf(chosenNumber);
-      arr.splice(index, 1);
+      const chosenNumber = p.arr[genNumbers(p.arr.length - 1)];
+      p.arr2.push(chosenNumber);
+      const index = p.arr.indexOf(chosenNumber);
+      p.arr.splice(index, 1);
     }
-    console.log(arr, arr2);
-    if (arr2[arr2.length - 1] == 0) {
-      [arr2[arr2.length - 1], arr2[1]] = [arr2[1], arr2[arr2.length - 1]];
+    console.log(p.arr, p.arr2);
+    if (p.arr2[p.arr2.length - 1] == 0) {
+      [p.arr2[p.arr2.length - 1], p.arr2[1]] = [
+        p.arr2[1],
+        p.arr2[p.arr2.length - 1],
+      ];
     }
 
     let b = 0.001;
-    for (let a = 0; a < arr2.length; a++) {
-      p.holdingNumber = arr2[a] * b;
+    for (let a = 0; a < p.arr2.length; a++) {
+      p.holdingNumber = p.arr2[a] * b;
       b = b * 10;
       p.totalNumber += p.holdingNumber;
     }
@@ -2388,7 +2392,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
     console.log(p.sumOfNum);
     p.sumOfNum = accDecimal(p.wholeNum + p.deciOne + p.deciTwo + p.deciThree);
 
-    if (setting == 1) {
+    if (p.setting == 1) {
       displayProblem.textContent = `${p.sumOfNum} ${p.firstUnit}  = ? ${p.secondUnit} `;
       if (p.firstUnit == "$") {
         displayProblem.textContent = `${p.firstUnit} ${p.sumOfNum.toFixed(
@@ -2396,7 +2400,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
         )} = ? ${p.secondUnit} `;
       }
     }
-    if (setting == 2) {
+    if (p.setting == 2) {
       let question = p.sumOfNum * 1000;
       if (p.firstUnit == "m" || p.firstUnit == "$") {
         question = p.sumOfNum * 100;
@@ -2598,33 +2602,33 @@ export function updateProblems(level, state, setting, regen, skipArr) {
       ctx.stroke();
     }
 
-    while (arr.length > 0) {
-      const chosenAlp = arr[genNumbers(arr.length - 1)];
-      const index = arr.indexOf(chosenAlp);
-      arr2.push(chosenAlp);
-      arr.splice(index, 1);
-      console.log(arr, arr2);
+    while (p.arr.length > 0) {
+      const chosenAlp = p.arr[genNumbers(p.arr.length - 1)];
+      const index = p.arr.indexOf(chosenAlp);
+      p.arr2.push(chosenAlp);
+      p.arr.splice(index, 1);
+      console.log(p.arr, p.arr2);
     }
 
     ctx.font = "1em serif";
 
-    arr3.push(arr2[1]);
-    arr3.push(arr2[2]);
-    arr3.push(arr2[5]);
-    arr3.push(arr2[8]);
-    arr3.push(arr2[7]);
-    arr3.push(arr2[6]);
-    arr3.push(arr2[3]);
-    arr3.push(arr2[0]);
-    console.log(arr3);
+    p.arr3.push(p.arr2[1]);
+    p.arr3.push(p.arr2[2]);
+    p.arr3.push(p.arr2[5]);
+    p.arr3.push(p.arr2[8]);
+    p.arr3.push(p.arr2[7]);
+    p.arr3.push(p.arr2[6]);
+    p.arr3.push(p.arr2[3]);
+    p.arr3.push(p.arr2[0]);
+    console.log(p.arr3);
 
     if (p.roll == 1) {
-      ctx.fillText(`_____ is ${p.compass} of ${arr2[4]}`, 20, 20);
+      ctx.fillText(`_____ is ${p.compass} of ${p.arr2[4]}`, 20, 20);
     } else {
       let a = 0;
-      for (let i = 0; i < arr3.length; i++) {
+      for (let i = 0; i < p.arr3.length; i++) {
         if (p.compass == compassArr[a]) {
-          p.choice = arr3[a];
+          p.choice = p.arr3[a];
         }
         a++;
       }
@@ -2641,9 +2645,9 @@ export function updateProblems(level, state, setting, regen, skipArr) {
     const alignmentX = -7;
     const alignmentY = -11;
     for (let i = -60; i <= 60; i += 60) {
-      ctx.fillText(`${arr2[a]}`, i + alignmentX, -60 + alignmentY);
-      ctx.fillText(`${arr2[3 + a]}`, i + alignmentX, 0 + alignmentY);
-      ctx.fillText(`${arr2[6 + a]}`, i + alignmentX, 60 + alignmentY);
+      ctx.fillText(`${p.arr2[a]}`, i + alignmentX, -60 + alignmentY);
+      ctx.fillText(`${p.arr2[3 + a]}`, i + alignmentX, 0 + alignmentY);
+      ctx.fillText(`${p.arr2[6 + a]}`, i + alignmentX, 60 + alignmentY);
       a++;
     }
 
@@ -2653,7 +2657,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
   }
 
   if (level == 4.18) {
-    console.log(arr2);
+    console.log(p.arr2);
     const gridX = 380;
     const gridY = 210;
     ctx.font = "1em serif";
@@ -2732,9 +2736,9 @@ export function updateProblems(level, state, setting, regen, skipArr) {
     const alignmentX = -8;
     const alignmentY = 7;
     for (let i = -60; i <= 60; i += 60) {
-      ctx.fillText(`${arr[a]}`, i + alignmentX, -60 + alignmentY);
-      ctx.fillText(`${arr[3 + a]}`, i + alignmentX, 0 + alignmentY);
-      ctx.fillText(`${arr[6 + a]}`, i + alignmentX, 60 + alignmentY);
+      ctx.fillText(`${p.arr[a]}`, i + alignmentX, -60 + alignmentY);
+      ctx.fillText(`${p.arr[3 + a]}`, i + alignmentX, 0 + alignmentY);
+      ctx.fillText(`${p.arr[6 + a]}`, i + alignmentX, 60 + alignmentY);
       a++;
     }
 
@@ -2742,7 +2746,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
 
     ctx.restore();
 
-    const index = arr2.indexOf(p.choice);
+    const index = p.arr2.indexOf(p.choice);
 
     if (p.roll == 1) {
       if (p.direction == "anti-clockwise") {
@@ -3215,13 +3219,13 @@ export function updateProblems(level, state, setting, regen, skipArr) {
   if (level == 4.21) {
     normalDisplay();
 
-    if (setting >= 2) {
+    if (p.setting >= 2) {
       calculatorSymbol.classList.remove("hidden");
     } else {
       calculatorSymbol.classList.add("hidden");
     }
 
-    if (setting == 1) {
+    if (p.setting == 1) {
       p.length = (genNumbers(10) + 1) * p.dimension;
       p.breadth = (genNumbers(10) + 1) * p.dimension;
       p.height = (genNumbers(10) + 1) * p.dimension;
@@ -3232,7 +3236,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
         `;
     }
 
-    if (setting == 2) {
+    if (p.setting == 2) {
       p.length =
         (genNumbers(10) + 1) * p.dimension + (genNumbers(p.dimension - 1) + 1);
       p.breadth =
@@ -3242,7 +3246,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
         ${p.length} cm by ${p.breadth} cm?
         `;
     }
-    if (setting == 3) {
+    if (p.setting == 3) {
       p.length =
         (genNumbers(10) + 1) * p.dimension + (genNumbers(p.dimension) + 1);
       p.breadth = (genNumbers(10) + 1) * p.dimension + genNumbers(p.dimension);
@@ -3253,7 +3257,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
         ${p.length} cm by ${p.breadth} cm by ${p.height}cm?
         `;
     }
-    if (setting == 4) {
+    if (p.setting == 4) {
       p.dimension = genNumbers(5) + 1;
       p.length =
         ((genNumbers(10) + 1) * p.dimension + (genNumbers(p.dimension) + 1)) *
@@ -3266,7 +3270,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
         `;
     }
 
-    if (setting == 5) {
+    if (p.setting == 5) {
       const a = genNumbers(10) + 2;
       const b = genNumbers(10) + 2;
       p.smallLength = [2, 3, 5, 7][genNumbers(4)];
@@ -3596,6 +3600,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
   }
 
   if (level == 4.26) {
+    normalDisplay();
     if (((p.oneSideNoCorners + 2) * 4) % 4 != 0)
       return updateCalc(level, state, setting, regen, skipGlobalUpdateProblem);
     let objects = ["chairs", "boxes", "tables"][genNumbers(3)];

@@ -947,38 +947,6 @@ export function handleSubmit(
       if (p.placeValue == "thousands") correctAnswer = arr2[6];
     }
 
-    // if (level == 4.03) {
-    //   if (p.placeValue == "Whole Number") {
-    //     // correctAnswer = (Math.round(p.numFinal)).toString()
-    //     correctAnswer = p.numFinal.toFixed();
-    //   }
-    //   if (p.placeValue == "1 decimal place" || p.placeValue == "tenth place") {
-    //     p.ansFinal = Math.round(p.numFinal * 10000) / 10000;
-    //     // if ((p.ansFinal*10)%10 == 0){
-    //     //   correctAnswer = (p.ansFinal + ".0").toString()
-    //     // } else {
-    //     // correctAnswer = p.ansFinal.toString()
-    //     // }
-    //     correctAnswer = p.ansFinal.toFixed(1);
-    //   }
-    //   if (
-    //     p.placeValue == "2 decimal place" ||
-    //     p.placeValue == "hundredth place"
-    //   ) {
-    //     p.ansFinal = Math.round(p.numFinal * 10000) / 10000;
-    //     // console.log(p.ansFinal)
-    //     // if ((p.ansFinal*100)%(100) == 0){
-    //     //   correctAnswer = (p.ansFinal + ".00").toString()
-    //     // } else if ((p.ansFinal*100)%(10) == 0){
-    //     //   correctAnswer = (p.ansFinal + "0").toString()
-    //     // } else {
-    //     // correctAnswer = p.ansFinal.toString()
-    //     // }
-    //     correctAnswer = p.ansFinal.toFixed(2);
-    //   }
-    //   decimalCheck(correctAnswer);
-    // }
-
     if (level == 4.03) {
       if (p.setting == 1) {
         console.log(p.chosen, p.size);
@@ -1023,9 +991,9 @@ export function handleSubmit(
             p.numThree /= i;
           }
         }
-        console.log(p.numThree, arr[0]);
+        console.log(p.numThree, p.arr[0]);
         p.numFour = p.numOne * p.numThree + p.numTwo;
-        if (p.numThree != arr[0]) {
+        if (p.numThree != p.arr[0]) {
           correctAnswer = `${p.numOne} ${p.numTwo}/${p.numThree}=${p.numFour}/${p.numThree}`;
         } else if (p.numTwo == 1) {
           p.numFour = p.numOne * p.numThree + p.numTwo;
@@ -1042,8 +1010,8 @@ export function handleSubmit(
             p.numThree /= i;
           }
         }
-        if (p.numThree != arr[1]) {
-          correctAnswer = `${p.numOne} ${arr[0]}/${arr[1]}=${p.numOne} ${
+        if (p.numThree != p.arr[1]) {
+          correctAnswer = `${p.numOne} ${p.arr[0]}/${p.arr[1]}=${p.numOne} ${
             p.numTwo % p.numThree
           }/${p.numThree}`;
         } else {
@@ -1097,13 +1065,13 @@ export function handleSubmit(
     }
 
     if (level == 4.07) {
-      if (p.placeValue == "thousandths") correctAnswer = arr2[0];
-      if (p.placeValue == "hundredths") correctAnswer = arr2[1];
-      if (p.placeValue == "tenths") correctAnswer = arr2[2];
-      if (p.placeValue == "ones") correctAnswer = arr2[3];
-      if (p.placeValue == "tens") correctAnswer = arr2[4];
-      if (p.placeValue == "hundreds") correctAnswer = arr2[5];
-      if (p.placeValue == "thousands") correctAnswer = arr2[6];
+      if (p.placeValue == "thousandths") correctAnswer = p.arr2[0];
+      if (p.placeValue == "hundredths") correctAnswer = p.arr2[1];
+      if (p.placeValue == "tenths") correctAnswer = p.arr2[2];
+      if (p.placeValue == "ones") correctAnswer = p.arr2[3];
+      if (p.placeValue == "tens") correctAnswer = p.arr2[4];
+      if (p.placeValue == "hundreds") correctAnswer = p.arr2[5];
+      if (p.placeValue == "thousands") correctAnswer = p.arr2[6];
     }
 
     if (level == 4.08) {
@@ -1275,36 +1243,36 @@ export function handleSubmit(
     if (level == 4.17) {
       if (p.roll == 1) {
         if (p.compass == "north-west") {
-          correctAnswer = arr2[0];
+          correctAnswer = p.arr2[0];
         }
         if (p.compass == "north") {
-          correctAnswer = arr2[1];
+          correctAnswer = p.arr2[1];
         }
         if (p.compass == "north-east") {
-          correctAnswer = arr2[2];
+          correctAnswer = p.arr2[2];
         }
         if (p.compass == "east") {
-          correctAnswer = arr2[5];
+          correctAnswer = p.arr2[5];
         }
         if (p.compass == "south-east") {
-          correctAnswer = arr2[8];
+          correctAnswer = p.arr2[8];
         }
         if (p.compass == "south") {
-          correctAnswer = arr2[7];
+          correctAnswer = p.arr2[7];
         }
         if (p.compass == "south-west") {
-          correctAnswer = arr2[6];
+          correctAnswer = p.arr2[6];
         }
         if (p.compass == "west") {
-          correctAnswer = arr2[3];
+          correctAnswer = p.arr2[3];
         }
       } else {
-        correctAnswer = arr2[4];
+        correctAnswer = p.arr2[4];
       }
     }
 
     if (level == 4.18) {
-      correctAnswer = arr2[p.finalIndex];
+      correctAnswer = p.arr2[p.finalIndex];
     }
 
     if (level == 4.19) {

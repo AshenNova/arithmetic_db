@@ -1618,7 +1618,6 @@ function buttonLevelSetting() {
       if (![2, 3, 4].includes(setting * 1)) {
         setting = 4;
       }
-      arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
@@ -1859,7 +1858,7 @@ function buttonLevelSetting() {
     case "Level 4.07":
       level = "4.07";
       scoreNeeded = 30;
-      arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
       break;
 
     case "Level 4.08":
