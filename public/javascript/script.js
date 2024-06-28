@@ -1924,7 +1924,7 @@ function buttonLevelSetting() {
       scoreNeeded = 20;
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
-      arr = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+      // arr = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
@@ -1933,8 +1933,7 @@ function buttonLevelSetting() {
       scoreNeeded = 20;
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
-      arr = ["A", "B", "C", "D", "O", "F", "G", "H", "I"];
-      arr2 = ["B", "C", "F", "I", "H", "G", "D", "A"];
+
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
@@ -2052,9 +2051,12 @@ function buttonLevelSetting() {
       break;
 
     case "Level 5.06":
-      setting = prompt("1. Right-angled Triangle\n2. Obtuse-triangle", 2);
-      if (setting != 1 && setting != 2) {
-        setting = 2;
+      setting = prompt(
+        "1. Right-angled Triangle\n2. Obtuse-triangle\n\n9. All",
+        9
+      );
+      if (setting != 1 && setting != 2 && setting != 9) {
+        setting = 9;
       }
       level = 5.06;
       scoreNeeded = 20;

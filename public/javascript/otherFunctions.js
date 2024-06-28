@@ -1669,6 +1669,56 @@ export function drawForFraction(object, type) {
   }
   ctx.restore(); //1st
 }
+
+export function drawHorizontalLine(x, y, right, adjust) {
+  ctx.save();
+
+  // straight line
+  ctx.translate(x, y);
+
+  ctx.beginPath();
+  ctx.moveTo(0, adjust);
+  ctx.lineTo(right, adjust);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(5, adjust - 5);
+  ctx.lineTo(0, adjust);
+  ctx.lineTo(5, adjust + 5);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(right - 5, adjust - 5);
+  ctx.lineTo(right, adjust);
+  ctx.lineTo(right - 5, adjust + 5);
+  ctx.stroke();
+  ctx.restore();
+}
+
+export function drawVerticalLine(x, y, bottom, adjust) {
+  ctx.save();
+
+  // straight line
+  ctx.translate(x, y);
+
+  ctx.beginPath();
+  ctx.moveTo(adjust, 0);
+  ctx.lineTo(adjust, bottom);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(adjust + 5, 5);
+  ctx.lineTo(adjust + 0, 0);
+  ctx.lineTo(adjust - 5, 5);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(adjust + 5, bottom - 5);
+  ctx.lineTo(adjust + 0, bottom);
+  ctx.lineTo(adjust - 5, bottom - 5);
+  ctx.stroke();
+  ctx.restore();
+}
 export {
   // drawQuadrant,
   pieChart,

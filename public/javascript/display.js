@@ -218,6 +218,8 @@ import {
   fillTextSplit,
   adjustCanvasBreadth,
   drawForFraction,
+  drawVerticalLine,
+  drawHorizontalLine,
 } from "./otherFunctions.js";
 
 export function updateProblems(level, state, setting, regen, skipArr) {
@@ -3854,7 +3856,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
   }
   if (level == 5.01) {
     normalDisplay();
-    if (setting == 1) {
+    if (p.setting == 1) {
       [p.numOne, p.denoOne] = simplify(p.numOne, p.denoOne);
       [p.numTwo, p.denoTwo] = simplify(p.numTwo, p.denoTwo);
       console.log("This is Level 5.01.1");
@@ -3911,7 +3913,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
         `;
       }
     }
-    if (setting == 2) {
+    if (p.setting == 2) {
       console.log("This is Level 5.01.2");
       if (p.numOne == p.denoOne)
         return updateCalc(
@@ -3955,7 +3957,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
       }.
         `;
     }
-    if (setting == 3) {
+    if (p.setting == 3) {
       for (let i = p.numTwo; i > 1; i--) {
         if (p.numOne % i == 0 && p.numTwo % i == 0) {
           p.numOne /= i;
@@ -4035,10 +4037,16 @@ export function updateProblems(level, state, setting, regen, skipArr) {
     }
 
     if (p.rollA == "fraction") {
-      displayProblem.innerHTML = `${p.numerator}/${p.denominator} = ___ %`;
+      displayProblem.innerHTML = `${displaySimpleFraction(
+        p.numerator,
+        p.denominator
+      )} = ___ %`;
     }
     if (p.rollA == "decimal") {
-      displayProblem.innerHTML = `${p.numerator / p.denominator} = ___ %`;
+      displayProblem.innerHTML = `${displaySimpleFraction(
+        p.numerator,
+        p.denominator
+      )} = ___ %`;
     }
 
     if (p.rollA == "percentage") {
@@ -4105,7 +4113,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
   }
 
   if (level == 5.06) {
-    if (setting == 1) {
+    if (p.setting == 1) {
       let alignXText = 15;
       ctx.font = "1em serif";
       ctx.save();
@@ -4186,7 +4194,8 @@ export function updateProblems(level, state, setting, regen, skipArr) {
       ctx.restore();
     }
 
-    if (setting == 2) {
+    if (p.setting == 2) {
+      canvas.setAttribute("height", "300px");
       ctx.save();
       ctx.font = "1em serif";
 

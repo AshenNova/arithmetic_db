@@ -1016,11 +1016,23 @@ export function genProblems(
   }
 
   if (level == 5.01) {
-    setting = calArrAll(3, calArr, setting, 9);
-    setting = checkRange(setting, calArr, skipArr);
+    // setting = calArrAll(3, calArr, setting, 9);
+    // setting = checkRange(setting, calArr, skipArr);
+    setting = calArrAll(
+      3,
+      calArr,
+      setting,
+      9,
+      level,
+      state,
+      skipGlobalUpdateProblem
+    );
+    setting = checkRange(setting, calArr, skipArr, skipGlobalUpdateProblem);
+
     if (setting == 1) {
       const total = genNumbers(5) + 5;
       return {
+        setting: 1,
         // version: genNumbers(2),
         version: 1,
         numOne: genNumbers(total) + 1,
@@ -1037,6 +1049,7 @@ export function genProblems(
       const num = genNumbers(total) + 1;
       const remainder = (total - num) * (genNumbers(3) + 1);
       return {
+        setting: 2,
         numOne: num,
         denoOne: total,
         remainderDeno: remainder,
@@ -1048,6 +1061,7 @@ export function genProblems(
     }
     if (setting == 3) {
       return {
+        setting: 3,
         numOne: genNumbers(5) + 1,
         numTwo: genNumbers(5) + 6,
         numThree: genNumbers(5) + 1,
@@ -1121,7 +1135,7 @@ export function genProblems(
       2,
       calArr,
       setting,
-      2,
+      9,
       level,
       state,
       skipGlobalUpdateProblem
@@ -1145,7 +1159,6 @@ export function genProblems(
       };
     }
     if (setting == 2) {
-      canvas.setAttribute("height", "300px");
       return {
         // triangle A
         setting: 2,
