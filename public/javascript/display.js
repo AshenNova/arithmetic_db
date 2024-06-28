@@ -5931,6 +5931,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
   }
 
   if (level == 6) {
+    simpleFractionDisplay();
     if (p.numOne == p.denoOne || p.numTwo == p.denoTwo) {
       console.log("Same");
       return updateCalc(level, state, setting, regen, skipGlobalUpdateProblem);
@@ -5951,7 +5952,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
     // }
     ctx.save();
     ctx.font = "1em serif";
-    if (setting == 1) {
+    if (p.setting == 1) {
       if (p.rollType == "area") {
         ctx.fillText(`Find the ${p.rollType} of the Circle`, 20, 20);
       }
@@ -6018,7 +6019,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
         ctx.fillText(`${p.radius * 2}cm`, 0 - 10, -3);
       }
     }
-    if (setting == 2) {
+    if (p.setting == 2) {
       if (p.rollType == "area") {
         ctx.fillText(`Find the ${p.rollType} of the figure`, 20, 20);
       }

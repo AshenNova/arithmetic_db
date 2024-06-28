@@ -1403,9 +1403,18 @@ export function genProblems(
   }
 
   if (level == 6.01) {
-    setting = calArrAll(2, calArr, setting, 9);
-    setting = checkRange(setting, calArr, skipArr);
+    setting = calArrAll(
+      2,
+      calArr,
+      setting,
+      2,
+      level,
+      state,
+      skipGlobalUpdateProblem
+    );
+    setting = checkRange(setting, calArr, skipArr, skipGlobalUpdateProblem);
     return {
+      setting,
       rollType: ["area", "circumference"][genNumbers(2)],
       rollRD: ["r", "d"][genNumbers(2)],
       rollPi: ["3.14", "22/7", "π"][genNumbers(3)],
@@ -1419,6 +1428,7 @@ export function genProblems(
 
   if (level == 6.02) {
     return {
+      setting,
       rotation: genNumbers(7) * 45,
       rollType: ["square2", "square", "angle", "radius", "triangle"][
         genNumbers(5)

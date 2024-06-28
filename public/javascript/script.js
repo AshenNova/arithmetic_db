@@ -1110,55 +1110,6 @@ function drawCuboid(a, b, c, d) {
   ctx.stroke();
 }
 
-function drawHorizontalLine(x, y, right, adjust) {
-  ctx.save();
-
-  // straight line
-  ctx.translate(x, y);
-
-  ctx.beginPath();
-  ctx.moveTo(0, adjust);
-  ctx.lineTo(right, adjust);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.moveTo(5, adjust - 5);
-  ctx.lineTo(0, adjust);
-  ctx.lineTo(5, adjust + 5);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.moveTo(right - 5, adjust - 5);
-  ctx.lineTo(right, adjust);
-  ctx.lineTo(right - 5, adjust + 5);
-  ctx.stroke();
-  ctx.restore();
-}
-
-function drawVerticalLine(x, y, bottom, adjust) {
-  ctx.save();
-
-  // straight line
-  ctx.translate(x, y);
-
-  ctx.beginPath();
-  ctx.moveTo(adjust, 0);
-  ctx.lineTo(adjust, bottom);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.moveTo(adjust + 5, 5);
-  ctx.lineTo(adjust + 0, 0);
-  ctx.lineTo(adjust - 5, 5);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.moveTo(adjust + 5, bottom - 5);
-  ctx.lineTo(adjust + 0, bottom);
-  ctx.lineTo(adjust - 5, bottom - 5);
-  ctx.stroke();
-  ctx.restore();
-}
 //////////////////// DISPLAY PROBLEMS ////////////////////
 
 // Step 3: Updating, storing and then displaying the problem
@@ -2229,7 +2180,7 @@ function buttonLevelSetting() {
     case "Level 6.0":
       level = 6;
       scoreNeeded = 10;
-      simpleFractionDisplay();
+
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "25px";
       break;
