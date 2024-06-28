@@ -2326,22 +2326,22 @@ export function handleSubmit(
     }
 
     if (level == "calOne") {
-      if (p.p.setting == 1 || p.p.setting == 3) {
+      if (p.setting == 1 || p.setting == 3) {
         correctAnswer = p.numOne + p.numThree;
       }
-      if (p.p.setting == 2 || p.p.setting == 4) {
+      if (p.setting == 2 || p.setting == 4) {
         correctAnswer = p.numOne - p.numThree;
       }
-      if (p.p.setting == 5 && p.version == "+") correctAnswer = p.numTwo;
-      if (p.p.setting == 5 && p.version == "-") correctAnswer = p.numTwo;
-      if (p.p.setting == 6) {
+      if (p.setting == 5 && p.version == "+") correctAnswer = p.numTwo;
+      if (p.setting == 5 && p.version == "-") correctAnswer = p.numTwo;
+      if (p.setting == 6) {
         if (p.identity == "D") correctAnswer = p.numTwo;
         if (p.identity == "C") correctAnswer = p.numOne;
       }
-      if (p.p.setting == 7 || p.p.setting == 8) {
+      if (p.setting == 7 || p.setting == 8) {
         correctAnswer = p.answer;
       }
-      if (p.p.setting == 9) {
+      if (p.setting == 9) {
         correctAnswer = p.answer;
       }
     }
@@ -5517,8 +5517,8 @@ export function handleSubmit(
       // EXTRA PRACTICE CHECK
 
       regen = 0;
-      questionsCorrectArr.push(setting);
-      const extra = cutOffCheck(level, setting, questionSecs);
+      questionsCorrectArr.push(p.setting);
+      const extra = cutOffCheck(level, p.setting, questionSecs);
       if (extra) {
         if (!extraPracticeArr.includes(extra)) {
           extraPracticeArr.push(extra);
@@ -5533,7 +5533,7 @@ export function handleSubmit(
       accumulatedScore++;
       console.log(accumulatedScore);
 
-      summaryPush("✅");
+      summaryPush("✅", state);
       ctx.clearRect(0, 0, 1000, 1000);
       //   if (mulLevel == "multiples") {
       //     multiplesArr.push(userInput.value);
@@ -5625,17 +5625,18 @@ export function handleSubmit(
         .querySelector(".help-btn")
         .addEventListener("click", function () {
           console.log("Seeking help");
-          helpMeFunc(level, state, setting);
+          helpMeFunc(level, state, p.setting);
         });
       state.mistake++;
-      summaryPush("❌");
+      summaryPush("❌", state);
 
       //EXTRA PRACTICE
       if (
         level.toString().startsWith("cal") ||
         level.toString().startsWith("heu")
       ) {
-        if (!extraPracticeArr.includes(setting)) extraPracticeArr.push(setting);
+        if (!extraPracticeArr.includes(p.setting))
+          extraPracticeArr.push(p.setting);
         console.log(`Extra Practice Needed: ${extraPracticeArr}`);
       }
 
@@ -5737,13 +5738,13 @@ export function handleSubmit(
       }
       // adds cal back into array if wrong
       if (attempt == 1) {
-        if (!calArr.includes(setting)) {
-          calArr.push(setting);
-          console.log(`Incorrect, try setting ${setting} again!`);
+        if (!calArr.includes(p.setting)) {
+          calArr.push(p.setting);
+          console.log(`Incorrect, try setting ${p.setting} again!`);
           console.log(calArr);
         }
       } else {
-        calArr.push(setting);
+        calArr.push(p.setting);
         console.log(calArr);
       }
     }

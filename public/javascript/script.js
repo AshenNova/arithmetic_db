@@ -285,35 +285,6 @@ let girlNames = [
   "Luna",
 ];
 
-function SummaryCreate(attempt, symbol, setting, time) {
-  this.attempt = attempt;
-  this.symbol = symbol;
-  this.setting = setting;
-  this.time = time;
-}
-export function summaryPush(symbol) {
-  if (
-    level.toString().startsWith("cal") ||
-    level.toString().startsWith("heu")
-  ) {
-    const question = new SummaryCreate(
-      attempt,
-      symbol,
-      setting,
-      questionTimeForSummary
-    );
-    summary.push(question);
-  } else {
-    const question = new SummaryCreate(
-      attempt,
-      symbol,
-      level,
-      questionTimeForSummary
-    );
-    summary.push(question);
-  }
-}
-
 let primeNumbers = [
   2, 3, 5, 7, 9, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
 ];
@@ -1243,6 +1214,35 @@ export function genNumbers(max) {
 //////////////////////////// SET VALUES //////////////////////////////
 // Step 2: Generate Problem
 // this is where genProblems use to be, exported to genProblems()
+
+function SummaryCreate(attempt, symbol, setting, time) {
+  this.attempt = attempt;
+  this.symbol = symbol;
+  this.setting = setting;
+  this.time = time;
+}
+export function summaryPush(symbol, state) {
+  if (
+    level.toString().startsWith("cal") ||
+    level.toString().startsWith("heu")
+  ) {
+    const question = new SummaryCreate(
+      attempt,
+      symbol,
+      state.currentProblem.setting,
+      questionTimeForSummary
+    );
+    summary.push(question);
+  } else {
+    const question = new SummaryCreate(
+      attempt,
+      symbol,
+      level,
+      questionTimeForSummary
+    );
+    summary.push(question);
+  }
+}
 
 function levelDisplay() {
   levelLabel.innerHTML = `You are attempting Level ${level}`;
