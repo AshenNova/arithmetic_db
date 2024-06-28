@@ -611,21 +611,21 @@ export function handleSubmit(
 
     // ANSWER
     if (level == 3.07) {
-      arr.sort(function (a, b) {
+      p.arr.sort(function (a, b) {
         return b - a;
       });
       let i = 0;
       let a = 0;
-      commonMultipleArr.push(arr[0]);
-      while (commonMultipleArr[i] % arr[1] != 0) {
-        const something = arr[0] * (i + 2);
+      commonMultipleArr.push(p.arr[0]);
+      while (commonMultipleArr[i] % p.arr[1] != 0) {
+        const something = p.arr[0] * (i + 2);
         commonMultipleArr.push(something);
         i++;
       }
       commonMultipleArrTwo.push(
         commonMultipleArr[commonMultipleArr.length - 1]
       );
-      while (commonMultipleArrTwo[a] % arr[2] != 0) {
+      while (commonMultipleArrTwo[a] % p.arr[2] != 0) {
         const somethingTwo = commonMultipleArrTwo[0] * (a + 2);
         commonMultipleArrTwo.push(somethingTwo);
         a++;
@@ -803,35 +803,35 @@ export function handleSubmit(
       // level 3.15
       if (p.setting == 4) {
         if (p.question == "A") {
-          let remainder = (p.position % arr.length) - 1;
+          let remainder = (p.position % p.arr.length) - 1;
           if (remainder < 0) {
-            remainder = arr.length - 1;
+            remainder = p.arr.length - 1;
           }
           console.log(remainder);
-          correctAnswer = arr[remainder];
+          correctAnswer = p.arr[remainder];
         }
         if (p.question == "B") {
           if (p.rollType == "A") {
             let sum = 0;
             let a = 0;
             for (let i = 0; i < p.position; i++) {
-              sum += arr[a];
+              sum += p.arr[a];
               a += 1;
-              if (a == arr.length) a = 0;
+              if (a == p.arr.length) a = 0;
             }
             correctAnswer = sum;
           }
           if (p.rollType == "B") {
             let count = 0;
-            arr.forEach((item) => {
+            p.arr.forEach((item) => {
               if (item == p.alphabet) count += 1;
             });
 
-            const remainder = p.position % arr.length;
-            const sets = Math.floor(p.position / arr.length);
+            const remainder = p.position % p.arr.length;
+            const sets = Math.floor(p.position / p.arr.length);
             let countTwo = 0;
             for (let i = 0; i < remainder; i++) {
-              if (arr[i] == p.alphabet) countTwo += 1;
+              if (p.arr[i] == p.alphabet) countTwo += 1;
             }
             correctAnswer = sets * count + countTwo;
           }

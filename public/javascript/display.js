@@ -1288,7 +1288,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
     if (p.numOne == p.numTwo && p.numTwo == p.numThree) {
       p.numOne = p.numOne + 1;
     }
-    arr.push(p.numOne, p.numTwo, p.numThree);
+    p.arr.push(p.numOne, p.numTwo, p.numThree);
     displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`;
   }
 
@@ -1599,12 +1599,12 @@ export function updateProblems(level, state, setting, regen, skipArr) {
     console.log(setting);
     arr = [];
     arr2 = [];
-    if (setting == 5) {
+    if (p.setting == 5) {
       displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne - 2} + ${
         p.numOne - 1
       } + ${p.numOne}</br> = ?`;
     }
-    if (setting == 1) {
+    if (p.setting == 1) {
       displayProblem.innerHTML = `
         Pattern 1: 1</br>
         Pattern 2: 3</br>
@@ -1615,7 +1615,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
         `;
     }
     // level 3.13
-    if (setting == 2) {
+    if (p.setting == 2) {
       displayProblem.innerHTML = `
         Pattern 1: ${p.numTwo}</br>
         Pattern 2: ${p.numTwo + p.numThree}</br>
@@ -1625,7 +1625,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
         `;
     }
     // level 3.14
-    if (setting == 3) {
+    if (p.setting == 3) {
       displayProblem.innerHTML = `
         Pattern 1: 1</br>
         Pattern 2: 4</br>
@@ -1636,13 +1636,13 @@ export function updateProblems(level, state, setting, regen, skipArr) {
         `;
     }
     // level 3.15
-    if (setting == 4) {
+    if (p.setting == 4) {
       if (p.rollType == "A") {
         for (let i = 0; i < p.rollTimes; i++) {
           p.rollA = genNumbers(5);
-          arr.push(p.rollA);
+          p.arr.push(p.rollA);
         }
-        if (arr[2] == arr[1] && arr[2] == arr[0]) {
+        if (p.arr[2] == p.arr[1] && p.arr[2] == p.arr[0]) {
           console.log("Refreshing");
           return updateCalc(
             level,
@@ -1656,9 +1656,9 @@ export function updateProblems(level, state, setting, regen, skipArr) {
       if (p.rollType == "B") {
         for (let i = 0; i < p.rollTimes; i++) {
           p.rollB = ["A", "B", "C", "D", "E"][genNumbers(5)];
-          arr.push(p.rollB);
+          p.arr.push(p.rollB);
         }
-        if (arr[2] == arr[1] && arr[2] == arr[0]) {
+        if (p.arr[2] == p.arr[1] && p.arr[2] == p.arr[0]) {
           console.log("Refreshing");
           return updateCalc(
             level,
@@ -1669,23 +1669,23 @@ export function updateProblems(level, state, setting, regen, skipArr) {
           );
         }
       }
-      console.log(arr);
-      for (let i = 0; arr2.length < 13; i++) {
-        arr2.push(arr[i % p.rollTimes]);
+      console.log(p.arr);
+      for (let i = 0; p.arr2.length < 13; i++) {
+        p.arr2.push(p.arr[i % p.rollTimes]);
       }
-      console.log(arr2);
-      arr2.push("...");
+      console.log(p.arr2);
+      p.arr2.push("...");
       if (p.question == "A") {
         displayProblem.innerHTML = `
           What is in position ${p.position}?</br>
-          ${arr2.toString()}
+          ${p.arr2.toString()}
           `;
       }
       if (p.question == "B") {
         //Numbers
         if (p.rollType == "A") {
           displayProblem.innerHTML = `
-            ${arr2.toString()}</br>
+            ${p.arr2.toString()}</br>
             <hr>
             What is the sum of all the numbers up to position ${
               p.position
@@ -1696,9 +1696,9 @@ export function updateProblems(level, state, setting, regen, skipArr) {
 
         //Alphabets
         if (p.rollType == "B") {
-          p.alphabet = arr[genNumbers(arr.length)];
+          p.alphabet = p.arr[genNumbers(p.arr.length)];
           displayProblem.innerHTML = `
-            ${arr2.toString()}</br>
+            ${p.arr2.toString()}</br>
             <hr>
             How many ${p.alphabet}'s are there up to position ${
             p.position
@@ -1850,7 +1850,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
     ctx.save();
 
     // if (difficulty == 1 || (difficulty == 9 && p.rollx == 0)) {
-    if (setting == 1) {
+    if (p.setting == 1) {
       ctx.fillText(
         `Find the ${p.areaOrPerimeter} of the ${p.shapeChoice}.`,
         20,
@@ -1908,7 +1908,7 @@ export function updateProblems(level, state, setting, regen, skipArr) {
     }
 
     // if (difficulty == 2 || (difficulty == 9 && p.rollx == 1)) {
-    if (setting == 2) {
+    if (p.setting == 2) {
       ctx.fillText(
         `Find the ${
           p.shapeChoice == "rectangle" ? p.side : "length of each side"

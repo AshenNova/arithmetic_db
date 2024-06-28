@@ -305,6 +305,7 @@ export function genProblems(
 
   if (level == 3.07) {
     return {
+      arr: [],
       numOne: genNumbers(5) + 1,
       numTwo: genNumbers(4) + 2,
       numThree: genNumbers(5) + 1,
@@ -387,16 +388,32 @@ export function genProblems(
   }
 
   if (level == 3.16) {
-    setting = calArrAll(5, calArr, setting, 9);
-    setting = checkRange(setting, calArr, skipArr);
+    setting = calArrAll(
+      5,
+      calArr,
+      setting,
+      9,
+      level,
+      state,
+      skipGlobalUpdateProblem
+    );
+    setting = checkRange(setting, calArr, skipArr, skipGlobalUpdateProblem);
     console.log(state.global);
-    if (setting == 1 || setting == 5) {
+    if (setting == 1) {
       return {
+        setting: 1,
+        numOne: genNumbers(94) + 7,
+      };
+    }
+    if (setting == 5) {
+      return {
+        setting: 5,
         numOne: genNumbers(94) + 7,
       };
     }
     if (setting == 2) {
       return {
+        setting: 2,
         numTwo: genNumbers(10) + 1,
         numThree: genNumbers(5) + 2,
         numFour: genNumbers(5) + 5,
@@ -404,12 +421,16 @@ export function genProblems(
     }
     if (setting == 3) {
       return {
+        setting: 3,
         numFive: genNumbers(8) + 5,
         numSix: [-1, 1, 2][genNumbers(3)],
       };
     }
     if (setting == 4) {
       return {
+        arr: [],
+        arr2: [],
+        setting: 4,
         rollType: ["A", "B"][genNumbers(2)],
         rollA: undefined,
         rollB: undefined,
@@ -467,28 +488,63 @@ export function genProblems(
     // if (difficulty != 1 && difficulty != 2 && difficulty != 9) {
     //   difficulty = 9;
     // }
-    setting = calArrAll(2, calArr, setting, 9);
-    setting = checkRange(setting, calArr, skipArr);
-    console.log(difficulty);
-    return {
-      shapeChoice: ["rectangle", "square"][genNumbers(2)],
-      squareCoord: genNumbers(50) + 30,
+    setting = calArrAll(
+      2,
+      calArr,
+      setting,
+      9,
+      level,
+      state,
+      skipGlobalUpdateProblem
+    );
+    setting = checkRange(setting, calArr, skipArr, skipGlobalUpdateProblem);
+    console.log(`The setting is: ${setting}`);
+    // setting = calArrAll(2, calArr, setting, 9);
+    // setting = checkRange(setting, calArr, skipArr);
+    if (setting == 1) {
+      return {
+        setting: 1,
+        shapeChoice: ["rectangle", "square"][genNumbers(2)],
+        squareCoord: genNumbers(50) + 30,
 
-      rectLengthCoord: genNumbers(5) * 10 + 50,
-      rectBreadthCoord: genNumbers(5) * 10 + 10,
+        rectLengthCoord: genNumbers(5) * 10 + 50,
+        rectBreadthCoord: genNumbers(5) * 10 + 10,
 
-      squareSide: genNumbers(12) + 2,
-      rectLength: undefined,
-      rectBreadth: undefined,
+        squareSide: genNumbers(12) + 2,
+        rectLength: undefined,
+        rectBreadth: undefined,
 
-      unitMeasurement: ["cm", "m", "km"][genNumbers(3)],
-      areaOrPerimeter: ["area", "perimeter"][genNumbers(2)],
+        unitMeasurement: ["cm", "m", "km"][genNumbers(3)],
+        areaOrPerimeter: ["area", "perimeter"][genNumbers(2)],
 
-      side: ["length", "breadth"][genNumbers(2)],
-      area: undefined,
-      perimeter: undefined,
-      rollx: genNumbers(2),
-    };
+        side: ["length", "breadth"][genNumbers(2)],
+        area: undefined,
+        perimeter: undefined,
+        rollx: genNumbers(2),
+      };
+    }
+    if (setting == 2) {
+      return {
+        setting: 2,
+        shapeChoice: ["rectangle", "square"][genNumbers(2)],
+        squareCoord: genNumbers(50) + 30,
+
+        rectLengthCoord: genNumbers(5) * 10 + 50,
+        rectBreadthCoord: genNumbers(5) * 10 + 10,
+
+        squareSide: genNumbers(12) + 2,
+        rectLength: undefined,
+        rectBreadth: undefined,
+
+        unitMeasurement: ["cm", "m", "km"][genNumbers(3)],
+        areaOrPerimeter: ["area", "perimeter"][genNumbers(2)],
+
+        side: ["length", "breadth"][genNumbers(2)],
+        area: undefined,
+        perimeter: undefined,
+        rollx: genNumbers(2),
+      };
+    }
   }
 
   if (level == 4.0) {
