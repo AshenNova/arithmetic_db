@@ -4024,11 +4024,7 @@ export function handleSubmit(
 
     // answers
     if (level == "heuTwob") {
-      if (
-        p.setting == 1 ||
-        (p.setting == 9 && p.rollz == 1) ||
-        (range == 1 && p.rollz == 1)
-      ) {
+      if (p.setting == 1) {
         if (p.rollAB == "A" && p.rollVar == 0) {
           correctAnswer = p.numOne - p.numTwo;
         }
@@ -4043,19 +4039,11 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 2 ||
-        (p.setting == 9 && p.rollz == 2) ||
-        (range == 1 && p.rollz == 2)
-      ) {
+      if (p.setting == 2) {
         correctAnswer = p.numOne + p.numTwo;
       }
 
-      if (
-        p.setting == 3 ||
-        (p.setting == 9 && p.rollz == 3) ||
-        (range == 1 && p.rollz == 3)
-      ) {
+      if (p.setting == 3) {
         if (p.rollChoice == 0) {
           correctAnswer = p.numTwo;
         }
@@ -4064,19 +4052,11 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 4 ||
-        (p.setting == 9 && p.rollz == 4) ||
-        (range == 1 && p.rollz == 4)
-      ) {
+      if (p.setting == 4) {
         correctAnswer = Math.abs(p.numOne - p.numTwo);
       }
 
-      if (
-        p.setting == 5 ||
-        (p.setting == 9 && p.rollz == 5) ||
-        (range == 1 && p.rollz == 5)
-      ) {
+      if (p.setting == 5) {
         if (p.rollLineThree == "A") {
           correctAnswer = p.varA;
         }
@@ -4088,11 +4068,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 6 ||
-        (p.setting == 9 && p.rollz == 6) ||
-        (range == 1 && p.rollz == 6)
-      ) {
+      if (p.setting == 6) {
         correctAnswer = p.each * p.packets + p.left;
       }
 
@@ -4119,11 +4095,7 @@ export function handleSubmit(
 
     //  answer
     if (level == "heuThree") {
-      if (
-        p.setting == 1 ||
-        (p.setting == 9 && p.rollz == 1) ||
-        (range == 1 && p.rollz == 1)
-      ) {
+      if (p.setting == 1) {
         let difference = Math.abs(p.numOne - p.numTwo);
         let adjustment = undefined;
         if (p.rollAnswer == 0) {
@@ -4157,11 +4129,7 @@ export function handleSubmit(
           correctAnswerTwo = p.numTwo;
         }
       }
-      if (
-        p.setting == 2 ||
-        (p.setting == 9 && p.rollz == 2) ||
-        (range == 1 && p.rollz == 2)
-      ) {
+      if (p.setting == 2) {
         let smallDifference = p.legTwo - p.legOne;
         let totalAnimal = p.numOne + p.numTwo;
         if (p.rollQn == "A") {
@@ -4192,11 +4160,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 3 ||
-        (p.setting == 9 && p.rollz == 3) ||
-        (range == 1 && p.rollz == 3)
-      ) {
+      if (p.setting == 3) {
         let unitOne = p.unitSentence * p.objectOneX;
         let unitTwo = p.objectTwoX;
         let totalUnit = unitOne + unitTwo;
@@ -4216,11 +4180,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 4 ||
-        (p.setting == 9 && p.rollz == 4) ||
-        (range == 1 && p.rollz == 4)
-      ) {
+      if (p.setting == 4) {
         let adjustment = undefined;
         let newTotal = undefined;
 
@@ -4261,11 +4221,7 @@ export function handleSubmit(
         correctAnswerTwo = oneUnit;
       }
 
-      if (
-        p.setting == 5 ||
-        (p.setting == 9 && p.rollz == 5) ||
-        (range == 1 && p.rollz == 5)
-      ) {
+      if (p.setting == 5) {
         let oneSet = p.objectOneV + p.objectTwoV;
         let totalSets = p.total / oneSet;
         let totalValueOne = totalSets * p.objectOneV;
@@ -4295,11 +4251,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 6 ||
-        (p.setting == 9 && p.rollz == 6) ||
-        (range == 1 && p.rollz == 6)
-      ) {
+      if (p.setting == 6) {
         if (p.rollQn == "A") {
           correctAnswer = `${p.total}/${p.objectV}=${Math.floor(
             p.total / p.objectV
@@ -4314,11 +4266,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 7 ||
-        (p.setting == 9 && p.rollz == 7) ||
-        (range == 1 && p.rollz == 7)
-      ) {
+      if (p.setting == 7) {
         let newDifference = undefined;
         if (p.transfer == "A" && p.difference < 0) {
           newDifference = Math.abs(p.difference) + p.transferV * 2;
@@ -4347,11 +4295,7 @@ export function handleSubmit(
         correctAnswerTwo = newDifference;
       }
 
-      if (
-        p.setting == 8 ||
-        (p.setting == 9 && p.rollz == 8) ||
-        (range == 1 && p.rollz == 8)
-      ) {
+      if (p.setting == 8) {
         if (p.options == "A") {
           let packetBought = p.value / p.cost;
           let sets = Math.floor(packetBought / p.min);
@@ -4395,11 +4339,7 @@ export function handleSubmit(
 
     if (level == "heuThreeb") {
       // 1. REPEATED IDENTITY
-      if (
-        p.setting == 1 ||
-        (p.setting == 9 && p.rollz == 1) ||
-        (range == 1 && p.rollz == 1)
-      ) {
+      if (p.setting == 1) {
         if (p.compA == "unit" && p.compB == "unit") {
           if (p.find == "A") correctAnswer = p.arrUnit[4] * p.oneUnit;
           if (p.find == "B") correctAnswer = p.arrUnit[5] * p.oneUnit;
@@ -4411,11 +4351,7 @@ export function handleSubmit(
         }
       }
       // 2.
-      if (
-        p.setting == 2 ||
-        (p.setting == 9 && p.rollz == 2) ||
-        (range == 1 && p.rollz == 2)
-      ) {
+      if (p.setting == 2) {
         let difference = undefined;
 
         if (p.situationOne > 0 && p.situationTwo > 0) {
@@ -4475,11 +4411,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 3 ||
-        (p.setting == 9 && p.roll == 3) ||
-        (range == 1 && p.rollz == 3)
-      ) {
+      if (p.setting == 3) {
         let difference = undefined;
         let oneUnit = undefined;
         if (p.situationOne > 0 && p.situationTwo > 0) {
@@ -4546,11 +4478,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 4 ||
-        (p.setting == 9 && p.rollz == 4) ||
-        (range == 1 && p.rollz == 4)
-      ) {
+      if (p.setting == 4) {
         if (p.answer == "A") {
           correctAnswer = p.startOne;
         }
@@ -4570,21 +4498,13 @@ export function handleSubmit(
         }
       }
       //WORKING BACKWARDS STRAIGHTLINE
-      if (
-        p.setting == 5 ||
-        (p.setting == 9 && p.rollz == 5) ||
-        (range == 1 && p.rollz == 5)
-      ) {
+      if (p.setting == 5) {
         correctAnswer = p.num;
       }
     }
     // answer
     if (level == "heuFour") {
-      if (
-        p.setting == 1 ||
-        (p.setting == 9 && p.rollz == 1) ||
-        (range == 1 && p.rollz == 1)
-      ) {
+      if (p.setting == 1) {
         let firstLine = undefined;
         let bigDiff = undefined;
         let newObjectOneS = Math.abs(p.objectOneS);
@@ -4617,11 +4537,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 2 ||
-        (p.setting == 9 && p.rollz == 2) ||
-        (range == 1 && p.rollz == 2)
-      ) {
+      if (p.setting == 2) {
         // let symbol = p.situationOne > 0 ? "+" : "-"
         // let bigDifference = undefined
         // let smallDifference = p.sceneTwo-p.sceneOne
@@ -4699,11 +4615,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 3 ||
-        (p.setting == 9 && p.rollz == 3) ||
-        (range == 1 && p.rollz == 3)
-      ) {
+      if (p.setting == 3) {
         let extraWork = p.remainingPeople * p.giveUp;
         let eachPerson = extraWork / p.absentPeople;
         let totalWork = eachPerson * p.peopleAtFirst;
@@ -4717,11 +4629,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 4 ||
-        (p.setting == 9 && p.rollz == 4) ||
-        (range == 1 && p.rollz == 4)
-      ) {
+      if (p.setting == 4) {
         let difference = p.groupTwo - p.groupOne;
         let eachUnit = difference / (p.unitSentence - 1);
         let objectOne = p.groupOne - eachUnit;
@@ -4734,11 +4642,7 @@ export function handleSubmit(
         correctAnswerTwo = objectOne;
       }
 
-      if (
-        p.setting == 5 ||
-        (p.setting == 9 && p.rollz == 5) ||
-        (range == 1 && p.rollz == 5)
-      ) {
+      if (p.setting == 5) {
         let setOne = p.objectOneV * p.objectOneUnit;
         let setTwo = p.objectTwoV * p.objectTwoUnit;
         let oneSet =
@@ -4786,11 +4690,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 6 ||
-        (p.setting == 9 && p.rollz == 6) ||
-        (range == 1 && p.rollz == 6)
-      ) {
+      if (p.setting == 6) {
         let sets = Math.floor(p.total / (p.objectTwoQ + 1));
         let remainder = p.total % (p.objectTwoQ + 1);
         if (remainder == 0) {
@@ -4841,11 +4741,7 @@ export function handleSubmit(
         }
       }
 
-      if (
-        p.setting == 7 ||
-        (p.setting == 9 && p.rollz == 7) ||
-        (range == 1 && p.rollz == 7)
-      ) {
+      if (p.setting == 7) {
         let firstLine = `x${p.groupOne} +${p.leftOne}`;
         let secondLine = p.arrFirstNum.join(", ");
         let thirdLine = `x${p.groupTwo} +${p.leftTwo}`;

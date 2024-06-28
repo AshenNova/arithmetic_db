@@ -1142,7 +1142,8 @@ function allTheStuffToSubmit() {
     scoreNeeded,
     reviewCount,
     attempt,
-    skipArr
+    skipArr,
+    heuArr
   );
 }
 ourForm.addEventListener("submit", function (e) {
