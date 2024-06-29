@@ -1,5 +1,5 @@
 import { checkRange, calArrAll } from "./script.js";
-
+const displayProblem = document.querySelector(".display-problems");
 let levelArr = [];
 let arr = [];
 let arr2 = [];

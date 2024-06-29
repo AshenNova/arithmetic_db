@@ -43,6 +43,7 @@ const currentMistake = document.getElementById("current-mistake");
 const reviewAnswer = document.querySelector(".fa-hire-a-helper");
 const mainContainer = document.querySelector(".main-container");
 const helpMe = document.querySelector(".help-me-text");
+const displayProblem = document.querySelector(".display-problems");
 export function handleSubmit(
   player,
   state,

@@ -6731,6 +6731,7 @@ export function updateProblems(level, state, setting, regen, skipArr, heuArr) {
       console.log(p.numOne, p.numTwo);
     }
     if (p.setting == 7) {
+      arr = [];
       for (let i = 0; i < 6; i++) {
         arr.push(p.startNum);
         p.startNum += p.difference;
@@ -6752,6 +6753,7 @@ export function updateProblems(level, state, setting, regen, skipArr, heuArr) {
       displayProblem.innerHTML = displayStr;
     }
     if (p.setting == 8) {
+      arr = [];
       for (let i = 0; i < 6; i++) {
         arr.push(p.startNum);
         i++;
@@ -7066,6 +7068,7 @@ export function updateProblems(level, state, setting, regen, skipArr, heuArr) {
     }
 
     if (p.setting == 7) {
+      arr = [];
       for (let i = 0; i < 6; i++) {
         arr.push(p.startNum);
         p.startNum += p.difference;
@@ -7087,6 +7090,7 @@ export function updateProblems(level, state, setting, regen, skipArr, heuArr) {
     }
 
     if (p.setting == 8) {
+      arr = [];
       for (let i = 0; i < 6; i++) {
         arr.push(p.startNum);
         i++;
