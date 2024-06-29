@@ -18,18 +18,40 @@ let now = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}
 console.log(now);
 
 // import { updateProblems } from "./updateProblems.js";
-
+import {
+  pieChart,
+  drawSquares,
+  drawGrid,
+  draw3d,
+  drawTriangle,
+  parallelOverlapping,
+  swap,
+  decimalCheck,
+  accDecimal,
+  commonDeno,
+  simplify,
+  commonFactors,
+  // updateCalc,
+  genUniqNum,
+  reverseCalculation,
+  simplifyThree,
+  zoneOfDay,
+  day12Hours,
+  permutationAnswer,
+  simplestForm,
+  resultSide,
+  blankSide,
+  drawIntervals,
+  drawThis,
+  fillTextSplit,
+  adjustCanvasBreadth,
+  drawForFraction,
+} from "./otherFunctions.js";
 // import { resetStuff } from "./reset.js";
 import { cutOffCheck } from "./cut_off.js";
 import { displayContent } from "./content.js";
 import { instructionsContent } from "./instruction-content.js";
 import { helpList, helpMeFunc } from "./helpMe.js";
-<<<<<<< HEAD
-import { updateProblems } from "./display.js";
-import { genProblems } from "./genProblems.js";
-import { handleSubmit } from "./answer.js";
-=======
->>>>>>> parent of 37eea21 (shifted  updateProblems() to display.js)
 
 let user = document.querySelector("#userName").textContent;
 user = user.trim();
@@ -287,6 +309,35 @@ let girlNames = [
   "Evelyn",
   "Luna",
 ];
+
+function SummaryCreate(attempt, symbol, setting, time) {
+  this.attempt = attempt;
+  this.symbol = symbol;
+  this.setting = setting;
+  this.time = time;
+}
+function summaryPush(symbol) {
+  if (
+    level.toString().startsWith("cal") ||
+    level.toString().startsWith("heu")
+  ) {
+    const question = new SummaryCreate(
+      attempt,
+      symbol,
+      setting,
+      questionTimeForSummary
+    );
+    summary.push(question);
+  } else {
+    const question = new SummaryCreate(
+      attempt,
+      symbol,
+      level,
+      questionTimeForSummary
+    );
+    summary.push(question);
+  }
+}
 
 let primeNumbers = [
   2, 3, 5, 7, 9, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
@@ -622,11 +673,7 @@ function withinStart() {
       questionTimer();
 
       optionsBox.classList.add("hidden");
-<<<<<<< HEAD
-      updateProblems(level, state, setting, regen, skipArr, heuArr); // display.js
-=======
       updateProblems();
->>>>>>> parent of 37eea21 (shifted  updateProblems() to display.js)
     }
   }, 1000);
 }
@@ -649,7 +696,7 @@ function clickStart() {
 
 let questionTime = undefined;
 let questionSecs = 0;
-export function questionTimer() {
+function questionTimer() {
   questionSecs = 0;
   questionTimerD.innerHTML = questionSecs;
   // clearInterval(countDownOne);
@@ -907,6 +954,7 @@ function resetStuff() {
   extraPracticeArr = [];
   // arr = null;
   calArrQns = [];
+  calRange = [];
   setting = null;
   state.global = 0;
   skipGlobalUpdateProblem = 0;
@@ -938,19 +986,7 @@ function resetStuff() {
   console.log("reset button activated");
 }
 
-<<<<<<< HEAD
-export function calArrAll(
-  max,
-  arr,
-  setting,
-  maxSetting,
-  level,
-  state,
-  skipGlobalUpdateProblem
-) {
-=======
 function calArrAll(max, arr, setting, maxSetting, level) {
->>>>>>> parent of 37eea21 (shifted  updateProblems() to display.js)
   // console.log(maxSetting);
   if (setting == maxSetting || state.global == 1) {
     console.log("Everything!");
@@ -991,10 +1027,6 @@ function calArrAll(max, arr, setting, maxSetting, level) {
   return setting;
 }
 
-<<<<<<< HEAD
-export function checkRange(setting, arr, skipArr, skipGlobalUpdateProblem) {
-  let calRange = [];
-=======
 const updateCalc = function () {
   displayProblem.innerHTML = ``;
   skipGlobalUpdateProblem = 1;
@@ -1010,7 +1042,6 @@ const updateCalc = function () {
 };
 
 function checkRange(setting, arr, skipArr) {
->>>>>>> parent of 37eea21 (shifted  updateProblems() to display.js)
   console.log(`SkipGlobal: ${skipGlobalUpdateProblem}`);
   // skipGlobalUpdateProblem = updateCalc();
   // if (skipGlobalUpdateProblem != 1 || state.global == 1) {
@@ -1092,11 +1123,7 @@ document.querySelector("#skipBtn").addEventListener("click", function (e) {
         setting = calArr[genNumbers(calArr.length)];
 
         questionSecs = 0;
-<<<<<<< HEAD
-        updateProblems(level, state, setting, regen, skipArr, heuArr);
-=======
         updateCalc();
->>>>>>> parent of 37eea21 (shifted  updateProblems() to display.js)
       }
     }
   }
@@ -1150,43 +1177,60 @@ function drawCuboid(a, b, c, d) {
   ctx.stroke();
 }
 
+function drawHorizontalLine(x, y, right, adjust) {
+  ctx.save();
+
+  // straight line
+  ctx.translate(x, y);
+
+  ctx.beginPath();
+  ctx.moveTo(0, adjust);
+  ctx.lineTo(right, adjust);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(5, adjust - 5);
+  ctx.lineTo(0, adjust);
+  ctx.lineTo(5, adjust + 5);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(right - 5, adjust - 5);
+  ctx.lineTo(right, adjust);
+  ctx.lineTo(right - 5, adjust + 5);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawVerticalLine(x, y, bottom, adjust) {
+  ctx.save();
+
+  // straight line
+  ctx.translate(x, y);
+
+  ctx.beginPath();
+  ctx.moveTo(adjust, 0);
+  ctx.lineTo(adjust, bottom);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(adjust + 5, 5);
+  ctx.lineTo(adjust + 0, 0);
+  ctx.lineTo(adjust - 5, 5);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(adjust + 5, bottom - 5);
+  ctx.lineTo(adjust + 0, bottom);
+  ctx.lineTo(adjust - 5, bottom - 5);
+  ctx.stroke();
+  ctx.restore();
+}
 //////////////////// DISPLAY PROBLEMS ////////////////////
 
 // Step 3: Updating, storing and then displaying the problem
 // 1. generate new problem and store the question in state object
 // 2. Also to visual update the HTML
-<<<<<<< HEAD
-// This used to be where updateProblems() is until is has been exported to display.js
-function allTheStuffToSubmit() {
-  console.log(arr);
-  handleSubmit(
-    player,
-    state,
-    level,
-    questionTime,
-    regen,
-    questionsCorrectArr,
-    setting,
-    questionSecs,
-    extraPracticeArr,
-    skipGlobalUpdateProblem,
-    accumulatedScore,
-    easy,
-    hardcore,
-    arr,
-    arr2,
-    arr3,
-    calArr,
-    calArrQns,
-    commonMultipleArr,
-    commonMultipleArrTwo,
-    scoreNeeded,
-    reviewCount,
-    attempt,
-    skipArr,
-    heuArr
-  );
-=======
 function updateProblems() {
   state.currentProblem = state.drawProblem = genProblems();
   // state.drawProblem = genProblems()
@@ -23703,22 +23747,7 @@ function handleSubmit(e) {
       }
     }
   }
->>>>>>> parent of 37eea21 (shifted  updateProblems() to display.js)
 }
-ourForm.addEventListener("submit", function (e) {
-  e.preventDefault();
-  allTheStuffToSubmit();
-});
-ourForm2.addEventListener("submit", function (e) {
-  e.preventDefault();
-  allTheStuffToSubmit();
-});
-
-///////////////// LAST STEP ////////////////////////
-// Step 4: Answer is marked
-// Answer used to be here until exported to answer.js
-
-////////// OTHERS////////
 
 // Step 1: generate number
 function genNumbers(max) {
@@ -23726,36 +23755,6 @@ function genNumbers(max) {
 }
 //////////////////////////// SET VALUES //////////////////////////////
 // Step 2: Generate Problem
-<<<<<<< HEAD
-// this is where genProblems use to be, exported to genProblems()
-
-function SummaryCreate(attempt, symbol, setting, time) {
-  this.attempt = attempt;
-  this.symbol = symbol;
-  this.setting = setting;
-  this.time = time;
-}
-export function summaryPush(symbol, state) {
-  if (
-    level.toString().startsWith("cal") ||
-    level.toString().startsWith("heu")
-  ) {
-    const question = new SummaryCreate(
-      attempt,
-      symbol,
-      state.currentProblem.setting,
-      questionTimeForSummary
-    );
-    summary.push(question);
-  } else {
-    const question = new SummaryCreate(
-      attempt,
-      symbol,
-      level,
-      questionTimeForSummary
-    );
-    summary.push(question);
-=======
 function genProblems() {
   if (level == 1.0) {
     return {
@@ -28231,7 +28230,6 @@ function genProblems() {
       numFive: 12,
       operator: ["x"][genNumbers(1)],
     };
->>>>>>> parent of 37eea21 (shifted  updateProblems() to display.js)
   }
 }
 
@@ -28584,7 +28582,7 @@ function buttonLevelSetting() {
       if (![2, 3, 4, 5, 6].includes(setting * 1)) {
         setting = 6;
       }
-
+      arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
       break;
 
     case "Level 2.03":
@@ -28607,6 +28605,7 @@ function buttonLevelSetting() {
       if (![2, 3, 4].includes(setting * 1)) {
         setting = 4;
       }
+      arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
@@ -28847,7 +28846,7 @@ function buttonLevelSetting() {
     case "Level 4.07":
       level = "4.07";
       scoreNeeded = 30;
-
+      arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
       break;
 
     case "Level 4.08":
@@ -28913,7 +28912,7 @@ function buttonLevelSetting() {
       scoreNeeded = 20;
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
-      // arr = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+      arr = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
@@ -28922,7 +28921,8 @@ function buttonLevelSetting() {
       scoreNeeded = 20;
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
-
+      arr = ["A", "B", "C", "D", "O", "F", "G", "H", "I"];
+      arr2 = ["B", "C", "F", "I", "H", "G", "D", "A"];
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
@@ -29040,12 +29040,9 @@ function buttonLevelSetting() {
       break;
 
     case "Level 5.06":
-      setting = prompt(
-        "1. Right-angled Triangle\n2. Obtuse-triangle\n\n9. All",
-        9
-      );
-      if (setting != 1 && setting != 2 && setting != 9) {
-        setting = 9;
+      setting = prompt("1. Right-angled Triangle\n2. Obtuse-triangle", 2);
+      if (setting != 1 && setting != 2) {
+        setting = 2;
       }
       level = 5.06;
       scoreNeeded = 20;
@@ -29218,7 +29215,7 @@ function buttonLevelSetting() {
     case "Level 6.0":
       level = 6;
       scoreNeeded = 10;
-
+      simpleFractionDisplay();
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "25px";
       break;
