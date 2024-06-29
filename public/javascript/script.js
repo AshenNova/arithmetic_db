@@ -21775,7 +21775,11 @@ function handleSubmit(e) {
         if (p.question == "A") correctAnswer = (p.speedA * p.time) / 60;
         if (p.question == "B") correctAnswer = (p.speedB * p.time) / 60;
         if (p.question == "total")
-          correctAnswer = ((p.speedA + p.speedB) * p.time) / 60;
+          if (p.type == "C") {
+            correctAnswer = ((p.speedA + p.speedB) * p.time) / 60 / 2;
+          } else {
+            correctAnswer = ((p.speedA + p.speedB) * p.time) / 60;
+          }
       }
 
       // SPEED: SURROGATE
