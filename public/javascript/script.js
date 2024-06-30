@@ -4553,6 +4553,7 @@ function updateProblems() {
   }
 
   if (level == 4.26) {
+    normalDisplay();
     if (((p.oneSideNoCorners + 2) * 4) % 4 != 0) return updateCalc();
     let objects = ["chairs", "boxes", "tables"][genNumbers(3)];
     if (p.version == 0) {
