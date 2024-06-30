@@ -4928,6 +4928,7 @@ function updateProblems() {
   }
 
   if (level == 5.03) {
+    normalDisplay();
     if (p.numerator == p.denominator) {
       p.numerator -= 1;
     }
@@ -4939,10 +4940,13 @@ function updateProblems() {
     }
 
     if (p.rollA == "fraction") {
-      displayProblem.innerHTML = `${p.numerator}/${p.denominator} = ___ %`;
+      displayProblem.innerHTML = `${displaySimpleFraction(
+        p.numerator,
+        p.denominator
+      )} = ___ %`;
     }
     if (p.rollA == "decimal") {
-      displayProblem.innerHTML = `${p.numerator / p.denominator} = ___ %`;
+      displayProblem.innerHTML = `displaySimpleFraction(p.numerator, p.denominator)} = ___ %`;
     }
 
     if (p.rollA == "percentage") {
