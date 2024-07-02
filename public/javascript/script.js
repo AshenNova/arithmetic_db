@@ -26322,7 +26322,7 @@ function genProblems() {
       skipGlobalUpdateProblem = 0;
       //   calArr.pop()
       normalDisplay();
-      setting = 10;
+      setting = calArr[genNumbers(calArr.length)];
       console.log("Whats the regen?");
     } else {
       setting = calArrAll(23, calArr, setting, 99);
@@ -26675,7 +26675,7 @@ function genProblems() {
       skipGlobalUpdateProblem = 0;
       //   calArr.pop()
       normalDisplay();
-      setting = 1;
+      setting = calArr[genNumbers(calArr.length)];
       console.log("Whats the regen?");
     } else {
       setting = calArrAll(10, calArr, setting, 99);
