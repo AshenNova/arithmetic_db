@@ -9,7 +9,9 @@ const router = express.Router();
 // router.post("/signup", authController.signup);
 // router.post("/login", authController.login);
 router.route("/").get(authController.authenticate, userController.getAllUsers);
-router.route("/edit").get(authController.authenticate, userController.editUser);
+router
+  .route("/edit/:id")
+  .get(authController.authenticate, userController.editUser);
 router
   .route("/summary")
   .get(authController.authenticate, userController.summary);
@@ -41,10 +43,8 @@ router
 router
   .route("/points/rewards/delete/:id")
   .get(authController.adminCheck, userController.deleteReward);
-router.route("/edit/:id").get(userController.editSingleUser);
-router
-  .route("/edit/save")
-  .post(authController.adminCheck, userController.saveEditUser);
+// router.route("/edit/:id").get(userController.editSingleUser);
+router.route("/edit/save/:id").post(userController.saveEditUser);
 router.route("/signup").post(authController.signup);
 router.route("/signuptrial/:id").get(authController.signupTrial);
 router.route("/login").post(authController.login);

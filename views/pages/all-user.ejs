@@ -80,7 +80,7 @@
                <%  } else { %>
                   <td></td>
                 <% } %>
-                <td><a href="/user/edit/?username=<%= item.username %>">Edit</a></td>
+                <td><a href="/user/edit/<%= item._id %>">Edit</a></td>
                 <td class="deleteUser"><a href="/user/delete/<%= item._id %>">Delete</a></td>
             </tr>
         <% }) %>

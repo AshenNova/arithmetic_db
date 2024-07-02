@@ -265,7 +265,8 @@ exports.authenticate = catchAsync(async (req, res, next) => {
   req.auth = {
     login: undefined,
   };
-
+  console.log(accessToken);
+  console.log(req.params);
   // try {
   // if (process.env.NODE_ENV != "DEVELOPMENT") {
   if (accessToken) {
@@ -275,6 +276,7 @@ exports.authenticate = catchAsync(async (req, res, next) => {
       const user = await User.findById(validToken.id);
       req.user = user;
       req.auth = { login: true };
+      console.log("Valid token");
     } else {
       // res.message = "Please login before proceeding";
       // console.log(res.message);

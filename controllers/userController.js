@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const Reward = require("../models/rewardModel");
 const RewardLog = require("../models/rewardLogModel");
 const Attempt = require("../models/attemptModel");
+const Highscore = require("../models/highscoreModel");
 const Homework = require("../models/homeworkModel");
 const Intervention = require("../models/interventionModel");
 const bcrypt = require("bcryptjs");
@@ -46,19 +47,24 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.editUser = catchAsync(async (req, res, next) => {
+  console.log("Trying to edit user profile");
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
-  console.log("Trying to edit user profile");
+  let id = req.params.id;
+  console.log(currentUser);
+
   if (
     !authenticate ||
-    (!currentUser.admin && currentUser.username != req.query.username)
+    (!currentUser.admin && currentUser._id != req.params.id)
   ) {
+    console.log("Nope!");
     return res.redirect("/user/login");
   }
   console.log("Editing");
   // console.log(req.query);
-  const editUser = await User.findOne({ username: req.query.username });
+  // const editUser = await User.findOne({ username: req.query.username });
+  const editUser = await User.findById(req.params.id);
 
   if (!editUser) {
     return next(new AppError(`No such User was found.`, 404));
@@ -84,50 +90,84 @@ exports.editUser = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.editSingleUser = catchAsync(async (req, res, next) => {
-  console.log("Edit Single");
+// exports.editSingleUser = catchAsync(async (req, res, next) => {
+//   console.log("Edit Single");
 
-  const id = req.params.id;
-  const editUser = await User.findOne({ _id: id });
-  console.log(editUser);
-  const subjects = editUser.subject;
-  console.log(subjects);
-  if (!req.user._id.equals(editUser._id) && !req.user.admin) {
-    return res.redirect("/user/login");
-  }
-  console.log(editUser);
+//   const id = req.params.id;
+//   const editUser = await User.findOne({ _id: id });
+//   console.log(editUser);
+//   const subjects = editUser.subject;
+//   console.log(subjects);
+//   if (!req.user._id.equals(editUser._id) && !req.user.admin) {
+//     return res.redirect("/user/login");
+//   }
+//   console.log(editUser);
 
-  let username = req.user.username;
-  let authenticate = req.auth;
-  let currentUser = req.user;
-  let days = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-  res.render("pages/edit-user", {
-    authenticate,
-    username,
-    currentUser,
-    editUser,
-    subjects,
-    days,
+//   let username = req.user.username;
+//   let authenticate = req.auth;
+//   let currentUser = req.user;
+//   let days = [
+//     "Monday",
+//     "Tuesday",
+//     "Wednesday",
+//     "Thursday",
+//     "Friday",
+//     "Saturday",
+//     "Sunday",
+//   ];
+//   res.render("pages/edit-user", {
+//     authenticate,
+//     username,
+//     currentUser,
+//     editUser,
+//     subjects,
+//     days,
+//   });
+// });
+function firstLetterCaps(name) {
+  let box = [];
+  let nameT = name.trim();
+  const split = nameT.split(" ");
+  split.forEach((item) => {
+    box.push(item.charAt(0).toUpperCase() + item.slice(1));
   });
-});
-
+  return box.join(" ");
+}
 exports.saveEditUser = catchAsync(async (req, res, next) => {
+  console.log("Saving edited user");
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
-  console.log("Save edited user");
-  console.log(currentUser.admin);
-  console.log(req.body);
-  // try {
-  const editUser = await User.findOne({ username: req.body.username });
+  console.log(req.params);
+  const editUser = await User.findById(req.params.id);
+
+  if (currentUser.admin && editUser.username != req.body.username) {
+    let oldUsername = firstLetterCaps(editUser.username);
+    let newUsername = firstLetterCaps(req.body.username);
+    console.log(oldUsername);
+    const updateAttemptName = await Attempt.updateMany(
+      {
+        user: oldUsername,
+      },
+      {
+        $set: {
+          user: newUsername,
+        },
+      }
+    );
+    const updateHighscoreName = await Attempt.updateMany(
+      {
+        user: oldUsername,
+      },
+      {
+        $set: {
+          user: newUsername,
+        },
+      }
+    );
+
+    console.log(updateAttemptName, updateHighscoreName);
+  }
 
   if (
     !currentUser.admin &&
@@ -138,6 +178,7 @@ exports.saveEditUser = catchAsync(async (req, res, next) => {
   }
   console.log(req.body);
   if (!currentUser.admin) {
+    delete req.body.username;
     delete req.body.email;
     delete req.body.DOB;
     delete req.body.subject;
@@ -161,16 +202,20 @@ exports.saveEditUser = catchAsync(async (req, res, next) => {
     } else {
       return res
         .status(403)
-        .json({ message: `Password and confirm password is not the same.` });
+        .json({ message: `Password and confirm password are not the same.` });
     }
   }
   req.body.confirmPassword = "";
-  console.log(req.body);
-  const update = await User.findByIdAndUpdate(editUser._id, req.body, {
+  // console.log(req.body);
+  const update = await User.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
+  // console.log(update);
+  // if (currentUser.admin && req.body.username != update.username) {
+  //   console.log("Changing username");
+  // }
   // req.body.confirmPassword = "";
-  console.log(`Update: ${update}`);
+  // console.log(`Update: ${update}`);
   console.log("Successfully updated.");
   res.redirect("/attempts");
   // } catch (err) {

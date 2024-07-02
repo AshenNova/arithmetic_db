@@ -27828,7 +27828,9 @@ function genProblems() {
       skipGlobalUpdateProblem = 0;
       //   calArr.pop()
       normalDisplay();
-      setting = 1;
+      console.log(`Finding new setting from ${calArr}`);
+      setting = calArr[genNumbers(calArr.length)];
+      console.log("Chose: " + setting);
       console.log("Whats the regen?");
     } else {
       setting = calArrAll(6, calArr, setting, 9);
