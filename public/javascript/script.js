@@ -21909,8 +21909,8 @@ function handleSubmit(e) {
             if (correctAnswer % 1 != 0) {
               let remainder = (oneUnit * p.speedA * p.timeA) % 60;
               let time = 60;
-              let whole = (Math.floor(correctAnswer)[(remainder, time)] =
-                simplify(remainder, time));
+              let whole = Math.floor(correctAnswer);
+              [remainder, time] = simplify(remainder, time);
               correctAnswer = `${whole} ${remainder}/${time}`;
             }
           }
