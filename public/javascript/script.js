@@ -13620,7 +13620,7 @@ function updateProblems() {
       //MAIN PASSAGE
       if (p.type == "A" || p.type == "B") {
         displayProblem.innerHTML = `
-        Town M is between Town A and Town B.</br>
+        Town M is exactly in between Town A and Town B.</br>
         ${personA} set off from Town A towards Town B at ${p.speedA} km/h and vice versa for ${personB} from Town B at ${p.speedB} km/h.</br>
         ${middleClue}</br>
         `;
@@ -13712,9 +13712,31 @@ How far is apart is Town A and Town B?
   // DISPLAY
   if (level == "calSixb") {
     calculatorSymbol.classList.remove("hidden");
+    //SPEED; SURROGATE: BEYOND
+    if (setting == 1) {
+      while (p.speedA < p.speedB || p.speedA == p.speedB) {
+        p.speedA = (genNumbers(5) + 1) * 5;
+        p.speedB = (genNumbers(5) + 1) * 5;
+      }
+      const diffSpeed = p.speedA - p.speedB;
+
+      displayProblem.innerHTML = `
+  Person A runs at a speed of ${
+    p.speedA
+  } m/s and is also faster than person B by ${diffSpeed} m/s.</br>
+  By the time Person B completes ${displaySimpleFraction(
+    1,
+    p.denominator
+  )} of the race, person A would be ${p.diffPartDistance} m ahead.</br>
+  How long did person ${
+    p.duration == "A" ? "A" : "B"
+  } take to reach the finish line?</br>
+  <i>Round off your answer to 2 decimal place when needed.</i>
+  `;
+    }
 
     //SPEED: MEET UP
-    if (setting == 1) {
+    if (setting == 2) {
       p.distance = p.speedA * p.timeA + p.speedB * p.timeB;
       // normal
       if (p.roll == "A") {
@@ -13775,7 +13797,7 @@ How far is apart is Town A and Town B?
       }
     }
     //SPEED: CATCH UP
-    if (setting == 2) {
+    if (setting == 3) {
       if (p.speedA == p.speedB) p.speedB += 1;
       p.gap = genNumbers(20) + 10;
       p.diffSpeed = p.speedB - p.speedA;
@@ -13846,7 +13868,7 @@ How far is apart is Town A and Town B?
     }
 
     // DOUBLE TRIANGLE
-    if (setting == 3) {
+    if (setting == 4) {
       if (p.type == "normalSpeedToTime") {
         if (p.speedA == p.speedB) {
           p.speedB += 10;
@@ -13934,7 +13956,7 @@ How far is apart is Town A and Town B?
       }
     }
     // VOLUME: GROUPING
-    if (setting == 4) {
+    if (setting == 5) {
       [p.finalHeightUnitA, p.finalHeightUnitB] = simplify(
         p.finalHeightUnitA,
         p.finalHeightUnitB
@@ -13995,7 +14017,7 @@ How far is apart is Town A and Town B?
       `;
     }
     // VOLUME: CATCH UP
-    if (setting == 5) {
+    if (setting == 6) {
       const volumeAFirst = p.lengthA * p.breadthA * p.waterLevelA;
       const volumeBFirst = p.lengthB * p.breadthB * p.waterLevelB;
       const heightAPerMin = (p.tapA * 1000) / (p.lengthA * p.breadthA);
@@ -14041,7 +14063,7 @@ How far is apart is Town A and Town B?
       );
     }
     // GEOMETRY: REPEATED IDENTITY
-    if (setting == 6) {
+    if (setting == 7) {
       drawingDisplay();
       let startYAxis = 135;
       const multiplier = 15;
@@ -14219,7 +14241,7 @@ How far is apart is Town A and Town B?
       ctx.restore(); // FIRST RESTORE
     }
     //GEOMETRY: MANIPULATION OF DIMENSION: OVERLAPPING AREA
-    if (setting == 7) {
+    if (setting == 8) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, 400, 275);
       drawingDisplay();
@@ -14274,7 +14296,8 @@ How far is apart is Town A and Town B?
       }
       ctx.restore(); //1st
     }
-    //END OF CALSIXB
+
+    //END OF CALSIXB DISPLAY
   }
 
   if (level == "heuOne") {
@@ -21803,8 +21826,25 @@ function handleSubmit(e) {
     }
     // ANSWERS
     if (level == "calSixb") {
-      //SPEED: MEET UP
+      //SPEED; SURROGATE: BEYOND
       if (setting == 1) {
+        const diffInDistance = p.diffPartDistance * p.denominator;
+        const duration = diffInDistance / (p.speedA - p.speedB);
+        const durationExtraA = diffInDistance / p.speedA;
+        let durationA = duration - durationExtraA;
+        let durationB = duration;
+        if (p.duration == "A") correctAnswer = durationA;
+        if (p.duration == "B") correctAnswer = durationB;
+        // console.log(correctAnswer.toString().split(".")[1] > 3);
+        const checkRecurringDecimal = correctAnswer.toString().split(".")[1];
+        if (checkRecurringDecimal && checkRecurringDecimal.length > 3) {
+          console.log("Splitting answer");
+          correctAnswer = Math.round(correctAnswer * 100) / 100;
+        }
+      }
+
+      //SPEED: MEET UP
+      if (setting == 2) {
         if (p.roll == "A") {
           correctAnswer = p.distance / (p.speedA + p.speedB);
         }
@@ -21832,7 +21872,7 @@ function handleSubmit(e) {
         }
       }
       //SPEED: CATCH UP
-      if (setting == 2) {
+      if (setting == 3) {
         if (p.roll == "A" || p.roll == "B") {
           // console.log(p.diffSpeed);
           correctAnswer = p.gap / p.diffSpeed;
@@ -21848,7 +21888,7 @@ function handleSubmit(e) {
         }
       }
 
-      if (setting == 3) {
+      if (setting == 4) {
         if (p.type == "normalSpeedToTime") {
           const oneUnit = p.differenceTime / Math.abs(p.timeA - p.timeB);
           const actualTimeA = oneUnit * p.timeA;
@@ -21901,7 +21941,7 @@ function handleSubmit(e) {
         }
       }
       // VOLUME: GROUPING
-      if (setting == 4) {
+      if (setting == 5) {
         if (p.question == "transfer") correctAnswer = p.answer;
         if (p.question == "finalA")
           correctAnswer = p.groups * p.finalHeightUnitA;
@@ -21910,7 +21950,7 @@ function handleSubmit(e) {
       }
 
       // VOLUME: CATCH UP
-      if (setting == 5) {
+      if (setting == 6) {
         const heightAPerMin = (p.tapA * 1000) / (p.lengthA * p.breadthA);
         const heightBPerMin = (p.tapB * 1000) / (p.lengthB * p.breadthB);
         const differenceHeight = Math.abs(p.waterLevelA - p.waterLevelB);
@@ -21931,7 +21971,7 @@ function handleSubmit(e) {
         }
       }
       // GEOMETRY: REPEATED IDENTITY
-      if (setting == 6) {
+      if (setting == 7) {
         if (p.type == 1) {
           const rect = p.rectLength * p.rectBreadth;
           const triangle = (1 / 2) * p.triangleBase * p.rectLength;
@@ -21949,7 +21989,7 @@ function handleSubmit(e) {
 
       // GEOMETRY: MANIPULATION OF DIMENSION: OVERLAPPING TRIANGLE
 
-      if (setting == 7) {
+      if (setting == 8) {
         const overlappingArea = (1 / 2) * p.rectLength * p.rectBreadth;
         const unshaded = overlappingArea - p.quadrilateral;
         const figure = p.rectLength * p.rectBreadth;
@@ -26836,15 +26876,27 @@ function genProblems() {
       skipGlobalUpdateProblem = 0;
       //   calArr.pop()
       normalDisplay();
-      setting = 1;
+      setting = calArr[genNumbers(calArr.length)];
       console.log("Whats the regen?");
     } else {
-      setting = calArrAll(7, calArr, setting, 99);
+      setting = calArrAll(8, calArr, setting, 99);
       setting = checkRange(setting, calArr, skipArr);
     }
 
-    //MEET UP
+    //SPEED; SURROGATE: BEYOND
     if (setting == 1) {
+      return {
+        speedA: (genNumbers(5) + 1) * 5,
+        speedB: (genNumbers(5) + 1) * 5,
+        denominator: genNumbers(4) + 2,
+        diffPartDistance: (genNumbers(20) + 10) * 5,
+        duration: ["A", "B"][genNumbers(2)],
+        // durationA: (genNumbers(5) + 5) * 15,
+      };
+    }
+
+    //MEET UP
+    if (setting == 2) {
       return {
         roll: ["D", "A", "B", "C"][genNumbers(4)],
         distance: undefined,
@@ -26855,7 +26907,7 @@ function genProblems() {
       };
     }
     // CATCH UP
-    if (setting == 2) {
+    if (setting == 3) {
       const genSpeedB = genNumbers(10) + 5;
       return {
         roll: ["E", "D", "C", "B", "A"][genNumbers(5)],
@@ -26867,7 +26919,7 @@ function genProblems() {
         diffSpeed: undefined,
       };
     }
-    if (setting == 3) {
+    if (setting == 4) {
       return {
         type: ["meet up", "normalTimeToSpeed", "normalSpeedToTime"][
           genNumbers(3)
@@ -26883,7 +26935,7 @@ function genProblems() {
       };
     }
     // VOLUME: GROUPING
-    if (setting == 4) {
+    if (setting == 5) {
       const gen_heightA = genNumbers(30) + 10;
       const gen_heightB = genNumbers(30) + 10;
       return {
@@ -26904,7 +26956,7 @@ function genProblems() {
     }
 
     //VOLUME: CATCH UP
-    if (setting == 5) {
+    if (setting == 6) {
       const gen_lengthA = (genNumbers(10) + 1) * 10;
       const gen_breadthA = (genNumbers(10) + 1) * 10;
       const gen_heightA = (genNumbers(10) + 1) * 10;
@@ -26927,7 +26979,7 @@ function genProblems() {
       };
     }
     // GEOMETRY: REPEATED IDENTITY
-    if (setting == 6) {
+    if (setting == 7) {
       return {
         type: [4, 3, 2, 1][genNumbers(4)],
         squareSides: genNumbers(2) + 13,
@@ -26939,7 +26991,7 @@ function genProblems() {
     }
 
     //GEOMETRY: MANIPULATION OF DIMENSION: OVERLAPPING AREA
-    if (setting == 7) {
+    if (setting == 8) {
       const gen_length = (genNumbers(20) + 20) * 4;
       return {
         type: [1][genNumbers(1)],
@@ -29431,7 +29483,7 @@ function buttonLevelSetting() {
         99
       );
       if (!setting) optionsBox.classList.add("hidden");
-      accepted = [1, 2, 3, 4, 5, 6, 7, 99];
+      accepted = [1, 2, 3, 4, 5, 6, 7, 8, 99];
       // if (
       //   ![1, 2, 3, 4, 5, 6, 7, 99].includes(setting * 1) &&
       //   !setting.split("").includes("-")

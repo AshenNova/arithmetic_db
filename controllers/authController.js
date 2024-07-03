@@ -265,8 +265,6 @@ exports.authenticate = catchAsync(async (req, res, next) => {
   req.auth = {
     login: undefined,
   };
-  console.log(accessToken);
-  console.log(req.params);
   // try {
   // if (process.env.NODE_ENV != "DEVELOPMENT") {
   if (accessToken) {
