@@ -28534,6 +28534,7 @@ easyMode.addEventListener("click", function () {
 // LEVEL SETTINGS
 function settingCheck(inputSetting, acceptedValues, level) {
   const split = inputSetting.split("");
+  level = level.toString();
   if (split.includes("-")) {
     const array = inputSetting.split("-");
     if (
@@ -29006,13 +29007,15 @@ function buttonLevelSetting() {
       break;
 
     case "Level 4.21":
+      level = 4.21;
       setting = prompt(
         "1. Perfect Cutting\n2. Rectangle\n3. Cuboid\n4. Circles\n5. Rectangles\n\n9. Everything",
         9
       );
       accepted = [1, 2, 3, 4, 5, 9];
+
       setting = settingCheck(setting, accepted, level);
-      level = 4.21;
+
       scoreNeeded = 10;
       document.querySelector("#user-input").setAttribute("type", "text");
 
