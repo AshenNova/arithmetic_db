@@ -16242,8 +16242,8 @@ How many items are there in each bag?
           let change = childAfter - p.numB;
           let changeText = `${change} years later,`;
           // if (ageDiff > 0) return updateCalc();
-          if (ageDiff < 0) {
-            changeText = `${change} years ago,`;
+          if (change < 0) {
+            changeText = `${Math.abs(change)} years ago,`;
           }
           unitSentence = `${changeText} the father ${p.unitA} times of ${person}'s age.</p>`;
           if (p.unitB != 1) {
