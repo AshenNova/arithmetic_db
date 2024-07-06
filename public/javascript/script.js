@@ -4946,7 +4946,10 @@ function updateProblems() {
       )} = ___ %`;
     }
     if (p.rollA == "decimal") {
-      displayProblem.innerHTML = `displaySimpleFraction(p.numerator, p.denominator)} = ___ %`;
+      displayProblem.innerHTML = `${displaySimpleFraction(
+        p.numerator,
+        p.denominator
+      )} = ___ %`;
     }
 
     if (p.rollA == "percentage") {
