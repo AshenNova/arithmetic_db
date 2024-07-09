@@ -205,9 +205,13 @@ exports.uploadSave = async (req, res) => {
 };
 
 exports.view = catchAsync(async (req, res, next) => {
+  let username = req.user.username;
+  let authenticate = req.auth;
+  let currentUser = req.user;
+
   const id = req.params.id;
   const exam = await Exam.findById(id);
-  res.render("./exam/view", { exam });
+  res.render("./exam/view", { exam, username, authenticate, currentUser });
 });
 
 exports.edit = catchAsync(async (req, res, next) => {
