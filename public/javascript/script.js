@@ -1846,6 +1846,7 @@ function updateProblems() {
   }
 
   if (level == 2.08) {
+    normalDisplay();
     if (p.operator == "-") {
       if (p.numOne < p.numThree) {
         [p.numOne, p.numThree] = [p.numThree, p.numOne];
