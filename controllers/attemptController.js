@@ -1077,35 +1077,73 @@ exports.saveAttempt = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteAttempt = catchAsync(async (req, res, next) => {
+  console.log(req.rawHeaders);
+
   const id = req.params.id;
 
   // try {
   const attempt = await Attempt.findById(id);
 
   if (!attempt) {
+    // console.log("No id found");
     return next(new AppError(`No such attempt was found.`, 404));
   }
-
+  // console.log("Attempt was found!");
   const username = attempt.user.toLowerCase();
   const user = await User.findOne({ username });
+  // console.log("User found" + user);
   const currentPoints = user.points;
   const adjustedPoints = currentPoints - attempt.points;
-  const [updateUser, deleteAttempt, deleteHighscore] = await Promise.all([
-    User.updateOne(
-      { username },
-      {
-        $set: { points: adjustedPoints },
-      }
-    ),
-    Attempt.findByIdAndDelete(id),
-    Highscore.deleteOne({
-      user: attempt.user,
-      level: attempt.level,
-      time: attempt.time,
-    }),
-  ]);
-  console.log(updateUser);
-  return res.redirect("/attempts");
+  if (attempt.subject == "Math") {
+    const [updateUser, deleteAttempt, deleteHighscore] = await Promise.all([
+      User.updateOne(
+        { username },
+        {
+          $set: { points: adjustedPoints },
+        }
+      ),
+      Attempt.findByIdAndDelete(id),
+      Highscore.deleteOne({
+        user: attempt.user,
+        level: attempt.level,
+        time: attempt.time,
+      }),
+    ]);
+  } else {
+    const deleteAttempt = await Attempt.findByIdAndDelete(id);
+  }
+
+  // const updateUser = await User.updateOne(
+  //   { username },
+  //   {
+  //     $set: { points: adjustedPoints },
+  //   }
+  // );
+  // console.log(`Updating User: ${updateUser}`);
+  // const deleteAttempt = await Attempt.findByIdAndDelete(id);
+  // console.log(`Deleted Attempt: ${deleteAttempt}`);
+  // const deleteHighscore = await Highscore.deleteOne({
+  //   user: attempt.user,
+  //   level: attempt.level,
+  //   time: attempt.time,
+  // });
+
+  // console.log(updateUser);
+  let query;
+  req.rawHeaders.forEach((item, index) => {
+    if (item.includes("?user=")) {
+      console.log(index);
+      query = req.rawHeaders[index];
+      query = query.split("?")[1];
+    }
+  });
+  console.log(query);
+  if (query) {
+    return res.redirect(`/attempts/filter/?${query}`);
+  } else {
+    return res.redirect("/attempts");
+  }
+
   // } catch (err) {
   //   res.status(404).json({
   //     err,
