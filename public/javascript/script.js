@@ -1613,6 +1613,16 @@ function updateProblems() {
       }
     }
   }
+  if (level == 1.09) {
+    normalDisplay();
+    const item = ["apples", "toys", "pears", "sweets"][genNumbers(4)];
+    while (p.value % p.starter == 0) p.value += 1;
+    displayProblem.innerHTML = `
+    ${p.starter} ${item} = $${p.value}</br>
+    ${p.end * p.starter} ${item} = $?
+
+    `;
+  }
 
   if (level == 1.01 || level == 2.01 || level == 3.01) {
     if (p.operator == "x")
@@ -2107,6 +2117,17 @@ function updateProblems() {
     }
     canvasTextId.textContent = `What time is displayed on the clock?`;
     drawClock(p.hour, p.min);
+  }
+
+  if (level == 2.11) {
+    normalDisplay();
+    const item = ["apples", "toys", "pears", "sweets"][genNumbers(4)];
+    while (p.value % p.starter == 0) p.value += 1;
+    displayProblem.innerHTML = `
+    ${p.starter} ${item} = $${p.value}</br>
+    ${p.end * p.starter} ${item} = $?
+
+    `;
   }
 
   if (level == 2.03 || level == 3.03 || level == 4.04 || level == 6.3) {
@@ -18282,6 +18303,10 @@ function handleSubmit(e) {
       }
     }
 
+    if (level == 1.09 || level == 2.11) {
+      correctAnswer = p.value * p.end;
+    }
+
     if (level == 2.02) {
       if (p.place == "ones") correctAnswer = arr2[0];
       if (p.place == "tens") correctAnswer = arr2[1];
@@ -23903,6 +23928,14 @@ function genProblems() {
     };
   }
 
+  if (level == 1.09) {
+    return {
+      starter: genNumbers(4) + 2,
+      value: genNumbers(3) + 2,
+      end: genNumbers(3) + 2,
+    };
+  }
+
   if (level == 2.0) {
     return {
       numOne: genNumbers(40) + 10,
@@ -24008,6 +24041,14 @@ function genProblems() {
     return {
       hour: genNumbers(12) + 1,
       min: genNumbers(60),
+    };
+  }
+
+  if (level == 2.11) {
+    return {
+      starter: genNumbers(4) + 2,
+      value: genNumbers(5) + 2,
+      end: genNumbers(5) + 5,
     };
   }
 
@@ -28628,6 +28669,11 @@ function buttonLevelSetting() {
       scoreNeeded = 20;
       break;
 
+    case "Level 1.09":
+      level = 1.09;
+      scoreNeeded = 20;
+      break;
+
     case "Level 2.0":
       level = 2.0;
       scoreNeeded = 50;
@@ -28713,6 +28759,11 @@ function buttonLevelSetting() {
       level = 2.1;
       scoreNeeded = 20;
       document.querySelector("#user-input").setAttribute("type", "text");
+      break;
+
+    case "Level 2.11":
+      level = 2.11;
+      scoreNeeded = 20;
       break;
 
     case "Level 3.0":

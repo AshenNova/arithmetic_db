@@ -1,4 +1,5 @@
 const summaryBtn = document.querySelectorAll(".summary");
+const clearBtn = document.querySelector(".clear_btn");
 
 document.querySelectorAll(".click-summary").forEach((item, index) => {
   item.addEventListener("click", function (e) {
@@ -22,4 +23,12 @@ document.querySelectorAll(".summaryCloseBtn").forEach((item, index) => {
       }
     });
   });
+});
+
+clearBtn.addEventListener("click", function () {
+  document.querySelector(".user_input").value = "";
+  document.querySelector(".level_input").value = "";
+  document.querySelector(".setting_input").value = "";
+  document.querySelector(".mode_input").value = "";
+  document.querySelector(".user_input").focus();
 });

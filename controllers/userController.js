@@ -990,6 +990,7 @@ const generateRec = async (nameTemp) => {
     "1.06",
     "1.07",
     "1.08",
+    "1.09",
   ];
   const levelTwo = [
     "2",
@@ -1000,7 +1001,10 @@ const generateRec = async (nameTemp) => {
     "2.05",
     "2.06",
     "2.07",
+    "2.08",
+    "2.09",
     "2.1",
+    "2.11",
   ];
   const levelThree = [
     "3",
@@ -1080,7 +1084,7 @@ const generateRec = async (nameTemp) => {
   // p3
   if (age == 9) {
     ageLevel = levelOne.concat(levelTwo);
-    const removeList = ["1", "1.01", "1.02", "2.01"];
+    const removeList = ["1", "1.01", "1.02", "1.09", "2.01"];
     removeList.forEach((item) => {
       if (ageLevel.includes(item)) {
         const index = ageLevel.indexOf(item);
