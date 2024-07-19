@@ -28577,7 +28577,7 @@ easyMode.addEventListener("click", function () {
 
 // LEVEL SETTINGS
 function settingCheck(inputSetting, acceptedValues, level) {
-  const split = inputSetting.split("");
+  const split = inputSetting.toString().split("");
   level = level.toString();
   if (split.includes("-")) {
     const array = inputSetting.split("-");
@@ -29663,7 +29663,9 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
+      console.log(setting)
       if (!setting) {
+        console.log("Here?")
         optionsBox.classList.add("hidden");
         setting = 9;
       }
