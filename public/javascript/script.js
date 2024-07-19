@@ -29446,7 +29446,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 99;
+      }
       accepted = [
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
         21, 22, 23, 24, 25, 26, 99,
@@ -29464,7 +29467,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 99;
+      }
 
       accepted = [...Array.from({ length: 23 }, (_, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
@@ -29481,7 +29487,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 99;
+      }
       // if (
       //   ![...Array(27).keys(), 99].includes(setting * 1) &&
       //   !setting.split("").includes("-")
@@ -29500,7 +29509,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 99;
+      }
       accepted = [...Array.from({ length: 24 }, (_, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -29516,7 +29528,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 99;
+      }
       //IF THERE ARE 7 TYPES, PUT 6. SINCE THE MAP FUNCTION WILL +1
       accepted = [...Array.from(Array(10)).map((e, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
@@ -29542,7 +29557,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 99;
+      }
       accepted = [1, 2, 3, 4, 5, 6, 7, 8, 99];
       // if (
       //   ![1, 2, 3, 4, 5, 6, 7, 99].includes(setting * 1) &&
@@ -29564,7 +29582,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 9;
+      }
       setting = settingCheck(setting, [1, 2, 3, 4, 5, 9], level);
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
@@ -29581,7 +29602,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 9;
+      }
       level = "heuTwo";
       accepted = [1, 2, 3, 4, 9];
       setting = settingCheck(setting, accepted, level);
@@ -29598,7 +29622,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 9;
+      }
       level = "heuTwob";
       accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       setting = settingCheck(setting, accepted, level);
@@ -29615,7 +29642,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 9;
+      }
       accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 10;
@@ -29633,7 +29663,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 9;
+      }
       accepted = [1, 2, 3, 4, 5, 9];
       setting = settingCheck(setting, accepted, level);
       range = 0;
@@ -29649,7 +29682,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 9;
+      }
       accepted = [1, 2, 3, 4, 5, 6, 7, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 10;
@@ -29666,7 +29702,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 9;
+      }
       accepted = [1, 2, 3, 4, 5, 6, 7, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 10;
@@ -29682,7 +29721,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 9;
+      }
       accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       setting = settingCheck(setting, accepted, level);
       range = 0;
@@ -29700,7 +29742,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 9;
+      }
       accepted = [1, 2, 3, 4, 5, 6, 7, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 5;
@@ -29717,7 +29762,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 9;
+      }
       accepted = [1, 2, 3, 4, 5, 6, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 5;
@@ -29734,7 +29782,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      if (!setting) optionsBox.classList.add("hidden");
+      if (!setting) {
+        optionsBox.classList.add("hidden");
+        setting = 9;
+      }
       accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 5;
