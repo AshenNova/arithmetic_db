@@ -785,7 +785,7 @@ exports.previousAttempts = async (req, res) => {
         age: age,
       }).sort({ time: 1 });
     };
-    let queryMean;
+    // let queryMean;
     [data.highscore, data.previous, queryMean] = await Promise.all([
       getHighscore(),
       getPrevious(),

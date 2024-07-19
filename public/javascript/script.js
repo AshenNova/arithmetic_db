@@ -2149,6 +2149,7 @@ function updateProblems() {
       }`;
   }
   if (level == 3.02) {
+    normalDisplay();
     if (p.option == "1") {
       displayProblem.textContent = `${p.numOne} x ${
         p.numMulti * p.numMultiTwo
@@ -28865,6 +28866,9 @@ function buttonLevelSetting() {
         "1. Triangle Pattern\n2. Continuous Pattern\n3. Square Number Pattern\n4. Position Pattern\n\n9. All",
         9
       );
+      if (!setting) {
+        setting = 9;
+      }
       scoreNeeded = 20;
       document.querySelector("#user-input").setAttribute("type", "text");
 
@@ -29924,9 +29928,20 @@ allLevelButtons.forEach((item, index) => {
 
         if (data.gold) {
           platinumStarter.textContent = `< ${Math.floor(data.gold.upper)}`;
+
           goldStarter.textContent = `< ${Math.floor(data.gold.lower)}`;
           silverStarter.textContent = `< ${Math.floor(data.silver.lower)}`;
           bronzeStarter.textContent = `< ${Math.floor(data.bronze.lower)}`;
+          // IF NEGATIVES
+          if (data.gold.lower < 0) {
+            goldStarter.textContent = `< ${Math.floor(data.silver.lower) - 1}`;
+            platinumStarter.textContent = `< ${
+              Math.floor(data.silver.lower) - 2
+            }`;
+          } else if (data.gold.upper < 0)
+            platinumStarter.textContent = `< ${
+              Math.floor(data.gold.lower) - 1
+            }`;
         } else {
           platinumStarter.textContent = `Nil`;
           goldStarter.textContent = `Nil`;
