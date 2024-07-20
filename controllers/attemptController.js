@@ -1047,6 +1047,12 @@ exports.getAttempt = catchAsync(async (req, res, next) => {
 });
 
 exports.saveAttempt = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+  req.body.recommendCheck
+    ? (req.body.recommendCheck = true)
+    : (req.body.recommendCheck = false);
+  console.log(req.body);
+
   // console.log(req.body);
   const id = req.params.id;
   // try {
@@ -1059,7 +1065,7 @@ exports.saveAttempt = catchAsync(async (req, res, next) => {
   const username = attempt.user.toLowerCase();
   const user = await User.findOne({ username });
   const userCurrentPoints = user.points;
-  console.log(attempt, user);
+  // console.log(attempt, user);
   // SAVE POINTS IS 10, BUT EDITTED POINTS IS 5.
   const differencePoints = req.body.points - attempt.points;
   const adjustedPoints = userCurrentPoints + differencePoints;
@@ -1068,6 +1074,7 @@ exports.saveAttempt = catchAsync(async (req, res, next) => {
     await Attempt.findByIdAndUpdate(id, {
       points: req.body.points,
       award: req.body.award,
+      recommendCheck: req.body.recommendCheck,
     }),
   ]);
   return res.redirect("/attempts");

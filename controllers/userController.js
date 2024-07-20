@@ -645,6 +645,7 @@ const generateRec = async (nameTemp) => {
       user: nameTemp,
       date: { $lt: today },
       tries: "1",
+      recommendCheck: true,
     })
       .sort({
         // level: -1,
