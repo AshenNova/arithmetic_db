@@ -69,9 +69,9 @@ incorrectBtn.forEach((item, index) => {
 // nextBtn[nextBtn.length - 1].classList.add("hidden");
 
 doneBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   if (click == 0) {
     click += 1;
-    e.preventDefault();
     // incorrectArr = incorrectArr;
     let arr = {
       incorrect: incorrectArr,
