@@ -17276,9 +17276,10 @@ How many items are there in each bag?
   // DISPLAY
   if (level == "heuSix") {
     calculatorSymbol.classList.remove("hidden");
-    normalDisplay();
+
     // LOWEST COMMON TIME
     if (setting == 1) {
+      normalDisplay();
       const timeUnits = ["h", "mins"];
       if (p.type == "merge") {
         if (p.version == "paint") {
@@ -17322,6 +17323,7 @@ How many items are there in each bag?
     //CYCLE
     if (setting == 2) {
       //CHECK
+      normalDisplay();
       if ((p.duration / p.people) % 1 != 0) {
         console.log("Not whole");
         return updateCalc();
@@ -17375,38 +17377,31 @@ How many items are there in each bag?
     }
     // REPEATED IDENTITY TYPE 3
     if (setting == 3) {
+      normalDisplay();
+      console.log(`The setting is 3.`);
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
       [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
       if (p.numeA == p.numeB && p.denoA == p.denoB) {
         console.log("Same numerator and denominator");
         return updateCalc();
       }
-      const onlyB = p.denoA - p.numeA;
       displayProblem.innerHTML = `
-  Students have 2 activities to choose from.</p>
+      Students have 2 activities to choose from.</p>
   ${p.actA.charAt(0).toUpperCase() + p.actA.slice(1)} and ${p.actB}.</p>
-  ${simpleFractionDisplay(p.numeA, p.denoA)} of the students chose ${p.actA}.</p>
-  ${simpleFractionDisplay(p.numeB,p.denoB)} of the students chose ${p.actB}.</p>
+  ${p.numeA}/${p.denoA} of the students chose ${p.actA}.</p>
+  ${p.numeB}/${p.denoB} of the students chose ${p.actB}.</p>
   `;
-      // if (p.question == "A")
-      //   displayProblem.insertAdjacentHTML(
-      //     "beforeend",
-      //     `What fraction of students choose ${p.actA} only?`
-      //   );
-      // if (p.question == "B")
-      //   displayProblem.insertAdjacentHTML(
-      //     "beforeend",
-      //     `What fraction of students choose ${p.actB} only?`
-      //   );
-      if (p.question == "Both")
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `What fraction of the students choose both activities?`
-        );
+
+      displayProblem.insertAdjacentHTML(
+        "beforeend",
+        `What fraction of the students choose both activities?`
+      );
+      console.log("Made it!");
     }
 
     //SNAKE AND LADDER
     if (setting == 4) {
+      normalDisplay();
       const distance = (p.positive - p.negative) * p.sets + p.positive;
       if (p.version == "human") {
         const person = [...boyNames, ...girlNames][genNumbers(20)];
@@ -28082,7 +28077,7 @@ function genProblems() {
         denoA: gen_denoA,
         numeB: Math.ceil(gen_denoB / 2),
         denoB: gen_denoB,
-        question: ["Both"][genNumbers(1)],
+        // question: ["Both"][genNumbers(1)],
       };
     }
     //SNAKE AND LADDER
@@ -29663,9 +29658,9 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      console.log(setting)
+      console.log(setting);
       if (!setting) {
-        console.log("Here?")
+        console.log("Here?");
         optionsBox.classList.add("hidden");
         setting = 9;
       }
