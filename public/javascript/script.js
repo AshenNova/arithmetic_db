@@ -17388,8 +17388,14 @@ How many items are there in each bag?
       displayProblem.innerHTML = `
       Students have 2 activities to choose from.</p>
   ${p.actA.charAt(0).toUpperCase() + p.actA.slice(1)} and ${p.actB}.</p>
-  ${p.numeA}/${p.denoA} of the students chose ${p.actA}.</p>
-  ${p.numeB}/${p.denoB} of the students chose ${p.actB}.</p>
+
+
+  ${displaySimpleFraction(p.numeA, p.denoA)} of the students chose ${
+        p.actA
+      }.</p>
+  ${displaySimpleFraction(p.numeB, p.denoB)} of the students chose ${
+        p.actB
+      }.</p>
   `;
 
       displayProblem.insertAdjacentHTML(
