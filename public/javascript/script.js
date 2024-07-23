@@ -4747,7 +4747,10 @@ function updateProblems() {
       if (p.numOne == p.numTwo) {
         return updateCalc();
       }
-      lineOne = `${p.firstPerson} has ${p.numOne}/${p.numTwo} ${measurement} of ${object}.`;
+      lineOne = `${p.firstPerson} has ${displaySimpleFraction(
+        p.numOne,
+        p.numTwo
+      )} ${measurement} of ${object}.`;
     }
     let firstGender = "She";
     if (p.firstPerson == "Anton" || p.firstPerson == "Grady")
@@ -4763,15 +4766,24 @@ function updateProblems() {
       lineTwo = `${firstGender} ${negative} ${p.numThree} ${measurement} of ${object}.`;
     // fraction fake +
     if (p.secondVar == "fake" && p.operator == "+")
-      lineTwo = `${firstGender} ${positive} another ${p.numThree}/${p.numFour} ${measurement}.`;
+      lineTwo = `${firstGender} ${positive} another ${displaySimpleFraction(
+        p.numThree,
+        p.numFour
+      )} ${measurement}.`;
     // fraction fake -
     if (p.secondVar == "fake" && p.operator == "-")
-      lineTwo = `${firstGender} ${negative} ${p.numThree}/${p.numFour} ${measurement} of ${object}.`;
+      lineTwo = `${firstGender} ${negative} ${displaySimpleFraction(
+        p.numThree,
+        p.numFour
+      )} ${measurement} of ${object}.`;
     if (p.secondVar == "whole" && p.operator == "+")
       lineTwo = `${firstGender} ${positive} ${p.numThree} ${measurement} of ${object}.`;
     if (p.secondVar == "whole" && p.operator == "-")
       // EXCEPTION -> instead of whole number, change to fraction
-      lineTwo = `${firstGender} ${negative} ${p.numThree}/${p.numFour} ${measurement} of ${object}.`;
+      lineTwo = `${firstGender} ${negative} ${displaySimpleFraction(
+        p.numThree,
+        p.numFour
+      )} ${measurement} of ${object}.`;
 
     // Whole number fake x
     // if (p.secondVar == "fake" && p.operator == "x")
@@ -4791,9 +4803,15 @@ function updateProblems() {
     }
     // if real
     if (p.secondVar == "real" && p.operator == "x")
-      lineTwo = `${firstGender} ${positive} another ${p.numThree}/${p.numFour} of it.`;
+      lineTwo = `${firstGender} ${positive} another ${displaySimpleFraction(
+        p.numThree,
+        p.numFour
+      )} of it.`;
     if (p.secondVar == "real" && p.operator == "/")
-      lineTwo = `${firstGender} ${negative} ${p.numThree}/${p.numFour} of it.`;
+      lineTwo = `${firstGender} ${negative} ${displaySimpleFraction(
+        p.numThree,
+        p.numFour
+      )} of it.`;
     // if (p.secondVar == "real" && p.operator == "x")
     //   lineTwo = `He/she bought/received another ${p.numThree}/${p.numFour} of it.`;
     // if (p.secondVar == "real" && p.operator == "/")
@@ -4817,6 +4835,7 @@ function updateProblems() {
     // Display the problem
     displayProblem.innerHTML = `${lineOne}</p>${lineTwo}</p>${lineThree}`;
   }
+
   if (level == 5.01) {
     normalDisplay();
     if (setting == 1) {
@@ -18176,6 +18195,7 @@ How many items are there in each bag?
       if (diffB % 1 != 0 || diffB == 0 || diffA == diffB) return updateCalc();
       [sitNumeA, sitDenoA] = simplify(sitNumeA, sitDenoA);
       [sitNumeB, sitDenoB] = simplify(sitNumeB, sitDenoB);
+      if ((sitNumeA == sitNumeB) & (sitDenoA == sitDenoB)) return updateCalc();
       displayProblem.innerHTML = `
       ${displaySimpleFraction(p.numeA, p.denoA)}
         of A is ${Math.abs(diffA)} ${diffA < 0 ? "less" : "more"} than
