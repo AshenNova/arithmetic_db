@@ -9478,8 +9478,48 @@ function updateProblems() {
       `;
     }
 
-    //DECIMALS
+    // FRACTIONS: CLOSEST AND FURTHEST
     if (setting == 15) {
+      normalDisplay();
+      [p.numeZero, p.denoZero] = simplify(p.numeZero, p.denoZero);
+      [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
+      [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
+      [p.numeThree, p.denoThree] = simplify(p.numeThree, p.denoThree);
+      const array = [
+        p.numeZero / p.denoZero,
+        p.numeOne / p.denoOne,
+        p.numeTwo / p.denoTwo,
+        p.numeThree / p.denoThree,
+      ];
+      const unique = [...new Set(array)];
+      if (unique.length < 4 || unique.includes(1)) return updateCalc();
+      displayProblem.innerHTML = `
+          Which option is the ${p.choice} to/from ${p.whole}?</br>
+          <hr>
+          <table>
+            <tr>
+              <td>
+                1) ${displaySimpleFraction(p.numeZero, p.denoZero)}</br>
+              </td>
+              <td>
+               2) ${displaySimpleFraction(p.numeOne, p.denoOne)}</br>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                3) ${displaySimpleFraction(p.numeTwo, p.denoTwo)}</br>
+              </td>
+              <td>
+               4) ${displaySimpleFraction(p.numeThree, p.denoThree)}</br>
+              </td>
+            </tr>
+
+          </table>
+          `;
+    }
+
+    //DECIMALS
+    if (setting == 16) {
       normalDisplay();
       console.log("The current setting is: " + setting);
       const oneDisplay = p.numOne / p.convenientNumOne;
@@ -9490,7 +9530,7 @@ function updateProblems() {
       decimalCheck(twoDisplay);
     }
 
-    if (setting == 16) {
+    if (setting == 17) {
       normalDisplay();
       console.log("The current setting is: " + setting);
       p.numOne = p.numOne / p.convenientNumOne;
@@ -9503,7 +9543,7 @@ function updateProblems() {
     }
 
     // DECIMALS: OVERLAPPING PLACE VALUE
-    if (setting == 17) {
+    if (setting == 18) {
       normalDisplay();
       let overlappingArr = [
         `${p.hundreds} hundreds`,
@@ -9528,7 +9568,7 @@ function updateProblems() {
       ${p.sentenceArr.join(", ")}.`;
     }
 
-    if (setting == 18) {
+    if (setting == 19) {
       normalDisplay();
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
@@ -9536,14 +9576,14 @@ function updateProblems() {
       ${p.numOne} x ${p.numTwo} = ?`;
       decimalCheck(p.numOne * p.numTwo);
     }
-    if (setting == 19) {
+    if (setting == 20) {
       normalDisplay();
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
     }
-    if (setting == 20) {
+    if (setting == 21) {
       normalDisplay();
       p.numTwo = p.numOne;
       p.numOne = (p.numOne * p.multiplier) / p.divisor;
@@ -9552,7 +9592,7 @@ function updateProblems() {
       ${p.numOne} ÷ ${p.numTwo} = ?`;
       decimalCheck(p.numOne / p.numTwo);
     }
-    if (setting == 21) {
+    if (setting == 22) {
       normalDisplay();
       // START CHANGE DISPLAY
       if (p.numOne == p.numTwo) {
@@ -9577,7 +9617,7 @@ function updateProblems() {
             `;
       }
     }
-    if (setting == 22) {
+    if (setting == 23) {
       normalDisplay();
       p.numOne = p.numTwo * (genNumbers(99) + 2);
       if (p.operator == "x") {
@@ -9596,7 +9636,7 @@ function updateProblems() {
     }
 
     // DECIMALS: PARTS AND INTERVAL
-    if (setting == 23) {
+    if (setting == 24) {
       drawingDisplay();
       drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
     }
@@ -11075,10 +11115,60 @@ function updateProblems() {
 
   //DISPLAY
   if (level == "calFiveb") {
-    calculatorSymbol.classList.remove("hidden");
+    const calculatorNotAllowed = [1];
+    if (calculatorNotAllowed.includes(setting * 1)) {
+      calculatorSymbol.classList.add("hidden");
+      // calculatorSymbol.
+    } else {
+      calculatorSymbol.classList.remove("hidden");
+    }
+    // FRACTIONS: CLOSEST AND FURTHEST
+    if (setting == 1) {
+      normalDisplay();
+      [p.denoComp, p.numeComp] = simplify(p.denoComp, p.numeComp);
+      [p.numeZero, p.denoZero] = simplify(p.numeZero, p.denoZero);
+      [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
+      [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
+      [p.numeThree, p.denoThree] = simplify(p.numeThree, p.denoThree);
+      const array = [
+        p.numeZero / p.denoZero,
+        p.numeOne / p.denoOne,
+        p.numeTwo / p.denoTwo,
+        p.numeThree / p.denoThree,
+      ];
+      const unique = [...new Set(array)];
+      console.log(unique);
+      if (unique.length < 4 || unique.includes(1)) return updateCalc();
+      displayProblem.innerHTML = `
+          Which option is the ${p.choice} to/from ${displaySimpleFraction(
+        p.numeComp,
+        p.denoComp
+      )}?</br>
+          <hr>
+          <table>
+            <tr>
+              <td>
+                1) ${displaySimpleFraction(p.numeZero, p.denoZero)}</br>
+              </td>
+              <td>
+               2) ${displaySimpleFraction(p.numeOne, p.denoOne)}</br>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                3) ${displaySimpleFraction(p.numeTwo, p.denoTwo)}</br>
+              </td>
+              <td>
+               4) ${displaySimpleFraction(p.numeThree, p.denoThree)}</br>
+              </td>
+            </tr>
+
+          </table>
+          `;
+    }
 
     //REMAINDER CONCEPT: BEFORE AND AFTER
-    if (setting == 1) {
+    if (setting == 2) {
       normalDisplay();
       [p.denoA, p.numeA] = simplify(p.denoA, p.numeA);
       [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
@@ -11128,7 +11218,7 @@ function updateProblems() {
       `;
     }
     //REMAINDER CONCEPT: UNDER THE SAME UNIT
-    if (setting == 2) {
+    if (setting == 3) {
       normalDisplay();
       const person = boyNames[genNumbers(boyNames.length)];
       [p.denoA, p.numeA] = simplify(p.denoA, p.numeA);
@@ -11189,7 +11279,7 @@ function updateProblems() {
       `;
     }
     // FRACTIONS: OVERLAPPING MODEL
-    if (setting == 3) {
+    if (setting == 4) {
       normalDisplay();
       const stuff = ["pens", "pencils", "erasers", "stamps"][genNumbers(4)];
       const personA = boyNames[genNumbers(boyNames.length)];
@@ -11233,7 +11323,7 @@ function updateProblems() {
         );
     }
     //IDENTICAL NUMERATOR (TYPE 2)
-    if (setting == 4) {
+    if (setting == 5) {
       normalDisplay();
       [p.nume, p.deno] = simplify(p.nume, p.deno);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
@@ -11275,7 +11365,7 @@ function updateProblems() {
       }
     }
     // GEOMETRY: AREA OF RIGHT ANGLED TRIANGLE
-    if (setting == 5) {
+    if (setting == 6) {
       drawingDisplay();
       ctx.font = "1em serif";
       ctx.save();
@@ -11479,7 +11569,7 @@ function updateProblems() {
       ctx.restore();
     }
     // GEOMETRY: AREA OF FIGURE : CUTTING
-    if (setting == 6) {
+    if (setting == 7) {
       drawingDisplay();
       ctx.save(); //1st
       const y = fillTextSplit(
@@ -11544,7 +11634,7 @@ function updateProblems() {
     }
 
     //GEOMETRY: MANIPULATION OF DIMENSION
-    if (setting == 7) {
+    if (setting == 8) {
       drawingDisplay();
       const y = fillTextSplit(
         `Find the area of the ${
@@ -11594,7 +11684,7 @@ function updateProblems() {
     }
 
     //GEOMETRY: MANIPULATION OF DIMENSION LEVEL 2
-    if (setting == 8) {
+    if (setting == 9) {
       drawingDisplay();
       // if (p.label == 1) {
       if (p.givenLabel == "A") p.findPart = "C";
@@ -11701,7 +11791,7 @@ function updateProblems() {
       ctx.restore();
     }
     // AREA OF FIGURE: DIFFERENT UNITS
-    if (setting == 9) {
+    if (setting == 10) {
       drawingDisplay();
       ctx.save();
       ctx.font = "1em serif";
@@ -11823,7 +11913,7 @@ function updateProblems() {
     }
 
     //  REPEATED GROUP RATIO
-    if (setting == 10) {
+    if (setting == 11) {
       normalDisplay();
       let total = p.varA + p.varB + p.varC;
       let firstTotal = undefined;
@@ -11879,7 +11969,7 @@ function updateProblems() {
       }
     }
     //RATIO: UNCHANGED OBJECT
-    if (setting == 11) {
+    if (setting == 12) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -12053,7 +12143,7 @@ function updateProblems() {
       `;
     }
     // RATIO: UNCHANGED TOTAL
-    if (setting == 12) {
+    if (setting == 13) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -12171,7 +12261,7 @@ function updateProblems() {
       ${lineFour}`;
     }
     //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 13) {
+    if (setting == 14) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -12270,7 +12360,7 @@ function updateProblems() {
       `;
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 14) {
+    if (setting == 15) {
       normalDisplay();
       [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
@@ -12287,7 +12377,7 @@ function updateProblems() {
       `;
     }
     // REPEATED IDENTITY GEOMETRY
-    if (setting == 15) {
+    if (setting == 16) {
       drawingDisplay();
       const heightNeeded = 140 + p.rectBreadth * 10 + p.triangleHeight * 10;
       if (heightNeeded > 275) {
@@ -12495,7 +12585,7 @@ function updateProblems() {
       p.answer = `${newUnshadedFirst}:${newUnshadedSecond}`;
     }
     // RATIO: REPEATED GROUP
-    if (setting == 16) {
+    if (setting == 17) {
       normalDisplay();
       const displayA = p.percA;
       const displayB = p.percB;
@@ -12579,7 +12669,7 @@ function updateProblems() {
     }
 
     // PERCENTAGE: OVERLAPPING MODEL
-    if (setting == 17) {
+    if (setting == 18) {
       normalDisplay();
       const stuff = ["pen", "pencils", "erasers", "stamps"][genNumbers(4)];
       const personA = boyNames[genNumbers(boyNames.length)];
@@ -12624,7 +12714,7 @@ function updateProblems() {
     }
 
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 18) {
+    if (setting == 19) {
       normalDisplay();
       if (p.optionOne == "simple gst") {
         displayProblem.innerHTML = `
@@ -12702,7 +12792,7 @@ function updateProblems() {
     }
 
     // PERCENTAGE: IDENTICAL EFFECT
-    if (setting == 19) {
+    if (setting == 20) {
       normalDisplay();
       const person = [...boyNames, ...girlNames][
         genNumbers(boyNames.length + girlNames.length)
@@ -12738,7 +12828,7 @@ function updateProblems() {
       `;
     }
     //AVERAGE: EXTERNAL CHANGE
-    if (setting == 20) {
+    if (setting == 21) {
       normalDisplay();
       if (p.changeQuantity == 0) return updateCalc();
       p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
@@ -12770,7 +12860,7 @@ function updateProblems() {
     }
 
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 21) {
+    if (setting == 22) {
       normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -12795,7 +12885,7 @@ function updateProblems() {
       `;
     }
     //RATIO: MANIPULATION OF UNITS WITH VALUE
-    if (setting == 22) {
+    if (setting == 23) {
       normalDisplay();
       const multi = genNumbers(50) + 50;
       p.total = (p.unitA + p.unitB) * multi;
@@ -12862,7 +12952,7 @@ function updateProblems() {
     }
 
     // PATTERN: CONTINUOUS PATTERN (SETS)
-    if (setting == 23) {
+    if (setting == 24) {
       normalDisplay();
       p.second = p.first + p.secondDiff;
       displayProblem.innerHTML = `
@@ -12934,7 +13024,7 @@ function updateProblems() {
       }
     }
     // RATIO: UNIDENTICAL GROUP
-    if (setting == 24) {
+    if (setting == 25) {
       normalDisplay();
 
       [p.A1, p.A2] = simplify(p.A1, p.A2);
@@ -20922,6 +21012,28 @@ function handleSubmit(e) {
       }
 
       if (setting == 15) {
+        const array = [
+          p.numeZero / p.denoZero,
+          p.numeOne / p.denoOne,
+          p.numeTwo / p.denoTwo,
+          p.numeThree / p.denoThree,
+        ];
+        const newArray = array.map((item) => Math.abs(item - p.whole));
+        let sortedArray = [...newArray];
+        sortedArray.sort(function (a, b) {
+          return a - b;
+        });
+        console.log(newArray);
+        console.log(sortedArray);
+        if (p.choice == "closest") {
+          correctAnswer = newArray.indexOf(sortedArray[0]) + 1;
+        }
+        if (p.choice == "furthest") {
+          correctAnswer = newArray.indexOf(sortedArray[3]) + 1;
+        }
+      }
+
+      if (setting == 16) {
         // correctAnswer =
         //   p.numOne / p.convenientNumOne + p.numTwo / p.convenientNumTwo;
         // decimalCheck(correctAnswer);
@@ -20930,13 +21042,13 @@ function handleSubmit(e) {
         ];
         correctAnswer = accDecimal(answer[0]);
       }
-      if (setting == 16) {
+      if (setting == 17) {
         correctAnswer = p.numOne - p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
 
       // DECIMALS: OVERLAPPING PLACE VALUE
-      if (setting == 17) {
+      if (setting == 18) {
         let sumArr = [];
         for (let i = 0; i < p.sentenceArr.length; i++) {
           console.log(p.sentenceArr[i]);
@@ -20977,22 +21089,22 @@ function handleSubmit(e) {
         // }
       }
 
-      if (setting == 18) {
-        correctAnswer = p.numOne * p.numTwo;
-        correctAnswer = accDecimal(correctAnswer);
-      }
       if (setting == 19) {
         correctAnswer = p.numOne * p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 20) {
-        correctAnswer = p.numOne / p.numTwo;
+        correctAnswer = p.numOne * p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 21) {
-        correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+        correctAnswer = p.numOne / p.numTwo;
+        correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 22) {
+        correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+      }
+      if (setting == 23) {
         if (p.operator == "x") {
           correctAnswer = p.comparison * p.divisor;
           correctAnswer = accDecimal(correctAnswer);
@@ -21004,7 +21116,7 @@ function handleSubmit(e) {
         decimalCheck(correctAnswer);
       }
 
-      if (setting == 23) {
+      if (setting == 24) {
         correctAnswer = accDecimal(p.start + p.eachInterval * p.arrow);
       }
     }
@@ -21436,31 +21548,55 @@ function handleSubmit(e) {
 
     //ANSWERS
     if (level == "calFiveb") {
-      // FRACTIONS: REMAINDER CONCEPT: BEFORE AND AFTER
       if (setting == 1) {
+        const array = [
+          p.numeZero / p.denoZero,
+          p.numeOne / p.denoOne,
+          p.numeTwo / p.denoTwo,
+          p.numeThree / p.denoThree,
+        ];
+        const newArray = array.map((item) =>
+          Math.abs(item - p.numeComp / p.denoComp)
+        );
+        let sortedArray = [...newArray];
+        sortedArray.sort(function (a, b) {
+          return a - b;
+        });
+        console.log(newArray);
+        console.log(sortedArray);
+        if (p.choice == "closest") {
+          correctAnswer = newArray.indexOf(sortedArray[0]) + 1;
+        }
+        if (p.choice == "furthest") {
+          correctAnswer = newArray.indexOf(sortedArray[3]) + 1;
+        }
+      }
+
+      // FRACTIONS: REMAINDER CONCEPT: BEFORE AND AFTER
+      if (setting == 2) {
         correctAnswer = p.atFirstUnits * p.oneUnit;
       }
       // FRACTIONS: REMAINDER CONCEPT: UNDER THE SAME UNIT
-      if (setting == 2) {
+      if (setting == 3) {
         if (p.chosen == "A")
           correctAnswer = p.quantityA + Math.floor(p.extraBought);
         if (p.chosen == "B")
           correctAnswer = p.quantityB + Math.floor(p.extraBought);
       }
       //FRACTIONS: OVERLAPPING MODEL
-      if (setting == 3) {
+      if (setting == 4) {
         if (p.question == "A") correctAnswer = p.oneUnit * p.numeA;
         if (p.question == "B")
           correctAnswer = p.oneUnit * p.numeA + p.difference;
         if (p.question == "total") correctAnswer = p.oneUnit * p.denoA;
       }
 
-      if (setting == 4) {
+      if (setting == 5) {
         correctAnswer = p.answer;
       }
 
       // AREA OF OBTUSE TRIANGLE
-      if (setting == 5) {
+      if (setting == 6) {
         if (p.chosenHeight == "A") correctAnswer = (1 / 2) * p.base * p.height;
         if (p.chosenHeight == "B")
           correctAnswer = (1 / 2) * p.lengthAB * p.lengthSecondH;
@@ -21468,17 +21604,17 @@ function handleSubmit(e) {
           correctAnswer = (1 / 2) * p.lengthBC * p.lengthThirdH;
       }
       //GEOMETRY: AREA OF FIGURE: CUTTING
-      if (setting == 6) {
+      if (setting == 7) {
         const baseA = p.valueA - p.valueB - p.adjust;
         const triangleA = (1 / 2) * baseA * p.valueA;
         const triangleB = (1 / 2) * p.valueB * (p.valueB + p.adjust);
         correctAnswer = triangleA + triangleB;
       }
       //GEOMETRY: MANIPULATION OF DIMENSION
-      if (setting == 7) {
+      if (setting == 8) {
         correctAnswer = (1 / 2) * p.length * p.breadth;
       }
-      if (setting == 8) {
+      if (setting == 9) {
         // if (p.label == 1) {
         const half = (1 / 2) * p.length * p.breadth;
         if (p.givenLabel == "A") correctAnswer = half - p.areaA;
@@ -21488,7 +21624,7 @@ function handleSubmit(e) {
         // }
       }
       // AREA OF FIGURE: DOUBLE UNITS
-      if (setting == 9) {
+      if (setting == 10) {
         let pointDF = p.firstTriangleBase;
         let pointCF = p.length - p.firstTriangleBase;
         [pointDF, pointCF] = simplify(pointDF, pointCF);
@@ -21513,7 +21649,7 @@ function handleSubmit(e) {
         correctAnswer = `${shaded}/${area}`;
       }
       // RATIO: REPEATED GROUP
-      if (setting == 10) {
+      if (setting == 11) {
         p.answer = simplestForm(p.answer);
         console.log(p.answer);
         // if (p.firstScene == "total" && p.secondScene == "total") {
@@ -21521,7 +21657,7 @@ function handleSubmit(e) {
         // }
       }
       // RATIO: UNCHANGED OBJ
-      if (setting == 11) {
+      if (setting == 12) {
         console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
         // if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         // if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
@@ -21530,21 +21666,21 @@ function handleSubmit(e) {
         correctAnswer = p.answer;
       }
       // RATIO: UNCHANGED TOTAL
-      if (setting == 12) {
-        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
-      }
-      // RATIO: UNCHANGED DIFFERENCE
       if (setting == 13) {
         if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
         if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
       }
-      // RATIO: MANIPULATION IN UNITS
+      // RATIO: UNCHANGED DIFFERENCE
       if (setting == 14) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      // RATIO: MANIPULATION IN UNITS
+      if (setting == 15) {
         const commonNumber = commonDeno(p.denoA, p.denoB);
         let end_A = ((p.ratioA * (p.denoA - p.numeA)) / p.denoA) * commonNumber;
         let end_B = ((p.ratioB * (p.denoB - p.numeB)) / p.denoB) * commonNumber;
@@ -21552,10 +21688,10 @@ function handleSubmit(e) {
         correctAnswer = `${end_A}:${end_B}`;
       }
       // RATIO: REPEATED IDENTITY (GEOMETRY)
-      if (setting == 15) {
+      if (setting == 16) {
         correctAnswer = p.answer;
       }
-      if (setting == 16) {
+      if (setting == 17) {
         console.log(p.answer);
         // got to change to an array
         p.answer = p.answer.split(":");
@@ -21564,14 +21700,14 @@ function handleSubmit(e) {
         correctAnswer = p.answer;
       }
       //PERCENTAGE: OVERLAPPING MODEL
-      if (setting == 17) {
+      if (setting == 18) {
         if (p.question == "A") correctAnswer = p.oneUnit * p.numeA;
         if (p.question == "B")
           correctAnswer = p.oneUnit * p.numeA + p.difference;
         if (p.question == "total") correctAnswer = p.oneUnit * p.denoA;
       }
       // PERCENTAGE: GST, DISCOUNT AND SERVICE CHARGE
-      if (setting == 18) {
+      if (setting == 19) {
         if (p.optionOne == "simple gst") {
           if (p.optionTwo == "gst") {
             correctAnswer = (p.value / 100) * p.gst;
@@ -21599,8 +21735,8 @@ function handleSubmit(e) {
         }
       }
       // PERCENTAG: IDENTICAL EFFECT
-      if (setting == 19) correctAnswer = p.salary;
-      if (setting == 20) {
+      if (setting == 20) correctAnswer = p.salary;
+      if (setting == 21) {
         if (p.question == "at first") {
           correctAnswer = p.oldQuantity;
         }
@@ -21609,24 +21745,24 @@ function handleSubmit(e) {
         }
       }
       //AVERAGE: CONSECUTIVE DAYS
-      if (setting == 21) {
+      if (setting == 22) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
 
       //RATIO: MANIPULATION OF UNITS WITH VALUE
-      if (setting == 22) {
+      if (setting == 23) {
         correctAnswer = p.total;
       }
 
       // PATTERN: CONTINUOUS PATTERN (SETS)
-      if (setting == 23) {
+      if (setting == 24) {
         if (p.question == "pattern") correctAnswer = p.value;
         if (p.question == "number") correctAnswer = p.pattern;
       }
 
       // RATIO: UNIDENTICAL GROUP
 
-      if (setting == 24) {
+      if (setting == 25) {
         if (p.question == "FM") {
           [p.A2, p.B1] = simplify(p.A2, p.B1);
           correctAnswer = `${p.A2}:${p.B1}`;
@@ -25776,7 +25912,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(23, calArr, setting, 99);
+    setting = calArrAll(24, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
@@ -25936,8 +26072,31 @@ function genProblems() {
         value: genNumbers(24) + 60,
       };
     }
+    // FRACTIONS: CLOSEST AND FURTHEST
+    if (setting == 15) {
+      let denominators = [];
+      while (denominators.length < 5) {
+        const num = genNumbers(8) + 4;
+        if (!denominators.includes(num)) {
+          denominators.push(num);
+        }
+      }
+      return {
+        whole: genNumbers(2) + 1,
+        choice: ["furthest", "closest"][genNumbers(2)],
+        denoZero: denominators[0],
+        denoOne: denominators[1],
+        denoTwo: denominators[2],
+        denoThree: denominators[3],
+        numeZero: denominators[0] + genNumbers(4) - 2,
+        numeOne: denominators[1] + genNumbers(4) - 2,
+        numeTwo: denominators[2] + genNumbers(4) - 2,
+        numeThree: denominators[3] + genNumbers(4) - 2,
+      };
+    }
+
     //DECIMALS
-    if (setting == 15 || setting == 16) {
+    if (setting == 16 || setting == 17) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [1, 10, 100][genNumbers(3)],
@@ -25947,7 +26106,7 @@ function genProblems() {
     }
 
     // DECIMALS: OVERLAPPING PLACE VALUE
-    if (setting == 17) {
+    if (setting == 18) {
       return {
         ones: genNumbers(99) + 1,
         tens: genNumbers(99) + 1,
@@ -25958,35 +26117,35 @@ function genProblems() {
       };
     }
 
-    if (setting == 18) {
+    if (setting == 19) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [10, 100, 1000][genNumbers(3)],
         numTwo: genNumbers(8) + 2,
       };
     }
-    if (setting == 19) {
+    if (setting == 20) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [10, 100, 1000][genNumbers(3)],
         numTwo: genNumbers(89) + 11,
       };
     }
-    if (setting == 20) {
+    if (setting == 21) {
       return {
         numOne: genNumbers(7) + 2,
         multiplier: genNumbers(989) + 11,
         divisor: [10, 100, 1000][genNumbers(3)],
       };
     }
-    if (setting == 21) {
+    if (setting == 22) {
       return {
         numOne: genNumbers(10) + 1,
         numTwo: [3, 7, 9, 11][genNumbers(4)],
         roundOff: genNumbers(3) + 1,
       };
     }
-    if (setting == 22) {
+    if (setting == 23) {
       return {
         operator: ["x", "÷"][genNumbers(2)],
         numOne: undefined,
@@ -25999,7 +26158,7 @@ function genProblems() {
     }
 
     //  DECIMALS: PARTS AND INTERVALS
-    if (setting == 23) {
+    if (setting == 24) {
       const gen_intervals = [5, 8, 10][genNumbers(3)];
       const gen_eachIntervals = [0.1, 0.01, 0.2, 0.02, 0.5, 0.05][
         genNumbers(6)
@@ -26410,13 +26569,37 @@ function genProblems() {
       setting = calArr[genNumbers(calArr.length)];
       console.log("Whats the regen?");
     } else {
-      setting = calArrAll(23, calArr, setting, 99);
+      setting = calArrAll(25, calArr, setting, 99);
       setting = checkRange(setting, calArr, skipArr);
+    }
+
+    // FRACTIONS: CLOSEST AND FURTHEST
+    if (setting == 1) {
+      let denominators = [];
+      while (denominators.length < 6) {
+        const num = genNumbers(7) + 4;
+        if (!denominators.includes(num)) {
+          denominators.push(num);
+        }
+      }
+      return {
+        denoComp: denominators[4],
+        numeComp: genNumbers(denominators[4] - 1) + 1,
+        choice: ["furthest", "closest"][genNumbers(2)],
+        denoZero: denominators[0],
+        denoOne: denominators[1],
+        denoTwo: denominators[2],
+        denoThree: denominators[3],
+        numeZero: denominators[0] + genNumbers(4) - 2,
+        numeOne: denominators[1] + genNumbers(4) - 2,
+        numeTwo: denominators[2] + genNumbers(4) - 2,
+        numeThree: denominators[3] + genNumbers(4) - 2,
+      };
     }
 
     //REMAINDER CONCEPT: BEFORE AND AFTER
 
-    if (setting == 1) {
+    if (setting == 2) {
       const gen_denoA = genNumbers(6) + 2;
       const gen_denoB = genNumbers(6) + 2;
       return {
@@ -26432,7 +26615,7 @@ function genProblems() {
     }
 
     //REMAINDER CONCEPT: UNDER THE SAME UNIT
-    if (setting == 2) {
+    if (setting == 3) {
       const gen_denoA = genNumbers(6) + 2;
       const gen_denoB = genNumbers(6) + 2;
       const gen_objPosition = genNumbers(2);
@@ -26454,7 +26637,7 @@ function genProblems() {
     }
 
     //FRACTIONS: OVERLAPPING MODEL
-    if (setting == 3) {
+    if (setting == 4) {
       const gen_deno = (genNumbers(2) + 3) * 2;
       return {
         question: ["A", "B", "total"][genNumbers(3)],
@@ -26468,7 +26651,7 @@ function genProblems() {
     }
 
     // IDENTICAL NUMERATOR TYPE 2
-    if (setting == 4) {
+    if (setting == 5) {
       const denominator = genNumbers(6) + 2;
       const numerator = genNumbers(denominator - 1) + 1;
       const denominatorTwo = genNumbers(10) + 2;
@@ -26486,7 +26669,7 @@ function genProblems() {
     }
 
     // GEOMETRY: OBTUSE TRIANGLE
-    if (setting == 5) {
+    if (setting == 6) {
       return {
         base: genNumbers(9) + 5,
         height: genNumbers(3) + 5,
@@ -26498,7 +26681,7 @@ function genProblems() {
       };
     }
     //GEOMETRY: AREA OF FIGURE: CUTTING
-    if (setting == 6) {
+    if (setting == 7) {
       const gen_squareA = genNumbers(50) + 100;
       return {
         squareA: gen_squareA,
@@ -26510,7 +26693,7 @@ function genProblems() {
     }
 
     // GEOMETRY: MANIPULATION OF DIMENSION
-    if (setting == 7) {
+    if (setting == 8) {
       const gen_length = (genNumbers(10) + 10) * 4;
       return {
         type: [2, 1][genNumbers(2)],
@@ -26520,7 +26703,7 @@ function genProblems() {
     }
 
     // GEOMETRY: MANIPULATION OF DIMENSION LEVEL 2
-    if (setting == 8) {
+    if (setting == 9) {
       const gen_length = (genNumbers(10) + 10) * 4;
       return {
         // part: ["A", "B", "C", "D"][genNumbers(4)],
@@ -26536,7 +26719,7 @@ function genProblems() {
       };
     }
     // AREA OF FIGURE: DIFFERENT UNITS
-    if (setting == 9) {
+    if (setting == 10) {
       const gen_length = genNumbers(5) + 10;
       const gen_breadth = genNumbers(gen_length - 8) + 8;
       return {
@@ -26547,7 +26730,7 @@ function genProblems() {
       };
     }
     // REPEATED GROUP RATIO
-    if (setting == 10) {
+    if (setting == 11) {
       let A = genNumbers(10) + 1;
       return {
         varA: A,
@@ -26559,7 +26742,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 11) {
+    if (setting == 12) {
       // console.log("Unchanged Object");
       return {
         object: ["sweets", "toys", "books"][genNumbers(3)],
@@ -26574,7 +26757,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 12) {
+    if (setting == 13) {
       // console.log("Unchanged Total");
       const valueA = (genNumbers(40) + 10) * 5;
       const valueB = (genNumbers(40) + 10) * 5;
@@ -26593,7 +26776,7 @@ function genProblems() {
     }
 
     //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 13) {
+    if (setting == 14) {
       // console.log("Unchanged Difference");
       const valueA = genNumbers(50) + 5;
       const valueB = genNumbers(50) + 5;
@@ -26612,7 +26795,7 @@ function genProblems() {
       };
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 14) {
+    if (setting == 15) {
       const gen_A = genNumbers(5) + 2;
       const gen_B = genNumbers(5) + 2;
       const genDeno_A = [genNumbers(gen_A - 2) + 2, gen_A * 2][genNumbers(2)];
@@ -26628,7 +26811,7 @@ function genProblems() {
     }
 
     // REPEATED IDENTITY (GEOMETRY)
-    if (setting == 15) {
+    if (setting == 16) {
       return {
         rectLength: genNumbers(5) + 5,
         rectBreadth: genNumbers(5) + 5,
@@ -26640,7 +26823,7 @@ function genProblems() {
       };
     }
     //PERCETAGE: REPEATED GROUP
-    if (setting == 16) {
+    if (setting == 17) {
       return {
         percA: (genNumbers(20) + 1) * 5,
         firstSentence: ["B and C", "the total"][genNumbers(2)],
@@ -26651,7 +26834,7 @@ function genProblems() {
     }
 
     //PERCENTAGE: OVERLAPPING MODEL
-    if (setting == 17) {
+    if (setting == 18) {
       const gen_deno = 10;
       return {
         question: ["A", "B", "total"][genNumbers(3)],
@@ -26665,7 +26848,7 @@ function genProblems() {
     }
 
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 18) {
+    if (setting == 19) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         optionOne: ["discount gst", "service", "simple gst"][genNumbers(3)],
@@ -26677,7 +26860,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: IDENTICAL EFFECT
-    if (setting == 19) {
+    if (setting == 20) {
       return {
         saves: (genNumbers(8) + 1) * 5,
         change: [(genNumbers(4) + 1) * 5, -(genNumbers(4) + 1) * 5][
@@ -26686,7 +26869,7 @@ function genProblems() {
         salary: genNumbers(5000) + 5000,
       };
     }
-    if (setting == 20) {
+    if (setting == 21) {
       return {
         oldQuantity: genNumbers(6) + 3,
         oldAverage: genNumbers(40) + 10,
@@ -26699,7 +26882,7 @@ function genProblems() {
       };
     }
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 21) {
+    if (setting == 22) {
       return {
         dayOne: genNumbers(20) + 5,
         days: genNumbers(5) + 5,
@@ -26710,7 +26893,7 @@ function genProblems() {
     }
 
     //RATIO: MANIPULATION OF UNITS WITH VALUE
-    if (setting == 22) {
+    if (setting == 23) {
       const gen_unitA = genNumbers(10) + 2;
       const gen_unitB = genNumbers(10) + 2;
       return {
@@ -26727,7 +26910,7 @@ function genProblems() {
     }
 
     // PATTERN: CONTINUOUS PATTERN (SETS)
-    if (setting == 23) {
+    if (setting == 24) {
       return {
         start: genNumbers(8) + 2,
         first: genNumbers(5) + 1,
@@ -26742,7 +26925,7 @@ function genProblems() {
     }
 
     // RATIO: UNIDENTICAL GROUP
-    if (setting == 24) {
+    if (setting == 25) {
       return {
         A1: genNumbers(5) + 1,
         A2: genNumbers(5) + 1,
@@ -29473,7 +29656,7 @@ function buttonLevelSetting() {
         setting = 99;
       }
 
-      accepted = [...Array.from({ length: 23 }, (_, i) => i + 1), 99];
+      accepted = [...Array.from({ length: 24 }, (_, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
@@ -29514,7 +29697,7 @@ function buttonLevelSetting() {
         optionsBox.classList.add("hidden");
         setting = 99;
       }
-      accepted = [...Array.from({ length: 24 }, (_, i) => i + 1), 99];
+      accepted = [...Array.from({ length: 25 }, (_, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";

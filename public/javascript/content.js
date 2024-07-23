@@ -235,16 +235,17 @@ export const displayContent = (level) => {
       12. Fractions: Parts of a fraction</br>
       13. Fractions: Form</br>
       14. Fractions: Conversion</br>
+      15. Fractions: Closest / Furthest </br>
       <hr>
-      15. Decimals: Addition</br>
-      16. Decimals: Subtraction</br>
-      17. Decimals: Overlapping Place Value</br>
-      18. Decimals: Multiplication (Single)</br>
-      19. Decimals: Multiplication (Double)</br>
-      20. Decimals: Division </br>
-      21. Fractions to Decimal (Limit)</br>
-      22. Decimals: Division and Multiplication with splitting</br>
-      23. Decimals: Parts and Intervals</br>
+      16. Decimals: Addition</br>
+      17. Decimals: Subtraction</br>
+      18. Decimals: Overlapping Place Value</br>
+      19. Decimals: Multiplication (Single)</br>
+      20. Decimals: Multiplication (Double)</br>
+      21. Decimals: Division </br>
+      22. Fractions to Decimal (Limit)</br>
+      23. Decimals: Division and Multiplication with splitting</br>
+      24. Decimals: Parts and Intervals</br>
       <hr>
       99. All
       `;
@@ -296,35 +297,36 @@ export const displayContent = (level) => {
   if (level == "calFiveb") {
     return `
     </p>
-    1. Fractions: Before and After</br>
-    2. Fractions: Under the same unit (Level 2)</br>
-    3. Fractions: Overlapping Model</br>
-    4. Fractions: Identical Numerator (Type 2)</br>
+    1. Fractions: Closest and Furthest</br>
+    2. Fractions: Before and After</br>
+    3. Fractions: Under the same unit (Level 2)</br>
+    4. Fractions: Overlapping Model</br>
+    5. Fractions: Identical Numerator (Type 2)</br>
     <hr>
-    5. Geometry: Obtuse Triangle</br>
-    6. Geometry: Area of Figure:  Cutting</br>
-    7. Geometry: Manipulation of Dimension</br>
-    8. Geometry: Manipulation of Dimension: level 2</br>
-    9. Geometry: Area of Figure: Using 2 different Units</br>
+    6. Geometry: Obtuse Triangle</br>
+    7. Geometry: Area of Figure:  Cutting</br>
+    8. Geometry: Manipulation of Dimension</br>
+    9. Geometry: Manipulation of Dimension: level 2</br>
+    10. Geometry: Area of Figure: Using 2 different Units</br>
     <hr>
-    10. Ratio: Repeated Group</br>
-    11. Ratio: Unchanged Object</br>
-    12. Ratio: Unchanged Total</br>
-    13. Ratio: Unchanged Difference</br>
-    14. Ratio: Manipulation in units</br>
-    15. Ratio: Repeated Identity (Geometry)</br>
+    11. Ratio: Repeated Group</br>
+    12. Ratio: Unchanged Object</br>
+    13. Ratio: Unchanged Total</br>
+    14. Ratio: Unchanged Difference</br>
+    15. Ratio: Manipulation in units</br>
+    16. Ratio: Repeated Identity (Geometry)</br>
     <hr>
-    16. Percentage: Repeated Group</br>
-    17. Percentage: Overlapping Model</br>
-    18. Percentage: GST, discount and Service Charge</br>
-    19. Percentage: Identical Effect</br>
+    17. Percentage: Repeated Group</br>
+    18. Percentage: Overlapping Model</br>
+    19. Percentage: GST, discount and Service Charge</br>
+    20. Percentage: Identical Effect</br>
     <hr>
-    20. Average: External Change</br>
-    21. Average: Odd consecutive days</br>
+    21. Average: External Change</br>
+    22. Average: Odd consecutive days</br>
     <hr>
-    22. Ratio: Manipulation of units with value</br>
-    23. Pattern: Continuous Pattern (Sets) </br>
-    24. Ratio: Unidentical Group
+    23. Ratio: Manipulation of units with value</br>
+    24. Pattern: Continuous Pattern (Sets) </br>
+    25. Ratio: Unidentical Group
     <hr>
     99. All
     `;
