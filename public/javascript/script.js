@@ -1492,6 +1492,7 @@ function updateProblems() {
   }
 
   if (level == 1.08) {
+    normalDisplay()
     p.numOne = p.quantity * p.multiplier;
     let massUnits = ["g", "kg"][genNumbers(2)];
     if (

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 
+    <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
     <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
@@ -17,10 +19,29 @@
     .message {
 background-color:#f8d7da;
     }
+    img {
+        border-radius: 25%;
+        height: 300px;
+    }
+    .carousel-container{
+        text-align: center;
+        position: relative;
+        width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+
+    }
+    /* .inside-box{
+        height: 100%;
+        max-height: 400px;
+ 
+    } */
 
 </style>
 <body>
     <%- include("../partials/navbar"); %>
+
+    <!-- MESSAGE -->
     <div class="py-5">
         <div class="container">
             <% if (message) { %>
@@ -28,10 +49,46 @@ background-color:#f8d7da;
                    <div class="message"><%= message %></div>
                 </div>
             <% } %>
+        </div>
+
+        <!-- CAROUSELL -->
+        <div class="carousel-container">
+        <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <!-- <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div> -->
+            <div class="carousel-inner inside-box">
+              <div class="carousel-item active">
+                <img src="https://drive.google.com/thumbnail?id=<%= gradPictures[0].link %>&sz=w500" alt="<%= gradPictures[0].name %>">
+                <p><%= gradPictures[0].name %></p>
+                <p><%= gradPictures[0].year %></p>
+              </div>
+              <% for(let i = 1; i < gradPictures.length; i++) { %>
+                <div class="carousel-item">
+                    <img src="https://drive.google.com/thumbnail?id=<%= gradPictures[i].link %>&sz=w500" alt="<%= gradPictures[i].name %>">
+                    <p><%= gradPictures[i].name %></p>
+                    <p><%= gradPictures[i].year %></p>
+                </div>
+              <% } %>
+             
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- LOGIN -->
+        <div class="container">
         <h1 class="text-center">Welcome! Please log in below.</h1>
-    
                       <div class="row">
-                       
                           <div class="col-md-5 mx-auto">
                               <div class="card card-body">
                                                           
@@ -54,7 +111,7 @@ background-color:#f8d7da;
                                       </div> -->
                                       <div class="form-group py-1 text-center">
                                           <button class="btn btn-primary btn-block mt-4" type="submit" id="loginBtn">Log In</button></p>
-                                          <a class="btn btn-secondary" href="/user/signup">Sign up</a>
+                                          <!-- <a class="btn btn-secondary" href="/user/signup">Sign up</a> -->
                                       </div>
                                   </form>
                                   <!-- <p class="small-xl py-3 text-center"> -->
@@ -69,4 +126,5 @@ background-color:#f8d7da;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="module" src="/javascript/login.js"></script> -->
+<!-- <link rel="stylesheet" href="/css/login.css"> -->
 </html>

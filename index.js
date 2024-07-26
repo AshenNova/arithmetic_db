@@ -13,6 +13,7 @@ const homeworkRoute = require("./routes/homeworks");
 const examRoute = require("./routes/exams");
 const invoiceRoute = require("./routes/invoices");
 const interventionRoute = require("./routes/interventions");
+const graduationRoute = require("./routes/graduations");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 const cookieParser = require("cookie-parser");
@@ -79,7 +80,8 @@ mongoose
 //
 
 app.get("/", (req, res) => {
-  res.send(fs.readFileSync("index.html", "utf8"));
+  // res.send(fs.readFileSync("index.html", "utf8"));
+  res.redirect("/user/login");
 });
 
 app.get("/online", authController.authenticate, (req, res) => {
@@ -125,6 +127,7 @@ app.use(
   invoiceRoute
 );
 app.use("/intervention", authController.authenticate, interventionRoute);
+app.use("/graduation", authController.authenticate, graduationRoute);
 app.get("*", function (req, res, next) {
   // res.redirect("./pages/arithmetic");
   // const err = new Error(`Can't find${req.originalUrl} on this server!`);

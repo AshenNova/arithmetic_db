@@ -1,0 +1,28 @@
+#points {
+  text-align: center;
+  /* max-height: 100%; */
+}
+
+.points-image {
+  width: 15%;
+  border-radius: 10%;
+  margin: 20px;
+}
+.carousel-control-prev {
+  color: black;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-image: none;
+}
+.carousel-control-next-icon:after {
+  content: ">";
+  font-size: 55px;
+  color: red;
+}
+
+.carousel-control-prev-icon:after {
+  content: "<";
+  font-size: 55px;
+  color: red;
+}

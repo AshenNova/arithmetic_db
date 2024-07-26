@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
+  <link rel="stylesheet" href="/css/navbar-styles.css">
+   <link rel="icon" href="/images/favicon.ico?v=1.1">
+
+  
+  <title>Graduation photo upload</title>
+</head>
+<body>
+  <%- include("../partials/navbar"); %>
+<div class="container mt-3">
+    <h1>Uploading new graduation photo.</h1>
+    <form action="/graduation/upload" method="post">
+        <div class="form-group my-1">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" name="name">
+        </div>
+        <div class="form-group my-1">
+            <label for="year">Year:</label>
+            <input type="text" class="form-control" name="Year" value="<%= new Date().getFullYear() %>">
+        </div>
+        <div class="form-group my-1">
+            <label for="name">Photo:</label>
+            <input type="file" class="form-control" name="picture">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+<script>
+    const formElem = document.querySelector("form");
+    formElem.addEventListener("submit", async (e) => {
+      console.log("form submitting");
+      e.preventDefault();
+      await fetch("/graduation/upload", {
+        method: "POST",
+        body: new FormData(formElem),
+      })
+        .then((response) => response.json()).then((data) => {
+          console.log(data)
+          alert("New graduation photo has been added successfully!");
+        //   window.location.href = "/science/questions/" + data.newQuestion._id
+    
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+    
+    </script>
+
+</html>

@@ -5,6 +5,7 @@ const Attempt = require("../models/attemptModel");
 const Highscore = require("../models/highscoreModel");
 const Homework = require("../models/homeworkModel");
 const Intervention = require("../models/interventionModel");
+const Graduation = require("../models/graduationModel");
 const bcrypt = require("bcryptjs");
 const catchAsync = require("../utils/catchAsync");
 const fs = require("fs");
@@ -1669,7 +1670,7 @@ exports.summary = async (req, res) => {
     // }
   }
 };
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
   console.log(req.auth);
   // const { message } = req;
   let message;
@@ -1677,7 +1678,15 @@ exports.login = (req, res) => {
   let authenticate = req.auth;
   let currentUser = req.user;
 
-  res.render("pages/login", { username, authenticate, currentUser, message });
+  const gradPictures = await Graduation.find().sort({ date: -1 });
+
+  res.render("pages/login", {
+    gradPictures,
+    username,
+    authenticate,
+    currentUser,
+    message,
+  });
   // res.send("This is the login page.");
 };
 
