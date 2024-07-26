@@ -1678,6 +1678,7 @@ exports.login = async (req, res) => {
   let authenticate = req.auth;
   let currentUser = req.user;
 
+  // const gradPictures = await Graduation.find().sort({ date: -1 }).limit(5);
   const gradPictures = await Graduation.find().sort({ date: -1 });
 
   res.render("pages/login", {

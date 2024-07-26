@@ -57,5 +57,5 @@ exports.uploadNew = async (req, res) => {
   req.body.link = imageID;
   const newGrad = await Graduation.create(req.body);
   console.log(newGrad);
-  res.send("Success");
+  res.send(JSON.stringify("Success"));
 };
