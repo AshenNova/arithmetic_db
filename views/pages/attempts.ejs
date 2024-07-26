@@ -273,7 +273,7 @@
                 <td class="click-summary"><%= "📜" %></td>
                 <% if (currentUser.admin) { %>
                   <td><a href="/user/summary/?username=<%= item.user %>" class="no-line" target="_blank">⛩️</a></td>
-                  <td><a href="/attempts/edit/<%= item._id %>" class="no-line"><i class="fa-solid fa-eye"></i></a></td>
+                  <td><a href="/attempts/edit/<%= item._id %>" class="no-line"><i class="fa-solid fa-pen-to-square"></i></a></td>
                   <td><a href="/attempts/delete/<%= item._id %>" class="no-line">❌</a></td>
                 <% } %>
             </tr>

@@ -25,6 +25,9 @@
 .single {
     display: inline-block;
 }
+  .no-line{
+    text-decoration: none;
+}
 </style>
 <body>
     <%- include("../partials/navbar"); %>
@@ -141,8 +144,9 @@
                                 <td style="width: 20%; text-align: left"><%- item.comment.replace(regex, "</br>") %></td>
                                 <td><%= item.status %></td>
                                 <% if (currentUser.admin) { %>
-                                    <td><a href="/homework/new/<%= item._id %>">Edit</a></td>
-                                    <td><a href="/homework/delete/<%= item._id %>/<%= item.name %>">Delete</a></td>
+                                    <td><a href="/homework/new/<%= item._id %>"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                    <td><a href="/homework/delete/<%= item._id %>/<%= item.name %>" class="no-line">❌</a></td>
+                                    <td><a href="/homework/status/completed/<%= item._id %>"><button class="btn btn-outline-warning">Completed</button></a></td>
                                 <% } %>
                             </tr>
                          <% } %>
@@ -196,8 +200,9 @@
                                          <% const regex = /\r\n/gi %>
                                 <td style="width: 20%; text-align: left"><%- item.comment.replace(regex, "</br>") %></td>
                                         <td><%= item.status %></td>
-                                        <td><a href="/homework/new/<%= item._id %>">Edit</a></td>
-                                        <td><a href="/homework/delete/<%= item._id %>/<%= item.name %>">Delete</a></td>
+                                        <td><a href="/homework/new/<%= item._id %>"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                        <td><a href="/homework/delete/<%= item._id %>/<%= item.name %>" class="no-line">❌</a></td>
+                                        <td><a href="/homework/status/incomplete/<%= item._id %>"><button class="btn btn-outline-dark">Incompleted</button></a></td>
                                     </tr>
                                    <% } %>
                             <% }) %>

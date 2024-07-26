@@ -7,6 +7,27 @@ const User = require("../models/userModel");
 //   } catch (e) {
 //     res.status(400).json({ message: e });
 //   }
+exports.updateToCompleted = async (req, res) => {
+  console.log("Updating status to completed");
+  try {
+    const homework = await Homework.findByIdAndUpdate(req.params.id, {
+      status: "Completed",
+    });
+    res.redirect(`/user/summary/?username=${homework.name}`);
+  } catch (e) {
+    res.status(400).json({ message: e });
+  }
+};
+exports.updateToIncomplete = async (req, res) => {
+  try {
+    const homework = await Homework.findByIdAndUpdate(req.params.id, {
+      status: "Incomplete",
+    });
+    res.redirect(`/user/summary/?username=${homework.name}`);
+  } catch (e) {
+    res.status(400).json({ message: e });
+  }
+};
 
 exports.getHomework = async (req, res) => {
   try {
