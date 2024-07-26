@@ -1492,7 +1492,7 @@ function updateProblems() {
   }
 
   if (level == 1.08) {
-    normalDisplay()
+    normalDisplay();
     p.numOne = p.quantity * p.multiplier;
     let massUnits = ["g", "kg"][genNumbers(2)];
     if (
@@ -16548,8 +16548,20 @@ How many items are there in each bag?
         }
 
         displayProblem.innerHTML = `
-        ${p.sceneAOne}/${totalAOne} girls and ${p.sceneBOne}/${totalBOne} boys is ${firstScene}.</p>
-        ${p.sceneATwo}/${totalATwo} girls and ${p.sceneBTwo}/${totalBTwo} boys is ${secondScene}.</p>
+       ${displaySimpleFraction(
+         p.sceneAOne,
+         totalAOne
+       )} girls and ${displaySimpleFraction(
+          p.sceneBOne,
+          totalBOne
+        )} boys is ${firstScene}.</p>
+       ${displaySimpleFraction(
+         p.sceneATwo,
+         totalATwo
+       )} girls and ${displaySimpleFraction(
+          p.sceneBTwo,
+          totalBTwo
+        )} boys is ${secondScene}.</p>
         `;
         p.varA = totalAOne;
         p.varB = totalBOne;
@@ -16568,7 +16580,13 @@ How many items are there in each bag?
           sceneATwoRemaining * p.unitA + sceneBTwoRemaining * p.unitB;
         displayProblem.innerHTML = `
         There is a a total of ${firstScene} students.</p>
-        If ${p.sceneATwo}/${totalATwo} girls and ${p.sceneBTwo}/${totalBTwo} boys left the school.</p>
+        If ${displaySimpleFraction(
+          p.sceneATwo,
+          totalATwo
+        )} girls and ${displaySimpleFraction(
+          p.sceneBTwo,
+          totalBTwo
+        )} boys left the school.</p>
         There would be ${secondScene} students remaining.</p>
         `;
         p.varA = totalATwo;

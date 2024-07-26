@@ -21,7 +21,7 @@
     <form action="/graduation/upload" method="post">
         <div class="form-group my-1">
             <label for="name">Name:</label>
-            <input type="text" class="form-control" name="name">
+            <input type="text" class="form-control student_name" class="student_name" name="name">
         </div>
         <div class="form-group my-1">
             <label for="year">Year:</label>
@@ -29,7 +29,7 @@
         </div>
         <div class="form-group my-1">
             <label for="name">Photo:</label>
-            <input type="file" class="form-control" name="picture">
+            <input type="file" class="form-control student_pic" name="picture">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -48,7 +48,11 @@
       })
         .then((response) => response.json()).then((data) => {
           console.log(data)
+          document.querySelector(".student_name").value = ""
+          document.querySelector(".student_pic").value = ""
           alert("New graduation photo has been added successfully!");
+          document.querySelector(".student_name").focus()
+         
         //   window.location.href = "/science/questions/" + data.newQuestion._id
     
         })
