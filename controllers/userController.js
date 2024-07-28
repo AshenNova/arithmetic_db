@@ -1069,7 +1069,7 @@ const generateRec = async (nameTemp) => {
     "5.17",
     "5.18",
   ];
-  const levelSix = ["6", "6.01", "6.02", "6.03"];
+  const levelSix = ["6", "6.01", "6.02", "6.03", "6.05"];
 
   let ageLevel;
   if (age <= 7) ageLevel = [];
@@ -1214,6 +1214,7 @@ const generateRec = async (nameTemp) => {
         !existingLevel.includes(attempt.level)
       ) {
         if (attempt.mode == "Hardcore" || attempt.mode == "Normal") {
+          console.log("⏱️");
           if (attempt.time == 600) {
             let mode = ["Easy", "Normal", "Hardcore"];
             let index = mode.indexOf(attempt.mode);
@@ -1289,7 +1290,11 @@ const generateRec = async (nameTemp) => {
 
           //Select new level
           if (index == ageLevel.length - 1) {
-            recommendObj.level = ageLevel[0];
+            let i = 0;
+            while (existingLevel.includes(ageLevel[i])) {
+              i += 1;
+            }
+            recommendObj.level = ageLevel[i];
           } else if (index == -1) {
             let temp = Math.floor(ageLevel.length / 2);
             while (existingLevel.includes(ageLevel[temp])) {
