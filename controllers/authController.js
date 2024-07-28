@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const { sendEmail } = require("../utils/email");
+const Graduation = require("../models/graduationModel");
 
 const signToken = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {
@@ -100,6 +101,7 @@ exports.login = catchAsync(async (req, res, next) => {
   const { password } = req.body;
   let { username } = req.body;
   username = username.trim();
+  const gradPictures = await Graduation.find();
   // try {
   // 1. CHECK IF USER AND PASSWORD EXIST
   console.log("USER AND PASSWORD EXIST CHECK!");
@@ -112,6 +114,7 @@ exports.login = catchAsync(async (req, res, next) => {
       authenticate,
       currentUser,
       message,
+      gradPictures,
     });
   }
   console.log("Cleared! 1");
@@ -129,6 +132,7 @@ exports.login = catchAsync(async (req, res, next) => {
       authenticate,
       currentUser,
       message,
+      gradPictures,
     });
   }
   const passwordAuthentication = await user.correctPassword(
@@ -147,6 +151,7 @@ exports.login = catchAsync(async (req, res, next) => {
       authenticate,
       currentUser,
       message,
+      gradPictures,
     });
   }
   console.log("Cleared! 3");
