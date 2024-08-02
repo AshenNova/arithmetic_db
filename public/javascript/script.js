@@ -16755,15 +16755,19 @@ How many items are there in each bag?
         if (p.boysQuantity == p.girlsQuantity)
           p.boysQuantity -= genNumbers(2) + 2;
         p.difference = p.boysQuantity - p.girlsQuantity;
+
+        if (Math.abs(p.difference) == 1) {
+          p.boysQuantity -= 3;
+          p.difference = p.boysQuantity - p.girlsQuantity;
+        }
         console.log(p.boysQuantity, p.girlsQuantity);
         const totalBoysSweets = p.boysQuantity * p.quantityOne;
         const totalGirlsSweets = p.girlsQuantity * p.quantityTwo;
         const differenceInSweets = totalBoysSweets - totalGirlsSweets;
 
-        if (Math.abs(p.difference) == 1) p.boysQuantity -= 3;
         displayProblem.innerHTML = `
-        Each girl receive ${p.quantityOne} sweets.</br>
-        Each boy receive ${p.quantityTwo} sweets.</br>
+        Each boy receive ${p.quantityOne} sweets.</br>
+        Each girl receive ${p.quantityTwo} sweets.</br>
         There are ${
           p.difference > 0
             ? `${p.difference} more`
@@ -18598,7 +18602,7 @@ function handleSubmit(e) {
         if (p.numTwo - p.numFour < 0) {
           correctAnswer = `${p.numOne - 1}${p.minHours}${p.numTwo + 60}${
             p.minSeconds
-          },${p.numOne - p.numThree - 1}${p.minHours}${
+          }, ${p.numOne - p.numThree - 1}${p.minHours}${
             p.numTwo + 60 - p.numFour
           }${p.minSeconds}`;
         } else {
