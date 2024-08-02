@@ -93,6 +93,7 @@ export const displayContent = (level) => {
     5. Simultaneous Equation</br>
     6. Internal Transfer: Double Effect</br>
     7. Fractions: Under the same unit (Difference)</br>
+    8. Bridging</br>
     <hr>
     9. All`;
   }

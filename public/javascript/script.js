@@ -298,7 +298,7 @@ let boyNames = [
   "Theodore",
 ];
 let girlNames = [
-  "Olivia",
+  "Tammy",
   "Emma",
   "Charlotte",
   "Amelia",
@@ -14822,7 +14822,7 @@ How far is apart is Town A and Town B?
         lineTwo = `${p.objectOne} is ${p.varA}.`;
         p.rollLineThree = ["B", "total"][genNumbers(2)];
         if (p.rollLineThree == "B") {
-          lineThree = `What is ${p.objectTwo}`;
+          lineThree = `What is ${p.objectTwo}?`;
         }
         if (p.rollLineThree == "total") {
           lineThree = `What is the total of ${p.objectOne} and ${p.objectTwo}?`;
@@ -14833,7 +14833,7 @@ How far is apart is Town A and Town B?
         lineTwo = `${p.objectTwo} is ${p.varB}.`;
         p.rollLineThree = ["A", "total"][genNumbers(2)];
         if (p.rollLineThree == "A") {
-          lineThree = `What is ${p.objectOne}`;
+          lineThree = `What is ${p.objectOne}?`;
         }
         if (p.rollLineThree == "total") {
           lineThree = `What is the total of ${p.objectOne} and ${p.objectTwo}?`;
@@ -14844,7 +14844,7 @@ How far is apart is Town A and Town B?
         lineTwo = `${p.objectOne} and ${p.objectTwo} is ${p.total}.`;
         p.rollLineThree = ["A", "B"][genNumbers(2)];
         if (p.rollLineThree == "A") {
-          lineThree = `What is ${p.objectOne}`;
+          lineThree = `What is ${p.objectOne}?`;
         }
         if (p.rollLineThree == "B") {
           lineThree = `What is ${p.objectTwo}?`;
@@ -16679,6 +16679,35 @@ How many items are there in each bag?
         `;
       }
     }
+    // BRIDGING
+    if (setting == 8) {
+      [p.numerator, p.denominator] = simplify(p.numerator, p.denominator);
+      if (p.numerator / p.denominator == 1) p.numerator += 1;
+      const personASpent = p.personBSpent * p.multiple;
+      const personBLeft = p.personBSpent + p.difference;
+
+      const personALeft = (personBLeft * p.numerator) / p.denominator;
+      p.totalA = personASpent + personALeft;
+      p.totalB = p.personBSpent + personBLeft;
+      const total = p.totalA + p.totalB;
+      if (total % 1 != 0 || total <= 0) return updateCalc();
+
+      displayProblem.innerHTML = `
+      ${p.personA} and ${p.personB} has $${total} at first.</br>
+      ${p.personA} spent ${p.multiple} times the amount ${p.personB} spent.</br>
+      The amount ${p.personB} has left is ${
+        p.difference < 0
+          ? `$${Math.abs(p.difference)} less than`
+          : `$${p.difference} more than`
+      } what she spent.</br>
+      The amount ${p.personA} has left is ${
+        p.numerator % p.denominator == 0
+          ? `${p.numerator} times`
+          : `${displaySimpleFraction(p.numerator, p.denominator)}`
+      } of what ${p.personB} has left.</br>
+      How much did ${p.choice == "A" ? p.personA : p.personB} had at first?
+      `;
+    }
   }
   // Display
   if (level == "heuFive") {
@@ -16689,36 +16718,63 @@ How many items are there in each bag?
       (range == 1 && p.rollz == 1)
     ) {
       normalDisplay();
-      while (p.quantityOne == p.quantityTwo) {
-        p.quantityOne = genNumbers(10) + 1;
-      }
-      while (p.difference == 0) {
-        p.difference = genNumbers(10) - 5;
-      }
+      if (p.type == "total") {
+        while (p.quantityOne == p.quantityTwo) {
+          p.quantityOne = genNumbers(10) + 1;
+        }
+        while (p.difference == 0) {
+          p.difference = genNumbers(10) - 5;
+        }
 
-      if (p.difference > 0) {
-        p.adjustment = p.difference * p.quantityOne;
-      } else {
-        p.adjustment = -p.difference * p.quantityTwo;
-      }
-      p.adjustedTotal = p.total - p.adjustment;
-      p.groupTotal = p.quantityOne + p.quantityTwo;
-      p.group = p.adjustedTotal / p.groupTotal;
+        if (p.difference > 0) {
+          p.adjustment = p.difference * p.quantityOne;
+        } else {
+          p.adjustment = -p.difference * p.quantityTwo;
+        }
+        p.adjustedTotal = p.total - p.adjustment;
+        p.groupTotal = p.quantityOne + p.quantityTwo;
+        p.group = p.adjustedTotal / p.groupTotal;
 
-      if (p.group % 1 != 0) {
-        updateCalc();
-        return console.log("Question changed!");
-      }
+        if (p.group % 1 != 0) {
+          console.log("Question changed!");
+          return updateCalc();
+        }
 
-      displayProblem.innerHTML = `
-      Each girl receive ${p.quantityOne} sweets.</br>
-      Each boy receive ${p.quantityTwo} sweets.</br>
-      There are ${Math.abs(p.difference)} ${
-        p.difference > 0 ? "more" : "less"
-      } girls than boys.</br>
-      A total of ${p.total} sweets were given out.
-      How many ${p.choice} are there?
-      `;
+        displayProblem.innerHTML = `
+        Each girl receive ${p.quantityOne} sweets.</br>
+        Each boy receive ${p.quantityTwo} sweets.</br>
+        There are ${Math.abs(p.difference)} ${
+          p.difference > 0 ? "more" : "less"
+        } girls than boys.</br>
+        A total of ${p.total} sweets were given out.
+        How many ${p.choice} are there?
+        `;
+      }
+      if (p.type == "difference") {
+        if (p.quantityOne == p.quantityTwo) p.quantityOne += 1;
+        if (p.boysQuantity == p.girlsQuantity)
+          p.boysQuantity -= genNumbers(2) + 2;
+        p.difference = p.boysQuantity - p.girlsQuantity;
+        console.log(p.boysQuantity, p.girlsQuantity);
+        const totalBoysSweets = p.boysQuantity * p.quantityOne;
+        const totalGirlsSweets = p.girlsQuantity * p.quantityTwo;
+        const differenceInSweets = totalBoysSweets - totalGirlsSweets;
+
+        if (Math.abs(p.difference) == 1) p.boysQuantity -= 3;
+        displayProblem.innerHTML = `
+        Each girl receive ${p.quantityOne} sweets.</br>
+        Each boy receive ${p.quantityTwo} sweets.</br>
+        There are ${
+          p.difference > 0
+            ? `${p.difference} more`
+            : `${Math.abs(p.difference)} less`
+        } boys than girls.</br>
+        The boys have ${Math.abs(differenceInSweets)} ${
+          differenceInSweets > 0 ? `more` : `less`
+        } sweets than the girls.</br>
+          How many ${p.choice} are there?
+        `;
+      }
     }
 
     if (
@@ -23256,6 +23312,11 @@ function handleSubmit(e) {
         if (p.question == "A") correctAnswer = p.valueA * p.denoA;
         if (p.question == "B") correctAnswer = p.valueB * p.denoB;
       }
+
+      if (setting == 8) {
+        if (p.choice == "A") correctAnswer = p.totalA;
+        if (p.choice == "B") correctAnswer = p.totalB;
+      }
     }
     // Answers
     if (level == "heuFive") {
@@ -23264,42 +23325,48 @@ function handleSubmit(e) {
         (setting == 9 && p.rollz == 1) ||
         (range == 1 && p.rollz == 1)
       ) {
-        let firstSentence = undefined;
-        if (p.difference > 0) {
-          firstSentence = `${p.difference}x${p.quantityOne}=${p.adjustment}`;
-        }
-        if (p.difference < 0) {
-          firstSentence = `${-p.difference}x${p.quantityTwo}=${p.adjustment}`;
-        }
-
-        let secondSentence = undefined;
-        secondSentence = `${p.total}-${p.adjustment}=${p.adjustedTotal}`;
-
-        let thirdSentence = `${p.quantityOne}+${p.quantityTwo}=${p.groupTotal}`;
-
-        let fourthSentence = `${p.adjustedTotal}/${p.groupTotal}=${p.group}`;
-
-        if (p.choice == "girls") {
+        if (p.type == "total") {
+          let firstSentence = undefined;
           if (p.difference > 0) {
-            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${
-              p.group
-            }+${p.difference}=${p.group + p.difference}`;
-            correctAnswerTwo = p.group + p.difference;
-          } else {
-            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`;
-            correctAnswerTwo = p.group;
+            firstSentence = `${p.difference}x${p.quantityOne}=${p.adjustment}`;
+          }
+          if (p.difference < 0) {
+            firstSentence = `${-p.difference}x${p.quantityTwo}=${p.adjustment}`;
+          }
+
+          let secondSentence = undefined;
+          secondSentence = `${p.total}-${p.adjustment}=${p.adjustedTotal}`;
+
+          let thirdSentence = `${p.quantityOne}+${p.quantityTwo}=${p.groupTotal}`;
+
+          let fourthSentence = `${p.adjustedTotal}/${p.groupTotal}=${p.group}`;
+
+          if (p.choice == "girls") {
+            if (p.difference > 0) {
+              correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${
+                p.group
+              }+${p.difference}=${p.group + p.difference}`;
+              correctAnswerTwo = p.group + p.difference;
+            } else {
+              correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`;
+              correctAnswerTwo = p.group;
+            }
+          }
+          if (p.choice == "boys") {
+            if (p.difference > 0) {
+              correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`;
+              correctAnswerTwo = p.group;
+            } else {
+              correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${
+                p.group
+              }+${-p.difference}=${p.group - p.difference}`;
+              correctAnswerTwo = p.group - p.difference;
+            }
           }
         }
-        if (p.choice == "boys") {
-          if (p.difference > 0) {
-            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`;
-            correctAnswerTwo = p.group;
-          } else {
-            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${
-              p.group
-            }+${-p.difference}=${p.group - p.difference}`;
-            correctAnswerTwo = p.group - p.difference;
-          }
+        if (p.type == "difference") {
+          if (p.choice == "girls") correctAnswer = p.girlsQuantity;
+          if (p.choice == "boys") correctAnswer = p.boysQuantity;
         }
       }
 
@@ -26432,7 +26499,7 @@ function genProblems() {
       return {
         something: arrSomething[genNumbers(arrSomething.length)],
         personOne: ["Liam", "Noah", "Oliver", "Elijah", "Jake"][genNumbers(5)],
-        personTwo: ["Olivia", "Emma", "Charlotte", "Amelia", "Camila"][
+        personTwo: ["Tammy", "Emma", "Charlotte", "Amelia", "Camila"][
           genNumbers(5)
         ],
         repeatedId: undefined,
@@ -27879,7 +27946,7 @@ function genProblems() {
   }
   //SETTINGS
   if (level == "heuFourb") {
-    setting = calArrAll(7, calArr, setting, 9);
+    setting = calArrAll(8, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 1) {
@@ -27991,6 +28058,22 @@ function genProblems() {
         question: ["A", "B"][genNumbers(2)],
       };
     }
+
+    // BRIDGING
+    if (setting == 8) {
+      return {
+        personA: boyNames[genNumbers(boyNames.length)],
+        personB: girlNames[genNumbers(girlNames.length)],
+        personBSpent: genNumbers(500) + 100,
+        multiple: genNumbers(4) + 2,
+        difference: genNumbers(1000) - 500,
+        numerator: genNumbers(2) + 2,
+        denominator: [1, genNumbers(4) + 2][genNumbers(2)],
+        choice: ["A", "B"][genNumbers(2)],
+        totalA: undefined,
+        totalB: undefined,
+      };
+    }
   }
   // Stats
   if (level == "heuFive") {
@@ -28008,6 +28091,9 @@ function genProblems() {
         adjustment: undefined,
         groupTotal: undefined,
         group: undefined,
+        type: ["difference", "total"][genNumbers(2)],
+        boysQuantity: genNumbers(10) + 10,
+        girlsQuantity: genNumbers(10) + 10,
       };
     }
 
@@ -29931,7 +30017,7 @@ function buttonLevelSetting() {
         optionsBox.classList.add("hidden");
         setting = 9;
       }
-      accepted = [1, 2, 3, 4, 5, 6, 7, 9];
+      accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
