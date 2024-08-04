@@ -16681,8 +16681,8 @@ How many items are there in each bag?
     }
     // BRIDGING
     if (setting == 8) {
-      [p.numerator, p.denominator] = simplify(p.numerator, p.denominator);
       if (p.numerator / p.denominator == 1) p.numerator += 1;
+      [p.numerator, p.denominator] = simplify(p.numerator, p.denominator);
       const personASpent = p.personBSpent * p.multiple;
       const personBLeft = p.personBSpent + p.difference;
 
