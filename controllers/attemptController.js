@@ -490,6 +490,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
         setting: setting,
         skip: "",
         age: currentAge,
+        recommendCheck: true,
       }).sort({ time: 1 });
       let sum = 0;
       let allTheTiming = [];
