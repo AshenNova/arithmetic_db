@@ -12,6 +12,15 @@
   <link rel="stylesheet" href="/css/navbar-styles.css">
    <link rel="icon" href="/images/favicon.ico?v=1.1">
 
+   <style>
+
+     .operations__content {
+       display: none;
+     }
+     .operations__content--active {
+       display: grid;
+     }
+   </style>
   
   <title>All-Time-Highscore</title>
 </head>
@@ -20,11 +29,30 @@
 
   <% const today = new Date().getDay() %>
 <% const dataArr = [sevenArr, eightArr, nineArr, tenArr, elevenArr, twelveArr] %>
-  <div class="container">
+  <div class="container operations">
     <h1> All Time</h1>
+    <div class="operations__tab-container">
+      <% dataArr.forEach((item, index) => { %>
+        <% if (index == 0) { %>
+          <button class="btn btn-primary operations__tab operations__tab--<%= `${index+1}` %> operations__tab--active" data-tab="<%= `${index+1}` %>">
+        <% } else { %>
+          <button class="btn btn-outline-primary operations__tab operations__tab--<%= `${index+1}` %> operations__tab--active" data-tab="<%= `${index+1}` %>">
+        <% } %>
+     
+          Primary <span><%=`${index+1}` %></span>
+        </button>
+      <% }) %>
+    </div>
     <% dataArr.forEach((item, index) => { %>
+    
+      <% if (index == 0){ %>
+      
+        <div class="mt-5 operations__content operations__content--<%= `${index+1}` %> operations__content--active">
+      <% }  else { %>
+        <div class="mt-5 operations__content operations__content--<%= `${index+1}` %> operations__content">
+      <% } %>
       <h2>Primary <%= index+1 %></h2>
-      <table class="table text-center table-hover">
+        <table class="table text-center table-hover">
           <thead class="thead-dark">
             <tr>
               <th scope="col">Name</th>
@@ -70,12 +98,47 @@
           <% });%>
           </tbody>
         </table>
+      </div>
+      
+    
     <% }) %>
    
       
     </div>
-  
   </body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
   <!-- <script type="module" src="/javascript/filter_attempt.js"></script> -->
+  <script>
+    const tabs = document.querySelectorAll(".operations__tab")
+    const tabsContainer = document.querySelector(".operations__tab-container")
+    const tabsContent = document.querySelectorAll(".operations__content")
+
+    tabsContainer.addEventListener("click", function(e){
+      //FINDS THE CLOSEST PARENTS WITH THIS CLASS NAME
+      const clicked = e.target.closest(".operations__tab");
+      // console.log(e.target.data)
+
+      //GUARD CLAUSE
+      if (!clicked) return;
+      tabs.forEach((t, index) => {
+       
+        if (clicked.dataset.tab == index + 1){
+          t.classList.add("btn-primary")
+          t.classList.remove("btn-outline-primary")
+        } else {
+          t.classList.remove("btn-primary")
+          t.classList.add("btn-outline-primary")
+        }
+      })
+      // clicked.classList.add("operations__tab--active")
+      console.log(clicked)
+
+      //ACTIVATE ACTIVE AREA
+      console.log(clicked.dataset.tab)
+      tabsContent.forEach(t => {
+        t.classList.remove("operations__content--active")
+      })
+      document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add("operations__content--active")
+    })
+  </script>
   </html>
