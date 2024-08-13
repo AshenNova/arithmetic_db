@@ -7384,7 +7384,7 @@ function updateProblems() {
       Someone moved from</br>
       A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB} ${p.timeUnits},</br>
       then from B to C in ${p.timeC} ${p.timeUnits}.</br>
-      ${p.gender} travelled at ${p.speedA} units/${p.timeUnits} for the whole journey.</br>
+      ${p.gender} travelled at an average speed of ${p.speedA} units/${p.timeUnits} for the whole journey.</br>
       At what speed did ${p.gender} travel between B to C?
 
       `;
@@ -7398,7 +7398,7 @@ function updateProblems() {
       Someone moved from</br>
       A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB} ${p.timeUnits},</br>
       then from B to C in ${p.speedC} units/${p.timeUnits}.</br>
-      ${p.gender} travelled at ${p.speedA} units/${p.timeUnits} for ${p.timeA} ${p.timeUnits} the whole journey.</br>
+      ${p.gender} travelled at an average speed of ${p.speedA} units/${p.timeUnits} for ${p.timeA} ${p.timeUnits} the whole journey.</br>
       At what long did ${p.gender} take to travel between B to C?
 
       `;
@@ -9538,8 +9538,91 @@ function updateProblems() {
           `;
     }
 
-    //DECIMALS
+    //FRACTIONS: COMPARISON
     if (setting == 16) {
+      normalDisplay();
+      displayProblem.innerHTML = `
+      Arrange the following starting from the ${p.order}.</br>
+      <p class="fraction_calFour text-center"></p>
+      `;
+      const fractionCalFour = document.querySelector(".fraction_calFour");
+      function display(type, nume, deno, fractions) {
+        [nume, deno] = simplify(nume, deno);
+        if (type == "lessHalf" || type == "moreHalf" || type == "improper") {
+          fractionCalFour.insertAdjacentHTML(
+            "beforeend",
+            displaySimpleFraction(nume, deno)
+          );
+          fractions.push(`${nume}/${deno}`);
+        } else {
+          const quotient = Math.floor(nume / deno);
+          const remainder = nume % deno;
+          if (remainder == 0) return updateCalc();
+          fractionCalFour.insertAdjacentHTML(
+            "beforeend",
+            `${quotient}${displaySimpleFraction(remainder, deno)}`
+          );
+          fractions.push(`${quotient} ${remainder}/${deno}`);
+        }
+      }
+      // A
+      if (p.typeA == "lessHalf") {
+        p.numeA = genNumbers(Math.floor(p.denoA / 2) - 1) + 1;
+      }
+      if (p.typeA == "moreHalf") {
+        p.numeA =
+          Math.floor(p.denoA / 2) + genNumbers(Math.floor(p.denoA / 2) - 1) + 1;
+      }
+      if (p.typeA == "improper" || p.typeA == "mixed") {
+        p.numeA =
+          genNumbers(3) + 2 * p.denoA + genNumbers(Math.floor(p.denoA)) + 1;
+      }
+      display(p.typeA, p.numeA, p.denoA, p.fractions);
+      //B
+      if (p.typeB == "lessHalf") {
+        p.numeB = genNumbers(Math.floor(p.denoB / 2) - 1) + 1;
+      }
+      if (p.typeB == "moreHalf") {
+        p.numeB =
+          Math.floor(p.denoB / 2) + genNumbers(Math.floor(p.denoB / 2) - 1) + 1;
+      }
+      if (p.typeB == "improper" || p.typeB == "mixed") {
+        p.numeB =
+          (genNumbers(3) + 2) * p.denoB + genNumbers(Math.floor(p.denoB)) + 1;
+      }
+      fractionCalFour.insertAdjacentHTML("beforeend", " , ");
+      display(p.typeB, p.numeB, p.denoB, p.fractions);
+
+      //C
+      if (p.typeC == "lessHalf") {
+        p.numeC = genNumbers(Math.floor(p.denoC / 2) - 1) + 1;
+      }
+      if (p.typeC == "moreHalf") {
+        p.numeC =
+          Math.floor(p.denoC / 2) + genNumbers(Math.floor(p.denoC / 2) - 1) + 1;
+      }
+      if (p.typeC == "improper" || p.typeC == "mixed") {
+        p.numeC =
+          genNumbers(3) + 2 * p.denoC + genNumbers(Math.floor(p.denoC)) + 1;
+      }
+
+      fractionCalFour.insertAdjacentHTML("beforeend", " , ");
+      display(p.typeC, p.numeC, p.denoC, p.fractions);
+
+      if (p.numeA == 0 || p.numeB == 0 || p.numeC == 0) return updateCalc();
+      if (
+        p.numeA / p.denoA == p.numeB / p.denoB ||
+        p.numeA / p.denoA == p.numeC / p.denoC ||
+        p.numeB / p.denoB == p.numeC / p.denoC
+      )
+        return updateCalc();
+      console.log(p.typeA, p.typeB, p.typeC);
+      console.log(p.numeA, p.numeB, p.numeC);
+      console.log(p.fractions);
+    }
+
+    //DECIMALS
+    if (setting == 17) {
       normalDisplay();
       console.log("The current setting is: " + setting);
       const oneDisplay = p.numOne / p.convenientNumOne;
@@ -9550,7 +9633,7 @@ function updateProblems() {
       decimalCheck(twoDisplay);
     }
 
-    if (setting == 17) {
+    if (setting == 18) {
       normalDisplay();
       console.log("The current setting is: " + setting);
       p.numOne = p.numOne / p.convenientNumOne;
@@ -9563,7 +9646,7 @@ function updateProblems() {
     }
 
     // DECIMALS: OVERLAPPING PLACE VALUE
-    if (setting == 18) {
+    if (setting == 19) {
       normalDisplay();
       let overlappingArr = [
         `${p.hundreds} hundreds`,
@@ -9588,7 +9671,7 @@ function updateProblems() {
       ${p.sentenceArr.join(", ")}.`;
     }
 
-    if (setting == 19) {
+    if (setting == 20) {
       normalDisplay();
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
@@ -9596,14 +9679,14 @@ function updateProblems() {
       ${p.numOne} x ${p.numTwo} = ?`;
       decimalCheck(p.numOne * p.numTwo);
     }
-    if (setting == 20) {
+    if (setting == 21) {
       normalDisplay();
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
     }
-    if (setting == 21) {
+    if (setting == 22) {
       normalDisplay();
       p.numTwo = p.numOne;
       p.numOne = (p.numOne * p.multiplier) / p.divisor;
@@ -9612,7 +9695,7 @@ function updateProblems() {
       ${p.numOne} ÷ ${p.numTwo} = ?`;
       decimalCheck(p.numOne / p.numTwo);
     }
-    if (setting == 22) {
+    if (setting == 23) {
       normalDisplay();
       // START CHANGE DISPLAY
       if (p.numOne == p.numTwo) {
@@ -9637,7 +9720,7 @@ function updateProblems() {
             `;
       }
     }
-    if (setting == 23) {
+    if (setting == 24) {
       normalDisplay();
       p.numOne = p.numTwo * (genNumbers(99) + 2);
       if (p.operator == "x") {
@@ -9656,7 +9739,7 @@ function updateProblems() {
     }
 
     // DECIMALS: PARTS AND INTERVAL
-    if (setting == 24) {
+    if (setting == 25) {
       drawingDisplay();
       drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
     }
@@ -21134,6 +21217,50 @@ function handleSubmit(e) {
       }
 
       if (setting == 16) {
+        const decimals = [];
+        let quotient;
+        let value;
+        console.log(p.fractions);
+        p.fractions.forEach((fraction) => {
+          console.log(fraction);
+          if (fraction.includes(" ")) {
+            quotient = fraction.split(" ")[0];
+            console.log(quotient);
+            value = fraction.split(" ")[1].split("/");
+            console.log(value);
+            value[0] = quotient * 1 * value[1] * 1 + value[0] * 1;
+            console.log(value);
+            value.map((x) => x * 1);
+          } else {
+            value = fraction.split("/");
+          }
+
+          console.log(value);
+          value.map((x) => x * 1);
+          decimals.push(value[0] / value[1]);
+        });
+        console.log(decimals);
+        const orderDecimal = [...decimals];
+        if (p.order == "smallest") {
+          orderDecimal.sort(function (a, b) {
+            return a - b;
+          });
+        } else {
+          orderDecimal.sort(function (a, b) {
+            return b - a;
+          });
+        }
+        console.log(orderDecimal);
+        let answerOrder = [];
+        orderDecimal.forEach((d) => {
+          const index = decimals.indexOf(d);
+          answerOrder.push(p.fractions[index]);
+        });
+
+        correctAnswer = answerOrder.join(", ");
+      }
+
+      if (setting == 17) {
         // correctAnswer =
         //   p.numOne / p.convenientNumOne + p.numTwo / p.convenientNumTwo;
         // decimalCheck(correctAnswer);
@@ -21142,13 +21269,13 @@ function handleSubmit(e) {
         ];
         correctAnswer = accDecimal(answer[0]);
       }
-      if (setting == 17) {
+      if (setting == 18) {
         correctAnswer = p.numOne - p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
 
       // DECIMALS: OVERLAPPING PLACE VALUE
-      if (setting == 18) {
+      if (setting == 19) {
         let sumArr = [];
         for (let i = 0; i < p.sentenceArr.length; i++) {
           console.log(p.sentenceArr[i]);
@@ -21189,22 +21316,22 @@ function handleSubmit(e) {
         // }
       }
 
-      if (setting == 19) {
-        correctAnswer = p.numOne * p.numTwo;
-        correctAnswer = accDecimal(correctAnswer);
-      }
       if (setting == 20) {
         correctAnswer = p.numOne * p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 21) {
-        correctAnswer = p.numOne / p.numTwo;
+        correctAnswer = p.numOne * p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 22) {
-        correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+        correctAnswer = p.numOne / p.numTwo;
+        correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 23) {
+        correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+      }
+      if (setting == 24) {
         if (p.operator == "x") {
           correctAnswer = p.comparison * p.divisor;
           correctAnswer = accDecimal(correctAnswer);
@@ -21216,9 +21343,11 @@ function handleSubmit(e) {
         decimalCheck(correctAnswer);
       }
 
-      if (setting == 24) {
+      if (setting == 25) {
         correctAnswer = accDecimal(p.start + p.eachInterval * p.arrow);
       }
+
+     
     }
 
     //ANSWERS
@@ -26023,7 +26152,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(24, calArr, setting, 99);
+    setting = calArrAll(25, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
@@ -26206,82 +26335,100 @@ function genProblems() {
       };
     }
 
-    //DECIMALS
-    if (setting == 16 || setting == 17) {
+    //FRACTIONS: COMPARISON
+    if (setting == 16) {
+      const gen_denoA = genNumbers(10) + 3;
+      const gen_denoB = genNumbers(10) + 3;
+      const gen_denoC = genNumbers(10) + 3;
       return {
-        numOne: genNumbers(999) + 1,
-        convenientNumOne: [1, 10, 100][genNumbers(3)],
-        numTwo: genNumbers(999) + 1,
-        convenientNumTwo: [10, 100][genNumbers(2)],
+        typeA: ["lessHalf", "moreHalf", "improper", "mixed"][genNumbers(4)],
+        typeB: ["lessHalf", "moreHalf", "improper", "mixed"][genNumbers(4)],
+        typeC: ["lessHalf", "moreHalf", "improper", "mixed"][genNumbers(4)],
+        denoA: gen_denoA,
+        denoB: gen_denoB,
+        denoC: gen_denoC,
+        numeA: undefined,
+        numeB: undefined,
+        numeC: undefined,
+        order: ["smallest", "largest"][genNumbers(2)],
+        fractions: [],
       };
     }
+  }
 
-    // DECIMALS: OVERLAPPING PLACE VALUE
-    if (setting == 18) {
-      return {
-        ones: genNumbers(99) + 1,
-        tens: genNumbers(99) + 1,
-        hundreds: genNumbers(99) + 1,
-        tenth: genNumbers(99) + 1,
-        hundredth: genNumbers(99) + 1,
-        sentenceArr: [],
-      };
-    }
+  //DECIMALS
+  if (setting == 17 || setting == 18) {
+    return {
+      numOne: genNumbers(999) + 1,
+      convenientNumOne: [1, 10, 100][genNumbers(3)],
+      numTwo: genNumbers(999) + 1,
+      convenientNumTwo: [10, 100][genNumbers(2)],
+    };
+  }
 
-    if (setting == 19) {
-      return {
-        numOne: genNumbers(999) + 1,
-        convenientNumOne: [10, 100, 1000][genNumbers(3)],
-        numTwo: genNumbers(8) + 2,
-      };
-    }
-    if (setting == 20) {
-      return {
-        numOne: genNumbers(999) + 1,
-        convenientNumOne: [10, 100, 1000][genNumbers(3)],
-        numTwo: genNumbers(89) + 11,
-      };
-    }
-    if (setting == 21) {
-      return {
-        numOne: genNumbers(7) + 2,
-        multiplier: genNumbers(989) + 11,
-        divisor: [10, 100, 1000][genNumbers(3)],
-      };
-    }
-    if (setting == 22) {
-      return {
-        numOne: genNumbers(10) + 1,
-        numTwo: [3, 7, 9, 11][genNumbers(4)],
-        roundOff: genNumbers(3) + 1,
-      };
-    }
-    if (setting == 23) {
-      return {
-        operator: ["x", "÷"][genNumbers(2)],
-        numOne: undefined,
-        multiOne: [10, 100][genNumbers(2)],
-        numTwo: genNumbers(7) + 2,
-        multiTwo: [10, 100, 100][genNumbers(3)],
-        divisor: undefined,
-        comparison: undefined,
-      };
-    }
+  // DECIMALS: OVERLAPPING PLACE VALUE
+  if (setting == 19) {
+    return {
+      ones: genNumbers(99) + 1,
+      tens: genNumbers(99) + 1,
+      hundreds: genNumbers(99) + 1,
+      tenth: genNumbers(99) + 1,
+      hundredth: genNumbers(99) + 1,
+      sentenceArr: [],
+    };
+  }
 
-    //  DECIMALS: PARTS AND INTERVALS
-    if (setting == 24) {
-      const gen_intervals = [5, 8, 10][genNumbers(3)];
-      const gen_eachIntervals = [0.1, 0.01, 0.2, 0.02, 0.5, 0.05][
-        genNumbers(6)
-      ];
-      return {
-        start: genNumbers(100) + 1 + gen_eachIntervals * genNumbers(10) + 1,
-        intervals: gen_intervals,
-        eachInterval: gen_eachIntervals,
-        end: undefined,
-        arrow: genNumbers(gen_intervals - 1) + 1,
-      };
-    }
+  if (setting == 20) {
+    return {
+      numOne: genNumbers(999) + 1,
+      convenientNumOne: [10, 100, 1000][genNumbers(3)],
+      numTwo: genNumbers(8) + 2,
+    };
+  }
+  if (setting == 21) {
+    return {
+      numOne: genNumbers(999) + 1,
+      convenientNumOne: [10, 100, 1000][genNumbers(3)],
+      numTwo: genNumbers(89) + 11,
+    };
+  }
+  if (setting == 22) {
+    return {
+      numOne: genNumbers(7) + 2,
+      multiplier: genNumbers(989) + 11,
+      divisor: [10, 100, 1000][genNumbers(3)],
+    };
+  }
+  if (setting == 23) {
+    return {
+      numOne: genNumbers(10) + 1,
+      numTwo: [3, 7, 9, 11][genNumbers(4)],
+      roundOff: genNumbers(3) + 1,
+    };
+  }
+  if (setting == 24) {
+    return {
+      operator: ["x", "÷"][genNumbers(2)],
+      numOne: undefined,
+      multiOne: [10, 100][genNumbers(2)],
+      numTwo: genNumbers(7) + 2,
+      multiTwo: [10, 100, 100][genNumbers(3)],
+      divisor: undefined,
+      comparison: undefined,
+    };
+  }
+
+  //  DECIMALS: PARTS AND INTERVALS
+  if (setting == 25) {
+    const gen_intervals = [5, 8, 10][genNumbers(3)];
+    const gen_eachIntervals = [0.1, 0.01, 0.2, 0.02, 0.5, 0.05][genNumbers(6)];
+    return {
+      start: genNumbers(100) + 1 + gen_eachIntervals * genNumbers(10) + 1,
+      intervals: gen_intervals,
+      eachInterval: gen_eachIntervals,
+      end: undefined,
+      arrow: genNumbers(gen_intervals - 1) + 1,
+    };
   }
 
   //SETTINGS
@@ -29786,7 +29933,7 @@ function buttonLevelSetting() {
         setting = 99;
       }
 
-      accepted = [...Array.from({ length: 24 }, (_, i) => i + 1), 99];
+      accepted = [...Array.from({ length: 25 }, (_, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";

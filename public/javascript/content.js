@@ -237,16 +237,17 @@ export const displayContent = (level) => {
       13. Fractions: Form</br>
       14. Fractions: Conversion</br>
       15. Fractions: Closest / Furthest </br>
+      16. Fractions: Comparison </br>
       <hr>
-      16. Decimals: Addition</br>
-      17. Decimals: Subtraction</br>
-      18. Decimals: Overlapping Place Value</br>
-      19. Decimals: Multiplication (Single)</br>
-      20. Decimals: Multiplication (Double)</br>
-      21. Decimals: Division </br>
-      22. Fractions to Decimal (Limit)</br>
-      23. Decimals: Division and Multiplication with splitting</br>
-      24. Decimals: Parts and Intervals</br>
+      17. Decimals: Addition</br>
+      18. Decimals: Subtraction</br>
+      19. Decimals: Overlapping Place Value</br>
+      20. Decimals: Multiplication (Single)</br>
+      21. Decimals: Multiplication (Double)</br>
+      22. Decimals: Division </br>
+      23. Fractions to Decimal (Limit)</br>
+      24. Decimals: Division and Multiplication with splitting</br>
+      25. Decimals: Parts and Intervals</br>
       <hr>
       99. All
       `;

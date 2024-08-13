@@ -787,11 +787,16 @@ exports.previousAttempts = async (req, res) => {
       }).sort({ time: 1 });
     };
     // let queryMean;
+    // data.highScore = await getHighscore();
+    // data.previous = await getPrevious();
+    // const queryMean = await getMean();
+    // let queryMean;
     [data.highscore, data.previous, queryMean] = await Promise.all([
       getHighscore(),
       getPrevious(),
       getMean(),
     ]);
+
     if (data.previous) {
       data.daysAgo = Math.floor(
         (new Date() - data.previous.date) / (1000 * 60 * 60 * 24)
