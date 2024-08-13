@@ -1232,6 +1232,8 @@ function drawVerticalLine(x, y, bottom, adjust) {
 // 1. generate new problem and store the question in state object
 // 2. Also to visual update the HTML
 function updateProblems() {
+  console.log("Generating questions." + ` Setting is ${setting}.`);
+  console.log(level);
   state.currentProblem = state.drawProblem = genProblems();
   // state.drawProblem = genProblems()
 
@@ -11218,6 +11220,8 @@ function updateProblems() {
 
   //DISPLAY
   if (level == "calFiveb") {
+    console.log("Display");
+    console.log(level, setting);
     const calculatorNotAllowed = [1];
     if (calculatorNotAllowed.includes(setting * 1)) {
       calculatorSymbol.classList.add("hidden");
@@ -12689,6 +12693,7 @@ function updateProblems() {
     }
     // RATIO: REPEATED GROUP
     if (setting == 17) {
+      console.log("Repeated Group");
       normalDisplay();
       const displayA = p.percA;
       const displayB = p.percB;
@@ -12905,10 +12910,12 @@ function updateProblems() {
       let genderB = undefined;
       boyNames.includes(person) ? (genderB = "he") : (genderB = "she");
       console.log(person);
+      console.log(p.salary, p.saves);
       const oldSave = (p.salary / 100) * p.saves;
       const newSave = accDecimal(
         (((p.salary / 100) * p.saves) / 100) * (100 + p.change)
       );
+      console.log(oldSave, newSave);
       if (newSave.toString().split(".")[1]) {
         if (newSave.toString().split(".")[1].length > 2) return updateCalc();
       }
@@ -21346,8 +21353,6 @@ function handleSubmit(e) {
       if (setting == 25) {
         correctAnswer = accDecimal(p.start + p.eachInterval * p.arrow);
       }
-
-     
     }
 
     //ANSWERS
@@ -21958,7 +21963,7 @@ function handleSubmit(e) {
             correctAnswer = accDecimal(p.value);
           }
         }
-        if (correctAnswer % 1 != 0) {
+        if (correctAnswer.toString().split(".")[0].length < 5) {
           console.log(p.value);
           correctAnswer = correctAnswer.toFixed(2);
         }
@@ -24210,6 +24215,8 @@ function genNumbers(max) {
 //////////////////////////// SET VALUES //////////////////////////////
 // Step 2: Generate Problem
 function genProblems() {
+  console.log("GenProblems()");
+  console.log(level, setting);
   if (level == 1.0) {
     return {
       numOne: genNumbers(5) + 1,
@@ -26354,81 +26361,83 @@ function genProblems() {
         fractions: [],
       };
     }
-  }
 
-  //DECIMALS
-  if (setting == 17 || setting == 18) {
-    return {
-      numOne: genNumbers(999) + 1,
-      convenientNumOne: [1, 10, 100][genNumbers(3)],
-      numTwo: genNumbers(999) + 1,
-      convenientNumTwo: [10, 100][genNumbers(2)],
-    };
-  }
+    //DECIMALS
+    if (setting == 17 || setting == 18) {
+      return {
+        numOne: genNumbers(999) + 1,
+        convenientNumOne: [1, 10, 100][genNumbers(3)],
+        numTwo: genNumbers(999) + 1,
+        convenientNumTwo: [10, 100][genNumbers(2)],
+      };
+    }
 
-  // DECIMALS: OVERLAPPING PLACE VALUE
-  if (setting == 19) {
-    return {
-      ones: genNumbers(99) + 1,
-      tens: genNumbers(99) + 1,
-      hundreds: genNumbers(99) + 1,
-      tenth: genNumbers(99) + 1,
-      hundredth: genNumbers(99) + 1,
-      sentenceArr: [],
-    };
-  }
+    // DECIMALS: OVERLAPPING PLACE VALUE
+    if (setting == 19) {
+      return {
+        ones: genNumbers(99) + 1,
+        tens: genNumbers(99) + 1,
+        hundreds: genNumbers(99) + 1,
+        tenth: genNumbers(99) + 1,
+        hundredth: genNumbers(99) + 1,
+        sentenceArr: [],
+      };
+    }
 
-  if (setting == 20) {
-    return {
-      numOne: genNumbers(999) + 1,
-      convenientNumOne: [10, 100, 1000][genNumbers(3)],
-      numTwo: genNumbers(8) + 2,
-    };
-  }
-  if (setting == 21) {
-    return {
-      numOne: genNumbers(999) + 1,
-      convenientNumOne: [10, 100, 1000][genNumbers(3)],
-      numTwo: genNumbers(89) + 11,
-    };
-  }
-  if (setting == 22) {
-    return {
-      numOne: genNumbers(7) + 2,
-      multiplier: genNumbers(989) + 11,
-      divisor: [10, 100, 1000][genNumbers(3)],
-    };
-  }
-  if (setting == 23) {
-    return {
-      numOne: genNumbers(10) + 1,
-      numTwo: [3, 7, 9, 11][genNumbers(4)],
-      roundOff: genNumbers(3) + 1,
-    };
-  }
-  if (setting == 24) {
-    return {
-      operator: ["x", "÷"][genNumbers(2)],
-      numOne: undefined,
-      multiOne: [10, 100][genNumbers(2)],
-      numTwo: genNumbers(7) + 2,
-      multiTwo: [10, 100, 100][genNumbers(3)],
-      divisor: undefined,
-      comparison: undefined,
-    };
-  }
+    if (setting == 20) {
+      return {
+        numOne: genNumbers(999) + 1,
+        convenientNumOne: [10, 100, 1000][genNumbers(3)],
+        numTwo: genNumbers(8) + 2,
+      };
+    }
+    if (setting == 21) {
+      return {
+        numOne: genNumbers(999) + 1,
+        convenientNumOne: [10, 100, 1000][genNumbers(3)],
+        numTwo: genNumbers(89) + 11,
+      };
+    }
+    if (setting == 22) {
+      return {
+        numOne: genNumbers(7) + 2,
+        multiplier: genNumbers(989) + 11,
+        divisor: [10, 100, 1000][genNumbers(3)],
+      };
+    }
+    if (setting == 23) {
+      return {
+        numOne: genNumbers(10) + 1,
+        numTwo: [3, 7, 9, 11][genNumbers(4)],
+        roundOff: genNumbers(3) + 1,
+      };
+    }
+    if (setting == 24) {
+      return {
+        operator: ["x", "÷"][genNumbers(2)],
+        numOne: undefined,
+        multiOne: [10, 100][genNumbers(2)],
+        numTwo: genNumbers(7) + 2,
+        multiTwo: [10, 100, 100][genNumbers(3)],
+        divisor: undefined,
+        comparison: undefined,
+      };
+    }
 
-  //  DECIMALS: PARTS AND INTERVALS
-  if (setting == 25) {
-    const gen_intervals = [5, 8, 10][genNumbers(3)];
-    const gen_eachIntervals = [0.1, 0.01, 0.2, 0.02, 0.5, 0.05][genNumbers(6)];
-    return {
-      start: genNumbers(100) + 1 + gen_eachIntervals * genNumbers(10) + 1,
-      intervals: gen_intervals,
-      eachInterval: gen_eachIntervals,
-      end: undefined,
-      arrow: genNumbers(gen_intervals - 1) + 1,
-    };
+    //  DECIMALS: PARTS AND INTERVALS
+    if (setting == 25) {
+      const gen_intervals = [5, 8, 10][genNumbers(3)];
+      const gen_eachIntervals = [0.1, 0.01, 0.2, 0.02, 0.5, 0.05][
+        genNumbers(6)
+      ];
+      return {
+        start: genNumbers(100) + 1 + gen_eachIntervals * genNumbers(10) + 1,
+        intervals: gen_intervals,
+        eachInterval: gen_eachIntervals,
+        end: undefined,
+        arrow: genNumbers(gen_intervals - 1) + 1,
+      };
+    }
   }
 
   //SETTINGS
@@ -26819,6 +26828,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "calFiveb") {
+    console.log("HERE I AM!");
     if (regen > 20) {
       console.log("⭐️Regen activated!⭐️");
       skipGlobalUpdateProblem = 0;
@@ -26830,7 +26840,7 @@ function genProblems() {
       setting = calArrAll(25, calArr, setting, 99);
       setting = checkRange(setting, calArr, skipArr);
     }
-
+    console.log(`THE SETTING IS ${setting}`);
     // FRACTIONS: CLOSEST AND FURTHEST
     if (setting == 1) {
       let denominators = [];
@@ -27119,6 +27129,7 @@ function genProblems() {
     }
     // PERCENTAGE: IDENTICAL EFFECT
     if (setting == 20) {
+      // console.log("This is setting: 20")
       return {
         saves: (genNumbers(8) + 1) * 5,
         change: [(genNumbers(4) + 1) * 5, -(genNumbers(4) + 1) * 5][
@@ -27127,6 +27138,7 @@ function genProblems() {
         salary: genNumbers(5000) + 5000,
       };
     }
+
     if (setting == 21) {
       return {
         oldQuantity: genNumbers(6) + 3,
@@ -27736,40 +27748,6 @@ function genProblems() {
   }
   // setting
   if (level == "heuThree") {
-    // let roll = genNumbers(7)+1
-    // let roll = undefined;
-    // let settingText = setting.toString();
-
-    // if (settingText.includes("-")) {
-    //   console.log("range detected");
-    //   range = 1;
-    //   settingText.split("-");
-    //   if (!heuArr.length) {
-    //     for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
-    //       heuArr.push(i);
-    //     }
-    //     console.log(heuArr);
-    //   }
-    //   roll = heuArr[genNumbers(heuArr.length)];
-    //   let index = heuArr.indexOf(roll);
-    //   heuArr.splice(index, 1);
-    // } else {
-    //   console.log("Not range detected");
-    //   setting = parseInt(setting);
-    //   if (isNaN(setting)) {
-    //     setting = 9;
-    //   }
-    // }
-
-    // if (setting == 9) {
-    //   if (!heuArr.length) {
-    //     heuArr = [1, 2, 3, 4, 5, 6, 7, 8];
-    //     console.log("array renewed! " + heuArr);
-    //   }
-    //   roll = heuArr[genNumbers(heuArr.length)];
-    //   let index = heuArr.indexOf(roll);
-    //   heuArr.splice(index, 1);
-    //   console.log("Current remaining arr is " + heuArr);
     // }
     setting = calArrAll(8, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
@@ -29976,6 +29954,7 @@ function buttonLevelSetting() {
       }
       accepted = [...Array.from({ length: 25 }, (_, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
+      console.log(`What is the setting? ${setting}`);
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -29996,16 +29975,6 @@ function buttonLevelSetting() {
       //IF THERE ARE 7 TYPES, PUT 6. SINCE THE MAP FUNCTION WILL +1
       accepted = [...Array.from(Array(10)).map((e, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
-      // if (
-      //   ![...Array.from(Array(10)).map((e, i) => i + 1), 99].includes(
-      //     setting * 1
-      //   ) &&
-      //   !setting.split("").includes("-")
-      // )
-      //   setting = 99;
-      // console.log(...Array.from(Array(6)).map((e, i) => i + 1), 99);
-      // console.log(...[...Array(6).keys()].map((i) => i + 1), 99);
-      // console.log(...Array(6).keys().map((e, i) => i + 1), 99);
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
