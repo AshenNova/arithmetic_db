@@ -29897,6 +29897,9 @@ function buttonLevelSetting() {
       setting = prompt("1. Basic\n2. Intermediate", 2);
       // difficulty = prompt("Enter 0 or 1");
       // console.log(difficulty);
+      if (!setting){
+        setting = 2
+      }
       level = 6.01;
       // if (difficulty == 1) {
       //   scoreNeeded = 10;
