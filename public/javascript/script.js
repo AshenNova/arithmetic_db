@@ -2133,6 +2133,96 @@ function updateProblems() {
     `;
   }
 
+  //PICTOGRAPH
+  if (level == 2.12) {
+    normalDisplay();
+    const nameA = boyNames[genNumbers(boyNames.length)];
+    const nameB = boyNames[genNumbers(boyNames.length)];
+    const nameC = girlNames[genNumbers(girlNames.length)];
+    // const nameD = girlNames[genNumbers(girlNames.length)];
+    const names = [nameA, nameB, nameC];
+    const num = [p.numA, p.numB, p.numC];
+    let statement;
+    if (p.question == "each") {
+      const index = genNumbers(3);
+      statement = `How many cookies does ${names[index]} have?`;
+      p.answer = num[index] * p.unit;
+    }
+    if (p.question == "total") {
+      const chosen = [];
+      let sum = 0;
+      for (let i = 0; i < 3; i++) {
+        const random = genNumbers(3);
+        const chosenOne = names[random];
+        if (!chosen.includes(chosenOne)) {
+          chosen.push(chosenOne);
+          sum += num[random];
+        }
+      }
+      console.log(chosen);
+      p.answer = sum * p.unit;
+      if (chosen.length == 1) {
+        statement = `How many cookies does ${chosen} have?`;
+      } else if (chosen.length == 2) {
+        statement = `How many cookies does ${chosen.join(
+          " and "
+        )} have altogether?`;
+      } else {
+        statement = `How many cookies are there altogether?`;
+      }
+    }
+    if (p.question == "diff" || p.question == "internal") {
+      const indexA = genNumbers(3);
+      const first = names[indexA];
+      let indexB = genNumbers(3);
+      while (indexA == indexB) {
+        indexB = genNumbers(3);
+      }
+      const second = names[indexB];
+      if (num[indexA] == num[indexB]) return updateCalc();
+      if (p.question == "diff") {
+        statement = `
+        How many cookies does ${names[indexA]} have ${
+          num[indexA] > num[indexB] ? "more" : "less"
+        } than ${names[indexB]}?
+        `;
+        p.answer = Math.abs(num[indexA] - num[indexB]) * p.unit;
+      }
+      if (p.question == "internal") {
+        statement = `
+        How many cookies does ${
+          num[indexA] > num[indexB] ? names[indexA] : names[indexB]
+        } have to give to ${
+          num[indexA] > num[indexB] ? names[indexB] : names[indexA]
+        } for them to be the same?
+        `;
+        p.answer = (Math.abs(num[indexA] - num[indexB]) * p.unit) / 2;
+        if (p.answer % 2 != 0) return updateCalc();
+      }
+    }
+
+    displayProblem.innerHTML = `
+    <p>${statement}</p>
+    <table class="table-bordered mx-2">
+    <tbody>
+        <tr>
+          <td class="align-bottom">${`🍪</br>`.repeat(p.numA)}</td>
+          <td class="align-bottom">${`🍪</br>`.repeat(p.numB)}</td>
+          <td class="align-bottom">${`🍪</br>`.repeat(p.numC)}</td>
+        </tr>
+        <tr>
+          <td colspan="4" class="align-left">Each 🍪 is ${p.unit}.</td>
+        </tr>
+        <tr>
+          <td class="nameA px-3">${nameA}</td>
+          <td class="nameB px-3">${nameB}</td>
+          <td class="nameC px-3">${nameC}</td>
+        </tr>
+      </tbody>
+    </table>
+    `;
+  }
+
   if (level == 2.03 || level == 3.03 || level == 4.04 || level == 6.3) {
     console.log(p.operator);
     if (p.operator == "x")
@@ -18880,6 +18970,10 @@ function handleSubmit(e) {
       }
     }
 
+    if (level == 2.12) {
+      correctAnswer = p.answer;
+    }
+
     if (level == 3.03 || level == 2.03 || level == 4.04 || level == 6.3) {
       if (p.operator == "+") correctAnswer = p.numOne + p.numTwo;
       if (p.operator == "-") {
@@ -24437,6 +24531,18 @@ function genProblems() {
     };
   }
 
+  if (level == 2.12) {
+    return {
+      numA: genNumbers(9) + 1,
+      numB: genNumbers(9) + 1,
+      numC: genNumbers(9) + 1,
+      // numD: genNumbers(9) + 1,
+      unit: genNumbers(4) + 2,
+      question: ["internal", "diff", "each", "total"][genNumbers(4)],
+      answer: undefined,
+    };
+  }
+
   if (level == 3.0) {
     return {
       numOne: genNumbers(150) + 100,
@@ -29203,6 +29309,11 @@ function buttonLevelSetting() {
 
     case "Level 2.11":
       level = 2.11;
+      scoreNeeded = 20;
+      break;
+
+    case "Level 2.12":
+      level = 2.12;
       scoreNeeded = 20;
       break;
 

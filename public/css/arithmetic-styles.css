@@ -526,6 +526,10 @@ button {
   border-color: #6665dd;
 }
 
+.btn-pictograph {
+  background-color: #de64f7;
+  color: #000500;
+}
 .btn-cal:hover {
   background-color: #6665dd;
   color: #000500;
