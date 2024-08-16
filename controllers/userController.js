@@ -1007,6 +1007,7 @@ const generateRec = async (nameTemp) => {
     "2.09",
     "2.1",
     "2.11",
+    "2.12",
   ];
   const levelThree = [
     "3",
