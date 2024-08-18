@@ -208,7 +208,10 @@
                 <td>
                  
                   <% if (item.recommendCount == 6){ %>
-                    <i class="fa-solid fa-crown" style="color:goldenrod"></i></br>
+                    <i class="fa-solid fa-award" style="color:rgb(0, 0, 0)"></i></br>
+                  <% } %>
+                  <% if (item.recommendCount == 7){ %>
+                    <i class="fa-solid fa-metal" style="color:rgb(221, 128, 22)"></i></br>
                   <% } %>
                   <%= item.level %> 
                   <% if (!item.recommendCheck && (item.date > genesisDate)){ %>
@@ -272,7 +275,7 @@
 
                 <td class="click-summary"><%= "📜" %></td>
                 <% if (currentUser.admin) { %>
-                  <td><a href="/user/summary/?username=<%= item.user %>" class="no-line" target="_blank">⛩️</a></td>
+                  <td><a href="/user/summary/?username=<%= item.user %>" class="no-line" target="_blank"><i class="fa-brands fa-think-peaks"></i></a></td>
                   <td><a href="/attempts/edit/<%= item._id %>" class="no-line"><i class="fa-solid fa-pen-to-square"></i></a></td>
                   <td><a href="/attempts/delete/<%= item._id %>" class="no-line">❌</a></td>
                 <% } %>

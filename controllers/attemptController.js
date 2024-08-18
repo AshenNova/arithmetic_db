@@ -657,7 +657,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
       }
       recCount = checkLimit.length + bump;
     });
-    if (checkLimit.length <= 5) {
+    if (checkLimit.length <= 6) {
       const updatePoints = await User.findByIdAndUpdate(userNow._id, {
         points: userNow.points,
       });

@@ -23877,7 +23877,9 @@ function handleSubmit(e) {
           if (theCommonDeno % total != 0) {
             const quotient = Math.floor(theCommonDeno / total);
             let remainder = theCommonDeno % total;
+            console.log(`before: ${remainder}, ${total}`);
             [remainder, total] = simplify(remainder, total);
+            console.log(`after: ${remainder}, ${total}`);
             if (quotient == 0) {
               correctAnswer = `${remainder}/${total}`;
             }
@@ -23898,10 +23900,12 @@ function handleSubmit(e) {
           if (quantityB > 1) {
             const quotient = Math.floor(theCommonMultiple / quantityB);
             let remainder = theCommonMultiple % quantityB;
-            [remainder, theCommonMultiple] = simplify(
+            console.log(`before: ${remainder}, ${quantityB}`);
+            [remainder, quantityB] = simplify(
               remainder,
-              theCommonMultiple
+              quantityB
             );
+            console.log(`after: ${remainder}, ${quantityB}`);
 
             correctAnswer = `${quotient} ${remainder}/${quantityB}`;
             if (remainder == 0) correctAnswer = `${quotient}`;

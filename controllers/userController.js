@@ -657,6 +657,7 @@ const generateRec = async (nameTemp) => {
     User.findOne({ username: nameTemp.toLowerCase() }),
   ]);
   let distinctLevels = await Attempt.distinct("level", { user: nameTemp });
+
   const age = new Date().getFullYear() - DOB.getFullYear();
   // console.log(age);
 
@@ -718,7 +719,7 @@ const generateRec = async (nameTemp) => {
           !uniqLevel.includes(attempt.level) &&
           !recommendList.includes(attempt.level)
         ) {
-          console.log(`In calcuation: ${attempt.level} 🥀`);
+          // console.log(`In calcuation: ${attempt.level} 🥀`);
           // if (attempt.award == award) {
           if (attempt.award == award && recommend.length < 1) {
             recommendObj.level = attempt.level;
@@ -728,7 +729,7 @@ const generateRec = async (nameTemp) => {
             uniqLevel.push(attempt.level);
           } else {
             // uniqLevel.push(attempt.level);
-            console.log("Rotation or promoted");
+            // console.log("Rotation or promoted");
             if (attempt.extra == "") {
               let ageCal;
               if (age <= 7) ageCal = calAgeSeven;
@@ -756,20 +757,20 @@ const generateRec = async (nameTemp) => {
             ) {
               let count = 0;
               let maximum = 1;
-              console.log(`The maximum is ${maximum}`);
+              // console.log(`The maximum is ${maximum}`);
               latestAttempt.forEach((item) => {
                 if (item.level.startsWith(recommendObj.level)) {
                   if (item.setting == 99) {
-                    console.log("99 exist");
+                    // console.log("99 exist");
                     count += 1;
                   } else {
-                    console.log(
-                      `Checking if setting is integer: ${item.setting} for Level: ${item.level}`
-                    );
+                    // console.log(
+                    //   `Checking if setting is integer: ${item.setting} for Level: ${item.level}`
+                    // );
                     // console.log(Number.isInteger(item.setting * 1));
                     if (Number.isInteger(item.setting * 1)) {
                       // console.log("Yes Integer");
-                      console.log(item.setting);
+                      // console.log(item.setting);
                       if (item.setting * 1 > maximum) {
                         maximum = item.setting;
                       }
@@ -777,15 +778,15 @@ const generateRec = async (nameTemp) => {
                       const split = item.setting.split("-");
                       const largest = split[split.length - 1];
                       if (largest > maximum * 1) {
-                        console.log("Switching maximum");
+                        // console.log("Switching maximum");
                         maximum = largest;
                       }
-                      console.log(`The maximum is now! ${maximum}`);
+                      // console.log(`The maximum is now! ${maximum}`);
                     }
                   }
                 }
               });
-              console.log(`Calculation maximum = ${maximum}`);
+              // console.log(`Calculation maximum = ${maximum}`);
               if (count > 0) {
                 console.log("Setting to 99");
                 recommendObj.setting = 99;
@@ -819,7 +820,7 @@ const generateRec = async (nameTemp) => {
   // //HEURISTICS
   console.log("CHECKING HEURISTICS");
   let heuristics = await Attempt.distinct("level", { user: nameTemp });
-  console.log("Attempted " + heuristics + " before");
+  // console.log("Attempted " + heuristics + " before");
   let heuristicsArr = [];
   const heuOne = ["heuOne"]; //age 7
   const heuTwo = ["heuTwo", "heuTwob"];
@@ -858,7 +859,7 @@ const generateRec = async (nameTemp) => {
       }
 
       if (heuRecommend.includes(attempt.level) && recommend.length < 2) {
-        console.log(`In heuristics: ${attempt.level} 🌞`);
+        // console.log(`In heuristics: ${attempt.level} 🌞`);
         if (
           !uniqLevel.includes(attempt.level) &&
           !recommendList.includes(attempt.level)
@@ -869,7 +870,7 @@ const generateRec = async (nameTemp) => {
             uniqLevel.push(attempt.level);
           } else {
             // uniqLevel.push(attempt.level);
-            console.log("Rotation or promoted");
+            // console.log("Rotation or promoted");
             if (attempt.extra == "") {
               let ageHeu = [];
               if (age <= 7) ageHeu = heuAgeSeven;
@@ -880,7 +881,7 @@ const generateRec = async (nameTemp) => {
               if (age == 12) ageHeu = heuAgeTwelve;
               distinctLevels.forEach((item) => {
                 if (ageHeu.includes(item) && !heuristicsArr.includes(item)) {
-                  console.log("YES!");
+                  // console.log("YES!");
                   heuristicsArr.push(item);
                 }
               });
@@ -901,12 +902,12 @@ const generateRec = async (nameTemp) => {
               latestAttempt.forEach((item) => {
                 if (item.level.startsWith(recommendObj.level)) {
                   if (item.setting == 9) {
-                    console.log("9 exist");
+                    // console.log("9 exist");
                     count += 1;
                   } else {
-                    console.log(
-                      `Checking if setting is integer: ${item.setting}`
-                    );
+                    // console.log(
+                    //   `Checking if setting is integer: ${item.setting}`
+                    // );
                     // console.log(Number.isInteger(item.setting * 1));
                     if (Number.isInteger(item.setting * 1)) {
                       // console.log("Yes Integer");
@@ -916,9 +917,9 @@ const generateRec = async (nameTemp) => {
                       }
                     } else {
                       // console.log("No integer, splitting");
-                      console.log(item.setting);
+                      // console.log(item.setting);
                       const split = item.setting.split("-");
-                      console.log(split);
+                      // console.log(split);
                       const largest = split[split.length - 1];
                       if (largest > maximum) {
                         maximum = largest;
@@ -927,9 +928,9 @@ const generateRec = async (nameTemp) => {
                   }
                 }
               });
-              console.log(`Calculation maximum = ${maximum}`);
+              // console.log(`Calculation maximum = ${maximum}`);
               if (count > 0) {
-                console.log("Setting to 9");
+                // console.log("Setting to 9");
                 recommendObj.setting = 9;
               } else {
                 if (maximum == 1) {
@@ -945,7 +946,7 @@ const generateRec = async (nameTemp) => {
               recommendObj.award = "";
               recommendObj.score = "";
               recommendObj.date = new Date();
-              console.log(`heu: ${recommendObj}`);
+              // console.log(`heu: ${recommendObj}`);
               recommend.push(recommendObj);
               // recommend.push(attempt);
               recommendList.push(attempt.level);
@@ -977,11 +978,18 @@ const generateRec = async (nameTemp) => {
       ) {
         recommend.push(item);
         existingLevel.push(item.level);
-        console.log("Pushed Intervention");
+        // console.log("Pushed Intervention");
       }
     });
   }
 
+  let onlyLevelsArr = [];
+  distinctLevels.forEach((level) => {
+    if (!level.startsWith("cal") && !level.startsWith("heu")) {
+      onlyLevelsArr.push(level);
+    }
+  });
+  console.log("1st: " + onlyLevelsArr);
   const levelOne = [
     "1",
     "1.01",
@@ -1072,6 +1080,12 @@ const generateRec = async (nameTemp) => {
   ];
   const levelSix = ["6", "6.01", "6.02", "6.03", "6.05"];
 
+  function removeAncient(arr, item) {
+    if (arr.includes(item)) {
+      const index = arr.indexOf(item);
+      arr.splice(index, 1);
+    }
+  }
   let ageLevel;
   if (age <= 7) ageLevel = [];
   if (age == 8) {
@@ -1082,6 +1096,7 @@ const generateRec = async (nameTemp) => {
         const index = ageLevel.indexOf(item);
         ageLevel.splice(index, 1);
       }
+      removeAncient(onlyLevelsArr, item);
     });
   }
   // p3
@@ -1093,24 +1108,14 @@ const generateRec = async (nameTemp) => {
         const index = ageLevel.indexOf(item);
         ageLevel.splice(index, 1);
       }
+      removeAncient(onlyLevelsArr, item);
     });
   }
-  //p4
-  if (age == 10) {
-    ageLevel = levelOne.concat(levelTwo, levelThree);
-  }
-  if (age == 11) ageLevel = levelOne.concat(levelTwo, levelThree, levelFour);
 
-  if (age == 12)
-    ageLevel = levelOne.concat(
-      levelTwo,
-      levelThree,
-      levelFour,
-      levelFive
-      // levelSix
-    );
+  //p4
   //Delete list for age 10
   if (age == 10) {
+    ageLevel = levelOne.concat(levelTwo, levelThree);
     const removeList = [
       "1",
       "1.01",
@@ -1131,15 +1136,26 @@ const generateRec = async (nameTemp) => {
     removeList.forEach((item) => {
       // console.log(item);
       if (ageLevel.includes(item)) {
-        console.log("Removing " + item);
+        // console.log("Removing " + item);
         const index = ageLevel.indexOf(item);
         ageLevel.splice(index, 1);
       }
+      removeAncient(onlyLevelsArr, item);
     });
   }
 
   //Delete list for age 10, 11 and 12
   if (age == 11 || age == 12) {
+    if (age == 11) ageLevel = levelOne.concat(levelTwo, levelThree, levelFour);
+    if (age == 12)
+      ageLevel = levelOne.concat(
+        levelTwo,
+        levelThree,
+        levelFour,
+        levelFive
+        // levelSix
+      );
+
     const removeList = [
       "1",
       "1.01",
@@ -1164,13 +1180,14 @@ const generateRec = async (nameTemp) => {
     removeList.forEach((item) => {
       // console.log(item);
       if (ageLevel.includes(item)) {
-        console.log("Removing " + item);
+        // console.log("Removing " + item);
         const index = ageLevel.indexOf(item);
         ageLevel.splice(index, 1);
+        removeAncient(onlyLevelsArr, item);
       }
     });
   }
-
+  console.log("2nd: " + onlyLevelsArr);
   distinctLevels.forEach((item) => {
     if (age <= 7) {
       if (item.startsWith("1")) {
@@ -1203,7 +1220,7 @@ const generateRec = async (nameTemp) => {
       }
     }
   });
-  console.log(`History: ${ageLevel}`);
+  // console.log(`History: ${ageLevel}`);
   latestAttempt.forEach((attempt) => {
     if (
       !attempt.level.startsWith("cal") &&
@@ -1215,27 +1232,27 @@ const generateRec = async (nameTemp) => {
         !existingLevel.includes(attempt.level)
       ) {
         if (attempt.mode == "Hardcore" || attempt.mode == "Normal") {
-          console.log("⏱️");
+          // console.log("⏱️");
           if (attempt.time == 600) {
             let mode = ["Easy", "Normal", "Hardcore"];
             let index = mode.indexOf(attempt.mode);
             attempt.mode = mode[index - 1];
           }
         }
-        console.log("Please try again");
+        // console.log("Please try again");
         recommend.push(attempt);
         existingLevel.push(attempt.level);
-        console.log(attempt);
+        // console.log(attempt);
       } else {
         //EASY MODE
         if (!ageLevel.includes(attempt.level)) {
           // console.log(ageLevel);
-          console.log("Not suppose to do " + attempt.level);
+          // console.log("Not suppose to do " + attempt.level);
           return;
         }
         if (attempt.mode == "Easy" && !existingLevel.includes(attempt.level)) {
           if (attempt.time <= 600 && attempt.mistake <= 5) {
-            console.log("Easy to Normal");
+            // console.log("Easy to Normal");
             attempt.mode = "Normal";
           }
           attempt.time = "";
@@ -1250,7 +1267,7 @@ const generateRec = async (nameTemp) => {
           !existingLevel.includes(attempt.level)
         ) {
           if (attempt.time < 600) {
-            console.log("Normal to Hardcore");
+            // console.log("Normal to Hardcore");
             attempt.mode = "Hardcore";
             recommend.push(attempt);
             existingLevel.push(attempt.level);
@@ -1259,7 +1276,7 @@ const generateRec = async (nameTemp) => {
             attempt.score = "";
             attempt.award = "";
           } else if (attempt.time == 600) {
-            console.log("Demoted from Normal to Easy");
+            // console.log("Demoted from Normal to Easy");
             attempt.mode = "Easy";
             attempt.award = "";
             recommend.push(attempt);
@@ -1272,7 +1289,7 @@ const generateRec = async (nameTemp) => {
 
           // HARDCORE MODE
         } else if (attempt.mode == "Hardcore" && attempt.time == 600) {
-          console.log("Demoted from Hardcore to Normal");
+          // console.log("Demoted from Hardcore to Normal");
           attempt.mode = "Normal";
           attempt.time = "";
           attempt.mistake = "";
@@ -1281,12 +1298,12 @@ const generateRec = async (nameTemp) => {
           recommend.push(attempt);
           existingLevel.push(attempt.level);
         } else if (attempt.mode == "Hardcore" && attempt.time < 600) {
-          console.log("COMPLETED IN HARDCORE MODE", attempt.level);
+          // console.log("COMPLETED IN HARDCORE MODE", attempt.level);
           let recommendObj = {};
           // Get rid of those levels are already has been pushed
           existingLevel.push(attempt.level);
-          console.log(`Unique Levels: ${existingLevel}`);
-          console.log(attempt.level);
+          // console.log(`Unique Levels: ${existingLevel}`);
+          // console.log(attempt.level);
           let index = ageLevel.indexOf(attempt.level);
 
           //Select new level
@@ -1314,15 +1331,15 @@ const generateRec = async (nameTemp) => {
           }
 
           if (!recommendObj.level) {
-            console.log("UNDEFINED!");
+            // console.log("UNDEFINED!");
             let index = 0;
             while (existingLevel.includes(ageLevel[index])) {
               index += 1;
             }
             recommendObj.level = ageLevel[index];
           }
-          console.log("The index is " + index);
-          console.log(`Previous: ${attempt.level}, New: ${recommendObj.level}`);
+          // console.log("The index is " + index);
+          // console.log(`Previous: ${attempt.level}, New: ${recommendObj.level}`);
           recommendObj.time = "";
           recommendObj.mistake = "";
           recommendObj.score = "";
@@ -1337,10 +1354,10 @@ const generateRec = async (nameTemp) => {
           });
           // console.log(`Count: ${count}`);
           if (count == 0) {
-            console.log(`Setting ${recommendObj.level} to Easy`);
+            // console.log(`Setting ${recommendObj.level} to Easy`);
             recommendObj.mode = "Easy";
           } else {
-            console.log(`Setting ${recommendObj.level} to Hardcore`);
+            // console.log(`Setting ${recommendObj.level} to Hardcore`);
             recommendObj.mode = "Hardcore";
           }
 
@@ -1349,7 +1366,7 @@ const generateRec = async (nameTemp) => {
             age,
             latestAttempt
           );
-          console.log(`The recommended settings is ${recommendObj.setting}`);
+          // console.log(`The recommended settings is ${recommendObj.setting}`);
           recommend.push(recommendObj);
           existingLevel.push(recommendObj.level);
 
@@ -1364,6 +1381,32 @@ const generateRec = async (nameTemp) => {
       }
     }
   });
+  let oldest = [];
+  latestAttempt.forEach((attempt) => {
+    if (onlyLevelsArr.includes(attempt.level) && attempt.mode == "Hardcore") {
+      if (oldest.length == 0 || oldest[0].date > attempt.date) {
+        oldest[0] = attempt;
+        const index = onlyLevelsArr.indexOf(attempt.level);
+        onlyLevelsArr.splice(index, 1);
+      }
+    }
+  });
+  let recommendLevels = [];
+  recommend.forEach((item) => {
+    recommendLevels.push(item.level);
+  });
+
+  console.log(recommendLevels);
+  if (!recommendLevels.includes(oldest[0].level)) {
+    let ancient = {
+      level: oldest[0].level,
+      mode: "Hardcore",
+      setting: oldest[0].setting,
+      date: oldest[0].date,
+    };
+    recommend.push(ancient);
+  }
+  console.log("💰" + oldest[0].level + oldest[0].date);
   return recommend;
 };
 
@@ -1376,7 +1419,7 @@ exports.generateRecommendMiddleware = catchAsync(async (req, res, next) => {
     nameTemp.push(item.charAt(0).toUpperCase() + item.slice(1, item.length));
   });
   nameTemp = nameTemp.join(" ");
-  console.log(nameTemp);
+  // console.log(nameTemp);
   // const summaryUser = req.params.username;
 
   const recommend = await generateRec(nameTemp);
