@@ -56,9 +56,9 @@ import { helpList, helpMeFunc } from "./helpMe.js";
 let user = document.querySelector("#userName").textContent;
 user = user.trim();
 if (user.split(" ").length > 1) {
-  console.log("Splitting user");
+  // console.log("Splitting user");
   user = user.split(" ");
-  console.log({ user });
+  // console.log({ user });
   user =
     user[0].charAt(0).toUpperCase() +
     user[0].slice(1, user[0].length).toLowerCase() +
@@ -2137,8 +2137,11 @@ function updateProblems() {
   if (level == 2.12) {
     normalDisplay();
     const nameA = boyNames[genNumbers(boyNames.length)];
-    const nameB = boyNames[genNumbers(boyNames.length)];
+    let nameB = boyNames[genNumbers(boyNames.length)];
     const nameC = girlNames[genNumbers(girlNames.length)];
+    while (nameA == nameB) {
+      nameB = boyNames[genNumbers(boyNames.length)];
+    }
     // const nameD = girlNames[genNumbers(girlNames.length)];
     const names = [nameA, nameB, nameC];
     const num = [p.numA, p.numB, p.numC];
@@ -11490,12 +11493,13 @@ function updateProblems() {
       const totalValue = p.oneUnit * p.denoA;
       const personAValue = p.oneUnit * p.numeA;
       const personBValue = personAValue + p.difference;
-      while (personBValue <= 0) {
-        p.difference = [-1, 1][genNumbers(2)] * genNumbers(50) + 10;
-        personBValue + p.difference;
-      }
-      const personCValue = totalValue - personAValue - personBValue;
 
+      const personCValue = totalValue - personAValue - personBValue;
+      if (personBValue <= 0 || personCValue <= 0) {
+        // p.difference = [-1, 1][genNumbers(2)] * genNumbers(50) + 10;
+        // personBValue + p.difference;
+        return updateCalc();
+      }
       displayProblem.innerHTML = `
   ${personA} took ${p.numeA}/${p.denoA} of the ${stuff}.</br>
   ${personB} took ${Math.abs(p.difference)} ${
@@ -23865,9 +23869,10 @@ function handleSubmit(e) {
       if (setting == 1) {
         if (p.type == "merge") {
           let theCommonDeno = commonDeno(p.timeA, p.timeB);
-          const multiA = theCommonDeno / p.timeA;
-          const multiB = theCommonDeno / p.timeB;
-          let total = multiA + multiB;
+          const workdoneA = theCommonDeno / p.timeA;
+          const workdoneB = theCommonDeno / p.timeB;
+          //AMOUNT OF WORKDONE IN THE SAME PERIOD OF TIME
+          let total = workdoneA + workdoneB;
           correctAnswer = theCommonDeno / total;
           if (theCommonDeno % total != 0) {
             const quotient = Math.floor(theCommonDeno / total);
@@ -29897,8 +29902,9 @@ function buttonLevelSetting() {
       setting = prompt("1. Basic\n2. Intermediate", 2);
       // difficulty = prompt("Enter 0 or 1");
       // console.log(difficulty);
-      if (!setting){
-        setting = 2
+
+      if (!setting) {
+        setting = 2;
       }
       level = 6.01;
       // if (difficulty == 1) {
