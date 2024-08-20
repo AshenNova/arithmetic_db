@@ -106,7 +106,7 @@
   </div>
   <div class="col-8">
     <!-- <ul> -->
-      🎈 Maximum of 6 daily attempt to earn points.</br>
+      🎈 Maximum of 7 daily attempt to earn points.</br>
       🎈 10 points deducted per day after 1 day of inactivity.</br>
       ❄️ If your points are <span class="text-primary">blue</span> instead of <span class="text-warning">orange</span>, it means that it has been frozen. No points will be lost during this period.</br>
     <!-- </ul> -->
@@ -207,11 +207,11 @@
                 <% const genesisDate = new Date(2024, 3, 11, 0) %>
                 <td>
                  
-                  <% if (item.recommendCount == 6){ %>
+                  <!-- <% if (item.recommendCount == 6){ %>
                     <i class="fa-solid fa-award" style="color:rgb(0, 0, 0)"></i></br>
-                  <% } %>
+                  <% } %> -->
                   <% if (item.recommendCount == 7){ %>
-                    <i class="fa-solid fa-metal" style="color:rgb(221, 128, 22)"></i></br>
+                    <i class="fa-solid fa-crown" style="color:rgb(221, 128, 22)"></i></br>
                   <% } %>
                   <%= item.level %> 
                   <% if (!item.recommendCheck && (item.date > genesisDate)){ %>

@@ -983,6 +983,7 @@ const generateRec = async (nameTemp) => {
     });
   }
 
+  //REMOVING CAL AND HEU FROM LIST
   let onlyLevelsArr = [];
   distinctLevels.forEach((level) => {
     if (!level.startsWith("cal") && !level.startsWith("heu")) {
@@ -1220,6 +1221,7 @@ const generateRec = async (nameTemp) => {
       }
     }
   });
+  // console.log("here");
   // console.log(`History: ${ageLevel}`);
   latestAttempt.forEach((attempt) => {
     if (
@@ -1329,7 +1331,6 @@ const generateRec = async (nameTemp) => {
               index = 0;
             }
           }
-
           if (!recommendObj.level) {
             // console.log("UNDEFINED!");
             let index = 0;
@@ -1382,6 +1383,7 @@ const generateRec = async (nameTemp) => {
     }
   });
   let oldest = [];
+
   latestAttempt.forEach((attempt) => {
     if (onlyLevelsArr.includes(attempt.level) && attempt.mode == "Hardcore") {
       if (oldest.length == 0 || oldest[0].date > attempt.date) {
@@ -1391,13 +1393,13 @@ const generateRec = async (nameTemp) => {
       }
     }
   });
+
+  //CHECKING IF THE EXISTING RECOMMENDED LIST CONTAINS THE ANCIENT LEVEL
   let recommendLevels = [];
   recommend.forEach((item) => {
     recommendLevels.push(item.level);
   });
-
-  console.log(recommendLevels);
-  if (!recommendLevels.includes(oldest[0].level)) {
+  if (onlyLevelsArr.length > 0 && !recommendLevels.includes(oldest[0].level)) {
     let ancient = {
       level: oldest[0].level,
       mode: "Hardcore",
@@ -1406,7 +1408,6 @@ const generateRec = async (nameTemp) => {
     };
     recommend.push(ancient);
   }
-  console.log("💰" + oldest[0].level + oldest[0].date);
   return recommend;
 };
 
