@@ -655,20 +655,15 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
           pointsAwarded = 1;
         }
       }
-      if (recommend.length == checkLimit.length + bump) {
-        recCount = 7;
-      } else {
-        recCount = checkLimit.length + bump;
-      }
+      recCount = checkLimit.length + bump;
     });
-    // if (checkLimit.length <= 6) {
-    if (!recCheck) pointsAwarded = 1;
-    const updatePoints = await User.findByIdAndUpdate(userNow._id, {
-      points: userNow.points,
-    });
-    // } else {
-    //   pointsAwarded = 0;
-    // }
+    if (checkLimit.length <= 6) {
+      const updatePoints = await User.findByIdAndUpdate(userNow._id, {
+        points: userNow.points,
+      });
+    } else {
+      pointsAwarded = 0;
+    }
   };
   console.log("Done checking limit");
 
