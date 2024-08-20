@@ -110,6 +110,9 @@ const inputBox = document.querySelector(".input.box");
 const resetButton = document.getElementById("reset");
 const backButton = document.querySelectorAll(".back-button");
 
+//SCOREBOARD
+const scoreBoardNumbers = document.querySelector(".score-board-numbers");
+const scoreBoardTexts = document.querySelector(".score-board-texts");
 //INSTRUCTIONS
 const instructions = document.querySelector(".instructions");
 const instructionPencilIcon = document.querySelector(".fa-pencil");
@@ -266,6 +269,15 @@ canvas.addEventListener("click", function (event) {
   mouse.y = event.y;
 });
 
+scoreBoardNumbers.addEventListener("click", function (e) {
+  scoreBoardNumbers.classList.toggle("hidden")
+  scoreBoardTexts.classList.toggle("hidden")
+});
+
+scoreBoardTexts.addEventListener("click", function (e) {
+  scoreBoardNumbers.classList.toggle("hidden")
+  scoreBoardTexts.classList.toggle("hidden")
+});
 let noAnswer = 0;
 let reviewCount = 0;
 let level = 0;
@@ -23901,10 +23913,7 @@ function handleSubmit(e) {
             const quotient = Math.floor(theCommonMultiple / quantityB);
             let remainder = theCommonMultiple % quantityB;
             console.log(`before: ${remainder}, ${quantityB}`);
-            [remainder, quantityB] = simplify(
-              remainder,
-              quantityB
-            );
+            [remainder, quantityB] = simplify(remainder, quantityB);
             console.log(`after: ${remainder}, ${quantityB}`);
 
             correctAnswer = `${quotient} ${remainder}/${quantityB}`;

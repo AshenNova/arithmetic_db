@@ -263,7 +263,8 @@ table {
 
 .main-box {
   width: 400px;
-  height: 400px;
+  height: auto;
+  max-height: 400px;
   background: skyblue;
   display: flex;
   flex-direction: column;
@@ -276,7 +277,15 @@ table {
 
 .score-board {
   width: 100%;
-  margin-top: 5%;
+  max-width: 400px;
+  /* margin-top: 5%; */
+  border: solid 1px black;
+  border-radius: 10px;
+}
+
+.score-board-texts {
+  font-size: 2em;
+  text-align: center;
 }
 
 table {
@@ -404,15 +413,19 @@ table {
 }
 
 .input-box {
-  position: relative;
+  /* position: relative; */
+  display: block;
   height: 50px;
   width: 175px;
   font-size: 45px;
-  top: 70%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  /* top: 70%;
+  left: 50%; */
+  /* -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  /* padding-bottom: 0; */
+  padding-bottom: 0; */
 }
 
 #skipBtn {
