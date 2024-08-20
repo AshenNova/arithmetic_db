@@ -655,7 +655,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
           pointsAwarded = 1;
         }
       }
-      if ((recommend.length = checkLimit.length + bump)) {
+      if (recommend.length == checkLimit.length + bump) {
         recCount = 7;
       } else {
         recCount = checkLimit.length + bump;
