@@ -413,8 +413,8 @@ table {
 }
 
 .input-box {
-  /* position: relative; */
-  display: block;
+  position: relative;
+  /* display: block; */
   height: 50px;
   width: 175px;
   font-size: 45px;
@@ -470,7 +470,7 @@ button {
   position: relative;
   font-weight: bold;
   font-size: 40px;
-  bottom: 50px;
+  /* bottom: 50px; */
 }
 
 .settingButton {
