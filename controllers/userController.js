@@ -680,6 +680,7 @@ const generateRec = async (nameTemp) => {
     }
   });
 
+  console.log(calRecommend);
   //CALCULATIONS
   console.log("CHECKING CALCULATIONS");
   // let calculations = await Attempt.distinct("level", { user: nameTemp });

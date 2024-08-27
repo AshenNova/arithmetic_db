@@ -270,13 +270,13 @@ canvas.addEventListener("click", function (event) {
 });
 
 scoreBoardNumbers.addEventListener("click", function (e) {
-  scoreBoardNumbers.classList.toggle("hidden")
-  scoreBoardTexts.classList.toggle("hidden")
+  scoreBoardNumbers.classList.toggle("hidden");
+  scoreBoardTexts.classList.toggle("hidden");
 });
 
 scoreBoardTexts.addEventListener("click", function (e) {
-  scoreBoardNumbers.classList.toggle("hidden")
-  scoreBoardTexts.classList.toggle("hidden")
+  scoreBoardNumbers.classList.toggle("hidden");
+  scoreBoardTexts.classList.toggle("hidden");
 });
 let noAnswer = 0;
 let reviewCount = 0;
@@ -22073,7 +22073,9 @@ function handleSubmit(e) {
             correctAnswer = accDecimal(p.value);
           }
         }
-        if (correctAnswer.toString().split(".")[0].length < 5) {
+        correctAnswer = accDecimal(correctAnswer);
+        console.log(correctAnswer)
+        if (correctAnswer.toString().split(".")[1] && correctAnswer.toString().split(".")[1].length > 3) {
           console.log(p.value);
           correctAnswer = correctAnswer.toFixed(2);
         }
