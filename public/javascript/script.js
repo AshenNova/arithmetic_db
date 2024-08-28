@@ -1641,7 +1641,7 @@ function updateProblems() {
   }
 
   if (level == 1.1) {
-    displayProblem.innerHTML = `<span style="font-size: 0.5em">Spell:</span></br>${p.number}`;
+    displayProblem.innerHTML = `<span style="font-size: 0.5em">Spell:</span></br>${p.number.toLocaleString()}`;
   }
 
   if (level == 1.01 || level == 2.01 || level == 3.01) {
@@ -18818,93 +18818,189 @@ function handleSubmit(e) {
         "eighty",
         "ninety",
       ];
-      if (text.length == 1) {
-        // const index = single.indexOf(text);
-        correctAnswer = single[p.number];
-      }
-      if (text.length == 2) {
-        const firstNum = p.number.toString().split("")[text.length - 1];
-        const secondNum = p.number.toString().split("")[text.length - 2];
-        let construct = [];
-        // if number in the tens place is 1.
-        if (secondNum == 1) {
-          correctAnswer = teens[firstNum * 1];
-          // if number in the tens place not 1.
-        } else {
-          // if number in the ones place isnt 0.
-          if (firstNum != 0) {
-            construct.push(tens[secondNum * 1]);
-            construct.push(single[firstNum * 1]);
-            correctAnswer = construct.join("-");
-            //if number is 20, 30, 40, 50 etc..
+      // if (text.length == 1) {
+      //   // const index = single.indexOf(text);
+      //   correctAnswer = single[p.number];
+      // }
+      // if (text.length == 2) {
+      //   const firstNum = p.number.toString().split("")[text.length - 1];
+      //   const secondNum = p.number.toString().split("")[text.length - 2];
+      //   let construct = [];
+      //   // if number in the tens place is 1.
+      //   if (secondNum == 1) {
+      //     correctAnswer = teens[firstNum * 1];
+      //     // if number in the tens place not 1.
+      //   } else {
+      //     // if number in the ones place isnt 0.
+      //     if (firstNum != 0) {
+      //       construct.push(tens[secondNum * 1]);
+      //       construct.push(single[firstNum * 1]);
+      //       correctAnswer = construct.join("-");
+      //       //if number is 20, 30, 40, 50 etc..
+      //     } else {
+      //       correctAnswer = tens[secondNum * 1];
+      //     }
+      //   }
+      // }
+      // if (text.length == 3) {
+      //   const firstNum = p.number.toString().split("")[text.length - 1];
+      //   const secondNum = p.number.toString().split("")[text.length - 2];
+      //   const thirdNum = p.number.toString().split("")[text.length - 3];
+      //   let construct = [];
+      //   let hundreds = [];
+      //   // hundreds place
+      //   hundreds.push(`${single[thirdNum * 1]} hundred and `);
+      //   // if number in the tens place is 1.
+      //   if (secondNum == 1) {
+      //     correctAnswer = `${hundreds[0]}${teens[firstNum * 1]}`;
+      //     // if number in the tens place not 1.
+      //   } else {
+      //     // if number in the ones place isnt 0.
+      //     if (firstNum != 0) {
+      //       if (secondNum != 0) {
+      //         construct.push(tens[secondNum * 1]);
+      //       }
+      //       construct.push(single[firstNum * 1]);
+      //       correctAnswer = `${hundreds[0]}${construct.join("-")}`;
+      //       //if number is 20, 30, 40, 50 etc..
+      //     } else {
+      //       correctAnswer = `${hundreds[0]}${tens[secondNum * 1]}`;
+      //     }
+      //   }
+      // }
+      function genNumToWord(value) {
+        value = value.toString();
+        console.log(value);
+        if (value.length == 1) {
+          // const index = single.indexOf(value);
+          return single[value];
+        }
+        if (value.length == 2) {
+          const firstNum = value.toString().split("")[value.length - 1];
+          const secondNum = value.toString().split("")[value.length - 2];
+          let construct = [];
+          // if number in the tens place is 1.
+          if (secondNum == 1) {
+            return teens[firstNum * 1];
+            // if number in the tens place not 1.
           } else {
-            correctAnswer = tens[secondNum * 1];
+            // if number in the ones place isnt 0.
+            if (firstNum != 0) {
+              construct.push(tens[secondNum * 1]);
+              construct.push(single[firstNum * 1]);
+              return construct.join("-");
+              //if number is 20, 30, 40, 50 etc..
+            } else {
+              return tens[secondNum * 1];
+            }
           }
         }
-      }
-      if (text.length == 3) {
-        const firstNum = p.number.toString().split("")[text.length - 1];
-        const secondNum = p.number.toString().split("")[text.length - 2];
-        const thirdNum = p.number.toString().split("")[text.length - 3];
-        let construct = [];
-        let hundreds = [];
-        // hundreds place
-        hundreds.push(`${single[thirdNum * 1]} hundred and `);
-        // if number in the tens place is 1.
-        if (secondNum == 1) {
-          correctAnswer = `${hundreds[0]}${teens[firstNum * 1]}`;
-          // if number in the tens place not 1.
-        } else {
-          // if number in the ones place isnt 0.
-          if (firstNum != 0) {
-            if (secondNum != 0) {
-              construct.push(tens[secondNum * 1]);
-            }
-            construct.push(single[firstNum * 1]);
-            correctAnswer = `${hundreds[0]}${construct.join("-")}`;
-            //if number is 20, 30, 40, 50 etc..
+        if (value.length == 3) {
+          const firstNum = value.split("")[value.length - 1];
+          const secondNum = value.split("")[value.length - 2];
+          const thirdNum = value.split("")[value.length - 3];
+          let construct = [];
+          let hundreds = [];
+          // hundreds place
+          if (thirdNum != 0) {
+            hundreds.push(`${single[thirdNum * 1]} hundred and `);
           } else {
-            correctAnswer = `${hundreds[0]}${tens[secondNum * 1]}`;
+            hundreds.push(`and `);
+          }
+
+          // if number in the tens place is 1.
+          if (secondNum == 1) {
+            return `${hundreds[0]}${teens[firstNum * 1]}`;
+            // if number in the tens place not 1.
+          } else {
+            // if number in the ones place isnt 0.
+            if (firstNum != 0) {
+              if (secondNum != 0) {
+                construct.push(tens[secondNum * 1]);
+              }
+              construct.push(single[firstNum * 1]);
+              return `${hundreds[0]}${construct.join("-")}`;
+              //if number is 20, 30, 40, 50 etc..
+            } else {
+              return `${hundreds[0]}${tens[secondNum * 1]}`;
+            }
           }
         }
       }
 
-      if (text.length == 4) {
-        const firstNum = p.number.toString().split("")[text.length - 1];
-        const secondNum = p.number.toString().split("")[text.length - 2];
-        const thirdNum = p.number.toString().split("")[text.length - 3];
-        const fourthNum = p.number.toString().split("")[text.length - 4];
-        let construct = [];
-        let hundreds = [];
-        // hundreds place
-        if (thirdNum != 0) {
-          hundreds.push(
-            `${single[fourthNum * 1]} thousand, ${
-              single[thirdNum * 1]
-            } hundred and `
-          );
-        } else {
-          hundreds.push(`${single[fourthNum * 1]} thousand, and `);
-        }
-
-        // if number in the tens place is 1.
-        if (secondNum == 1) {
-          correctAnswer = `${hundreds[0]}${teens[firstNum * 1]}`;
-          // if number in the tens place not 1.
-        } else {
-          // if number in the ones place isnt 0.
-          if (firstNum != 0) {
-            if (secondNum != 0) {
-              construct.push(tens[secondNum * 1]);
-            }
-            construct.push(single[firstNum * 1]);
-            correctAnswer = `${hundreds[0]}${construct.join("-")}`;
-            //if number is 20, 30, 40, 50 etc..
-          } else {
-            correctAnswer = `${hundreds[0]}${tens[secondNum * 1]}`;
-          }
-        }
+      if (setting == 0 || setting == 1 || setting == 2) {
+        correctAnswer = genNumToWord(p.number);
       }
+      if (setting == 3 || setting == 4 || setting == 5) {
+        const length = p.number.toString().length;
+        let setA;
+        let setB;
+        if (length == 6) {
+          setA = p.number.toString().slice(0, 3);
+          setB = p.number.toString().slice(3);
+        } else {
+          const start = length % 3;
+          setA = p.number.toString().slice(0, start);
+          setB = p.number.toString().slice(start);
+          console.log(setA, setB);
+        }
+        correctAnswer = `${genNumToWord(setA)} thousand, ${genNumToWord(setB)}`;
+      }
+      if (setting == 6) {
+        const length = p.number.toString().length;
+        let setA;
+        let setB;
+        let setC;
+        // if (length == 6) {
+        //   setA = p.number.toString().slice(0, 3);
+        //   setB = p.number.toString().slice(3);
+        // } else {
+        const start = length % 3;
+        setA = p.number.toString().slice(0, start);
+        setB = p.number.toString().slice(start, start + 3);
+        setC = p.number.toString().slice(start + 3);
+        console.log(setA, setB, setC);
+        // }
+        correctAnswer = `${genNumToWord(setA)} million, ${genNumToWord(
+          setB
+        )} thousand, ${genNumToWord(setC)}`;
+      }
+      // if (text.length == 4) {
+      //   const firstNum = p.number.toString().split("")[text.length - 1];
+      //   const secondNum = p.number.toString().split("")[text.length - 2];
+      //   const thirdNum = p.number.toString().split("")[text.length - 3];
+      //   const fourthNum = p.number.toString().split("")[text.length - 4];
+      //   let construct = [];
+      //   let hundreds = [];
+      //   // hundreds place
+      //   if (thirdNum != 0) {
+      //     hundreds.push(
+      //       `${single[fourthNum * 1]} thousand, ${
+      //         single[thirdNum * 1]
+      //       } hundred and `
+      //     );
+      //   } else {
+      //     hundreds.push(`${single[fourthNum * 1]} thousand, and `);
+      //   }
+
+      //   // if number in the tens place is 1.
+      //   if (secondNum == 1) {
+      //     correctAnswer = `${hundreds[0]}${teens[firstNum * 1]}`;
+      //     // if number in the tens place not 1.
+      //   } else {
+      //     // if number in the ones place isnt 0.
+      //     if (firstNum != 0) {
+      //       if (secondNum != 0) {
+      //         construct.push(tens[secondNum * 1]);
+      //       }
+      //       construct.push(single[firstNum * 1]);
+      //       correctAnswer = `${hundreds[0]}${construct.join("-")}`;
+      //       //if number is 20, 30, 40, 50 etc..
+      //     } else {
+      //       correctAnswer = `${hundreds[0]}${tens[secondNum * 1]}`;
+      //     }
+      //   }
+      // }
     }
 
     if (level == 2.02) {
@@ -29522,13 +29618,14 @@ function buttonLevelSetting() {
       scoreNeeded = 10;
       document.querySelector("#user-input").setAttribute("type", "text");
       setting = prompt(
-        "What is your level?\n0. Primary 1 ( 0 to 10 )\n1. Primary 1\n2. Primary 2\n3. Primary 3"
+        "What is your level?\n0. Primary 1 ( 0 to 9 )\n1. Primary 1 (10 to 99)\n2. Primary 2 ( 100 to 999)\n3. Primary 3 (1 000 to 9999)\n4. Primary 4 (10 000 to 99 999)\n5. Primary 5 (100 000 to 999 999)\n6. Primary 6 (1 000 000 to 9 999 999)",
+        0
       );
       // setting = prompt(
       //   "What is your level?\n0. Primary 1 ( 0 to 10 )\n1. Primary 1\n2. Primary 2\n3. Primary 3\n4. Primary 4\n5. Primary 5\n6. Primary 6"
       // );
-      if (![0, 1, 2, 3].includes(setting * 1)) {
-        setting = 3;
+      if (![0, 1, 2, 3, 4, 5, 6].includes(setting * 1)) {
+        setting = 6;
       }
       break;
 
