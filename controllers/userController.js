@@ -1023,7 +1023,7 @@ const generateRec = async (nameTemp) => {
     "1.07",
     "1.08",
     "1.09",
-    "1.10",
+    "1.1",
   ];
   const levelTwo = [
     "2",
@@ -1477,7 +1477,7 @@ exports.recommend = catchAsync(async (req, res, next) => {
     user: nameTemp,
     date: { $gte: start, $lt: end },
   });
-  console.log(recommend);
+
   console.log(todayAttempts);
   // console.log(todayAttempts);
   recommend.forEach((item, index) => {
@@ -1489,9 +1489,18 @@ exports.recommend = catchAsync(async (req, res, next) => {
       ) {
         console.log("YES! " + index);
         item.accomplish = true;
+        console.log(todayItem.time, todayItem.mode);
+        if (
+          (todayItem.mode == "Hardcore" || todayItem.mode == "Normal") &&
+          todayItem.time >= 600
+        ) {
+          console.log("?");
+          item.accomplish = false;
+        }
       }
     });
   });
+  console.log(recommend);
   //  console.log(item.accomplish);
   let authenticate = req.auth;
   let currentUser = req.user;
