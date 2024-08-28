@@ -479,7 +479,27 @@ exports.deleteRewardLog = catchAsync(async (req, res, next) => {
 });
 
 function settings(level, age, allAttempts) {
-  if (level == 2.02) {
+  if (level == 1.1) {
+    if (age == 7) {
+      allAttempts.forEach((item) => {
+        if (item.setting == 1) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    } else if (age == 8) {
+      return 2;
+    } else if (age == 9) {
+      return 3;
+    } else if (age == 10) {
+      return 3;
+    } else if (age == 11) {
+      return 3;
+    } else if (age >= 12) {
+      return 3;
+    }
+  } else if (level == 2.02) {
     console.log(`The level is ${level}. Age is ${age}.`);
     if (age == 8 || age <= 7) {
       return 2;
@@ -1003,6 +1023,7 @@ const generateRec = async (nameTemp) => {
     "1.07",
     "1.08",
     "1.09",
+    "1.10",
   ];
   const levelTwo = [
     "2",

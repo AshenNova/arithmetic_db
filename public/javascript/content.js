@@ -274,24 +274,25 @@ export const displayContent = (level) => {
       12. Volume: Numerator with a Value</br>
       <hr></hr>
       13. Ratio: Simplification and Expansion</br>
-      14. Ratio: Shapes</br>
-      15. Ratio: Repeated Identity</br>
-      16. Ratio: Identical Total</br>
-      17. Ratio: Wipe on wipe off</br>
+      14. Ratio: Possible</br>
+      15. Ratio: Shapes</br>
+      16. Ratio: Repeated Identity</br>
+      17. Ratio: Identical Total</br>
+      18. Ratio: Wipe on wipe off</br>
       <hr></hr>
-      18. Rates: Part thereof part thereafter</br>
-      19. Rates: Taps</br>
+      19. Rates: Part thereof part thereafter</br>
+      20. Rates: Taps</br>
       <hr></hr>
-      20. Percentage: Percentage of</br>
-      21. Percentage: Percentage change</br>
-      22. Percentage: Repeated Identity</br>
+      21. Percentage: Percentage of</br>
+      22. Percentage: Percentage change</br>
+      23. Percentage: Repeated Identity</br>
       
-      23. Percentage: Remainder Concept</br>
-      24. Percentage: Simple and Further discount</br>
+      24. Percentage: Remainder Concept</br>
+      25. Percentage: Simple and Further discount</br>
 
       <hr></hr>
-      25. Average: Internal change</br>
-      26. Average: Triangle Numbers</br>
+      26. Average: Internal change</br>
+      27. Average: Triangle Numbers</br>
       <hr></hr>
       </p>99. All
       

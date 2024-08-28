@@ -352,7 +352,8 @@ function summaryPush(symbol) {
 }
 
 let primeNumbers = [
-  2, 3, 5, 7, 9, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
+  2, 3, 5, 7, 9, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
+  73, 79, 83, 89, 97,
 ];
 const compassArr = [
   "north",
@@ -1637,6 +1638,10 @@ function updateProblems() {
     ${p.end * p.starter} ${item} = $?
 
     `;
+  }
+
+  if (level == 1.1) {
+    displayProblem.innerHTML = `<span style="font-size: 0.5em">Spell:</span></br>${p.number}`;
   }
 
   if (level == 1.01 || level == 2.01 || level == 3.01) {
@@ -9855,7 +9860,7 @@ function updateProblems() {
   if (level == "calFive") {
     //ALLOW CALCULATOR
 
-    const calculatorNotAllowed = [0, 1, 2, 3, 20, 21];
+    const calculatorNotAllowed = [0, 1, 2, 3, 14, 21, 22];
     if (calculatorNotAllowed.includes(setting * 1)) {
       calculatorSymbol.classList.add("hidden");
       // calculatorSymbol.
@@ -10694,8 +10699,85 @@ function updateProblems() {
         )} = ${equalArrB.join(" : ")}</p>`;
       }
     }
-    //RATIO: SHAPES
+
+    // RATIO: POSSIBLE
     if (setting == 14) {
+      normalDisplay();
+      function getFactors(num) {
+        let factors = [];
+        for (let i = 1; i <= p.number; i++) {
+          if (p.number % i == 0) factors.push(i);
+        }
+        return factors;
+      }
+      let factors = getFactors(p.number);
+      while (factors.length < 4) {
+        factors = getFactors(p.number);
+      }
+      let arr = [p.optionOne, p.optionTwo, p.optionThree, p.optionFour];
+      arr.forEach((item) => {
+        for (let i = 0; i < 3; i++) {
+          const num = genNumbers(5) + 1;
+          item.push(num);
+        }
+      });
+      arr.forEach((item, index) => {
+        let sum = 0;
+        item.map((x) => {
+          sum += x;
+        });
+        if (sum > p.number) return updateCalc();
+        while (index == p.chosen && p.number % sum != 0) {
+          item[genNumbers(item.length)] += 1;
+          sum += 1;
+        }
+        while (index != p.chosen && p.number % sum == 0) {
+          item[genNumbers(item.length)] += 1;
+          sum += 1;
+        }
+      });
+      function simplifyAll(arr) {
+        const sorting = [...arr];
+        sorting.sort((a, b) => b - a);
+        const largest = sorting[0];
+
+        for (let i = 2; i <= largest; i++) {
+          while (arr[0] % i == 0 && arr[1] % i == 0 && arr[2] % i == 0) {
+            arr[0] /= i;
+            arr[1] /= i;
+            arr[2] /= i;
+          }
+        }
+        return arr;
+      }
+      simplifyAll(p.optionOne);
+      simplifyAll(p.optionTwo);
+      simplifyAll(p.optionThree);
+      simplifyAll(p.optionFour);
+      arr.forEach((item, index) => {
+        for (let i = 0; i < 4; i++) {
+          if (index == i) return;
+          if (item.toString() == arr[i].toString()) return updateCalc();
+        }
+      });
+      displayProblem.innerHTML = `
+      Which set of ratio is possible to give the value ${p.number}?
+      <hr>
+      <table>
+        <tr>
+          <td>1) ${p.optionOne.join(" : ")}</br></td>
+          <td>2) ${p.optionTwo.join(" : ")}</br></td>
+        </tr>
+        <tr>
+          <td>3) ${p.optionThree.join(" : ")}</br></td>
+          <td>4) ${p.optionFour.join(" : ")}</br></td>   
+         </tr>
+      </table>
+      `;
+    }
+
+    //RATIO: SHAPES
+    if (setting == 15) {
       drawingDisplay();
       drawForFraction(state, "ratio");
       // console.log(mediumColumn, smallRow, p.shaded, p.total);
@@ -10706,7 +10788,7 @@ function updateProblems() {
       ctx.restore(); //1st
     }
     // RATIO: REPEATED IDENTITY
-    if (setting == 15) {
+    if (setting == 16) {
       normalDisplay();
       let lineOne = "";
       if (p.firstSentence == "unit") {
@@ -10769,7 +10851,7 @@ function updateProblems() {
       `;
     }
     // RATIO: IDENTICAL TOTAL
-    if (setting == 16) {
+    if (setting == 17) {
       normalDisplay();
       console.log(p.objects);
       const objectA = p.objects[0];
@@ -10817,7 +10899,7 @@ function updateProblems() {
     }
 
     // RATIO: WIPE ON WIPE OFF
-    if (setting == 17) {
+    if (setting == 18) {
       normalDisplay();
       // displayProblem.innerHTML = `
       // How many more dark squares have to be added for the ratio to be ???`;
@@ -10908,7 +10990,7 @@ function updateProblems() {
       }
     }
     //PART THEREOF & PART THEREAFTER
-    if (setting == 18) {
+    if (setting == 19) {
       normalDisplay();
       const durationHours = Math.floor(p.duration / 60);
       const durationMins = p.duration % 60;
@@ -10930,7 +11012,7 @@ function updateProblems() {
       `;
     }
     // RATES: TAPS
-    if (setting == 19) {
+    if (setting == 20) {
       normalDisplay();
       [p.nume, p.deno] = simplify(p.nume, p.deno);
       let lineOne = `The dimensions of a container is ${p.length} cm, ${p.breadth} cm, ${p.height} cm.`;
@@ -10983,7 +11065,7 @@ function updateProblems() {
     }
 
     // PERCENTAGE: PERCENTAGE OF
-    if (setting == 20) {
+    if (setting == 21) {
       normalDisplay();
       const statement = genNumbers(2);
       if (p.start == "fractions") {
@@ -11020,7 +11102,7 @@ function updateProblems() {
       }
     }
     // PERCENTAGE: PERCENTAGE CHANGE
-    if (setting == 21) {
+    if (setting == 22) {
       normalDisplay();
 
       if (p.version == "change") {
@@ -11066,7 +11148,7 @@ function updateProblems() {
       }
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 22) {
+    if (setting == 23) {
       normalDisplay();
       let lineOne = undefined;
       let tempArr = [];
@@ -11099,7 +11181,7 @@ function updateProblems() {
     }
 
     // PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 23) {
+    if (setting == 24) {
       normalDisplay();
       displayProblem.innerHTML = `
       Person A spent ${p.percA}% of his money on ${p.itemOne}.</p>
@@ -11162,7 +11244,7 @@ function updateProblems() {
       }
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 24) {
+    if (setting == 25) {
       normalDisplay();
       if (p.frontBack == "front") {
         if (p.moreDiscount == 0) {
@@ -11233,7 +11315,7 @@ function updateProblems() {
     }
 
     //AVERAGE: INTERNAL CHANGE
-    if (setting == 25) {
+    if (setting == 26) {
       normalDisplay();
       const oldAverage = (p.numOne + p.numTwo + p.numThree) / 3;
       if (oldAverage % 1 != 0) {
@@ -11281,7 +11363,7 @@ function updateProblems() {
     }
 
     //AVERAGE: TRIANGLE NUMBER
-    if (setting == 26) {
+    if (setting == 27) {
       normalDisplay();
       console.log(p.start, p.end);
       const strArr = [];
@@ -17872,6 +17954,7 @@ How many items are there in each bag?
 
   // DISPLAY
   if (level == "heuSixb") {
+    calculatorSymbol.classList.remove("hidden");
     normalDisplay();
 
     // SIMULTANEOUS EQUATION (PARTS AND UNITS) TYPE 1
@@ -18693,6 +18776,135 @@ function handleSubmit(e) {
 
     if (level == 1.09 || level == 2.11) {
       correctAnswer = p.value * p.end;
+    }
+
+    if (level == 1.1) {
+      console.log("Checking answer");
+      const text = p.number.toString();
+      console.log(text, text.length);
+      const single = [
+        "zero",
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+      ];
+      const teens = [
+        "ten",
+        "eleven",
+        "twelve",
+        "thirteen",
+        "fourteen",
+        "fifteen",
+        "sixteen",
+        "seventeen",
+        "eighteen",
+        "nineteen",
+      ];
+      const tens = [
+        "nil",
+        "nil",
+        "twenty",
+        "thirty",
+        "forty",
+        "fifty",
+        "sixty",
+        "seventy",
+        "eighty",
+        "ninety",
+      ];
+      if (text.length == 1) {
+        // const index = single.indexOf(text);
+        correctAnswer = single[p.number];
+      }
+      if (text.length == 2) {
+        const firstNum = p.number.toString().split("")[text.length - 1];
+        const secondNum = p.number.toString().split("")[text.length - 2];
+        let construct = [];
+        // if number in the tens place is 1.
+        if (secondNum == 1) {
+          correctAnswer = teens[firstNum * 1];
+          // if number in the tens place not 1.
+        } else {
+          // if number in the ones place isnt 0.
+          if (firstNum != 0) {
+            construct.push(tens[secondNum * 1]);
+            construct.push(single[firstNum * 1]);
+            correctAnswer = construct.join("-");
+            //if number is 20, 30, 40, 50 etc..
+          } else {
+            correctAnswer = tens[secondNum * 1];
+          }
+        }
+      }
+      if (text.length == 3) {
+        const firstNum = p.number.toString().split("")[text.length - 1];
+        const secondNum = p.number.toString().split("")[text.length - 2];
+        const thirdNum = p.number.toString().split("")[text.length - 3];
+        let construct = [];
+        let hundreds = [];
+        // hundreds place
+        hundreds.push(`${single[thirdNum * 1]} hundred and `);
+        // if number in the tens place is 1.
+        if (secondNum == 1) {
+          correctAnswer = `${hundreds[0]}${teens[firstNum * 1]}`;
+          // if number in the tens place not 1.
+        } else {
+          // if number in the ones place isnt 0.
+          if (firstNum != 0) {
+            if (secondNum != 0) {
+              construct.push(tens[secondNum * 1]);
+            }
+            construct.push(single[firstNum * 1]);
+            correctAnswer = `${hundreds[0]}${construct.join("-")}`;
+            //if number is 20, 30, 40, 50 etc..
+          } else {
+            correctAnswer = `${hundreds[0]}${tens[secondNum * 1]}`;
+          }
+        }
+      }
+
+      if (text.length == 4) {
+        const firstNum = p.number.toString().split("")[text.length - 1];
+        const secondNum = p.number.toString().split("")[text.length - 2];
+        const thirdNum = p.number.toString().split("")[text.length - 3];
+        const fourthNum = p.number.toString().split("")[text.length - 4];
+        let construct = [];
+        let hundreds = [];
+        // hundreds place
+        if (thirdNum != 0) {
+          hundreds.push(
+            `${single[fourthNum * 1]} thousand, ${
+              single[thirdNum * 1]
+            } hundred and `
+          );
+        } else {
+          hundreds.push(`${single[fourthNum * 1]} thousand, and `);
+        }
+
+        // if number in the tens place is 1.
+        if (secondNum == 1) {
+          correctAnswer = `${hundreds[0]}${teens[firstNum * 1]}`;
+          // if number in the tens place not 1.
+        } else {
+          // if number in the ones place isnt 0.
+          if (firstNum != 0) {
+            if (secondNum != 0) {
+              construct.push(tens[secondNum * 1]);
+            }
+            construct.push(single[firstNum * 1]);
+            correctAnswer = `${hundreds[0]}${construct.join("-")}`;
+            //if number is 20, 30, 40, 50 etc..
+          } else {
+            correctAnswer = `${hundreds[0]}${tens[secondNum * 1]}`;
+          }
+        }
+      }
     }
 
     if (level == 2.02) {
@@ -21688,8 +21900,13 @@ function handleSubmit(e) {
         correctAnswer = p.answer;
       }
 
-      //RATIO: SHAPES
+      //RATIO: POSSIBLE
       if (setting == 14) {
+        correctAnswer = p.chosen += 1;
+      }
+
+      //RATIO: SHAPES
+      if (setting == 15) {
         let shaded = p.shaded;
         let unshaded = p.total - shaded;
         [shaded, unshaded] = simplify(shaded, unshaded);
@@ -21700,13 +21917,13 @@ function handleSubmit(e) {
         // }
       }
       // RATIO: REPEATED IDENTITY
-      if (setting == 15) {
+      if (setting == 16) {
         calArrQns = simplestForm(calArrQns);
         correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
       }
 
       // RATIO: IDENTICAL TOTAL
-      if (setting == 16) {
+      if (setting == 17) {
         let totalA = p.ratioA + p.ratioB;
         let totalB = p.ratioC + p.ratioD;
         const commonTotal = commonDeno(totalA, totalB);
@@ -21734,7 +21951,7 @@ function handleSubmit(e) {
       }
 
       //RATIO: WIPE ON WIPE OFF
-      if (setting == 17) {
+      if (setting == 18) {
         correctAnswer = Math.abs(p.change);
         if (p.version == "difference") {
           const differenceAtFirst = Math.abs(p.shaded - p.unshaded);
@@ -21749,7 +21966,7 @@ function handleSubmit(e) {
         }
       }
 
-      if (setting == 18) {
+      if (setting == 19) {
         if (p.type == "part thereof") {
           correctAnswer = Math.ceil(p.duration / p.group) * p.rates;
         }
@@ -21758,7 +21975,7 @@ function handleSubmit(e) {
         }
       }
 
-      if (setting == 19) {
+      if (setting == 20) {
         const capacity = p.length * p.breadth * p.height;
         const fill = (capacity / p.deno) * (p.deno - p.nume);
         const drain = (capacity / p.deno) * p.nume;
@@ -21780,7 +21997,7 @@ function handleSubmit(e) {
       }
 
       //PERCENTAGE: PERCENTAGE OF
-      if (setting == 20) {
+      if (setting == 21) {
         if (p.start == "fractions" || p.start == "decimals") {
           correctAnswer = `${accDecimal((p.nume / p.deno) * 100)}%`;
         }
@@ -21795,7 +22012,7 @@ function handleSubmit(e) {
         }
       }
       //PERCENRAGE: PERCENTAGE CHANGE
-      if (setting == 21) {
+      if (setting == 22) {
         const change = Math.abs(p.next - p.previous);
         if (p.version == "change")
           correctAnswer = `${accDecimal((change / p.previous) * 100)}%`;
@@ -21805,13 +22022,13 @@ function handleSubmit(e) {
           correctAnswer = accDecimal((p.next / (100 + p.change)) * 100);
       }
       // PERCENTAGE: REPEATED IDENTITY
-      if (setting == 22) {
+      if (setting == 23) {
         p.answer = simplestForm(p.answer);
         correctAnswer = p.answer.join(":");
       }
 
       // PERCENTAGE: REMAINDER CONCEPT
-      if (setting == 23) {
+      if (setting == 24) {
         if (p.question == "percentage") {
           const remaining = 100 - p.percA;
           const itemTwoP = (remaining / 100) * p.percR;
@@ -21825,7 +22042,7 @@ function handleSubmit(e) {
         }
       }
       // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-      if (setting == 24) {
+      if (setting == 25) {
         if (p.frontBack == "front") {
           if (p.moreDiscount == 0) {
             if (p.discountOrPrice == "price") {
@@ -21873,10 +22090,10 @@ function handleSubmit(e) {
         correctAnswer = accDecimal(correctAnswer.toFixed(2));
       }
 
-      if (setting == 25) correctAnswer = p.answer;
+      if (setting == 26) correctAnswer = p.answer;
 
       //AVERAGE: TRIANGLE NUMBERS
-      if (setting == 26) {
+      if (setting == 27) {
         if (p.type == "average") {
           console.log(p.start, p.end);
           const average = (p.end + p.start) / 2;
@@ -22074,8 +22291,11 @@ function handleSubmit(e) {
           }
         }
         correctAnswer = accDecimal(correctAnswer);
-        console.log(correctAnswer)
-        if (correctAnswer.toString().split(".")[1] && correctAnswer.toString().split(".")[1].length > 3) {
+        console.log(correctAnswer);
+        if (
+          correctAnswer.toString().split(".")[1] &&
+          correctAnswer.toString().split(".")[1].length > 3
+        ) {
           console.log(p.value);
           correctAnswer = correctAnswer.toFixed(2);
         }
@@ -24435,6 +24655,51 @@ function genProblems() {
     };
   }
 
+  if (level == 1.1) {
+    // 0 to 10
+    if (setting == 0) {
+      return {
+        number: genNumbers(9) + 1,
+      };
+    }
+    // 11 to 100
+    if (setting == 1) {
+      return {
+        number: genNumbers(90) + 11,
+      };
+    }
+    // 101 to 1000
+    if (setting == 2) {
+      return {
+        number: genNumbers(900) + 101,
+      };
+    }
+    // 101 to 1000
+    if (setting == 3) {
+      return {
+        number: genNumbers(9000) + 1001,
+      };
+    }
+    // 101 to 1000
+    if (setting == 4) {
+      return {
+        number: genNumbers(90000) + 10001,
+      };
+    }
+    // 101 to 1000
+    if (setting == 5) {
+      return {
+        number: genNumbers(900000) + 100001,
+      };
+    }
+    // 101 to 1000
+    if (setting == 6) {
+      return {
+        number: genNumbers(9000000) + 1000001,
+      };
+    }
+  }
+
   if (level == 2.0) {
     return {
       numOne: genNumbers(40) + 10,
@@ -26568,7 +26833,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "calFive") {
-    setting = calArrAll(26, calArr, setting, 99);
+    setting = calArrAll(27, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 0) {
@@ -26769,8 +27034,20 @@ function genProblems() {
         answer: undefined,
       };
     }
-    //REPEATED IDENTITY: SHAPES
+    //RATIO: POSSIBLE RATIOS
     if (setting == 14) {
+      return {
+        number: genNumbers(70) + 30,
+        optionOne: [],
+        optionTwo: [],
+        optionThree: [],
+        optionFour: [],
+        chosen: genNumbers(4),
+      };
+    }
+
+    //REPEATED IDENTITY: SHAPES
+    if (setting == 15) {
       return {
         shapes: ["square", "triangle", "rectangle", "circle"][genNumbers(4)],
         shaded: undefined,
@@ -26781,7 +27058,7 @@ function genProblems() {
       };
     }
     //repeated identity [Ratio]
-    if (setting == 15) {
+    if (setting == 16) {
       const arrSomething = ["books", "homeworks", "pencils", "pens"];
       return {
         something: arrSomething[genNumbers(arrSomething.length)],
@@ -26803,7 +27080,7 @@ function genProblems() {
     }
 
     // RATIO: IDENTICAL TOTAL
-    if (setting == 16) {
+    if (setting == 17) {
       const genObjects = genNumbers(3);
       return {
         position: genObjects,
@@ -26821,7 +27098,7 @@ function genProblems() {
     }
 
     // RATIO: WIPE ON WIPE OFF
-    if (setting == 17) {
+    if (setting == 18) {
       return {
         version: ["difference", "total", "object"][genNumbers(3)],
         length: genNumbers(5) + 5,
@@ -26833,7 +27110,7 @@ function genProblems() {
     }
 
     // RATES: PARTTHEREOF & PARTTHEREAFTER
-    if (setting == 18) {
+    if (setting == 19) {
       return {
         startHour: genNumbers(5) + 1,
         startMins: genNumbers(60 - 1) + 1,
@@ -26845,7 +27122,7 @@ function genProblems() {
     }
 
     // RATES: TAPS
-    if (setting == 19) {
+    if (setting == 20) {
       const gen_height = genNumbers(4) + 2;
       return {
         length: genNumbers(20) + 10,
@@ -26858,7 +27135,7 @@ function genProblems() {
     }
 
     // PERCENTAGE: PERCENTAGE OF
-    if (setting == 20) {
+    if (setting == 21) {
       const gen_deno = [2, 4, 5, 8, 10, 20, 50, 100, 1000][genNumbers(9)];
       // const position = genNumbers(6);
       return {
@@ -26872,7 +27149,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: PERCENTAGE CHANGE
-    if (setting == 21) {
+    if (setting == 22) {
       return {
         previous: (genNumbers(20) + 1) * 5,
         next: (genNumbers(20) + 1) * 5,
@@ -26883,7 +27160,7 @@ function genProblems() {
       };
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 22) {
+    if (setting == 23) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -26896,7 +27173,7 @@ function genProblems() {
     }
 
     //PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 23) {
+    if (setting == 24) {
       return {
         percA: (genNumbers(20 - 1) + 1) * 5,
         itemOne: ["toys", "chocolates", "food"][genNumbers(3)],
@@ -26913,7 +27190,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 24) {
+    if (setting == 25) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         cost: genNumbers(899) + 100,
@@ -26926,7 +27203,7 @@ function genProblems() {
     }
 
     //AVERAGE:INTERNAL CHANGE
-    if (setting == 25) {
+    if (setting == 26) {
       return {
         version: genNumbers(3),
         // version: 2,
@@ -26940,7 +27217,7 @@ function genProblems() {
     }
 
     //AVERAGE: TRIANGLE NUMBERS
-    if (setting == 26) {
+    if (setting == 27) {
       const gen_start = genNumbers(90) + 10;
       const range = genNumbers(500) + 100;
       return {
@@ -29240,6 +29517,21 @@ function buttonLevelSetting() {
       scoreNeeded = 20;
       break;
 
+    case "Level 1.10":
+      level = 1.1;
+      scoreNeeded = 10;
+      document.querySelector("#user-input").setAttribute("type", "text");
+      setting = prompt(
+        "What is your level?\n0. Primary 1 ( 0 to 10 )\n1. Primary 1\n2. Primary 2\n3. Primary 3"
+      );
+      // setting = prompt(
+      //   "What is your level?\n0. Primary 1 ( 0 to 10 )\n1. Primary 1\n2. Primary 2\n3. Primary 3\n4. Primary 4\n5. Primary 5\n6. Primary 6"
+      // );
+      if (![0, 1, 2, 3].includes(setting * 1)) {
+        setting = 3;
+      }
+      break;
+
     case "Level 2.0":
       level = 2.0;
       scoreNeeded = 50;
@@ -30070,7 +30362,7 @@ function buttonLevelSetting() {
       //   !setting.split("").includes("-")
       // )
       //   setting = 99;
-      accepted = [...Array(27).keys(), 99];
+      accepted = [...Array(28).keys(), 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
