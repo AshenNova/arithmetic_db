@@ -10336,9 +10336,7 @@ function updateProblems() {
       Person ${p.person} gave away ${displaySimpleFraction(
           p.denoOne - p.numeOne,
           p.denoOne
-        )}${p.denoOne - p.numeOne}/${p.denoOne} of ${
-          gender == "she" ? "her" : "his"
-        } money.</p>
+        )} of ${gender == "she" ? "her" : "his"} money.</p>
       ${gender} then spent another $${
           p.situation
         }, and now has ${displaySimpleFraction(
@@ -14394,7 +14392,10 @@ How far is apart is Town A and Town B?
         if (p.finalHeightUnitA == p.finalHeightUnitB) {
           questionSentence = `How much water must be poured from container ${transferText} for the height to be the same?</p>`;
         } else {
-          questionSentence = `How much water must be poured so that the height of A to B is ${p.finalHeightUnitA}/${p.finalHeightUnitB}?`;
+          questionSentence = `How much water must be poured so that the height of A to B is ${displaySimpleFraction(
+            p.finalHeightUnitA,
+            p.finalHeightUnitB
+          )}?`;
         }
       }
       if (p.question == "finalA") {
@@ -18087,8 +18088,8 @@ How many items are there in each bag?
         console.log("Ugly!");
         if (difference % p.denoB != 0) return updateCalc();
       }
-      const fractionA = `${p.numeA}/${p.denoA}`;
-      const fractionB = `${p.numeB}/${p.denoB}`;
+      const fractionA = `${displaySimpleFraction(p.numeA, p.denoA)}`;
+      const fractionB = `${displaySimpleFraction(p.numeB, p.denoB)}`;
       const percentageA = (p.numeA / p.denoA) * 100;
       const percentageB = (p.numeB / p.denoB) * 100;
       let unitA = fractionA;
@@ -18282,7 +18283,10 @@ How many items are there in each bag?
       [p.quantityA, p.quantityB] = simplify(p.quantityA, p.quantityB);
       if (p.quantityA == p.quantityB) return updateCalc();
       const unitType = ["fractions", "ratio", "percentage"][genNumbers(3)];
-      let unitStatement = `He bought ${p.quantityA}/${p.quantityB} as many ${itemA} as ${itemB}.`;
+      let unitStatement = `He bought ${displaySimpleFraction(
+        p.quantityA,
+        p.quantityB
+      )} as many ${itemA} as ${itemB}.`;
       if (unitType == "ratio") {
         unitStatement = `He bought ${itemA} to ${itemB} in the ratio of ${p.quantityA}:${p.quantityB}.`;
       }
@@ -29619,7 +29623,7 @@ function buttonLevelSetting() {
       document.querySelector("#user-input").setAttribute("type", "text");
       setting = prompt(
         "What is your level?\n0. Primary 1 ( 0 to 9 )\n1. Primary 1 (10 to 99)\n2. Primary 2 ( 100 to 999)\n3. Primary 3 (1 000 to 9999)\n4. Primary 4 (10 000 to 99 999)\n5. Primary 5 (100 000 to 999 999)\n6. Primary 6 (1 000 000 to 9 999 999)",
-        0
+        6
       );
       // setting = prompt(
       //   "What is your level?\n0. Primary 1 ( 0 to 10 )\n1. Primary 1\n2. Primary 2\n3. Primary 3\n4. Primary 4\n5. Primary 5\n6. Primary 6"

@@ -166,8 +166,18 @@ exports.saveEditUser = catchAsync(async (req, res, next) => {
         },
       }
     );
+    const updateHomeworkName = await Homework.updateMany(
+      {
+        name: editUser.username,
+      },
+      {
+        $set: {
+          name: req.body.username,
+        },
+      }
+    );
 
-    console.log(updateAttemptName, updateHighscoreName);
+    console.log(updateAttemptName, updateHighscoreName, updateHomeworkName);
   }
 
   if (
