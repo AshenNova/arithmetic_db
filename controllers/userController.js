@@ -503,11 +503,11 @@ function settings(level, age, allAttempts) {
     } else if (age == 9) {
       return 3;
     } else if (age == 10) {
-      return 3;
+      return 4;
     } else if (age == 11) {
-      return 3;
+      return 5;
     } else if (age >= 12) {
-      return 3;
+      return 6;
     }
   } else if (level == 2.02) {
     console.log(`The level is ${level}. Age is ${age}.`);

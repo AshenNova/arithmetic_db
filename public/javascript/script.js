@@ -17393,17 +17393,17 @@ How many items are there in each bag?
         }
       }
       displayProblem.innerHTML = `
-      Person A took ${p.numeOne}/${p.denoOne} ${
+      Person A took ${displaySimpleFraction(p.numeOne, p.denoOne)} ${
         p.situationOne == "+"
           ? `and another $${p.numOne}`
           : `and put back $${p.numOne}`
       } from the total.</p>
-      Person B took ${p.numeTwo}/${p.denoTwo} ${
+      Person B took ${displaySimpleFraction(p.numeTwo, p.denoTwo)} ${
         p.situationTwo == "+"
           ? `and another $${p.numTwo}`
           : `and put back $${p.numTwo}`
       } from the remainder.</p>
-      Person C took ${p.numeThree}/${p.denoThree} ${
+      Person C took ${displaySimpleFraction(p.numeThree, p.denoThree)} ${
         p.situationThree == "+"
           ? `and another $${p.numThree}`
           : `and put back $${p.numThree}`
@@ -17447,9 +17447,9 @@ How many items are there in each bag?
       People A, B and C have a total of $${p.total.toLocaleString(
         "en-US"
       )} at first.</p>
-      A gave ${p.numeOne}/${p.denoOne} to B.</p>
-      B then gave ${p.numeTwo}/${p.denoTwo} to C.</p>
-      C then gave ${p.numeThree}/${p.denoThree} to A.</p>
+      A gave ${displaySimpleFraction(p.numeOne, p.denoOne)} to B.</p>
+      B then gave ${displaySimpleFraction(p.numeTwo, p.denoTwo)} to C.</p>
+      C then gave ${displaySimpleFraction(p.numeThree, p.denoThree)} to A.</p>
       All 3 people ended with the same amount.</p>
       How much did A have at first?
       `;
@@ -17685,7 +17685,10 @@ How many items are there in each bag?
 
       let sentenceA = ["ratio", "fraction"][genNumbers(2)];
       if (sentenceA == "fraction") {
-        sentenceA = `The fraction of the number of students to ${object}s is ${p.totalQuantity}/${p.totalValue}`;
+        sentenceA = `The fraction of the number of students to ${object}s is ${displaySimpleFraction(
+          p.totalQuantity,
+          p.totalValue
+        )}`;
       } else {
         sentenceA = `The ratio of the number of students to ${object}s is ${p.totalQuantity} : ${p.totalValue}`;
       }
@@ -24590,8 +24593,8 @@ function handleSubmit(e) {
         "calSixb",
       ];
       const levelDoNotClearNum = [
-        1.1, 2.05, 2.09, 2.08, 2.09, 3.09, 3.12, 3.13, 3.14, 3.16, 4.0, 4.03, 5.11,
-        6.01,
+        1.1, 2.05, 2.09, 2.08, 2.09, 3.09, 3.12, 3.13, 3.14, 3.16, 4.0, 4.03,
+        5.11, 6.01,
       ];
       if (
         !levelDoNotClearNum.includes(level) &&
@@ -29469,7 +29472,13 @@ document
   });
 
 calBtn.forEach((item) => {
+  // console.log(item);
+  console.log(`This is player: ${player}.`);
+
+  // console.log(`This is player: ${player}.`);
   item.addEventListener("dblclick", function () {
+    // if (player == 1) {
+    // player = 0;
     buttonLevel = this.innerHTML;
     mulLevel = "nil";
 
@@ -29477,11 +29486,14 @@ calBtn.forEach((item) => {
     setTimeout(function () {
       buttonLevelSetting();
       levelBox();
+      // player = 1;
+      // console.log(`This is player: ${player}.`);
       if (buttonLevel != "Cal.6") {
         wholeNumberContainer.classList.toggle("hidden");
         workingContainer.classList.toggle("hidden");
       }
     }, 2000);
+    // }
   });
 });
 
