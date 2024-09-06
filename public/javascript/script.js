@@ -18391,7 +18391,12 @@ How many items are there in each bag?
         } coins are there?`;
       }
       if (p.question == "T") {
-        finalStatement = `What is the total value of both boxes?`;
+        if (p.situation == 1) {
+          finalStatement = `What is the total value of both boxes at first?`;
+        } else {
+          finalStatement = `What is the total value of both boxes?`;
+        }
+       
       }
       displayProblem.innerHTML = `
       Box A contains only ${
