@@ -495,8 +495,11 @@ function settings(level, age, allAttempts) {
         let count = 0;
         if (item.setting == 1) count += 1;
       });
-      if (count > 1) {return 1};
-      else {return 0};
+      if (count > 1) {
+        return 1;
+      } else {
+        return 0;
+      }
     } else if (age == 8) {
       return 2;
     } else if (age == 9) {
