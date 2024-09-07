@@ -18396,7 +18396,6 @@ How many items are there in each bag?
         } else {
           finalStatement = `What is the total value of both boxes?`;
         }
-       
       }
       displayProblem.innerHTML = `
       Box A contains only ${
@@ -18915,7 +18914,11 @@ function handleSubmit(e) {
           let hundreds = [];
           // hundreds place
           if (thirdNum != 0) {
-            hundreds.push(`${single[thirdNum * 1]} hundred and `);
+            if (firstNum == 0 && secondNum == 0) {
+              return `${single[thirdNum * 1]} hundred`;
+            } else {
+              hundreds.push(`${single[thirdNum * 1]} hundred and `);
+            }
           } else {
             hundreds.push(`and `);
           }
@@ -24774,12 +24777,14 @@ function genProblems() {
     if (setting == 1) {
       return {
         number: genNumbers(90) + 11,
+        // number: (genNumbers(9) + 1) * 10,
       };
     }
     // 101 to 1000
     if (setting == 2) {
       return {
         number: genNumbers(900) + 101,
+        // number: (genNumbers(9) + 1) * 100,
       };
     }
     // 101 to 1000
