@@ -14364,6 +14364,10 @@ How far is apart is Town A and Town B?
         How long did it take both Cars to meet?
         `;
       }
+      displayProblem.insertAdjacentHTML(
+        "beforeend",
+        "Leave your answer in fraction if needed."
+      );
     }
     // VOLUME: GROUPING
     if (setting == 5) {
@@ -18913,7 +18917,9 @@ function handleSubmit(e) {
           let construct = [];
           let hundreds = [];
           // hundreds place
-          if (thirdNum != 0) {
+          if (thirdNum == 0 && secondNum == 0 && firstNum == 0) {
+            return;
+          } else if (thirdNum != 0) {
             if (firstNum == 0 && secondNum == 0) {
               return `${single[thirdNum * 1]} hundred`;
             } else {
@@ -18960,6 +18966,9 @@ function handleSubmit(e) {
           console.log(setA, setB);
         }
         correctAnswer = `${genNumToWord(setA)} thousand, ${genNumToWord(setB)}`;
+        if (setA*1 == 0){
+          correctAnswer = `${genNumToWord(setA)}, ${genNumToWord(setB)}`;
+        }
       }
       if (setting == 6) {
         const length = p.number.toString().length;
@@ -18979,6 +18988,9 @@ function handleSubmit(e) {
         correctAnswer = `${genNumToWord(setA)} million, ${genNumToWord(
           setB
         )} thousand, ${genNumToWord(setC)}`;
+        if (setB*1 == 0){
+          correctAnswer = `${genNumToWord(setA)} million, ${genNumToWord(setC)}`;
+        }
       }
       // if (text.length == 4) {
       //   const firstNum = p.number.toString().split("")[text.length - 1];
