@@ -491,8 +491,8 @@ exports.deleteRewardLog = catchAsync(async (req, res, next) => {
 function settings(level, age, allAttempts) {
   if (level == 1.1) {
     if (age == 7) {
+      let count = 0;
       allAttempts.forEach((item) => {
-        let count = 0;
         if (item.setting == 1) count += 1;
       });
       if (count > 1) {
