@@ -18569,7 +18569,7 @@ How many items are there in each bag?
       if (diffB % 1 != 0 || diffB == 0 || diffA == diffB) return updateCalc();
       [sitNumeA, sitDenoA] = simplify(sitNumeA, sitDenoA);
       [sitNumeB, sitDenoB] = simplify(sitNumeB, sitDenoB);
-      if ((sitNumeA == sitNumeB) & (sitDenoA == sitDenoB)) return updateCalc();
+      if (sitNumeA == sitNumeB || sitDenoA == sitDenoB) return updateCalc();
       displayProblem.innerHTML = `
       ${displaySimpleFraction(p.numeA, p.denoA)}
         of A is ${Math.abs(diffA)} ${diffA < 0 ? "less" : "more"} than
@@ -18966,7 +18966,7 @@ function handleSubmit(e) {
           console.log(setA, setB);
         }
         correctAnswer = `${genNumToWord(setA)} thousand, ${genNumToWord(setB)}`;
-        if (setA*1 == 0){
+        if (setA * 1 == 0) {
           correctAnswer = `${genNumToWord(setA)}, ${genNumToWord(setB)}`;
         }
       }
@@ -18988,8 +18988,10 @@ function handleSubmit(e) {
         correctAnswer = `${genNumToWord(setA)} million, ${genNumToWord(
           setB
         )} thousand, ${genNumToWord(setC)}`;
-        if (setB*1 == 0){
-          correctAnswer = `${genNumToWord(setA)} million, ${genNumToWord(setC)}`;
+        if (setB * 1 == 0) {
+          correctAnswer = `${genNumToWord(setA)} million, ${genNumToWord(
+            setC
+          )}`;
         }
       }
       // if (text.length == 4) {
