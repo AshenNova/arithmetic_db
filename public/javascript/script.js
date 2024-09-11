@@ -14366,7 +14366,7 @@ How far is apart is Town A and Town B?
       }
       displayProblem.insertAdjacentHTML(
         "beforeend",
-        "Leave your answer in fraction if needed."
+        "<p><i>Leave your answer in fraction if needed.</i></p>"
       );
     }
     // VOLUME: GROUPING
@@ -27746,7 +27746,7 @@ function genProblems() {
       setting = calArr[genNumbers(calArr.length)];
       console.log("Whats the regen?");
     } else {
-      setting = calArrAll(10, calArr, setting, 99);
+      setting = calArrAll(9, calArr, setting, 99);
       setting = checkRange(setting, calArr, skipArr);
     }
 
