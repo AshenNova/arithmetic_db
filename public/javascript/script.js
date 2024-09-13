@@ -19121,6 +19121,9 @@ function handleSubmit(e) {
           }${p.minSeconds}=${p.numOne + p.numThree + 1}${p.minHours}${
             p.numTwo + p.numFour - 60
           }${p.minSeconds}`;
+          correctAnswerTwo = `${p.numOne + p.numThree + 1}${p.minHours}${
+            p.numTwo + p.numFour - 60
+          }${p.minSeconds}`;
         } else if (p.numOne == p.numThree && p.numOne == 0) {
           correctAnswer = `${p.numTwo + p.numFour}${p.minSeconds}`;
         } else {
@@ -19137,6 +19140,9 @@ function handleSubmit(e) {
           correctAnswer = `${p.numOne - 1}${p.minHours}${p.numTwo + 60}${
             p.minSeconds
           }, ${p.numOne - p.numThree - 1}${p.minHours}${
+            p.numTwo + 60 - p.numFour
+          }${p.minSeconds}`;
+          correctAnswerTwo = `${p.numOne - p.numThree - 1}${p.minHours}${
             p.numTwo + 60 - p.numFour
           }${p.minSeconds}`;
         } else {
