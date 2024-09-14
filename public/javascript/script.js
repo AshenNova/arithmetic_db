@@ -14482,64 +14482,78 @@ How far is apart is Town A and Town B?
     // GEOMETRY: REPEATED IDENTITY
     if (setting == 7) {
       drawingDisplay();
-      let startYAxis = 135;
+      // let startYAxis = 135;
       const multiplier = 15;
       if (p.type == 1) {
         // console.log(startYAxis);
-        const neededHeight = startYAxis + p.rectLength * multiplier + 30;
-        console.log(neededHeight);
-        if (neededHeight > 275) {
-          canvas.setAttribute("height", neededHeight);
-        } else {
-          canvas.setAttribute("height", 275);
-        }
-        startYAxis = fillTextSplit(
-          `The length and breadth of the rectangle is ${p.rectLength} cm and ${p.rectBreadth} cm.\nThe base of the triangle is ${p.triangleBase} cm.\nWhat is the difference between area of part X and part Y?`
-        );
+        // const neededHeight = startYAxis + p.rectLength * multiplier + 30;
+        // console.log(neededHeight);
+        // if (neededHeight > 275) {
+        //   canvas.setAttribute("height", neededHeight);
+        // } else {
+        //   canvas.setAttribute("height", 275);
+        // }
+
+        // startYAxis = fillTextSplit(
+        //   `The length and breadth of the rectangle is ${p.rectLength} cm and ${p.rectBreadth} cm.\nThe base of the triangle is ${p.triangleBase} cm.\nWhat is the difference between area of part X and part Y?`
+        // );
+        canvasTextId.innerHTML = `
+        The length and breadth of the rectangle is ${p.rectLength} cm and ${p.rectBreadth} cm.</br>The base of the triangle is ${p.triangleBase} cm.</br>What is the difference between area of part X and part Y</br>?
+        `;
       }
       if (p.type == 2) {
         // console.log(startYAxis);
-        const neededHeight = startYAxis + p.squareSides * multiplier + 30;
-        console.log(neededHeight);
-        if (neededHeight > 275) {
-          canvas.setAttribute("height", neededHeight);
-        } else {
-          canvas.setAttribute("height", 275);
-        }
-        startYAxis = fillTextSplit(
-          `The sides of the square is ${p.squareSides} cm.\nWhat is the difference between area of part A and part B?`
-        );
+        // const neededHeight = startYAxis + p.squareSides * multiplier + 30;
+        // console.log(neededHeight);
+        // if (neededHeight > 275) {
+        //   canvas.setAttribute("height", neededHeight);
+        // } else {
+        //   canvas.setAttribute("height", 275);
+        // }
+        // startYAxis = fillTextSplit(
+        //   `The sides of the square is ${p.squareSides} cm.\nWhat is the difference between area of part A and part B?`
+        // );
+        canvasTextId.innerHTML = `
+        The sides of the square is ${p.squareSides} cm.</br>What is the difference between area of part A and part B</br>?
+        `;
       }
       if (p.type == 3) {
         // console.log(startYAxis);
-        const neededHeight = startYAxis + p.squareSides * multiplier + 30;
-        console.log(neededHeight);
-        if (neededHeight > 275) {
-          canvas.setAttribute("height", neededHeight);
-        } else {
-          canvas.setAttribute("height", 275);
-        }
-        startYAxis = fillTextSplit(
-          `Both triangles have a height of ${p.squareSides} cm.\nOne has a base of ${p.triangleBase} cm.\n The other has a base of ${p.triangle2ndBase} cm.\nWhat is the difference between area of part A and part B?`
-        );
+        // const neededHeight = startYAxis + p.squareSides * multiplier + 30;
+        // console.log(neededHeight);
+        // if (neededHeight > 275) {
+        //   canvas.setAttribute("height", neededHeight);
+        // } else {
+        //   canvas.setAttribute("height", 275);
+        // }
+        // startYAxis = fillTextSplit(
+        //   `Both triangles have a height of ${p.squareSides} cm.\nOne has a base of ${p.triangleBase} cm.\n The other has a base of ${p.triangle2ndBase} cm.\nWhat is the difference between area of part A and part B?`
+        // );
+        canvasTextId.innerHTML = `
+        Both triangles have a height of ${p.squareSides} cm.</br>One has a base of ${p.triangleBase} cm.</br>The other has a base of ${p.triangle2ndBase} cm.</br>What is the difference between area of part A and part B</br>?
+        `;
       }
       if (p.type == 4) {
         // console.log(startYAxis);
-        const neededHeight = startYAxis + p.squareSides * multiplier + 30;
-        console.log(neededHeight);
-        if (neededHeight > 275) {
-          canvas.setAttribute("height", neededHeight);
-        } else {
-          canvas.setAttribute("height", 275);
-        }
-        startYAxis = fillTextSplit(
-          `Both triangles have a height of ${p.squareSides} cm.\nOne has a base of ${p.triangleBase} cm.\n The other has a base of ${p.triangle2ndBase} cm.\nWhat is the difference between area of part P and part Q?`
-        );
+        // const neededHeight = startYAxis + p.squareSides * multiplier + 30;
+        // console.log(neededHeight);
+        // if (neededHeight > 275) {
+        //   canvas.setAttribute("height", neededHeight);
+        // } else {
+        //   canvas.setAttribute("height", 275);
+        // }
+        // startYAxis = fillTextSplit(
+        //   `Both triangles have a height of ${p.squareSides} cm.\nOne has a base of ${p.triangleBase} cm.\n The other has a base of ${p.triangle2ndBase} cm.\nWhat is the difference between area of part P and part Q?`
+        // );
+        canvasTextId.innerHTML = `
+        Both triangles have a height of ${p.squareSides} cm.</br>One has a base of ${p.triangleBase} cm.</br>The other has a base of ${p.triangle2ndBase} cm.</br>What is the difference between area of part P and part Q</br>?
+        `;
       }
       ctx.save(); //FIRST SAVE
 
       ctx.font = "1em serif";
-      ctx.translate(20, startYAxis);
+      // ctx.translate(20, startYAxis);
+      ctx.translate(20, 0);
       if (p.type == 1) {
         ctx.beginPath();
         ctx.rect(0, 0, p.rectBreadth * multiplier, p.rectLength * multiplier);
@@ -18497,6 +18511,7 @@ How many items are there in each bag?
         const totalFlagB = (commonDistance / p.priceB) * p.quantityB * p.groups;
         console.log(commonDistance, totalFlagA, totalFlagB);
         const diffValue = totalFlagA - totalFlagB;
+        if (diffValue == 0) return updateCalc()
         if (diffValue < 0) {
           clue = `${Math.abs(
             diffValue
