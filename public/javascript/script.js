@@ -13438,7 +13438,7 @@ function updateProblems() {
         The greatest number of shirts were made.</p>
         `;
       }
-      if (p.type == "mixed fractions") {
+      if (p.type == "mixed fractions" || p.type == "simple fractions") {
         const numeTotal = p.whole * p.denominator + p.numerator;
         if (
           (numeTotal * p.denominatorTwo) % (p.denominator * p.numeratorTwo) ==
