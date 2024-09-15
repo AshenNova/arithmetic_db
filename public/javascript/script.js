@@ -18511,7 +18511,7 @@ How many items are there in each bag?
         const totalFlagB = (commonDistance / p.priceB) * p.quantityB * p.groups;
         console.log(commonDistance, totalFlagA, totalFlagB);
         const diffValue = totalFlagA - totalFlagB;
-        if (diffValue == 0) return updateCalc()
+        if (diffValue == 0) return updateCalc();
         if (diffValue < 0) {
           clue = `${Math.abs(
             diffValue
@@ -19209,6 +19209,7 @@ function handleSubmit(e) {
             correctAnswer = `${hours}${amOrPm2}`;
           } else if (p.timeMinutes + p.changeMinutes == 60) {
             correctAnswer = `${p.timeHours}.60=${hours}${amOrPm2}`;
+            correctAnswerTwo = `${hours}${amOrPm2}`;
           } else if (
             p.timeMinutes + p.changeMinutes >= 60 &&
             p.timeMinutes + p.changeMinutes - 60 < 10
@@ -19216,10 +19217,12 @@ function handleSubmit(e) {
             correctAnswer = `${p.timeHours}.${
               p.timeMinutes + p.changeMinutes
             }=${hours}.0${finalMinutes % 60}${amOrPm2}`;
+            correctAnswerTwo = `${hours}.0${finalMinutes % 60}${amOrPm2}`;
           } else if (p.timeMinutes + p.changeMinutes >= 60) {
             correctAnswer = `${p.timeHours}.${
               p.timeMinutes + p.changeMinutes
             }=${hours}.${finalMinutes % 60}${amOrPm2}`;
+            correctAnswerTwo = `${hours}.${finalMinutes % 60}${amOrPm2}`
           } else if (finalMinutes % 60 < 10) {
             correctAnswer = `${hours}.0${finalMinutes % 60}${amOrPm2}`;
           } else {
@@ -19277,6 +19280,9 @@ function handleSubmit(e) {
             correctAnswer = `${hours}.${p.timeMinutes + 60},${hours}.${
               finalMinutes % 60
             }${amOrPm2}`;
+            correctAnswerTwo = `${hours}.${
+              finalMinutes % 60
+            }${amOrPm2}`
           } else if (finalMinutes % 60 < 10) {
             correctAnswer = `${hours}.0${finalMinutes % 60}${amOrPm2}`;
           } else {
