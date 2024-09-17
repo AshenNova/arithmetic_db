@@ -10315,7 +10315,7 @@ function updateProblems() {
       Person ${p.person} gave away some of ${
           gender == "she" ? "her" : "his"
         } money and had ${displaySimpleFraction(
-          p.numOne,
+          p.numeOne,
           p.denoOne
         )} of it left.</p>
       ${gender} then spent another $${
@@ -19222,7 +19222,7 @@ function handleSubmit(e) {
             correctAnswer = `${p.timeHours}.${
               p.timeMinutes + p.changeMinutes
             }=${hours}.${finalMinutes % 60}${amOrPm2}`;
-            correctAnswerTwo = `${hours}.${finalMinutes % 60}${amOrPm2}`
+            correctAnswerTwo = `${hours}.${finalMinutes % 60}${amOrPm2}`;
           } else if (finalMinutes % 60 < 10) {
             correctAnswer = `${hours}.0${finalMinutes % 60}${amOrPm2}`;
           } else {
@@ -19280,9 +19280,7 @@ function handleSubmit(e) {
             correctAnswer = `${hours}.${p.timeMinutes + 60},${hours}.${
               finalMinutes % 60
             }${amOrPm2}`;
-            correctAnswerTwo = `${hours}.${
-              finalMinutes % 60
-            }${amOrPm2}`
+            correctAnswerTwo = `${hours}.${finalMinutes % 60}${amOrPm2}`;
           } else if (finalMinutes % 60 < 10) {
             correctAnswer = `${hours}.0${finalMinutes % 60}${amOrPm2}`;
           } else {
