@@ -11133,7 +11133,7 @@ function updateProblems() {
       }
       if (p.version == "percentage back") {
         let answer = accDecimal((p.next / (100 + p.change)) * 100);
-        if (answer.toString().split(".")[1].length > 2) {
+        if (answer % 1 != 0 && answer.toString().split(".")[1].length > 2) {
           console.log("recurring");
           return updateCalc();
         }
