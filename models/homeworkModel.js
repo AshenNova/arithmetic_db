@@ -15,6 +15,7 @@ const homeworkSchema = new mongoose.Schema({
   linkA: String,
   linkB: String,
   dueDate: Date,
+  completeDate: Date,
   status: {
     type: String,
     default: "Incomplete",

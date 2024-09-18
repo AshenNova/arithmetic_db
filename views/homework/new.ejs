@@ -102,7 +102,7 @@
         <div class="col-3">
             <div class="form-group required">
                 <label class="form-label" for="dateIssue">Issue Date ( Leave blank if today )</label>
-                <input type="date" class="form-control" name="dateIssue"<% if (editHomework) { %>
+                <input type="date" class="form-control" name="dateIssue"<% if (editHomework && editHomework.issueDate) { %>
                   value="<%= editHomework.dateIssue.getFullYear() %>-<%= (editHomework.dateIssue.getMonth()+1).toString().padStart(2, 0) %>-<%= editHomework.dateIssue.getDate().toString().padStart(2, 0) %>"
                            <% } %>
                            >
@@ -110,13 +110,22 @@
         </div>
         <div class="col-3">
             <div class="form-group required">
-                <label class="form-label" for="dateIssue">Due Date</br></label>
+                <label class="form-label" for="dueDate">Due Date</br></label>
                 <input type="date" class="form-control" name="dueDate" <% if (editHomework && editHomework.dueDate) { %>
                   value="<%= editHomework.dueDate.getFullYear() %>-<%= (editHomework.dueDate.getMonth()+1).toString().padStart(2, 0) %>-<%= editHomework.dueDate.getDate().toString().padStart(2, 0) %>"
                            <% } %>
                            >
             </div>
         </div>
+        <div class="col-3">
+          <div class="form-group">
+              <label class="form-label" for="dateComplete">Completed Date</br></label>
+              <input type="date" class="form-control" name="completeDate" <% if (editHomework && editHomework.completeDate) { %>
+                value="<%= editHomework.completeDate.getFullYear() %>-<%= (editHomework.completeDate.getMonth()+1).toString().padStart(2, 0) %>-<%= editHomework.completeDate.getDate().toString().padStart(2, 0) %>"
+                         <% } %>
+                         >
+          </div>
+      </div>
       </div>
 
     <button type="submit" class="btn btn-primary">

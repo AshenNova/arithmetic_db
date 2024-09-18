@@ -9,19 +9,35 @@ const User = require("../models/userModel");
 //   }
 exports.updateToCompleted = async (req, res) => {
   console.log("Updating status to completed");
+  console.log(req.body);
   try {
-    const homework = await Homework.findByIdAndUpdate(req.params.id, {
-      status: "Completed",
-    });
+    const homework = await Homework.findById(req.params.id);
+    if (!req.body.completeDate) req.body.completeDate = Date.now();
+    if (req.body.completeDate != homework.completeDate) {
+      const homework = await Homework.findByIdAndUpdate(req.params.id, {
+        status: "Completed",
+        completeDate: req.body.completeDate,
+      });
+    } else {
+      const updateStatusHomework = await Homework.findByIdAndUpdate(
+        req.params.id,
+        {
+          status: "Completed",
+        }
+      );
+    }
+
     res.redirect(`/user/summary/?username=${homework.name}`);
   } catch (e) {
     res.status(400).json({ message: e });
   }
 };
+
 exports.updateToIncomplete = async (req, res) => {
   try {
     const homework = await Homework.findByIdAndUpdate(req.params.id, {
       status: "Incomplete",
+      completeDate: "",
     });
     res.redirect(`/user/summary/?username=${homework.name}`);
   } catch (e) {
