@@ -18585,6 +18585,14 @@ How many items are there in each bag?
       [sitNumeA, sitDenoA] = simplify(sitNumeA, sitDenoA);
       [sitNumeB, sitDenoB] = simplify(sitNumeB, sitDenoB);
       if (sitNumeA == sitNumeB || sitDenoA == sitDenoB) return updateCalc();
+      if (p.numeA >= p.numeB) {
+        const commonNumerator = commonDeno(p.numeA, p.numeB);
+        const newDenoA = (commonNumerator / p.numeA) * p.denoA;
+        const newDenoB = (commonNumerator / p.numeB) * p.denoB;
+        const endDenoA = newDenoA/sitDenoA*(sitDenoA-sitNumeA)
+        const endDenoB = newDenoB/sitDenoB*(sitDenoB-sitNumeB)
+        if (endDenoA == endDenoB) return updateCalc()
+      }
       displayProblem.innerHTML = `
       ${displaySimpleFraction(p.numeA, p.denoA)}
         of A is ${Math.abs(diffA)} ${diffA < 0 ? "less" : "more"} than
