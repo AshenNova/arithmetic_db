@@ -18589,9 +18589,9 @@ How many items are there in each bag?
         const commonNumerator = commonDeno(p.numeA, p.numeB);
         const newDenoA = (commonNumerator / p.numeA) * p.denoA;
         const newDenoB = (commonNumerator / p.numeB) * p.denoB;
-        const endDenoA = newDenoA/sitDenoA*(sitDenoA-sitNumeA)
-        const endDenoB = newDenoB/sitDenoB*(sitDenoB-sitNumeB)
-        if (endDenoA == endDenoB) return updateCalc()
+        const endDenoA = (newDenoA / sitDenoA) * (sitDenoA - sitNumeA);
+        const endDenoB = (newDenoB / sitDenoB) * (sitDenoB - sitNumeB);
+        if (endDenoA == endDenoB) return updateCalc();
       }
       displayProblem.innerHTML = `
       ${displaySimpleFraction(p.numeA, p.denoA)}
@@ -20190,7 +20190,13 @@ function handleSubmit(e) {
       const numSquareHeight = Math.floor(p.height / p.dimension);
       const totalSquare = numSquareLength * numSquareBreadth;
       const totalCube = numSquareLength * numSquareBreadth * numSquareHeight;
-      if (setting == 1 || setting == 2) {
+      if (setting == 1) {
+        correctAnswer = `${numSquareLength}x${numSquareBreadth}=${totalSquare}`;
+        correctAnswerTwo = `${p.length * p.breadth}/${
+          p.dimension * p.dimension
+        }=${totalSquare}`;
+      }
+      if (setting == 2) {
         correctAnswer = `${numSquareLength}x${numSquareBreadth}=${totalSquare}`;
       }
       if (setting == 3) {
