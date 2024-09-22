@@ -16987,6 +16987,7 @@ How many items are there in each bag?
       p.totalA = personASpent + personALeft;
       p.totalB = p.personBSpent + personBLeft;
       const total = p.totalA + p.totalB;
+      if (p.difference < 0) return updateCalc();
       if (total % 1 != 0 || total <= 0 || p.totalA <= 0 || p.totalB <= 0)
         return updateCalc();
 
