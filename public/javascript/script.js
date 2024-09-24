@@ -16263,24 +16263,41 @@ How many items are there in each bag?
       `;
     }
 
-    if (
-      setting == 3 ||
-      (setting == 9 && p.rollz == 3) ||
-      (range == 1 && p.rollz == 3)
-    ) {
+    if (setting == 3) {
       p.absentPeople = genNumbers(p.peopleAtFirst - 2) + 1;
       p.giveUp = (genNumbers(4) + 1) * p.absentPeople;
       p.remainingPeople = p.peopleAtFirst - p.absentPeople;
-      displayProblem.innerHTML = `
-      There were ${p.peopleAtFirst} workers at first.</br>
-      ${p.absentPeople} did not turn up for work. </br>
-      Each of the remaining workers have to do additional ${p.giveUp} work.</br>
-      ${
-        p.rollQn == "A"
-          ? "How many did each worker originally needed to do?"
-          : "What was the total amount of work needed to be done?"
+      if (p.type == 1) {
+        displayProblem.innerHTML = `
+        There were ${p.peopleAtFirst} workers at first.</br>
+        ${p.absentPeople} did not turn up for work. </br>
+        Each of the remaining workers have to do additional ${
+          p.giveUp
+        } work.</br>
+        ${
+          p.rollQn == "A"
+            ? "How many did each worker originally needed to do?"
+            : "What was the total amount of work needed to be done?"
+        }
+        `;
       }
-      `;
+      if (p.type == 2) {
+        const people = boyNames.concat(girlNames);
+        const name = people[genNumbers(people.length)];
+        p.boxEnd = genNumbers(p.boxFirst - 1) + 1;
+        const sweetsGivenAway = p.peopleAtFirst * p.sweetsEach;
+        const decreaseInBoxes = p.boxFirst - p.boxEnd;
+        p.eachBox = sweetsGivenAway / decreaseInBoxes;
+        // console.log(p.eachBox)
+        if (p.eachBox % 1 != 0) return updateCalc();
+        displayProblem.innerHTML = `
+        ${name} had ${p.boxFirst} boxes of sweets at first.</br>
+        ${p.peopleAtFirst} students were given ${p.sweetsEach} sweets each.</br>
+        There were ${p.boxEnd} boxes of sweets left in the end.</br>
+        How many sweets were there at first?
+                
+        `;
+      }
     }
 
     if (
@@ -23674,21 +23691,29 @@ function handleSubmit(e) {
         }
       }
 
-      if (
-        setting == 3 ||
-        (setting == 9 && p.rollz == 3) ||
-        (range == 1 && p.rollz == 3)
-      ) {
-        let extraWork = p.remainingPeople * p.giveUp;
-        let eachPerson = extraWork / p.absentPeople;
-        let totalWork = eachPerson * p.peopleAtFirst;
-        if (p.rollQn == "A") {
-          correctAnswer = `${p.peopleAtFirst}-${p.absentPeople}=${p.remainingPeople}\n${p.remainingPeople}x${p.giveUp}=${extraWork}\n${extraWork}/${p.absentPeople}=${eachPerson}`;
-          correctAnswerTwo = eachPerson;
+      if (setting == 3) {
+        if (p.type == 1) {
+          let extraWork = p.remainingPeople * p.giveUp;
+          let eachPerson = extraWork / p.absentPeople;
+          let totalWork = eachPerson * p.peopleAtFirst;
+          if (p.rollQn == "A") {
+            correctAnswer = `${p.peopleAtFirst}-${p.absentPeople}=${p.remainingPeople}\n${p.remainingPeople}x${p.giveUp}=${extraWork}\n${extraWork}/${p.absentPeople}=${eachPerson}`;
+            correctAnswerTwo = eachPerson;
+          }
+          if (p.rollQn == "B") {
+            correctAnswer = `${p.peopleAtFirst}-${p.absentPeople}=${p.remainingPeople}\n${p.remainingPeople}x${p.giveUp}=${extraWork}\n${extraWork}/${p.absentPeople}=${eachPerson}\n${p.peopleAtFirst}x${eachPerson}=${totalWork}`;
+            correctAnswerTwo = totalWork;
+          }
         }
-        if (p.rollQn == "B") {
-          correctAnswer = `${p.peopleAtFirst}-${p.absentPeople}=${p.remainingPeople}\n${p.remainingPeople}x${p.giveUp}=${extraWork}\n${extraWork}/${p.absentPeople}=${eachPerson}\n${p.peopleAtFirst}x${eachPerson}=${totalWork}`;
-          correctAnswerTwo = totalWork;
+        if (p.type == 2) {
+          correctAnswer = `${p.peopleAtFirst}x${p.sweetsEach}=${
+            p.peopleAtFirst * p.sweetsEach
+          }\n${p.boxFirst}-${p.boxEnd}=${p.boxFirst - p.boxEnd}\n${
+            p.peopleAtFirst * p.sweetsEach
+          }/${p.boxFirst - p.boxEnd}=${p.eachBox}\n${p.eachBox}x${p.boxFirst}=${
+            p.boxFirst * p.eachBox
+          }`;
+          correctAnswerTwo = p.boxFirst * p.eachBox;
         }
       }
 
@@ -28585,7 +28610,11 @@ function genProblems() {
         remainingPeople: undefined,
         giveUp: undefined,
         rollQn: ["A", "B"][genNumbers(2)],
-        rollz: 3,
+        type: genNumbers(2) + 1,
+        boxFirst: genNumbers(10) + 5,
+        sweetsEach: genNumbers(10) + 2,
+        boxEnd: undefined,
+        eachBox: undefined,
       };
     }
 
