@@ -194,7 +194,12 @@
                                                 <a href="<%= item.linkB %>" target="_blank">Link B</a></br>
                                             <% } %>
                                         </td>
-                                        <td><%= item.dateIssue.toLocaleDateString('en-GB') %></td>
+                                        <% if (item.dateIssue){ %>
+                                            <td><%= item.dateIssue.toLocaleDateString('en-GB') %></td>
+                                        <% } else { %>
+                                            <td>Nil</td>
+                                        <% } %>
+                                       
                                         <% if (item.dueDate) { %>
                                             <td><%= item.dueDate.toLocaleDateString('en-GB') %></td>
                                         <% } else { %>
