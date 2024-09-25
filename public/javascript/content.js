@@ -123,6 +123,7 @@ export const displayContent = (level) => {
     5. Unchanged Total (if)</br>
     6. Supposition (Units)</br>
     7. Ratio: Continuous </br>
+    8. Difference Quantity with Difference </br>
     <hr>9. All
     `;
   }
@@ -323,13 +324,14 @@ export const displayContent = (level) => {
     18. Percentage: Overlapping Model</br>
     19. Percentage: GST, discount and Service Charge</br>
     20. Percentage: Identical Effect</br>
+    21. Percentage: Solving in units</br>
     <hr>
-    21. Average: External Change</br>
-    22. Average: Odd consecutive days</br>
+    22. Average: External Change</br>
+    23. Average: Odd consecutive days</br>
     <hr>
-    23. Ratio: Manipulation of units with value</br>
-    24. Pattern: Continuous Pattern (Sets) </br>
-    25. Ratio: Unidentical Group
+    24. Ratio: Manipulation of units with value</br>
+    25. Pattern: Continuous Pattern (Sets) </br>
+    26. Ratio: Unidentical Group
     <hr>
     99. All
     `;

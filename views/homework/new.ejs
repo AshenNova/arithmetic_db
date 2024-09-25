@@ -102,7 +102,7 @@
         <div class="col-3">
             <div class="form-group required">
                 <label class="form-label" for="dateIssue">Issue Date ( Leave blank if today )</label>
-                <input type="date" class="form-control" name="dateIssue"<% if (editHomework && editHomework.issueDate) { %>
+                <input type="date" class="form-control" name="dateIssue"<% if (editHomework && editHomework.dateIssue) { %>
                   value="<%= editHomework.dateIssue.getFullYear() %>-<%= (editHomework.dateIssue.getMonth()+1).toString().padStart(2, 0) %>-<%= editHomework.dateIssue.getDate().toString().padStart(2, 0) %>"
                            <% } %>
                            >

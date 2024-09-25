@@ -13123,8 +13123,54 @@ function updateProblems() {
 
       `;
     }
-    //AVERAGE: EXTERNAL CHANGE
+
+    //PERCENTAGE: SOLVING IN UNITS
     if (setting == 21) {
+      normalDisplay();
+      const itemName = ["pies", "cakes", "sandwiches", "hotdogs"][
+        genNumbers(4)
+      ];
+      p.quantitySoldAtOriginalPrice = (p.items * p.originalPerc) / 100;
+      p.quantitySoldAtDiscountedPrice =
+        ((p.items - p.quantitySoldAtOriginalPrice) * p.remainderPerc) / 100;
+      const leftOvers =
+        p.items -
+        p.quantitySoldAtDiscountedPrice -
+        p.quantitySoldAtOriginalPrice;
+      if (leftOvers % 1 != 0) return updateCalc();
+      const received =
+        p.price * p.quantitySoldAtOriginalPrice +
+        ((p.price * (100 - p.discount)) / 100) *
+          p.quantitySoldAtDiscountedPrice;
+      displayProblem.innerHTML = `
+      At a carnival, ${
+        p.originalPerc
+      }% of the ${itemName} were sold at the original price.</br>
+      ${
+        p.remainderPerc
+      }% of the remaining ${itemName} were sold at discount of ${
+        p.discount
+      }%.</br>
+      All ${leftOvers} leftovers were donated to charity.</br>
+      $${
+        received % 1 != 0 ? received.toFixed(2) : received
+      } was collected at the end of the carnival.</p>
+      `;
+      if (p.question == "A") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How much was collected from selling the ${itemName} that were sold at original price?`
+        );
+      }
+      if (p.question == "B") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How much was collected from selling the ${itemName} that were sold at discounted price?`
+        );
+      }
+    }
+    //AVERAGE: EXTERNAL CHANGE
+    if (setting == 22) {
       normalDisplay();
       if (p.changeQuantity == 0) return updateCalc();
       p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
@@ -13156,7 +13202,7 @@ function updateProblems() {
     }
 
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 22) {
+    if (setting == 23) {
       normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -13181,7 +13227,7 @@ function updateProblems() {
       `;
     }
     //RATIO: MANIPULATION OF UNITS WITH VALUE
-    if (setting == 23) {
+    if (setting == 24) {
       normalDisplay();
       const multi = genNumbers(50) + 50;
       p.total = (p.unitA + p.unitB) * multi;
@@ -13248,7 +13294,7 @@ function updateProblems() {
     }
 
     // PATTERN: CONTINUOUS PATTERN (SETS)
-    if (setting == 24) {
+    if (setting == 25) {
       normalDisplay();
       p.second = p.first + p.secondDiff;
       displayProblem.innerHTML = `
@@ -13320,7 +13366,7 @@ function updateProblems() {
       }
     }
     // RATIO: UNIDENTICAL GROUP
-    if (setting == 25) {
+    if (setting == 26) {
       normalDisplay();
 
       [p.A1, p.A2] = simplify(p.A1, p.A2);
@@ -13386,6 +13432,25 @@ function updateProblems() {
       p.A2 = p.totalA.length * p.A2;
       p.B1 = p.totalB.length * p.B1;
       p.B2 = p.totalB.length * p.B2;
+    }
+    if (setting == 27) {
+      normalDisplay();
+
+      let large = Math.floor(p.quantity / p.largeTray);
+      let remainder = p.quantity % p.largeTray;
+      if (remainder == 0) return updateCalc();
+      while (remainder % p.smallTray != 0) {
+        large -= 1;
+        remainder += p.largeTray;
+        if (large <= 0) return updateCalc();
+      }
+      p.largeTrayQuantity = large;
+      p.smallTrayQuantity = remainder / p.smallTray;
+      displayProblem.innerHTML = `
+      There is a total of ${p.quantity} eggs.</br>
+      A large tray can hold ${p.largeTray} eggs while a small tray can hold ${p.smallTray} eggs.</p>
+      What is the least number of trays needed to hold all the eggs?
+      `;
     }
     // BOTTOM OF CALFIVEB
   }
@@ -17775,6 +17840,27 @@ How many items are there in each bag?
         p.secondSituation
       )} and their ratio became ${p.secondUnitA} : ${p.secondUnitB}.</br>
       What is the value of A at first?
+
+      `;
+    }
+
+    if (setting == 8) {
+      normalDisplay();
+      // const differenceInNumberOfContainer =
+      //   p.numLargeContainer - p.numSmallContainer;
+      if (p.largeContainer <= p.smallContainer) return updateCalc();
+      const halfVolume = p.largeContainer * p.numLargeContainer;
+      const equalSmall = p.smallContainer * p.numLargeContainer;
+      const diffVolume = halfVolume - equalSmall;
+      const diffContainer = diffVolume / p.smallContainer;
+      if (diffContainer % 1 != 0) return updateCalc();
+      displayProblem.innerHTML = `
+      Half of a mixture was poured into small containers, while the other half is poured into large containers.</p>
+      The containers were all fully filled.</br>
+      The small container holds ${p.smallContainer} ml.</br>
+      The large container holds ${p.largeContainer} ml.</p>
+      There were ${diffContainer} more small containers than large containers.</br>
+      What was the total of the mixture at first?
 
       `;
     }
@@ -22484,7 +22570,17 @@ function handleSubmit(e) {
       }
       // PERCENTAG: IDENTICAL EFFECT
       if (setting == 20) correctAnswer = p.salary;
+
+      //PERCENTAGE: SOLVING IN UNITS
       if (setting == 21) {
+        if (p.question == "A")
+          correctAnswer = p.price * p.quantitySoldAtOriginalPrice;
+        if (p.question == "B")
+          correctAnswer =
+            ((p.price * (100 - p.discount)) / 100) *
+            p.quantitySoldAtDiscountedPrice;
+      }
+      if (setting == 22) {
         if (p.question == "at first") {
           correctAnswer = p.oldQuantity;
         }
@@ -22493,24 +22589,24 @@ function handleSubmit(e) {
         }
       }
       //AVERAGE: CONSECUTIVE DAYS
-      if (setting == 22) {
+      if (setting == 23) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
 
       //RATIO: MANIPULATION OF UNITS WITH VALUE
-      if (setting == 23) {
+      if (setting == 24) {
         correctAnswer = p.total;
       }
 
       // PATTERN: CONTINUOUS PATTERN (SETS)
-      if (setting == 24) {
+      if (setting == 25) {
         if (p.question == "pattern") correctAnswer = p.value;
         if (p.question == "number") correctAnswer = p.pattern;
       }
 
       // RATIO: UNIDENTICAL GROUP
 
-      if (setting == 25) {
+      if (setting == 26) {
         if (p.question == "FM") {
           [p.A2, p.B1] = simplify(p.A2, p.B1);
           correctAnswer = `${p.A2}:${p.B1}`;
@@ -22527,6 +22623,9 @@ function handleSubmit(e) {
           [p.A1, p.B1] = simplify(p.A1, p.B1);
           correctAnswer = `${p.A1}:${p.B1}`;
         }
+      }
+      if (setting == 27) {
+        correctAnswer = p.largeTrayQuantity + p.smallTrayQuantity;
       }
     }
 
@@ -24285,6 +24384,10 @@ function handleSubmit(e) {
 
       if (setting == 7) {
         correctAnswer = p.oneUnit * p.newUnitA[0] - p.firstSituation;
+      }
+
+      if (setting == 8) {
+        correctAnswer = p.largeContainer * p.numLargeContainer * 2;
       }
     }
     //ANSWERS
@@ -27432,7 +27535,7 @@ function genProblems() {
       setting = calArr[genNumbers(calArr.length)];
       console.log("Whats the regen?");
     } else {
-      setting = calArrAll(25, calArr, setting, 99);
+      setting = calArrAll(27, calArr, setting, 99);
       setting = checkRange(setting, calArr, skipArr);
     }
     console.log(`THE SETTING IS ${setting}`);
@@ -27734,7 +27837,21 @@ function genProblems() {
       };
     }
 
+    // PERCENRAGE: SOLVING IN UNITS
     if (setting == 21) {
+      return {
+        items: genNumbers(50) * 10 + 500,
+        originalPerc: (genNumbers(3) + 1) * 10,
+        remainderPerc: (genNumbers(3) + 1) * 5,
+        discount: (genNumbers(7) + 2) * 5,
+        price: (genNumbers(20) + 10) * 1,
+        question: ["A", "B"][genNumbers(2)],
+        quantitySoldAtDiscountedPrice: undefined,
+        quantitySoldAtOriginalPrice: undefined,
+      };
+    }
+
+    if (setting == 22) {
       return {
         oldQuantity: genNumbers(6) + 3,
         oldAverage: genNumbers(40) + 10,
@@ -27747,7 +27864,7 @@ function genProblems() {
       };
     }
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 22) {
+    if (setting == 23) {
       return {
         dayOne: genNumbers(20) + 5,
         days: genNumbers(5) + 5,
@@ -27758,7 +27875,7 @@ function genProblems() {
     }
 
     //RATIO: MANIPULATION OF UNITS WITH VALUE
-    if (setting == 23) {
+    if (setting == 24) {
       const gen_unitA = genNumbers(10) + 2;
       const gen_unitB = genNumbers(10) + 2;
       return {
@@ -27775,7 +27892,7 @@ function genProblems() {
     }
 
     // PATTERN: CONTINUOUS PATTERN (SETS)
-    if (setting == 24) {
+    if (setting == 25) {
       return {
         start: genNumbers(8) + 2,
         first: genNumbers(5) + 1,
@@ -27790,7 +27907,7 @@ function genProblems() {
     }
 
     // RATIO: UNIDENTICAL GROUP
-    if (setting == 25) {
+    if (setting == 26) {
       return {
         A1: genNumbers(5) + 1,
         A2: genNumbers(5) + 1,
@@ -27798,6 +27915,18 @@ function genProblems() {
         B2: genNumbers(5) + 1,
         multiples: genNumbers(4) + 2,
         question: ["FM", "FF", "MF", "MM"][genNumbers(4)],
+      };
+    }
+
+    // LEAST NUMBER
+    if (setting == 27) {
+      const gen_smallTray = genNumbers(5) + 2;
+      return {
+        quantity: genNumbers(200) + 100,
+        smallTray: gen_smallTray,
+        largeTray: gen_smallTray + genNumbers(5) + 2,
+        largeTrayQuantity: undefined,
+        smallTrayQuantity: undefined,
       };
     }
   }
@@ -29075,6 +29204,17 @@ function genProblems() {
         oneUnit: genNumbers(100) + 1,
         newUnitA: undefined,
         newUnitB: undefined,
+      };
+    }
+
+    if (setting == 8) {
+      const gen_numLargeContainer = (genNumbers(10) + 1) * 5;
+      const gen_smallContainer = (genNumbers(10) + 1) * 5;
+      return {
+        largeContainer: gen_smallContainer * (genNumbers(5) + 2),
+        smallContainer: gen_smallContainer,
+        numSmallContainer: undefined,
+        numLargeContainer: gen_numLargeContainer + genNumbers(20) + 10,
       };
     }
   }
@@ -30585,7 +30725,7 @@ function buttonLevelSetting() {
         optionsBox.classList.add("hidden");
         setting = 99;
       }
-      accepted = [...Array.from({ length: 25 }, (_, i) => i + 1), 99];
+      accepted = [...Array.from({ length: 27 }, (_, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
       console.log(`What is the setting? ${setting}`);
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -30811,7 +30951,7 @@ function buttonLevelSetting() {
         optionsBox.classList.add("hidden");
         setting = 9;
       }
-      accepted = [1, 2, 3, 4, 5, 6, 7, 9];
+      accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 5;
       displayProblem.style.fontSize = "18px";
