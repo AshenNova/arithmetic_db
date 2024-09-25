@@ -864,7 +864,7 @@ const generateRec = async (nameTemp) => {
   const heuAgeSeven = heuOne;
   const heuAgeEight = heuTwo;
   const heuAgeNine = heuTwo.concat(heuThree); //p3
-  const heuAgeTen = heuThree.concat(heuFour); //p4
+  const heuAgeTen = heuThree.concat(heuTwo, heuFour); //p4
   const heuAgeEleven = heuThree.concat(heuFour, heuFive); //p5
   const heuAgeTwelve = heuThree.concat(heuFour, heuFive, heuSix); //p6
   awards.forEach((award) => {
