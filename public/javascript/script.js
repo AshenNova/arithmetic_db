@@ -7997,7 +7997,32 @@ function updateProblems() {
       console.log(p.numOne, p.numTwo);
     }
 
+    // OVERLAPPING PLACE VALUE
     if (setting == 7) {
+      normalDisplay();
+      displayProblem.style.fontSize = "1em";
+      let overlappingArr = [
+        `${p.whole} ones`,
+        `${p.tens} tens`,
+        `${p.hundreds} hundreds`,
+      ];
+      for (let i = 2; i >= 0; i--) {
+        const include = genNumbers(2);
+        if (include == 1) {
+          p.sentenceArr.push(overlappingArr[i]);
+        }
+      }
+      if (p.sentenceArr.length < 2) {
+        console.log("Empty 🥲");
+        return updateCalc();
+      }
+      console.log(p.sentenceArr);
+      displayProblem.innerHTML = `
+      Find the value of:</p>
+      ${p.sentenceArr.join(", ")}.`;
+    }
+
+    if (setting == 8) {
       for (let i = 0; i < 6; i++) {
         arr.push(p.startNum);
         p.startNum += p.difference;
@@ -8012,7 +8037,7 @@ function updateProblems() {
       displayProblem.innerHTML = displayStr;
     }
 
-    if (setting == 8) {
+    if (setting == 9) {
       for (let i = 0; i < 6; i++) {
         arr.push(p.startNum);
         i++;
@@ -8031,7 +8056,7 @@ function updateProblems() {
       displayProblem.innerHTML = displayStr;
     }
     // LEFT SIDE RIGHT SIDE
-    if (setting == 9) {
+    if (setting == 10) {
       let leftSide = resultSide(p.limit, p.multiMin, p.multiMax);
 
       // console.log(leftSide);
@@ -8062,7 +8087,7 @@ function updateProblems() {
       p.answer = rightSide.answer;
       displayProblem.innerHTML = tempStatementArr;
     }
-    if (setting == 10) {
+    if (setting == 11) {
       drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
       // const largeIntervals = 20;
       // const adjustment = 10;
@@ -8108,7 +8133,7 @@ function updateProblems() {
     }
 
     //TIME: TIMELINE
-    if (setting == 11) {
+    if (setting == 12) {
       console.log(`Hours at first: ${p.hours}, Minutes at first: ${p.mins}`);
       let zone = "am";
       let timeHours = p.hours;
@@ -8152,7 +8177,7 @@ function updateProblems() {
       }
     }
     // FRACTIONS: IDENTIFICATION
-    if (setting == 12) {
+    if (setting == 13) {
       normalDisplay();
       displayProblem.innerHTML = `<p class="mb-2">What fraction of the figure is ${p.type}?</br>`;
       let fractArr = [];
@@ -8180,7 +8205,7 @@ function updateProblems() {
       // console.log(fractArr);
     }
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 13) {
+    if (setting == 14) {
       simpleFractionDisplay();
       denominatorOne.classList.remove("hidden");
       fractionsLine.classList.remove("hidden");
@@ -8470,7 +8495,7 @@ function updateProblems() {
         `${p.tens} tens`,
         `${p.hundreds} hundreds`,
       ];
-      for (let i = 2; i > 0; i--) {
+      for (let i = 2; i >= 0; i--) {
         const include = genNumbers(2);
         if (include == 1) {
           p.sentenceArr.push(overlappingArr[i]);
@@ -21288,16 +21313,38 @@ function handleSubmit(e) {
         if (p.identity == "D") correctAnswer = p.numTwo;
         if (p.identity == "C") correctAnswer = p.numOne;
       }
-      if (setting == 7 || setting == 8) {
-        correctAnswer = p.answer;
+      // OVERLAPPING PLACE VALUE
+      if (setting == 7) {
+        let sumArr = [];
+        for (let i = 0; i < p.sentenceArr.length; i++) {
+          console.log(p.sentenceArr[i]);
+          let num;
+
+          if (p.sentenceArr[i].includes("ones")) {
+            num = p.whole * 1;
+          }
+          if (p.sentenceArr[i].includes("tens")) {
+            num = p.tens * 10;
+          }
+          if (p.sentenceArr[i].includes("hundreds")) {
+            num = p.hundreds * 100;
+          }
+          sumArr.push(num);
+        }
+        let sum = 0;
+        sumArr.map((item) => (sum += item * 1));
+        correctAnswer = accDecimal(sum);
       }
-      if (setting == 9) {
+      if (setting == 8 || setting == 9) {
         correctAnswer = p.answer;
       }
       if (setting == 10) {
-        correctAnswer = p.start + p.eachInterval * p.arrow;
+        correctAnswer = p.answer;
       }
       if (setting == 11) {
+        correctAnswer = p.start + p.eachInterval * p.arrow;
+      }
+      if (setting == 12) {
         if (p.beforeAfter == "before") {
           let totalTime = undefined;
           if (p.hoursMins == "hours") {
@@ -21351,13 +21398,13 @@ function handleSubmit(e) {
       }
 
       // FRACTIONS: IDENTIFICATION
-      if (setting == 12) {
+      if (setting == 13) {
         if (p.type == "black")
           correctAnswer = `${p.black}/${p.black + p.white}`;
         if (p.type == "white")
           correctAnswer = `${p.white}/${p.black + p.white}`;
       }
-      if (setting == 13) {
+      if (setting == 14) {
         if (p.operator == "+") {
           correctAnswer = `${p.numeOne + p.numeTwo}/${p.deno}`;
           if (p.numeOne + p.numeTwo == p.deno) correctAnswer = 1;
@@ -26406,7 +26453,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(8, calArr);
     // }
-    setting = calArrAll(13, calArr, setting, 99, level);
+    setting = calArrAll(14, calArr, setting, 99, level);
     setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 1) {
@@ -26475,13 +26522,22 @@ function genProblems() {
     }
     if (setting == 7) {
       return {
+        whole: genNumbers(99) + 1,
+        tens: genNumbers(50) + 1,
+        hundreds: genNumbers(5) + 1,
+        sentenceArr: [],
+      };
+    }
+
+    if (setting == 8) {
+      return {
         startNum: genNumbers(500) + 500,
         difference: genNumbers(200) - 100,
         position: genNumbers(6),
         answer: undefined,
       };
     }
-    if (setting == 8) {
+    if (setting == 9) {
       return {
         roll: undefined,
         startNum: genNumbers(500) + 500,
@@ -26492,7 +26548,7 @@ function genProblems() {
       };
     }
     // LEFT SIDE RIGHT SIDE
-    if (setting == 9) {
+    if (setting == 10) {
       return {
         limit: 50,
         multiMin: 2,
@@ -26500,7 +26556,7 @@ function genProblems() {
       };
     }
     // PARTS AND INTERVALS
-    if (setting == 10) {
+    if (setting == 11) {
       const gen_intervals = [2, 4, 5][genNumbers(3)];
       return {
         start: genNumbers(599) + 100,
@@ -26512,7 +26568,7 @@ function genProblems() {
     }
 
     // TIME: TIMELINE
-    if (setting == 11) {
+    if (setting == 12) {
       return {
         hours: genNumbers(24),
         mins: genNumbers(60),
@@ -26523,7 +26579,7 @@ function genProblems() {
       };
     }
     // FRACTIONS: IDENTIFICATION
-    if (setting == 12) {
+    if (setting == 13) {
       return {
         row: genNumbers(3) + 1,
         column: genNumbers(3) + 3,
@@ -26533,7 +26589,7 @@ function genProblems() {
       };
     }
     //FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 13) {
+    if (setting == 14) {
       const gen_deno = genNumbers(9) + 3;
       const gen_diff = genNumbers(gen_deno - 1) + 1;
       return {
@@ -30647,7 +30703,7 @@ function buttonLevelSetting() {
         99
       );
       if (!setting) optionsBox.classList.add("hidden");
-      accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 99];
+      accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
@@ -30721,6 +30777,7 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
+
       if (!setting) {
         optionsBox.classList.add("hidden");
         setting = 99;

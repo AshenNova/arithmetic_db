@@ -173,14 +173,15 @@ export const displayContent = (level) => {
     4. Subtraction (to 1000) (Borrowing)<br>
     5. Single blank<br>
     6. Working (Other sequence)<br>
-    7. Arithmetic Constant<br>
-    8. Arithmetic Stagger<br>
-    9. Left Side Right Side + - x /<br>
-    10. Parts and Intervals<br>
-    11. Time: Timeline<br>
-    12. Fractions: Identification<br>
-    13. Fractions: Addition and Subtraction</br>
-    </hr>
+    7. Overlapping place value</br>
+    8. Arithmetic Constant<br>
+    9. Arithmetic Stagger<br>
+    10. Left Side Right Side + - x /<br>
+    11. Parts and Intervals<br>
+    12. Time: Timeline<br>
+    13. Fractions: Identification<br>
+    14. Fractions: Addition and Subtraction</br>
+    <hr>
     99. Everything`;
   }
   if (level == "calThree") {
@@ -331,7 +332,8 @@ export const displayContent = (level) => {
     <hr>
     24. Ratio: Manipulation of units with value</br>
     25. Pattern: Continuous Pattern (Sets) </br>
-    26. Ratio: Unidentical Group
+    26. Ratio: Unidentical Group</br>
+    27. Supposition: Least</br>
     <hr>
     99. All
     `;
