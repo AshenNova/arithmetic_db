@@ -7795,32 +7795,8 @@ function updateProblems() {
   }
 
   if (level == "calTwo") {
-    //DRAWING DISPLAY
-    if (setting == 10) {
-      drawingDisplay();
-    }
-    //WORKING DISPLAY
-    if (
-      setting == 1 ||
-      setting == 2 ||
-      setting == 3 ||
-      setting == 4 ||
-      setting == 5 ||
-      setting == 6
-    ) {
-      workingDisplay();
-    }
-    // NORMAL DISPLAY
-    if (setting == 7 || setting == 8 || setting == 9 || setting == 11) {
-      displayProblem.style.fontSize = "24px";
-      normalDisplay();
-      if (setting == 9) {
-        displayProblem.style.fontSize = "20px";
-        displayProblem.style.textAlign = "left";
-      }
-    }
-
     if (setting == 1) {
+      workingDisplay();
       const numOneStr = p.numOne.toString();
       let numTwoStr = p.numTwo.toString();
       // if (countA != countB) {
@@ -7842,6 +7818,7 @@ function updateProblems() {
       workingAnswer.textContent = "?";
     }
     if (setting == 2) {
+      workingDisplay();
       // if (p.numTwo > p.numOne) {
       //   [p.numTwo, p.numOne] = [p.numOne, p.numTwo];
       // }
@@ -7865,6 +7842,7 @@ function updateProblems() {
       workingAnswer.textContent = "?";
     }
     if (setting == 3) {
+      workingDisplay();
       while (p.numOne + p.numTwo >= 1000) {
         if (p.numOne > p.numTwo) p.numOne -= 100;
         if (p.numTwo > p.numOne) p.numTwo -= 100;
@@ -7876,6 +7854,7 @@ function updateProblems() {
     }
 
     if (setting == 4) {
+      workingDisplay();
       const arr = p.numOne.toString().split("");
       const arr2 = p.numTwo.toString().split("");
       for (let i = 0; i < 5; i++) {
@@ -7894,6 +7873,7 @@ function updateProblems() {
       workingAnswer.textContent = "?";
     }
     if (setting == 5) {
+      workingDisplay();
       let arrOne = [];
       let arrTwo = [];
       arrOne = p.numOne.toString().split("");
@@ -7956,6 +7936,7 @@ function updateProblems() {
       }
     }
     if (setting == 6) {
+      workingDisplay();
       if (p.operator == "+") {
         operator.textContent = p.operator;
         while (p.numOne + p.numTwo > 1000) {
@@ -8023,6 +8004,8 @@ function updateProblems() {
     }
 
     if (setting == 8) {
+      displayProblem.style.fontSize = "24px";
+      normalDisplay();
       for (let i = 0; i < 6; i++) {
         arr.push(p.startNum);
         p.startNum += p.difference;
@@ -8038,6 +8021,8 @@ function updateProblems() {
     }
 
     if (setting == 9) {
+      displayProblem.style.fontSize = "24px";
+      normalDisplay();
       for (let i = 0; i < 6; i++) {
         arr.push(p.startNum);
         i++;
@@ -8057,6 +8042,9 @@ function updateProblems() {
     }
     // LEFT SIDE RIGHT SIDE
     if (setting == 10) {
+      displayProblem.style.fontSize = "20px";
+      displayProblem.style.textAlign = "left";
+      normalDisplay();
       let leftSide = resultSide(p.limit, p.multiMin, p.multiMax);
 
       // console.log(leftSide);
@@ -8088,6 +8076,7 @@ function updateProblems() {
       displayProblem.innerHTML = tempStatementArr;
     }
     if (setting == 11) {
+      drawingDisplay();
       drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
       // const largeIntervals = 20;
       // const adjustment = 10;
@@ -8134,6 +8123,8 @@ function updateProblems() {
 
     //TIME: TIMELINE
     if (setting == 12) {
+      displayProblem.style.fontSize = "24px";
+      normalDisplay();
       console.log(`Hours at first: ${p.hours}, Minutes at first: ${p.mins}`);
       let zone = "am";
       let timeHours = p.hours;
