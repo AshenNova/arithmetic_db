@@ -1644,6 +1644,91 @@ function updateProblems() {
     displayProblem.innerHTML = `<span style="font-size: 0.5em">Spell:</span></br>${p.number.toLocaleString()}`;
   }
 
+  if (level == 1.11) {
+    drawingDisplay();
+    canvasTextId.textContent = `Identify the shape below.`;
+    console.log(p.shape);
+    ctx.save();
+    const width = canvas.getAttribute("width").slice(0, -2);
+    const height = canvas.getAttribute("height").slice(0, -2);
+    ctx.lineWidth = 5;
+    ctx.lineCap = "round";
+
+    if (p.shape == "square") {
+      const length = genNumbers(50) + 50;
+      ctx.beginPath();
+
+      ctx.rect(width / 2 - length / 2, height / 2 - length / 2, length, length);
+      ctx.stroke();
+    }
+    if (p.shape == "rectangle") {
+      let length = genNumbers(50) + 50;
+      let breadth = genNumbers(50) + 50;
+      while (Math.abs(length - breadth) < 20) {
+        length += 1;
+        breadth -= 1;
+      }
+      ctx.beginPath();
+      ctx.rect(
+        width / 2 - length / 2,
+        height / 2 - breadth / 2,
+        length,
+        breadth
+      );
+      ctx.stroke();
+    }
+    if (p.shape == "triangle") {
+      ctx.beginPath();
+      ctx.moveTo(genNumbers(width / 2), genNumbers(height / 2));
+      ctx.lineTo(width / 2 + genNumbers(width / 2), genNumbers(height / 2));
+      ctx.lineTo(genNumbers(width), height / 2 + genNumbers(height / 2));
+      ctx.closePath();
+
+      ctx.stroke();
+    }
+    if (p.shape == "circle") {
+      ctx.beginPath();
+      const radius = genNumbers(50) + 20;
+      ctx.arc(width / 2, height / 2, radius, 0, 2 * Math.PI);
+      ctx.stroke();
+    }
+    if (p.shape == "quadrant") {
+      ctx.beginPath();
+      // ctx.save()
+      ctx.translate(width / 2, height / 2);
+      ctx.rotate(genNumbers(360));
+      // ctx.restore()
+      const radius = genNumbers(50) + 20;
+      ctx.arc(0 / 2, 0 / 2, radius, 1.5 * Math.PI, 2 * Math.PI);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0 / 2, 0 / 2);
+      ctx.lineTo(0 / 2, 0 / 2 - radius);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0 / 2, 0 / 2);
+      ctx.lineTo(0 / 2 + radius, 0 / 2);
+      ctx.stroke();
+    }
+    if (p.shape == "semicircle") {
+      ctx.beginPath();
+      // ctx.save()
+      ctx.translate(width / 2, height / 2);
+      ctx.rotate(genNumbers(360));
+      // ctx.restore()
+      const radius = genNumbers(50) + 20;
+      ctx.arc(0 / 2, 0 / 2, radius, 1 * Math.PI, 2 * Math.PI);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0 - radius, 0);
+      ctx.lineTo(0 + radius, 0);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
   if (level == 1.01 || level == 2.01 || level == 3.01) {
     if (p.operator == "x")
       displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}`;
@@ -19175,6 +19260,10 @@ function handleSubmit(e) {
       // }
     }
 
+    if (level == 1.11) {
+      correctAnswer = p.shape;
+      if (p.shape == "quadrant") correctAnswerTwo = "quarter circle";
+    }
     if (level == 2.02) {
       if (p.place == "ones") correctAnswer = arr2[0];
       if (p.place == "tens") correctAnswer = arr2[1];
@@ -25032,6 +25121,20 @@ function genProblems() {
       };
     }
   }
+  if (level == 1.11) {
+    let shapes = [
+      "square",
+      "triangle",
+      "rectangle",
+      "circle",
+      "quadrant",
+      "semicircle",
+    ];
+    // shapes = ["quadrant"];
+    return {
+      shape: shapes[genNumbers(shapes.length)],
+    };
+  }
 
   if (level == 2.0) {
     return {
@@ -29923,6 +30026,13 @@ function buttonLevelSetting() {
       if (![0, 1, 2, 3, 4, 5, 6].includes(setting * 1)) {
         setting = 6;
       }
+      break;
+
+    case "Level 1.11":
+      level = 1.11;
+      document.querySelector("#user-input").setAttribute("type", "text");
+      scoreNeeded = 10;
+
       break;
 
     case "Level 2.0":
