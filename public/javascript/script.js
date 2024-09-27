@@ -5783,6 +5783,7 @@ function updateProblems() {
 
   if (level == 5.08) {
     ctx.save();
+    console.log(p.roll, p.corrRoll);
     ctx.font = "1em serif";
     if (p.roll == "opposite") {
       ctx.fillText("What is ∠a?", 20, 20);
@@ -20875,14 +20876,16 @@ function handleSubmit(e) {
 
     if (level == 5.08) {
       if (p.roll == "opposite") {
-        correctAnswer = p.oppositeRotation;
+        correctAnswer = `${p.oppositeRotation} opp`;
       }
       if (p.roll == "corresponding") {
-        if (p.corrRoll == "1" || p.corrRoll == "3" || p.corrRoll == "4") {
-          correctAnswer = p.corrAngleDisplay;
+        if (p.corrRoll == "1") correctAnswer = `${p.corrAngleDisplay} adj`;
+        if (p.corrRoll == "4") correctAnswer = `${p.corrAngleDisplay} opp`;
+        if (p.corrRoll == "3") {
+          correctAnswer = `${p.corrAngleDisplay} corr`;
         }
         if (p.corrRoll == "2") {
-          correctAnswer = `180-${p.corrAngleDisplay}`;
+          correctAnswer = `180-${p.corrAngleDisplay} sum of // line`;
         }
       }
     }
