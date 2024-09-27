@@ -26126,7 +26126,7 @@ function genProblems() {
 
   if (level == 5.08) {
     return {
-      roll: ["corresponding", "opposite"][genNumbers(2)],
+      roll: ["corresponding", "opposite", "corresponding"][genNumbers(3)],
       oppositeRotation: [genNumbers(120) + 30],
       finalRotation: [genNumbers(180) - 90],
 
