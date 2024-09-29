@@ -209,7 +209,7 @@
                                         <% if (item.completeDate) { %>
                                            
                                             <td><%= item.completeDate.toLocaleDateString('en-GB') %></br>
-                                                <%= Math.ceil((new Date()-item.completeDate)/(1000*60*60*24)) %>
+                                                <%= Math.ceil((new Date()-item.completeDate)/(1000*60*60*24))-1 %>
                                             </td>
                                          <% } else { %>
                                             <td>Nil</td>

@@ -8107,14 +8107,27 @@ function updateProblems() {
     }
 
     if (setting == 9) {
-      displayProblem.style.fontSize = "24px";
+      // displayProblem.style.fontSize = "24px";
       normalDisplay();
-      for (let i = 0; i < 6; i++) {
+      console.log(p.diffOne, p.diffThree);
+      for (let i = 0; i < 7; i++) {
+        console.log(i);
         arr.push(p.startNum);
         i++;
+        //calculates the 2nd position.
         p.startNum += p.diffOne;
         arr.push(p.startNum);
+        //calculates the 3rd position.
         p.startNum += p.diffTwo;
+
+        if (p.diffThree != p.diffOne && i < 7) {
+          console.log(p.diffOne == p.diffThree);
+          arr.push(p.startNum);
+          i++;
+          p.startNum += p.diffThree;
+
+          // i++;
+        }
       }
       if (arr[5] > 1000 || arr[5] < 0 || p.diffOne == 0 || p.diffTwo == 0) {
         console.log(arr[5]);
@@ -8537,12 +8550,21 @@ function updateProblems() {
 
     if (setting == 8) {
       normalDisplay();
-      for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < 7; i++) {
         arr.push(p.startNum);
         i++;
         p.startNum += p.diffOne;
         arr.push(p.startNum);
         p.startNum += p.diffTwo;
+
+        if (p.diffThree != p.diffOne && i < 7) {
+          console.log(p.diffOne == p.diffThree);
+          arr.push(p.startNum);
+          i++;
+          p.startNum += p.diffThree;
+
+          // i++;
+        }
       }
       if (arr[5] > 10000 || arr[5] < 0 || p.diffOne == 0 || p.diffTwo == 0) {
         console.log(arr[5]);
@@ -11156,7 +11178,7 @@ function updateProblems() {
         questionSent = "How many mins does it take to drain the container?";
       }
       displayProblem.innerHTML = `${lineOne}</p>
-      It is ${p.nume}/${p.deno} filled.</p>
+      It is ${displaySimpleFraction(p.nume, p.deno)} filled.</p>
       ${rateASentence}
       ${rateBSentence}
       ${questionSent}</p>
@@ -26635,11 +26657,14 @@ function genProblems() {
       };
     }
     if (setting == 9) {
+      const gen_diffOne = genNumbers(200) - 100;
       return {
         roll: undefined,
         startNum: genNumbers(500) + 500,
-        diffOne: genNumbers(200) - 100,
+        // diffOne: genNumbers(200) - 100,
+        diffOne: gen_diffOne,
         diffTwo: genNumbers(200) - 100,
+        diffThree: [gen_diffOne, genNumbers(200) - 100][genNumbers(2)],
         position: genNumbers(6),
         answer: undefined,
       };
@@ -26784,10 +26809,12 @@ function genProblems() {
       };
     }
     if (setting == 8) {
+      const gen_diffOne = genNumbers(200) * 10;
       return {
         startNum: genNumbers(5000) + 5000,
-        diffOne: genNumbers(2000) - 1000,
-        diffTwo: genNumbers(2000) - 1000,
+        diffOne: gen_diffOne,
+        diffTwo: genNumbers(200) * 10,
+        diffThree: [gen_diffOne, genNumbers(200) * 10][genNumbers(2)],
         position: genNumbers(6),
         answer: undefined,
       };
@@ -27571,10 +27598,10 @@ function genProblems() {
 
     // RATES: TAPS
     if (setting == 20) {
-      const gen_height = genNumbers(4) + 2;
+      const gen_height = genNumbers(40) + 20;
       return {
-        length: genNumbers(20) + 10,
-        breadth: genNumbers(20) + 10,
+        length: genNumbers(50) + 50,
+        breadth: genNumbers(50) + 50,
         height: gen_height * (genNumbers(5) + 2),
         deno: gen_height,
         nume: genNumbers(gen_height - 1) + 1,
@@ -29075,9 +29102,9 @@ function genProblems() {
       return {
         personA: boyNames[genNumbers(boyNames.length)],
         personB: girlNames[genNumbers(girlNames.length)],
-        personBSpent: genNumbers(500) + 100,
+        personBSpent: genNumbers(300) + 100,
         multiple: genNumbers(4) + 2,
-        difference: genNumbers(1000) - 500,
+        difference: genNumbers(500) - 250,
         numerator: genNumbers(2) + 2,
         denominator: [1, genNumbers(4) + 2][genNumbers(2)],
         choice: ["A", "B"][genNumbers(2)],
