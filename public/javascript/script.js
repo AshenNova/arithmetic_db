@@ -20901,7 +20901,7 @@ function handleSubmit(e) {
         correctAnswer = `${p.oppositeRotation} opp`;
       }
       if (p.roll == "corresponding") {
-        if (p.corrRoll == "1") correctAnswer = `${p.corrAngleDisplay} adj`;
+        if (p.corrRoll == "1") correctAnswer = `${p.corrAngleDisplay} alt`;
         if (p.corrRoll == "4") correctAnswer = `${p.corrAngleDisplay} opp`;
         if (p.corrRoll == "3") {
           correctAnswer = `${p.corrAngleDisplay} corr`;
