@@ -22322,7 +22322,8 @@ function handleSubmit(e) {
 
       //RATIO: POSSIBLE
       if (setting == 14) {
-        correctAnswer = p.chosen += 1;
+        console.log(p.chosen);
+        correctAnswer = p.chosen + 1;
       }
 
       //RATIO: SHAPES
