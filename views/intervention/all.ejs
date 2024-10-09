@@ -12,6 +12,12 @@
    <link rel="icon" href="/images/favicon.ico?v=1.1">
 
   
+   <style>
+    .no-line{
+      text-decoration: none;
+  }
+  </style>
+
   <title>All Interventions</title>
 </head>
 <body>
@@ -52,8 +58,8 @@
                 <td><%= item.quantity %></td>
                 <td><%= item.dateStart.toLocaleDateString("en-GB") %></td>
                 <td><%= item.date.toLocaleDateString("en-GB") %></td>
-                <td><a href="/intervention/edit/<%= item._id %>">Edit</a></td>
-                <td><a href="#" class="delete-intervention">Delete</a></td>
+                <td><a href="/intervention/edit/<%= item._id %>" class="no-line"><i class="fa-solid fa-pen-to-square"></i></td>
+                <td><a href="#" class="delete-intervention no-line">❌</a></td>
             </tr>
         <% }) %>
 

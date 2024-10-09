@@ -10827,22 +10827,27 @@ function updateProblems() {
       normalDisplay();
       function getFactors(num) {
         let factors = [];
-        for (let i = 1; i <= p.number; i++) {
-          if (p.number % i == 0) factors.push(i);
+        for (let i = 1; i <= num; i++) {
+          if (num % i == 0) factors.push(i);
         }
         return factors;
       }
       let factors = getFactors(p.number);
-      while (factors.length < 4) {
-        factors = getFactors(p.number);
+      console.log(factors);
+      if (factors.length < 4) {
+        // p.number +=1
+        return updateCalc();
+        // factors = getFactors(p.number);
       }
       let arr = [p.optionOne, p.optionTwo, p.optionThree, p.optionFour];
+      //FILL UP THE OPTIONS
       arr.forEach((item) => {
         for (let i = 0; i < 3; i++) {
           const num = genNumbers(5) + 1;
           item.push(num);
         }
       });
+      //CHECK THE ARRAYS
       arr.forEach((item, index) => {
         let sum = 0;
         item.map((x) => {
@@ -10852,10 +10857,12 @@ function updateProblems() {
         while (index == p.chosen && p.number % sum != 0) {
           item[genNumbers(item.length)] += 1;
           sum += 1;
+          if (sum > p.number) return updateCalc();
         }
         while (index != p.chosen && p.number % sum == 0) {
           item[genNumbers(item.length)] += 1;
           sum += 1;
+          if (sum > p.number) return updateCalc();
         }
       });
       function simplifyAll(arr) {
@@ -10872,14 +10879,39 @@ function updateProblems() {
         }
         return arr;
       }
+      console.log("simplfying");
       simplifyAll(p.optionOne);
+      console.log("Done 1");
       simplifyAll(p.optionTwo);
+      console.log("Done 2");
       simplifyAll(p.optionThree);
+      console.log("Done 3");
       simplifyAll(p.optionFour);
+      console.log("Done 4");
       arr.forEach((item, index) => {
-        for (let i = 0; i < 4; i++) {
-          if (index == i) return;
-          if (item.toString() == arr[i].toString()) return updateCalc();
+        console.log(`Option: ${index + 1} ${item}`);
+        if (p.chosen == index) {
+          console.log("HUH?");
+          return;
+        }
+        // for (let i = 0; i < 4; i++) {
+        //   console.log(i);
+        //   if (index == i) {
+        //     console.log("Here?");
+        //     return;
+        //   }
+
+        //   //CHECKING IF THERE ARE ANY IDENTICAL ARRAYS
+        //   if (item.toString() == arr[i].toString()) return updateCalc();
+        // }
+        //CHECKING IF OTHER OPTIONS MIGHT LEAD TO ANOTHER ANSWER
+        let summation = 0;
+        item.map((x) => (summation += x));
+        console.log(`The summation is :${summation}`);
+        if (p.number % summation == 0) {
+          console.log(p.number);
+          console.log(summation);
+          return updateCalc();
         }
       });
       displayProblem.innerHTML = `
