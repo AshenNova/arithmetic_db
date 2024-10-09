@@ -10890,20 +10890,12 @@ function updateProblems() {
       console.log("Done 4");
       arr.forEach((item, index) => {
         console.log(`Option: ${index + 1} ${item}`);
+        // SKIP EVERYTHING BELOW IF ITS THE ANSWER
         if (p.chosen == index) {
           console.log("HUH?");
           return;
         }
-        // for (let i = 0; i < 4; i++) {
-        //   console.log(i);
-        //   if (index == i) {
-        //     console.log("Here?");
-        //     return;
-        //   }
 
-        //   //CHECKING IF THERE ARE ANY IDENTICAL ARRAYS
-        //   if (item.toString() == arr[i].toString()) return updateCalc();
-        // }
         //CHECKING IF OTHER OPTIONS MIGHT LEAD TO ANOTHER ANSWER
         let summation = 0;
         item.map((x) => (summation += x));
@@ -10912,6 +10904,17 @@ function updateProblems() {
           console.log(p.number);
           console.log(summation);
           return updateCalc();
+        }
+
+        //CHECKING IF THERE ARE ANY IDENTICAL ARRAYS
+        for (let i = 0; i < 4; i++) {
+          // DO NOT CHECK IF OPTIONS IS THE SAME OPTION
+          if (index != i) {
+            if (item.toString() == arr[i].toString()) {
+              console.log("Repeat detected");
+              return updateCalc();
+            }
+          }
         }
       });
       displayProblem.innerHTML = `
