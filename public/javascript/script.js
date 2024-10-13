@@ -15456,6 +15456,11 @@ How many items are there in each bag?
       const diffEnd = valueAEnd - valueBEnd;
       if (valueA == 0 || valueB == 0 || valueAEnd == 0 || valueBEnd == 0)
         return updateCalc();
+      if (
+        Math.abs(p.situationA) == Math.abs(diffEnd) ||
+        Math.abs(p.situationB) == Math.abs(diffEnd)
+      )
+        return updateCalc();
       if (p.type == "unit") {
         displayProblem.innerHTML = `
         A is ${p.unitA} times of B.</br>

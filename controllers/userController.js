@@ -489,8 +489,9 @@ exports.deleteRewardLog = catchAsync(async (req, res, next) => {
 });
 
 function settings(level, age, allAttempts) {
+  const month = new Date().getMonth();
   if (level == 1.1) {
-    if (age == 7) {
+    if (age <= 7) {
       let count = 0;
       allAttempts.forEach((item) => {
         if (item.setting == 1) count += 1;
@@ -500,38 +501,38 @@ function settings(level, age, allAttempts) {
       } else {
         return 0;
       }
-    } else if (age == 8) {
+    } else if (age == 8 || (age == 7 && month >= 10)) {
       return 2;
-    } else if (age == 9) {
+    } else if (age == 9 || (age == 8 && month >= 10)) {
       return 3;
-    } else if (age == 10) {
+    } else if (age == 10 || (age == 9 && month >= 10)) {
       return 4;
-    } else if (age == 11) {
+    } else if (age == 11 || (age == 10 && month >= 10)) {
       return 5;
-    } else if (age >= 12) {
+    } else if (age >= 12 || (age == 11 && month >= 10)) {
       return 6;
     }
   } else if (level == 2.02) {
     console.log(`The level is ${level}. Age is ${age}.`);
-    if (age == 8 || age <= 7) {
+    if ((age == 8 && month < 10) || age <= 7 || (age == 7 && month >= 10)) {
       return 2;
-    } else if (age == 9) {
+    } else if (age == 9 || (age == 8 && month >= 10)) {
       return 3;
-    } else if (age == 10) {
+    } else if (age == 10 || (age == 10 && month >= 10)) {
       return 4;
-    } else if (age == 11) {
+    } else if (age == 11 || (age == 10 && month >= 10)) {
       return 5;
-    } else if (age == 12) {
+    } else if (age == 12 || (age == 11 && month >= 10)) {
       return 6;
     } else {
       return 6;
     }
   } else if (level == 2.05) {
-    if (age == 8 || age <= 7) {
+    if ((age == 8 && month < 10) || age <= 7 || (age == 7 && month >= 10)) {
       return 2;
-    } else if (age == 9) {
+    } else if (age == 9 || (age == 8 && month >= 10)) {
       return 3;
-    } else if (age >= 10) {
+    } else if (age >= 10 || (age == 9 && month >= 10)) {
       return 4;
     }
   } else if (level == 3.16 || level == 5.01) {
@@ -607,16 +608,27 @@ function settings(level, age, allAttempts) {
     allAttempts.forEach((item) => {
       if (item.level == 4.21) {
         if (item.setting == 1) countOne += 1;
-        if (item.setting == 2 || item.setting == "1-2" || age >= 10) {
+        if (
+          item.setting == 2 ||
+          item.setting == "1-2" ||
+          age >= 10 ||
+          (age == 9 && month >= 10)
+        ) {
           countTwo += 1;
         }
-        if (item.setting == 3 || item.setting == "1-3" || age >= 11) {
+        if (
+          item.setting == 3 ||
+          item.setting == "1-3" ||
+          age >= 11 ||
+          (age == 10 && month >= 10)
+        ) {
           countThree += 1;
         }
         if (
           item.setting == 4 ||
           item.setting == "1-4" ||
-          (age >= 12 && new Date().getMonth() >= 3)
+          (age >= 12 && new Date().getMonth() >= 3) ||
+          (age == 11 && month >= 10)
         ) {
           countFour += 1;
         }
@@ -691,6 +703,8 @@ const generateRec = async (nameTemp) => {
   let distinctLevels = await Attempt.distinct("level", { user: nameTemp });
 
   const age = new Date().getFullYear() - DOB.getFullYear();
+  console.log(`The month for today is ${new Date().getMonth()}`);
+  const month = new Date().getMonth();
   // console.log(age);
 
   let recommend = [];
@@ -766,11 +780,13 @@ const generateRec = async (nameTemp) => {
             if (attempt.extra == "") {
               let ageCal;
               if (age <= 7) ageCal = calAgeSeven;
-              if (age == 8) ageCal = calAgeEight;
-              if (age == 9) ageCal = calAgeNine;
-              if (age == 10) ageCal = calAgeTen;
-              if (age == 11) ageCal = calAgeEleven;
-              if (age == 12) ageCal = calAgeTwelve;
+              if (age == 8 || (age == 7 && month >= 10)) ageCal = calAgeEight;
+              if (age == 9 || (age == 8 && month >= 10)) ageCal = calAgeNine;
+              if (age == 10 || (age == 9 && month >= 10)) ageCal = calAgeTen;
+              if (age == 11 || (age == 10 && month >= 10))
+                ageCal = calAgeEleven;
+              if (age == 12 || (age == 11 && month >= 10))
+                ageCal = calAgeTwelve;
               distinctLevels.forEach((item) => {
                 if (ageCal.includes(item) && !calculationsArr.includes(item)) {
                   calculationsArr.push(item);
@@ -907,11 +923,13 @@ const generateRec = async (nameTemp) => {
             if (attempt.extra == "") {
               let ageHeu = [];
               if (age <= 7) ageHeu = heuAgeSeven;
-              if (age == 8) ageHeu = heuAgeEight;
-              if (age == 9) ageHeu = heuAgeNine;
-              if (age == 10) ageHeu = heuAgeTen;
-              if (age == 11) ageHeu = heuAgeEleven;
-              if (age == 12) ageHeu = heuAgeTwelve;
+              if (age == 8 || (age == 7 && month >= 10)) ageHeu = heuAgeEight;
+              if (age == 9 || (age == 8 && month >= 10)) ageHeu = heuAgeNine;
+              if (age == 10 || (age == 9 && month >= 10)) ageHeu = heuAgeTen;
+              if (age == 11 || (age == 10 && month >= 10))
+                ageHeu = heuAgeEleven;
+              if (age == 12 || (age == 11 && month >= 10))
+                ageHeu = heuAgeTwelve;
               distinctLevels.forEach((item) => {
                 if (ageHeu.includes(item) && !heuristicsArr.includes(item)) {
                   // console.log("YES!");
@@ -1124,7 +1142,7 @@ const generateRec = async (nameTemp) => {
   }
   let ageLevel;
   if (age <= 7) ageLevel = [];
-  if (age == 8) {
+  if (age == 8 || (age == 7 && month >= 10)) {
     ageLevel = levelOne;
     const removeList = ["1", "1.02"];
     removeList.forEach((item) => {
@@ -1136,7 +1154,7 @@ const generateRec = async (nameTemp) => {
     });
   }
   // p3
-  if (age == 9) {
+  if (age == 9 || (age == 8 && month >= 10)) {
     ageLevel = levelOne.concat(levelTwo);
     const removeList = ["1", "1.01", "1.02", "1.09", "2.01"];
     removeList.forEach((item) => {
@@ -1150,7 +1168,7 @@ const generateRec = async (nameTemp) => {
 
   //p4
   //Delete list for age 10
-  if (age == 10) {
+  if (age == 10 || (age == 9 && month >= 10)) {
     ageLevel = levelOne.concat(levelTwo, levelThree);
     const removeList = [
       "1",
@@ -1181,9 +1199,10 @@ const generateRec = async (nameTemp) => {
   }
 
   //Delete list for age 10, 11 and 12
-  if (age == 11 || age == 12) {
-    if (age == 11) ageLevel = levelOne.concat(levelTwo, levelThree, levelFour);
-    if (age == 12)
+  if (age == 11 || age == 12 || (age == 10 && month >= 10)) {
+    if (age == 11 || (age == 10 && month >= 10))
+      ageLevel = levelOne.concat(levelTwo, levelThree, levelFour);
+    if (age == 12 || (age == 11 && month >= 10))
       ageLevel = levelOne.concat(
         levelTwo,
         levelThree,
@@ -1231,27 +1250,27 @@ const generateRec = async (nameTemp) => {
         ageLevel.push(item);
       }
     }
-    if (age == 8) {
+    if (age == 8 || (age == 7 && month >= 10)) {
       if (item.startsWith("2")) {
         ageLevel.push(item);
       }
     }
-    if (age == 9) {
+    if (age == 9 || (age == 8 && month >= 10)) {
       if (item.startsWith("3")) {
         ageLevel.push(item);
       }
     }
-    if (age == 10) {
+    if (age == 10 || (age == 9 && month >= 10)) {
       if (item.startsWith("4")) {
         ageLevel.push(item);
       }
     }
-    if (age == 11) {
+    if (age == 11 || (age == 10 && month >= 10)) {
       if (item.startsWith("5")) {
         ageLevel.push(item);
       }
     }
-    if (age == 12) {
+    if (age == 12 || (age == 11 && month >= 10)) {
       if (item.startsWith("6")) {
         ageLevel.push(item);
       }
