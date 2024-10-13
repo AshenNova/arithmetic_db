@@ -2836,8 +2836,17 @@ function updateProblems() {
       Pattern 2: ${p.numTwo + p.numThree}</br>
       Pattern 3: ${p.numTwo + p.numThree * 2}</br>
       ...</br>
-      Pattern ${p.numFour}: ?
       `;
+      if (p.type == "value")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `Pattern ${p.numFour}: ?`
+        );
+      if (p.type == "pattern")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `Pattern ? : ${p.numTwo + p.numThree * (p.numFour - 1)}`
+        );
     }
     // level 3.14
     if (setting == 3) {
@@ -19868,15 +19877,34 @@ function handleSubmit(e) {
       // level 3.13
       if (setting == 2) {
         if (p.numThree > p.numTwo) {
-          correctAnswer = `${p.numThree}n-${p.numThree - p.numTwo} ${
-            p.numThree * p.numFour + (p.numTwo - p.numThree)
-          }`;
+          if (p.type == "value") {
+            correctAnswer = `${p.numThree}n-${p.numThree - p.numTwo} ${
+              p.numThree * p.numFour + (p.numTwo - p.numThree)
+            }`;
+          }
+          if (p.type == "pattern") {
+            correctAnswer = `${p.numThree}n-${p.numThree - p.numTwo} ${
+              p.numFour
+            }`;
+          }
         } else if (p.numThree == p.numTwo) {
-          correctAnswer = `${p.numThree}n ${p.numThree * p.numFour}`;
+          if (p.type == "value") {
+            correctAnswer = `${p.numThree}n ${p.numThree * p.numFour}`;
+          }
+          if (p.type == "pattern") {
+            correctAnswer = `${p.numThree}n ${p.numFour}`;
+          }
         } else {
-          correctAnswer = `${p.numThree}n+${p.numTwo - p.numThree} ${
-            p.numThree * p.numFour + (p.numTwo - p.numThree)
-          }`;
+          if (p.type == "value"){
+            correctAnswer = `${p.numThree}n+${p.numTwo - p.numThree} ${
+              p.numThree * p.numFour + (p.numTwo - p.numThree)
+            }`;
+          }
+          if (p.type == "pattern"){
+            correctAnswer = `${p.numThree}n+${p.numTwo - p.numThree} ${p.numFour
+            }`;
+          }
+         
         }
       }
       // level 3.14
@@ -25500,6 +25528,7 @@ function genProblems() {
         numTwo: genNumbers(10) + 1,
         numThree: genNumbers(5) + 2,
         numFour: genNumbers(5) + 5,
+        type: ["value", "pattern"][genNumbers(2)],
       };
     }
     if (setting == 3) {
