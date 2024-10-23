@@ -1532,8 +1532,9 @@ exports.recommend = catchAsync(async (req, res, next) => {
         }
       }
     });
+    console.log(item.accomplish, item.level);
   });
-  console.log(recommend);
+  // console.log(recommend);
   //  console.log(item.accomplish);
   let authenticate = req.auth;
   let currentUser = req.user;

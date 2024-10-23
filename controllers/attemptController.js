@@ -326,7 +326,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
   const time = req.body.time;
   const skip = req.body.skip;
   const mistake = req.body.mistake;
-  const setting = req.body.setting;
+  const setting = req.body.setting.trim();
   const score = req.body.score;
   const tries = req.body.attemptNum;
   const extra = req.body.extra;

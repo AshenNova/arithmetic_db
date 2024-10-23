@@ -2346,6 +2346,18 @@ function updateProblems() {
         p.numThree
       }`;
   }
+  // 3D SHAPES
+  if (level == 2.13) {
+    drawingDisplay();
+    canvasTextId.textContent = `Identify the shape below.`;
+    console.log(p.shape);
+    ctx.save();
+    const width = canvas.getAttribute("width").slice(0, -2);
+    const height = canvas.getAttribute("height").slice(0, -2);
+    ctx.lineWidth = 5;
+    ctx.lineCap = "round";
+    ctx.restore();
+  }
   if (level == 3.02) {
     normalDisplay();
     if (p.option == "1") {
@@ -19895,16 +19907,16 @@ function handleSubmit(e) {
             correctAnswer = `${p.numThree}n ${p.numFour}`;
           }
         } else {
-          if (p.type == "value"){
+          if (p.type == "value") {
             correctAnswer = `${p.numThree}n+${p.numTwo - p.numThree} ${
               p.numThree * p.numFour + (p.numTwo - p.numThree)
             }`;
           }
-          if (p.type == "pattern"){
-            correctAnswer = `${p.numThree}n+${p.numTwo - p.numThree} ${p.numFour
+          if (p.type == "pattern") {
+            correctAnswer = `${p.numThree}n+${p.numTwo - p.numThree} ${
+              p.numFour
             }`;
           }
-         
         }
       }
       // level 3.14
@@ -25358,6 +25370,12 @@ function genProblems() {
     };
   }
 
+  if (level == 2.13) {
+    const shapes = ["sphere"];
+    return {
+      shape: shapes[genNumbers(shapes.length)],
+    };
+  }
   if (level == 3.0) {
     return {
       numOne: genNumbers(150) + 100,
@@ -30230,6 +30248,13 @@ function buttonLevelSetting() {
     case "Level 2.12":
       level = 2.12;
       scoreNeeded = 20;
+      break;
+
+    case "Level 2.13":
+      level = 2.13;
+      document.querySelector("#user-input").setAttribute("type", "text");
+      scoreNeeded = 10;
+
       break;
 
     case "Level 3.0":
