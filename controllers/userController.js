@@ -1276,7 +1276,7 @@ const generateRec = async (nameTemp) => {
       }
     }
   });
-  // console.log("here");
+  console.log("here 1");
   // console.log(`History: ${ageLevel}`);
   latestAttempt.forEach((attempt) => {
     if (
@@ -1437,6 +1437,7 @@ const generateRec = async (nameTemp) => {
       }
     }
   });
+  console.log("Here 2");
   let oldest = [];
 
   latestAttempt.forEach((attempt) => {
@@ -1449,12 +1450,19 @@ const generateRec = async (nameTemp) => {
     }
   });
 
+  console.log("Here 3");
   //CHECKING IF THE EXISTING RECOMMENDED LIST CONTAINS THE ANCIENT LEVEL
   let recommendLevels = [];
   recommend.forEach((item) => {
+    console.log("Here 4");
     recommendLevels.push(item.level);
   });
-  if (onlyLevelsArr.length > 0 && !recommendLevels.includes(oldest[0].level)) {
+  if (
+    oldest.length != 0 &&
+    onlyLevelsArr.length > 0 &&
+    !recommendLevels.includes(oldest[0].level)
+  ) {
+    console.log("Here 5");
     let ancient = {
       level: oldest[0].level,
       mode: "Hardcore",
@@ -1463,6 +1471,7 @@ const generateRec = async (nameTemp) => {
     };
     recommend.push(ancient);
   }
+  console.log("Here 6");
   return recommend;
 };
 
