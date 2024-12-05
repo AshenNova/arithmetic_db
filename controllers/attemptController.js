@@ -43,15 +43,24 @@ exports.getAllAttempts = catchAsync(async (req, res, next) => {
   let end = new Date();
   end.setHours(23, 59, 59, 999);
 
-  const todayCount = (await Attempt.find({ date: { $gte: start, $lt: end } }))
+  const todayCount = await Attempt.find({ date: { $gte: start, $lt: end } })
     .length;
-  // todayCount = todayCount.length;
+  console.log(`Today Count Done`);
   const attempts = await Attempt.find()
     .sort({ date: -1 })
     .skip((page - 1) * limit)
     .limit(limit);
-  const attemptsTwo = await Attempt.find().sort({ date: -1 });
-  // console.log(`Attempts with filter: ${attemptsTwo}`);
+  console.log(`Attempts Done`);
+  const attemptsTwo = await Attempt.find().limit(1000);
+  console.log(`Attempts 2 Done`);
+  // const [todayCount, attempts, attemptsTwo] = await Promise.all([
+  //   Attempt.find({ date: { $gte: start, $lt: end } }),
+  //   Attempt.find()
+  //     .sort({ date: -1 })
+  //     .skip((page - 1) * limit)
+  //     .limit(limit),
+  //   Attempt.find(),
+  // ]);
   const paginatedAttempts = paginate(
     attemptsTwo,
     attemptsTwo.length,
