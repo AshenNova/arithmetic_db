@@ -1682,6 +1682,7 @@ exports.summary = async (req, res) => {
         }
       });
       console.log("Week End");
+
       //THIS MONTH
       console.log("Month start");
       const thisMonth = start.getMonth() + 1;
@@ -1712,27 +1713,79 @@ exports.summary = async (req, res) => {
       console.log("Month End");
       // THIS YEAR
       console.log("Year Start");
-      const thisYear = new Date().getFullYear();
-      const year = await Attempt.find({
-        $expr: { $eq: [{ $year: "$date" }, thisYear] },
-        user: username,
-      });
-      console.log("HERE!");
-      yearCount = year.length;
 
-      year.forEach((item) => {
-        if (item.level) {
-          if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
-            yearLevelCount += 1;
-          }
-          if (item.level.startsWith("cal")) {
-            yearCalCount += 1;
-          }
-          if (item.level.startsWith("heu")) {
-            yearHeuCount += 1;
-          }
-        }
+      const thisYear = new Date().getFullYear();
+
+      async function yearWorkDone(username, thisYear) {
+        await Attempt.find({
+          $expr: { $eq: [{ $year: "$date" }, thisYear] },
+          user: username,
+        });
+      }
+
+      // async function timeout(delay) {
+      //   setTimeout(function () {
+      //     return "Database error";
+      //   }, delay);
+      // }
+      const timeout = new Promise((_, reject) => {
+        setTimeout(() => {
+          // reject("Time out");
+          console.log("Time out");
+        }, 15000);
       });
+      const year = await Promise.race([
+        yearWorkDone(username, thisYear),
+        timeout,
+      ]);
+
+      console.log(year);
+      if (!year) {
+        yearCount = "Database Error";
+        yearLevelCount = "Database Error";
+        yearCalCount = "Database Error";
+        yearHeuCount = "Database Error";
+      } else {
+        year.forEach((item) => {
+          if (item.level) {
+            if (
+              !item.level.startsWith("cal") &&
+              !item.level.startsWith("heu")
+            ) {
+              yearLevelCount += 1;
+            }
+            if (item.level.startsWith("cal")) {
+              yearCalCount += 1;
+            }
+            if (item.level.startsWith("heu")) {
+              yearHeuCount += 1;
+            }
+          }
+        });
+      }
+
+      console.log("HERE!");
+
+      // const year = await Attempt.find({
+      //   $expr: { $eq: [{ $year: "$date" }, thisYear] },
+      //   user: username,
+      // });
+
+      // yearCount = year.length;
+      // console.log(`The year count is ${year.length}`);
+      // year.forEach((item) => {
+      //   if (item.level) {
+      //     if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
+      //       yearLevelCount += 1;
+      //     }
+      //     if (item.level.startsWith("cal")) {
+      //       yearCalCount += 1;
+      //     }
+      //     if (item.level.startsWith("heu")) {
+      //       yearHeuCount += 1;
+      //     }
+      //   }
+      // });
 
       console.log("Year End");
 
