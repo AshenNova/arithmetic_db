@@ -20,6 +20,7 @@ const cookieParser = require("cookie-parser");
 const authController = require("./controllers/authController");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
+const timeout = require("connect-timeout");
 
 let username;
 let currentUser;
@@ -38,6 +39,7 @@ process.on("uncaughtException", (err) => {
 
 const app = express();
 app.set("view engine", "ejs");
+app.use(timeout("60s"));
 app.use(
   cors({
     credentials: true,
