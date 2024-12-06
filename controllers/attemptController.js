@@ -128,7 +128,7 @@ exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
     .skip((page - 1) * limit)
     .limit(limit);
 
-  const attemptsTwo = await Attempt.find(filter).sort({ date: -1 });
+  const attemptsTwo = await Attempt.find(filter).sort({ date: -1 }).limit(1000);
   // .skip((page - 1) * limit)
   // .limit(limit);
 
@@ -152,10 +152,12 @@ exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
       user: { $regex: user, $options: "i" },
       // user,
       tries: "1",
-    }).sort({
-      level: -1,
-      date: -1,
-    });
+    })
+      .sort({
+        level: -1,
+        date: -1,
+      })
+      .limit(1000);
 
     // console.log(latestAttempt);
     let stageOne = [];
