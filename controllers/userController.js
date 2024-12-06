@@ -1749,26 +1749,71 @@ exports.summary = async (req, res) => {
 
       console.log("HERE!");
 
-      const year = await Attempt.find({
-        $expr: { $eq: [{ $year: "$date" }, thisYear] },
-        user: username,
+      // const year = await Attempt.find({
+      //   $expr: { $eq: [{ $year: "$date" }, thisYear] },
+      //   user: username,
+      // });
+
+      async function year(username, thisYear) {
+        const year = await Attempt.find({
+          $expr: { $eq: [{ $year: "$date" }, thisYear] },
+          user: username,
+        });
+        return year;
+      }
+
+      let timeout = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve("Timeout");
+        }, 10000);
       });
 
-      yearCount = year.length;
-      console.log(`The year count is ${year.length}`);
-      year.forEach((item) => {
-        if (item.level) {
-          if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
-            yearLevelCount += 1;
-          }
-          if (item.level.startsWith("cal")) {
-            yearCalCount += 1;
-          }
-          if (item.level.startsWith("heu")) {
-            yearHeuCount += 1;
+      await Promise.race([year(username, thisYear), timeout]).then(
+        (message) => {
+          console.log(`msg: ${message}`);
+          if (message == "Timeout") {
+            yearCount = "Database slow";
+            yearLevelCount = "Database slow";
+            yearCalCount = "Database slow";
+            yearHeuCount = "Database slow";
+          } else {
+            yearCount = message.length;
+            console.log(`The year count is ${message.length}`);
+            message.forEach((item) => {
+              if (item.level) {
+                if (
+                  !item.level.startsWith("cal") &&
+                  !item.level.startsWith("heu")
+                ) {
+                  yearLevelCount += 1;
+                }
+                if (item.level.startsWith("cal")) {
+                  yearCalCount += 1;
+                }
+                if (item.level.startsWith("heu")) {
+                  yearHeuCount += 1;
+                }
+              }
+            });
           }
         }
-      });
+      );
+
+      // yearCount = year.length;
+      // console.log(`The year count is ${year.length}`);
+      // year.forEach((item) => {
+      //   if (item.level) {
+      //     if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
+      //       yearLevelCount += 1;
+      //     }
+      //     if (item.level.startsWith("cal")) {
+      //       yearCalCount += 1;
+      //     }
+      //     if (item.level.startsWith("heu")) {
+      //       yearHeuCount += 1;
+      //     }
+      //   }
+      // });
 
       console.log("Year End");
 
