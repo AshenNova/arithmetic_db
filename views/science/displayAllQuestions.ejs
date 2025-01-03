@@ -58,6 +58,7 @@
       </form>
     </div>
     <div class="container">
+      <% const regex = /\r\n/gi %>
         <h1>All Questions</h1>
 
         <table class="table">
@@ -87,13 +88,13 @@
                           <% if (item.imageQ) { %>
                             <%= "🌁" %><br>
                             <% } %>
-                          <%= item.question %>
+                          <%- item.question.replace(regex, "</br>") %>
                         </td>
                         <td>
                           <% if (item.image) { %>
                             <%= "🌁" %><br>
                             <% } %>
-                            <%= item.answer %>
+                            <%- item.answer.replace(regex, "</br>") %>
                           </td>
                           <td>
                             <a href="/science/questions/<%= item._id %>" target="_blank">View</a><br>

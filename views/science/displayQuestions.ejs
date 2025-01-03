@@ -111,6 +111,7 @@ img {
                         <!-- </div> --> 
                     </div>
                     <div class="flip-card-back hidden mt-4">
+                        <% const regex = /\r\n/gi %>
                         <h5 class="card-title">Topic:</br></h5>
                         <%= item.level %></br>
                         <%= item.topic %></br>
@@ -123,7 +124,7 @@ img {
                         </div>
                         <% } %>
                         <h5>Answer:</br></h5>
-                        <div class="answer-bg"><%= item.answer %></div>
+                        <div class="answer-bg"><%- item.answer.replace(regex, "</br>") %></div>
                         <h5>Comment:</br></h1>
                         <%= item.comment %>
                         <hr>

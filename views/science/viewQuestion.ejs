@@ -23,6 +23,7 @@
 </style>
 <body>
     <%- include("../partials/navbar") %>
+    <% const regex = /\r\n/gi %>
     <div class="container mt-4">
         <h1>Viewing <%= question._id %></h1>
         <h5>Topic:</h5>
@@ -41,7 +42,7 @@
                     <!-- </div> -->
                     <% } %>
                 <h5>Question:</h5>
-                <p><%= question.question %></p>
+                <p><%- question.question.replace(regex, "</br>") %></p>
              </div>
              <div class="col-6">
                  <h5>Answer image:</h5>
@@ -53,11 +54,11 @@
                     <!-- </div> -->
                     <% } %>
                 <h5>Answer:</h5>
-                <p><%= question.answer %></p>
+                <p><%- question.answer.replace(regex, "</br>") %></p>
               </div>
         </div>
         <h5>Comment:</h5>
-        <p><%= question.comment %></p>
+        <p><%- question.comment.replace(regex, "</br>") %></p>
         <a href="/science/questions/edit/<%=question._id %>" class="btn btn-primary">Edit</a>
         <a href="/science/new/<%= question._id %>" class="btn btn-warning">Clone</a>
     </div>

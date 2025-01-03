@@ -31427,7 +31427,7 @@ allLevelButtons.forEach((item, index) => {
         // console.log(`Ajax: ${res}`);
         // const data = JSON.parse(res);
         const data = res;
-        console.log(data);
+        console.log(data.highscore);
         // highScoreName.textContent = data.highscore.user;
         // highScoreTime.textContent = data.highscore.time;
         // highScoreMistakes.textContent = data.highscore.mistake;
