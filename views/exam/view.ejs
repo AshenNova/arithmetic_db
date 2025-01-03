@@ -15,6 +15,7 @@
 </head>
 <body>
   <%- include("../partials/navbar") %>
+  <% const regex = /\r\n/gi %>
     <div class="container mt-3">
         <table class="table">
          <tr>
@@ -35,7 +36,7 @@
         </tr>
         <tr>
           <td>Comment:</td>
-          <td><%= exam.comment %></td>
+          <td><%- exam.comment.replace(regex, "</br>") %></td>
         </tr>
       </div>
     </table>

@@ -126,9 +126,9 @@
       <div class="mb-3">
         <label class="form-label">Comment</label>
         <% if (existing) { %>
-          <input type="text" class="form-control" name="comment" value="<%= existing.comment %>">
+          <textarea type="text" class="form-control" name="comment" value="<%= existing.comment %>"></textarea>
         <% }  else {%>
-          <input type="text" class="form-control" name="comment">
+          <textarea type="text" class="form-control" name="comment"></textarea>
         <% } %>
       </div>
       <% if (existing) { %>

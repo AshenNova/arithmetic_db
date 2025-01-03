@@ -51,6 +51,7 @@ exports.getHomework = async (req, res) => {
     let authenticate = req.auth;
     let currentUser = req.user;
     let editHomework = {};
+    let exampaper = {};
     if (!currentUser.admin) {
       return res.redirect("/user/login");
     }
@@ -67,6 +68,7 @@ exports.getHomework = async (req, res) => {
       console.log(req.params);
       const exam = await Exam.findById(req.params.hw);
       console.log(exam);
+      exampaper.id = exam._id;
       editHomework.subject = exam.subject;
       editHomework.description = `${exam.year}.${exam.level}.${exam.type}.${exam.school}`;
       editHomework.linkA = exam.link;
@@ -79,6 +81,7 @@ exports.getHomework = async (req, res) => {
       currentUser,
       getAllUsers,
       editHomework,
+      exampaper,
     });
   } catch (e) {
     res.status(400).json({ message: e });

@@ -107,6 +107,9 @@
                     <th scope="col">Due date</th>
                     <th scope="col">Days left</th>
                     <th scope="col">Comment</th>
+                    <% if (currentUser.admin) { %>
+                        <th scope="col">Exam Comment</th>
+                    <% } %>
                     <th scope="col">Status</th>
                 <% if (currentUser.admin) { %>
                     <th colspan="3">Actions</th>
@@ -147,6 +150,9 @@
                                  <% } %>
                                  <% const regex = /\r\n/gi %>
                                 <td style="width: 20%; text-align: left"><%- item.comment.replace(regex, "</br>") %></td>
+                                <% if (currentUser.admin) { %>
+                                    <td><%= item.exampaper_comment %></td>
+                                <% } %>
                                 <td><%= item.status %></td>
                                 <% if (currentUser.admin) { %>
                                     <td><a href="/homework/new/<%= item._id %>"><i class="fa-solid fa-pen-to-square"></i></a></td>
@@ -171,6 +177,8 @@
                                     <th scope="col">Due date</th>
                                     <th scope="col">Completed Date</th>
                                     <th scope="col">Comment</th>
+                                        <th scope="col">Exam Comment</th>
+                                    
                                     <th scope="col">Status</th>
                                 <% if (currentUser.admin) { %>
                                     <th colspan="3">Actions</th>
@@ -216,6 +224,7 @@
                                          <% } %>
                                          <% const regex = /\r\n/gi %>
                                 <td style="width: 20%; text-align: left"><%- item.comment.replace(regex, "</br>") %></td>
+                                        <td><%= item.exampaper_comment %></td>
                                         <td><%= item.status %></td>
                                         <td><a href="/homework/new/<%= item._id %>"><i class="fa-solid fa-pen-to-square"></i></a></td>
                                         <td><a href="/homework/delete/<%= item._id %>/<%= item.name %>" class="no-line">❌</a></td>

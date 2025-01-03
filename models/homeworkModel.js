@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const homeworkSchema = new mongoose.Schema({
   name: String,
+  exampaper_id: String,
   description: String,
   dateIssue: {
     type: Date,

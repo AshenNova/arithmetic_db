@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const Reward = require("../models/rewardModel");
 const RewardLog = require("../models/rewardLogModel");
 const Attempt = require("../models/attemptModel");
+const Exam = require("../models/examModel");
 const Highscore = require("../models/highscoreModel");
 const Homework = require("../models/homeworkModel");
 const Intervention = require("../models/interventionModel");
@@ -1592,7 +1593,7 @@ exports.summary = async (req, res) => {
   let allHeuCount = 0;
   let allCount = 0;
   // let attempts;
-  console.log(req.query);
+  // console.log(req.query);
 
   try {
     if (req.query.username) {
@@ -1825,8 +1826,33 @@ exports.summary = async (req, res) => {
         subject: -1,
         dateIssue: -1,
       });
-
       console.log(homework);
+      let exam_id = [];
+      let exams = [];
+      async function getExamComments(homework) {
+        for (let i = 0; i < homework.length; i++) {
+          const exam = await Exam.findById(homework[i].exampaper_id);
+          if (exam) {
+            console.log(`The exam comment is ${exam.comment}`);
+            exams.push(exam);
+            homework[i].exampaper_comment = exam.comment;
+            console.log(exam + " ⌚️");
+            // console.log(homework[0] + " ☎️");
+          }
+        }
+      }
+      await getExamComments(homework);
+
+      // homework.forEach(async (item, index) => {
+      //   // exam_id.push(item.exampaper_id);
+      //   const exam = await Exam.findById(item.exampaper_id);
+      //   if (exam) {
+      //     exams.push(exam);
+      //     homework[index].exam_comment = exam.comment;
+      //     console.log(exam + " ⌚️");
+      //   }
+      // });
+
       if (!searchedUser) {
         searchedUser = "Not found";
       }
@@ -1877,6 +1903,7 @@ exports.summary = async (req, res) => {
     // }
   }
 };
+
 exports.login = async (req, res) => {
   console.log(req.auth);
   // const { message } = req;

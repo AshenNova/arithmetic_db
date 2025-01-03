@@ -24,11 +24,19 @@
     <% if (editHomework.id) { %>
       <div class="mb-3">
         <div class="form-group required">
-          <label class="form-label" for="id">ID</label>
+          <label class="form-label" for="id">Homework ID</label>
           <input type="text" class="form-control" name="id" value="<%= editHomework._id %>" readonly="readonly">
         </div>
       </div>
     <% } %>
+
+
+    <div class="mb-3">
+      <div class="form-group required">
+        <label class="form-label" for="id">Exam paper ID</label>
+        <input type="text" class="form-control" name="exampaper_id" value="<%= exampaper.id %>" readonly="readonly">
+      </div>
+    </div>
 
     <p>Status</p>
     <select class="form-select mb-3" aria-label="Default select example" name="status">
@@ -42,7 +50,7 @@
           <option value="Going through">Going through</option>
             <option value="Completed">Completed</option>
       </select>
-
+    
     <p>Student</p>
     <select class="form-select mb-3" aria-label="Default select example" name="name">
       <% if (editHomework) { %>
