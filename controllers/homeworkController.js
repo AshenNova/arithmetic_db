@@ -46,6 +46,7 @@ exports.updateToIncomplete = async (req, res) => {
 };
 
 exports.getHomework = async (req, res) => {
+  console.log("Getting homework");
   try {
     let username = req.user.username;
     let authenticate = req.auth;
@@ -65,10 +66,11 @@ exports.getHomework = async (req, res) => {
       // console.log(editHomework);
     }
     if (req.params.hw) {
+      console.log("Homework params detected");
       console.log(req.params);
       const exam = await Exam.findById(req.params.hw);
       console.log(exam);
-      exampaper.id = exam._id;
+      editHomework.exampaper_id = exam._id;
       editHomework.subject = exam.subject;
       editHomework.description = `${exam.year}.${exam.level}.${exam.type}.${exam.school}`;
       editHomework.linkA = exam.link;
@@ -89,14 +91,17 @@ exports.getHomework = async (req, res) => {
 };
 
 exports.createHomework = async (req, res) => {
+  console.log("Trying to create homework");
   try {
     console.log(req.body);
     req.body.comment = req.body.comment.trim();
+    console.log("1");
     if (req.body.id) {
       const update = await Homework.findByIdAndUpdate(req.body.id, req.body);
       console.log(update);
     } else {
       console.log(req.body);
+      console.log("HERE I AM!!!");
       if (req.body.dateIssue == "") {
         req.body.dateIssue = new Date();
       }
