@@ -879,7 +879,7 @@ const generateRec = async (nameTemp) => {
   const heuFive = ["heuFive", "heuFiveb"];
   const heuSix = ["heuSix", "heuSixb"];
   const heuAgeSeven = heuOne;
-  const heuAgeEight = heuTwo;
+  const heuAgeEight = heuTwo.concat(heuOne);
   const heuAgeNine = heuTwo.concat(heuThree); //p3
   const heuAgeTen = heuThree.concat(heuTwo, heuFour); //p4
   const heuAgeEleven = heuThree.concat(heuFour, heuFive); //p5
