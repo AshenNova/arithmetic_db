@@ -16518,12 +16518,21 @@ How many items are there in each bag?
       }
 
       displayProblem.innerHTML = `
-        If ${p.sceneOne} sweets were given to each pupils, there would be <u>${
-        p.situationOneW
-      }</u> of ${Math.abs(p.situationOne)} sweets.</br>
-        If ${p.sceneTwo} sweets were given to each pupils, there would be <u>${
-        p.situationTwoW
-      }</u> of ${Math.abs(p.situationTwo)} sweets.</br>
+        If ${p.sceneOne} sweets were given to each pupils, ${
+        p.situationOne == 0
+          ? `there would be no sweets left.</br>`
+          : `there would be <u>${p.situationOneW}</u> of ${Math.abs(
+              p.situationOne
+            )} sweets.</br>`
+      }
+        If ${p.sceneTwo} sweets were given to each pupils, 
+        ${
+          p.situationTwo == 0
+            ? `there would be no sweets left.</br>`
+            : `there would be <u>${p.situationTwoW}</u> of ${Math.abs(
+                p.situationTwo
+              )} sweets.</br>`
+        }
         ${
           p.rollAnswer == 1
             ? "How many pupils are there?"
@@ -16611,7 +16620,10 @@ How many items are there in each bag?
         displayProblem.innerHTML = `
         Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
         Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
-        The number of ${p.objectOne} is ${displaySimpleFraction(p.objectOneUnit, p.objectTwoUnit)} the number of ${p.objectTwo}.</br>
+        The number of ${p.objectOne} is ${displaySimpleFraction(
+          p.objectOneUnit,
+          p.objectTwoUnit
+        )} the number of ${p.objectTwo}.</br>
         The total for both is ${p.total} ${p.unitMeasurement}.</br>
         ${
           p.rollQn2 == "many"
@@ -16627,7 +16639,10 @@ How many items are there in each bag?
         displayProblem.innerHTML = `
         Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
         Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
-        The number of ${p.objectOne} is ${displaySimpleFraction(p.objectOneUnit, p.objectTwoUnit)} the number of ${p.objectTwo}.</br>
+        The number of ${p.objectOne} is ${displaySimpleFraction(
+          p.objectOneUnit,
+          p.objectTwoUnit
+        )} the number of ${p.objectTwo}.</br>
         The total for both is ${p.total} ${p.unitMeasurement}.</br>
         How many ${p.objectOne}s and ${p.objectTwo}s are there in total?
         `;
@@ -16667,8 +16682,8 @@ How many items are there in each bag?
         return updateCalc();
       }
       let extraOrExcess = ["extra", "excess"][genNumbers(2)];
-      p.min = p.total - 10;
-      p.max = p.total + 10;
+      p.min = p.total - 10 - genNumbers(p.groupOne);
+      p.max = p.total + 10 + genNumbers(p.groupTwo);
 
       let firstNum = p.groupOne + p.leftOne;
       let secondNum = p.groupTwo + p.leftTwo;
@@ -16751,9 +16766,17 @@ How many items are there in each bag?
       displayProblem.innerHTML = `
        There are some ${p.objects} between ${p.min} and ${p.max}.</br>
        If someone packs them in groups of ${p.groupOne},
-      there would be an ${extraOrExcess} of ${p.leftOne}.</br>
+      ${
+        p.leftOne == 0
+          ? `there would be nothing left.</br>`
+          : `there would be an ${extraOrExcess} of ${p.leftOne}.</br>`
+      }
        If someone packs them in groups of ${p.groupTwo},
-       there would be an ${extraOrExcess} of ${p.leftTwo}.</br>
+       ${
+         p.leftTwo == 0
+           ? `there would be nothing left.</br>`
+           : `there would be an ${extraOrExcess} of ${p.leftTwo}.</br>.</br>`
+       }
        How many ${p.objects} are there?
       `;
     }
@@ -29011,8 +29034,8 @@ function genProblems() {
         situationOne: undefined,
         situationTwo: undefined,
         rollAnswer: genNumbers(2) + 1,
-        situationOneW: "short",
-        situationTwoW: "short",
+        situationOneW: "a shortage",
+        situationTwoW: "a shortage",
         rollz: 2,
       };
     }
@@ -29075,7 +29098,7 @@ function genProblems() {
       return {
         rollz: 7,
         objects: ["sweets", "chocolates", "candies"][genNumbers(3)],
-        total: genNumbers(90) + 10,
+        total: genNumbers(90) + 50,
         groupOne: genNumbers(8) + 2,
         leftOne: undefined,
         groupTwo: genNumbers(8) + 2,
