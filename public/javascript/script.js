@@ -25300,7 +25300,7 @@ function genProblems() {
   if (level == 2.04) {
     return {
       figure: ["🏀", "⚽️", "🏈", "🎾", "🍎", "🍏", "🌭"][genNumbers(7)],
-      repeat: [2, 3][genNumbers(2)],
+      repeat: [2, 3, 4, 5][genNumbers(4)],
       operator: ["x", "+"][genNumbers(2)],
       numOne: genNumbers(4) + 2,
     };
@@ -30205,6 +30205,7 @@ function buttonLevelSetting() {
     case "Level 2.04":
       level = 2.04;
       scoreNeeded = 30;
+      displayProblem.style.fontSize = "1.5em";
       break;
 
     case "Level 2.05":
