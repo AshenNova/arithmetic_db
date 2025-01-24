@@ -16611,9 +16611,7 @@ How many items are there in each bag?
         displayProblem.innerHTML = `
         Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
         Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
-        The number of ${p.objectOne} is ${p.objectOneUnit}/${
-          p.objectTwoUnit
-        } the number of ${p.objectTwo}.</br>
+        The number of ${p.objectOne} is ${displaySimpleFraction(p.objectOneUnit, p.objectTwoUnit)} the number of ${p.objectTwo}.</br>
         The total for both is ${p.total} ${p.unitMeasurement}.</br>
         ${
           p.rollQn2 == "many"
@@ -16629,7 +16627,7 @@ How many items are there in each bag?
         displayProblem.innerHTML = `
         Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
         Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
-        The number of ${p.objectOne} is ${p.objectOneUnit}/${p.objectTwoUnit} the number of ${p.objectTwo}.</br>
+        The number of ${p.objectOne} is ${displaySimpleFraction(p.objectOneUnit, p.objectTwoUnit)} the number of ${p.objectTwo}.</br>
         The total for both is ${p.total} ${p.unitMeasurement}.</br>
         How many ${p.objectOne}s and ${p.objectTwo}s are there in total?
         `;
