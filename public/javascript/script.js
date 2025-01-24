@@ -13654,6 +13654,8 @@ function updateProblems() {
         p.denominatorTwo
       );
       if (p.numeratorTwo == p.denominatorTwo) p.denominatorTwo += 1;
+
+      // WHOLE NUMBER
       if (p.type == "whole") {
         p.numerator = 0;
         p.denominator = 0;
@@ -13672,7 +13674,8 @@ function updateProblems() {
         `;
       }
 
-      if (p.type == "simple fractions") {
+      //SIMPLE FRACTIONS
+      else if (p.type == "simple fractions") {
         p.whole = 0;
         const setOne = p.numerator / p.denominator;
         const setTwo = p.numeratorTwo / p.denominatorTwo;
@@ -13692,7 +13695,8 @@ function updateProblems() {
         The greatest number of shirts were made.</p>
         `;
       }
-      if (p.type == "mixed fractions" || p.type == "simple fractions") {
+      // MIXED FRACTIONS
+      else {
         const numeTotal = p.whole * p.denominator + p.numerator;
         if (
           (numeTotal * p.denominatorTwo) % (p.denominator * p.numeratorTwo) ==
