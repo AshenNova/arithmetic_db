@@ -13664,7 +13664,10 @@ function updateProblems() {
 
         displayProblem.innerHTML = `
         ${person} has ${p.whole} m of cloth at first.</p>
-        ${p.numeratorTwo}/${p.denominatorTwo} m is needed to make a shirt.</p>
+        ${displaySimpleFraction(
+          p.numeratorTwo,
+          p.denominatorTwo
+        )} m is needed to make a shirt.</p>
         The greatest number of shirts were made.</p>
         `;
       }
@@ -13678,8 +13681,14 @@ function updateProblems() {
           return updateCalc();
         }
         displayProblem.innerHTML = `
-        ${person} has ${p.numerator}/${p.denominator} m of cloth at first.</p>
-        ${p.numeratorTwo}/${p.denominatorTwo} m is needed to make a shirt.</p>
+        ${person} has ${displaySimpleFraction(
+          p.numerator,
+          p.denominator
+        )} m of cloth at first.</p>
+        ${displaySimpleFraction(
+          p.numeratorTwo,
+          p.denominatorTwo
+        )} m is needed to make a shirt.</p>
         The greatest number of shirts were made.</p>
         `;
       }
@@ -13693,8 +13702,14 @@ function updateProblems() {
         }
 
         displayProblem.innerHTML = `
-        ${person} has ${p.whole} ${p.numerator}/${p.denominator} m of cloth at first.</p>
-        ${p.numeratorTwo}/${p.denominatorTwo} m is needed to make a shirt.</p>
+        ${person} has ${p.whole} ${displaySimpleFraction(
+          p.numerator,
+          p.denominator
+        )} m of cloth at first.</p>
+        ${displaySimpleFraction(
+          p.numeratorTwo,
+          p.denominatorTwo
+        )} m is needed to make a shirt.</p>
         The greatest number of shirts were made.</p>
         `;
       }
