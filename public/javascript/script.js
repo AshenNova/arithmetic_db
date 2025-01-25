@@ -28804,8 +28804,8 @@ function genProblems() {
           ["bicycle", "cars", "2", "4"],
         ],
         rollObj: genNumbers(4),
-        numOne: genNumbers(5) + 1,
-        numTwo: genNumbers(5) + 1,
+        numOne: genNumbers(5) + 5,
+        numTwo: genNumbers(5) + 5,
         rollAnswer: genNumbers(2),
         difference: undefined,
         objectOne: undefined,
@@ -30145,6 +30145,7 @@ function buttonLevelSetting() {
       level = 1.05;
       scoreNeeded = 30;
       document.querySelector("#user-input").setAttribute("type", "text");
+      displayProblem.style.fontSize = "1.5em"
 
       break;
 
