@@ -1907,8 +1907,8 @@ function updateProblems() {
       p.numTwo = genNumbers(5) + 1;
     }
     arr.push(p.figureTwo);
-    let repeat = genNumbers(2) + 2;
-    let repeatTwo = genNumbers(2) + 2;
+    let repeat = genNumbers(3) + 2;
+    let repeatTwo = genNumbers(3) + 2;
     if ((repeat = repeatTwo)) {
       repeat -= 1;
     }
@@ -1928,7 +1928,7 @@ function updateProblems() {
     displayProblem.innerHTML = `
     ${arr2.join("+")} = ${p.numOne * count + p.numTwo}</br>
     ${arr[0]}+${arr[1]} = ${p.numOne}</br>
-    ${arr[1]} = ?
+    ${p.which == 0 ? `${arr[1]}` : `${arr[0]}`} = ?
     `;
   }
 
@@ -19427,7 +19427,11 @@ function handleSubmit(e) {
     }
 
     if (level == 2.06) {
-      correctAnswer = p.numTwo;
+      if (p.which == 0) {
+        correctAnswer = p.numTwo;
+      } else {
+        correctAnswer = p.numOne - p.numTwo;
+      }
     }
 
     if (level == 2.07) {
@@ -25343,6 +25347,7 @@ function genProblems() {
       operator: "+",
       numOne: genNumbers(9) + 2,
       numTwo: genNumbers(5) + 1,
+      which: genNumbers(2),
     };
   }
 
@@ -30145,13 +30150,14 @@ function buttonLevelSetting() {
       level = 1.05;
       scoreNeeded = 30;
       document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "1.5em"
+      displayProblem.style.fontSize = "1.5em";
 
       break;
 
     case "Level 1.06":
       level = 1.06;
       scoreNeeded = 30;
+      displayProblem.style.fontSize = "1.5em";
       break;
 
     case "Level 1.07":
