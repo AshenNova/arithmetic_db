@@ -8876,9 +8876,10 @@ function updateProblems() {
       if (p.unit == "m") {
         p.answerUnit = "cm";
         p.intervals = [2, 4, 5, 10][genNumbers(4)];
-        while (p.arrow == 0 || p.arrow == p.intervals) {
-          p.arrow = genNumbers(p.intervals);
-        }
+        p.arrow = genNumbers(p.intervals - 1) + 1;
+        // while (p.arrow == 0 || p.arrow == p.intervals) {
+        //   p.arrow = genNumbers(p.intervals - 1) + 1;
+        // }
       }
 
       canvasTextId.textContent = `Give your answer in ${p.answerUnit}`;
@@ -27061,7 +27062,7 @@ function genProblems() {
       return {
         start: 0,
         intervals: gen_intervals,
-        unit: ["kg", "ℓ", "m", "km"][genNumbers(4)],
+        unit: ["m", "kg", "ℓ", "m", "km"][genNumbers(0)],
         answerUnit: undefined,
         eachInterval: undefined,
         end: undefined,
