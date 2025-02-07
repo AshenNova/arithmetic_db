@@ -766,7 +766,7 @@ function timer2() {
         //   finalText.innerHTML = `You scored a total of ${accumulatedScore}`;
         // }
         document.getElementById("current-table-time").innerHTML = "Failed";
-        document.getElementById("current-table-time").style.color = "red";
+        // document.getElementById("current-table-time").style.color = "red";
         document.getElementById("current-table-mistake").innerHTML =
           state.mistake;
         if (hardcore == 1)
@@ -30098,7 +30098,7 @@ function settingCheck(inputSetting, acceptedValues, level) {
       } else if (
         (level.startsWith("cal") && array[1] == 99) ||
         (level.startsWith("cal") &&
-          acceptedValues[acceptedValues.length - 2] == array[1])
+          acceptedValues[acceptedValues.length - 2] == array[1] && array[0] == 1)
       ) {
         return 99;
       } else {

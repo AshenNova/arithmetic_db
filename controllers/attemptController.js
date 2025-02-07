@@ -1214,7 +1214,7 @@ const updateMany = catchAsync(async (req, res, next) => {
 // updateMany();
 
 const deleteMany = async (req, res) => {
-  const deleteNow = { user: "Kenneth Lin" };
+  const deleteNow = { level: "2.06" };
   try {
     const deleteHigh = await Highscore.deleteMany(deleteNow);
     const deleteAttempts = await Attempt.deleteMany(
