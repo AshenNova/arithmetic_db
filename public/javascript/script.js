@@ -16891,7 +16891,10 @@ How many items are there in each bag?
         if (p.unitB > p.unitA) [p.unitA, p.unitB] = [p.unitB, p.unitA];
         let unitSentence = `A has ${p.unitA} times of B in the end.`;
         if (p.unitB > 1) {
-          unitSentence = `A is ${p.unitA}/${p.unitB} of B in the end.`;
+          unitSentence = `A is ${displaySimpleFraction(
+            p.unitA,
+            p.unitB
+          )} of B in the end.`;
         }
 
         let situationText = undefined;
@@ -16974,7 +16977,10 @@ How many items are there in each bag?
         if (p.ageType == "norm") {
           unitSentence = `${changeText} the father ${p.unitA} times of ${person}'s age?`;
           if (p.unitB != 1) {
-            unitSentence = `${changeText} the father ${p.unitA}/${p.unitB} of ${person}'s age?`;
+            unitSentence = `${changeText} the father ${displaySimpleFraction(
+              p.unitA,
+              p.unitB
+            )} of ${person}'s age?`;
           }
         }
         if (p.ageType == "diff") {
@@ -16986,7 +16992,10 @@ How many items are there in each bag?
           }
           unitSentence = `${changeText} the father ${p.unitA} times of ${person}'s age.</p>`;
           if (p.unitB != 1) {
-            unitSentence = `${changeText} the father ${p.unitA}/${p.unitB} of ${person}'s age.</p>`;
+            unitSentence = `${changeText} the father ${displaySimpleFraction(
+              p.unitA,
+              p.unitB
+            )} of ${person}'s age.</p>`;
           }
         }
 
@@ -17266,18 +17275,14 @@ How many items are there in each bag?
       if (p.valueB > p.valueA) statement = "less";
       if (p.type == "before") {
         displayProblem.innerHTML = `
-        1/${p.denoA} of A is ${Math.abs(diff)} ${statement} than 1/${
-          p.denoB
-        } of B.</br>
+        ${displaySimpleFraction(1, p.denoA)} of A is ${Math.abs(diff)} ${statement} than ${displaySimpleFraction(1, p.denoB)} of B.</br>
         Their total is ${total}.</br>
         What is the value of ${p.question}?
         `;
       }
       if (p.type == "after") {
         displayProblem.innerHTML = `
-        ${p.denoA - 1}/${p.denoA} of A and ${p.denoB - 1}/${
-          p.denoB
-        } of B were ${genNumbers(2) == 0 ? "removed" : "sold"}.</br>
+        ${displaySimpleFraction(p.denoA-1, p.denoA)}of A and ${displaySimpleFraction(p.denoB-1, p.denoB)}of B were ${genNumbers(2) == 0 ? "removed" : "sold"}.</br>
         A is ${Math.abs(diff)} ${statement} than B in the end.</br>
         Their total was ${total} at first.</br>
         What is the value of ${p.question} at first?
@@ -30098,7 +30103,8 @@ function settingCheck(inputSetting, acceptedValues, level) {
       } else if (
         (level.startsWith("cal") && array[1] == 99) ||
         (level.startsWith("cal") &&
-          acceptedValues[acceptedValues.length - 2] == array[1] && array[0] == 1)
+          acceptedValues[acceptedValues.length - 2] == array[1] &&
+          array[0] == 1)
       ) {
         return 99;
       } else {
