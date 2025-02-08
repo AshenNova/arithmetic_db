@@ -5065,8 +5065,12 @@ function updateProblems() {
       if (p.version == 0) {
         if (p.numOne + p.numTwo >= p.denoOne) return updateCalc();
         displayProblem.innerHTML = `
-      ${p.numOne}/${p.denoOne} of ${p.identity} is ${p.ref}.</p>
-      ${p.numTwo}/${p.denoTwo} of ${p.identity} is ${p.ref}.</p>
+      ${displaySimpleFraction(p.numOne, p.denoOne)} of ${p.identity} is ${
+          p.ref
+        }.</p>
+      ${displaySimpleFraction(p.numTwo, p.denoTwo)} of ${p.identity} is ${
+          p.ref
+        }.</p>
       What fraction of of ${p.identity} is ${
           p.ref == "shaded" ? "unshaded" : "shaded"
         }?
@@ -5086,8 +5090,12 @@ function updateProblems() {
         }
         if (p.denoTwo == p.numTwo || p.numOne == p.denoOne) return updateCalc();
         displayProblem.innerHTML = `
-      ${p.numOne}/${p.denoOne} of ${p.identity} is ${p.refColor}.</p>
-      ${p.numTwo}/${p.denoTwo} of ${p.identity} is ${refColor2}.</p>
+      ${displaySimpleFraction(p.numOne, p.denoOne)} of ${p.identity} is ${
+          p.refColor
+        }.</p>
+      ${displaySimpleFraction(p.numTwo, p.denoTwo)} of ${
+          p.identity
+        } is ${refColor2}.</p>
       The rest of ${p.identity} is ${refColor3}.</p>
       What fraction of of ${p.identity} is ${refColor3}?
       `;
@@ -5113,8 +5121,13 @@ function updateProblems() {
       }
 
       displayProblem.innerHTML = `
-      ${p.numOne}/${p.denoOne} of ${p.identity} is ${p.refColor}.</p>
-      ${p.remainderNum}/${p.remainderDeno} of the remainder is ${refColor2}.</p>
+      ${displaySimpleFraction(p.numOne, p.denoOne)} of ${p.identity} is ${
+        p.refColor
+      }.</p>
+      ${displaySimpleFraction(
+        p.remainderNum,
+        p.remainderDeno
+      )} of the remainder is ${refColor2}.</p>
       The rest are ${refColor3}.</p>
       What fraction of ${p.identity} are ${
         p.question == 0 ? refColor2 : refColor3
@@ -5140,9 +5153,9 @@ function updateProblems() {
           p.numSix /= i;
         }
       }
-      displayProblem.innerHTML = `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
-    ${p.numThree}/${p.numFour} of A was removed.</br>
-    ${p.numFive}/${p.numSix} of B was removed.</br>
+      displayProblem.innerHTML = `A is ${displaySimpleFraction(p.numOne, p.numTwo)} of ${p.letterBTotal}.</br>
+    ${displaySimpleFraction(p.numThree, p.numFour)} of A was removed.</br>
+    ${displaySimpleFraction(p.numFive, p.numSix)} of B was removed.</br>
     What fraction of the total was ${p.letterAB} ${p.letterLeftRemoved}?`;
     }
   }
@@ -17275,14 +17288,21 @@ How many items are there in each bag?
       if (p.valueB > p.valueA) statement = "less";
       if (p.type == "before") {
         displayProblem.innerHTML = `
-        ${displaySimpleFraction(1, p.denoA)} of A is ${Math.abs(diff)} ${statement} than ${displaySimpleFraction(1, p.denoB)} of B.</br>
+        ${displaySimpleFraction(1, p.denoA)} of A is ${Math.abs(
+          diff
+        )} ${statement} than ${displaySimpleFraction(1, p.denoB)} of B.</br>
         Their total is ${total}.</br>
         What is the value of ${p.question}?
         `;
       }
       if (p.type == "after") {
         displayProblem.innerHTML = `
-        ${displaySimpleFraction(p.denoA-1, p.denoA)}of A and ${displaySimpleFraction(p.denoB-1, p.denoB)}of B were ${genNumbers(2) == 0 ? "removed" : "sold"}.</br>
+        ${displaySimpleFraction(
+          p.denoA - 1,
+          p.denoA
+        )}of A and ${displaySimpleFraction(p.denoB - 1, p.denoB)}of B were ${
+          genNumbers(2) == 0 ? "removed" : "sold"
+        }.</br>
         A is ${Math.abs(diff)} ${statement} than B in the end.</br>
         Their total was ${total} at first.</br>
         What is the value of ${p.question} at first?
