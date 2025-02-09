@@ -24858,6 +24858,7 @@ function handleSubmit(e) {
       console.log("correct");
       //HIDE HELP
       document.querySelector(".help-btn").classList.add("hidden");
+      document.querySelector("#help").classList.add("hidden");
       //RESTART QUESTION TIME
       clearInterval(questionTime);
       questionTimer();
