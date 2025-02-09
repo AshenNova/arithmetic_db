@@ -16773,6 +16773,39 @@ How many items are there in each bag?
         How many ${p.rollQn == "A" ? p.objectOne : p.objectTwo}s are there?
       `;
     }
+
+    if (setting == 8) {
+      // If A is more in value, A should have lesser quantity.
+      while (p.difference == 0) p.difference = genNumbers(100) - 50;
+      p.quantityA = genNumbers(3) + 2;
+      if (p.difference > 0) {
+        p.quantityB = p.quantityA + (genNumbers(2) + 2);
+      } else {
+        p.quantityB = p.quantityA - (genNumbers(2) + 2);
+      }
+      if (p.quantityA <= 0 || p.quantityB <= 0) {
+        console.log("Quantity incorrect");
+        return updateCalc();
+      }
+      const smallerQuantity =
+        p.quantityA > p.quantityB ? p.quantityB : p.quantityA;
+      const difference_In_Quantity = Math.abs(p.quantityA - p.quantityB);
+      const valueOfSmallerUnit =
+        (Math.abs(p.difference) * smallerQuantity) / difference_In_Quantity;
+      if (valueOfSmallerUnit % 2 != 0) {
+        console.log("Floating Number")
+        return updateCalc();
+      }
+      displayProblem.innerHTML = `
+      A is ${
+        p.difference > 0
+          ? `${Math.abs(p.difference)} more than `
+          : `${Math.abs(p.difference)} less than`
+      } B.</br>
+      ${p.quantityA}A is equal to ${p.quantityB}B.</br>
+      What is the value of ${p.question}.</br>
+      `;
+    }
   }
   //  DISPLAY
   if (level == "heuFourb") {
@@ -24213,6 +24246,22 @@ function handleSubmit(e) {
           }
         }
       }
+      if (setting == 8) {
+        const smallerQuantity =
+          p.quantityA > p.quantityB ? p.quantityB : p.quantityA;
+        const difference_In_Quantity = Math.abs(p.quantityA - p.quantityB);
+        const valueOfSmallerUnit =
+          (Math.abs(p.difference) * smallerQuantity) / difference_In_Quantity;
+        const largerUnit = valueOfSmallerUnit + Math.abs(p.difference);
+        if (p.difference > 0) {
+          if (p.question == "A") correctAnswer = largerUnit;
+          if (p.question == "B") correctAnswer = valueOfSmallerUnit;
+        }
+        if (p.difference < 0) {
+          if (p.question == "B") correctAnswer = largerUnit;
+          if (p.question == "A") correctAnswer = valueOfSmallerUnit;
+        }
+      }
     }
     //ANSWERS
     if (level == "heuFourb") {
@@ -28991,7 +29040,7 @@ function genProblems() {
   // setting
 
   if (level == "heuFour") {
-    setting = calArrAll(7, calArr, setting, 9);
+    setting = calArrAll(8, calArr, setting, 9);
     setting = checkRange(setting, calArr, skipArr);
 
     if (setting == 1) {
@@ -29095,6 +29144,15 @@ function genProblems() {
         objectTwoQ: genNumbers(3) + 2,
         total: genNumbers(45) + 5,
         rollQn: ["A", "B"][genNumbers(2)],
+      };
+    }
+    //IDENTICAL TOTAL WITH DIFFERENCE
+    if (setting == 8) {
+      return {
+        difference: genNumbers(100) - 50,
+        quantityA: undefined,
+        quantityB: undefined,
+        question: ["A", "B"][genNumbers(2)],
       };
     }
   }
@@ -31209,7 +31267,7 @@ function buttonLevelSetting() {
         optionsBox.classList.add("hidden");
         setting = 9;
       }
-      accepted = [1, 2, 3, 4, 5, 6, 7, 9];
+      accepted = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 10;
       range = 0;
