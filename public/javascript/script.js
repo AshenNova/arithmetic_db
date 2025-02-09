@@ -5153,7 +5153,10 @@ function updateProblems() {
           p.numSix /= i;
         }
       }
-      displayProblem.innerHTML = `A is ${displaySimpleFraction(p.numOne, p.numTwo)} of ${p.letterBTotal}.</br>
+      displayProblem.innerHTML = `A is ${displaySimpleFraction(
+        p.numOne,
+        p.numTwo
+      )} of ${p.letterBTotal}.</br>
     ${displaySimpleFraction(p.numThree, p.numFour)} of A was removed.</br>
     ${displaySimpleFraction(p.numFive, p.numSix)} of B was removed.</br>
     What fraction of the total was ${p.letterAB} ${p.letterLeftRemoved}?`;
@@ -16455,233 +16458,7 @@ How many items are there in each bag?
   // display
 
   if (level == "heuFour") {
-    if (
-      setting == 1 ||
-      (setting == 9 && p.rollz == 1) ||
-      (range == 1 && p.rollz == 1)
-    ) {
-      while (p.objectOneQ == p.objectTwoQ || p.objectOneQ > p.objectTwoQ) {
-        p.objectTwoQ = genNumbers(4) + 2;
-        p.objectOneQ = genNumbers(4) + 2;
-      }
-
-      p.objectOneS = p.totalValue - p.objectOneQ * p.price;
-      p.objectTwoS = p.totalValue - p.objectTwoQ * p.price;
-      if (p.objectOneS == 0 || p.objectTwoS == 0) return updateCalc();
-
-      if (p.rollType == "A") {
-        displayProblem.innerHTML = `
-        If person ${p.objectOne} bought ${p.objectOneQ} ${p.objects}.</br>
-        ${p.label} would ${
-          p.objectOneS >= 0 ? "have an excess" : "be short"
-        } of $${Math.abs(p.objectOneS)}.</br>
-        If ${p.label} bought ${p.objectTwoQ} ${p.objects} instead.</br>
-        ${p.label} would ${
-          p.objectTwoS >= 0 ? "have an excess" : "be short"
-        } of $${Math.abs(p.objectTwoS)}.</br>
-        ${
-          p.rollQn == "price"
-            ? `How much does each item cost?`
-            : `How much did person ${p.objectOne} have?`
-        }
-        `;
-      }
-      if (p.rollType == "B") {
-        displayProblem.innerHTML = `
-        Both person ${p.objectOne} and ${p.objectTwo} has the same amount.</br>
-        If person ${p.objectOne} bought ${p.objectOneQ} ${p.objects}.</br>
-        ${p.label} would ${
-          p.objectOneS >= 0 ? "have an excess" : "be short"
-        } of $${Math.abs(p.objectOneS)}.</br>
-        If person ${p.objectTwo} bought ${p.objectTwoQ} ${p.objects}.</br>
-        ${p.label} would ${
-          p.objectTwoS >= 0 ? "have an excess" : "be short"
-        } of $${Math.abs(p.objectTwoS)}.</br>
-        ${
-          p.rollQn == "price"
-            ? `How much does each item cost?`
-            : `How much did person ${p.objectOne} have?`
-        }
-        `;
-      }
-    }
-
-    if (
-      setting == 2 ||
-      (setting == 9 && p.rollz == 2) ||
-      (range == 1 && p.rollz == 2)
-    ) {
-      p.sceneTwo = p.sceneOne + genNumbers(5) + 1;
-      p.situationOne = p.numberOfStuff - p.sceneOne * p.numberOfStudents;
-      // p.situationOne = 0
-      if (p.situationOne >= 0) {
-        p.situationOneW = "an excess";
-      }
-      if (p.situationTwo >= 0) {
-        p.situationTwoW = "an excess";
-      }
-      p.situationTwo = p.numberOfStuff - p.sceneTwo * p.numberOfStudents;
-
-      if (p.situationOneW != p.situationTwoW) {
-        let bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo);
-        let smallDifference = p.sceneTwo - p.sceneOne;
-        if (bigDifference % smallDifference != 0) {
-          console.log("Question changed!");
-          return updateCalc();
-        }
-      }
-
-      displayProblem.innerHTML = `
-        If ${p.sceneOne} sweets were given to each pupils, ${
-        p.situationOne == 0
-          ? `there would be no sweets left.</br>`
-          : `there would be <u>${p.situationOneW}</u> of ${Math.abs(
-              p.situationOne
-            )} sweets.</br>`
-      }
-        If ${p.sceneTwo} sweets were given to each pupils, 
-        ${
-          p.situationTwo == 0
-            ? `there would be no sweets left.</br>`
-            : `there would be <u>${p.situationTwoW}</u> of ${Math.abs(
-                p.situationTwo
-              )} sweets.</br>`
-        }
-        ${
-          p.rollAnswer == 1
-            ? "How many pupils are there?"
-            : "How many sweets are there?"
-        }
-      `;
-    }
-
-    if (setting == 3) {
-      p.absentPeople = genNumbers(p.peopleAtFirst - 2) + 1;
-      p.giveUp = (genNumbers(4) + 1) * p.absentPeople;
-      p.remainingPeople = p.peopleAtFirst - p.absentPeople;
-      if (p.type == 1) {
-        displayProblem.innerHTML = `
-        There were ${p.peopleAtFirst} workers at first.</br>
-        ${p.absentPeople} did not turn up for work. </br>
-        Each of the remaining workers have to do additional ${
-          p.giveUp
-        } work.</br>
-        ${
-          p.rollQn == "A"
-            ? "How many did each worker originally needed to do?"
-            : "What was the total amount of work needed to be done?"
-        }
-        `;
-      }
-      if (p.type == 2) {
-        const people = boyNames.concat(girlNames);
-        const name = people[genNumbers(people.length)];
-        p.boxEnd = genNumbers(p.boxFirst - 1) + 1;
-        const sweetsGivenAway = p.peopleAtFirst * p.sweetsEach;
-        const decreaseInBoxes = p.boxFirst - p.boxEnd;
-        p.eachBox = sweetsGivenAway / decreaseInBoxes;
-        // console.log(p.eachBox)
-        if (p.eachBox % 1 != 0) return updateCalc();
-        displayProblem.innerHTML = `
-        ${name} had ${p.boxFirst} boxes of sweets at first.</br>
-        ${p.peopleAtFirst} students were given ${p.sweetsEach} sweets each.</br>
-        There were ${p.boxEnd} boxes of sweets left in the end.</br>
-        How many sweets were there at first?
-                
-        `;
-      }
-    }
-
-    if (
-      setting == 4 ||
-      (setting == 9 && p.rollz == 4) ||
-      (range == 1 && p.rollz == 4)
-    ) {
-      let index = ["X", "Y", "Z"].indexOf(p.objectTwo);
-      console.log(index);
-      let newArray = ["X", "Y", "Z"];
-      newArray.splice(index, 1);
-      p.objectThree = newArray[genNumbers(2)];
-      console.log(newArray, p.objectThree);
-
-      p.groupTwo = p.groupOne + (p.unitSentence - 1) * (genNumbers(5) + 1);
-      displayProblem.innerHTML = `
-      ${p.objectOne} and ${p.objectTwo} is ${p.groupOne}.</br>
-      ${p.objectOne} and ${p.objectThree} is ${p.groupTwo}.</br>
-      ${p.objectThree} is ${p.unitSentence} times of ${p.objectTwo}.</br>
-      What is the value of ${p.objectOne}?
-      `;
-    }
-
-    if (
-      setting == 5 ||
-      (setting == 9 && p.rollz == 5) ||
-      (range == 1 && p.rollz == 5)
-    ) {
-      while (p.objectOneV == p.objectTwoV) {
-        p.objectOneV = genNumbers(3) + 2;
-      }
-      while (
-        p.objectOneUnit == p.objectTwoUnit ||
-        (p.objectOneUnit % 2 == 0 && p.objectTwoUnit % 2 == 0)
-      ) {
-        p.objectOneUnit = genNumbers(3) + 2;
-      }
-      p.total =
-        (genNumbers(3) + 2) *
-        (p.objectOneV * p.objectOneUnit + p.objectTwoV * p.objectTwoUnit);
-      if (p.rollQn2 != "total") {
-        displayProblem.innerHTML = `
-        Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
-        Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
-        The number of ${p.objectOne} is ${displaySimpleFraction(
-          p.objectOneUnit,
-          p.objectTwoUnit
-        )} the number of ${p.objectTwo}.</br>
-        The total for both is ${p.total} ${p.unitMeasurement}.</br>
-        ${
-          p.rollQn2 == "many"
-            ? `How many ${
-                p.rollQn == "A" ? p.objectOne : p.objectTwo
-              }s are there?`
-            : `What is the total for ${
-                p.rollQn == "A" ? p.objectOne : p.objectTwo
-              }? `
-        }
-        `;
-      } else {
-        displayProblem.innerHTML = `
-        Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
-        Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
-        The number of ${p.objectOne} is ${displaySimpleFraction(
-          p.objectOneUnit,
-          p.objectTwoUnit
-        )} the number of ${p.objectTwo}.</br>
-        The total for both is ${p.total} ${p.unitMeasurement}.</br>
-        How many ${p.objectOne}s and ${p.objectTwo}s are there in total?
-        `;
-      }
-    }
-
-    if (
-      setting == 6 ||
-      (setting == 9 && p.rollz == 6) ||
-      (range == 1 && p.rollz == 6)
-    ) {
-      displayProblem.innerHTML = `
-        There is at least ${p.objectTwoQ} ${p.objectTwo}s between any ${
-        p.objectOne
-      }.</br>
-        There is a total of ${p.total} ${p.objectTwo}s and ${p.objectOne}s.</br>
-        How many ${p.rollQn == "A" ? p.objectOne : p.objectTwo}s are there?
-      `;
-    }
-
-    if (
-      setting == 7 ||
-      (setting == 9 && p.rollz == 7) ||
-      (range == 1 && p.rollz == 7)
-    ) {
+    if (setting == 1) {
       while (p.groupOne == p.groupTwo) {
         p.groupOne = genNumbers(8) + 2;
       }
@@ -16789,9 +16566,211 @@ How many items are there in each bag?
        ${
          p.leftTwo == 0
            ? `there would be nothing left.</br>`
-           : `there would be an ${extraOrExcess} of ${p.leftTwo}.</br>.</br>`
+           : `there would be an ${extraOrExcess} of ${p.leftTwo}.</br>`
        }
        How many ${p.objects} are there?
+      `;
+    }
+
+    if (setting == 2) {
+      while (p.objectOneQ == p.objectTwoQ || p.objectOneQ > p.objectTwoQ) {
+        p.objectTwoQ = genNumbers(4) + 2;
+        p.objectOneQ = genNumbers(4) + 2;
+      }
+
+      p.objectOneS = p.totalValue - p.objectOneQ * p.price;
+      p.objectTwoS = p.totalValue - p.objectTwoQ * p.price;
+      if (p.objectOneS == 0 || p.objectTwoS == 0) return updateCalc();
+
+      if (p.rollType == "A") {
+        displayProblem.innerHTML = `
+        If person ${p.objectOne} bought ${p.objectOneQ} ${p.objects}.</br>
+        ${p.label} would ${
+          p.objectOneS >= 0 ? "have an excess" : "be short"
+        } of $${Math.abs(p.objectOneS)}.</br>
+        If ${p.label} bought ${p.objectTwoQ} ${p.objects} instead.</br>
+        ${p.label} would ${
+          p.objectTwoS >= 0 ? "have an excess" : "be short"
+        } of $${Math.abs(p.objectTwoS)}.</br>
+        ${
+          p.rollQn == "price"
+            ? `How much does each item cost?`
+            : `How much did person ${p.objectOne} have?`
+        }
+        `;
+      }
+      if (p.rollType == "B") {
+        displayProblem.innerHTML = `
+        Both person ${p.objectOne} and ${p.objectTwo} has the same amount.</br>
+        If person ${p.objectOne} bought ${p.objectOneQ} ${p.objects}.</br>
+        ${p.label} would ${
+          p.objectOneS >= 0 ? "have an excess" : "be short"
+        } of $${Math.abs(p.objectOneS)}.</br>
+        If person ${p.objectTwo} bought ${p.objectTwoQ} ${p.objects}.</br>
+        ${p.label} would ${
+          p.objectTwoS >= 0 ? "have an excess" : "be short"
+        } of $${Math.abs(p.objectTwoS)}.</br>
+        ${
+          p.rollQn == "price"
+            ? `How much does each item cost?`
+            : `How much did person ${p.objectOne} have?`
+        }
+        `;
+      }
+    }
+
+    if (setting == 3) {
+      p.sceneTwo = p.sceneOne + genNumbers(5) + 1;
+      p.situationOne = p.numberOfStuff - p.sceneOne * p.numberOfStudents;
+      // p.situationOne = 0
+      if (p.situationOne >= 0) {
+        p.situationOneW = "an excess";
+      }
+      if (p.situationTwo >= 0) {
+        p.situationTwoW = "an excess";
+      }
+      p.situationTwo = p.numberOfStuff - p.sceneTwo * p.numberOfStudents;
+
+      if (p.situationOneW != p.situationTwoW) {
+        let bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo);
+        let smallDifference = p.sceneTwo - p.sceneOne;
+        if (bigDifference % smallDifference != 0) {
+          console.log("Question changed!");
+          return updateCalc();
+        }
+      }
+
+      displayProblem.innerHTML = `
+        If ${p.sceneOne} sweets were given to each pupils, ${
+        p.situationOne == 0
+          ? `there would be no sweets left.</br>`
+          : `there would be <u>${p.situationOneW}</u> of ${Math.abs(
+              p.situationOne
+            )} sweets.</br>`
+      }
+        If ${p.sceneTwo} sweets were given to each pupils, 
+        ${
+          p.situationTwo == 0
+            ? `there would be no sweets left.</br>`
+            : `there would be <u>${p.situationTwoW}</u> of ${Math.abs(
+                p.situationTwo
+              )} sweets.</br>`
+        }
+        ${
+          p.rollAnswer == 1
+            ? "How many pupils are there?"
+            : "How many sweets are there?"
+        }
+      `;
+    }
+
+    if (setting == 4) {
+      p.absentPeople = genNumbers(p.peopleAtFirst - 2) + 1;
+      p.giveUp = (genNumbers(4) + 1) * p.absentPeople;
+      p.remainingPeople = p.peopleAtFirst - p.absentPeople;
+      if (p.type == 1) {
+        displayProblem.innerHTML = `
+        There were ${p.peopleAtFirst} workers at first.</br>
+        ${p.absentPeople} did not turn up for work. </br>
+        Each of the remaining workers have to do additional ${
+          p.giveUp
+        } work.</br>
+        ${
+          p.rollQn == "A"
+            ? "How many did each worker originally needed to do?"
+            : "What was the total amount of work needed to be done?"
+        }
+        `;
+      }
+      if (p.type == 2) {
+        const people = boyNames.concat(girlNames);
+        const name = people[genNumbers(people.length)];
+        p.boxEnd = genNumbers(p.boxFirst - 1) + 1;
+        const sweetsGivenAway = p.peopleAtFirst * p.sweetsEach;
+        const decreaseInBoxes = p.boxFirst - p.boxEnd;
+        p.eachBox = sweetsGivenAway / decreaseInBoxes;
+        // console.log(p.eachBox)
+        if (p.eachBox % 1 != 0) return updateCalc();
+        displayProblem.innerHTML = `
+        ${name} had ${p.boxFirst} boxes of sweets at first.</br>
+        ${p.peopleAtFirst} students were given ${p.sweetsEach} sweets each.</br>
+        There were ${p.boxEnd} boxes of sweets left in the end.</br>
+        How many sweets were there at first?
+                
+        `;
+      }
+    }
+
+    if (setting == 5) {
+      let index = ["X", "Y", "Z"].indexOf(p.objectTwo);
+      console.log(index);
+      let newArray = ["X", "Y", "Z"];
+      newArray.splice(index, 1);
+      p.objectThree = newArray[genNumbers(2)];
+      console.log(newArray, p.objectThree);
+
+      p.groupTwo = p.groupOne + (p.unitSentence - 1) * (genNumbers(5) + 1);
+      displayProblem.innerHTML = `
+      ${p.objectOne} and ${p.objectTwo} is ${p.groupOne}.</br>
+      ${p.objectOne} and ${p.objectThree} is ${p.groupTwo}.</br>
+      ${p.objectThree} is ${p.unitSentence} times of ${p.objectTwo}.</br>
+      What is the value of ${p.objectOne}?
+      `;
+    }
+
+    if (setting == 6) {
+      while (p.objectOneV == p.objectTwoV) {
+        p.objectOneV = genNumbers(3) + 2;
+      }
+      while (
+        p.objectOneUnit == p.objectTwoUnit ||
+        (p.objectOneUnit % 2 == 0 && p.objectTwoUnit % 2 == 0)
+      ) {
+        p.objectOneUnit = genNumbers(3) + 2;
+      }
+      p.total =
+        (genNumbers(3) + 2) *
+        (p.objectOneV * p.objectOneUnit + p.objectTwoV * p.objectTwoUnit);
+      if (p.rollQn2 != "total") {
+        displayProblem.innerHTML = `
+        Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
+        Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
+        The number of ${p.objectOne} is ${displaySimpleFraction(
+          p.objectOneUnit,
+          p.objectTwoUnit
+        )} the number of ${p.objectTwo}.</br>
+        The total for both is ${p.total} ${p.unitMeasurement}.</br>
+        ${
+          p.rollQn2 == "many"
+            ? `How many ${
+                p.rollQn == "A" ? p.objectOne : p.objectTwo
+              }s are there?`
+            : `What is the total for ${
+                p.rollQn == "A" ? p.objectOne : p.objectTwo
+              }? `
+        }
+        `;
+      } else {
+        displayProblem.innerHTML = `
+        Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
+        Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
+        The number of ${p.objectOne} is ${displaySimpleFraction(
+          p.objectOneUnit,
+          p.objectTwoUnit
+        )} the number of ${p.objectTwo}.</br>
+        The total for both is ${p.total} ${p.unitMeasurement}.</br>
+        How many ${p.objectOne}s and ${p.objectTwo}s are there in total?
+        `;
+      }
+    }
+
+    if (setting == 7) {
+      displayProblem.innerHTML = `
+        There is at least ${p.objectTwoQ} ${p.objectTwo}s between any ${
+        p.objectOne
+      }.</br>
+        There is a total of ${p.total} ${p.objectTwo}s and ${p.objectOne}s.</br>
+        How many ${p.rollQn == "A" ? p.objectOne : p.objectTwo}s are there?
       `;
     }
   }
@@ -23974,11 +23953,19 @@ function handleSubmit(e) {
     }
     // answer
     if (level == "heuFour") {
-      if (
-        setting == 1 ||
-        (setting == 9 && p.rollz == 1) ||
-        (range == 1 && p.rollz == 1)
-      ) {
+      //SYSTEMATIC LISTING
+      if (setting == 1) {
+        let firstLine = `x${p.groupOne} +${p.leftOne}`;
+        let secondLine = p.arrFirstNum.join(", ");
+        let thirdLine = `x${p.groupTwo} +${p.leftTwo}`;
+        let fourthLine = p.arrSecondNum.join(", ");
+        correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}\n${fourthLine}\n${
+          p.arrFirstNum[p.arrFirstNum.length - 1]
+        }`;
+        correctAnswerTwo = p.arrFirstNum[p.arrFirstNum.length - 1];
+      }
+
+      if (setting == 2) {
         let firstLine = undefined;
         let bigDiff = undefined;
         let newObjectOneS = Math.abs(p.objectOneS);
@@ -24011,11 +23998,7 @@ function handleSubmit(e) {
         }
       }
 
-      if (
-        setting == 2 ||
-        (setting == 9 && p.rollz == 2) ||
-        (range == 1 && p.rollz == 2)
-      ) {
+      if (setting == 3) {
         // let symbol = p.situationOne > 0 ? "+" : "-"
         // let bigDifference = undefined
         // let smallDifference = p.sceneTwo-p.sceneOne
@@ -24093,7 +24076,7 @@ function handleSubmit(e) {
         }
       }
 
-      if (setting == 3) {
+      if (setting == 4) {
         if (p.type == 1) {
           let extraWork = p.remainingPeople * p.giveUp;
           let eachPerson = extraWork / p.absentPeople;
@@ -24119,11 +24102,7 @@ function handleSubmit(e) {
         }
       }
 
-      if (
-        setting == 4 ||
-        (setting == 9 && p.rollz == 4) ||
-        (range == 1 && p.rollz == 4)
-      ) {
+      if (setting == 5) {
         let difference = p.groupTwo - p.groupOne;
         let eachUnit = difference / (p.unitSentence - 1);
         let objectOne = p.groupOne - eachUnit;
@@ -24136,11 +24115,7 @@ function handleSubmit(e) {
         correctAnswerTwo = objectOne;
       }
 
-      if (
-        setting == 5 ||
-        (setting == 9 && p.rollz == 5) ||
-        (range == 1 && p.rollz == 5)
-      ) {
+      if (setting == 6) {
         let setOne = p.objectOneV * p.objectOneUnit;
         let setTwo = p.objectTwoV * p.objectTwoUnit;
         let oneSet =
@@ -24188,11 +24163,7 @@ function handleSubmit(e) {
         }
       }
 
-      if (
-        setting == 6 ||
-        (setting == 9 && p.rollz == 6) ||
-        (range == 1 && p.rollz == 6)
-      ) {
+      if (setting == 7) {
         let sets = Math.floor(p.total / (p.objectTwoQ + 1));
         let remainder = p.total % (p.objectTwoQ + 1);
         if (remainder == 0) {
@@ -24241,21 +24212,6 @@ function handleSubmit(e) {
             correctAnswerTwo = sets * p.objectTwoQ + remainder - 1;
           }
         }
-      }
-
-      if (
-        setting == 7 ||
-        (setting == 9 && p.rollz == 7) ||
-        (range == 1 && p.rollz == 7)
-      ) {
-        let firstLine = `x${p.groupOne} +${p.leftOne}`;
-        let secondLine = p.arrFirstNum.join(", ");
-        let thirdLine = `x${p.groupTwo} +${p.leftTwo}`;
-        let fourthLine = p.arrSecondNum.join(", ");
-        correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}\n${fourthLine}\n${
-          p.arrFirstNum[p.arrFirstNum.length - 1]
-        }`;
-        correctAnswerTwo = p.arrFirstNum[p.arrFirstNum.length - 1];
       }
     }
     //ANSWERS
@@ -29039,6 +28995,22 @@ function genProblems() {
 
     if (setting == 1) {
       return {
+        rollz: 7,
+        objects: ["sweets", "chocolates", "candies"][genNumbers(3)],
+        total: genNumbers(90) + 50,
+        groupOne: genNumbers(8) + 2,
+        leftOne: undefined,
+        groupTwo: genNumbers(8) + 2,
+        leftTwo: undefined,
+        min: undefined,
+        max: undefined,
+        arrFirstNum: [],
+        arrSecondNum: [],
+      };
+    }
+
+    if (setting == 2) {
+      return {
         rollz: 1,
         objects: ["stationeries", "cards", "toys", "games"][genNumbers(4)],
         label: ["he", "she"][genNumbers(2)],
@@ -29056,7 +29028,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 2) {
+    if (setting == 3) {
       return {
         numberOfStudents: genNumbers(8) + 2,
         numberOfStuff: genNumbers(20) + 10,
@@ -29071,7 +29043,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 3) {
+    if (setting == 4) {
       return {
         peopleAtFirst: genNumbers(8) + 3,
         absentPeople: undefined,
@@ -29086,7 +29058,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 4) {
+    if (setting == 5) {
       return {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
@@ -29098,7 +29070,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 5) {
+    if (setting == 6) {
       return {
         unitMeasurement: ["kg", "g", "ml", "ℓ"][genNumbers(4)],
         objectOne: ["A", "B", "C"][genNumbers(3)],
@@ -29114,7 +29086,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 6) {
+    if (setting == 7) {
       return {
         rollz: 6,
         objectOne: ["A", "B", "C"][genNumbers(3)],
@@ -29122,22 +29094,6 @@ function genProblems() {
         objectTwoQ: genNumbers(3) + 2,
         total: genNumbers(45) + 5,
         rollQn: ["A", "B"][genNumbers(2)],
-      };
-    }
-
-    if (setting == 7) {
-      return {
-        rollz: 7,
-        objects: ["sweets", "chocolates", "candies"][genNumbers(3)],
-        total: genNumbers(90) + 50,
-        groupOne: genNumbers(8) + 2,
-        leftOne: undefined,
-        groupTwo: genNumbers(8) + 2,
-        leftTwo: undefined,
-        min: undefined,
-        max: undefined,
-        arrFirstNum: [],
-        arrSecondNum: [],
       };
     }
   }
@@ -30535,6 +30491,7 @@ function buttonLevelSetting() {
       level = "4.07";
       scoreNeeded = 30;
       arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
     case "Level 4.08":

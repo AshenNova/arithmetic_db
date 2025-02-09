@@ -71,13 +71,14 @@ export const displayContent = (level) => {
   if (level == "heuFour") {
     return `
     </p>
-    1. Excess and Shortage ( Type 1 )</br>
-    2. Excess and Shortage ( Type 2 )</br>
-    3. Origin</br>
-    4.Repeated Identity ( Type 2 )</br>
-    5. Uneven Grouping</br>
-    6. Grouping Rows</br>
-    7. Systematic Listing</br>
+    1. Systematic Listing</br>
+    2. Excess and Shortage ( Type 1 )</br>
+    3. Excess and Shortage ( Type 2 )</br>
+    4. Origin</br>
+    5.Repeated Identity ( Type 2 )</br>
+    6. Uneven Grouping</br>
+    7. Grouping Rows</br>
+    8. Identical Total with Difference</br>
     <hr>
     9. All
     `;
