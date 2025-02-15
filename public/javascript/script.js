@@ -16793,7 +16793,7 @@ How many items are there in each bag?
       const valueOfSmallerUnit =
         (Math.abs(p.difference) * smallerQuantity) / difference_In_Quantity;
       if (valueOfSmallerUnit % 2 != 0) {
-        console.log("Floating Number")
+        console.log("Floating Number");
         return updateCalc();
       }
       displayProblem.innerHTML = `
@@ -24065,7 +24065,7 @@ function handleSubmit(e) {
 
         if (
           (p.situationOneW == "an excess" && p.situationTwoW == "an excess") ||
-          (p.situationTwoW == "short" && p.situationOneW == "short")
+          (p.situationTwoW == "a shortage" && p.situationOneW == "a shortage")
         ) {
           bigDifference = Math.abs(p.situationTwo) - Math.abs(p.situationOne);
           firstLine = `${Math.abs(p.situationTwo)}-${Math.abs(
