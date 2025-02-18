@@ -10955,6 +10955,26 @@ function updateProblems() {
           }
         }
       });
+      let optionOneSum;
+      let optionTwoSum;
+      let optionThreeSum;
+      let optionFourSum;
+      p.optionOne.map((x) => {
+        optionOneSum += x;
+      });
+      p.optionTwo.map((x) => {
+        optionTwoSum += x;
+      });
+      p.optionThree.map((x) => {
+        optionThreeSum += x;
+      });
+      p.optionFour.map((x) => {
+        optionFourSum += x;
+      });
+      let unique = [...new Set([optionOneSum, optionTwoSum, optionThreeSum, optionFourSum])]
+      if (unique.length < 4) {
+        return updateCalc()
+      }
       displayProblem.innerHTML = `
       Which set of ratio is possible to give the value ${p.number}?
       <hr>
