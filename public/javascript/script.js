@@ -10971,9 +10971,21 @@ function updateProblems() {
       p.optionFour.map((x) => {
         optionFourSum += x;
       });
-      let unique = [...new Set([optionOneSum, optionTwoSum, optionThreeSum, optionFourSum])]
-      if (unique.length < 4) {
-        return updateCalc()
+      // let unique = [
+      //   ...new Set([optionOneSum, optionTwoSum, optionThreeSum, optionFourSum]),
+      // ];
+      // if (unique.length < 4) {
+      //   console.log("Repeated Sum")
+      //   return updateCalc();
+      // }
+      let possibility;
+      if (p.number % optionOneSum == 0) possibility += 1;
+      if (p.number % optionTwoSum == 0) possibility += 1;
+      if (p.number % optionThreeSum == 0) possibility += 1;
+      if (p.number % optionFourSum == 0) possibility += 1;
+      if (possibility > 1) {
+        console.log("More than 1 possible option");
+        return updateCalc();
       }
       displayProblem.innerHTML = `
       Which set of ratio is possible to give the value ${p.number}?
