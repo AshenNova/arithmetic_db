@@ -21231,13 +21231,24 @@ function handleSubmit(e) {
     }
 
     if (level == 5.16) {
+      //Whole Number
       if (p.choice2 == "B") {
+        console.log("Whole Number");
         correctAnswer = `${p.objectTwoV}/${p.objectOneV}=${
           p.objectTwoV / p.objectOneV
         }`;
+        correctAnswerTwo = p.objectTwoV / p.objectOneV;
       }
+      //Fractions
       if (p.choice2 == "S") {
+        console.log("Fractions");
         correctAnswer = `${p.objectTwoV}/${p.objectOneV}`;
+        const [nume, deno] = simplestForm([p.objectTwoV, p.objectOneV]);
+        if (p.objectTwoV == nume) {
+          correctAnswerTwo = `${p.objectTwoV}/${p.objectOneV}`;
+        } else {
+          correctAnswerTwo = `${p.objectTwoV}/${p.objectOneV}=${nume}/${deno}`;
+        }
       }
     }
 
