@@ -10337,9 +10337,7 @@ function updateProblems() {
         const gender = ["he", "she"][position];
         const genderTwo = ["his", "her"][position];
         displayProblem.innerHTML = `
-        Person ${p.choiceVar} used ${p.partA}/${
-          p.denoA
-        } of ${genderTwo} money to buy ${p.objects}.</p>
+        Person ${p.choiceVar} used ${displaySimpleFraction(p.partA, p.denoA)} of ${genderTwo} money to buy ${p.objects}.</p>
         ${gender[0].toUpperCase() + gender.slice(1)} spent another ${p.partB}/${
           p.denoB
         } of the remainder on ${p.objectsTwo}.</p>
@@ -25445,9 +25443,9 @@ function genProblems() {
       minHours: ["mins", "h"][genNumbers(2)],
       minSeconds: undefined,
       numOne: genNumbers(10),
-      numTwo: genNumbers(60) + 1,
+      numTwo: genNumbers(59) + 1,
       numThree: genNumbers(10),
-      numFour: genNumbers(60) + 1,
+      numFour: genNumbers(59) + 1,
     };
   }
 
