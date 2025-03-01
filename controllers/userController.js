@@ -1293,7 +1293,7 @@ const generateRec = async (nameTemp) => {
       ) {
         if (attempt.mode == "Hardcore" || attempt.mode == "Normal") {
           // console.log("⏱️");
-          if (attempt.time == 600) {
+          if (attempt.time >= 600) {
             let mode = ["Easy", "Normal", "Hardcore"];
             let index = mode.indexOf(attempt.mode);
             attempt.mode = mode[index - 1];

@@ -5060,6 +5060,13 @@ function updateProblems() {
     if (setting == 1) {
       [p.numOne, p.denoOne] = simplify(p.numOne, p.denoOne);
       [p.numTwo, p.denoTwo] = simplify(p.numTwo, p.denoTwo);
+      const commonMultiple = commonDeno(p.denoOne, p.denoTwo)
+      const newNumeOne = commonMultiple/p.denoOne*p.numOne
+      const newNumeTwo = commonMultiple/p.denoTwo*p.numTwo
+      if (newNumeOne + newNumeTwo >= commonMultiple) {
+        console.log("Fractions too large.")
+        return updateCalc()
+      }
       console.log("This is Level 5.01.1");
       // PLUS
       if (p.version == 0) {
@@ -10337,7 +10344,10 @@ function updateProblems() {
         const gender = ["he", "she"][position];
         const genderTwo = ["his", "her"][position];
         displayProblem.innerHTML = `
-        Person ${p.choiceVar} used ${displaySimpleFraction(p.partA, p.denoA)} of ${genderTwo} money to buy ${p.objects}.</p>
+        Person ${p.choiceVar} used ${displaySimpleFraction(
+          p.partA,
+          p.denoA
+        )} of ${genderTwo} money to buy ${p.objects}.</p>
         ${gender[0].toUpperCase() + gender.slice(1)} spent another ${p.partB}/${
           p.denoB
         } of the remainder on ${p.objectsTwo}.</p>
@@ -12335,7 +12345,11 @@ function updateProblems() {
       console.log(pointDF, pointCF);
       const choiceFirst = genNumbers(3);
       if (choiceFirst == 0) {
-        ctx.fillText(`Point DF is ${pointDF}/${pointCF} CF.`, 20, 20);
+        ctx.fillText(
+          `Point DF is ${displaySimpleFraction(pointDF, pointCF)} CF.`,
+          20,
+          20
+        );
       } else if (choiceFirst == 1) {
         ctx.fillText(`Point DF is ${pointDF} : ${pointCF} to CF.`, 20, 20);
       } else {
@@ -12349,7 +12363,11 @@ function updateProblems() {
       console.log(pointBE, pointCE);
       const choiceSecond = genNumbers(3);
       if (choiceSecond == 0) {
-        ctx.fillText(`Point BE is ${pointBE}/${pointCE} CE.`, 20, 40);
+        ctx.fillText(
+          `Point BE is ${displaySimpleFraction(pointBE, pointCE)} CE.`,
+          20,
+          40
+        );
       } else if (choiceSecond == 1) {
         ctx.fillText(`Point BE is ${pointBE} : ${pointCE} to CE.`, 20, 40);
       } else {
