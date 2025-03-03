@@ -1,4 +1,158 @@
+// import { Document } from "mongoose";
+import { commonDeno } from "./otherFunctions.js";
+
+// NO IDEA WHY I COULD IMPORT THIS FROM "SCRIPT.JS"
+function displaySimpleFraction(numerator, denominator) {
+  return `
+  <div class="frac">
+  <span>${numerator}</span>
+  <span class="symbol">/</span>
+  <span class="bottom">${denominator}</span>
+  </div>  
+  `;
+}
+
 const helpMe = document.querySelector(".help-me-text");
+
+//SECOND CANVAS
+const secondCanvas = document.querySelector(".second-canvas");
+// const canvasTextId = document.getElementById("canvasText");
+const canvas2 = document.getElementById("canvas2");
+const ctx2 = canvas2.getContext("2d");
+const secondCanvasTextId = document.querySelector("#second-canvas-text");
+function secondCanvasHelp() {
+  secondCanvas.classList.remove("hidden");
+  ctx2.setTransform(1, 0, 0, 1, 0, 0);
+  ctx2.clearRect(0, 0, 1000, 1000);
+}
+
+function likeFractionModel(
+  x,
+  y,
+  widthOfModel,
+  heightOfModel,
+  firstFraction,
+  secondFraction,
+  thirdColor
+) {
+  const [n1, d1, color1] = firstFraction;
+  const [n2, d2, color2] = secondFraction;
+  const commonDenominator = commonDeno(d1, d2);
+  const newN1 = (commonDenominator / d1) * n1;
+  const newN2 = (commonDenominator / d2) * n2;
+
+  const widthOfEachUnit = widthOfModel / commonDenominator;
+  const heightOfEachUnit = heightOfModel;
+  console.log(commonDenominator);
+  // const start = x;
+  let count = 1;
+  for (let a = 0; a < widthOfModel; a += widthOfEachUnit) {
+    ctx2.beginPath();
+    ctx2.rect(x + a, y, widthOfEachUnit, heightOfEachUnit);
+    ctx2.stroke();
+    if (count <= newN1) {
+      ctx2.fillStyle = color1;
+      ctx2.fillRect(x + a, y, widthOfEachUnit, heightOfEachUnit);
+    } else if (count <= newN1 + newN2) {
+      ctx2.fillStyle = color2;
+      ctx2.fillRect(x + a, y, widthOfEachUnit, heightOfEachUnit);
+    } else {
+      ctx2.fillStyle = thirdColor;
+      // return;
+    }
+    count += 1;
+  }
+}
+function remainderConceptModel(
+  x,
+  y,
+  widthOfModel,
+  heightOfModel,
+  firstLevel,
+  secondLevel,
+  thirdColor
+) {
+  //First level
+  ctx2.beginPath();
+  ctx2.rect(x, y, widthOfModel, heightOfModel);
+  ctx2.stroke();
+
+  //Cutting the rectangles
+  const [firstNumerator, firstDenominator, color1] = firstLevel;
+  const firstLevelIntervalDistance = widthOfModel / firstDenominator;
+  let firstCount = 1;
+  for (
+    let d1 = firstLevelIntervalDistance;
+    d1 < widthOfModel;
+    d1 += firstLevelIntervalDistance
+  ) {
+    console.log(d1);
+    ctx2.beginPath();
+    ctx2.moveTo(x + d1, y);
+    ctx2.lineTo(x + d1, y + heightOfModel);
+    ctx2.stroke();
+    //SHADING
+    if (firstCount <= firstNumerator) {
+      ctx2.fillStyle = color1;
+      ctx2.fillRect(
+        x + firstLevelIntervalDistance * (firstCount - 1),
+        y,
+        firstLevelIntervalDistance,
+        30
+      );
+      ctx2.stroke();
+    }
+
+    firstCount += 1;
+  }
+
+  // Second Level:
+
+  const [secondNumerator, secondDenominator, color2] = secondLevel;
+  const secondStartPoint = x + firstLevelIntervalDistance * firstNumerator;
+  const remainingDistance =
+    firstLevelIntervalDistance * (firstDenominator - firstNumerator);
+  const secondLevelIntervalDistance = remainingDistance / secondDenominator;
+  ctx2.beginPath();
+  ctx2.rect(
+    secondStartPoint,
+    y + 50,
+    firstLevelIntervalDistance * (firstDenominator - firstNumerator),
+    heightOfModel
+  );
+  ctx2.stroke();
+
+  //Cutting the rectangles
+  // const firstLevelIntervalDistance = widthOfModel / firstDenominator;
+  let secondCount = 1;
+  for (
+    let d2 = secondLevelIntervalDistance;
+    d2 <= remainingDistance;
+    d2 += secondLevelIntervalDistance
+  ) {
+    console.log(d2);
+    ctx2.beginPath();
+    ctx2.moveTo(secondStartPoint + d2, y + 50);
+    ctx2.lineTo(secondStartPoint + d2, y + 50 + heightOfModel);
+    ctx2.stroke();
+
+    //SHADING
+    if (secondCount <= secondNumerator) {
+      ctx2.fillStyle = color2;
+    } else {
+      ctx2.fillStyle = thirdColor;
+    }
+
+    ctx2.fillRect(
+      secondStartPoint + secondLevelIntervalDistance * (secondCount - 1),
+      y + 50,
+      secondLevelIntervalDistance,
+      30
+    );
+    ctx2.stroke();
+    secondCount += 1;
+  }
+}
 
 export function helpList(level) {
   const helpArr = [
@@ -12,6 +166,7 @@ export function helpList(level) {
     "4.06",
     "4.11",
     "4.26",
+    "5.01",
     "6.05",
     "heuThree",
     "heuFour",
@@ -171,6 +326,94 @@ export function helpMeFunc(level, state, setting) {
     let end = "❌" + "⭕️".repeat(p.oneSideNoCorners) + "❌";
     helpMe.insertAdjacentHTML("beforeend", end);
     // }
+  }
+  //REMAINDER CONCEPT
+  if (level == 5.01) {
+    secondCanvasHelp();
+    // ctx2.beginPath();
+    // ctx2.moveTo(0, 0);
+    // ctx2.lineTo(10, 0);
+    // ctx2.lineTo(10, 20);
+    // ctx2.lineTo(0, 20);
+    // ctx2.closePath();
+    // ctx2.stroke();
+
+    //LIKE FRACTIONS
+    if (setting == 1) {
+      // const canvasWidth = document.getElementById("canvas2").width;
+      let widthOfModel = 250;
+      while (widthOfModel % p.denoOne != 0) widthOfModel += 1;
+      const commonDenominator = commonDeno(p.denoOne, p.denoTwo);
+      const newN1 = (commonDenominator / p.denoOne) * p.numOne;
+      const newN2 = (commonDenominator / p.denoTwo) * p.numTwo;
+      secondCanvasTextId.innerHTML = `
+      Both fractions are <u>like fractions</u> since both are <u>based on</u> ${
+        p.identity
+      }.</br>
+      ${displaySimpleFraction(p.numOne, p.denoOne)} = ${displaySimpleFraction(
+        newN1,
+        commonDenominator
+      )} -> ${p.refColor}</br>
+      ${displaySimpleFraction(p.numTwo, p.denoTwo)} = ${displaySimpleFraction(
+        newN2,
+        commonDenominator
+      )} -> ${p.refColor2}</br>
+      Hence:
+      1 - ${displaySimpleFraction(
+        newN1,
+        commonDenominator
+      )} - ${displaySimpleFraction(newN2, commonDenominator)}
+      `;
+      likeFractionModel(
+        50,
+        20,
+        widthOfModel,
+        30,
+        [p.numOne, p.denoOne, p.refColor],
+        [p.numTwo, p.denoTwo, p.refColor2],
+        p.refColor3
+      );
+    }
+    //UNLIKE FRACTIONS V1
+    if (setting == 2) {
+      console.log("Setting 2");
+      secondCanvasTextId.innerHTML = `
+      First fraction is based on <u>${
+        p.identity
+      }</u>.</br>Second fraction is based on <u>remainder</u>. </br>
+      Hence, they are <u>unlike fractions</u>.</br>
+      ${displaySimpleFraction(p.denoOne - p.numOne, p.denoOne)} x ${
+        p.question == 0
+          ? displaySimpleFraction(p.remainderNum, p.remainderDeno)
+          : displaySimpleFraction(
+              p.remainderDeno - p.remainderNum,
+              p.remainderDeno
+            )
+      }
+      `;
+      let widthOfTopModel = 250;
+      remainderConceptModel(
+        50,
+        20,
+        widthOfTopModel,
+        30,
+        [p.numOne, p.denoOne, p.refColor],
+        [p.remainderNum, p.remainderDeno, p.refColor2],
+        p.refColor3
+      );
+    }
+    //UNLIKE FRACTIONS V2
+    if (setting == 3) {
+      console.log("Setting 3");
+      secondCanvasTextId.innerHTML = `
+      Second fraction is based on <u>A</u>.</br>
+      Third fraction is based on <u>B</u>. </br>
+      Hence, they are <u>unlike fractions</u>.</br>
+      ...
+      </br>
+      If you still dont understand, redo in "setting 2"
+      `;
+    }
   }
   if (level == 6.05) {
     helpMe.textContent = `Distance = Speed x Time`;

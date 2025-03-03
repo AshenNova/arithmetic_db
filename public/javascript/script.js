@@ -635,6 +635,11 @@ function drawingDisplay() {
   fractionsContainerTwo.classList.add("hidden");
   workingContainer.classList.add("hidden");
 }
+function secondCanvasHelp() {
+  secondCanvas.classList.remove("hidden");
+  ctx2.setTransform(1, 0, 0, 1, 0, 0);
+  ctx2.clearRect(0, 0, 1000, 1000);
+}
 function simpleFractionDisplay() {
   fractionsContainer.classList.remove("hidden");
   wholeNumberContainer.classList.add("hidden");
@@ -5060,12 +5065,12 @@ function updateProblems() {
     if (setting == 1) {
       [p.numOne, p.denoOne] = simplify(p.numOne, p.denoOne);
       [p.numTwo, p.denoTwo] = simplify(p.numTwo, p.denoTwo);
-      const commonMultiple = commonDeno(p.denoOne, p.denoTwo)
-      const newNumeOne = commonMultiple/p.denoOne*p.numOne
-      const newNumeTwo = commonMultiple/p.denoTwo*p.numTwo
+      const commonMultiple = commonDeno(p.denoOne, p.denoTwo);
+      const newNumeOne = (commonMultiple / p.denoOne) * p.numOne;
+      const newNumeTwo = (commonMultiple / p.denoTwo) * p.numTwo;
       if (newNumeOne + newNumeTwo >= commonMultiple) {
-        console.log("Fractions too large.")
-        return updateCalc()
+        console.log("Fractions too large.");
+        return updateCalc();
       }
       console.log("This is Level 5.01.1");
       // PLUS
@@ -5087,24 +5092,24 @@ function updateProblems() {
       if (p.version == 1) {
         if (p.numOne + p.numTwo >= p.denoOne) return updateCalc();
         const colorArr = ["red", "blue", "green", "yellow"];
-        let refColor2 = colorArr[genNumbers(4)];
-        while (refColor2 == p.refColor) {
-          refColor2 = colorArr[genNumbers(4)];
+        p.refColor2 = colorArr[genNumbers(4)];
+        while (p.refColor2 == p.refColor) {
+          p.refColor2 = colorArr[genNumbers(4)];
         }
-        let refColor3 = colorArr[genNumbers(4)];
-        while (refColor3 == refColor2 || refColor3 == p.refColor) {
-          refColor3 = colorArr[genNumbers(4)];
+        p.refColor3 = colorArr[genNumbers(4)];
+        while (p.refColor3 == p.refColor2 || p.refColor3 == p.refColor) {
+          p.refColor3 = colorArr[genNumbers(4)];
         }
         if (p.denoTwo == p.numTwo || p.numOne == p.denoOne) return updateCalc();
         displayProblem.innerHTML = `
       ${displaySimpleFraction(p.numOne, p.denoOne)} of ${p.identity} is ${
           p.refColor
         }.</p>
-      ${displaySimpleFraction(p.numTwo, p.denoTwo)} of ${
-          p.identity
-        } is ${refColor2}.</p>
-      The rest of ${p.identity} is ${refColor3}.</p>
-      What fraction of of ${p.identity} is ${refColor3}?
+      ${displaySimpleFraction(p.numTwo, p.denoTwo)} of ${p.identity} is ${
+          p.refColor2
+        }.</p>
+      The rest of ${p.identity} is ${p.refColor3}.</p>
+      What fraction of of ${p.identity} is ${p.refColor3}?
       `;
       }
     }
@@ -5118,13 +5123,13 @@ function updateProblems() {
         p.remainderDeno
       );
       let colorArr = ["red", "blue", "green", "yellow"];
-      let refColor2 = colorArr[genNumbers(4)];
-      while (refColor2 == p.refColor) {
-        refColor2 = colorArr[genNumbers(4)];
+      p.refColor2 = colorArr[genNumbers(4)];
+      while (p.refColor2 == p.refColor) {
+        p.refColor2 = colorArr[genNumbers(4)];
       }
-      let refColor3 = colorArr[genNumbers(4)];
-      while (refColor3 == refColor2 || refColor3 == p.refColor) {
-        refColor3 = colorArr[genNumbers(4)];
+      p.refColor3 = colorArr[genNumbers(4)];
+      while (p.refColor3 == p.refColor2 || p.refColor3 == p.refColor) {
+        p.refColor3 = colorArr[genNumbers(4)];
       }
 
       displayProblem.innerHTML = `
@@ -5134,10 +5139,10 @@ function updateProblems() {
       ${displaySimpleFraction(
         p.remainderNum,
         p.remainderDeno
-      )} of the remainder is ${refColor2}.</p>
-      The rest are ${refColor3}.</p>
+      )} of the remainder is ${p.refColor2}.</p>
+      The rest are ${p.refColor3}.</p>
       What fraction of ${p.identity} are ${
-        p.question == 0 ? refColor2 : refColor3
+        p.question == 0 ? p.refColor2 : p.refColor3
       }.
       `;
     }
@@ -25076,6 +25081,7 @@ function handleSubmit(e) {
       // WHEN INCORRECT
       console.log("incorrect");
 
+      //NEED HELP?
       helpList(level);
       document
         .querySelector(".help-btn")
@@ -26203,6 +26209,8 @@ function genProblems() {
         identity: ["A", "B"][genNumbers(2)],
         ref: ["shaded", "unshaded"][genNumbers(2)],
         refColor: ["red", "blue", "green", "yellow"][genNumbers(4)],
+        refColor2: undefined,
+        refColor3: undefined,
       };
     }
     if (setting == 2) {
@@ -26216,6 +26224,8 @@ function genProblems() {
         remainderNum: genNumbers(remainder) + 1,
         identity: ["A", "B"][genNumbers(2)],
         refColor: ["red", "blue", "green", "yellow"][genNumbers(4)],
+        refColor2: undefined,
+        refColor3: undefined,
         question: genNumbers(2),
       };
     }
@@ -31845,4 +31855,4 @@ $("#attemptAjex").on("submit", function (event) {
 });
 // });
 
-export { updateProblems, genNumbers };
+export { updateProblems, genNumbers, displaySimpleFraction };
