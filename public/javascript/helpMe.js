@@ -1,16 +1,17 @@
 // import { Document } from "mongoose";
 import { commonDeno } from "./otherFunctions.js";
+import { displaySimpleFraction } from "./script.js";
 
 // NO IDEA WHY I COULD IMPORT THIS FROM "SCRIPT.JS"
-function displaySimpleFraction(numerator, denominator) {
-  return `
-  <div class="frac">
-  <span>${numerator}</span>
-  <span class="symbol">/</span>
-  <span class="bottom">${denominator}</span>
-  </div>  
-  `;
-}
+// function displaySimpleFraction(numerator, denominator) {
+//   return `
+//   <div class="frac">
+//   <span>${numerator}</span>
+//   <span class="symbol">/</span>
+//   <span class="bottom">${denominator}</span>
+//   </div>
+//   `;
+// }
 
 const helpMe = document.querySelector(".help-me-text");
 
@@ -26,6 +27,40 @@ function secondCanvasHelp() {
   ctx2.clearRect(0, 0, 1000, 1000);
 }
 
+function arrowHeadHorizontalLine(start, end, text, positionForText) {
+  const [x1, y1] = start;
+  const [x2, y2] = end;
+
+  //LINE
+  ctx2.beginPath();
+  ctx2.moveTo(x1, y1);
+  ctx2.lineTo(x2, y2);
+  ctx2.stroke();
+
+  //ARROWHEAD START
+  const adjust1 = 5;
+  ctx2.beginPath();
+  ctx2.moveTo(x1 + adjust1, y1 - adjust1);
+  ctx2.lineTo(x1, y1);
+  ctx2.lineTo(x1 + adjust1, y1 + adjust1);
+  ctx2.stroke();
+  //ARROWHEAD end
+  ctx2.beginPath();
+  ctx2.moveTo(x2 - adjust1, y2 - adjust1);
+  ctx2.lineTo(x2, y2);
+  ctx2.lineTo(x2 - adjust1, y2 + adjust1);
+  ctx2.stroke();
+
+  const textLength = text.length;
+  console.log(`The length of the text is :${textLength}`);
+  ctx2.font = "16px Arial";
+  ctx2.fillStyle = "black";
+  if (positionForText == "top") {
+    ctx2.fillText(text, (x1 + x2) / 2 - textLength * 4, (y1 + y2) / 2 - 10);
+  } else if (positionForText == "bottom") {
+    ctx2.fillText(text, (x1 + x2) / 2 - textLength * 4, (y1 + y2) / 2 + 15);
+  }
+}
 function likeFractionModel(
   x,
   y,
@@ -51,6 +86,7 @@ function likeFractionModel(
     ctx2.rect(x + a, y, widthOfEachUnit, heightOfEachUnit);
     ctx2.stroke();
     if (count <= newN1) {
+      ctx2.save();
       ctx2.fillStyle = color1;
       ctx2.fillRect(x + a, y, widthOfEachUnit, heightOfEachUnit);
     } else if (count <= newN1 + newN2) {
@@ -62,6 +98,26 @@ function likeFractionModel(
     }
     count += 1;
   }
+  ctx2.restore();
+  console.log(widthOfEachUnit, widthOfModel, newN1);
+  arrowHeadHorizontalLine(
+    [x, y - 10],
+    [x + widthOfEachUnit * newN1, y - 10],
+    color1,
+    "top"
+  );
+  arrowHeadHorizontalLine(
+    [x + widthOfEachUnit * newN1, y - 10],
+    [x + widthOfEachUnit * (newN1 + newN2), y - 10],
+    color2,
+    "top"
+  );
+  arrowHeadHorizontalLine(
+    [x + widthOfEachUnit * (newN1 + newN2), y + 10 + heightOfEachUnit],
+    [x + widthOfModel, y + 10 + heightOfEachUnit],
+    "?",
+    "bottom"
+  );
 }
 function remainderConceptModel(
   x,
@@ -105,6 +161,19 @@ function remainderConceptModel(
 
     firstCount += 1;
   }
+
+  arrowHeadHorizontalLine(
+    [x, y - 10],
+    [x + firstLevelIntervalDistance * firstNumerator, y - 10],
+    color1,
+    "top"
+  );
+  arrowHeadHorizontalLine(
+    [x + firstLevelIntervalDistance * firstNumerator, y - 10],
+    [x + widthOfModel, y - 10],
+    "remainder",
+    "top"
+  );
 
   // Second Level:
 
@@ -152,6 +221,25 @@ function remainderConceptModel(
     ctx2.stroke();
     secondCount += 1;
   }
+
+  arrowHeadHorizontalLine(
+    [secondStartPoint, y + 50 + heightOfModel + 10],
+    [
+      secondStartPoint + secondLevelIntervalDistance * secondNumerator,
+      y + 50 + heightOfModel + 10,
+    ],
+    color2,
+    "bottom"
+  );
+  arrowHeadHorizontalLine(
+    [
+      secondStartPoint + secondLevelIntervalDistance * secondNumerator,
+      y + 50 + heightOfModel + 10,
+    ],
+    [x + widthOfModel, y + 50 + heightOfModel + 10],
+    thirdColor,
+    "bottom"
+  );
 }
 
 export function helpList(level) {
@@ -350,14 +438,16 @@ export function helpMeFunc(level, state, setting) {
       Both fractions are <u>like fractions</u> since both are <u>based on</u> ${
         p.identity
       }.</br>
-      ${displaySimpleFraction(p.numOne, p.denoOne)} = ${displaySimpleFraction(
-        newN1,
-        commonDenominator
-      )} -> ${p.refColor}</br>
-      ${displaySimpleFraction(p.numTwo, p.denoTwo)} = ${displaySimpleFraction(
-        newN2,
-        commonDenominator
-      )} -> ${p.refColor2}</br>
+      ${displaySimpleFraction(p.numOne, p.denoOne)} ${
+        newN1 == p.numOne
+          ? ""
+          : `= ${displaySimpleFraction(newN1, commonDenominator)}`
+      } -> ${p.refColor}</br>
+      ${displaySimpleFraction(p.numTwo, p.denoTwo)} ${
+        newN2 == p.numTwo
+          ? ""
+          : ` = ${displaySimpleFraction(newN2, commonDenominator)}`
+      } -> ${p.refColor2}</br>
       Hence:
       1 - ${displaySimpleFraction(
         newN1,
@@ -365,8 +455,8 @@ export function helpMeFunc(level, state, setting) {
       )} - ${displaySimpleFraction(newN2, commonDenominator)}
       `;
       likeFractionModel(
-        50,
-        20,
+        80,
+        80,
         widthOfModel,
         30,
         [p.numOne, p.denoOne, p.refColor],
@@ -393,8 +483,8 @@ export function helpMeFunc(level, state, setting) {
       `;
       let widthOfTopModel = 250;
       remainderConceptModel(
-        50,
-        20,
+        80,
+        80,
         widthOfTopModel,
         30,
         [p.numOne, p.denoOne, p.refColor],
@@ -404,15 +494,221 @@ export function helpMeFunc(level, state, setting) {
     }
     //UNLIKE FRACTIONS V2
     if (setting == 3) {
+      // const firstUnitQuantity = p.numOne;
+      function remainderConceptModel2Ways(
+        x,
+        y,
+        widthOfModel,
+        heightOfModel,
+        firstLevel,
+        secondLevel,
+        theOtherSecondLevel
+      ) {
+        //First level
+        ctx2.beginPath();
+        ctx2.rect(x, y, widthOfModel, heightOfModel);
+        ctx2.stroke();
+
+        //Cutting the rectangles
+        const [firstNumerator, firstDenominator, color1] = firstLevel;
+        const firstLevelIntervalDistance = widthOfModel / firstDenominator;
+        let firstCount = 1;
+        for (
+          let d1 = firstLevelIntervalDistance;
+          d1 < widthOfModel;
+          d1 += firstLevelIntervalDistance
+        ) {
+          console.log(d1);
+          ctx2.beginPath();
+          ctx2.moveTo(x + d1, y);
+          ctx2.lineTo(x + d1, y + heightOfModel);
+          ctx2.stroke();
+          //SHADING
+          if (firstCount <= firstNumerator) {
+            ctx2.fillStyle = "#FAE7EB";
+            ctx2.fillRect(
+              x + firstLevelIntervalDistance * (firstCount - 1),
+              y,
+              firstLevelIntervalDistance,
+              30
+            );
+            ctx2.stroke();
+          }
+
+          firstCount += 1;
+        }
+
+        arrowHeadHorizontalLine(
+          [x, y - 10],
+          [x + firstLevelIntervalDistance * firstNumerator, y - 10],
+          "A",
+          "top"
+        );
+        arrowHeadHorizontalLine(
+          [x + firstLevelIntervalDistance * firstNumerator, y - 10],
+          [x + widthOfModel, y - 10],
+          "B",
+          "top"
+        );
+
+        // Second Level:
+
+        const [secondNumerator, secondDenominator, color2] = secondLevel;
+        const secondStartPoint =
+          x + firstLevelIntervalDistance * firstNumerator;
+        const remainingDistance =
+          firstLevelIntervalDistance * (firstDenominator - firstNumerator);
+        const secondLevelIntervalDistance =
+          remainingDistance / secondDenominator;
+        ctx2.beginPath();
+        ctx2.rect(
+          secondStartPoint,
+          y + 50,
+          firstLevelIntervalDistance * (firstDenominator - firstNumerator),
+          heightOfModel
+        );
+        ctx2.stroke();
+
+        //Cutting the rectangles
+        // const firstLevelIntervalDistance = widthOfModel / firstDenominator;
+        let secondCount = 1;
+        for (
+          let d2 = secondLevelIntervalDistance;
+          d2 <= remainingDistance;
+          d2 += secondLevelIntervalDistance
+        ) {
+          console.log(d2);
+          ctx2.beginPath();
+          ctx2.moveTo(secondStartPoint + d2, y + 50);
+          ctx2.lineTo(secondStartPoint + d2, y + 50 + heightOfModel);
+          ctx2.stroke();
+
+          //SHADING
+          if (secondCount <= secondNumerator) {
+            ctx2.fillStyle = "red";
+          } else {
+            ctx2.fillStyle = "#CCDCEB";
+          }
+          console.log(
+            `Count: ${secondCount}, ${secondNumerator}/${secondDenominator}`
+          );
+          ctx2.fillRect(
+            secondStartPoint + secondLevelIntervalDistance * (secondCount - 1),
+            y + 50,
+            secondLevelIntervalDistance,
+            30
+          );
+          ctx2.stroke();
+          secondCount += 1;
+        }
+
+        arrowHeadHorizontalLine(
+          [secondStartPoint, y + 50 + heightOfModel + 10],
+          [
+            secondStartPoint + secondLevelIntervalDistance * secondNumerator,
+            y + 50 + heightOfModel + 10,
+          ],
+          "Removed",
+          "bottom"
+        );
+        arrowHeadHorizontalLine(
+          [
+            secondStartPoint + secondLevelIntervalDistance * secondNumerator,
+            y + 50 + heightOfModel + 10,
+          ],
+          [x + widthOfModel, y + 50 + heightOfModel + 10],
+          "Left",
+          "bottom"
+        );
+
+        // The other second level.
+        const [thirdNumerator, thirdDenominator] = theOtherSecondLevel;
+        console.log;
+        const firstLevelEndPoint = firstLevelIntervalDistance * firstNumerator;
+
+        // while ((firstLevelEndPoint - x) % thirdDenominator != 0)
+        //   firstLevelEndPoint -= 1;
+        ctx2.beginPath();
+        ctx2.rect(x, y + 100, firstLevelEndPoint, heightOfModel);
+        ctx2.stroke();
+
+        console.log(`First Level End Point: ${firstLevelEndPoint}`);
+        //Cutting the rectangles
+        const thirdLevelIntervalDistance =
+          firstLevelEndPoint / thirdDenominator;
+        console.log(
+          `Distance for third Interval: ${thirdLevelIntervalDistance}`
+        );
+        let thirdCount = 1;
+        for (
+          let d3 = thirdLevelIntervalDistance;
+          d3 <= firstLevelEndPoint;
+          d3 += thirdLevelIntervalDistance
+        ) {
+          console.log(d3);
+          ctx2.beginPath();
+          ctx2.moveTo(x + d3, y + 100);
+          ctx2.lineTo(x + d3, y + 100 + heightOfModel);
+          ctx2.stroke();
+
+          //SHADING
+
+          if (thirdCount <= thirdNumerator) {
+            ctx2.fillStyle = "red";
+          } else {
+            ctx2.fillStyle = "#CCDCEB";
+          }
+          console.log(
+            `Count: ${thirdCount}, ${thirdNumerator}/${thirdDenominator}`
+          );
+          ctx2.fillRect(
+            x + thirdLevelIntervalDistance * (thirdCount - 1),
+            y + 100,
+            thirdLevelIntervalDistance,
+            30
+          );
+          ctx2.stroke();
+          thirdCount += 1;
+        }
+
+        arrowHeadHorizontalLine(
+          [x, y + 100 + heightOfModel + 10],
+          [
+            x + thirdLevelIntervalDistance * thirdNumerator,
+            y + 100 + heightOfModel + 10,
+          ],
+          "Removed",
+          "bottom"
+        );
+        arrowHeadHorizontalLine(
+          [
+            x + thirdLevelIntervalDistance * thirdNumerator,
+            y + 100 + heightOfModel + 10,
+          ],
+          [x + firstLevelEndPoint, y + 100 + heightOfModel + 10],
+          "Left",
+          "bottom"
+        );
+      }
+
+      const widthOfTopModel = 350;
+      let topLevelTotal = p.numTwo;
+      if (p.letterBTotal == "B") topLevelTotal = p.numOne + p.numTwo;
       console.log("Setting 3");
       secondCanvasTextId.innerHTML = `
       Second fraction is based on <u>A</u>.</br>
       Third fraction is based on <u>B</u>. </br>
       Hence, they are <u>unlike fractions</u>.</br>
-      ...
-      </br>
-      If you still dont understand, redo in "setting 2"
       `;
+      remainderConceptModel2Ways(
+        50,
+        80,
+        widthOfTopModel,
+        30,
+        [p.numOne, topLevelTotal, "A"],
+        [p.numFive, p.numSix, "B"],
+        [p.numThree, p.numFour]
+      );
     }
   }
   if (level == 6.05) {

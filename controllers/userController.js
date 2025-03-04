@@ -1202,10 +1202,10 @@ const generateRec = async (nameTemp) => {
   }
 
   //Delete list for age 10, 11 and 12
-  if (age == 11 || age == 12 || (age == 10 && month >= 10)) {
+  if (age == 11 || age >= 12 || (age == 10 && month >= 10)) {
     if (age == 11 || (age == 10 && month >= 10))
       ageLevel = levelOne.concat(levelTwo, levelThree, levelFour);
-    if (age == 12 || (age == 11 && month >= 10))
+    if (age >= 12 || (age == 11 && month >= 10))
       ageLevel = levelOne.concat(
         levelTwo,
         levelThree,
@@ -1273,26 +1273,33 @@ const generateRec = async (nameTemp) => {
         ageLevel.push(item);
       }
     }
-    if (age == 12 || (age == 11 && month >= 10)) {
+    if (age >= 12 || (age == 11 && month >= 10)) {
       if (item.startsWith("6")) {
         ageLevel.push(item);
       }
     }
   });
   console.log("here 1");
+
   // console.log(`History: ${ageLevel}`);
+  console.log(latestAttempt);
   latestAttempt.forEach((attempt) => {
+    console.log("here 1.1");
+    console.log(attempt.level);
     if (
       !attempt.level.startsWith("cal") &&
       !attempt.level.startsWith("heu") &&
       recommend.length < 6
     ) {
+      console.log("here 1.2");
       if (
         attempt.award == "Try harder" &&
         !existingLevel.includes(attempt.level)
       ) {
+        console.log("here 1.3");
         if (attempt.mode == "Hardcore" || attempt.mode == "Normal") {
           // console.log("⏱️");
+          console.log("here 1.4");
           if (attempt.time >= 600) {
             let mode = ["Easy", "Normal", "Hardcore"];
             let index = mode.indexOf(attempt.mode);
@@ -1305,16 +1312,22 @@ const generateRec = async (nameTemp) => {
         // console.log(attempt);
       } else {
         //EASY MODE
+        console.log("here 1.5");
         if (!ageLevel.includes(attempt.level)) {
+          console.log("here 1.6");
           // console.log(ageLevel);
           // console.log("Not suppose to do " + attempt.level);
           return;
         }
+
         if (attempt.mode == "Easy" && !existingLevel.includes(attempt.level)) {
+          console.log("here 1.7");
           if (attempt.time <= 600 && attempt.mistake <= 5) {
+            console.log("here 1.8");
             // console.log("Easy to Normal");
             attempt.mode = "Normal";
           }
+          console.log("here 1.8");
           attempt.time = "";
           attempt.mistake = "";
           attempt.score = "";
@@ -1326,6 +1339,7 @@ const generateRec = async (nameTemp) => {
           attempt.mode == "Normal" &&
           !existingLevel.includes(attempt.level)
         ) {
+          console.log("here 1.9");
           if (attempt.time < 600) {
             // console.log("Normal to Hardcore");
             attempt.mode = "Hardcore";
@@ -1336,12 +1350,14 @@ const generateRec = async (nameTemp) => {
             attempt.score = "";
             attempt.award = "";
           } else if (attempt.time == 600) {
+            console.log("here 1.10");
             // console.log("Demoted from Normal to Easy");
             attempt.mode = "Easy";
             attempt.award = "";
             recommend.push(attempt);
             existingLevel.push(attempt.level);
           } else {
+            console.log("here 1.11");
             attempt.award = "";
             recommend.push(attempt);
             existingLevel.push(attempt.level);
@@ -1390,6 +1406,7 @@ const generateRec = async (nameTemp) => {
             }
           }
           if (!recommendObj.level) {
+            console.log("here 1.11");
             // console.log("UNDEFINED!");
             let index = 0;
             while (existingLevel.includes(ageLevel[index])) {

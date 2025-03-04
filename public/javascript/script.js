@@ -26231,12 +26231,12 @@ function genProblems() {
     }
     if (setting == 3) {
       return {
-        numOne: genNumbers(5) + 1,
-        numTwo: genNumbers(5) + 6,
-        numThree: genNumbers(5) + 1,
-        numFour: genNumbers(5) + 6,
-        numFive: genNumbers(5) + 1,
-        numSix: genNumbers(5) + 6,
+        numOne: genNumbers(3) + 1,
+        numTwo: genNumbers(3) + 4,
+        numThree: genNumbers(2) + 1,
+        numFour: genNumbers(2) + 3,
+        numFive: genNumbers(2) + 1,
+        numSix: genNumbers(2) + 3,
         varA: 0,
         varB: 0,
         varTotal: 0,
