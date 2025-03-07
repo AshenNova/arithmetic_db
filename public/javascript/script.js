@@ -12351,7 +12351,7 @@ function updateProblems() {
       const choiceFirst = genNumbers(3);
       if (choiceFirst == 0) {
         ctx.fillText(
-          `Point DF is ${displaySimpleFraction(pointDF, pointCF)} CF.`,
+          `Point DF is ${pointDF}/${pointCF} CF.`,
           20,
           20
         );
@@ -12369,7 +12369,7 @@ function updateProblems() {
       const choiceSecond = genNumbers(3);
       if (choiceSecond == 0) {
         ctx.fillText(
-          `Point BE is ${displaySimpleFraction(pointBE, pointCE)} CE.`,
+          `Point BE is ${pointBE}/${pointCE} CE.`,
           20,
           40
         );
