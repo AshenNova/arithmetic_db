@@ -17808,7 +17808,12 @@ How many items are there in each bag?
           console.log("Negative numbers");
           return updateCalc();
         }
+        if (p.answer < p.numLast) {
+          console.log("Start is smaller than end.");
+          return updateCalc();
+        }
       }
+
       displayProblem.innerHTML = `
       Person A took ${displaySimpleFraction(p.numeOne, p.denoOne)} ${
         p.situationOne == "+"

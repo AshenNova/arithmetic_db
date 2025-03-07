@@ -256,6 +256,7 @@ export function helpList(level) {
     "4.26",
     "5.01",
     "6.05",
+    "heuTwo",
     "heuThree",
     "heuFour",
     "heuFive",
@@ -715,9 +716,41 @@ export function helpMeFunc(level, state, setting) {
     helpMe.textContent = `Distance = Speed x Time`;
   }
 
+  //HEURISTICS TWO
+  if (level == "heuTwo") {
+    if (setting == 1) {
+      helpMe.style.fontSize = "1em";
+      const position = ["1st", "2nd", "3rd", "4th", "5th", "6th"];
+      const indexOfFirstPosition = position.indexOf(p.positionOne);
+      const indexOfSecondPosition = position.indexOf(p.positionTwo);
+      const indexOfThirdPosition = position.indexOf(p.positionThree);
+      const indexOfFourthPosition = position.indexOf(p.positionFour);
+      const intervals = indexOfSecondPosition - indexOfFirstPosition;
+      const intervalsTwo = indexOfFourthPosition - indexOfThirdPosition;
+      console.log(indexOfSecondPosition);
+      helpMe.innerHTML = `
+      Note: <p style="color: red">Position - Position = Intervals</p>
+       ${p.positionOne} ${" _____ ?".repeat(intervals - 1)} ____ ${
+        p.positionTwo
+      }</br>
+       From the above, we can see that there are ${intervals} intervals between the two positions.</br>
+       ${p.positionTwo} - ${p.positionOne} = ${intervals} intervals => ${
+        p.distance
+      } m</br>
+       1 interval => ${p.distance} / ${intervals} = ${
+        p.distance / intervals
+      } m.</br>
+      </br>
+       Hint:</br>
+       ${p.positionThree} ${" _____ ?".repeat(intervalsTwo - 1)} ____ ${
+        p.positionFour
+      }</br>
+       `;
+    }
+  }
   // HEURISTICS THREE
   if (level == "heuThree") {
-    if (p.rollz == 1) {
+    if (setting == 1) {
       helpMe.innerHTML = `
           1. Change one variable to another using difference. ( + or - )</p>
           + to change to the larger variable, - to change to the smaller variable.</p>
@@ -726,7 +759,7 @@ export function helpMeFunc(level, state, setting) {
           `;
     }
 
-    if (p.rollz == 2) {
+    if (setting == 2) {
       helpMe.innerHTML = `
           1. Let all be the other variable.<p>
           2. Find big difference. </p>
@@ -735,7 +768,7 @@ export function helpMeFunc(level, state, setting) {
           4. Big difference/small difference</p>
           `;
     }
-    if (p.rollz == 3) {
+    if (setting == 3) {
       helpMe.innerHTML = `
           Unit version.</p>
           Reminder: Start with quantity.</p>
@@ -748,7 +781,7 @@ export function helpMeFunc(level, state, setting) {
           `;
     }
 
-    if (p.rollz == 4) {
+    if (setting == 4) {
       helpMe.innerHTML = `
           Difference version.</p>
           Reminder: Start with quantity.</p>
@@ -759,7 +792,7 @@ export function helpMeFunc(level, state, setting) {
           4. Divide to find one variable.</p>
           `;
     }
-    if (p.rollz == 5) {
+    if (setting == 5) {
       helpMe.innerHTML = `
             1) Find the value of 1 groups.</p>
             2) Find the number of groups.</p>
@@ -779,7 +812,7 @@ export function helpMeFunc(level, state, setting) {
         helpMe.insertAdjacentHTML("beforeend", html);
       }
     }
-    if (p.rollz == 8) {
+    if (setting == 8) {
       if (p.options == "A") {
         helpMe.innerHTML = `
               1) Find the number of packets bought.</p>
