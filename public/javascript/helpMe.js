@@ -246,6 +246,7 @@ export function helpList(level) {
   const helpArr = [
     "1.01",
     "1.04",
+    "1.06",
     // "2.09",
     "3.04",
     "3.05",
@@ -271,7 +272,6 @@ export function helpMeFunc(level, state, setting) {
   document.querySelector("#help").classList.remove("hidden");
   const p = state.currentProblem;
   console.log(state);
-
   //  HELP!!!
   if (level == 1.01) {
     helpMe.style.lineHeight = "50%";
@@ -319,10 +319,10 @@ export function helpMeFunc(level, state, setting) {
     }
   }
 
-  if (level == 1.04) {
+  if (level == 1.04 || level == 1.06) {
     helpMe.innerHTML = `
     1 + 2 = 2 + 1 = 3</br>
-    C<sup>o</sup> ± D<sup>-</sup> =  C<sup>o</sup> ± D<sup>-</sup> = R<sup>f</sup>
+    c<sup>o</sup> ± d<sup>-</sup> =  c<sup>o</sup> ± d<sup>-</sup> = r<sup>f</sup>
     `;
   }
   if (level == 2.09) {
