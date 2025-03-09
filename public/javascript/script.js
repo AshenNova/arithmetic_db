@@ -231,6 +231,7 @@ const secondNum = document.querySelector(".secondNum");
 const workingAnswer = document.querySelector(".workingAnswer");
 const operator = document.querySelector(".operator");
 
+//FIRST CANVAS
 const firstCanvas = document.querySelector(".first-canvas");
 const canvasTextId = document.getElementById("canvasText");
 const canvas = document.getElementById("canvas1");
@@ -239,6 +240,11 @@ const mouse = {
   x: undefined,
   y: undefined,
 };
+//SECOND CANVAS
+const secondCanvas = document.querySelector(".second-canvas");
+const canvas2 = document.getElementById("canvas2");
+const ctx2 = canvas2.getContext("2d");
+const secondCanvasTextId = document.querySelector("#second-canvas-text");
 
 function findFactors(number) {
   let factors = [];
@@ -2522,7 +2528,7 @@ function updateProblems() {
       p.numOne = p.numOne + 1;
     }
     arr.push(p.numOne, p.numTwo, p.numThree);
-    displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`;
+    displayProblem.innerHTML = `Find the lowest common multiple of </br> ${p.numOne} , ${p.numTwo} , ${p.numThree}`;
   }
 
   if (level == 3.08) {
@@ -12350,11 +12356,7 @@ function updateProblems() {
       console.log(pointDF, pointCF);
       const choiceFirst = genNumbers(3);
       if (choiceFirst == 0) {
-        ctx.fillText(
-          `Point DF is ${pointDF}/${pointCF} CF.`,
-          20,
-          20
-        );
+        ctx.fillText(`Point DF is ${pointDF}/${pointCF} CF.`, 20, 20);
       } else if (choiceFirst == 1) {
         ctx.fillText(`Point DF is ${pointDF} : ${pointCF} to CF.`, 20, 20);
       } else {
@@ -12368,11 +12370,7 @@ function updateProblems() {
       console.log(pointBE, pointCE);
       const choiceSecond = genNumbers(3);
       if (choiceSecond == 0) {
-        ctx.fillText(
-          `Point BE is ${pointBE}/${pointCE} CE.`,
-          20,
-          40
-        );
+        ctx.fillText(`Point BE is ${pointBE}/${pointCE} CE.`, 20, 40);
       } else if (choiceSecond == 1) {
         ctx.fillText(`Point BE is ${pointBE} : ${pointCE} to CE.`, 20, 40);
       } else {
@@ -25000,7 +24998,11 @@ function handleSubmit(e) {
       console.log(accumulatedScore);
 
       summaryPush("✅");
+
+      //CLEAR BTOH CANVAS
       ctx.clearRect(0, 0, 1000, 1000);
+      ctx2.clearRect(0, 0, 1000, 1000);
+      secondCanvas.classList.add("hidden");
       if (mulLevel == "multiples") {
         multiplesArr.push(userInput.value);
         state.score = multiplesArr.length - 1;
@@ -30470,6 +30472,7 @@ function buttonLevelSetting() {
       break;
 
     case "Level 3.07":
+      displayProblem.style.fontSize = "1em";
       level = 3.07;
       scoreNeeded = 30;
 

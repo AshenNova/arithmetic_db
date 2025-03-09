@@ -245,6 +245,7 @@ function remainderConceptModel(
 export function helpList(level) {
   const helpArr = [
     "1.01",
+    "1.04",
     // "2.09",
     "3.04",
     "3.05",
@@ -316,6 +317,13 @@ export function helpMeFunc(level, state, setting) {
           `;
       helpMe.insertAdjacentHTML("afterbegin", html);
     }
+  }
+
+  if (level == 1.04) {
+    helpMe.innerHTML = `
+    1 + 2 = 2 + 1 = 3</br>
+    C<sup>o</sup> ± D<sup>-</sup> =  C<sup>o</sup> ± D<sup>-</sup> = R<sup>f</sup>
+    `;
   }
   if (level == 2.09) {
     if (state.mistake > 5) {
