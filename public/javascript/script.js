@@ -9658,9 +9658,11 @@ function updateProblems() {
 
       if ((p.identity == 0 || p.identity == 1) && p.secondSelection != 3) {
         displayProblem.innerHTML = `
-     ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${
-          p.denominator
-        } of the ${p.type[p.identity][2]} are ${
+     ${
+       p.firstSelection == 0
+         ? displaySimpleFraction(p.firstUnit, p.denominator)
+         : displaySimpleFraction(p.secondUnit, p.denominator)
+     } of the ${p.type[p.identity][2]} are ${
           p.type[p.identity][p.firstSelection]
         }.</br>
      There are ${p.value} ${p.secondSelection}.</br>
@@ -9671,9 +9673,11 @@ function updateProblems() {
         p.secondSelection != 3
       ) {
         displayProblem.innerHTML = `
-     ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${
-          p.denominator
-        } of the ${p.type[p.identity][2]} was ${
+     ${
+       p.firstSelection == 0
+         ? displaySimpleFraction(p.firstUnit, p.denominator)
+         : displaySimpleFraction(p.secondUnit, p.denominator)
+     } of the ${p.type[p.identity][2]} was ${
           p.type[p.identity][p.firstSelection]
         }.</br>
      ${
@@ -9693,9 +9697,11 @@ function updateProblems() {
       ) {
         console.log("here");
         displayProblem.innerHTML = `
-       ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${
-          p.denominator
-        } of the ${p.type[p.identity][2]} are ${
+       ${
+         p.firstSelection == 0
+           ? displaySimpleFraction(p.firstUnit, p.denominator)
+           : displaySimpleFraction(p.secondUnit, p.denominator)
+       } of the ${p.type[p.identity][2]} are ${
           p.type[p.identity][p.firstSelection]
         }.</br>
        There are ${p.value} ${p.firstUnit > p.secondUnit ? "more" : "less"} ${

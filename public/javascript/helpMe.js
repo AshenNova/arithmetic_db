@@ -255,6 +255,7 @@ export function helpList(level) {
     "4.02",
     "4.06",
     "4.11",
+    "4.13",
     "4.26",
     "5.01",
     "6.05",
@@ -321,8 +322,11 @@ export function helpMeFunc(level, state, setting) {
 
   if (level == 1.04 || level == 1.06) {
     helpMe.innerHTML = `
-    1 + 2 = 2 + 1 = 3</br>
-    c<sup>o</sup> ± d<sup>-</sup> =  c<sup>o</sup> ± d<sup>-</sup> = r<sup>f</sup>
+    1 + 2 = 3</br>
+    c<sup>o</sup> ± d<sup>-</sup> = r<sup>f</sup></br>
+    <hr>
+    3 = 2 + 1</br>
+    r<sup>f</sup> = c<sup>o</sup> ± d<sup>-</sup>
     `;
   }
   if (level == 2.09) {
@@ -410,6 +414,12 @@ export function helpMeFunc(level, state, setting) {
           3) And then the rest are 9s. (If there are digits left)</p>
           `;
     }
+  }
+  if (level == 4.13) {
+    helpMe.innerHTML = `
+    00 MM to 11 MM = am</br>
+    12 MM to 23 MM = pm
+    `;
   }
   if (level == 4.26) {
     // if (p.version == 0){
