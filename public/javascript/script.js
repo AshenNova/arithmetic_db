@@ -3394,12 +3394,13 @@ function updateProblems() {
           p.numTwo /= i;
         }
       }
+      p.value = p.numOne * p.numMulti;
       displayProblem.innerHTML = `
       <div class="frac">
       <span>${p.numOne}</span>
       <span class="symbol">/</span>
       <span class="bottom">${p.numTwo}</span>
-      </div> of a number is ${p.numOne * p.numMulti}.<br>
+      </div> of a number is ${p.value}.<br>
       What is the number?`;
     }
     if (setting == 2 || (setting == 9 && p.rollChoice == 2)) {
@@ -3417,13 +3418,13 @@ function updateProblems() {
         }
       }
 
-      let value = p.deno * p.numMulti;
+      p.value = p.deno * p.numMulti;
       displayProblem.innerHTML = `
       <div class="frac">
       <span>${p.nume}</span>
       <span class="symbol">/</span>
       <span class="bottom">${p.deno}</span>
-      </div> of ${value} is ?</br>
+      </div> of ${p.value} is ?</br>
       What is that value?
       `;
     }
@@ -6899,21 +6900,25 @@ function updateProblems() {
       p.objectTwoV = p.objectOneV;
       p.objectOneV = p.objectOneV * (genNumbers(5) + 2);
     }
-    let gender = ["girls", "boys"][genNumbers(2)];
+    p.gender = ["girls", "boys"][genNumbers(2)];
     if (p.choice == "A") {
       displayProblem.innerHTML = `
-      ${p.objectOneV} ${gender} shared ${p.objectTwoV} ${
+      ${p.objectOneV} ${p.gender} shared ${p.objectTwoV} ${
         p.unit
       } of something.</br>
-      How much ${p.unit} did each ${gender == "girls" ? "girl" : "boy"} receive?
+      How much ${p.unit} did each ${
+        p.gender == "girls" ? "girl" : "boy"
+      } receive?
       `;
     }
     if (p.choice == "B") {
       displayProblem.innerHTML = `
-      ${p.objectTwoV} ${p.unit} of something was shared among ${
-        p.objectOneV
-      } ${gender}.</br>
-      How much ${p.unit} did each ${gender == "girls" ? "girl" : "boy"} receive?
+      ${p.objectTwoV} ${p.unit} of something was shared among ${p.objectOneV} ${
+        p.gender
+      }.</br>
+      How much ${p.unit} did each ${
+        p.gender == "girls" ? "girl" : "boy"
+      } receive?
       `;
     }
   }
@@ -25888,6 +25893,7 @@ function genProblems() {
         numOne: genNumbers(8) + 1,
         numTwo: genNumbers(8) + 2,
         numMulti: genNumbers(8) + 2,
+        value: undefined,
       };
     }
     if (setting == 2 || (setting == 9 && roll == 2)) {
@@ -25896,6 +25902,7 @@ function genProblems() {
         nume: genNumbers(8) + 1,
         deno: genNumbers(8) + 2,
         numMulti: genNumbers(8) + 2,
+        value: undefined,
       };
     }
   }
@@ -26514,6 +26521,7 @@ function genProblems() {
       objectTwoV: undefined,
       choice: ["A", "B"][genNumbers(2)],
       choice2: ["B", "S"][genNumbers(2)],
+      gender: undefined,
     };
   }
 
@@ -30587,7 +30595,7 @@ function buttonLevelSetting() {
 
     case "Level 4.03":
       level = 4.03;
-      setting = prompt("1. Halfing\n2. Opposite\n\n9. All");
+      setting = prompt("1. Halfing\n2. Opposite\n\n9. All", 9);
       if (setting != 1 && setting != 2) setting = 9;
       scoreNeeded = 20;
       wholeNumberContainer.classList.add("hidden");

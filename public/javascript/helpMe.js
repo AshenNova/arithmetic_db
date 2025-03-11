@@ -1,5 +1,5 @@
 // import { Document } from "mongoose";
-import { commonDeno } from "./otherFunctions.js";
+import { commonDeno, drawHorizontalLine } from "./otherFunctions.js";
 import { displaySimpleFraction } from "./script.js";
 
 // NO IDEA WHY I COULD IMPORT THIS FROM "SCRIPT.JS"
@@ -59,6 +59,37 @@ function arrowHeadHorizontalLine(start, end, text, positionForText) {
     ctx2.fillText(text, (x1 + x2) / 2 - textLength * 4, (y1 + y2) / 2 - 10);
   } else if (positionForText == "bottom") {
     ctx2.fillText(text, (x1 + x2) / 2 - textLength * 4, (y1 + y2) / 2 + 15);
+  }
+}
+
+function arrowHeadVerticalLine(start, end, text, positionForText) {
+  const [x1, y1] = start;
+  const [x2, y2] = end;
+
+  //LINE
+  ctx2.beginPath();
+  ctx2.moveTo(x1, y1);
+  ctx2.lineTo(x2, y2);
+  ctx2.stroke();
+
+  //ARROWHEAD START
+  const adjust1 = 5;
+  ctx2.beginPath();
+  ctx2.moveTo(x1 - adjust1, y1 + adjust1);
+  ctx2.lineTo(x1, y1);
+  ctx2.lineTo(x1 + adjust1, y1 + adjust1);
+  ctx2.stroke();
+  //ARROWHEAD end
+  ctx2.beginPath();
+  ctx2.moveTo(x2 - adjust1, y2 - adjust1);
+  ctx2.lineTo(x2, y2);
+  ctx2.lineTo(x2 + adjust1, y2 - adjust1);
+  ctx2.stroke();
+
+  if (positionForText == "right") {
+    ctx2.fillText(text, x1 + 10, (y1 + y2) / 2);
+  } else if (positionForText == "left") {
+    ctx2.fillText(text, x1 - 10 - text.length * 3, (y1 + y2) / 2);
   }
 }
 function likeFractionModel(
@@ -242,6 +273,63 @@ function remainderConceptModel(
   );
 }
 
+function comparisonModelDifference(
+  position,
+  variableOne,
+  valueOne,
+  variableTwo,
+  valueTwo,
+  total,
+  displayTotal,
+  displayDifference
+) {
+  const [x, y] = position;
+  //Draw same
+  ctx2.font = "16px Arial";
+  ctx2.fillText(variableOne, x, y);
+  ctx2.fillText(variableTwo, x, y + 50);
+
+  // Same size
+  const adjustX = +25;
+  const adjustY = -20;
+  ctx2.beginPath();
+  ctx2.rect(x + adjustX, y + adjustY, 60, 30);
+  ctx2.rect(x + adjustX, y + adjustY + 50, 60, 30);
+  ctx2.stroke();
+
+  //difference
+  const difference = Math.abs(valueOne - valueTwo);
+  const top = [x + adjustX + 60, y + adjustY];
+  if (valueOne > valueTwo) {
+    console.log("Top");
+    ctx2.beginPath();
+    ctx2.rect(top[0], top[1], 120, 30);
+    ctx2.stroke();
+    if (displayDifference == "yes") {
+      ctx2.fillText(difference, 150, top[1] + 20);
+    } else {
+      ctx2.fillText("?", 150, top[1] + 20);
+    }
+  } else if (valueTwo > valueOne) {
+    console.log("Bottom");
+    ctx2.beginPath();
+    ctx2.rect(top[0], top[1] + 50, 120, 30);
+    ctx2.stroke();
+    if (displayDifference == "yes") {
+      ctx2.fillText(difference, 150, top[1] + 50 + 20);
+    } else {
+      ctx2.fillText("?", 150, top[1] + 50 + 20);
+    }
+  }
+  if (total) {
+    const [x1, y1] = [x + adjustX + 60 + 120 + 10, y + adjustY];
+    const [x2, y2] = [x + adjustX + 60 + 120 + 10, top[1] + 50 + 30];
+    if (displayTotal == "yes")
+      arrowHeadVerticalLine([x1, y1], [x1, y2], valueOne + valueTwo, "right");
+  }
+
+  return [x + adjustX, y + adjustY, x + adjustX, y + adjustY + 50];
+}
 export function helpList(level) {
   const helpArr = [
     "1.01",
@@ -253,13 +341,16 @@ export function helpList(level) {
     "3.05",
     "3.06",
     "4.02",
+    "4.05",
     "4.06",
     "4.11",
     "4.13",
     "4.26",
     "5.01",
+    "5.16",
     "6.05",
     "heuTwo",
+    "heuTwob",
     "heuThree",
     "heuFour",
     "heuFive",
@@ -379,6 +470,12 @@ export function helpMeFunc(level, state, setting) {
       helpMe.textContent = `1 ℓ  = 1000 mℓ`;
     }
   }
+  if (level == 3.19) {
+    helpMe.innerHTML = `
+    Area (Inside) = Length x Breadth
+    Perimeter (Outside) = 2 Length + 2 Breadth
+    `;
+  }
   if (level == 4.02) {
     let str = p.numOne.toString();
     const length = str.length;
@@ -413,6 +510,28 @@ export function helpMeFunc(level, state, setting) {
           4</p>
           3) And then the rest are 9s. (If there are digits left)</p>
           `;
+    }
+  }
+  if (level == 4.05) {
+    if (setting == 1 || p.rollChoice == 1) {
+      helpMe.innerHTML = `
+      ${displaySimpleFraction(p.numOne, p.numTwo)} -> ${p.value}</br>
+      ${
+        p.numOne != 1
+          ? ` ${displaySimpleFraction(1, p.numTwo)} -> ${p.value}/${
+              p.numOne
+            } = ____ </br>`
+          : ""
+      }
+      ${displaySimpleFraction(p.numTwo, p.numTwo)} -> ____ x ${p.numTwo} = _____
+      `;
+    }
+    if (setting == 2 || p.rollChoice == 2) {
+      helpMe.innerHTML = `
+      1 whole -> ${displaySimpleFraction(p.deno, p.deno)} -> ${p.value}</br>
+      ${displaySimpleFraction(1, p.deno)} -> ${p.value}/${p.deno} = ___ </br>
+      ${displaySimpleFraction(p.nume, p.deno)} -> ____ x ${p.nume} = _____
+      `;
     }
   }
   if (level == 4.13) {
@@ -730,6 +849,13 @@ export function helpMeFunc(level, state, setting) {
       );
     }
   }
+  if (level == 5.16) {
+    helpMe.innerHTML = `
+      ${p.objectOneV} ${p.gender} -> ${p.objectTwoV}</br>
+      1 ${p.gender == "girls" ? "girl" : "boy"} -> ${p.objectTwoV}/${
+      p.objectOneV
+    }`;
+  }
   if (level == 6.05) {
     helpMe.textContent = `Distance = Speed x Time`;
   }
@@ -766,15 +892,231 @@ export function helpMeFunc(level, state, setting) {
        `;
     }
   }
+
+  //HEUTWOB
+  if (level == "heuTwob") {
+    if (setting == 1) {
+      secondCanvasHelp();
+      secondCanvasTextId.innerHTML = `
+      3 reasons to draw comparison model.
+      <ul>
+        <li>Difference is given. ✓</li>
+        <li>Find the difference.</li>
+        <li>Unit sentence.</li>
+      </ul>
+      `;
+      const numberOne = p.numOne;
+      let numberTwo = undefined;
+      if (p.rollVar == 0) {
+        numberTwo = p.numOne - p.numTwo;
+      } else {
+        numberTwo = p.numOne + p.numTwo;
+      }
+      const [x1, y1, x2, y2] = comparisonModelDifference(
+        [20, 60],
+        "A",
+        numberOne,
+        "B",
+        numberTwo,
+        "yes",
+        "no"
+      );
+
+      //Question mark
+      if (p.rollAB != "A") {
+        if (numberOne > numberTwo) {
+          console.log("A1");
+          arrowHeadHorizontalLine(
+            [x1, y1 - 10],
+            [x1 + 60 + 120, y1 - 10],
+            "?",
+            "top"
+          );
+          arrowHeadHorizontalLine(
+            [x2, y2 + 30 + 10],
+            [x2 + 60, y2 + 30 + 10],
+            numberOne.toString(),
+            "bottom"
+          );
+        }
+        if (numberOne < numberTwo) {
+          console.log("A2");
+          arrowHeadHorizontalLine(
+            [x1, y1 - 10],
+            [x1 + 60, y1 - 10],
+            "?",
+            "top"
+          );
+          arrowHeadHorizontalLine(
+            [x2, y2 + 30 + 10],
+            [x2 + 60 + 120, y2 + 30 + 10],
+            numberTwo.toString(),
+            "bottom"
+          );
+        }
+      }
+
+      if (p.rollAB != "B") {
+        if (numberOne > numberTwo) {
+          console.log("B1");
+          arrowHeadHorizontalLine(
+            [x2, y2 + 30 + 10],
+            [x2 + 60, y2 + 30 + 10],
+            "?",
+            "bottom"
+          );
+          arrowHeadHorizontalLine(
+            [x1, y1 - 10],
+            [x1 + 60 + 120, y1 - 10],
+            numberOne.toString(),
+            "top"
+          );
+        }
+        if (numberOne < numberTwo) {
+          console.log("B2");
+          arrowHeadHorizontalLine(
+            [x2, y2 + 30 + 10],
+            [x2 + 60 + 120, y2 + 30 + 10],
+            "?",
+            "bottom"
+          );
+          arrowHeadHorizontalLine(
+            [x1, y1 - 10],
+            [x1 + 60, y1 - 10],
+            numberOne.toString(),
+            "top"
+          );
+        }
+      }
+    }
+
+    if (setting == 4) {
+      secondCanvasTextId.innerHTML = `
+      3 reasons to draw comparison model.
+      <ul>
+        <li>Difference is given.</li>
+        <li>Find the difference. ✓</li>
+        <li>Unit sentence.</li>
+      </ul>
+      `;
+      secondCanvasHelp();
+      if (p.rollChoice2 == "B") {
+        const [x1, y1, x2, y2] = comparisonModelDifference(
+          [20, 60],
+          p.objectOne,
+          p.numOne,
+          p.objectTwo,
+          p.numTwo,
+          p.numOne + p.numTwo,
+          "yes",
+          "no"
+        );
+        //NUMBER ONE IS GIVEN
+        if (p.rollChoice3 == 0) {
+          if (p.numOne > p.numTwo) {
+            console.log("A1");
+
+            //top if longer
+            arrowHeadHorizontalLine(
+              [x1, y1 - 10],
+              [x1 + 60 + 120, y1 - 10],
+              p.numOne.toString(),
+              "top"
+            );
+          } else {
+            //top is shorter
+            arrowHeadHorizontalLine(
+              [x1, y1 - 10],
+              [x2 + 60, y1 - 10],
+              p.numOne.toString(),
+              "top"
+            );
+          }
+          //NUMBER TWO IS GIVEN
+        } else {
+          if (p.numOne < p.numTwo) {
+            console.log("B1");
+            //bottom if longer
+            arrowHeadHorizontalLine(
+              [x2, y2 + +30 + 10],
+              [x2 + 60 + 120, y2 + 30 + 10],
+              p.numTwo.toString(),
+              "bottom"
+            );
+          } else {
+            //bottom if shorter
+            arrowHeadHorizontalLine(
+              [x2, y2 + 10 + 30],
+              [x2 + 60, y2 + 10 + 30],
+              p.numTwo.toString(),
+              "bottom"
+            );
+          }
+        }
+      }
+
+      if (p.rollChoice2 == "A") {
+        const [x1, y1, x2, y2] = comparisonModelDifference(
+          [20, 60],
+          p.objectOne,
+          p.numOne,
+          p.objectTwo,
+          p.numTwo,
+          p.numOne + p.numTwo,
+          "no",
+          "no"
+        );
+        if (p.numOne > p.numTwo) {
+          console.log("A1");
+          arrowHeadHorizontalLine(
+            [x1, y1 - 10],
+            [x1 + 60 + 120, y1 - 10],
+            p.numOne.toString(),
+            "top"
+          );
+          arrowHeadHorizontalLine(
+            [x2, y2 + 10 + 30],
+            [x2 + 60, y2 + 10 + 30],
+            p.numTwo.toString(),
+            "bottom"
+          );
+        }
+
+        if (p.numOne < p.numTwo) {
+          console.log("B1");
+          arrowHeadHorizontalLine(
+            [x1, y1 - 10],
+            [x2 + 60, y1 - 10],
+            p.numOne.toString(),
+            "top"
+          );
+          arrowHeadHorizontalLine(
+            [x2, y2 + +30 + 10],
+            [x2 + 60 + 120, y2 + 30 + 10],
+            p.numTwo.toString(),
+            "bottom"
+          );
+        }
+      }
+    }
+  }
   // HEURISTICS THREE
   if (level == "heuThree") {
     if (setting == 1) {
       helpMe.innerHTML = `
           1. Change one variable to another using difference. ( + or - )</p>
           + to change to the larger variable, - to change to the smaller variable.</p>
-          2. Divide by 2.</p>
-          Since there are now 2 of it.</p>
+          2. Divide by 2 (Since there are now 2 of it).
           `;
+      secondCanvasHelp();
+      comparisonModelDifference(
+        [20, 50],
+        p.objectOne,
+        p.numOne,
+        p.objectTwo,
+        p.numTwo,
+        p.numOne + p.numTwo
+      );
     }
 
     if (setting == 2) {
