@@ -918,8 +918,9 @@ export function helpMeFunc(level, state, setting) {
         numberOne,
         "B",
         numberTwo,
-        "yes",
-        "no"
+        numberOne + numberTwo,
+        "no",
+        "yes"
       );
 
       //Question mark
