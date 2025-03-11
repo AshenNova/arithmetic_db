@@ -15368,9 +15368,9 @@ How far is apart is Town A and Town B?
     if (setting == 2) {
       if (p.type == 1) {
         displayProblem.innerHTML = `
-        A has ${p.numOne}.</br>
-        B has ${p.numTwo}.</br>
-        What is the total of A and B?
+        ${p.objectOne} has ${p.numOne}.</br>
+        ${p.objectTwo} has ${p.numTwo}.</br>
+        What is the total of ${p.objectOne} and ${p.objectTwo}?
       `;
       }
       if (p.type == 2) {

@@ -330,6 +330,77 @@ function comparisonModelDifference(
 
   return [x + adjustX, y + adjustY, x + adjustX, y + adjustY + 50];
 }
+
+function straightLineModel(start, totalText, totalValue, parts) {
+  const [x1, y1] = start;
+  ctx2.beginPath();
+  ctx2.rect(x1, y1, 250, 30);
+  ctx2.stroke();
+
+  //Draw line for total
+  if (totalText == "?") {
+    arrowHeadHorizontalLine([x1, y1 - 10], [x1 + 250, y1 - 10], "?", "top");
+  } else {
+    arrowHeadHorizontalLine(
+      [x1, y1 - 10],
+      [x1 + 250, y1 - 10],
+      totalText.toString(),
+      "top"
+    );
+  }
+
+  let sum = 0;
+  let values = [];
+  let names = [];
+  parts.map((x, index) => {
+    if (index % 2 != 0) {
+      values.push(x);
+      sum += x;
+    } else {
+      names.push(x);
+    }
+  });
+  const rangeForModel = 250;
+  let cumulate = 0;
+  const coordinatesX = values.map((x) => {
+    console.log(x / sum);
+    const coordinate = (x / sum) * rangeForModel + cumulate;
+    cumulate += coordinate;
+    return coordinate + x1;
+  });
+  console.log(parts);
+  console.log(sum);
+  console.log(names);
+  console.log(coordinatesX);
+
+  //CUTTING THE MODEL
+  coordinatesX.forEach((a, index) => {
+    if (index != coordinatesX.length - 1) {
+      ctx2.beginPath();
+      ctx2.moveTo(a, y1 - 10);
+      ctx2.lineTo(a, y1 + 40);
+      ctx2.stroke();
+    }
+  });
+  coordinatesX.forEach((b, index) => {
+    // if (index != 0)
+    if (index == 0) {
+      arrowHeadHorizontalLine(
+        [x1, y1 + 30 + 10],
+        [b, y1 + 30 + 10],
+        names[index],
+        "bottom"
+      );
+    } else {
+      arrowHeadHorizontalLine(
+        [coordinatesX[index - 1], y1 + 30 + 10],
+        [b, y1 + 30 + 10],
+        names[index],
+        "bottom"
+      );
+    }
+  });
+}
 export function helpList(level) {
   const helpArr = [
     "1.01",
@@ -990,7 +1061,82 @@ export function helpMeFunc(level, state, setting) {
         }
       }
     }
-
+    if (setting == 2) {
+      secondCanvasHelp();
+      secondCanvasTextId.innerHTML = `
+      <strong>None</strong> of 3 reasons to draw comparison model is present.
+      <ul>
+        <li>Difference is given.</li>
+        <li>Find the difference.</li>
+        <li>Unit sentence.</li>
+      </ul>
+      Hence we draw a straight line model instead.
+      `;
+      if (p.type == 1) {
+        straightLineModel([20, 60], "?", p.numOne + p.numTwo, [
+          p.objectOne,
+          p.numOne,
+          p.objectTwo,
+          p.numTwo,
+        ]);
+      }
+      if (p.type == 2) {
+        straightLineModel([20, 60], "?", p.numOne + p.numTwo, [
+          "spent",
+          p.numOne,
+          "left",
+          p.numTwo,
+        ]);
+      }
+    }
+    if (setting == 3) {
+      secondCanvasHelp();
+      secondCanvasTextId.innerHTML = `
+      <strong>None</strong> of 3 reasons to draw comparison model is present.
+      <ul>
+        <li>Difference is given.</li>
+        <li>Find the difference.</li>
+        <li>Unit sentence.</li>
+      </ul>
+      Hence we draw a straight line model instead.
+      `;
+      if (p.type == 1) {
+        if (p.roll == 0) {
+          straightLineModel([20, 60], p.numTotal, p.numTotal, [
+            p.objectOne,
+            p.numOne,
+            "?",
+            p.numTwo,
+          ]);
+        }
+        if (p.rollChoice == 1) {
+          straightLineModel([20, 60], p.numTotal, p.numTotal, [
+            "?",
+            p.numOne,
+            p.objectTwo,
+            p.numTwo,
+          ]);
+        }
+      }
+      if (p.type == 2) {
+        if (p.rollChoice == 0) {
+          straightLineModel([20, 60], p.numTotal, p.numTotal, [
+            "spent",
+            p.numOne,
+            "?",
+            p.numTwo,
+          ]);
+        }
+        if (p.rollChoice == 1) {
+          straightLineModel([20, 60], p.numTotal, p.numTotal, [
+            "?",
+            p.numOne,
+            "left",
+            p.numTwo,
+          ]);
+        }
+      }
+    }
     if (setting == 4) {
       secondCanvasTextId.innerHTML = `
       3 reasons to draw comparison model.
