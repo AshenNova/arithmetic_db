@@ -16003,36 +16003,37 @@ How many items are there in each bag?
       if (p.valueA < p.valueB) {
         diffAB = "less";
       }
-      let lineOne = undefined;
+
       if (p.compA == "unit") {
-        lineOne = `A is ${p.unitA} times of B.`;
+        p.lineOne = `A is ${p.unitA} times of B.`;
         p.arrUnit.push(p.unitA);
         p.arrUnit.push(1);
       }
       if (p.compA == "comp") {
-        lineOne = `A is ${diffValueAB} ${diffAB} than B.`;
+        p.lineOne = `A is ${diffValueAB} ${diffAB} than B.`;
         p.arrUnit.push("comp");
         p.arrUnit.push("comp");
       }
       // 2. SECOND SENTENCE
       let diffBC = "more";
+      // console.log(p.valueB, p.valueC);
       let diffValueBC = Math.abs(p.valueB - p.valueC);
       if (diffValueBC == 0) return updateCalc();
       if (p.valueB < p.valueC) {
         diffBC = "less";
       }
-      let lineTwo = undefined;
+
       if (p.compB == "unit") {
-        lineTwo = `B is ${p.unitB} times of C.`;
+        p.lineTwo = `B is ${p.unitB} times of C.`;
         p.arrUnit.push(p.unitB);
         p.arrUnit.push(1);
       }
       if (p.compB == "comp") {
-        lineTwo = `B is ${diffValueBC} ${diffBC} than C.`;
+        p.lineTwo = `B is ${diffValueBC} ${diffBC} than C.`;
         p.arrUnit.push("comp");
         p.arrUnit.push("comp");
       }
-      let total = p.valueA + p.valueB + p.valueC;
+      p.total = p.valueA + p.valueB + p.valueC;
       if (p.compA == "unit" && p.compB == "unit") {
         const commonNum = commonDeno(p.arrUnit[1], p.arrUnit[2]);
         p.arrUnit.push((p.arrUnit[0] * commonNum) / p.arrUnit[1]);
@@ -16040,7 +16041,7 @@ How many items are there in each bag?
         p.arrUnit.push((p.arrUnit[3] * commonNum) / p.arrUnit[2]);
         const totalUnit = p.arrUnit[4] + p.arrUnit[5] + p.arrUnit[6];
         if (totalUnit > 10) return updateCalc();
-        total = totalUnit * p.oneUnit;
+        p.total = totalUnit * p.oneUnit;
       }
       if (p.compA == "comp" && p.compB == "unit") {
         p.valueC = p.valueB / p.unitB;
@@ -16053,8 +16054,8 @@ How many items are there in each bag?
         } else {
           diffAB = "more";
         }
-        lineOne = `A is ${diffValueAB} ${diffAB} than B.`;
-        total = p.valueA + p.valueB + p.valueC;
+        p.lineOne = `A is ${diffValueAB} ${diffAB} than B.`;
+        p.total = p.valueA + p.valueB + p.valueC;
       }
       if (p.compA == "unit" && p.compB == "comp") {
         p.valueB = p.valueA / p.unitA;
@@ -16067,19 +16068,19 @@ How many items are there in each bag?
         } else {
           diffBC = "more";
         }
-        lineTwo = `B is ${diffValueBC} ${diffBC} than C.`;
-        total = p.valueA + p.valueB + p.valueC;
+        p.lineTwo = `B is ${diffValueBC} ${diffBC} than C.`;
+        p.total = p.valueA + p.valueB + p.valueC;
       }
       console.log(p.arrUnit);
       //3. THIRD SENTENCE (TOTAL)
 
-      const lineThree = `Their total is ${total}.`;
+      const lineThree = `Their total is ${p.total}.`;
       //4. FOURTH SENTENCE (QUESTIONS)
       const lineFour = `Find the value of ${p.find}.`;
       // Repeated identity
       displayProblem.innerHTML = `
-      ${lineOne}</p>
-      ${lineTwo}</p>
+      ${p.lineOne}</p>
+      ${p.lineTwo}</p>
       ${lineThree}</p>
       ${lineFour}`;
     }
@@ -24986,6 +24987,7 @@ function handleSubmit(e) {
       //HIDE HELP
       document.querySelector(".help-btn").classList.add("hidden");
       document.querySelector("#help").classList.add("hidden");
+
       //RESTART QUESTION TIME
       clearInterval(questionTime);
       questionTimer();
@@ -25104,6 +25106,7 @@ function handleSubmit(e) {
       document
         .querySelector(".help-btn")
         .addEventListener("click", function () {
+          helpMe.innerHTML = "";
           console.log("Seeking help");
           helpMeFunc(level, state, setting);
         });
@@ -29042,11 +29045,14 @@ function genProblems() {
         valueA: genNumbers(20) + 10,
         unitB: genNumbers(3) + 2,
         valueB: genNumbers(20) + 10,
-        // unitC: genNumbers(3) + 2,
+        unitC: genNumbers(3) + 2,
         valueC: genNumbers(20) + 10,
         find: ["A", "B", "C"][genNumbers(3)],
         arrUnit: [],
         oneUnit: genNumbers(9) + 2,
+        lineOne: undefined,
+        lineTwo: undefined,
+        total: undefined,
       };
     }
 

@@ -1,6 +1,6 @@
 // import { Document } from "mongoose";
 import { commonDeno, drawHorizontalLine } from "./otherFunctions.js";
-import { displaySimpleFraction } from "./script.js";
+import { displaySimpleFraction, genNumbers } from "./script.js";
 
 // NO IDEA WHY I COULD IMPORT THIS FROM "SCRIPT.JS"
 // function displaySimpleFraction(numerator, denominator) {
@@ -51,14 +51,22 @@ function arrowHeadHorizontalLine(start, end, text, positionForText) {
   ctx2.lineTo(x2 - adjust1, y2 + adjust1);
   ctx2.stroke();
 
-  const textLength = text.length;
+  const textLength = text.toString().length;
   console.log(`The length of the text is :${textLength}`);
   ctx2.font = "16px Arial";
   ctx2.fillStyle = "black";
   if (positionForText == "top") {
-    ctx2.fillText(text, (x1 + x2) / 2 - textLength * 4, (y1 + y2) / 2 - 10);
+    ctx2.fillText(
+      text.toString(),
+      (x1 + x2) / 2 - textLength * 4,
+      (y1 + y2) / 2 - 10
+    );
   } else if (positionForText == "bottom") {
-    ctx2.fillText(text, (x1 + x2) / 2 - textLength * 4, (y1 + y2) / 2 + 15);
+    ctx2.fillText(
+      text.toString(),
+      (x1 + x2) / 2 - textLength * 4,
+      (y1 + y2) / 2 + 15
+    );
   }
 }
 
@@ -330,7 +338,351 @@ function comparisonModelDifference(
 
   return [x + adjustX, y + adjustY, x + adjustX, y + adjustY + 50];
 }
+function unitSentence(start, units, total) {
+  ctx2.font = "16px arial";
+  const [x1, y1] = start;
+  let names = [];
+  let quantity = [];
+  let unitSize = [60, 30];
+  let x = 0;
+  let y = 0;
+  let startPoints = [];
+  units.forEach((x, index) => {
+    if (index % 2 == 0) {
+      names.push(x);
+    } else {
+      quantity.push(x);
+    }
+  });
 
+  names.forEach((n, index) => {
+    if (units.length == 6) {
+      ctx2.strokeStyle = "red";
+    } else {
+      ctx2.strokeStyle = "black";
+    }
+    //Fill in variable name
+    ctx2.fillText(n, x1, y1 + index * 40);
+    //Draw Units
+    let times = quantity[index];
+    for (let q = 0; q < times; q++) {
+      x = x1 + 40 + unitSize[0] * q;
+      y = y1 - 20 + 40 * index;
+
+      ctx2.beginPath();
+      ctx2.rect(x, y, unitSize[0], unitSize[1]);
+      ctx2.stroke();
+      if (q == 0) {
+        // console.log(x, y);
+        startPoints.push([x, y]);
+      }
+    }
+
+    if (units.length == 6) {
+      ctx2.strokeStyle = "black";
+      arrowHeadVerticalLine(
+        [x1 + 40 + quantity[0] * unitSize[0] + 10, startPoints[0][1]],
+        [x1 + 40 + quantity[0] * unitSize[0] + 10, y1 - 20 + 30 * 3 + 10 * 2],
+        total,
+        "right"
+      );
+    } else {
+      ctx2.strokeStyle = "black";
+      arrowHeadVerticalLine(
+        [x1 + 40 + quantity[0] * unitSize[0] + 10, startPoints[0][1]],
+        [x1 + 40 + quantity[0] * unitSize[0] + 10, y1 - 20 + 30 * 2 + 10 * 1],
+        total,
+        "right"
+      );
+    }
+  });
+  console.log(startPoints);
+  if (units.length == 6) {
+    //OVERLAY
+    ctx2.strokeStyle = "black";
+    const lengthOfBigUnit = unitSize[0] * quantity[1];
+    //Top
+    const repeat = quantity[0] / quantity[1];
+    console.log(repeat);
+    for (let q = 0; q < repeat; q++) {
+      ctx2.beginPath();
+      ctx2.rect(
+        startPoints[0][0] + q * lengthOfBigUnit,
+        startPoints[0][1],
+        lengthOfBigUnit,
+        30
+      );
+      ctx2.stroke();
+    }
+    //Middle
+    ctx2.beginPath();
+    ctx2.rect(startPoints[1][0], startPoints[1][1], lengthOfBigUnit, 30);
+    ctx2.stroke();
+  }
+}
+function unitSentenceWithDifference(
+  start,
+  units,
+  first,
+  comparison,
+  total,
+  variableName,
+  comparedAgainst
+) {
+  ctx2.font = "16px arial";
+  const [x1, y1] = start;
+  let names = [];
+  let quantity = [];
+  let unitSize = [60, 30];
+  let x = 0;
+  let y = 0;
+  let startPoints = [];
+  units.forEach((x, index) => {
+    if (index % 2 == 0) {
+      names.push(x);
+    } else {
+      quantity.push(x);
+    }
+  });
+
+  names.forEach((n, index) => {
+    ctx2.strokeStyle = "black";
+
+    //Fill in variable name
+    ctx2.fillText(n, x1, y1 + index * 40);
+    //Draw Units
+    let times = quantity[index];
+    for (let q = 0; q < times; q++) {
+      x = x1 + 40 + unitSize[0] * q;
+      y = y1 - 20 + 40 * index;
+
+      ctx2.beginPath();
+      ctx2.rect(x, y, unitSize[0], unitSize[1]);
+      ctx2.stroke();
+      if (q == 0) {
+        // console.log(x, y);
+        startPoints.push([x, y]);
+      }
+    }
+  });
+
+  // DRAW COMPARISON STATEMENT
+  const XC = 20 + 40;
+  const YC = 50 - 20 + 40 * 2;
+  //Naming
+  ctx2.fillText(variableName, 20, 50 + 2 * 40);
+  // B - C ( Meaning C is larger)
+  let difference = comparison - first;
+  console.log(difference, first, comparison);
+  let C = 25;
+  if (difference < 0) {
+    //DRAW C THE SAME SIZE FIRST
+    console.log("COMPARISON IS LARGER");
+    for (let q = 0; q < quantity[comparedAgainst]; q++) {
+      ctx2.beginPath();
+      ctx2.rect(XC + q * 60, YC, 60, 30);
+      ctx2.stroke();
+    }
+
+    //THEN DRAW THE EXTRA
+    ctx2.beginPath();
+    ctx2.rect(XC + 60 * quantity[comparedAgainst], YC, C, 30);
+    ctx2.stroke();
+    ctx2.fillText(
+      Math.abs(difference),
+      XC + 60 * quantity[comparedAgainst] + 5,
+      YC + 20
+    );
+    arrowHeadVerticalLine(
+      [x1 + 40 + 60 * quantity[0] + 40, startPoints[0][1]],
+      [x1 + 40 + 60 * quantity[0] + 40, y1 - 20 + 30 * 3 + 10 * 2],
+      total,
+      "right"
+    );
+  } else {
+    //DRAW C SMALLER THAN B
+    console.log("COMPARISON IS SMALLER");
+    ctx2.beginPath();
+    ctx2.rect(XC, YC, 60 * quantity[comparedAgainst] - C, 30);
+    ctx2.stroke();
+    // ctx2.fillText(Math.abs(difference), XC + 60 + 5, YC + 20);
+    arrowHeadHorizontalLine(
+      [XC + 60 * quantity[comparedAgainst] - C, YC],
+      [XC + 60 * quantity[comparedAgainst], YC],
+      difference,
+      "bottom"
+    );
+    arrowHeadVerticalLine(
+      [x1 + 40 + 60 * quantity[0] + 10, startPoints[0][1]],
+      [x1 + 40 + 60 * quantity[0] + 10, y1 - 20 + 30 * 3 + 10 * 2],
+      total,
+      "right"
+    );
+  }
+}
+function doubleDifference(start, variables, total) {
+  const [x1, y1] = start;
+  let names = [];
+  let values = [];
+  ctx2.font = "16px arial";
+  variables.forEach((x, index) => {
+    if (index % 2 == 0) {
+      names.push(x);
+    } else {
+      values.push(x);
+    }
+  });
+  console.log(names, values);
+  names.forEach((n, index) => {
+    ctx2.fillText(n, x1, y1 + 40 * index);
+  });
+  //DRAW FIRST 2 VARIABLES
+  const A = values[0];
+  const B = values[1];
+  if (A > B) {
+    const diff = B - A;
+    //A is larger
+    ctx2.beginPath();
+    ctx2.rect(x1 + 40, y1 - 20, 60, 30);
+    ctx2.rect(x1 + 40 + 60, y1 - 20, 120, 30);
+    ctx2.stroke();
+    ctx2.fillText(Math.abs(diff), x1 + 40 + 60 + 30, y1 - 20 + 20);
+    //B
+    ctx2.beginPath();
+    ctx2.rect(x1 + 40, y1 - 20 + 40, 60, 30);
+    ctx2.stroke();
+    //C
+    const C = values[2];
+    const diff2 = C - B;
+    // if C is larger than B.
+    if (Math.abs(diff2) == Math.abs(diff)) {
+      //SAME DIFF
+      console.log("same diff");
+      ctx2.beginPath();
+      ctx2.rect(x1 + 40, y1 - 20 + 40 * 2, 60, 30);
+      ctx2.rect(x1 + 40 + 60, y1 - 20 + 40 * 2, 120, 30);
+      ctx2.stroke();
+      ctx2.fillText(
+        Math.abs(diff2).toString(),
+        x1 + 40 + 60 + 20,
+        y1 - 20 + 40 * 2 + 20
+      );
+    } else if (diff2 > 0) {
+      console.log("C is larger than B.");
+      //HOW MUCH LARGER?
+      if (Math.abs(diff2) > Math.abs(diff)) {
+        ctx2.beginPath();
+        ctx2.rect(x1 + 40, y1 - 20 + 40 * 2, 60, 30);
+        ctx2.rect(x1 + 40 + 60, y1 - 20 + 40 * 2, 140, 30);
+        ctx2.stroke();
+        ctx2.fillText(
+          Math.abs(diff2),
+          x1 + 40 + 60 + 10,
+          y1 - 20 + 40 * 2 + 20
+        );
+      } else {
+        ctx2.beginPath();
+        ctx2.rect(x1 + 40, y1 - 20 + 40 * 2, 60, 30);
+        ctx2.rect(x1 + 40 + 60, y1 - 20 + 40 * 2, 45, 30);
+        ctx2.stroke();
+        ctx2.fillText(
+          Math.abs(diff2),
+          x1 + 40 + 60 + 10,
+          y1 - 20 + 40 * 2 + 20
+        );
+      }
+    } else {
+      //if C is smaller than B.
+      console.log("C is smaller than B.");
+      ctx2.beginPath();
+      ctx2.rect(x1 + 40, y1 - 20 + 40 * 2, 25, 30);
+      ctx2.stroke();
+      arrowHeadHorizontalLine(
+        [x1 + 40 + 25, y1 - 20 + 40 * 2],
+        [x1 + 40 + 60, y1 - 20 + 40 * 2],
+        Math.abs(diff2),
+        "bottom"
+      );
+    }
+    arrowHeadVerticalLine(
+      [x1 + 40 + 60 + 150 + 10, y1 - 20],
+      [x1 + 40 + 60 + 150 + 10, y1 - 20 + 40 * 2 + 30],
+      total,
+      "right"
+    );
+  } else {
+    //A is smaller
+    const diff = B - A;
+    ctx2.beginPath();
+    ctx2.rect(x1 + 40, y1 - 20, 60, 30);
+    // ctx2.rect(x1 + 40 + 60, y1 - 20, 25, 30);
+    ctx2.stroke();
+    //B is larger
+    ctx2.beginPath();
+    ctx2.rect(x1 + 40, y1 - 20 + 40, 60, 30);
+    ctx2.rect(x1 + 40 + 60, y1 - 20 + 40, 120, 30);
+    ctx2.stroke();
+    ctx2.fillText(Math.abs(diff), x1 + 40 + 60 + 30, y1 - 20 + 40 + 20);
+    //C
+    const C = values[2];
+    const diff2 = C - B;
+    // C is larger than B. B also larger than C.
+    if (diff2 > 0) {
+      // if (Math.abs(diff2) < Math.abs(diff)) {
+      ctx2.beginPath();
+      ctx2.rect(x1 + 40, y1 - 20 + 40 * 2, 60, 30);
+      ctx2.rect(x1 + 40 + 60, y1 - 20 + 40 * 2, 120, 30);
+      ctx2.rect(x1 + 40 + 60 + 120, y1 - 20 + 40 * 2, 25, 30);
+      ctx2.stroke();
+      ctx2.fillText(
+        Math.abs(diff2),
+        x1 + 40 + 60 + 120 + 10,
+        y1 - 20 + 40 * 2 + 20
+      );
+      // }
+    } else if (diff2 < 0) {
+      // C is smaller than B.
+      if (Math.abs(diff) == Math.abs(diff2)) {
+        ctx2.beginPath();
+        ctx2.rect(x1 + 40, y1 - 20 + 40 * 2, 60, 30);
+        ctx2.stroke();
+        // arrowHeadHorizontalLine(
+        //   [x1 + 40 + 60, y1 - 20 + 40 * 2],
+        //   [x1 + 40 + 60 + 120, y1 - 20 + 40 * 2],
+        //   Math.abs(diff2),
+        //   "bottom"
+        // );
+      } else if (Math.abs(diff2) > Math.abs(diff)) {
+        ctx2.beginPath();
+        ctx2.rect(x1 + 40, y1 - 20 + 40 * 2, 35, 30);
+        ctx2.stroke();
+        arrowHeadHorizontalLine(
+          [x1 + 40 + 35, y1 - 20 + 40 * 2],
+          [x1 + 40 + 60 + 120, y1 - 20 + 40 * 2],
+          Math.abs(diff2),
+          "bottom"
+        );
+      } else {
+        //C is larger than B.
+        ctx2.beginPath();
+        ctx2.rect(x1 + 40, y1 - 20 + 40 * 2, 60 + 25, 30);
+        ctx2.stroke();
+        arrowHeadHorizontalLine(
+          [x1 + 40 + 60 + 25, y1 - 20 + 40 * 2],
+          [x1 + 40 + 60 + 120, y1 - 20 + 40 * 2],
+          Math.abs(diff2),
+          "bottom"
+        );
+      }
+    }
+    arrowHeadVerticalLine(
+      [x1 + 40 + 60 + 150 + 10, y1 - 20],
+      [x1 + 40 + 60 + 150 + 10, y1 - 20 + 40 * 2 + 30],
+      total,
+      "right"
+    );
+  }
+}
 function straightLineModel(start, totalText, totalValue, parts) {
   const [x1, y1] = start;
   ctx2.beginPath();
@@ -411,6 +763,7 @@ export function helpList(level) {
     "3.05",
     "3.05",
     "3.06",
+    "3.19",
     "4.02",
     "4.05",
     "4.06",
@@ -423,6 +776,7 @@ export function helpList(level) {
     "heuTwo",
     "heuTwob",
     "heuThree",
+    "heuThreeb",
     "heuFour",
     "heuFive",
   ];
@@ -1338,7 +1692,93 @@ export function helpMeFunc(level, state, setting) {
       }
     }
   }
+  if (level == "heuThreeb") {
+    if (setting == 1) {
+      secondCanvasHelp();
+      if (p.compA == "unit" && p.compB == "unit") {
+        secondCanvasTextId.innerHTML = `
+        Since both clues are unit sentences.</br>
+        We will start with the one that comes first.</br>
+        <i>${p.lineOne}</i>.</br>
+        Followed by:</br>
+        <i>${p.lineTwo}</i></br>
+        Since B has already been drawn. <strong>DO NOT</strong> make it longer or shorter.
+        Just cut it into the stated number of pieces and then do the same for A.
+        `;
+        let C = 1;
+        let B = 1 * p.unitB;
+        let A = B * p.unitA;
+        unitSentence([20, 50], ["A", A, "B", B, "C", C], p.total);
+      }
+      if (p.compA == "unit" && p.compB == "comp") {
+        let unitLine = p.lineOne;
+        let diffLine = p.lineTwo;
+        if (!p.lineOne.includes("times")) {
+          unitLine = p.lineTwo;
+          diffLine = p.lineOne;
+        }
+        secondCanvasTextId.innerHTML = `
+        Since there are both difference and unit sentence.</br>
+        We will start with the unit sentence first.</br>
+        <i>${unitLine}</i>.</br>
+        Followed by:</br>
+        <i>${diffLine}</i></br>
+        Since B has already been drawn. <strong>DO NOT</strong> make it longer or shorter.
+        Just draw C ${diffLine.includes("more") ? "longer" : "shorter"} than B.
+        `;
 
+        let B = 1;
+        let A = B * p.unitA;
+        // unitSentence([20, 50], ["A", A, "B", B], p.total);
+        unitSentenceWithDifference(
+          [20, 50],
+          ["A", A, "B", B],
+          p.valueC,
+          p.valueB,
+          p.total,
+          "C",
+          1
+        );
+      }
+      if (p.compA == "comp" && p.compB == "unit") {
+        let unitLine = p.lineOne;
+        let diffLine = p.lineTwo;
+        if (!p.lineOne.includes("times")) {
+          unitLine = p.lineTwo;
+          diffLine = p.lineOne;
+        }
+        secondCanvasTextId.innerHTML = `
+        Since there are both difference and unit sentence.</br>
+        We will start with the unit sentence first.</br>
+        <i>${unitLine}</i>.</br>
+        Followed by:</br>
+        <i>${diffLine}</i></br>
+        Since B has already been drawn. <strong>DO NOT</strong> make it longer or shorter.
+        Just draw A ${diffLine.includes("more") ? "longer" : "shorter"} than B.
+        `;
+
+        let C = 1;
+        let B = C * p.unitB;
+        // unitSentence([20, 50], ["A", A, "B", B], p.total);
+        unitSentenceWithDifference(
+          [20, 50],
+          ["B", B, "C", C],
+          p.valueA,
+          p.valueB,
+          p.total,
+          "A",
+          0
+        );
+      }
+      if (p.compA == "comp" && p.compB == "comp") {
+        doubleDifference(
+          [20, 50],
+          ["A", p.valueA, "B", p.valueB, "C", p.valueC],
+          p.total
+        );
+      }
+    }
+  }
   // HEURISTICS FOUR
   if (level == "heuFour") {
     if (p.rollz == 1 || p.rollz == 2) {
