@@ -1724,7 +1724,7 @@ export function helpMeFunc(level, state, setting) {
         Followed by:</br>
         <i>${diffLine}</i></br>
         Since B has already been drawn. <strong>DO NOT</strong> make it longer or shorter.
-        Just draw C ${diffLine.includes("more") ? "longer" : "shorter"} than B.
+        Just draw C ${diffLine.includes("less") ? "longer" : "shorter"} than B.
         `;
 
         let B = 1;
