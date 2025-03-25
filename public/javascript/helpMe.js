@@ -758,6 +758,7 @@ export function helpList(level) {
     "1.01",
     "1.04",
     "1.06",
+    "1.07",
     // "2.09",
     "3.04",
     "3.05",
@@ -843,6 +844,21 @@ export function helpMeFunc(level, state, setting) {
     <hr>
     3 = 2 + 1</br>
     r<sup>f</sup> = c<sup>o</sup> ± d<sup>-</sup>
+    `;
+  }
+  //MULTIPLICATION IN SETS
+  if (level == 1.07) {
+    helpMe.style.fontSize = "1em";
+    helpMe.style.textAlign = "left";
+    helpMe.innerHTML = `
+    Observe that the question is in sets of ${p.numTwo}.</br>
+    <ul>
+      <li>Ignore ${p.numTwo}.</li>
+      <li>Reconstruct the question.</li>
+      <li>Identify the identity (Comparison , difference, result).</li>
+    </ul>
+    ${p.numThree == 1 ? `Sets by itself is 1 set.</br>` : ""}
+    Attempt level 1.04 if you are unable to understand.</br>
     `;
   }
   if (level == 2.09) {
@@ -1781,7 +1797,32 @@ export function helpMeFunc(level, state, setting) {
   }
   // HEURISTICS FOUR
   if (level == "heuFour") {
-    if (p.rollz == 1 || p.rollz == 2) {
+    if (setting == 1) {
+      let groupOneArr = [];
+      for (let x = p.leftOne; x < p.max; x += p.groupOne) {
+        if (x > p.min) groupOneArr.push(x);
+      }
+      if (groupOneArr[0] - p.groupOne != 0)
+        groupOneArr.unshift(groupOneArr[0] - p.groupOne);
+      let groupTwoArr = [];
+      for (let x = p.leftTwo; x < p.max; x += p.groupTwo) {
+        if (x > p.min) groupTwoArr.push(x);
+      }
+      if (groupTwoArr[0] - p.groupTwo != 0)
+        groupTwoArr.unshift(groupTwoArr[0] - p.groupTwo);
+      helpMe.innerHTML = `
+      Since the number of packs can change; we know this is systematic listing. Not Excess and shortage. </br>
+      <p>
+      List both scenarios as close as possible to the range but stop one set before it. </br>
+
+      x${p.groupOne} ${p.leftOne != 0 ? `+${p.leftOne}` : ""}</br>
+      ${groupOneArr.join(", ")}</br>
+
+      x${p.groupTwo} ${p.leftTwo != 0 ? `+${p.leftTwo}` : ""}</br>
+      ${groupTwoArr.join(", ")}</br>
+      `;
+    }
+    if (setting == 2 || setting == 3) {
       helpMe.innerHTML = `
             excess & excess = -</p>
             short & short = -</p>
@@ -1789,10 +1830,10 @@ export function helpMeFunc(level, state, setting) {
             1. Find big difference.</p>
             2. Find small difference.</p>
             3. Big difference / small difference = Groups </p> 
-            Maybe 4. Find ${p.rollz == 1 ? `Person ${p.objectOne}` : "sweets"}.
+            Maybe 4. Find ${setting == 1 ? `Person ${p.objectOne}` : "sweets"}.
             `;
     }
-    if (p.rollz == 3) {
+    if (setting == 4) {
       helpMe.innerHTML = `
             1. Find the number of workers that turned up.</p>
             2. Find the total amount of extra work.</p>
@@ -1800,7 +1841,7 @@ export function helpMeFunc(level, state, setting) {
             Maybe 4. Find the total.</p>
             `;
     }
-    if (p.rollz == 4) {
+    if (setting == 5) {
       helpMe.innerHTML = `
             1. Subtraction the larger equation with the smaller equation.</p>
             ${p.objectOne} + 1 unit = ${p.groupOne}</p>
@@ -1815,7 +1856,7 @@ export function helpMeFunc(level, state, setting) {
             4. Find ${p.objectOne} using the first equation.
             `;
     }
-    if (p.rollz == 5) {
+    if (p.rollz == 6) {
       helpMe.innerHTML = `
             1. Find the value of ${p.objectOneUnit} ${p.objectOne}.</p>
             eg. Quantity x value</p>
@@ -1864,7 +1905,7 @@ export function helpMeFunc(level, state, setting) {
         helpMe.insertAdjacentHTML("beforeend", html);
       }
     }
-    if (p.rollz == 6) {
+    if (p.rollz == 7) {
       let quotient = Math.floor(p.total / (p.objectTwoQ + 1));
       let remainder = p.total % (p.objectTwoQ + 1);
       if (remainder == 0) {
