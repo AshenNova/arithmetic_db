@@ -1822,16 +1822,102 @@ export function helpMeFunc(level, state, setting) {
       ${groupTwoArr.join(", ")}</br>
       `;
     }
-    if (setting == 2 || setting == 3) {
+    if (setting == 2) {
+      secondCanvasHelp();
+      secondCanvasTextId.innerHTML = `
+           If <strong>Excess</strong>: Draw on the left (underspent)</br>
+           If <strong>Shortage</strong>: Draw on the right (overspent)</br>
+           <hr>
+      `;
+      const width = canvas2.width;
+      // console.log(length, width);
+      // ctx2.translate(width / 2, 200);
+      ctx2.font = "1em arial";
+      ctx2.lineWidth = 3;
+      ctx2.beginPath();
+      ctx2.moveTo(width * 0.1, 100);
+      ctx2.lineTo(width * 0.9, 100);
+      ctx2.stroke();
+
+      ctx2.translate(width / 2, 100);
+      ctx2.beginPath();
+      ctx2.moveTo(0, 40);
+      ctx2.lineTo(0, -40);
+      ctx2.stroke();
+
+      ctx2.lineWidth = 1;
+      let multi = 2;
+      if (Math.abs(p.objectOneS) < 50 || Math.abs(p.objectTwoS) < 50) multi = 3;
+      if (Math.abs(p.objectOneS) < 20 || Math.abs(p.objectTwoS) < 20) multi = 4;
+      if (Math.abs(p.objectOneS) < 10 || Math.abs(p.objectTwoS) < 10) multi = 5;
+      const firstX = p.objectOneS * multi;
+      console.log(firstX);
+      //FIRST
+      ctx2.beginPath();
+      ctx2.moveTo(-firstX, 5);
+      ctx2.lineTo(-firstX, -30);
+      ctx2.stroke();
+      ctx2.fillText(
+        `${p.objectOneQ} ${p.objects}`,
+        -firstX - p.objects.length * 3,
+        -50
+      );
+      if (p.objectOneS < 0) {
+        arrowHeadHorizontalLine(
+          [0, -20],
+          [-firstX, -20],
+
+          `$${Math.abs(p.objectOneS)}`,
+          "top"
+        );
+      } else {
+        arrowHeadHorizontalLine(
+          [-firstX, -20],
+          [0, -20],
+          `$${p.objectOneS}`,
+          "top"
+        );
+      }
+
+      const secondX = p.objectTwoS * multi;
+      //SECOND
+      ctx2.beginPath();
+      ctx2.moveTo(-secondX, -5);
+      ctx2.lineTo(-secondX, 30);
+      ctx2.stroke();
+      ctx2.fillText(
+        `${p.objectTwoQ} ${p.objects}`,
+        -secondX - p.objects.length * 3,
+        45
+      );
+      if (p.objectTwoS < 0) {
+        arrowHeadHorizontalLine(
+          [0, 20],
+          [-secondX, 20],
+
+          `$${Math.abs(p.objectTwoS)}`,
+          "bottom"
+        );
+      } else {
+        arrowHeadHorizontalLine(
+          [-secondX, 20],
+          [0, 20],
+          `$${p.objectTwoS}`,
+          "bottom"
+        );
+      }
+    }
+
+    if (setting == 3) {
       helpMe.innerHTML = `
-            excess & excess = -</p>
-            short & short = -</p>
-            excess & short = + </p>
-            1. Find big difference.</p>
-            2. Find small difference.</p>
-            3. Big difference / small difference = Groups </p> 
-            Maybe 4. Find ${setting == 1 ? `Person ${p.objectOne}` : "sweets"}.
-            `;
+      excess & excess = -</p>
+      short & short = -</p>
+      excess & short = + </p>
+      1. Find big difference.</p>
+      2. Find small difference.</p>
+      3. Big difference / small difference = Groups </p> 
+      Maybe 4. Find ${setting == 2 ? `Person ${p.objectOne}` : "sweets"}.
+      `;
     }
     if (setting == 4) {
       helpMe.innerHTML = `

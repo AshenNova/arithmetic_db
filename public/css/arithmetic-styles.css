@@ -573,6 +573,10 @@ img {
   position: relative;
 }
 
+#canvas2 {
+  overflow: scroll;
+}
+
 .loader {
   position: relative;
   /* top: 0;
