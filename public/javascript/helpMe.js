@@ -1828,6 +1828,10 @@ export function helpMeFunc(level, state, setting) {
            If <strong>Excess</strong>: Draw on the left (underspent)</br>
            If <strong>Shortage</strong>: Draw on the right (overspent)</br>
            <hr>
+           1. Find big difference.</p>
+           2. Find small difference.</p>
+           3. Big difference / small difference = Groups </p> 
+           Maybe 4. Find ${setting == 2 ? `Person ${p.objectOne}` : "sweets"}.
       `;
       const width = canvas2.width;
       // console.log(length, width);
@@ -1909,16 +1913,108 @@ export function helpMeFunc(level, state, setting) {
     }
 
     if (setting == 3) {
-      helpMe.innerHTML = `
-      excess & excess = -</p>
-      short & short = -</p>
-      excess & short = + </p>
-      1. Find big difference.</p>
-      2. Find small difference.</p>
-      3. Big difference / small difference = Groups </p> 
-      Maybe 4. Find ${setting == 2 ? `Person ${p.objectOne}` : "sweets"}.
+      // helpMe.innerHTML = `
+      // excess & excess = -</p>
+      // short & short = -</p>
+      // excess & short = + </p>
+      // 1. Find big difference.</p>
+      // 2. Find small difference.</p>
+      // 3. Big difference / small difference = Groups </p>
+      // Maybe 4. Find ${setting == 2 ? `Person ${p.objectOne}` : "sweets"}.
+      // `;
+      secondCanvasHelp();
+      const smallD = p.sceneTwo - p.sceneOne;
+      secondCanvasTextId.innerHTML = `
+      <table>
+        <tr>
+          <td>First Scenario</td>
+          <td>x${p.sceneOne}</td>
+          <td>${p.situationOne < 0 ? p.situationOne : `+${p.situationOne}`}</td>
+        </tr>
+        <tr>
+          <td>Second Scenario</td>
+          <td>x${p.sceneTwo}</td>
+          <td> ${
+            p.situationTwo < 0 ? p.situationTwo : `+${p.situationTwo}`
+          }</td> 
+       </tr>
+       <tr>
+       <td>Change</td>
+       <td>+${smallD}</td>
+       <td>${Math.abs(p.situationTwo - p.situationOne)}</td>
+     </tr>
+      </table>
+      Explanation:</br>
+      To go from ${p.sceneOne} sweets per student to ${
+        p.sceneTwo
+      } sweets per student.</br>
+      Each student needs another ${smallD} ${
+        smallD == 1 ? "sweet" : "sweets"
+      }.</br>
+      For that to happen, another ${Math.abs(
+        p.situationTwo - p.situationOne
+      )} more sweets are needed.
       `;
     }
+
+    const width = canvas2.width;
+    // console.log(length, width);
+    // ctx2.translate(width / 2, 200);
+    p.situationTwo = p.numberOfStuff - p.sceneTwo * p.numberOfStudents;
+    ctx2.font = "1em arial";
+    ctx2.lineWidth = 3;
+    ctx2.beginPath();
+    ctx2.moveTo(width * 0.05, 100);
+    ctx2.lineTo(width * 0.95, 100);
+    ctx2.stroke();
+
+    ctx2.translate(width / 2, 100);
+    ctx2.beginPath();
+    ctx2.moveTo(0, 40);
+    ctx2.lineTo(0, -40);
+    ctx2.stroke();
+
+    let multi = 2;
+    if (Math.abs(p.situationOne) < 50 || Math.abs(p.situationTwo) < 50)
+      multi = 3;
+    if (Math.abs(p.situationOne) < 20 || Math.abs(p.situationTwo) < 20)
+      multi = 4;
+    if (Math.abs(p.situationOne) < 10 || Math.abs(p.situationTwo) < 10)
+      multi = 5;
+    ctx2.lineWidth = 1;
+    const firstX = p.situationOne * multi;
+    ctx2.translate(0, 0);
+    ctx2.beginPath();
+    ctx2.moveTo(-firstX, 5);
+    ctx2.lineTo(-firstX, -30);
+    ctx2.stroke();
+    ctx2.fillText(`${p.situationOne} sweets`, -firstX - 6 * 3, -50);
+
+    const secondX = p.situationTwo * multi;
+    ctx2.translate(0, 0);
+    ctx2.beginPath();
+    ctx2.moveTo(-secondX, -5);
+    ctx2.lineTo(-secondX, 30);
+    ctx2.stroke();
+    ctx2.fillText(`${p.situationTwo} sweets`, -secondX - 6 * 3, 45);
+
+    console.log(p.situationOne);
+    console.log(p.situationTwo);
+    const range = Math.abs(p.situationTwo - p.situationOne) * multi;
+    const interval = range / p.numberOfStudents;
+    ctx2.strokeStyle = "red";
+    ctx2.lineWidth = 2;
+    let times = 0;
+    let stop = range / interval;
+    for (let x = -firstX + interval; times < stop; x += interval) {
+      console.log(x, range, interval);
+      ctx2.beginPath();
+      ctx2.moveTo(x, 5);
+      ctx2.lineTo(x, -5);
+      ctx2.stroke();
+      times += 1;
+    }
+    ctx2.strokeStyle = "black";
     if (setting == 4) {
       helpMe.innerHTML = `
             1. Find the number of workers that turned up.</p>
