@@ -1955,66 +1955,67 @@ export function helpMeFunc(level, state, setting) {
         p.situationTwo - p.situationOne
       )} more sweets are needed.
       `;
-    }
 
-    const width = canvas2.width;
-    // console.log(length, width);
-    // ctx2.translate(width / 2, 200);
-    p.situationTwo = p.numberOfStuff - p.sceneTwo * p.numberOfStudents;
-    ctx2.font = "1em arial";
-    ctx2.lineWidth = 3;
-    ctx2.beginPath();
-    ctx2.moveTo(width * 0.05, 100);
-    ctx2.lineTo(width * 0.95, 100);
-    ctx2.stroke();
-
-    ctx2.translate(width / 2, 100);
-    ctx2.beginPath();
-    ctx2.moveTo(0, 40);
-    ctx2.lineTo(0, -40);
-    ctx2.stroke();
-
-    let multi = 2;
-    if (Math.abs(p.situationOne) < 50 || Math.abs(p.situationTwo) < 50)
-      multi = 3;
-    if (Math.abs(p.situationOne) < 20 || Math.abs(p.situationTwo) < 20)
-      multi = 4;
-    if (Math.abs(p.situationOne) < 10 || Math.abs(p.situationTwo) < 10)
-      multi = 5;
-    ctx2.lineWidth = 1;
-    const firstX = p.situationOne * multi;
-    ctx2.translate(0, 0);
-    ctx2.beginPath();
-    ctx2.moveTo(-firstX, 5);
-    ctx2.lineTo(-firstX, -30);
-    ctx2.stroke();
-    ctx2.fillText(`${p.situationOne} sweets`, -firstX - 6 * 3, -50);
-
-    const secondX = p.situationTwo * multi;
-    ctx2.translate(0, 0);
-    ctx2.beginPath();
-    ctx2.moveTo(-secondX, -5);
-    ctx2.lineTo(-secondX, 30);
-    ctx2.stroke();
-    ctx2.fillText(`${p.situationTwo} sweets`, -secondX - 6 * 3, 45);
-
-    console.log(p.situationOne);
-    console.log(p.situationTwo);
-    const range = Math.abs(p.situationTwo - p.situationOne) * multi;
-    const interval = range / p.numberOfStudents;
-    ctx2.strokeStyle = "red";
-    ctx2.lineWidth = 2;
-    let times = 0;
-    let stop = range / interval;
-    for (let x = -firstX + interval; times < stop; x += interval) {
-      console.log(x, range, interval);
+      const width = canvas2.width;
+      // console.log(length, width);
+      // ctx2.translate(width / 2, 200);
+      p.situationTwo = p.numberOfStuff - p.sceneTwo * p.numberOfStudents;
+      ctx2.font = "1em arial";
+      ctx2.lineWidth = 3;
       ctx2.beginPath();
-      ctx2.moveTo(x, 5);
-      ctx2.lineTo(x, -5);
+      ctx2.moveTo(width * 0.05, 100);
+      ctx2.lineTo(width * 0.95, 100);
       ctx2.stroke();
-      times += 1;
+
+      ctx2.translate(width / 2, 100);
+      ctx2.beginPath();
+      ctx2.moveTo(0, 40);
+      ctx2.lineTo(0, -40);
+      ctx2.stroke();
+
+      let multi = 2;
+      if (Math.abs(p.situationOne) < 50 || Math.abs(p.situationTwo) < 50)
+        multi = 3;
+      if (Math.abs(p.situationOne) < 20 || Math.abs(p.situationTwo) < 20)
+        multi = 4;
+      if (Math.abs(p.situationOne) < 10 || Math.abs(p.situationTwo) < 10)
+        multi = 5;
+      ctx2.lineWidth = 1;
+      const firstX = p.situationOne * multi;
+      ctx2.translate(0, 0);
+      ctx2.beginPath();
+      ctx2.moveTo(-firstX, 5);
+      ctx2.lineTo(-firstX, -30);
+      ctx2.stroke();
+      ctx2.fillText(`${p.situationOne} sweets`, -firstX - 6 * 3, -50);
+
+      const secondX = p.situationTwo * multi;
+      ctx2.translate(0, 0);
+      ctx2.beginPath();
+      ctx2.moveTo(-secondX, -5);
+      ctx2.lineTo(-secondX, 30);
+      ctx2.stroke();
+      ctx2.fillText(`${p.situationTwo} sweets`, -secondX - 6 * 3, 45);
+
+      console.log(p.situationOne);
+      console.log(p.situationTwo);
+      const range = Math.abs(p.situationTwo - p.situationOne) * multi;
+      const interval = range / p.numberOfStudents;
+      ctx2.strokeStyle = "red";
+      ctx2.lineWidth = 2;
+      let times = 0;
+      let stop = range / interval;
+      for (let x = -firstX + interval; times < stop; x += interval) {
+        console.log(x, range, interval);
+        ctx2.beginPath();
+        ctx2.moveTo(x, 5);
+        ctx2.lineTo(x, -5);
+        ctx2.stroke();
+        times += 1;
+      }
+      ctx2.strokeStyle = "black";
     }
-    ctx2.strokeStyle = "black";
+
     if (setting == 4) {
       helpMe.innerHTML = `
             1. Find the number of workers that turned up.</p>
