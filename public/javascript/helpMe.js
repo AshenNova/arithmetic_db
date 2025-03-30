@@ -338,6 +338,9 @@ function comparisonModelDifference(
 
   return [x + adjustX, y + adjustY, x + adjustX, y + adjustY + 50];
 }
+// start coordinates
+// units = [name, number of units...]
+// total
 function unitSentence(start, units, total) {
   ctx2.font = "16px arial";
   const [x1, y1] = start;
@@ -1615,6 +1618,146 @@ export function helpMeFunc(level, state, setting) {
           );
         }
       }
+    }
+    // UNIT SENTENCE
+    if (setting == 5) {
+      secondCanvasHelp();
+      secondCanvasTextId.innerHTML = `
+      <strong>${p.objectOne} is ${p.unitSentence} times of ${p.objectTwo}.</strong></br>
+      1. Draw ${p.unitSentence} units for ${p.objectOne}.</br>
+      2. Draw 1 unit for ${p.objectTwo}.</br>
+      3. Fill in the rest of the information.</br>
+      `;
+      function unitSentence(start, varA, unitA, varB, unitB, total) {
+        const [x1, y1] = start;
+        //FILL IN VARIABLE NAME
+        ctx2.font = "1em arial";
+        ctx2.fillText(varA, x1, y1);
+        ctx2.fillText(varB, x1, y1 + 40);
+
+        //DRAWING UNITS
+        const sizeOfUnit = [40, 30];
+        const startPositionForVarA = [x1 + 20, y1 - 20];
+        //start position of first variable
+        ctx2.beginPath();
+        for (let x = 0; x < unitA; x++) {
+          ctx2.rect(
+            startPositionForVarA[0] + x * sizeOfUnit[0],
+            startPositionForVarA[1],
+            sizeOfUnit[0],
+            sizeOfUnit[1]
+          );
+        }
+        //SECOND VARIABLE
+        const startPositionForVarB = [
+          startPositionForVarA[0],
+          startPositionForVarA[1] + 40,
+        ];
+        for (let x = 0; x < unitB; x++) {
+          ctx2.rect(
+            startPositionForVarB[0] + x * sizeOfUnit[0],
+            startPositionForVarB[1],
+            sizeOfUnit[0],
+            sizeOfUnit[1]
+          );
+        }
+        ctx2.stroke();
+        if (p.rollLineTwo == "A") {
+          arrowHeadHorizontalLine(
+            [startPositionForVarA[0], startPositionForVarA[1] - 10],
+            [
+              startPositionForVarA[0] + sizeOfUnit[0] * unitA,
+              startPositionForVarA[1] - 10,
+            ],
+            p.varA,
+            "top"
+          );
+        } else if (p.rollLineTwo == "B") {
+          //IF MORE THAN 1 UNIT
+          if (unitB > 1) {
+            arrowHeadHorizontalLine(
+              [
+                startPositionForVarB[0],
+                startPositionForVarB[1] + sizeOfUnit[1] + 10,
+              ],
+              [
+                startPositionForVarB[0] + sizeOfUnit[0] * unitB,
+                startPositionForVarB[1] + sizeOfUnit[1] + 10,
+              ],
+              p.varB,
+              "bottom"
+            );
+          } else {
+            ctx2.fillText(
+              p.varB,
+              startPositionForVarB[0] + 10,
+              startPositionForVarB[1] + 20
+            );
+          }
+          //TOTAL
+        } else {
+          const totalStart =
+            startPositionForVarA[0] + sizeOfUnit[0] * unitA + 10;
+          arrowHeadVerticalLine(
+            [totalStart, startPositionForVarA[1]],
+            [totalStart, startPositionForVarB[1] + sizeOfUnit[1]],
+            p.total,
+            "right"
+          );
+        }
+
+        if (p.rollLineThree == "A") {
+          arrowHeadHorizontalLine(
+            [startPositionForVarA[0], startPositionForVarA[1] - 10],
+            [
+              startPositionForVarA[0] + sizeOfUnit[0] * unitA,
+              startPositionForVarA[1] - 10,
+            ],
+            "?",
+            "top"
+          );
+        } else if (p.rollLineThree == "B") {
+          //IF MORE THAN 1 UNIT
+          if (unitB > 1) {
+            arrowHeadHorizontalLine(
+              [
+                startPositionForVarB[0],
+                startPositionForVarB[1] + sizeOfUnit[1] + 10,
+              ],
+              [
+                startPositionForVarB[0] + sizeOfUnit[0] * unitB,
+                startPositionForVarB[1] + sizeOfUnit[1] + 10,
+              ],
+              "?",
+              "bottom"
+            );
+          } else {
+            ctx2.fillText(
+              "?",
+              startPositionForVarB[0] + 10,
+              startPositionForVarB[1] + 20
+            );
+          }
+          //TOTAL
+        } else {
+          const totalStart =
+            startPositionForVarA[0] + sizeOfUnit[0] * unitA + 10;
+          arrowHeadVerticalLine(
+            [totalStart, startPositionForVarA[1]],
+            [totalStart, startPositionForVarB[1] + sizeOfUnit[1]],
+            "?",
+            "right"
+          );
+        }
+      }
+      unitSentence(
+        [20, 60],
+        p.objectOne,
+        p.unitSentence,
+        p.objectTwo,
+        1,
+        p.total
+      );
     }
   }
   // HEURISTICS THREE
