@@ -1763,11 +1763,12 @@ export function helpMeFunc(level, state, setting) {
   // HEURISTICS THREE
   if (level == "heuThree") {
     if (setting == 1) {
-      helpMe.innerHTML = `
-          1. Change one variable to another using difference. ( + or - )</p>
-          + to change to the larger variable, - to change to the smaller variable.</p>
-          2. Divide by 2 (Since there are now 2 of it).
-          `;
+      secondCanvasTextId.innerHTML = `
+      1. Change one variable to another using small difference. ( + or - )</br>
+      + to change to the larger variable, - to change to the smaller variable.</br>
+      2. Divide by 2 (Since there are now 2 of it).
+      <hr>
+      `;
       secondCanvasHelp();
       comparisonModelDifference(
         [20, 50],
@@ -1775,7 +1776,9 @@ export function helpMeFunc(level, state, setting) {
         p.numOne,
         p.objectTwo,
         p.numTwo,
-        p.numOne + p.numTwo
+        p.numOne + p.numTwo,
+        "yes",
+        "yes"
       );
     }
 
@@ -1789,16 +1792,94 @@ export function helpMeFunc(level, state, setting) {
           `;
     }
     if (setting == 3) {
-      helpMe.innerHTML = `
-          Unit version.</p>
-          Reminder: Start with quantity.</p>
-          1. Convert first variable into units.</p>
-          eg. Quantity x Units</p>
-          2. Convert second variable into units.</p>
-          3. Add the units together.</p>
-          4. Divide to find one unit.</p>
-          Maybe 5. Find ${p.objectOne} by multiplying ${p.unitSentence}.</p>
-          `;
+      // helpMe.innerHTML = `
+      //     Unit version.</p>
+      //     Reminder: Start with quantity.</p>
+      //     1. Convert first variable into units.</p>
+      //     eg. Quantity x Units</p>
+      //     2. Convert second variable into units.</p>
+      //     3. Add the units together.</p>
+      //     4. Divide to find one unit.</p>
+      //     Maybe 5. Find ${p.objectOne} by multiplying ${p.unitSentence}.</p>
+      //     `;
+      secondCanvasHelp();
+      ctx2.font = "1em arial";
+      ctx2.fillText("Expanded model", 50, 20);
+      function multipleUnitModel(
+        start,
+        nameA,
+        unitA,
+        quanA,
+        nameB,
+        unitB,
+        quanB,
+        total
+      ) {
+        const [x1, y1] = start;
+        const modelSize = [60, 30];
+        const space = 10;
+        const modelStartX = x1 + 20;
+        const modelStartY = y1 - 20;
+        for (let y = 0; y < quanA; y++) {
+          for (let x = 0; x < unitA; x++) {
+            ctx2.fillText(nameA, x1, y1 + y * 40);
+            ctx2.beginPath();
+            ctx2.rect(
+              modelStartX + modelSize[0] * x,
+              modelStartY + y * 40,
+              modelSize[0],
+              modelSize[1]
+            );
+            ctx2.stroke();
+          }
+        }
+        const nextStartX = modelStartX;
+        const nextStartY = y1 - 20 + 40 * quanA;
+        for (let y = 0; y < quanB; y++) {
+          for (let x = 0; x < unitB; x++) {
+            console.log(x, y, nameB, unitB, quanB);
+            ctx2.fillText(nameB, x1, nextStartY + 20 + y * 40);
+            ctx2.beginPath();
+            ctx2.rect(
+              nextStartX + modelSize[0] * x,
+              nextStartY + y * 40,
+              modelSize[0],
+              modelSize[1]
+            );
+            ctx2.stroke();
+          }
+        }
+
+        arrowHeadVerticalLine(
+          [modelStartX + modelSize[0] * quanA + 10, modelStartY],
+          [
+            modelStartX + modelSize[0] * quanA + 10,
+            modelStartY + 40 * (quanA + quanB) - space,
+          ],
+          total,
+          "right"
+        );
+      }
+      secondCanvasTextId.innerHTML = `
+      1. Draw ${p.unitSentence} units for ${p.objectOne} ${p.objectOneX} ${
+        p.objectOneX == 1 ? "time" : "times"
+      }.</br>
+      2. Draw 1 unit for ${p.objectTwo} ${p.objectTwoX} ${
+        p.objectTwoX == 1 ? "time" : "times"
+      }.</br>
+      3. Fill in the rest.</br>
+      <hr>
+      `;
+      multipleUnitModel(
+        [50, 60],
+        p.objectOne,
+        p.unitSentence,
+        p.objectOneX,
+        p.objectTwo,
+        1,
+        p.objectTwoX,
+        p.totalValue
+      );
     }
 
     if (setting == 4) {

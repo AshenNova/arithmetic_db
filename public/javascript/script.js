@@ -5116,7 +5116,7 @@ function updateProblems() {
           p.refColor2
         }.</p>
       The rest of ${p.identity} is ${p.refColor3}.</p>
-      What fraction of of ${p.identity} is ${p.refColor3}?
+      What fraction of ${p.identity} is ${p.refColor3}?
       `;
       }
     }

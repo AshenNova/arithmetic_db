@@ -570,8 +570,11 @@ img {
   position: relative;
 }
 
-#canvas2 {
-  overflow: scroll;
+.second-canvas {
+  position: relative;
+  /* width: 500px;*/
+  height: 250px;
+  overflow: auto;
 }
 
 .loader {
