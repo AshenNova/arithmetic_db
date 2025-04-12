@@ -37,6 +37,15 @@
                                 <label class="form-check-label" for="flexCheckDefault">
                                   Super Admin
                                 </label>
+                            </div> 
+                            <div class="form-group form-check">
+                                <input class="form-check-input" type="checkbox" name="teacher" value="true"
+                                <% if (editUser.teacher) { %>
+                                     checked
+                                <% } %>> 
+                                <label class="form-check-label" for="flexCheckDefault">
+                                  Teacher
+                                </label>
                             </div>  
                             <div class="form-group form-check">  
                                 <input class="form-check-input" type="checkbox" name="subject_admin" value="true"

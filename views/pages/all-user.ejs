@@ -47,6 +47,8 @@
               <% } %>
               <% if (item.admin) { %>
                 <td><%= "⭐️" %></td>
+              <% }  else if (item.teacher) { %>
+                <td><i class="fas fa-chalkboard-teacher"></i></td>
               <% } else { %>
                 <td></td>
               <% } %>

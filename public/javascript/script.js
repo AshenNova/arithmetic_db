@@ -6514,6 +6514,7 @@ function updateProblems() {
   }
 
   if (level == 5.12) {
+    calculatorSymbol.classList.remove("hidden")
     drawingDisplay();
     // ctx.save();
 
@@ -30658,7 +30659,7 @@ function buttonLevelSetting() {
 
     case "Level 4.09":
       level = 4.09;
-      scoreNeeded = 30;
+      scoreNeeded = 20;
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 

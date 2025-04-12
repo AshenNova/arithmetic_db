@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
   },
   admin: { type: Boolean, default: false },
   subject_admin: { type: Boolean, default: false },
+  teacher: { type: Boolean, default: false },
   password: {
     type: String,
     required: [true, "Please provide a password."],

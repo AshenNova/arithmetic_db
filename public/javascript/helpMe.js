@@ -962,7 +962,7 @@ export function helpMeFunc(level, state, setting) {
       ${displaySimpleFraction(p.numOne, p.numTwo)} -> ${p.value}</br>
       ${
         p.numOne != 1
-          ? ` ${displaySimpleFraction(1, p.numTwo)} -> ${p.value}/${
+          ? ` ${displaySimpleFraction(1, p.numTwo)} -> ${p.value} ÷ ${
               p.numOne
             } = ____ </br>`
           : ""
@@ -973,7 +973,7 @@ export function helpMeFunc(level, state, setting) {
     if (setting == 2 || p.rollChoice == 2) {
       helpMe.innerHTML = `
       1 whole -> ${displaySimpleFraction(p.deno, p.deno)} -> ${p.value}</br>
-      ${displaySimpleFraction(1, p.deno)} -> ${p.value}/${p.deno} = ___ </br>
+      ${displaySimpleFraction(1, p.deno)} -> ${p.value} ÷ ${p.deno} = ___ </br>
       ${displaySimpleFraction(p.nume, p.deno)} -> ____ x ${p.nume} = _____
       `;
     }
@@ -2147,6 +2147,7 @@ export function helpMeFunc(level, state, setting) {
       // Maybe 4. Find ${setting == 2 ? `Person ${p.objectOne}` : "sweets"}.
       // `;
       secondCanvasHelp();
+      p.situationTwo = p.numberOfStuff - p.sceneTwo * p.numberOfStudents;
       const smallD = p.sceneTwo - p.sceneOne;
       secondCanvasTextId.innerHTML = `
       <table>
@@ -2183,7 +2184,7 @@ export function helpMeFunc(level, state, setting) {
       const width = canvas2.width;
       // console.log(length, width);
       // ctx2.translate(width / 2, 200);
-      p.situationTwo = p.numberOfStuff - p.sceneTwo * p.numberOfStudents;
+
       ctx2.font = "1em arial";
       ctx2.lineWidth = 3;
       ctx2.beginPath();
