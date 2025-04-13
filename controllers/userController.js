@@ -1609,6 +1609,7 @@ exports.summary = async (req, res) => {
   let allCalCount = 0;
   let allHeuCount = 0;
   let allCount = 0;
+  let students;
   // let attempts;
   // console.log(req.query);
 
@@ -1639,7 +1640,30 @@ exports.summary = async (req, res) => {
       });
       todayCount = today.length;
       console.log(`Today: ${todayCount}`);
-      console.log(today);
+
+      // FOR CHART
+      const todayOnList = await Attempt.find({
+        date: { $gte: start, $lt: end },
+        tries: "1",
+        recommendCheck: true,
+      });
+      console.log(todayOnList);
+      students = {
+        name: [],
+        count: [],
+      };
+      todayOnList.forEach((x) => {
+        if (!students.name.includes(x.user)) {
+          students.name.push(x.user);
+        }
+      });
+      students.name.forEach((names) => {
+        let count = 0;
+        todayOnList.forEach((x) => {
+          if (x.user == names) count += 1;
+        });
+        students.count.push(count);
+      });
       today.forEach((item) => {
         if (item.level) {
           if (!item.level.startsWith("cal") && !item.level.startsWith("heu")) {
@@ -1877,6 +1901,7 @@ exports.summary = async (req, res) => {
       console.log("Empty");
     }
     res.render("pages/summary", {
+      students,
       username,
       authenticate,
       currentUser,

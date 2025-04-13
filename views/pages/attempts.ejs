@@ -7,6 +7,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c594d2df83.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
     <link rel="stylesheet" href="/css/attempts-styles.css">
     <link rel="stylesheet" href="/css/navbar-styles.css">
      <link rel="icon" href="/images/favicon.ico?v=1.1">
@@ -30,8 +32,11 @@
   <!-- <div class="container"> -->
     <%- include("../partials/navbar") %>
     <%- include("../partials/rewardLog") %>
+    <%- include("../partials/workdone-chart") %>
 
   <!-- FILTER -->
+  
+ 
   <div class="container my-4">
     <form action="/attempts/filter" method="/GET">
         <div class="row">
@@ -93,8 +98,6 @@
     </ul>
   </nav>
 </div>
-
-
 
 <div class="container">
   <div class="row">
@@ -380,6 +383,45 @@
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+<script>
+  let names = document.getElementById("studentNameId").innerHTML.split(",")
+  let counts = document.getElementById("studentCountId").innerHTML.split(",")
+  console.log(names)
+  
+  var xValues = names;
+  var yValues = counts;
+  var barColors = ["#FF6B6B", "#FF9F1C", "#FFD93D", "#6BCB77", "#4D96FF",
+  "#845EC2", "#FFC75F", "#F9F871", "#2C73D2", "#0089BA",
+  "#008E9B", "#B0A8B9", "#C34A36", "#F76C6C", "#A1C349",
+  "#00C9A7", "#F0A500", "#6A0572", "#AB83A1", "#FF9671",
+  "#FFC300", "#6F69AC", "#3E8E7E", "#D65DB1", "#FF6F91",
+  "#9D5C63", "#88E0EF", "#16123F", "#30475E", "#F05454"];;
+  
+  new Chart("myChart", {
+    type: "bar",
+    data: {
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues,
+      }]
+    },
+    options: {
+      legend: {display: false},
+      title: {
+        display: true,
+        text: "Work done"
+      },
+      scales: {
+        yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+      }
+    }
+  });
+  </script>
 <!-- <script src="~/lib/bootstrap-select/js/bootstrap-select.min.js"></script> -->
 <script type="module" src="/javascript/filter_attempt.js"></script>
 </html>

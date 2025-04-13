@@ -16,6 +16,7 @@
     <!-- <link rel="stylesheet" href="/css/arithmetic-styles.css"> -->
     <link rel="stylesheet" href="/css/navbar-styles.css">
      <link rel="icon" href="/images/favicon.ico?v=1.1">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
 </head>
 <style>
@@ -50,6 +51,7 @@
          
             <h1> Summary for <u><%= nameA.charAt(0).toUpperCase() %><%= nameA.slice(1, nameA.length) %> <%= nameB.charAt(0).toUpperCase() %><%= nameB.slice(1, nameB.length) %></u></h1>
             <h2>Arithmetic Practice</h2>
+            <%- include("../partials/workdone-chart") %>
                  <a href="/attempts/filter?user=<%= searchedUser.username %>&level=&setting=&mode=" target="_blank" class="btn btn-outline-primary">Results</a>
                 <a href="/user/recommend/<%= searchedUser.username %>" class="btn btn-outline-primary" target="_blank">Recommendation</a>
                
@@ -260,4 +262,43 @@
         document.querySelector(".completeTable").classList.toggle("hidden")
     })
 </script>
+<script>
+    let names = document.getElementById("studentNameId").innerHTML.split(",")
+    let counts = document.getElementById("studentCountId").innerHTML.split(",")
+    console.log(names)
+    
+    var xValues = names;
+    var yValues = counts;
+    var barColors = ["#FF6B6B", "#FF9F1C", "#FFD93D", "#6BCB77", "#4D96FF",
+    "#845EC2", "#FFC75F", "#F9F871", "#2C73D2", "#0089BA",
+    "#008E9B", "#B0A8B9", "#C34A36", "#F76C6C", "#A1C349",
+    "#00C9A7", "#F0A500", "#6A0572", "#AB83A1", "#FF9671",
+    "#FFC300", "#6F69AC", "#3E8E7E", "#D65DB1", "#FF6F91",
+    "#9D5C63", "#88E0EF", "#16123F", "#30475E", "#F05454"];;
+    
+    new Chart("myChart", {
+      type: "bar",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues,
+        }]
+      },
+      options: {
+        legend: {display: false},
+        title: {
+          display: true,
+          text: "Work done"
+        },
+        scales: {
+          yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+        }
+      }
+    });
+    </script>
 </html>

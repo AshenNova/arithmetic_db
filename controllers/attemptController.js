@@ -43,9 +43,31 @@ exports.getAllAttempts = catchAsync(async (req, res, next) => {
   let end = new Date();
   end.setHours(23, 59, 59, 999);
 
-  const todayCount = await Attempt.find({ date: { $gte: start, $lt: end } })
-    .length;
-  console.log(`Today Count Done`);
+  const today = await Attempt.find({ date: { $gte: start, $lt: end } });
+  const todayCount = today.length;
+  const todayOnList = await Attempt.find({
+    date: { $gte: start, $lt: end },
+    tries: "1",
+    recommendCheck: true,
+  });
+  console.log(todayOnList);
+  const students = {
+    name: [],
+    count: [],
+  };
+  todayOnList.forEach((x) => {
+    if (!students.name.includes(x.user)) {
+      students.name.push(x.user);
+    }
+  });
+  students.name.forEach((names) => {
+    let count = 0;
+    todayOnList.forEach((x) => {
+      if (x.user == names) count += 1;
+    });
+    students.count.push(count);
+  });
+  console.log(students);
   const attempts = await Attempt.find()
     .sort({ date: -1 })
     .skip((page - 1) * limit)
@@ -53,14 +75,6 @@ exports.getAllAttempts = catchAsync(async (req, res, next) => {
   console.log(`Attempts Done`);
   const attemptsTwo = await Attempt.find().limit(1000);
   console.log(`Attempts 2 Done`);
-  // const [todayCount, attempts, attemptsTwo] = await Promise.all([
-  //   Attempt.find({ date: { $gte: start, $lt: end } }),
-  //   Attempt.find()
-  //     .sort({ date: -1 })
-  //     .skip((page - 1) * limit)
-  //     .limit(limit),
-  //   Attempt.find(),
-  // ]);
   const paginatedAttempts = paginate(
     attemptsTwo,
     attemptsTwo.length,
@@ -77,6 +91,7 @@ exports.getAllAttempts = catchAsync(async (req, res, next) => {
   let username = req.user.username;
 
   res.status(200).render("pages/attempts", {
+    students,
     attempts,
     paginatedAttempts,
     latestAttemptObj,
@@ -132,7 +147,38 @@ exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
   // .skip((page - 1) * limit)
   // .limit(limit);
 
-  // const attemptsTwo = attempts;
+  //FOR CHART
+  let start = new Date();
+  start.setHours(0, 0, 0, 0);
+
+  let end = new Date();
+  end.setHours(23, 59, 59, 999);
+  const today = await Attempt.find({ date: { $gte: start, $lt: end } });
+  const todayCount = today.length;
+  const todayOnList = await Attempt.find({
+    date: { $gte: start, $lt: end },
+    tries: "1",
+    recommendCheck: true,
+  });
+  console.log(todayOnList);
+  const students = {
+    name: [],
+    count: [],
+  };
+  todayOnList.forEach((x) => {
+    if (!students.name.includes(x.user)) {
+      students.name.push(x.user);
+    }
+  });
+  students.name.forEach((names) => {
+    let count = 0;
+    todayOnList.forEach((x) => {
+      if (x.user == names) count += 1;
+    });
+    students.count.push(count);
+  });
+  console.log(students);
+
   const paginatedAttempts = paginate(
     attemptsTwo,
     attemptsTwo.length,
@@ -211,13 +257,14 @@ exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
     }
   }
 
-  const todayCount = "";
+  // const todayCount = "";
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
   let logRewards;
   console.log(queryObj);
   res.status(200).render("pages/attempts", {
+    students,
     queryObj,
     attempts,
     paginatedAttempts,
