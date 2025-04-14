@@ -36,7 +36,7 @@
                       <tr>
                         <td><a href="/attempts/filter/?user=<%= item.username %>&level=&setting=&mode="><%= item.username %></a></td>
                         <td><%= item.points %></td>
-                        <td><%= item.loggedIn.toLocaleDateString() %></td>
+                        <td><%= item.loggedIn.toLocaleDateString("en-GB") %></td>
                         <td><%= ago %></td>
                       </tr>
                     <% } %>
