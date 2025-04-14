@@ -1624,7 +1624,6 @@ exports.summary = async (req, res) => {
         arr.push(temp);
       });
       const username = arr.join(" ");
-      console.log(username);
       searchedUser = await User.findOne({ username: req.query.username });
       allCount = await Attempt.find({ user: username }).count();
 
@@ -1639,7 +1638,6 @@ exports.summary = async (req, res) => {
         date: { $gte: start, $lt: end },
       });
       todayCount = today.length;
-      console.log(`Today: ${todayCount}`);
 
       // FOR CHART
       const todayOnList = await Attempt.find({

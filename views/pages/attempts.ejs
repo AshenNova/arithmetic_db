@@ -31,8 +31,19 @@
 <body>
   <!-- <div class="container"> -->
     <%- include("../partials/navbar") %>
-    <%- include("../partials/rewardLog") %>
-    <%- include("../partials/workdone-chart") %>
+    <div class="container">
+      <div class="row align-items-end">
+          <div class="col">
+            <%- include("../partials/rewardLog") %>
+          </div>
+        <% if (todayCount != 0){%>
+          <div class="col">
+            <%- include("../partials/workdone-chart") %>
+          </div>
+        <% } %> 
+      </div>
+    </div>
+   
 
   <!-- FILTER -->
   
