@@ -50,8 +50,9 @@
             <% const nameB = searchedUser.username.split(" ")[1] %>
          
             <h1> Summary for <u><%= nameA.charAt(0).toUpperCase() %><%= nameA.slice(1, nameA.length) %> <%= nameB.charAt(0).toUpperCase() %><%= nameB.slice(1, nameB.length) %></u></h1>
-            <h2>Arithmetic Practice</h2>
+            
             <%- include("../partials/workdone-chart") %>
+            <h2>Arithmetic Practice</h2>
             <div class="container mt-3">
                  <a href="/attempts/filter?user=<%= searchedUser.username %>&level=&setting=&mode=" target="_blank" class="btn btn-outline-primary">Results</a>
                 <a href="/user/recommend/<%= searchedUser.username %>" class="btn btn-outline-primary" target="_blank">Recommendation</a>
