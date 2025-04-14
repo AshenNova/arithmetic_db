@@ -55,6 +55,7 @@ exports.getAllAttempts = catchAsync(async (req, res, next) => {
     name: [],
     count: [],
   };
+  console.log(students.length);
   todayOnList.forEach((x) => {
     if (!students.name.includes(x.user)) {
       students.name.push(x.user);
