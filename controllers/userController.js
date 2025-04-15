@@ -1628,7 +1628,7 @@ exports.summary = async (req, res) => {
       allCount = await Attempt.find({ user: username }).count();
 
       //TODAY
-      console.log("Today start");
+      // console.log("Today start");
       const start = new Date();
       start.setHours(0, 0, 0, 0);
       const end = new Date();
@@ -1684,23 +1684,23 @@ exports.summary = async (req, res) => {
       // todayLevelCount = todayLevel.length;
       // todayCalCount = todayCal.length;
       // todayHeuCount = todayHeu.length;
-      console.log("Today end");
+      // console.log("Today end");
       //THIS WEEK
-      console.log("Week start");
+      // console.log("Week start");
       const now = new Date();
       let day = now.getDay();
       if (day == 0) day = 7;
-      console.log(`The day is ${day}`);
+      // console.log(`The day is ${day}`);
       const oneDay = 1000 * 60 * 60 * 24;
       // 2 = Tuesday; 3 = Wednesday
       let begin = new Date(start.getTime() - (day - 1) * oneDay);
-      console.log(begin.toLocaleDateString("en-GB"));
+      // console.log(begin.toLocaleDateString("en-GB"));
       const week = await Attempt.find({
         user: username,
         date: { $gte: begin, $lt: end },
       });
       weekCount = week.length;
-      console.log(`Week: ${weekCount}`);
+      // console.log(`Week: ${weekCount}`);
 
       week.forEach((item) => {
         if (item.level) {
@@ -1723,10 +1723,10 @@ exports.summary = async (req, res) => {
           }
         }
       });
-      console.log("Week End");
+      // console.log("Week End");
 
       //THIS MONTH
-      console.log("Month start");
+      // console.log("Month start");
       const thisMonth = start.getMonth() + 1;
       const month = await Attempt.find({
         $expr: { $eq: [{ $month: "$date" }, thisMonth] },
@@ -1751,10 +1751,10 @@ exports.summary = async (req, res) => {
         }
       });
 
-      console.log(`Month: ${monthCount}`);
-      console.log("Month End");
+      // console.log(`Month: ${monthCount}`);
+      // console.log("Month End");
       // THIS YEAR
-      console.log("Year Start");
+      // console.log("Year Start");
 
       const thisYear = new Date().getFullYear();
 
@@ -1789,7 +1789,7 @@ exports.summary = async (req, res) => {
       //   });
       // }
 
-      console.log("HERE!");
+      // console.log("HERE!");
 
       // const year = await Attempt.find({
       //   $expr: { $eq: [{ $year: "$date" }, thisYear] },
@@ -1857,25 +1857,25 @@ exports.summary = async (req, res) => {
       //   }
       // });
 
-      console.log("Year End");
+      // console.log("Year End");
 
       //HOMEWORK!!!
-      console.log(req.query.username);
+      // console.log(req.query.username);
       homework = await Homework.find({ name: req.query.username }).sort({
         subject: -1,
         dateIssue: -1,
       });
-      console.log(homework);
+      // console.log(homework);
       let exam_id = [];
       let exams = [];
       async function getExamComments(homework) {
         for (let i = 0; i < homework.length; i++) {
           const exam = await Exam.findById(homework[i].exampaper_id);
           if (exam) {
-            console.log(`The exam comment is ${exam.comment}`);
+            // console.log(`The exam comment is ${exam.comment}`);
             exams.push(exam);
             homework[i].exampaper_comment = exam.comment;
-            console.log(exam + " ⌚️");
+            // console.log(exam + " ⌚️");
             // console.log(homework[0] + " ☎️");
           }
         }
@@ -1891,7 +1891,7 @@ exports.summary = async (req, res) => {
       //     console.log(exam + " ⌚️");
       //   }
       // });
-
+      console.log(`Students: ${students}`);
       if (!searchedUser) {
         searchedUser = "Not found";
       }
