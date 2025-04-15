@@ -1642,7 +1642,7 @@ exports.summary = async (req, res) => {
       // FOR CHART
       const todayOnList = await Attempt.find({
         date: { $gte: start, $lt: end },
-        tries: "1",
+        extra: "",
         recommendCheck: true,
       });
       console.log(todayOnList);
@@ -1658,7 +1658,17 @@ exports.summary = async (req, res) => {
       students.name.forEach((names) => {
         let count = 0;
         todayOnList.forEach((x) => {
-          if (x.user == names) count += 1;
+          if (x.user == names) {
+            // console.log(`${x} ☎️`);
+            // if (x.level.startsWith("cal") || x.level.startsWith("heu")) {
+            //   if (x.extra == "") {
+            //     count += 1;
+            //   }
+            // } else {
+            //   count += 1;
+            // }
+            count += 1;
+          }
         });
         students.count.push(count);
       });
@@ -1812,7 +1822,7 @@ exports.summary = async (req, res) => {
 
       await Promise.race([year(username, thisYear), timeout]).then(
         (message) => {
-          console.log(`msg: ${message}`);
+          // console.log(`msg: ${message}`);
           if (message == "Timeout") {
             yearCount = "Database slow";
             yearLevelCount = "Database slow";
@@ -1820,7 +1830,7 @@ exports.summary = async (req, res) => {
             yearHeuCount = "Database slow";
           } else {
             yearCount = message.length;
-            console.log(`The year count is ${message.length}`);
+            // console.log(`The year count is ${message.length}`);
             message.forEach((item) => {
               if (item.level) {
                 if (
