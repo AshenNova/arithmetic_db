@@ -68,7 +68,7 @@ exports.getAllAttempts = catchAsync(async (req, res, next) => {
     });
     students.count.push(count);
   });
-  console.log(students);
+  console.log(students.name[0]);
   const attempts = await Attempt.find()
     .sort({ date: -1 })
     .skip((page - 1) * limit)
