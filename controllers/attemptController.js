@@ -158,7 +158,7 @@ exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
   const todayCount = today.length;
   const todayOnList = await Attempt.find({
     date: { $gte: start, $lt: end },
-    tries: "1",
+    extra: "",
     recommendCheck: true,
   });
   console.log(todayOnList);
