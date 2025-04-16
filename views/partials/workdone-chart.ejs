@@ -1,12 +1,13 @@
 <% if (students.name[0]) {%>
-
-  <div class="hidden">
-    <div id="studentNameId"><%= students.name %></div>
-    <div id="studentCountId"><%= students.count %></div>
-  </div>
-    <div class="container">
-      <h2>Daily Workdone</h2>
-      <canvas id="myChart" style="width:100%;max-width:700px;"></canvas>
+  <div class="col">
+    <div class="hidden">
+      <div id="studentNameId"><%= students.name %></div>
+      <div id="studentCountId"><%= students.count %></div>
     </div>
+      <div class="container">
+        <h2>Daily Workdone</h2>
+        <canvas id="myChart" style="width:100%;max-width:700px;"></canvas>
+      </div>
+  </div>
 <% } %>
     
