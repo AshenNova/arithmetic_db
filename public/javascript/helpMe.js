@@ -1883,15 +1883,101 @@ export function helpMeFunc(level, state, setting) {
     }
 
     if (setting == 4) {
-      helpMe.innerHTML = `
-          Difference version.</p>
-          Reminder: Start with quantity.</p>
-          1. Figure out the change using difference.</p>
-          eg. Quantity x difference <p>
-          2. Apply the change. ( + or - )</p>
-          3. Add the number of variables together.</p>
-          4. Divide to find one variable.</p>
-          `;
+      secondCanvasTextId.innerHTML = `
+            Difference version.</p>
+            1. Identify the small difference.</p>
+            2. Change the <i>other variable</i> into the <i>wanted variable</i>.</p>
+            3. Add the number of variables together.</p>
+            4. Divide to find one variable.</p>
+            `;
+      secondCanvasHelp();
+      ctx2.font = "1em arial";
+      ctx2.fillText("Expanded model", 50, 20);
+      function underTheSameUnitDifference(
+        start,
+        objectOne,
+        objectOneV,
+        objectOneQ,
+        objectTwo,
+        objectTwoV,
+        objectTwoQ,
+        total
+      ) {
+        console.log("Fill in variable name");
+        let [x1, y1] = start;
+        let x1VarNameCoor = x1;
+        let y1VarNameCoor = y1;
+        console.log("VarA");
+        for (let i = 0; i < objectOneQ; i++) {
+          ctx2.fillText(objectOne, x1VarNameCoor, y1VarNameCoor);
+          y1VarNameCoor += 40;
+        }
+        console.log("VarB");
+        for (let i = 0; i < objectTwoQ; i++) {
+          ctx2.fillText(objectTwo, x1VarNameCoor, y1VarNameCoor);
+          y1VarNameCoor += 40;
+        }
+        console.log("Draw common units");
+        const modelSize = [60, 30];
+        const modelStartX = x1 + 40;
+        ctx2.beginPath();
+        for (let i = 0; i < objectOneQ + objectTwoQ; i++) {
+          ctx2.rect(
+            modelStartX,
+            30 + (modelSize[1] + 10) * i,
+            modelSize[0],
+            modelSize[1]
+          );
+        }
+
+        console.log("Draw difference");
+        if (objectOneV > objectTwoV) {
+          for (let i = 0; i < objectOneQ; i++) {
+            let currentX = modelStartX + modelSize[0];
+            let currentY = 30 + (modelSize[1] + 10) * i;
+            ctx2.rect(currentX, currentY, modelSize[0] * 2, modelSize[1]);
+            ctx2.fillText(
+              Math.abs(objectOneV - objectTwoV),
+              currentX + 40,
+              currentY + 20
+            );
+          }
+        } else {
+          for (let i = 0; i < objectTwoQ; i++) {
+            let currentX = modelStartX + modelSize[0];
+            let currentY =
+              30 + objectOneQ * (modelSize[1] + 10) + (modelSize[1] + 10) * i;
+            ctx2.rect(currentX, currentY, modelSize[0] * 2, modelSize[1]);
+            ctx2.fillText(
+              Math.abs(objectOneV - objectTwoV),
+              currentX + 40,
+              currentY + 20
+            );
+          }
+        }
+        ctx2.stroke();
+        console.log(`Draw Total ${total}`);
+
+        arrowHeadVerticalLine(
+          [modelStartX + modelSize[0] * 3 + 10, 30],
+          [
+            modelStartX + modelSize[0] * 3 + 10,
+            30 + 40 * (objectOneQ + objectTwoQ) - 10,
+          ],
+          total,
+          "right"
+        );
+      }
+      underTheSameUnitDifference(
+        [20, 50],
+        p.objectOne,
+        p.objectOneV,
+        p.objectOneQ,
+        p.objectTwo,
+        p.objectTwoV,
+        p.objectTwoQ,
+        p.totalValue
+      );
     }
     if (setting == 5) {
       helpMe.innerHTML = `

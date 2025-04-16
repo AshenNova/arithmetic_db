@@ -28919,8 +28919,8 @@ function genProblems() {
       return {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
-        numOne: (genNumbers(5) + 1) * 2,
-        numTwo: (genNumbers(5) + 1) * 2,
+        numOne: (genNumbers(10) + 2) * 2,
+        numTwo: (genNumbers(10) + 2) * 2,
         rollAnswer: genNumbers(2),
         rollz: 1,
       };
@@ -28967,8 +28967,8 @@ function genProblems() {
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
         objectOneQ: genNumbers(4) + 2,
         objectTwoQ: genNumbers(4) + 2,
-        objectOneV: genNumbers(4) + 2,
-        objectTwoV: genNumbers(4) + 2,
+        objectOneV: genNumbers(50) + 10,
+        objectTwoV: genNumbers(50) + 10,
         totalValue: undefined,
         rollQn: ["A", "B"][genNumbers(2)],
         rollz: 4,
