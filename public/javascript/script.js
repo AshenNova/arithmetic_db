@@ -30264,7 +30264,7 @@ function buttonLevelSetting() {
 
     case "Level 1.01":
       level = 1.01;
-      scoreNeeded = 1;
+      scoreNeeded = 50;
       break;
 
     case "Level 1.02":
