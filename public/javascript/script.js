@@ -21372,6 +21372,7 @@ function handleSubmit(e) {
             correctAnswerTwo = `${p.rollPi}x${p.radius * 2}`;
           } else {
             correctAnswer = `pix${p.radius * 2}`;
+            correctAnswerTwo = `2xpix${p.radius}`;
           }
         }
       }
