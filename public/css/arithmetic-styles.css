@@ -458,6 +458,10 @@ button {
   background-color: red;
 }
 
+.animate-right-container-extra {
+  background-color: yellow;
+}
+
 .mistakesCount {
   color: red;
   font-weight: strong;

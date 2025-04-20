@@ -24990,13 +24990,18 @@ function handleSubmit(e) {
       document.querySelector(".help-btn").classList.add("hidden");
       document.querySelector("#help").classList.add("hidden");
 
-      
       // EXTRA PRACTICE CHECK
 
       regen = 0;
       questionsCorrectArr.push(setting);
       const extra = cutOffCheck(level, setting, questionSecs);
       if (extra) {
+        //SCREEN FLASH YELLOW IF THERE IS EXTRA.
+        mainContainer.classList.add("animate-wrong-container");
+        setTimeout(
+          () => mainContainer.classList.remove("animate-wrong-container"),
+          331
+        );
         if (!extraPracticeArr.includes(extra)) {
           extraPracticeArr.push(extra);
         } else {
@@ -25008,7 +25013,7 @@ function handleSubmit(e) {
       //RESTART QUESTION TIME
       clearInterval(questionTime);
       questionTimer();
-      
+
       skipGlobalUpdateProblem = 0;
       state.score++;
       accumulatedScore++;
@@ -25030,8 +25035,10 @@ function handleSubmit(e) {
       } else {
         currentScore.textContent = state.score;
       }
+
       currentScore.classList.add("animate-right");
       setTimeout(() => currentScore.classList.remove("animate-right"), 331);
+
       state.numSix++;
       arr.length = 0;
       arr2.length = 0;
