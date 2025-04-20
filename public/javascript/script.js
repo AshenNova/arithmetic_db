@@ -24990,9 +24990,7 @@ function handleSubmit(e) {
       document.querySelector(".help-btn").classList.add("hidden");
       document.querySelector("#help").classList.add("hidden");
 
-      //RESTART QUESTION TIME
-      clearInterval(questionTime);
-      questionTimer();
+      
       // EXTRA PRACTICE CHECK
 
       regen = 0;
@@ -25007,6 +25005,10 @@ function handleSubmit(e) {
       }
       console.log(`Extra Practice Needed: ${extraPracticeArr}`);
 
+      //RESTART QUESTION TIME
+      clearInterval(questionTime);
+      questionTimer();
+      
       skipGlobalUpdateProblem = 0;
       state.score++;
       accumulatedScore++;

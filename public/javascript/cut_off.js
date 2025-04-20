@@ -1,5 +1,5 @@
 export function cutOffCheck(level, setting, time) {
-  console.log("Cut off timing activated!");
+  console.log("Cut off timing activated! ⏱️");
   console.log(time);
   let push = "No";
 
