@@ -199,15 +199,18 @@ exports.getFilteredAttempts = catchAsync(async (req, res, next) => {
       user: { $regex: user, $options: "i" },
       // user,
       tries: "1",
-    })
-      .sort({
-        level: -1,
-        date: -1,
-      })
-      .limit(1000);
+    }).sort({
+      level: -1,
+      date: -1,
+    });
+    // .limit(1000);
+    // .limit(1000);
 
     // console.log(latestAttempt);
     let stageOne = [];
+    // if (latestAttempt.length < 1000) {
+    //   numberOfLevels = latestAttempt.length;
+    // }
     for (let i = 0; i < latestAttempt.length; i++) {
       if (stageOne.includes(latestAttempt[i].level)) {
         // console.log("Already in");
