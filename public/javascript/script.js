@@ -10045,6 +10045,7 @@ function updateProblems() {
     // DECIMALS: PARTS AND INTERVAL
     if (setting == 25) {
       drawingDisplay();
+      canvasTextId.textContent = `Please give your answer in decimal.`;
       drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
     }
   }
