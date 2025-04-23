@@ -24997,9 +24997,10 @@ function handleSubmit(e) {
       const extra = cutOffCheck(level, setting, questionSecs);
       if (extra) {
         //SCREEN FLASH YELLOW IF THERE IS EXTRA.
-        mainContainer.classList.add("animate-wrong-container");
+        mainContainer.classList.add("animate-wrong-container-extra");
         setTimeout(
-          () => mainContainer.classList.remove("animate-wrong-container"),
+          () =>
+            mainContainer.classList.remove("animate-wrong--container-extra"),
           331
         );
         if (!extraPracticeArr.includes(extra)) {
