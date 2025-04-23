@@ -6,30 +6,30 @@ export function cutOffCheck(level, setting, time) {
   // CALCULATIONS
 
   if (level == "calTwo") {
-    if (setting == 12) {
-      if (time > 30) {
-        push = "Yes";
-      }
-    }
     if (setting == 1 || setting == 2 || setting == 3 || setting == 4) {
       if (time > 60) {
         push = "Yes";
       }
-    }
-    if (
+    } else if (
       setting == 5 ||
       setting == 6 ||
       setting == 9 ||
       setting == 10 ||
-      setting == 11 ||
-      setting == 13
+      setting == 11
     ) {
       if (time > 90) {
         push = "Yes";
       }
-    }
-    if (setting == 7 || setting == 8) {
+    } else if (setting == 7 || setting == 8) {
       if (time > 300) {
+        push = "Yes";
+      }
+    } else if (setting == 12) {
+      if (time > 30) {
+        push = "Yes";
+      }
+    } else {
+      if (time > 20) {
         push = "Yes";
       }
     }
