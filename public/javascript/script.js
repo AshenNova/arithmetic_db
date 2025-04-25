@@ -29024,8 +29024,10 @@ function genProblems() {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
         difference: (genNumbers(20) - 10) * 2,
+        // difference: -10,
         transfer: ["A", "B"][genNumbers(2)],
         transferV: genNumbers(10) + 1,
+        // transferV: 4,
       };
     }
 

@@ -21,6 +21,23 @@ const secondCanvas = document.querySelector(".second-canvas");
 const canvas2 = document.getElementById("canvas2");
 const ctx2 = canvas2.getContext("2d");
 const secondCanvasTextId = document.querySelector("#second-canvas-text");
+
+function modelVariableNames(s, v, q) {
+  //INSERTING VARIABLE NAMES
+  console.log("Filling in variable names");
+  const [x1, y1] = s;
+  const modelSize = [60, 30];
+  const space = 10;
+  const varNames = v;
+  const varQuantity = q;
+  let row = 0;
+  varNames.forEach((names, index) => {
+    for (let i = 0; i < varQuantity[index]; i++) {
+      ctx2.fillText(names, x1, y1 + (modelSize[1] + space) * row);
+      row += 1;
+    }
+  });
+}
 function secondCanvasHelp() {
   secondCanvas.classList.remove("hidden");
   ctx2.setTransform(1, 0, 0, 1, 0, 0);
@@ -2016,6 +2033,188 @@ export function helpMeFunc(level, state, setting) {
               4) Find the final cost. (after discount)</p>
               `;
       }
+    }
+
+    //DOUBLE EFFECT
+    if (setting == 7) {
+      secondCanvasTextId.innerHTML = `
+            Internal Transfer.</p>
+            1. Same, give 1/2 difference.</p>
+            2. Double Effect. ✅</p>
+            3. Unchanged Total.</p>
+            `;
+      secondCanvasHelp();
+      ctx2.font = "1em arial";
+
+      function doubleEffectLessThanHalf(
+        varAName,
+        varAValue,
+        varBName,
+        varBValue,
+        transfer,
+        difference,
+        transferVar
+      ) {
+        //NAMES
+        modelVariableNames([20, 50], [varAName, varBName], [1, 1]);
+        //SAME SIZE MODEL
+        let row = 0;
+        ctx2.beginPath();
+        for (let i = 0; i < 2; i++) {
+          ctx2.rect(40, 30 + 40 * row, 60, 30);
+          row += 1;
+        }
+        ctx2.stroke();
+        // FIRST VARIABLE IS LARGER.
+        ctx2.beginPath();
+        if (varAValue > varBValue || difference > 0) {
+          ctx2.rect(100, 30, 120, 30);
+          ctx2.stroke();
+          arrowHeadHorizontalLine(
+            [100, 30 - 7],
+            [100 + 120, 30 - 7],
+            difference,
+            "top"
+          );
+          if (transferVar == "A") {
+            //FIRST VARIABLE IS LARGER AND TRANSFERING FROM A.
+            ctx2.beginPath();
+            ctx2.moveTo(200, 0);
+            ctx2.lineTo(200, 90);
+            ctx2.stroke();
+            const cutSizeX = 20;
+            const cutSizeY = 30;
+            //DEPARTURE
+            ctx2.fillStyle = "red";
+            ctx2.fillRect(200, 30, cutSizeX, cutSizeY);
+            ctx2.fillStyle = "black";
+            ctx2.fillText(transfer, 200 + 5, 50);
+            //ARRIVAL
+            const startBlueX = 40 + 60;
+            const endBlueX = startBlueX + cutSizeX;
+            ctx2.fillStyle = "lightblue";
+            ctx2.fillRect(startBlueX, 30 + 40, cutSizeX, cutSizeY);
+            ctx2.fillStyle = "black";
+            ctx2.fillText(transfer, 40 + 60 + 5, 90);
+            arrowHeadHorizontalLine(
+              [endBlueX, 30 + 40 + 30],
+              [40 + 60 + 120 - cutSizeX, 30 + 40 + 30],
+              "?",
+              "bottom"
+            );
+          } else {
+            //FIRST VARIABLE IS LARGER AND TRANSFERING FROM B.
+            ctx2.beginPath();
+            ctx2.moveTo(80, 0);
+            ctx2.lineTo(80, 120);
+            ctx2.stroke();
+            const cutSizeX = 20;
+            const cutSizeY = 30;
+            //DEPARTURE
+            ctx2.fillStyle = "red";
+            const startRedX = 40 + 60 - 20;
+            const startRedY = 30 + 40;
+            ctx2.fillRect(startRedX, startRedY, cutSizeX, cutSizeY);
+            ctx2.fillStyle = "black";
+            ctx2.fillText(transfer, startRedX + 5, startRedY + 20);
+            ctx2.fillText(transfer, 40 + 60 - 20 + 5, 30 + 20);
+            //ARRIVAL
+            const startBlueX = 40 + 60 + 120;
+            const endBlueX = startBlueX + cutSizeX;
+            const startBlueY = 30;
+            ctx2.fillStyle = "lightblue";
+            ctx2.fillRect(startBlueX, startBlueY, cutSizeX, cutSizeY);
+            ctx2.fillStyle = "black";
+            ctx2.fillText(transfer, startBlueX + 5, startBlueY + 20);
+            arrowHeadHorizontalLine(
+              [startRedX, startRedY + 30 + 10],
+              [startBlueX + cutSizeX, startRedY + 30 + 10],
+              "?",
+              "bottom"
+            );
+          }
+        } else {
+          ctx2.rect(100, 70, 120, 30);
+          ctx2.stroke();
+          arrowHeadHorizontalLine(
+            [100, 70 + 30 + 10],
+            [100 + 120, 70 + 30 + 10],
+            Math.abs(difference),
+            "bottom"
+          );
+          if (transferVar == "A") {
+            //FIRST VARIABLE IS SMALLER AND TRANSFERING FROM A.
+            ctx2.beginPath();
+            ctx2.moveTo(80, 0);
+            ctx2.lineTo(80, 120);
+            ctx2.stroke();
+            const cutSizeX = 20;
+            const cutSizeY = 30;
+            //DEPARTURE
+            ctx2.fillStyle = "red";
+            const startRedX = 40 + 60 - 20;
+            const startRedY = 30;
+            ctx2.fillRect(startRedX, startRedY, cutSizeX, cutSizeY);
+            ctx2.fillStyle = "black";
+            ctx2.fillText(transfer, startRedX + 5, startRedY + 20);
+            ctx2.fillText(transfer, 40 + 60 - 20 + 5, 30 + 40 + 20);
+            //ARRIVAL
+            const startBlueX = 40 + 60 + 120;
+            const endBlueX = startBlueX + cutSizeX;
+            const startBlueY = 30 + 40;
+            ctx2.fillStyle = "lightblue";
+            ctx2.fillRect(startBlueX, startBlueY, cutSizeX, cutSizeY);
+            ctx2.fillStyle = "black";
+            ctx2.fillText(transfer, startBlueX + 5, startBlueY + 20);
+            arrowHeadHorizontalLine(
+              [startRedX, startRedY - 10],
+              [startBlueX + cutSizeX, startRedY - 10],
+              "?",
+              "bottom"
+            );
+          } else {
+            //FIRST VARIABLE IS SMALLER AND TRANSFERING FROM B.
+            ctx2.beginPath();
+            ctx2.moveTo(200, 50);
+            ctx2.lineTo(200, 120);
+            ctx2.stroke();
+
+            const cutSizeX = 20;
+            const cutSizeY = 30;
+            //DEPARTURE
+            ctx2.fillStyle = "red";
+            const startRedX = 40 + +60 + 120 - 20;
+            const startRedY = 30 + 40;
+            ctx2.fillRect(startRedX, startRedY, cutSizeX, cutSizeY);
+            ctx2.fillStyle = "black";
+            ctx2.fillText(transfer, startRedX + 5, startRedY + 20);
+            // ctx2.fillText(transfer, 40 + 60 - 20 + 5, 30 + 40 + 20);
+            //ARRIVAL
+            const startBlueX = 40 + 60;
+            const endBlueX = startBlueX + cutSizeX;
+            const startBlueY = 30;
+            ctx2.fillStyle = "lightblue";
+            ctx2.fillRect(startBlueX, startBlueY, cutSizeX, cutSizeY);
+            ctx2.fillStyle = "black";
+            ctx2.fillText(transfer, startBlueX + 5, startBlueY + 20);
+            arrowHeadHorizontalLine(
+              [startBlueX + cutSizeX, 30 - 7],
+              [startRedX, 30 - 7],
+              "?",
+              "top"
+            );
+          }
+        }
+      }
+      doubleEffectLessThanHalf(
+        p.objectOne,
+        0,
+        p.objectTwo,
+        0,
+        p.transferV,
+        p.difference,
+        p.transfer
+      );
     }
   }
   if (level == "heuThreeb") {
