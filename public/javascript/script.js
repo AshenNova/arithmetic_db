@@ -3717,64 +3717,276 @@ function updateProblems() {
 
   if (level == 4.15) {
     normalDisplay();
-    displayProblem.innerHTML = `
-    <table class="positionPattern table">
-      <tr>
-        <th></th>
-        <th>A</th>
-        <th>B</th>
-        <th>C</th>
-        <th>D</th>
-      </tr>
-      <tr>
-        <td>Row 1</td>
-        <td>${p.start}</td>
-        <td>${p.start + 1}</td>
-        <td>${p.start + 2}</td>
-        <td>${p.start + 3}</td>
-      </tr>
-    </table>
-    `;
-
-    const positionPatternCl = document.querySelector(".positionPattern");
-    let html;
+    if (p.numberOfColumns == 3) p.column = ["A", "B", "C"][genNumbers(3)];
+    if (p.numberOfColumns == 4) p.column = ["A", "B", "C", "D"][genNumbers(4)];
+    if (p.numberOfColumns == 5)
+      p.column = ["A", "B", "C", "D", "E"][genNumbers(5)];
     if (p.type == "repeat") {
-      html = `
-      <tr>
-        <td>Row 2</td>
-        <td>${p.start + 4}</td>
-        <td>${p.start + 5}</td>
-        <td>${p.start + 6}</td>
-        <td>${p.start + 7}</td>
-      </tr>
-      <tr>
-      <td>Row 3</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-      `;
+      if (p.numberOfColumns == 3) {
+        displayProblem.innerHTML = `
+        <table class="table positionPattern style="width: 100%"">
+          <tr>
+              <th></th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+          </tr>
+          <tr>
+            <td>Row 1</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+          <tr>
+           <td>Row 2</td>
+           <td>4</td>
+           <td>5</td>
+           <td>6</td>
+          </tr>
+          <tr>
+          <td>Row 3</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+         </tr>
+        </table>
+        `;
+      }
+      if (p.numberOfColumns == 4) {
+        displayProblem.innerHTML = `
+        <table class="table positionPattern">
+          <tr>
+              <th></th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+              <th>D</th>
+          </tr>
+          <tr>
+            <td>Row 1</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+           </tr>
+          <tr>
+           <td>Row 2</td>
+           <td>5</td>
+           <td>6</td>
+           <td>7</td>
+           <td>8</td>
+          </tr>
+          <tr>
+            <td>Row 3</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+           </tr>
+        </table>
+        `;
+      }
+      if (p.numberOfColumns == 5) {
+        displayProblem.innerHTML = `
+        <table class="table positionPattern">
+          <tr>
+              <th></th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+              <th>D</th>
+              <th>E</th>
+          </tr>
+          <tr>
+            <td>Row 1</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+           </tr>
+          <tr>
+           <td>Row 2</td>
+           <td>6</td>
+           <td>7</td>
+           <td>8</td>
+           <td>9</td>
+           <td>10</td>
+          </tr>
+          <tr>
+          <td>Row 3</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+         </tr>
+        </table>
+        `;
+      }
     }
     if (p.type == "snake") {
-      html = `
-      <tr>
-        <td>Row 2</td>
-        <td>${p.start + 7}</td>
-        <td>${p.start + 6}</td>
-        <td>${p.start + 5}</td>
-        <td>${p.start + 4}</td>
-      </tr>
-      <tr>
-      <td>Row 3</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-      `;
+      if (p.numberOfColumns == 3) {
+        displayProblem.innerHTML = `
+        <table class="table positionPattern" style="width: 100%">
+          <tr>
+              <th></th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+          </tr>
+          <tr>
+            <td>Row 1</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+          <tr>
+           <td>Row 2</td>
+           <td>6</td>
+           <td>5</td>
+           <td>4</td>
+          </tr>
+          <tr>
+          <td>Row 3</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+         </tr>
+        </table>
+        `;
+      }
+      if (p.numberOfColumns == 4) {
+        displayProblem.innerHTML = `
+        <table class="table positionPattern">
+          <tr>
+              <th></th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+              <th>D</th>
+          </tr>
+          <tr>
+            <td>Row 1</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+           </tr>
+          <tr>
+           <td>Row 2</td>
+           <td>8</td>
+           <td>7</td>
+           <td>6</td>
+           <td>5</td>
+          </tr>
+          <tr>
+            <td>Row 3</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+           </tr>
+        </table>
+        `;
+      }
+      if (p.numberOfColumns == 5) {
+        displayProblem.innerHTML = `
+        <table class="table positionPattern">
+          <tr>
+              <th></th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+              <th>D</th>
+              <th>E</th>
+          </tr>
+          <tr>
+            <td>Row 1</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+           </tr>
+          <tr>
+           <td>Row 2</td>
+           <td>10</td>
+           <td>9</td>
+           <td>8</td>
+           <td>7</td>
+           <td>6</td>
+          </tr>
+          <tr>
+          <td>Row 3</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+         </tr>
+        </table>
+        `;
+      }
     }
-    positionPatternCl.insertAdjacentHTML("beforeend", html);
+    // displayProblem.innerHTML = `
+    // <table class="positionPattern table">
+    //   <tr>
+    //     <th></th>
+    //     <th>A</th>
+    //     <th>B</th>
+    //     <th>C</th>
+    //     <th>D</th>
+    //   </tr>
+    //   <tr>
+    //     <td>Row 1</td>
+    //     <td>${p.start}</td>
+    //     <td>${p.start + 1}</td>
+    //     <td>${p.start + 2}</td>
+    //     <td>${p.start + 3}</td>
+    //   </tr>
+    // </table>
+    // `;
+
+    // let html;
+    // if (p.type == "repeat") {
+    //   html = `
+    //   <tr>
+    //     <td>Row 2</td>
+    //     <td>${p.start + 4}</td>
+    //     <td>${p.start + 5}</td>
+    //     <td>${p.start + 6}</td>
+    //     <td>${p.start + 7}</td>
+    //   </tr>
+    //   <tr>
+    //   <td>Row 3</td>
+    //   <td>...</td>
+    //   <td>...</td>
+    //   <td>...</td>
+    //   <td>...</td>
+    // </tr>
+    //   `;
+    // }
+    // if (p.type == "snake") {
+    //   html = `
+    //   <tr>
+    //     <td>Row 2</td>
+    //     <td>${p.start + 7}</td>
+    //     <td>${p.start + 6}</td>
+    //     <td>${p.start + 5}</td>
+    //     <td>${p.start + 4}</td>
+    //   </tr>
+    //   <tr>
+    //   <td>Row 3</td>
+    //   <td>...</td>
+    //   <td>...</td>
+    //   <td>...</td>
+    //   <td>...</td>
+    // </tr>
+    //   `;
+    // }
+    const positionPatternCl = document.querySelector(".positionPattern");
+    // positionPatternCl.insertAdjacentHTML("beforeend", html);
     if (p.question == "columnRow") {
       positionPatternCl.insertAdjacentHTML(
         "beforebegin",
@@ -20497,14 +20709,27 @@ function handleSubmit(e) {
     // }
 
     if (level == 4.15) {
-      const columnArr = ["A", "B", "C", "D"];
+      let columnArr;
+      let divider;
+      if (p.numberOfColumns == 3) {
+        columnArr = ["A", "B", "C"];
+        divider = 3;
+      }
+      if (p.numberOfColumns == 4) {
+        columnArr = ["A", "B", "C", "D"];
+        divider = 4;
+      }
+      if (p.numberOfColumns == 5) {
+        columnArr = ["A", "B", "C", "D", "E"];
+        divider = 5;
+      }
       if (p.type == "repeat") {
         if (p.question == "columnRow") {
-          let column = p.number % 4;
+          let column = p.number % divider;
           column -= 1;
           if (column < 0) column = columnArr.length - 1;
-          const row = Math.floor(p.number / 4);
-          if (p.number % 4 == 0) {
+          const row = Math.floor(p.number / divider);
+          if (p.number % divider == 0) {
             correctAnswer = `${columnArr[column]}, ${row}`;
             correctAnswerTwo = `${row}, ${columnArr[column]}`;
           } else {
@@ -20513,25 +20738,40 @@ function handleSubmit(e) {
           }
         }
         if (p.question == "number") {
-          correctAnswer = (p.row - 1) * 4 + columnArr.indexOf(p.column) + 1;
+          correctAnswer =
+            (p.row - 1) * divider + columnArr.indexOf(p.column) + 1;
         }
       }
       if (p.type == "snake") {
         if (p.question == "columnRow") {
           // if (column < 0) column = columnArr.length - 1;
 
-          let remainder = (p.number % 8) - 1;
-          if (remainder < 0) remainder = 7;
-          const columnArrSnake = ["A", "B", "C", "D", "D", "C", "B", "A"][
-            remainder
-          ];
+          let remainder = (p.number % (divider * 2)) - 1;
+          if (remainder < 0) remainder = divider - 1;
+          let columnArrSnake = [];
+          if (p.numberOfColumns == 3) {
+            columnArrSnake = ["A", "B", "C", "C", "B", "A"][remainder];
+          }
+          if (p.numberOfColumns == 4) {
+            columnArrSnake = ["A", "B", "C", "D", "D", "C", "B", "A"][
+              remainder
+            ];
+          }
+          if (p.numberOfColumns == 5) {
+            columnArrSnake = ["A", "B", "C", "D", "E", "E", "D", "C", "B", "A"][
+              remainder
+            ];
+          }
+          // const columnArrSnake = ["A", "B", "C", "D", "D", "C", "B", "A"][
+          //   remainder
+          // ];
 
-          const row = Math.floor(p.number / 8) * 2;
-          const left = p.number - row * 4;
-          if (p.number % 8 == 0) {
+          const row = Math.floor(p.number / (divider * 2)) * 2;
+          const left = p.number - row * divider;
+          if (p.number % (divider * 2) == 0) {
             correctAnswer = `${columnArrSnake}, ${row}`;
             correctAnswerTwo = `${row}, ${columnArrSnake}`;
-          } else if (left > 0 && left < 5) {
+          } else if (left > 0 && left < divider + 1) {
             correctAnswer = `${columnArrSnake}, ${row + 1}`;
             correctAnswerTwo = `${row + 1}, ${columnArrSnake}`;
           } else {
@@ -20540,7 +20780,7 @@ function handleSubmit(e) {
           }
         }
         if (p.question == "number") {
-          let base = Math.floor(p.row / 2) * 8;
+          let base = Math.floor(p.row / 2) * (divider * 2);
           console.log("HERE!");
 
           // REMAINDER
@@ -26052,9 +26292,14 @@ function genProblems() {
     return {
       start: 1,
       columns: genNumbers(4) + 1,
-      type: ["repeat", "snake"][genNumbers(2)],
-      question: ["number", "columnRow"][genNumbers(2)],
-      column: ["A", "B", "C", "D"][genNumbers(4)],
+      // type: ["repeat", "snake"][genNumbers(2)],
+      type: "snake",
+      // type: "repeat",
+      // question: ["number", "columnRow"][genNumbers(2)],
+      question: "number",
+      column: undefined,
+      numberOfColumns: genNumbers(3) + 3,
+      // numberOfColumns: 3,
       row: genNumbers(5) + 10,
       number: genNumbers(50) + 50,
     };
