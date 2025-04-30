@@ -2598,7 +2598,7 @@ export function helpMeFunc(level, state, setting) {
         helpMe.insertAdjacentHTML("beforeend", html);
       }
     }
-    if (p.rollz == 7) {
+    if (setting == 7) {
       let quotient = Math.floor(p.total / (p.objectTwoQ + 1));
       let remainder = p.total % (p.objectTwoQ + 1);
       if (remainder == 0) {

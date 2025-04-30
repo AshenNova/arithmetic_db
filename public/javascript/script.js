@@ -30611,7 +30611,7 @@ function buttonLevelSetting() {
     case "Level 2.01":
       level = 2.01;
       scoreNeeded = 50;
-      displayProblem.style.fontSize = "25px";
+      displayProblem.style.fontSize = "2em";
       break;
 
     case "Level 2.02":
