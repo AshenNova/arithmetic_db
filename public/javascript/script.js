@@ -3754,7 +3754,7 @@ function updateProblems() {
       }
       if (p.numberOfColumns == 4) {
         displayProblem.innerHTML = `
-        <table class="table positionPattern">
+        <table class="table positionPattern" style="width: 100%">
           <tr>
               <th></th>
               <th>A</th>
@@ -3788,7 +3788,7 @@ function updateProblems() {
       }
       if (p.numberOfColumns == 5) {
         displayProblem.innerHTML = `
-        <table class="table positionPattern">
+        <table class="table positionPattern" style="width: 100%">
           <tr>
               <th></th>
               <th>A</th>
@@ -3858,7 +3858,7 @@ function updateProblems() {
       }
       if (p.numberOfColumns == 4) {
         displayProblem.innerHTML = `
-        <table class="table positionPattern">
+        <table class="table positionPattern" style="width: 100%">
           <tr>
               <th></th>
               <th>A</th>
@@ -3892,7 +3892,7 @@ function updateProblems() {
       }
       if (p.numberOfColumns == 5) {
         displayProblem.innerHTML = `
-        <table class="table positionPattern">
+        <table class="table positionPattern" style="width: 100%">
           <tr>
               <th></th>
               <th>A</th>
@@ -25235,21 +25235,26 @@ function handleSubmit(e) {
 
       regen = 0;
       questionsCorrectArr.push(setting);
-      const extra = cutOffCheck(level, setting, questionSecs);
-      if (extra) {
-        //SCREEN FLASH YELLOW IF THERE IS EXTRA.
-        mainContainer.classList.add("animate-right-container-extra");
-        setTimeout(
-          () => mainContainer.classList.remove("animate-right-container-extra"),
-          331
-        );
-        if (!extraPracticeArr.includes(extra)) {
-          extraPracticeArr.push(extra);
-        } else {
-          console.log("Already Exist");
+
+      //CHECKING IF THIS IS THE FIRST ATTEMPT TO CHECK IF IT IS WITHIN CUTOFF.
+      if (attempt == 1) {
+        const extra = cutOffCheck(level, setting, questionSecs);
+        if (extra) {
+          //SCREEN FLASH YELLOW IF THERE IS EXTRA.
+          mainContainer.classList.add("animate-right-container-extra");
+          setTimeout(
+            () =>
+              mainContainer.classList.remove("animate-right-container-extra"),
+            331
+          );
+          if (!extraPracticeArr.includes(extra)) {
+            extraPracticeArr.push(extra);
+          } else {
+            console.log("Already Exist");
+          }
         }
+        console.log(`Extra Practice Needed: ${extraPracticeArr}`);
       }
-      console.log(`Extra Practice Needed: ${extraPracticeArr}`);
 
       //RESTART QUESTION TIME
       clearInterval(questionTime);
