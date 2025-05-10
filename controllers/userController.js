@@ -1147,7 +1147,7 @@ const generateRec = async (nameTemp) => {
   if (age <= 7) ageLevel = [];
   if (age == 8 || (age == 7 && month >= 10)) {
     ageLevel = levelOne;
-    const removeList = ["1", "1.02"];
+    const removeList = ["1"];
     removeList.forEach((item) => {
       if (ageLevel.includes(item)) {
         const index = ageLevel.indexOf(item);

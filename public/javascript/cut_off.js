@@ -4,6 +4,11 @@ export function cutOffCheck(level, setting, time) {
   let push = "No";
 
   // CALCULATIONS
+  if (level == "calOne") {
+    if ([1, 2, 3, 4, 5, 6, 9].includes(setting)) {
+      if (time > 60) push = "Yes";
+    }
+  }
 
   if (level == "calTwo") {
     if (setting == 1 || setting == 2 || setting == 3 || setting == 4) {

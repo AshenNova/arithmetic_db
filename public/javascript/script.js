@@ -25225,7 +25225,7 @@ function handleSubmit(e) {
       correctAnswerArr.includes(userInput.value.trim()) ||
       correctAnswerArr.includes(userInput2.value.trim())
     ) {
-      // WHEN CORRECT
+      // WHEN CORRECT IF CORRECT
       console.log("correct");
       //HIDE HELP
       document.querySelector(".help-btn").classList.add("hidden");
@@ -25238,6 +25238,7 @@ function handleSubmit(e) {
 
       //CHECKING IF THIS IS THE FIRST ATTEMPT TO CHECK IF IT IS WITHIN CUTOFF.
       if (attempt == 1) {
+        console.log(`This is attempt number: ${attempt}.`)
         const extra = cutOffCheck(level, setting, questionSecs);
         if (extra) {
           //SCREEN FLASH YELLOW IF THERE IS EXTRA.
@@ -25871,9 +25872,9 @@ function genProblems() {
 
   if (level == 3.07) {
     return {
-      numOne: genNumbers(5) + 1,
-      numTwo: genNumbers(4) + 2,
-      numThree: genNumbers(5) + 1,
+      numOne: genNumbers(9) + 1,
+      numTwo: genNumbers(9) + 1,
+      numThree: genNumbers(9) + 1,
     };
   }
 
