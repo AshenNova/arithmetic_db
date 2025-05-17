@@ -31949,7 +31949,7 @@ allLevelButtons.forEach((item, index) => {
           )}s, ${data.previous.mistake} mistakes, ${data.daysAgo} days ago
           `;
         } else {
-          previousAttempt.textContent = `This is your 1st Attempt.`;
+          previousAttempt.textContent = ``;
         }
 
         // previousAttempt.textContent = `Age`;
