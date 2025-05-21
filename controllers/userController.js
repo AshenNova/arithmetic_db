@@ -697,7 +697,7 @@ const generateRec = async (nameTemp) => {
         // level: -1,
         date: -1,
       })
-      .limit(1000)
+      // .limit(1000)
       .lean(),
     User.findOne({ username: nameTemp.toLowerCase() }),
   ]);

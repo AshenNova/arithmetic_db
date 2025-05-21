@@ -777,6 +777,7 @@ export function helpList(level) {
   const helpArr = [
     "1.01",
     "1.04",
+    "1.05",
     "1.06",
     "1.07",
     // "2.09",
@@ -864,6 +865,14 @@ export function helpMeFunc(level, state, setting) {
     <hr>
     3 = 2 + 1</br>
     r<sup>f</sup> = c<sup>o</sup> ± d<sup>-</sup>
+    `;
+  }
+  // IDENTITY SHORT STATEMENTS
+  if (level == 1.05) {
+    helpMe.innerHTML = `
+    than <u>c</u><sup>opposite</sup></br>
+    <u>d</u><sup>minus</sup>more/less</br>
+    is <u>r</u><sup>follow</sup>
     `;
   }
   //MULTIPLICATION IN SETS
