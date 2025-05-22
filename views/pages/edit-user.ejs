@@ -73,6 +73,10 @@
                             <div class="form-group required">
                                 <label for="username">Username</label>
                                 <input type="text" class="form-control text-lowercase" id="username" required="" name="username" value="<%= editUser.username %>">
+                            </div>
+                            <div class="form-group required">
+                                <label for="perSession">Cost per session</label>
+                                <input type="number" class="form-control" id="perSession" required="" name="perSession" value="<%= editUser.perSession %>">
                             </div>   
                         <% } else { %>
                             <div class="form-group required">

@@ -18471,7 +18471,8 @@ How many items are there in each bag?
       const minsDuration = p.duration % 60;
       let endHours = p.startHour + hoursDuration;
       let endMins = p.startMins + minsDuration;
-
+      let endTimeZone = "a.m";
+      if (endHours >= 12) endTimeZone = "p.m";
       if (endMins >= 60) {
         endMins -= 60;
         endHours += 1;
@@ -18490,7 +18491,7 @@ How many items are there in each bag?
           .toString()
           .padStart(2, "0")}${timeZone} to ${endHours}.${endMins
           .toString()
-          .padStart(2, "0")}${timeZone}.</p>
+          .padStart(2, "0")}${endtimeZone}.</p>
       Only ${p.active} of them can be playing each time.</p>
       How much time did each of them get to play?</p>
       `;
