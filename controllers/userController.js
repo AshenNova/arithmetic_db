@@ -1383,20 +1383,26 @@ const generateRec = async (nameTemp) => {
           let index = ageLevel.indexOf(attempt.level);
 
           //Select new level
-          if (index == ageLevel.length - 1) {
-            let i = 0;
+
+          if (index == ageLevel.length - 1 || index == -1) {
+            //if last
+            let i = genNumbers(ageLevel.length);
+
             while (existingLevel.includes(ageLevel[i])) {
               i += 1;
             }
             recommendObj.level = ageLevel[i];
-          } else if (index == -1) {
-            let temp = Math.floor(ageLevel.length / 2);
-            while (existingLevel.includes(ageLevel[temp])) {
-              temp += 1;
-            }
+            // } else if (index == -1) {
+            //   //if it doesnt exist
+            //   let temp = Math.floor(ageLevel.length / 2);
+            //   while (existingLevel.includes(ageLevel[temp])) {
+            //     temp += 1;
+            //   }
             recommendObj.level = ageLevel[temp];
           } else {
+            //next level
             index += 1;
+
             while (existingLevel.includes(ageLevel[index])) {
               index += 1;
             }
