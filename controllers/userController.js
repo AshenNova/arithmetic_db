@@ -1247,33 +1247,40 @@ const generateRec = async (nameTemp) => {
     });
   }
   console.log("2nd: " + onlyLevelsArr);
+  let loopingLevel = 0;
   distinctLevels.forEach((item) => {
     if (age <= 7) {
+      // loopingLevel = 1;
       if (item.startsWith("1")) {
         ageLevel.push(item);
       }
     }
     if (age == 8 || (age == 7 && month >= 10)) {
+      loopingLevel = 1;
       if (item.startsWith("2")) {
         ageLevel.push(item);
       }
     }
     if (age == 9 || (age == 8 && month >= 10)) {
+      loopingLevel = 2;
       if (item.startsWith("3")) {
         ageLevel.push(item);
       }
     }
     if (age == 10 || (age == 9 && month >= 10)) {
+      loopingLevel = 3;
       if (item.startsWith("4")) {
         ageLevel.push(item);
       }
     }
     if (age == 11 || (age == 10 && month >= 10)) {
+      loopingLevel = 4;
       if (item.startsWith("5")) {
         ageLevel.push(item);
       }
     }
     if (age >= 12 || (age == 11 && month >= 10)) {
+      loopingLevel = 5;
       if (item.startsWith("6")) {
         ageLevel.push(item);
       }
@@ -1283,6 +1290,7 @@ const generateRec = async (nameTemp) => {
 
   // console.log(`History: ${ageLevel}`);
   console.log(latestAttempt);
+
   latestAttempt.forEach((attempt) => {
     console.log("here 1.1");
     console.log(attempt.level);
@@ -1383,10 +1391,35 @@ const generateRec = async (nameTemp) => {
           let index = ageLevel.indexOf(attempt.level);
 
           //Select new level
-
+          console.log(attempt.level, index, ageLevel);
           if (index == ageLevel.length - 1 || index == -1) {
+            console.log("YOU HAVE REACHED THE END ✅");
             //if last
-            let i = genNumbers(ageLevel.length);
+            // let end = 0;
+            let i = 0;
+
+            // if (age >= 11) {
+            // console.log("Age 11 and above");
+            console.log(loopingLevel);
+            if (loopingLevel > 1) {
+              recommend.forEach((l) => {
+                if (l.level.startsWith(loopingLevel)) {
+                  console.log(`Level ${loopingLevel} already exist.`);
+                  loopingLevel -= 1;
+                }
+              });
+              ageLevel.forEach((l, index) => {
+                if (i != 0) return;
+                if (l.startsWith(loopingLevel)) {
+                  console.log(`Returning index: ${index}, ${l}`);
+                  i = index;
+                }
+              });
+            } else {
+              console.log("i = 0");
+              i = 0;
+            }
+            // }
 
             while (existingLevel.includes(ageLevel[i])) {
               i += 1;
@@ -1398,9 +1431,10 @@ const generateRec = async (nameTemp) => {
             //   while (existingLevel.includes(ageLevel[temp])) {
             //     temp += 1;
             //   }
-            recommendObj.level = ageLevel[temp];
+            // recommendObj.level = ageLevel[temp];
           } else {
             //next level
+            console.log("Next Level");
             index += 1;
 
             while (existingLevel.includes(ageLevel[index])) {
