@@ -2770,7 +2770,14 @@ function updateProblems() {
 
   if (level == 3.12) {
     drawingDisplay();
-    canvasTextId.innerHTML = `The length of each square is ${p.side} cm.</br>What is the area below?`;
+    const area = p.side * p.side;
+    const roll = genNumbers(2);
+    if (roll == 0) {
+      canvasTextId.innerHTML = `The length of each square is ${p.side} cm.</br>What is the area below?`;
+    } else {
+      canvasTextId.innerHTML = `The area of each square is ${area} cm2.</br>What is the area below?`;
+    }
+
     p.count = drawSquares(p.length, p.breadth, 30, p.side);
     drawGrid(p.length, p.breadth, 30);
     if (p.count == "Error") return updateCalc();
@@ -25930,7 +25937,7 @@ function genProblems() {
     return {
       length: genNumbers(4) + 4,
       breadth: genNumbers(3) + 4,
-      side: genNumbers(2) + 1,
+      side: genNumbers(3) + 1,
       count: undefined,
     };
   }
