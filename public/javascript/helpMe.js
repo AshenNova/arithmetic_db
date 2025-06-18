@@ -1877,9 +1877,9 @@ export function helpMeFunc(level, state, setting) {
         }
 
         arrowHeadVerticalLine(
-          [modelStartX + modelSize[0] * quanA + 10, modelStartY],
+          [modelStartX + modelSize[0] * unitA + 10, modelStartY],
           [
-            modelStartX + modelSize[0] * quanA + 10,
+            modelStartX + modelSize[0] * unitA + 10,
             modelStartY + 40 * (quanA + quanB) - space,
           ],
           total,

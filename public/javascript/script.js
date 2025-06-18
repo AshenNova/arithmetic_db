@@ -15415,7 +15415,7 @@ How far is apart is Town A and Town B?
         lineTwo = `${p.objectOne} is ${p.varA}.`;
         p.rollLineThree = ["B", "total"][genNumbers(2)];
         if (p.rollLineThree == "B") {
-          lineThree = `What is ${p.objectTwo}`;
+          lineThree = `What is ${p.objectTwo}?`;
         }
         if (p.rollLineThree == "total") {
           lineThree = `What is the total of ${p.objectOne} and ${p.objectTwo}?`;
@@ -15426,7 +15426,7 @@ How far is apart is Town A and Town B?
         lineTwo = `${p.objectTwo} is ${p.varB}.`;
         p.rollLineThree = ["A", "total"][genNumbers(2)];
         if (p.rollLineThree == "A") {
-          lineThree = `What is ${p.objectOne}`;
+          lineThree = `What is ${p.objectOne}?`;
         }
         if (p.rollLineThree == "total") {
           lineThree = `What is the total of ${p.objectOne} and ${p.objectTwo}?`;
@@ -17532,6 +17532,12 @@ How many items are there in each bag?
           "How many girls are there?"
         );
       }
+      // if (p.type == "C") {
+
+      //   displayProblem.innerHTML = `
+      //  How many girls and boys in total must move between the classes so that ${sceneOneA}
+      //   `;
+      // }
     }
     //INTERNAL TRANSFER: DOUBLE EFFECT
     if (setting == 6) {
@@ -28951,8 +28957,8 @@ function genProblems() {
         type: [1, 2][genNumbers(2)],
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
-        numOne: genNumbers(90) + 10,
-        numTwo: genNumbers(90) + 10,
+        numOne: genNumbers(40) + 10,
+        numTwo: genNumbers(40) + 10,
       };
     }
 
