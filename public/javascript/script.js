@@ -2775,7 +2775,7 @@ function updateProblems() {
     if (roll == 0) {
       canvasTextId.innerHTML = `The length of each square is ${p.side} cm.</br>What is the area below?`;
     } else {
-      canvasTextId.innerHTML = `The area of each square is ${area} cm2.</br>What is the area below?`;
+      canvasTextId.innerHTML = `The area of each square is ${area} cm<sup>2</sup>.</br>What is the area below?`;
     }
 
     p.count = drawSquares(p.length, p.breadth, 30, p.side);
