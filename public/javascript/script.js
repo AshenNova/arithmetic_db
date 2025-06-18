@@ -29517,7 +29517,7 @@ function genProblems() {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
         objectTwoQ: genNumbers(3) + 2,
-        total: genNumbers(45) + 5,
+        total: genNumbers(45) + 100,
         rollQn: ["A", "B"][genNumbers(2)],
       };
     }
