@@ -23225,9 +23225,10 @@ function handleSubmit(e) {
         }
         if (p.optionOne == "discount gst") {
           if (p.optionThree == "final cost") {
-            correctAnswer =
+            correctAnswer = (
               (((p.value / 100) * (100 - p.discount)) / 100) *
-              (100 + p.gst).toFixed(2);
+              (100 + p.gst)
+            ).toFixed(2);
           }
           if (p.optionThree == "initial cost") {
             correctAnswer = accDecimal(p.value);
@@ -23237,7 +23238,7 @@ function handleSubmit(e) {
         console.log(correctAnswer);
         if (
           correctAnswer.toString().split(".")[1] &&
-          correctAnswer.toString().split(".")[1].length > 3
+          correctAnswer.toString().split(".")[1].length > 2
         ) {
           console.log(p.value);
           correctAnswer = correctAnswer.toFixed(2);
