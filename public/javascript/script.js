@@ -12073,7 +12073,10 @@ function updateProblems() {
         return updateCalc();
       }
       displayProblem.innerHTML = `
-  ${personA} took ${p.numeA}/${p.denoA} of the ${stuff}.</br>
+  ${personA} took ${displaySimpleFraction(
+        p.numeA,
+        p.denoA
+      )} of the ${stuff}.</br>
   ${personB} took ${Math.abs(p.difference)} ${
         p.difference > 0 ? "more" : "less"
       } ${stuff} than ${personA}.</br>
@@ -12768,7 +12771,10 @@ function updateProblems() {
         lineOne = `The ratio of A : B is ${unitAF} : ${unitBF} at first.`;
       }
       if (lineOne == 1) {
-        lineOne = `A is ${unitAF}/${unitBF} of B at first.`;
+        lineOne = `A is ${displaySimpleFraction(
+          unitAF,
+          unitBF
+        )} of B at first.`;
       }
       if (lineOne == 2) {
         lineOne = `The ratio of A to A and B is ${unitAF} : ${
@@ -12776,7 +12782,10 @@ function updateProblems() {
         } at first.`;
       }
       if (lineOne == 3) {
-        lineOne = ` A is ${unitAF}/${unitAF + unitBF} of the total at first.`;
+        lineOne = ` A is ${displaySimpleFraction(
+          unitAF,
+          unitAF + unitBF
+        )} of the total at first.`;
       }
       // LINE TWO
 
@@ -12832,7 +12841,7 @@ function updateProblems() {
         lineThree = `The ratio of A : B in the end is ${unitAE} : ${unitBE}.`;
       }
       if (lineThree == 1) {
-        lineThree = `A became ${unitAE}/${unitBE} of B.`;
+        lineThree = `A became ${displaySimpleFraction(unitAE, unitBE)} of B.`;
       }
       if (lineThree == 2) {
         lineThree = `The ratio of A to the total is ${unitAE} : ${
@@ -12840,7 +12849,10 @@ function updateProblems() {
         } in the end.`;
       }
       if (lineThree == 3) {
-        lineThree = `A became ${unitAE}/${unitAE + unitBE} of the total.`;
+        lineThree = `A became ${displaySimpleFraction(
+          unitAE,
+          unitAE + unitBE
+        )} of the total.`;
       }
 
       //LINE FOUR
@@ -12990,10 +13002,16 @@ function updateProblems() {
         lineOne = `The ratio of A : B is ${unitAF} : ${unitBF} at first.`;
       }
       if (lineOne == 1) {
-        lineOne = ` A  is ${unitAF}/${unitBF} of B at first.`;
+        lineOne = ` A  is ${displaySimpleFraction(
+          unitAF,
+          unitBF
+        )} of B at first.`;
       }
       if (lineOne == 2) {
-        lineOne = ` A  is ${unitAF}/${unitAF + unitBF} of the total at first.`;
+        lineOne = ` A  is ${displaySimpleFraction(
+          unitAF,
+          unitAF + unitBF
+        )} of the total at first.`;
       }
       if (lineOne == 3) {
         lineOne = `The ratio of A to the total is ${unitAF}:${
@@ -13014,7 +13032,7 @@ function updateProblems() {
       }
       if (lineThree == 1) {
         lineThree = `
-              A is ${unitAE}/${unitBE} of B in the end.`;
+              A is ${displaySimpleFraction(unitAE, unitBE)} of B in the end.`;
       }
       // LINE FOUR
       let lineFour = "";
@@ -13064,7 +13082,7 @@ function updateProblems() {
         lineOne = `The ratio of A : B is ${unitAF}:${unitBF}.`;
       }
       if (lineOne == 1) {
-        lineOne = `A is ${unitAF}/${unitBF} of B .`;
+        lineOne = `A is ${displaySimpleFraction(unitAF, unitBF)} of B .`;
       }
       if (lineOne == 2) {
         lineOne = `The ratio of A to the total is ${unitAF}:${
@@ -13072,7 +13090,10 @@ function updateProblems() {
         }.`;
       }
       if (lineOne == 3) {
-        lineOne = `A is ${unitAF}/${unitAF + unitBF} of the total.`;
+        lineOne = `A is ${displaySimpleFraction(
+          unitAF,
+          unitAF + unitBF
+        )} of the total.`;
       }
 
       // LINE TWO
@@ -13100,7 +13121,10 @@ function updateProblems() {
         lineThree = `The ratio of A:B in the end is ${unitAE}:${unitBE}.`;
       }
       if (lineThree == 1) {
-        lineThree = `A is ${unitAE}/${unitBE} of B in the end.`;
+        lineThree = `A is ${displaySimpleFraction(
+          unitAE,
+          unitBE
+        )} of B in the end.`;
       }
       if (lineThree == 2) {
         lineThree = `The ratio of A to A and B in the end is ${unitAE}:${
@@ -13143,8 +13167,8 @@ function updateProblems() {
 
       displayProblem.innerHTML = `
       The ratio of A : B is ${p.ratioA} : ${p.ratioB}.</p>
-      ${p.numeA}/${p.denoA} of A was removed.</p>
-      ${p.numeB}/${p.denoB} of B was removed.</p>
+      ${displaySimpleFraction(p.numeA, p.denoA)} of A was removed.</p>
+      ${displaySimpleFraction(p.numeB, p.denoB)} of B was removed.</p>
       What is the ratio of A : B in the end?
 
       `;
