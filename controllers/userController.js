@@ -1587,7 +1587,8 @@ exports.recommend = catchAsync(async (req, res, next) => {
       if (
         item.level == todayItem.level &&
         item.mode == todayItem.mode &&
-        item.setting == todayItem.setting
+        item.setting == todayItem.setting &&
+        todayItem.extra == ""
       ) {
         console.log("YES! " + index);
         item.accomplish = true;
