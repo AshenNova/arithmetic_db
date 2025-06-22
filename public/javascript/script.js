@@ -5412,9 +5412,9 @@ function updateProblems() {
     if (p.numOne == p.numThree) {
       p.numOne += 1;
     }
-    // if (p.numOne > p.numThree) {
-    //   [p.numOne, p.numThree] = [p.numThree, p.numOne];
-    // }
+    if (p.numOne > p.numThree) {
+      [p.numOne, p.numThree] = [p.numThree, p.numOne];
+    }
 
     arr.push(p.numOne, p.numThree);
     arr.sort(function (a, b) {

@@ -35,8 +35,8 @@ export function instructionsContent(level) {
   }
   console.log("CHECKING FOR INSTRUCTIONS FOR " + level);
   const list = [
-    1.04, 1.05, 2.05, 2.07, 4.03, 3.06, 3.07, 3.09, 3.16, 4.0, 4.06, 4.21, 4.24,
-    5.0, 5.01, 5.02, 5.03,
+    1.04, 1.05, 2.05, 2.07, 4.03, 3.06, 3.07, 3.09, 3.16, 4.0, 4.06, 4.09, 4.21,
+    4.24, 5.0, 5.01, 5.02, 5.03,
   ];
   if (list.includes(level)) {
     document.querySelector(".fa-pencil").classList.remove("hidden");
@@ -92,6 +92,9 @@ export function instructionsContent(level) {
     return `
     Do not simplify.
     `;
+  } else if (level == 4.09) {
+    return `Directly convert the decimals to fractions.</br>
+    Do not need to simplify`;
   } else if (level == 4.21) {
     return `Present the last number statement with the result.<br>
     eg. 3x4=12
