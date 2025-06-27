@@ -30838,7 +30838,7 @@ function buttonLevelSetting() {
 
     case "Level 3.12":
       level = 3.12;
-      scoreNeeded = 20;
+      scoreNeeded = 10;
       document.querySelector("#user-input").setAttribute("type", "text");
       // instructions.textContent = "Form an Equation from the pattern";
       break;
