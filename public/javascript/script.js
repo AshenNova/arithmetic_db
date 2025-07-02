@@ -20785,7 +20785,7 @@ function handleSubmit(e) {
           // if (column < 0) column = columnArr.length - 1;
 
           let remainder = (p.number % (divider * 2)) - 1;
-          if (remainder < 0) remainder = divider - 1;
+          if (remainder <= 0) remainder = divider - 1;
           let columnArrSnake = [];
           if (p.numberOfColumns == 3) {
             columnArrSnake = ["A", "B", "C", "C", "B", "A"][remainder];
