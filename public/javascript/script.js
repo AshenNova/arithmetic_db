@@ -1914,9 +1914,11 @@ function updateProblems() {
     while (arr[0] == p.figureTwo) {
       p.figureTwo = ["🏀", "⚽️", "🏈", "🎾", "🍎", "🍏", "🌭"][genNumbers(7)];
     }
-    while (p.numTwo > p.numOne || p.numOne == p.numTwo) {
-      p.numTwo = genNumbers(5) + 1;
-    }
+    const diff = p.numOne - p.numTwo;
+    if (p.numTwo == diff || p.numTwo > p.numOne || p.numOne == p.numTwo) return updateCalc();
+    // while (p.numTwo > p.numOne || p.numOne == p.numTwo) {
+    //   p.numTwo = genNumbers(5) + 1;
+    // }
     arr.push(p.figureTwo);
     let repeat = genNumbers(3) + 2;
     let repeatTwo = genNumbers(3) + 2;
