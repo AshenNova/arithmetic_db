@@ -26044,15 +26044,15 @@ function genProblems() {
   }
 
   if (level == 2.06) {
-    let figureOne = genNumbers(7);
-    let figureTwo = genNumbers(7);
-    while (figureOne == figureTwo) {
-      figureOne = genNumbers(7);
-      figureTwo = genNumbers(7);
+    let positionOne = genNumbers(7);
+    let positionTwo = genNumbers(7);
+    while (positionOne == positionTwo) {
+      positionOne = genNumbers(7);
+      positionTwo = genNumbers(7);
     }
     return {
-      figure: ["🏀", "⚽️", "🏈", "🎾", "🍎", "🍏", "🌭"][genNumbers(7)],
-      figureTwo: ["🏀", "⚽️", "🏈", "🎾", "🍎", "🍏", "🌭"][genNumbers(7)],
+      figure: ["🏀", "⚽️", "🏈", "🎾", "🍎", "🍏", "🌭"][positionOne],
+      figureTwo: ["🏀", "⚽️", "🏈", "🎾", "🍎", "🍏", "🌭"][positionTwo],
       operator: "+",
       numOne: genNumbers(9) + 2,
       numTwo: genNumbers(5) + 1,
