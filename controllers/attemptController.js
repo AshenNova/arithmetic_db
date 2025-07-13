@@ -648,12 +648,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     const userNow = await User.findOne({ username: user.toLowerCase() });
     console.log(userNow);
     const age = new Date().getFullYear() - userNow.DOB.getFullYear();
-    if (extra == ""){
-      pointsAwarded = points(level, award, age, data.eligible, setting);
-    } else {
-      pointsAwarded = 1;
-    }
-    
+    pointsAwarded = points(level, award, age, data.eligible, setting);
     if (!userNow.points) {
       userNow.points = pointsAwarded;
     } else {
@@ -662,7 +657,6 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
     console.log(
       `Points Awarded: ${pointsAwarded}, Cumulative: ${userNow.points}`
     );
-    if (extra != "" )
     //SEARCH FOR ALL THE ATTEMPTS DONE TODAY
     let start = new Date();
     start.setHours(0, 0, 0, 0);
