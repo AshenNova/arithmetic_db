@@ -303,17 +303,19 @@ exports.loginCheck = catchAsync(async (req, res, next) => {
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
+
   // let message;
   if (req.auth.login == false) {
-    console.log("Bad login");
-    // message = "Please login before proceeding";
-    // return res.redirect("/user/login");
     let message;
+    const gradPictures = await Graduation.find();
+    console.log("Bad login");
+    message = "Please login before proceeding";
     return res.render("pages/login", {
       username,
       authenticate,
       currentUser,
       message,
+      gradPictures,
     });
   }
   next();

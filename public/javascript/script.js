@@ -1911,11 +1911,12 @@ function updateProblems() {
   if (level == 2.06) {
     normalDisplay();
     arr.push(p.figure);
-    while (arr[0] == p.figureTwo) {
-      p.figureTwo = ["🏀", "⚽️", "🏈", "🎾", "🍎", "🍏", "🌭"][genNumbers(7)];
-    }
+    // while (arr[0] == p.figureTwo) {
+    //   p.figureTwo = ["🏀", "⚽️", "🏈", "🎾", "🍎", "🍏", "🌭"][genNumbers(7)];
+    // }
     const diff = p.numOne - p.numTwo;
-    if (p.numTwo == diff || p.numTwo > p.numOne || p.numOne == p.numTwo) return updateCalc();
+    if (p.numTwo == diff || p.numTwo > p.numOne || p.numOne == p.numTwo)
+      return updateCalc();
     // while (p.numTwo > p.numOne || p.numOne == p.numTwo) {
     //   p.numTwo = genNumbers(5) + 1;
     // }
@@ -7845,43 +7846,328 @@ function updateProblems() {
     }
   }
 
+  // if (level == 6.06) {
+  //   if (p.roll == "A") {
+  //     displayProblem.innerHTML = `
+  //     Someone moved from</br>
+  //     A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB}${p.timeUnits},</br>
+  //     then </br>
+  //     B to C at ${p.speedC} units/${p.timeUnits} for ${p.timeC}${p.timeUnits}.</br>
+  //     Whats the average speed of the whole journey?
+
+  //     `;
+  //   }
+  //   if (p.roll == "B") {
+  //     p.speedA = Math.ceil(
+  //       (p.speedB * p.timeB + p.speedC * p.timeC) / (p.timeB + p.timeC)
+  //     );
+  //     displayProblem.innerHTML = `
+  //     Someone moved from</br>
+  //     A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB} ${p.timeUnits},</br>
+  //     then from B to C in ${p.timeC} ${p.timeUnits}.</br>
+  //     ${p.gender} travelled at an average speed of ${p.speedA} units/${p.timeUnits} for the whole journey.</br>
+  //     At what speed did ${p.gender} travel between B to C?
+
+  //     `;
+  //   }
+  //   if (p.roll == "C") {
+  //     p.speedA = Math.ceil(
+  //       (p.speedB * p.timeB + p.speedC * p.timeC) / (p.timeB + p.timeC)
+  //     );
+  //     p.timeA = p.timeB + p.timeC;
+  //     displayProblem.innerHTML = `
+  //     Someone moved from</br>
+  //     A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB} ${p.timeUnits},</br>
+  //     then from B to C in ${p.speedC} units/${p.timeUnits}.</br>
+  //     ${p.gender} travelled at an average speed of ${p.speedA} units/${p.timeUnits} for ${p.timeA} ${p.timeUnits} the whole journey.</br>
+  //     At what long did ${p.gender} take to travel between B to C?
+
+  //     `;
+  //   }
+  // }
   if (level == 6.06) {
-    if (p.roll == "A") {
-      displayProblem.innerHTML = `
-      Someone moved from</br>
-      A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB}${p.timeUnits},</br>
-      then </br>
-      B to C at ${p.speedC} units/${p.timeUnits} for ${p.timeC}${p.timeUnits}.</br>
-      Whats the average speed of the whole journey?
-
-      `;
+    normalDisplay();
+    if (p.numberOfColumns == 3) p.column = ["A", "B", "C"][genNumbers(3)];
+    if (p.numberOfColumns == 4) p.column = ["A", "B", "C", "D"][genNumbers(4)];
+    if (p.numberOfColumns == 5)
+      p.column = ["A", "B", "C", "D", "E"][genNumbers(5)];
+    if (p.type == "repeat") {
+      if (p.numberOfColumns == 3) {
+        displayProblem.innerHTML = `
+        <table class="table positionPattern style="width: 100%"">
+          <tr>
+              <th></th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+          </tr>
+          <tr>
+            <td>Row 1</td>
+            <td>${p.start}</td>
+            <td>${p.start + 1}</td>
+            <td>${p.start + 2}</td>
+           </tr>
+          <tr>
+           <td>Row 2</td>
+           <td>${p.start + 3}</td>
+           <td>${p.start + 4}</td>
+           <td>${p.start + 5}</td>
+          </tr>
+          <tr>
+          <td>Row 3</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+         </tr>
+        </table>
+        `;
+      }
+      if (p.numberOfColumns == 4) {
+        displayProblem.innerHTML = `
+        <table class="table positionPattern" style="width: 100%">
+          <tr>
+              <th></th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+              <th>D</th>
+          </tr>
+          <tr>
+            <td>Row 1</td>
+            <td>${p.start}</td>
+            <td>${p.start + 1}</td>
+            <td>${p.start + 2}</td>
+            <td>${p.start + 3}</td>
+           </tr>
+          <tr>
+           <td>Row 2</td>
+           <td>${p.start + 4}</td>
+           <td>${p.start + 5}</td>
+           <td>${p.start + 6}</td>
+           <td>${p.start + 7}</td>
+          </tr>
+          <tr>
+            <td>Row 3</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+           </tr>
+        </table>
+        `;
+      }
+      if (p.numberOfColumns == 5) {
+        displayProblem.innerHTML = `
+        <table class="table positionPattern" style="width: 100%">
+          <tr>
+              <th></th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+              <th>D</th>
+              <th>E</th>
+          </tr>
+          <tr>
+            <td>Row 1</td>
+            <td>${p.start}</td>
+            <td>${p.start + 1}</td>
+            <td>${p.start + 2}</td>
+            <td>${p.start + 3}</td>
+            <td>${p.start + 4}</td>
+           </tr>
+          <tr>
+           <td>Row 2</td>
+           <td>${p.start +5}</td>
+           <td>${p.start + 6}</td>
+           <td>${p.start + 7}</td>
+           <td>${p.start + 8}</td>
+           <td>${p.start + 9}</td>
+          </tr>
+          <tr>
+          <td>Row 3</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+         </tr>
+        </table>
+        `;
+      }
     }
-    if (p.roll == "B") {
-      p.speedA = Math.ceil(
-        (p.speedB * p.timeB + p.speedC * p.timeC) / (p.timeB + p.timeC)
-      );
-      displayProblem.innerHTML = `
-      Someone moved from</br>
-      A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB} ${p.timeUnits},</br>
-      then from B to C in ${p.timeC} ${p.timeUnits}.</br>
-      ${p.gender} travelled at an average speed of ${p.speedA} units/${p.timeUnits} for the whole journey.</br>
-      At what speed did ${p.gender} travel between B to C?
-
-      `;
+    if (p.type == "snake") {
+      if (p.numberOfColumns == 3) {
+        displayProblem.innerHTML = `
+        <table class="table positionPattern" style="width: 100%">
+          <tr>
+              <th></th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+          </tr>
+          <tr>
+            <td>Row 1</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+           </tr>
+          <tr>
+           <td>Row 2</td>
+           <td>6</td>
+           <td>5</td>
+           <td>4</td>
+          </tr>
+          <tr>
+          <td>Row 3</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+         </tr>
+        </table>
+        `;
+      }
+      if (p.numberOfColumns == 4) {
+        displayProblem.innerHTML = `
+        <table class="table positionPattern" style="width: 100%">
+          <tr>
+              <th></th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+              <th>D</th>
+          </tr>
+          <tr>
+            <td>Row 1</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+           </tr>
+          <tr>
+           <td>Row 2</td>
+           <td>8</td>
+           <td>7</td>
+           <td>6</td>
+           <td>5</td>
+          </tr>
+          <tr>
+            <td>Row 3</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+           </tr>
+        </table>
+        `;
+      }
+      if (p.numberOfColumns == 5) {
+        displayProblem.innerHTML = `
+        <table class="table positionPattern" style="width: 100%">
+          <tr>
+              <th></th>
+              <th>A</th>
+              <th>B</th>
+              <th>C</th>
+              <th>D</th>
+              <th>E</th>
+          </tr>
+          <tr>
+            <td>Row 1</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+           </tr>
+          <tr>
+           <td>Row 2</td>
+           <td>10</td>
+           <td>9</td>
+           <td>8</td>
+           <td>7</td>
+           <td>6</td>
+          </tr>
+          <tr>
+          <td>Row 3</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+         </tr>
+        </table>
+        `;
+      }
     }
-    if (p.roll == "C") {
-      p.speedA = Math.ceil(
-        (p.speedB * p.timeB + p.speedC * p.timeC) / (p.timeB + p.timeC)
-      );
-      p.timeA = p.timeB + p.timeC;
-      displayProblem.innerHTML = `
-      Someone moved from</br>
-      A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB} ${p.timeUnits},</br>
-      then from B to C in ${p.speedC} units/${p.timeUnits}.</br>
-      ${p.gender} travelled at an average speed of ${p.speedA} units/${p.timeUnits} for ${p.timeA} ${p.timeUnits} the whole journey.</br>
-      At what long did ${p.gender} take to travel between B to C?
+    // displayProblem.innerHTML = `
+    // <table class="positionPattern table">
+    //   <tr>
+    //     <th></th>
+    //     <th>A</th>
+    //     <th>B</th>
+    //     <th>C</th>
+    //     <th>D</th>
+    //   </tr>
+    //   <tr>
+    //     <td>Row 1</td>
+    //     <td>${p.start}</td>
+    //     <td>${p.start + 1}</td>
+    //     <td>${p.start + 2}</td>
+    //     <td>${p.start + 3}</td>
+    //   </tr>
+    // </table>
+    // `;
 
-      `;
+    // let html;
+    // if (p.type == "repeat") {
+    //   html = `
+    //   <tr>
+    //     <td>Row 2</td>
+    //     <td>${p.start + 4}</td>
+    //     <td>${p.start + 5}</td>
+    //     <td>${p.start + 6}</td>
+    //     <td>${p.start + 7}</td>
+    //   </tr>
+    //   <tr>
+    //   <td>Row 3</td>
+    //   <td>...</td>
+    //   <td>...</td>
+    //   <td>...</td>
+    //   <td>...</td>
+    // </tr>
+    //   `;
+    // }
+    // if (p.type == "snake") {
+    //   html = `
+    //   <tr>
+    //     <td>Row 2</td>
+    //     <td>${p.start + 7}</td>
+    //     <td>${p.start + 6}</td>
+    //     <td>${p.start + 5}</td>
+    //     <td>${p.start + 4}</td>
+    //   </tr>
+    //   <tr>
+    //   <td>Row 3</td>
+    //   <td>...</td>
+    //   <td>...</td>
+    //   <td>...</td>
+    //   <td>...</td>
+    // </tr>
+    //   `;
+    // }
+    const positionPatternCl = document.querySelector(".positionPattern");
+    // positionPatternCl.insertAdjacentHTML("beforeend", html);
+    if (p.question == "columnRow") {
+      positionPatternCl.insertAdjacentHTML(
+        "beforebegin",
+        `Which Column and Row is number ${p.number}?`
+      );
+    }
+    if (p.question == "number") {
+      positionPatternCl.insertAdjacentHTML(
+        "beforebegin",
+        `What number is in Column ${p.column} and Row ${p.row}?`
+      );
     }
   }
 
@@ -25758,6 +26044,12 @@ function genProblems() {
   }
 
   if (level == 2.06) {
+    let figureOne = genNumbers(7);
+    let figureTwo = genNumbers(7);
+    while (figureOne == figureTwo) {
+      figureOne = genNumbers(7);
+      figureTwo = genNumbers(7);
+    }
     return {
       figure: ["🏀", "⚽️", "🏈", "🎾", "🍎", "🍏", "🌭"][genNumbers(7)],
       figureTwo: ["🏀", "⚽️", "🏈", "🎾", "🍎", "🍏", "🌭"][genNumbers(7)],
@@ -26944,6 +27236,24 @@ function genProblems() {
       rollS: genNumbers(10) + 5,
       distance: undefined,
       identity: ["he", "she"][genNumbers(2)],
+    };
+  }
+
+  //POSITION PATTERN
+  if (level == 6.06) {
+    return {
+      start: genNumbers(10) - 5,
+      columns: genNumbers(4) + 1,
+      type: ["repeat", "snake"][genNumbers(2)],
+      // type: "snake",
+      // type: "repeat",
+      question: ["number", "columnRow"][genNumbers(2)],
+      // question: "number",
+      column: undefined,
+      numberOfColumns: genNumbers(3) + 3,
+      // numberOfColumns: 3,
+      row: genNumbers(5) + 10,
+      number: genNumbers(50) + 50,
     };
   }
 
@@ -31399,6 +31709,13 @@ function buttonLevelSetting() {
       instructions.innerHTML = `
         Distance = Speed x Time
         `;
+      break;
+
+    case "Level 6.06":
+      level = 6.06;
+      scoreNeeded = 10;
+      document.querySelector("#user-input").setAttribute("type", "text");
+      document.querySelector("#user-input").style.width = "250px";
       break;
 
     case "Level 7":
