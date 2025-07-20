@@ -28294,7 +28294,7 @@ function genProblems() {
       const CNum = genNumbers(C - 1) + 1;
 
       return {
-        version: [2, 0, 1][genNumbers(1)],
+        version: [0, 1, 2][genNumbers(3)],
         partA: Aparts,
         partB: Bparts,
         partC: Cparts,
@@ -28314,7 +28314,7 @@ function genProblems() {
         likeDenominator: undefined,
         value: undefined,
         spent: undefined,
-        versionOne: [0, 1, 1][genNumbers(3)],
+        versionOne: [0, 1, 2][genNumbers(3)],
       };
     }
     // FRACTIONS: Identical Numerator
