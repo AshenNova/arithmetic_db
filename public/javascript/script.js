@@ -1909,6 +1909,8 @@ function updateProblems() {
   }
 
   if (level == 2.06) {
+    arr = [];
+    arr2 = [];
     normalDisplay();
     arr.push(p.figure);
     // while (arr[0] == p.figureTwo) {
@@ -7977,7 +7979,7 @@ function updateProblems() {
            </tr>
           <tr>
            <td>Row 2</td>
-           <td>${p.start +5}</td>
+           <td>${p.start + 5}</td>
            <td>${p.start + 6}</td>
            <td>${p.start + 7}</td>
            <td>${p.start + 8}</td>
@@ -10896,6 +10898,30 @@ function updateProblems() {
             `How much does Person ${p.choiceVar} spend on ${p.objectsTwo}?`
           );
         }
+      }
+      if (p.version == 2) {
+        [p.numA, p.denoA] = simplify(p.numA, p.denoA);
+        [p.numB, p.denoB] = simplify(p.numB, p.denoB);
+        [p.numC, p.denoC] = simplify(p.numC, p.denoC);
+        displayProblem.innerHTML = `
+        ${displaySimpleFraction(
+          p.numA,
+          p.denoA
+        )} of the students in a class are girls.</p>
+        ${displaySimpleFraction(
+          p.numB,
+          p.denoB
+        )} of the girls left for the canteen.</p>
+        ${displaySimpleFraction(
+          p.numC,
+          p.denoC
+        )} of the boys left for the canteen.</p>
+        ${
+          p.versionOne == 0
+            ? `What fraction of the students remained in class?`
+            : `What fraction of the students went to the canteen?`
+        }
+        `;
       }
     }
     //FRACTIONS: IDENTICAL NUMERATOR
@@ -22972,10 +22998,11 @@ function handleSubmit(e) {
         correctAnswer = numerator;
       }
       if (setting == 4) {
+        let num = undefined;
+        let deno = undefined;
         if (p.version == 0) {
           const total = p.partA + p.partB + p.partC;
-          let num = undefined;
-          let deno = undefined;
+
           if (p.choiceVar == "A") {
             if (p.choice == "left") {
               num = p.partA * (p.denoA - p.numA);
@@ -23006,6 +23033,7 @@ function handleSubmit(e) {
               deno = total * p.denoC;
             }
           }
+
           [num, deno] = simplify(num, deno);
           correctAnswer = `${num}/${deno}`;
         }
@@ -23017,6 +23045,37 @@ function handleSubmit(e) {
           }
           if (p.versionOne == 1) {
             correctAnswer = (p.value / p.likeNumerator) * p.finalNumTwo;
+          }
+        }
+        if (p.version == 2) {
+          const girls = p.numA;
+          const total = p.denoA;
+          const boys = p.denoA - p.numA;
+          const girlsLeft = p.numB;
+          const girlsRemainder = p.denoB;
+          const boysLeft = p.numC;
+          const boysRemainder = p.denoC;
+          const girlsLeftTotalNum = girls * girlsLeft;
+          const girlsLeftTotalDeno = total * girlsRemainder;
+          const boysLeftTotalNum = boys * boysLeft;
+          const boysLeftTotalDeno = total * boysRemainder;
+          const denominator = commonDeno(girlsLeftTotalDeno, boysLeftTotalDeno);
+          const girlsLeftNewNum =
+            (denominator / girlsLeftTotalDeno) * girlsLeftTotalNum;
+          const boysLeftNewNum =
+            (denominator / boysLeftTotalDeno) * boysLeftTotalNum;
+          let canteen = girlsLeftNewNum + boysLeftNewNum;
+          let remained = denominator - canteen;
+          let grandTotal = denominator;
+          // STUDENTS WHO 'LEFT' AND WENT TO THE CANTEEN
+          if (p.versionOne == 1) {
+            [canteen, grandTotal] = simplify(canteen, grandTotal);
+            correctAnswer = `${canteen}/${grandTotal}`;
+          }
+          //STUDENTS WHO REMAINDED
+          if (p.versionOne == 0) {
+            [remained, grandTotal] = simplify(remained, grandTotal);
+            correctAnswer = `${remained}/${grandTotal}`;
           }
         }
       }
@@ -28235,7 +28294,7 @@ function genProblems() {
       const CNum = genNumbers(C - 1) + 1;
 
       return {
-        version: [0, 1][genNumbers(2)],
+        version: [2, 0, 1][genNumbers(1)],
         partA: Aparts,
         partB: Bparts,
         partC: Cparts,

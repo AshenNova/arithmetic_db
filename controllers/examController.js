@@ -19,6 +19,7 @@ const { google } = require("googleapis");
 
 exports.new = catchAsync(async (req, res, next) => {
   console.log(req.params);
+  console.log(req.query);
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
@@ -28,10 +29,12 @@ exports.new = catchAsync(async (req, res, next) => {
   }
   console.log("New exam paper");
   let existing = {};
+  console.log("Getting schools and subjects");
   const schools = await Exam.distinct("school");
   const subjects = await Exam.distinct("subject");
 
   if (req.params.driveid) {
+    console.log("Google drive id detected");
     existing.link = `https://drive.google.com/file/d/${req.params.driveid}/view?usp=sharing`;
   }
   if (req.url.startsWith("/clone")) {
