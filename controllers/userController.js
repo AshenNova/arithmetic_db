@@ -704,6 +704,7 @@ const generateRec = async (nameTemp) => {
   let distinctLevels = await Attempt.distinct("level", {
     user: nameTemp,
     recommendCheck: true,
+    date: { $lt: today },
   });
 
   const age = new Date().getFullYear() - DOB.getFullYear();
