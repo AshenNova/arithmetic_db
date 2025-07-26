@@ -701,7 +701,10 @@ const generateRec = async (nameTemp) => {
       .lean(),
     User.findOne({ username: nameTemp.toLowerCase() }),
   ]);
-  let distinctLevels = await Attempt.distinct("level", { user: nameTemp });
+  let distinctLevels = await Attempt.distinct("level", {
+    user: nameTemp,
+    recommendCheck: true,
+  });
 
   const age = new Date().getFullYear() - DOB.getFullYear();
   console.log(`The month for today is ${new Date().getMonth()}`);
@@ -1292,8 +1295,8 @@ const generateRec = async (nameTemp) => {
   console.log(latestAttempt);
 
   latestAttempt.forEach((attempt) => {
-    console.log("here 1.1");
-    console.log(attempt.level);
+    // console.log("here 1.1");
+    // console.log(attempt.level);
     if (
       !attempt.level.startsWith("cal") &&
       !attempt.level.startsWith("heu") &&

@@ -17472,7 +17472,7 @@ How many items are there in each bag?
         Every ${ordinalPosition[p.numTwo]} participant receives ${
           things[genNumbers(2) + 2]
         }.</p>
-        Which is the ${p.times} participant to receive both?</br>
+        What is the positon of the ${p.times} participant whom will receive both?</br>
         <i>Leave your answer in ordinal numbers.</i>
         `;
       }
