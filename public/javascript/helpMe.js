@@ -1460,193 +1460,8 @@ export function helpMeFunc(level, state, setting) {
         }
       }
     }
-    if (setting == 2) {
-      secondCanvasHelp();
-      secondCanvasTextId.innerHTML = `
-      <strong>None</strong> of 3 reasons to draw comparison model is present.
-      <ul>
-        <li>Difference is given.</li>
-        <li>Find the difference.</li>
-        <li>Unit sentence.</li>
-      </ul>
-      Hence we draw a straight line model instead.
-      `;
-      if (p.type == 1) {
-        straightLineModel([20, 60], "?", p.numOne + p.numTwo, [
-          p.objectOne,
-          p.numOne,
-          p.objectTwo,
-          p.numTwo,
-        ]);
-      }
-      if (p.type == 2) {
-        straightLineModel([20, 60], "?", p.numOne + p.numTwo, [
-          "spent",
-          p.numOne,
-          "left",
-          p.numTwo,
-        ]);
-      }
-    }
-    if (setting == 3) {
-      secondCanvasHelp();
-      secondCanvasTextId.innerHTML = `
-      <strong>None</strong> of 3 reasons to draw comparison model is present.
-      <ul>
-        <li>Difference is given.</li>
-        <li>Find the difference.</li>
-        <li>Unit sentence.</li>
-      </ul>
-      Hence we draw a straight line model instead.
-      `;
-      if (p.type == 1) {
-        if (p.roll == 0) {
-          straightLineModel([20, 60], p.numTotal, p.numTotal, [
-            p.objectOne,
-            p.numOne,
-            "?",
-            p.numTwo,
-          ]);
-        }
-        if (p.rollChoice == 1) {
-          straightLineModel([20, 60], p.numTotal, p.numTotal, [
-            "?",
-            p.numOne,
-            p.objectTwo,
-            p.numTwo,
-          ]);
-        }
-      }
-      if (p.type == 2) {
-        if (p.rollChoice == 0) {
-          straightLineModel([20, 60], p.numTotal, p.numTotal, [
-            "spent",
-            p.numOne,
-            "?",
-            p.numTwo,
-          ]);
-        }
-        if (p.rollChoice == 1) {
-          straightLineModel([20, 60], p.numTotal, p.numTotal, [
-            "?",
-            p.numOne,
-            "left",
-            p.numTwo,
-          ]);
-        }
-      }
-    }
-    if (setting == 4) {
-      secondCanvasTextId.innerHTML = `
-      3 reasons to draw comparison model.
-      <ul>
-        <li>Difference is given.</li>
-        <li>Find the difference. ✓</li>
-        <li>Unit sentence.</li>
-      </ul>
-      `;
-      secondCanvasHelp();
-      if (p.rollChoice2 == "B") {
-        const [x1, y1, x2, y2] = comparisonModelDifference(
-          [20, 60],
-          p.objectOne,
-          p.numOne,
-          p.objectTwo,
-          p.numTwo,
-          p.numOne + p.numTwo,
-          "yes",
-          "no"
-        );
-        //NUMBER ONE IS GIVEN
-        if (p.rollChoice3 == 0) {
-          if (p.numOne > p.numTwo) {
-            console.log("A1");
-
-            //top if longer
-            arrowHeadHorizontalLine(
-              [x1, y1 - 10],
-              [x1 + 60 + 120, y1 - 10],
-              p.numOne.toString(),
-              "top"
-            );
-          } else {
-            //top is shorter
-            arrowHeadHorizontalLine(
-              [x1, y1 - 10],
-              [x2 + 60, y1 - 10],
-              p.numOne.toString(),
-              "top"
-            );
-          }
-          //NUMBER TWO IS GIVEN
-        } else {
-          if (p.numOne < p.numTwo) {
-            console.log("B1");
-            //bottom if longer
-            arrowHeadHorizontalLine(
-              [x2, y2 + +30 + 10],
-              [x2 + 60 + 120, y2 + 30 + 10],
-              p.numTwo.toString(),
-              "bottom"
-            );
-          } else {
-            //bottom if shorter
-            arrowHeadHorizontalLine(
-              [x2, y2 + 10 + 30],
-              [x2 + 60, y2 + 10 + 30],
-              p.numTwo.toString(),
-              "bottom"
-            );
-          }
-        }
-      }
-
-      if (p.rollChoice2 == "A") {
-        const [x1, y1, x2, y2] = comparisonModelDifference(
-          [20, 60],
-          p.objectOne,
-          p.numOne,
-          p.objectTwo,
-          p.numTwo,
-          p.numOne + p.numTwo,
-          "no",
-          "no"
-        );
-        if (p.numOne > p.numTwo) {
-          console.log("A1");
-          arrowHeadHorizontalLine(
-            [x1, y1 - 10],
-            [x1 + 60 + 120, y1 - 10],
-            p.numOne.toString(),
-            "top"
-          );
-          arrowHeadHorizontalLine(
-            [x2, y2 + 10 + 30],
-            [x2 + 60, y2 + 10 + 30],
-            p.numTwo.toString(),
-            "bottom"
-          );
-        }
-
-        if (p.numOne < p.numTwo) {
-          console.log("B1");
-          arrowHeadHorizontalLine(
-            [x1, y1 - 10],
-            [x2 + 60, y1 - 10],
-            p.numOne.toString(),
-            "top"
-          );
-          arrowHeadHorizontalLine(
-            [x2, y2 + +30 + 10],
-            [x2 + 60 + 120, y2 + 30 + 10],
-            p.numTwo.toString(),
-            "bottom"
-          );
-        }
-      }
-    }
     // UNIT SENTENCE
-    if (setting == 5) {
+    if (setting == 2) {
       secondCanvasHelp();
       secondCanvasTextId.innerHTML = `
       <strong>${p.objectOne} is ${p.unitSentence} times of ${p.objectTwo}.</strong></br>
@@ -1784,6 +1599,191 @@ export function helpMeFunc(level, state, setting) {
         1,
         p.total
       );
+    }
+    if (setting == 3) {
+      secondCanvasHelp();
+      secondCanvasTextId.innerHTML = `
+      <strong>None</strong> of 3 reasons to draw comparison model is present.
+      <ul>
+        <li>Difference is given.</li>
+        <li>Find the difference.</li>
+        <li>Unit sentence.</li>
+      </ul>
+      Hence we draw a straight line model instead.
+      `;
+      if (p.type == 1) {
+        straightLineModel([20, 60], "?", p.numOne + p.numTwo, [
+          p.objectOne,
+          p.numOne,
+          p.objectTwo,
+          p.numTwo,
+        ]);
+      }
+      if (p.type == 2) {
+        straightLineModel([20, 60], "?", p.numOne + p.numTwo, [
+          "spent",
+          p.numOne,
+          "left",
+          p.numTwo,
+        ]);
+      }
+    }
+    if (setting == 4) {
+      secondCanvasHelp();
+      secondCanvasTextId.innerHTML = `
+      <strong>None</strong> of 3 reasons to draw comparison model is present.
+      <ul>
+        <li>Difference is given.</li>
+        <li>Find the difference.</li>
+        <li>Unit sentence.</li>
+      </ul>
+      Hence we draw a straight line model instead.
+      `;
+      if (p.type == 1) {
+        if (p.roll == 0) {
+          straightLineModel([20, 60], p.numTotal, p.numTotal, [
+            p.objectOne,
+            p.numOne,
+            "?",
+            p.numTwo,
+          ]);
+        }
+        if (p.rollChoice == 1) {
+          straightLineModel([20, 60], p.numTotal, p.numTotal, [
+            "?",
+            p.numOne,
+            p.objectTwo,
+            p.numTwo,
+          ]);
+        }
+      }
+      if (p.type == 2) {
+        if (p.rollChoice == 0) {
+          straightLineModel([20, 60], p.numTotal, p.numTotal, [
+            "spent",
+            p.numOne,
+            "?",
+            p.numTwo,
+          ]);
+        }
+        if (p.rollChoice == 1) {
+          straightLineModel([20, 60], p.numTotal, p.numTotal, [
+            "?",
+            p.numOne,
+            "left",
+            p.numTwo,
+          ]);
+        }
+      }
+    }
+    if (setting == 5) {
+      secondCanvasTextId.innerHTML = `
+      3 reasons to draw comparison model.
+      <ul>
+        <li>Difference is given.</li>
+        <li>Find the difference. ✓</li>
+        <li>Unit sentence.</li>
+      </ul>
+      `;
+      secondCanvasHelp();
+      if (p.rollChoice2 == "B") {
+        const [x1, y1, x2, y2] = comparisonModelDifference(
+          [20, 60],
+          p.objectOne,
+          p.numOne,
+          p.objectTwo,
+          p.numTwo,
+          p.numOne + p.numTwo,
+          "yes",
+          "no"
+        );
+        //NUMBER ONE IS GIVEN
+        if (p.rollChoice3 == 0) {
+          if (p.numOne > p.numTwo) {
+            console.log("A1");
+
+            //top if longer
+            arrowHeadHorizontalLine(
+              [x1, y1 - 10],
+              [x1 + 60 + 120, y1 - 10],
+              p.numOne.toString(),
+              "top"
+            );
+          } else {
+            //top is shorter
+            arrowHeadHorizontalLine(
+              [x1, y1 - 10],
+              [x2 + 60, y1 - 10],
+              p.numOne.toString(),
+              "top"
+            );
+          }
+          //NUMBER TWO IS GIVEN
+        } else {
+          if (p.numOne < p.numTwo) {
+            console.log("B1");
+            //bottom if longer
+            arrowHeadHorizontalLine(
+              [x2, y2 + +30 + 10],
+              [x2 + 60 + 120, y2 + 30 + 10],
+              p.numTwo.toString(),
+              "bottom"
+            );
+          } else {
+            //bottom if shorter
+            arrowHeadHorizontalLine(
+              [x2, y2 + 10 + 30],
+              [x2 + 60, y2 + 10 + 30],
+              p.numTwo.toString(),
+              "bottom"
+            );
+          }
+        }
+      }
+
+      if (p.rollChoice2 == "A") {
+        const [x1, y1, x2, y2] = comparisonModelDifference(
+          [20, 60],
+          p.objectOne,
+          p.numOne,
+          p.objectTwo,
+          p.numTwo,
+          p.numOne + p.numTwo,
+          "no",
+          "no"
+        );
+        if (p.numOne > p.numTwo) {
+          console.log("A1");
+          arrowHeadHorizontalLine(
+            [x1, y1 - 10],
+            [x1 + 60 + 120, y1 - 10],
+            p.numOne.toString(),
+            "top"
+          );
+          arrowHeadHorizontalLine(
+            [x2, y2 + 10 + 30],
+            [x2 + 60, y2 + 10 + 30],
+            p.numTwo.toString(),
+            "bottom"
+          );
+        }
+
+        if (p.numOne < p.numTwo) {
+          console.log("B1");
+          arrowHeadHorizontalLine(
+            [x1, y1 - 10],
+            [x2 + 60, y1 - 10],
+            p.numOne.toString(),
+            "top"
+          );
+          arrowHeadHorizontalLine(
+            [x2, y2 + +30 + 10],
+            [x2 + 60 + 120, y2 + 30 + 10],
+            p.numTwo.toString(),
+            "bottom"
+          );
+        }
+      }
     }
   }
   // HEURISTICS THREE
