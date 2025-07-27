@@ -5408,18 +5408,19 @@ function updateProblems() {
 
   if (level == 5.02) {
     normalDisplay();
-    if (p.numThree == p.numFour) {
-      p.numFour = p.numThree + [1, 2][genNumbers(2)];
-    }
-    if (p.numOne == p.numTwo) {
-      p.numTwo = p.numOne + [1, 2][genNumbers(2)];
-    }
     if (p.numOne == p.numThree) {
       p.numOne += 1;
     }
     if (p.numOne > p.numThree) {
       [p.numOne, p.numThree] = [p.numThree, p.numOne];
     }
+    if (p.numThree == p.numFour) {
+      p.numFour += [1, 2][genNumbers(2)];
+    }
+    if (p.numOne == p.numTwo) {
+      p.numTwo += [1, 2][genNumbers(2)];
+    }
+
 
     arr.push(p.numOne, p.numThree);
     arr.sort(function (a, b) {
