@@ -21255,6 +21255,7 @@ function handleSubmit(e) {
       }
       if (setting == 2) {
         correctAnswer = `${numSquareLength}x${numSquareBreadth}=${totalSquare}`;
+        correctAnswerTwo = `${numSquareBreadth}x${numSquareLength}=${totalSquare}`;
       }
       if (setting == 3) {
         correctAnswer = `${numSquareLength}x${numSquareBreadth}x${numSquareHeight}=${totalCube}`;
