@@ -5421,7 +5421,6 @@ function updateProblems() {
       p.numTwo += [1, 2][genNumbers(2)];
     }
 
-
     arr.push(p.numOne, p.numThree);
     arr.sort(function (a, b) {
       return b - a;
@@ -15924,93 +15923,7 @@ How far is apart is Town A and Town B?
         `;
       }
     }
-
     if (setting == 2) {
-      if (p.type == 1) {
-        displayProblem.innerHTML = `
-        ${p.objectOne} has ${p.numOne}.</br>
-        ${p.objectTwo} has ${p.numTwo}.</br>
-        What is the total of ${p.objectOne} and ${p.objectTwo}?
-      `;
-      }
-      if (p.type == 2) {
-        displayProblem.innerHTML = `
-        Person A spent $${p.numOne} and has $${p.numTwo} left.</p>
-        How much did he have at first?
-        `;
-      }
-    }
-
-    if (setting == 3) {
-      p.numTotal = p.numOne + p.numTwo;
-      if (p.type == 1) {
-        displayProblem.innerHTML = `
-        ${p.objectOne} and ${p.objectTwo} has a total of ${p.numTotal}.</br>
-        ${
-          p.rollChoice == 0
-            ? `${p.objectOne} is ${p.numOne}`
-            : `${p.objectTwo} is ${p.numTwo}`
-        }.</br>
-        What is ${p.rollChoice == 0 ? p.objectTwo : p.objectOne}?
-      `;
-      }
-      if (p.type == 2) {
-        displayProblem.innerHTML = `
-        Person A had $${p.numTotal} at first.</br>
-        `;
-        if (p.rollChoice == 0) {
-          displayProblem.insertAdjacentHTML(
-            "beforeend",
-            `He spent $${p.numOne}</br>How much does he have left?`
-          );
-        }
-        if (p.rollChoice == 1) {
-          displayProblem.insertAdjacentHTML(
-            "beforeend",
-            `He has $${p.numTwo} left after spending some money.</br>How much did he have spend?`
-          );
-        }
-      }
-    }
-
-    if (
-      setting == 4 ||
-      (setting == 9 && p.rollz == 4) ||
-      (range == 1 && p.rollz == 4)
-    ) {
-      while (p.numOne == p.numTwo) {
-        p.numOne = genNumbers(400) + 100;
-      }
-
-      if (p.rollChoice2 == "A") {
-        displayProblem.innerHTML = `
-          ${p.objectOne} is ${p.numOne}.</br>
-          ${p.objectTwo} is ${p.numTwo}.</br>
-          What is the difference between ${p.objectOne} and ${p.objectTwo}?
-        `;
-      }
-
-      if (p.rollChoice2 == "B") {
-        p.numTotal = p.numOne + p.numTwo;
-        displayProblem.innerHTML = `
-          The total for ${p.objectOne} and ${p.objectTwo} is ${p.numTotal}.</br>
-          ${
-            p.rollChoice3 == 0
-              ? `${p.objectOne} is ${p.numOne}`
-              : `${p.objectTwo} is ${p.numTwo}`
-          }.</br>
-          How much ${p.numOne > p.numTwo ? "more" : "less"} is ${
-          p.objectOne
-        } than ${p.objectTwo}?
-        `;
-      }
-    }
-
-    if (
-      setting == 5 ||
-      (setting == 9 && p.rollz == 5) ||
-      (range == 1 && p.rollz == 5)
-    ) {
       let oneUnit = genNumbers(5) + 5;
       p.total = (p.unitSentence + 1) * oneUnit;
       p.varB = oneUnit;
@@ -16057,6 +15970,83 @@ How far is apart is Town A and Town B?
       ${lineThree}</br>
 
       `;
+    }
+
+    if (setting == 3) {
+      if (p.type == 1) {
+        displayProblem.innerHTML = `
+        ${p.objectOne} has ${p.numOne}.</br>
+        ${p.objectTwo} has ${p.numTwo}.</br>
+        What is the total of ${p.objectOne} and ${p.objectTwo}?
+      `;
+      }
+      if (p.type == 2) {
+        displayProblem.innerHTML = `
+        Person A spent $${p.numOne} and has $${p.numTwo} left.</p>
+        How much did he have at first?
+        `;
+      }
+    }
+
+    if (setting == 4) {
+      p.numTotal = p.numOne + p.numTwo;
+      if (p.type == 1) {
+        displayProblem.innerHTML = `
+        ${p.objectOne} and ${p.objectTwo} has a total of ${p.numTotal}.</br>
+        ${
+          p.rollChoice == 0
+            ? `${p.objectOne} is ${p.numOne}`
+            : `${p.objectTwo} is ${p.numTwo}`
+        }.</br>
+        What is ${p.rollChoice == 0 ? p.objectTwo : p.objectOne}?
+      `;
+      }
+      if (p.type == 2) {
+        displayProblem.innerHTML = `
+        Person A had $${p.numTotal} at first.</br>
+        `;
+        if (p.rollChoice == 0) {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `He spent $${p.numOne}</br>How much does he have left?`
+          );
+        }
+        if (p.rollChoice == 1) {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `He has $${p.numTwo} left after spending some money.</br>How much did he have spend?`
+          );
+        }
+      }
+    }
+
+    if (setting == 5) {
+      while (p.numOne == p.numTwo) {
+        p.numOne = genNumbers(400) + 100;
+      }
+
+      if (p.rollChoice2 == "A") {
+        displayProblem.innerHTML = `
+          ${p.objectOne} is ${p.numOne}.</br>
+          ${p.objectTwo} is ${p.numTwo}.</br>
+          What is the difference between ${p.objectOne} and ${p.objectTwo}?
+        `;
+      }
+
+      if (p.rollChoice2 == "B") {
+        p.numTotal = p.numOne + p.numTwo;
+        displayProblem.innerHTML = `
+          The total for ${p.objectOne} and ${p.objectTwo} is ${p.numTotal}.</br>
+          ${
+            p.rollChoice3 == 0
+              ? `${p.objectOne} is ${p.numOne}`
+              : `${p.objectTwo} is ${p.numTwo}`
+          }.</br>
+          How much ${p.numOne > p.numTwo ? "more" : "less"} is ${
+          p.objectOne
+        } than ${p.objectTwo}?
+        `;
+      }
     }
 
     // PARTS OF A WHOLE ( UNITARY )
@@ -17473,7 +17463,9 @@ How many items are there in each bag?
         Every ${ordinalPosition[p.numTwo]} participant receives ${
           things[genNumbers(2) + 2]
         }.</p>
-        What is the positon of the ${p.times} participant whom will receive both?</br>
+        What is the positon of the ${
+          p.times
+        } participant whom will receive both?</br>
         <i>Leave your answer in ordinal numbers.</i>
         `;
       }
@@ -20169,6 +20161,7 @@ function handleSubmit(e) {
         // }
       }
       if (p.operator == "-") {
+        //HAVE TO BORROW
         if (p.numTwo - p.numFour < 0) {
           correctAnswer = `${p.numOne - 1}${p.minHours}${p.numTwo + 60}${
             p.minSeconds
@@ -20178,6 +20171,7 @@ function handleSubmit(e) {
           correctAnswerTwo = `${p.numOne - p.numThree - 1}${p.minHours}${
             p.numTwo + 60 - p.numFour
           }${p.minSeconds}`;
+          //DONT HAVE TO BORROW
         } else {
           correctAnswer = `${p.numOne - p.numThree}${p.minHours}${
             p.numTwo - p.numFour
@@ -24164,13 +24158,29 @@ function handleSubmit(e) {
         (setting == 9 && p.rollz == 2) ||
         (range == 1 && p.rollz == 2)
       ) {
-        correctAnswer = p.numOne + p.numTwo;
+        if (p.rollLineThree == "A") {
+          correctAnswer = p.varA;
+        }
+        if (p.rollLineThree == "B") {
+          correctAnswer = p.varB;
+        }
+        if (p.rollLineThree == "total") {
+          correctAnswer = p.total;
+        }
       }
 
       if (
         setting == 3 ||
         (setting == 9 && p.rollz == 3) ||
         (range == 1 && p.rollz == 3)
+      ) {
+        correctAnswer = p.numOne + p.numTwo;
+      }
+
+      if (
+        setting == 4 ||
+        (setting == 9 && p.rollz == 4) ||
+        (range == 1 && p.rollz == 4)
       ) {
         if (p.rollChoice == 0) {
           correctAnswer = p.numTwo;
@@ -24181,27 +24191,11 @@ function handleSubmit(e) {
       }
 
       if (
-        setting == 4 ||
-        (setting == 9 && p.rollz == 4) ||
-        (range == 1 && p.rollz == 4)
-      ) {
-        correctAnswer = Math.abs(p.numOne - p.numTwo);
-      }
-
-      if (
         setting == 5 ||
         (setting == 9 && p.rollz == 5) ||
         (range == 1 && p.rollz == 5)
       ) {
-        if (p.rollLineThree == "A") {
-          correctAnswer = p.varA;
-        }
-        if (p.rollLineThree == "B") {
-          correctAnswer = p.varB;
-        }
-        if (p.rollLineThree == "total") {
-          correctAnswer = p.total;
-        }
+        correctAnswer = Math.abs(p.numOne - p.numTwo);
       }
 
       if (
@@ -29488,7 +29482,25 @@ function genProblems() {
       };
     }
 
-    if (setting == 2) {
+    if (
+      setting == 2 ||
+      (setting == 2 && roll == 2) ||
+      (range == 1 && roll == 2)
+    ) {
+      return {
+        rollz: 2,
+        objectOne: ["A", "B", "C"][genNumbers(3)],
+        objectTwo: ["X", "Y", "Z"][genNumbers(3)],
+        unitSentence: genNumbers(9) + 2,
+        total: undefined,
+        varA: undefined,
+        varB: undefined,
+        rollLineTwo: ["A", "B", "total"][genNumbers(3)],
+        rollLineThree: ["A", "B", "total"][genNumbers(3)],
+      };
+    }
+
+    if (setting == 3) {
       return {
         type: [1, 2][genNumbers(2)],
         objectOne: ["A", "B", "C"][genNumbers(3)],
@@ -29498,7 +29510,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 3) {
+    if (setting == 4) {
       return {
         type: [1, 2][genNumbers(2)],
         objectOne: ["A", "B", "C"][genNumbers(3)],
@@ -29510,13 +29522,9 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 4 ||
-      (setting == 4 && roll == 4) ||
-      (range == 1 && roll == 4)
-    ) {
+    if (setting == 5) {
       return {
-        rollz: 4,
+        rollz: 5,
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
         numOne: genNumbers(400) + 100,
@@ -29528,23 +29536,6 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 5 ||
-      (setting == 5 && roll == 5) ||
-      (range == 1 && roll == 5)
-    ) {
-      return {
-        rollz: 5,
-        objectOne: ["A", "B", "C"][genNumbers(3)],
-        objectTwo: ["X", "Y", "Z"][genNumbers(3)],
-        unitSentence: genNumbers(9) + 2,
-        total: undefined,
-        varA: undefined,
-        varB: undefined,
-        rollLineTwo: ["A", "B", "total"][genNumbers(3)],
-        rollLineThree: ["A", "B", "total"][genNumbers(3)],
-      };
-    }
     //  PARTS OF A WHOLE ( UNITARY )
     if (
       setting == 6 ||

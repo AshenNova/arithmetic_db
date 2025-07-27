@@ -29,10 +29,10 @@ export const displayContent = (level) => {
     return `
     </p>
     1. Comparison Model</br>
-    2. Parts of a Whole</br>
-    3. Whole and Parts</br>
-    4. Looking for Difference</br>
-    5. Unit Sentence</br>
+    2. Unit Sentence</br>
+    3. Parts of a Whole</br>
+    4. Whole and Parts</br>
+    5. Looking for Difference</br>
     6. Parts of a whole ( Unitary )</br>
     7. Whole and parts ( Unitary )</br>
     8. Comparison ( Situational )</br>
