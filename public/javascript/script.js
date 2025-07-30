@@ -10881,9 +10881,12 @@ function updateProblems() {
           p.partA,
           p.denoA
         )} of ${genderTwo} money to buy ${p.objects}.</p>
-        ${gender[0].toUpperCase() + gender.slice(1)} spent another ${p.partB}/${
+        ${
+          gender[0].toUpperCase() + gender.slice(1)
+        } spent another ${displaySimpleFraction(
+          p.partB,
           p.denoB
-        } of the remainder on ${p.objectsTwo}.</p>
+        )} of the remainder on ${p.objectsTwo}.</p>
         $${p.value.toLocaleString("en-US")} was spent.</p>
         `;
         if (p.versionOne == 0) {
@@ -10903,6 +10906,26 @@ function updateProblems() {
         [p.numA, p.denoA] = simplify(p.numA, p.denoA);
         [p.numB, p.denoB] = simplify(p.numB, p.denoB);
         [p.numC, p.denoC] = simplify(p.numC, p.denoC);
+        const girls = p.numA;
+        const total = p.denoA;
+        // console.log(`Girls: ${girls}/${total}`)
+        const boys = p.denoA - p.numA;
+        // console.log(`Boys: ${total-girls}/${total}`)
+        const girlsLeft = p.numB;
+        const girlsRemainder = p.denoB;
+        // console.log(`Girls left for canteen: ${p.numB}/${p.denoB}`)
+        const boysLeft = p.numC;
+        const boysRemainder = p.denoC;
+        // console.log(`Boys left for canteen: ${p.numC}/${p.denoC}`)
+        const girlsLeftTotalNum = girls * girlsLeft;
+        const girlsLeftTotalDeno = total * girlsRemainder;
+        // console.log(`${girlsLeftTotalNum}/${girlsLeftTotalDeno}`)
+        const boysLeftTotalNum = boys * boysLeft;
+        const boysLeftTotalDeno = total * boysRemainder;
+        // console.log(`${boysLeftTotalNum}/${boysLeftTotalDeno}`)
+        const denominator = commonDeno(girlsLeftTotalDeno, boysLeftTotalDeno);
+        // console.log(denominator)
+        if (denominator == "Error") return updateCalc();
         displayProblem.innerHTML = `
         ${displaySimpleFraction(
           p.numA,
@@ -23046,16 +23069,23 @@ function handleSubmit(e) {
         if (p.version == 2) {
           const girls = p.numA;
           const total = p.denoA;
+          // console.log(`Girls: ${girls}/${total}`)
           const boys = p.denoA - p.numA;
+          // console.log(`Boys: ${total-girls}/${total}`)
           const girlsLeft = p.numB;
           const girlsRemainder = p.denoB;
+          // console.log(`Girls left for canteen: ${p.numB}/${p.denoB}`)
           const boysLeft = p.numC;
           const boysRemainder = p.denoC;
+          // console.log(`Boys left for canteen: ${p.numC}/${p.denoC}`)
           const girlsLeftTotalNum = girls * girlsLeft;
           const girlsLeftTotalDeno = total * girlsRemainder;
+          // console.log(`${girlsLeftTotalNum}/${girlsLeftTotalDeno}`)
           const boysLeftTotalNum = boys * boysLeft;
           const boysLeftTotalDeno = total * boysRemainder;
+          // console.log(`${boysLeftTotalNum}/${boysLeftTotalDeno}`)
           const denominator = commonDeno(girlsLeftTotalDeno, boysLeftTotalDeno);
+          // console.log(denominator)
           const girlsLeftNewNum =
             (denominator / girlsLeftTotalDeno) * girlsLeftTotalNum;
           const boysLeftNewNum =
@@ -23063,6 +23093,7 @@ function handleSubmit(e) {
           let canteen = girlsLeftNewNum + boysLeftNewNum;
           let remained = denominator - canteen;
           let grandTotal = denominator;
+          console.log(canteen, remained, grandTotal);
           // STUDENTS WHO 'LEFT' AND WENT TO THE CANTEEN
           if (p.versionOne == 1) {
             [canteen, grandTotal] = simplify(canteen, grandTotal);
