@@ -8662,7 +8662,7 @@ function updateProblems() {
     if (setting == 8) {
       displayProblem.style.fontSize = "24px";
       normalDisplay();
-      for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < 8; i++) {
         arr.push(p.startNum);
         p.startNum += p.difference;
       }
@@ -8679,24 +8679,69 @@ function updateProblems() {
     if (setting == 9) {
       // displayProblem.style.fontSize = "24px";
       normalDisplay();
-      console.log(p.diffOne, p.diffThree);
-      for (let i = 0; i < 7; i++) {
-        console.log(i);
-        arr.push(p.startNum);
-        i++;
-        //calculates the 2nd position.
-        p.startNum += p.diffOne;
-        arr.push(p.startNum);
-        //calculates the 3rd position.
-        p.startNum += p.diffTwo;
+      // console.log(p.diffOne, p.diffThree);
+      // for (let i = 0; i < 7; i++) {
+      //   console.log(i);
+      //   arr.push(p.startNum);
+      //   i++;
+      //   //calculates the 2nd position.
+      //   p.startNum += p.diffOne;
+      //   arr.push(p.startNum);
+      //   //calculates the 3rd position.
+      //   p.startNum += p.diffTwo;
 
-        if (p.diffThree != p.diffOne && i < 7) {
-          console.log(p.diffOne == p.diffThree);
+      //   if (p.diffThree != p.diffOne && i < 7) {
+      //     console.log(p.diffOne == p.diffThree);
+      //     arr.push(p.startNum);
+      //     i++;
+      //     p.startNum += p.diffThree;
+
+      //     // i++;
+      //   }
+      // }
+      const quantity = 7;
+      arr.push(p.startNum);
+      if (p.type == "stagger2") {
+        for (let i = 0; i < quantity; i++) {
+          if (i % 2 == 0) {
+            p.startNum += p.diffOne;
+            arr.push(p.startNum);
+          } else {
+            p.startNum += p.diffTwo;
+            arr.push(p.startNum);
+          }
+        }
+      }
+      if (p.type == "stagger3") {
+        let count = 0;
+        for (let i = 0; i < quantity; i++) {
+          if ((count = 0)) {
+            p.startNum += p.diffOne;
+
+            count += 1;
+          } else if (count == 1) {
+            p.startNum += p.diffTwo;
+            count += 1;
+          } else {
+            p.startNum += p.diffThree;
+            count = 0;
+          }
           arr.push(p.startNum);
-          i++;
-          p.startNum += p.diffThree;
-
-          // i++;
+        }
+      }
+      if (p.type == "ladder") {
+        p.diffOne = [1, 10, 100][genNumbers(3)];
+        for (let i = 0; i < quantity; i++) {
+          p.startNum += p.diffOne * (i + 1);
+          arr.push(p.startNum);
+        }
+      }
+      if (p.type == "expo") {
+        p.diffOne = 1;
+        for (let i = 0; i < quantity; i++) {
+          p.diffOne *= 2;
+          p.startNum += p.diffOne;
+          arr.push(p.startNum);
         }
       }
       if (arr[5] > 1000 || arr[5] < 0 || p.diffOne == 0 || p.diffTwo == 0) {
@@ -17597,7 +17642,7 @@ How many items are there in each bag?
         if (p.question == "change") {
           displayProblem.insertAdjacentHTML(
             "beforeend",
-            `What is each ${situationText} by?`
+            `What did each ${situationText} by?`
           );
         }
       }
@@ -27618,11 +27663,12 @@ function genProblems() {
       const gen_diffOne = genNumbers(200) - 100;
       return {
         roll: undefined,
+        type: ["stagger2", "stagger3", "ladder", "expo"][genNumbers(4)],
         startNum: genNumbers(500) + 500,
         // diffOne: genNumbers(200) - 100,
         diffOne: gen_diffOne,
         diffTwo: genNumbers(200) - 100,
-        diffThree: [gen_diffOne, genNumbers(200) - 100][genNumbers(2)],
+        diffThree: genNumbers(200) - 100,
         position: genNumbers(6),
         answer: undefined,
       };
