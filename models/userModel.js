@@ -61,7 +61,8 @@ const userSchema = new mongoose.Schema({
   freezeEndDate: { type: Date },
   perSession: Number,
   day: Array,
-  private: Boolean,
+  private: { type: Boolean, default: false },
+  endDate: Date,
 });
 
 userSchema.pre("save", async function (next) {

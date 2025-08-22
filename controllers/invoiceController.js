@@ -22,7 +22,7 @@ const months = [
 
 function generateInvoice() {
   let QR;
-  // schedule.scheduleJob("*/5 * * * * *", async function () {
+  // schedule.scheduleJob("5 * * * * *", async function () {
   schedule.scheduleJob("0 0 1 * *", async function () {
     console.count("Run");
     let event = new Date();
@@ -65,7 +65,7 @@ function generateInvoice() {
       } else if (event.getDay() == 0) {
         sunday.push(event.toLocaleDateString("en-GB"));
       }
-      console.log(event);
+      // console.log(event);
       event.setDate(event.getDate() + 1);
     }
 
@@ -82,10 +82,31 @@ function generateInvoice() {
       if (student.day.includes("Sunday")) studentDate.push(sunday);
       // console.log(studentDate.join(",").split(",").length);
 
+      console.log(studentDate, student.endDate);
+      console.log(student.endDate.getMonth());
+      console.log(new Date().getMonth());
+      if (student.endDate.getMonth() == new Date().getMonth()) {
+        console.log("This is the last month.");
+        const length = studentDate.length;
+        for (let i = 0; i < length; i++) {
+          let before = [];
+          studentDate[i].forEach((d, index) => {
+            const day = d.split("/")[0];
+            const lastDay = student.endDate.getDate();
+
+            //IF DAYS ARE BEFORE END DATE. PUSH INTO ARRAY
+            if (day < lastDay) {
+              before.push(d);
+              // console.log(day, lastDay);
+              // console.log("Passed... Removing...");
+              // studentDate[i].splice(index, 1);
+            }
+          });
+          studentDate[i] = before;
+        }
+      }
       console.log(studentDate);
-      // const newDateArr = Array.prototype.concat(...studentDate);
-      // studentDate = studentDate.flat();
-      // console.log(newDateArr);
+      console.log(student.id);
 
       const newInvoice = new Invoice({
         student: student.username,
@@ -120,6 +141,11 @@ function generateInvoice() {
           Thank you and have a great day!
           `,
           });
+
+          if (student.endDate.getMonth() == new Date().getMonth()) {
+            console.log("Thank you for the private lessons");
+            await User.findByIdAndUpdate(student.id, { private: false });
+          }
         })
         .catch((e) => {
           console.log(e);

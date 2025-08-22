@@ -137,12 +137,19 @@ function firstLetterCaps(name) {
 }
 exports.saveEditUser = catchAsync(async (req, res, next) => {
   console.log("Saving edited user");
+  console.log(req.body);
+  if (!req.body.admin) req.body.admin = false;
+  if (!req.body.teacher) req.body.teacher = false;
+  if (!req.body.subject_admin) req.body.subject_admin = false;
+  if (!req.body.private) req.body.private = false;
   let username = req.user.username;
   let authenticate = req.auth;
   let currentUser = req.user;
   console.log(req.params);
   const editUser = await User.findById(req.params.id);
 
+  // if (req.params.private == "on") req.params.private = "true";
+  //UPDATING NAME
   if (currentUser.admin && editUser.username != req.body.username) {
     let oldUsername = firstLetterCaps(editUser.username);
     let newUsername = firstLetterCaps(req.body.username);
@@ -190,6 +197,7 @@ exports.saveEditUser = catchAsync(async (req, res, next) => {
   }
   console.log(req.body);
   if (!currentUser.admin) {
+    console.log("Deleting");
     delete req.body.username;
     delete req.body.email;
     delete req.body.DOB;

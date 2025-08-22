@@ -50,12 +50,12 @@ exports.getAllAttempts = catchAsync(async (req, res, next) => {
     extra: "",
     recommendCheck: true,
   });
-  console.log(todayOnList);
+  // console.log(todayOnList);
   const students = {
     name: [],
     count: [],
   };
-  console.log(students.length);
+  // console.log(students.length);
   todayOnList.forEach((x) => {
     if (!students.name.includes(x.user)) {
       students.name.push(x.user);
@@ -68,21 +68,21 @@ exports.getAllAttempts = catchAsync(async (req, res, next) => {
     });
     students.count.push(count);
   });
-  console.log(students.name[0]);
+  // console.log(students.name[0]);
   const attempts = await Attempt.find()
     .sort({ date: -1 })
     .skip((page - 1) * limit)
     .limit(limit);
-  console.log(`Attempts Done`);
+  // console.log(`Attempts Done`);
   const attemptsTwo = await Attempt.find().limit(1000);
-  console.log(`Attempts 2 Done`);
+  // console.log(`Attempts 2 Done`);
   const paginatedAttempts = paginate(
     attemptsTwo,
     attemptsTwo.length,
     limit,
     page
   );
-  console.log(paginatedAttempts.pagination);
+  // console.log(paginatedAttempts.pagination);
   const logRewards = await RewardLog.find().sort({ claimed: -1 }).limit(10);
   let summaryObj = attemptsTwo[0];
   const filteredUser = "";
