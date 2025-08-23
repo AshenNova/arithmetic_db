@@ -18025,6 +18025,16 @@ How many items are there in each bag?
       if (total % 1 != 0 || total <= 0 || p.totalA <= 0 || p.totalB <= 0)
         return updateCalc();
 
+      if (p.difference % p.denominator != 0) {
+        const decimal = p.difference / p.denominator;
+        const split = decimal.toString().split(".");
+        // console.log(decimal, split, split[1].length);
+        if (split[1].length > 2) {
+          console.log("Decimals with more than 2 decimal places detected.")
+          return updateCalc()
+        };
+      }
+
       displayProblem.innerHTML = `
       ${p.personA} and ${p.personB} has $${total} at first.</br>
       ${p.personA} spent ${p.multiple} times the amount ${p.personB} spent.</br>
