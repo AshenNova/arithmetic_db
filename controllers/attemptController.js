@@ -466,6 +466,7 @@ exports.newAttempt = catchAsync(async (req, res, next) => {
           level,
           mode,
           age: currentAge,
+          setting,
         }).sort({
           time: 1,
         });
