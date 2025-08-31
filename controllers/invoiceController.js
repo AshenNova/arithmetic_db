@@ -95,7 +95,7 @@ function generateInvoice() {
             const lastDay = student.endDate.getDate();
 
             //IF DAYS ARE BEFORE END DATE. PUSH INTO ARRAY
-            if (day < lastDay) {
+            if (day <= lastDay) {
               before.push(d);
               // console.log(day, lastDay);
               // console.log("Passed... Removing...");
