@@ -667,10 +667,10 @@ function settings(level, age, allAttempts) {
     let countTwo = 0;
 
     allAttempts.forEach((item) => {
-      if (item.level == 6.01 && item.setting == 1) {
+      if ((item.level == 6.01 || item.level == 5.06) && item.setting == 1) {
         countOne += 1;
       }
-      if (item.level == 6.01 && item.setting == 2) {
+      if ((item.level == 6.01 || item.level == 5.06) && item.setting == 2) {
         countTwo += 1;
       }
     });
