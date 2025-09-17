@@ -11817,6 +11817,11 @@ function updateProblems() {
         }
         shadedEnd = shaded += p.change;
         unshadedEnd = unshaded += p.change;
+        if (
+          Math.abs(p.shaded - p.unshaded) % Math.abs(shadedEnd - unshadedEnd) !=
+          0
+        )
+          return updateCalc();
         if (shadedEnd == unshadedEnd || shadedEnd <= 0 || unshaded <= 0) {
           return updateCalc();
         }
@@ -18030,9 +18035,9 @@ How many items are there in each bag?
         const split = decimal.toString().split(".");
         // console.log(decimal, split, split[1].length);
         if (split[1].length > 2) {
-          console.log("Decimals with more than 2 decimal places detected.")
-          return updateCalc()
-        };
+          console.log("Decimals with more than 2 decimal places detected.");
+          return updateCalc();
+        }
       }
 
       displayProblem.innerHTML = `
