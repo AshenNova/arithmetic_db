@@ -4092,6 +4092,13 @@ function updateProblems() {
     const gridX = 380;
     const gridY = 210;
     ctx.font = "1em serif";
+    let fractionsValue;
+    if (p.angleTurn == 45) fractionsValue = `1/8`;
+    if (p.angleTurn == 90) fractionsValue = `1/4`;
+    if (p.angleTurn == 135) fractionsValue = `3/8`;
+    if (p.angleTurn == 270) fractionsValue = `5/8`;
+    if (p.angleTurn == 315) fractionsValue = `7/8`;
+
     if (p.roll == 1) {
       if (p.angleTurn == 180 || p.angleTurn == 360) {
         ctx.fillText(
@@ -4100,11 +4107,20 @@ function updateProblems() {
           20
         );
       } else {
-        ctx.fillText(
-          `Person O facing ${p.choice}, turn ${p.angleTurn}° ${p.direction}.`,
-          20,
-          20
-        );
+        const type = genNumbers(2) == 1 ? `fractions` : "value";
+        if (type == `fractions`) {
+          ctx.fillText(
+            `Person O facing ${p.choice}, turn  ${fractionsValue} ${p.direction}.`,
+            20,
+            20
+          );
+        } else {
+          ctx.fillText(
+            `Person O facing ${p.choice}, turn ${p.angleTurn}° ${p.direction}.`,
+            20,
+            20
+          );
+        }
       }
       ctx.fillText(`Now facing ___?`, 20, 40);
     } else {
@@ -4115,11 +4131,21 @@ function updateProblems() {
           20
         );
       } else {
-        ctx.fillText(
-          `After turning ${p.angleTurn}° ${p.direction}, person O is facing ${p.choice}`,
-          20,
-          20
-        );
+        const type = genNumbers(2) == 1 ? `fractions` : `value`
+        if (type == `fractions`){
+          ctx.fillText(
+            `After turning ${fractionsValue} ${p.direction}, person O is facing ${p.choice}`,
+            20,
+            20
+          );
+        } else {
+          ctx.fillText(
+            `After turning ${p.angleTurn}° ${p.direction}, person O is facing ${p.choice}`,
+            20,
+            20
+          );
+        }
+       
       }
       ctx.fillText(`Facing Point ___ at first?`, 20, 40);
     }
