@@ -4096,7 +4096,8 @@ function updateProblems() {
     if (p.angleTurn == 45) fractionsValue = `1/8`;
     if (p.angleTurn == 90) fractionsValue = `1/4`;
     if (p.angleTurn == 135) fractionsValue = `3/8`;
-    if (p.angleTurn == 270) fractionsValue = `5/8`;
+    if (p.angleTurn == 225) fractionsValue = `5/8`;
+    if (p.angleTurn == 270) fractionsValue = `3/4`;
     if (p.angleTurn == 315) fractionsValue = `7/8`;
 
     if (p.roll == 1) {
