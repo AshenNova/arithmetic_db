@@ -23398,7 +23398,7 @@ function handleSubmit(e) {
         const str = correctAnswer.toString().split(".")[1];
         if (str) {
           if (str.length > 2) {
-            correctAnswer = correctAnswer.toFixed(2) * 1;
+            correctAnswer = (Math.round(correctAnswer*1*100)/100).toFixed(2);
           }
         }
       }
