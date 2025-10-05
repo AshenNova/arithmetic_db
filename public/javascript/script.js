@@ -4132,8 +4132,8 @@ function updateProblems() {
           20
         );
       } else {
-        const type = genNumbers(2) == 1 ? `fractions` : `value`
-        if (type == `fractions`){
+        const type = genNumbers(2) == 1 ? `fractions` : `value`;
+        if (type == `fractions`) {
           ctx.fillText(
             `After turning ${fractionsValue} ${p.direction}, person O is facing ${p.choice}`,
             20,
@@ -4146,7 +4146,6 @@ function updateProblems() {
             20
           );
         }
-       
       }
       ctx.fillText(`Facing Point ___ at first?`, 20, 40);
     }
@@ -17171,6 +17170,7 @@ How many items are there in each bag?
   // display
 
   if (level == "heuFour") {
+    normalDisplay();
     if (setting == 1) {
       while (p.groupOne == p.groupTwo) {
         p.groupOne = genNumbers(8) + 2;
@@ -21816,12 +21816,15 @@ function handleSubmit(e) {
       if (p.roll == 4) {
         if (p.triRoll == 1) {
           correctAnswer = `180-${p.triLeftAngleD}-${p.triRightAngleD}`;
+          correctAnswerTwo = `180-${p.triRightAngleD}-${p.triLeftAngleD}`;
         }
         if (p.triRoll == 2) {
           correctAnswer = `180-${p.tri2LeftAngleD}-${p.tri2RightAngleD}`;
+          correctAnswerTwo = `180-${p.tri2RightAngleD}-${p.tri2LeftAngleD}`;
         }
         if (p.triRoll == 3) {
           correctAnswer = `180-${p.tri3LeftAngleD}-${p.tri3RightAngleD}`;
+          correctAnswerTwo = `180-${p.tri3RightAngleD}-${p.tri3LeftAngleD}`;
         }
       }
     }
@@ -27141,8 +27144,8 @@ function genProblems() {
 
   if (level == 5.07) {
     return {
-      roll: [3, 2, 1][genNumbers(3)],
-
+      roll: [4, 3, 2, 1][genNumbers(4)],
+      // roll: 4,
       rightAngleTriX1: -(genNumbers(4) + 3) * 15,
       rightAngleTriX2: (genNumbers(4) + 3) * 20,
       rightAngleTriY: -(genNumbers(5) + 2) * 20,
