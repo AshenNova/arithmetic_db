@@ -11637,7 +11637,7 @@ function updateProblems() {
       //   console.log("Repeated Sum")
       //   return updateCalc();
       // }
-      let possibility;
+      let possibility = 0;
       if (p.number % optionOneSum == 0) possibility += 1;
       if (p.number % optionTwoSum == 0) possibility += 1;
       if (p.number % optionThreeSum == 0) possibility += 1;
@@ -28361,10 +28361,10 @@ function genProblems() {
     setting = calArrAll(27, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
 
-    while (setting == 14) {
-      setting = calArrAll(27, calArr, setting, 99);
-      setting = checkRange(setting, calArr, skipArr);
-    }
+    // while (setting == 14) {
+    //   setting = calArrAll(27, calArr, setting, 99);
+    //   setting = checkRange(setting, calArr, skipArr);
+    // }
     if (setting == 0) {
       return {
         arrSymbol: ["+", "-", "*", "/"],
