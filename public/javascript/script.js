@@ -23398,8 +23398,8 @@ function handleSubmit(e) {
         const str = correctAnswer.toString().split(".")[1];
         if (str) {
           if (str.length > 2) {
-            if (str[0]==5) correctAnswer += 0.001
-            correctAnswer = correctAnswer.toFixed(2)
+            if (str[0] == 5) correctAnswer += 0.001;
+            correctAnswer = correctAnswer.toFixed(2);
           }
         }
       }
@@ -28361,6 +28361,10 @@ function genProblems() {
     setting = calArrAll(27, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
 
+    while (setting == 14) {
+      setting = calArrAll(27, calArr, setting, 99);
+      setting = checkRange(setting, calArr, skipArr);
+    }
     if (setting == 0) {
       return {
         arrSymbol: ["+", "-", "*", "/"],
