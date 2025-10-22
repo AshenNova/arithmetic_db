@@ -20445,6 +20445,9 @@ function handleSubmit(e) {
           }
         }
       }
+      if (finalMinutes == 0){
+        correctAnswerTwo = `${hours}${amOrPm2}`
+      }
     }
 
     if (level == 2.1) {
