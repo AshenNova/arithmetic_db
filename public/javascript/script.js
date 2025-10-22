@@ -20445,8 +20445,8 @@ function handleSubmit(e) {
           }
         }
       }
-      if (finalMinutes == 0){
-        correctAnswerTwo = `${hours}${amOrPm2}`
+      if (finalMinutes == 0) {
+        correctAnswerTwo = `${hours}${amOrPm2}`;
       }
     }
 
@@ -22446,6 +22446,7 @@ function handleSubmit(e) {
           }
           if (mins.toString().length == 0) {
             correctAnswer = `${hours}${zone}`;
+            correctAnswerTwo = `${hours}.00${zone}`;
           }
         }
       }
