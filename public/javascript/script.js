@@ -20307,11 +20307,13 @@ function handleSubmit(e) {
       // am range = 11x60+59=719
       // pm range = 780 to 1439
       let amOrPm2 = undefined;
+      let finalMinutes;
+      let hours;
       if (p.situation == "later") {
         if (p.roll == "mins") {
-          let finalMinutes = totalMinutes + p.changeMinutes;
+          finalMinutes = totalMinutes + p.changeMinutes;
           console.log(`Final Minutes: ${finalMinutes}`);
-          let hours = Math.floor(finalMinutes / 60);
+          hours = Math.floor(finalMinutes / 60);
           if (finalMinutes < 60) {
             hours = 12;
           }
@@ -20352,9 +20354,9 @@ function handleSubmit(e) {
           }
         }
         if (p.roll == "hours") {
-          let finalMinutes = totalMinutes + p.changeHours * 60;
+          finalMinutes = totalMinutes + p.changeHours * 60;
           console.log(`Final Minutes: ${finalMinutes}`);
-          let hours = Math.floor(finalMinutes / 60);
+          hours = Math.floor(finalMinutes / 60);
           if (hours > 12 && hours < 25) {
             hours -= 12;
           }
@@ -20378,12 +20380,12 @@ function handleSubmit(e) {
       }
       if (p.situation == "before") {
         if (p.roll == "mins") {
-          let finalMinutes = totalMinutes - p.changeMinutes;
+          finalMinutes = totalMinutes - p.changeMinutes;
           if (finalMinutes <= 0) {
             finalMinutes += 1440;
           }
           console.log(`Final Minutes: ${finalMinutes}`);
-          let hours = Math.floor(finalMinutes / 60);
+          hours = Math.floor(finalMinutes / 60);
           if (hours > 12 && hours < 25) {
             hours -= 12;
           }
@@ -20415,12 +20417,12 @@ function handleSubmit(e) {
         }
 
         if (p.roll == "hours") {
-          let finalMinutes = totalMinutes - p.changeHours * 60;
+          finalMinutes = totalMinutes - p.changeHours * 60;
           if (finalMinutes <= 0) {
             finalMinutes += 1440;
           }
           console.log(`Final Minutes: ${finalMinutes}`);
-          let hours = Math.floor(finalMinutes / 60);
+          hours = Math.floor(finalMinutes / 60);
           if (hours > 12 && hours < 25) {
             hours -= 12;
           }
@@ -22398,19 +22400,23 @@ function handleSubmit(e) {
         correctAnswer = p.start + p.eachInterval * p.arrow;
       }
       if (setting == 12) {
+        let mins;
+        let hours;
+        let totalTime;
+        let zone;
         if (p.beforeAfter == "before") {
-          let totalTime = undefined;
+          // let totalTime = undefined;
           if (p.hoursMins == "hours") {
             totalTime = p.hours * 60 + p.mins + p.situationHours * 60;
           }
           if (p.hoursMins == "mins") {
             totalTime = p.hours * 60 + p.mins + p.situationMins;
           }
-          let hours = Math.floor(totalTime / 60);
-          let mins = totalTime % 60;
+          hours = Math.floor(totalTime / 60);
+          mins = totalTime % 60;
           console.log(totalTime, hours, mins);
           // let zone = "am";
-          let zone = "am";
+          zone = "am";
           zone = zoneOfDay(totalTime);
           hours = day12Hours(hours);
 
@@ -22418,12 +22424,12 @@ function handleSubmit(e) {
           if (mins.toString().length == 1) {
             correctAnswer = `${hours}.0${mins}${zone}`;
           }
-          if (mins.toString().length == 0) {
-            correctAnswer = `${hours}${zone}`;
-          }
+          // if (mins.toString().length == 0) {
+          //   correctAnswer = `${hours}${zone}`;
+          // }
         }
         if (p.beforeAfter == "after") {
-          let totalTime = undefined;
+          totalTime = undefined;
           if (p.hoursMins == "hours") {
             totalTime = p.hours * 60 + p.mins - p.situationHours * 60;
           }
@@ -22433,21 +22439,21 @@ function handleSubmit(e) {
           if (totalTime < 0) {
             totalTime = totalTime + 24 * 60;
           }
-          let hours = Math.floor(totalTime / 60);
-          let mins = totalTime % 60;
+          hours = Math.floor(totalTime / 60);
+          mins = totalTime % 60;
           console.log(totalTime, hours, mins);
 
-          let zone = "am";
+          zone = "am";
           zone = zoneOfDay(totalTime);
           hours = day12Hours(hours);
           correctAnswer = `${hours}.${mins}${zone}`;
           if (mins.toString().length == 1) {
             correctAnswer = `${hours}.0${mins}${zone}`;
           }
-          if (mins.toString().length == 0) {
-            correctAnswer = `${hours}${zone}`;
-            correctAnswerTwo = `${hours}.00${zone}`;
-          }
+        }
+        if (mins.toString().length == 0) {
+          correctAnswer = `${hours}${zone}`;
+          correctAnswerTwo = `${hours}.00${zone}`;
         }
       }
 
