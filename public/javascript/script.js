@@ -2244,11 +2244,18 @@ function updateProblems() {
     normalDisplay();
     const item = ["apples", "toys", "pears", "sweets"][genNumbers(4)];
     while (p.value % p.starter == 0) p.value += 1;
-    displayProblem.innerHTML = `
-    ${p.starter} ${item} = $${p.value}</br>
-    ${p.end * p.starter} ${item} = $?
-
-    `;
+    if (p.type == 0) {
+      displayProblem.innerHTML = `
+      ${p.starter} ${item} = $${p.value}</br>
+      ${p.end * p.starter} ${item} = $?
+      `;
+    }
+    if (p.type == 1) {
+      displayProblem.innerHTML = `
+      ${p.starter} ${item} = $${p.value}</br>
+      ? ${item} = $${p.value * p.end}
+      `;
+    }
   }
 
   //PICTOGRAPH
@@ -19917,7 +19924,8 @@ function handleSubmit(e) {
     }
 
     if (level == 1.09 || level == 2.11) {
-      correctAnswer = p.value * p.end;
+      if (p.type == 0) correctAnswer = p.value * p.end;
+      if (p.type == 1) correctAnswer = p.end * p.starter;
     }
 
     if (level == 1.1) {
@@ -26296,6 +26304,7 @@ function genProblems() {
       starter: genNumbers(4) + 2,
       value: genNumbers(5) + 2,
       end: genNumbers(5) + 5,
+      type: genNumbers(2),
     };
   }
 
