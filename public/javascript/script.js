@@ -2795,14 +2795,47 @@ function updateProblems() {
     if (p.count == "Error") return updateCalc();
   }
 
+  // if (level == 3.13) {
+  //   displayProblem.innerHTML = `
+  //   Pattern 1: ${p.numTwo}</br>
+  //   Pattern 2: ${p.numTwo + p.numThree}</br>
+  //   Pattern 3: ${p.numTwo + p.numThree * 2}</br>
+  //   ...</br>
+  //   Pattern ${p.numFour}: ?
+  //   `;
+  // }
+
+  //24 HOURS
   if (level == 3.13) {
-    displayProblem.innerHTML = `
-    Pattern 1: ${p.numTwo}</br>
-    Pattern 2: ${p.numTwo + p.numThree}</br>
-    Pattern 3: ${p.numTwo + p.numThree * 2}</br>
-    ...</br>
-    Pattern ${p.numFour}: ?
-    `;
+    normalDisplay();
+    if (p.type == 24) {
+      displayProblem.innerHTML = `
+        What is the time below in 12 hour clock?</p>
+      ${p.hours.toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+      })} ${p.mins.toLocaleString("en-US", { minimumIntegerDigits: 2 })}
+      `;
+    }
+    if (p.type == 12) {
+      let time12hr = p.hours;
+      if (p.hours > 12) {
+        time12hr = p.hours - 12;
+        displayProblem.innerHTML = `
+          What is the time below in 24 hour clock?</p>
+        ${time12hr}.${p.mins.toLocaleString("en-US", {
+          minimumIntegerDigits: 2,
+        })} p.m`;
+      } else {
+        if (p.hours == 0) time12hr = 12;
+        displayProblem.innerHTML = `
+          What is the time below in 24 hour clock?</p>
+        ${time12hr}.${p.mins.toLocaleString("en-US", {
+          minimumIntegerDigits: 2,
+        })} a.m
+      `;
+      }
+    }
+    console.log(p.hours);
   }
 
   if (level == 3.14) {
@@ -20678,17 +20711,52 @@ function handleSubmit(e) {
       correctAnswer = p.count * p.side * p.side;
     }
 
+    // if (level == 3.13) {
+    //   if (p.numThree > p.numTwo) {
+    //     correctAnswer = `${p.numThree}n-${p.numThree - p.numTwo} ${
+    //       p.numThree * p.numFour + (p.numTwo - p.numThree)
+    //     }`;
+    //   } else if (p.numThree == p.numTwo) {
+    //     correctAnswer = `${p.numThree}n ${p.numThree * p.numFour}`;
+    //   } else {
+    //     correctAnswer = `${p.numThree}n+${p.numTwo - p.numThree} ${
+    //       p.numThree * p.numFour + (p.numTwo - p.numThree)
+    //     }`;
+    //   }
+    // }
+
     if (level == 3.13) {
-      if (p.numThree > p.numTwo) {
-        correctAnswer = `${p.numThree}n-${p.numThree - p.numTwo} ${
-          p.numThree * p.numFour + (p.numTwo - p.numThree)
-        }`;
-      } else if (p.numThree == p.numTwo) {
-        correctAnswer = `${p.numThree}n ${p.numThree * p.numFour}`;
-      } else {
-        correctAnswer = `${p.numThree}n+${p.numTwo - p.numThree} ${
-          p.numThree * p.numFour + (p.numTwo - p.numThree)
-        }`;
+      console.log(p.type, p.hours);
+      if (p.type == 24) {
+        let time12hr = p.hours;
+        if (p.hours > 12) time12hr = p.hours - 12;
+        if (p.hours > 0 && p.hours < 12) {
+          correctAnswer = `${time12hr}.${p.mins.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+          })}am`;
+        } else if (p.hours == 0) {
+          correctAnswer = `12.${p.mins.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+          })}am`;
+        } else {
+          correctAnswer = `${time12hr}.${p.mins.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+          })}pm`;
+        }
+      }
+      // ANSWER IN 24 HOUR CLOCK
+      if (p.type == 12) {
+        if (p.hours == 12) {
+          correctAnswer = `00 ${p.mins.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+          })}`;
+        } else {
+          correctAnswer = `${p.hours.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+          })} ${p.mins.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+          })}`;
+        }
       }
     }
 
@@ -25958,8 +26026,8 @@ function handleSubmit(e) {
         "calSixb",
       ];
       const levelDoNotClearNum = [
-        1.1, 2.05, 2.09, 2.08, 2.09, 3.09, 3.12, 3.13, 3.14, 3.16, 4.0, 4.03,
-        5.11, 6.01,
+        1.1, 2.05, 2.09, 2.08, 2.09, 3.09, 3.12, 3.14, 3.16, 4.0, 4.03, 5.11,
+        6.01,
       ];
       if (
         !levelDoNotClearNum.includes(level) &&
@@ -26457,11 +26525,20 @@ function genProblems() {
     };
   }
 
+  // if (level == 3.13) {
+  //   return {
+  //     numTwo: genNumbers(10) + 1,
+  //     numThree: genNumbers(5) + 2,
+  //     numFour: genNumbers(5) + 5,
+  //   };
+  // }
+
   if (level == 3.13) {
     return {
-      numTwo: genNumbers(10) + 1,
-      numThree: genNumbers(5) + 2,
-      numFour: genNumbers(5) + 5,
+      type: [12, 24][genNumbers(2)],
+      hours: genNumbers(24),
+      // hours: [0, 12][genNumbers(2)],
+      mins: genNumbers(60),
     };
   }
 
@@ -31351,6 +31428,12 @@ function buttonLevelSetting() {
       scoreNeeded = 10;
       document.querySelector("#user-input").setAttribute("type", "text");
       // instructions.textContent = "Form an Equation from the pattern";
+      break;
+
+    case "Level 3.13":
+      level = 3.13;
+      scoreNeeded = 20;
+      document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
     case "Level 3.16":
