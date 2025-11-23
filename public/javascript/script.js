@@ -20302,6 +20302,9 @@ function handleSubmit(e) {
           }${p.minSeconds}`;
         } else if (p.numOne == p.numThree && p.numOne == 0) {
           correctAnswer = `${p.numTwo + p.numFour}${p.minSeconds}`;
+          correctAnswerTwo = `0${p.minHours}${p.numTwo + p.numFour}${
+            p.minSeconds
+          }`;
         } else {
           correctAnswer = `${p.numOne + p.numThree}${p.minHours}${
             p.numTwo + p.numFour
@@ -20322,6 +20325,12 @@ function handleSubmit(e) {
           correctAnswerTwo = `${p.numOne - p.numThree - 1}${p.minHours}${
             p.numTwo + 60 - p.numFour
           }${p.minSeconds}`;
+          if (p.numOne - p.numThree - 1 == 0) {
+            correctAnswerArr.push(
+              `${p.numTwo + 60 - p.numFour}${p.minSeconds}`
+            );
+          }
+
           //DONT HAVE TO BORROW
         } else {
           correctAnswer = `${p.numOne - p.numThree}${p.minHours}${
@@ -20330,6 +20339,9 @@ function handleSubmit(e) {
         }
         if (p.numOne == p.numThree) {
           correctAnswer = `${p.numTwo - p.numFour}${p.minSeconds}`;
+          correctAnswerTwo = `0${p.minHours}${p.numTwo - p.numFour}${
+            p.minSeconds
+          }`;
         }
       }
     }
