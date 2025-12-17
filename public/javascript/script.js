@@ -22027,9 +22027,13 @@ function handleSubmit(e) {
     if (level == 5.13) {
       if (p.rollAnswer == "A") {
         correctAnswer = `${p.shadedArea}+${p.unshadedArea}x2`;
+        correctAnswerArr.push(`${p.shadedArea}+2x${p.unshadedArea}`);
+        correctAnswerArr.push(`${p.unshadedArea}x2+${p.shadedArea}`);
+        correctAnswerArr.push(`2x${p.unshadedArea}+${p.shadedArea}`);
       }
       if (p.rollAnswer == "B") {
         correctAnswer = `${p.unshadedArea}x2`;
+        correctAnswerTwo = `2x${p.unshadedArea}`;
       }
     }
 
