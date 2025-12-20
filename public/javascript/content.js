@@ -276,13 +276,14 @@ export const displayContent = (level) => {
       11. Volume: Dimensions and Surface Area</br>
       12. Volume: Numerator with a Value</br>
       <hr></hr>
-      13. Ratio: Simplification and Expansion</br>
-      14. Ratio: Possible</br>
-      15. Ratio: Shapes</br>
-      16. Ratio: Repeated Identity</br>
-      17. Ratio: Identical Total</br>
-      18. Ratio: Wipe on wipe off</br>
-      <hr></hr>
+      13. Fractions: Closest and Furthest</br>
+      14. Fractions: Before and After</br>
+      15. Fractions: Under the same unit (Level 2)</br>
+      16. Fractions: Overlapping Model</br>
+      17. Fractions: Identical Numerator (Type 2)</br>
+      <hr>
+      18. Pattern: Continuous Pattern (Sets) </br>
+      <hr>
       19. Rates: Part thereof part thereafter</br>
       20. Rates: Taps</br>
       <hr></hr>
@@ -303,40 +304,23 @@ export const displayContent = (level) => {
   if (level == "calFiveb") {
     return `
     </p>
-    1. Fractions: Closest and Furthest</br>
-    2. Fractions: Before and After</br>
-    3. Fractions: Under the same unit (Level 2)</br>
-    4. Fractions: Overlapping Model</br>
-    5. Fractions: Identical Numerator (Type 2)</br>
+    1. Geometry: Obtuse Triangle</br>
+    2. Geometry: Area of Figure:  Cutting</br>
+    3. Geometry: Manipulation of Dimension</br>
+    4. Geometry: Manipulation of Dimension: level 2</br>
+    5. Geometry: Area of Figure: Using 2 different Units</br>
     <hr>
-    6. Geometry: Obtuse Triangle</br>
-    7. Geometry: Area of Figure:  Cutting</br>
-    8. Geometry: Manipulation of Dimension</br>
-    9. Geometry: Manipulation of Dimension: level 2</br>
-    10. Geometry: Area of Figure: Using 2 different Units</br>
+    6. Percentage: Repeated Group</br>
+    7. Percentage: Overlapping Model</br>
+    8. Percentage: GST, discount and Service Charge</br>
+    9. Percentage: Identical Effect</br>
+    10. Percentage: Solving in units</br>
     <hr>
-    11. Ratio: Repeated Group</br>
-    12. Ratio: Unchanged Object</br>
-    13. Ratio: Unchanged Total</br>
-    14. Ratio: Unchanged Difference</br>
-    15. Ratio: Manipulation in units</br>
-    16. Ratio: Repeated Identity (Geometry)</br>
-    <hr>
-    17. Percentage: Repeated Group</br>
-    18. Percentage: Overlapping Model</br>
-    19. Percentage: GST, discount and Service Charge</br>
-    20. Percentage: Identical Effect</br>
-    21. Percentage: Solving in units</br>
-    <hr>
-    22. Average: External Change</br>
-    23. Average: Odd consecutive days</br>
-    <hr>
-    24. Ratio: Manipulation of units with value</br>
-    25. Pattern: Continuous Pattern (Sets) </br>
-    26. Ratio: Unidentical Group</br>
-    27. Supposition: Least</br>
+    11. Average: External Change</br>
+    12. Average: Odd consecutive days</br>
     <hr>
     99. All
+    
     `;
   }
   if (level == "calSix") {
@@ -345,16 +329,28 @@ export const displayContent = (level) => {
     1. Fractions: Finding remainder</br>
     2. Fractions: Numerator with a Value</br>
     <hr>
-    3. Circles: Area and Perimeter</br>
-    4. Circles: Inner Square</br>
-    5. Circles: Others</br>
+    3. Ratio: Simplification and Expansion</br>
+    4. Ratio: Possible</br>
+    5. Ratio: Shapes</br>
+    6. Ratio: Repeated Identity</br>
+    7. Ratio: Identical Total</br>
+    8. Ratio: Repeated Group</br>
+    9. Ratio: Unchanged Object</br>
+    10. Ratio: Unchanged Total</br>
+    11. Ratio: Unchanged Difference</br>
+    12. Ratio: Manipulation in units</br>
+    13. Ratio: Repeated Identity (Geometry)</br>
     <hr>
-    6. Speed: Average Speed</br>
-    7. Speed: Moving Apart</br>
-    8. Speed: Difference in speed (Mid)</br>
-    9. Speed: Surrogate</br>
+    14. Circles: Area and Perimeter</br>
+    15. Circles: Inner Square</br>
+    16. Circles: Others</br>
     <hr>
-    10. Pie Chart</br>
+    17. Speed: Average Speed</br>
+    18. Speed: Moving Apart</br>
+    19. Speed: Difference in speed (Mid)</br>
+    20. Speed: Surrogate</br>
+    <hr>
+    21. Pie Chart</br>
     <hr>
     99. All
     `;
@@ -362,16 +358,21 @@ export const displayContent = (level) => {
   if (level == "calSixb") {
     return `
     </p>
-    1. Speed: Surrogation: Beyond </br>
-    2. Speed: Meet up</br>
-    3. Speed: Catch up</br>
-    4. Speed: Double Triangle</br>
+    1. Ratio: Manipulation of units with value</br>
+    2. Ratio: Wipe on wipe off</br>
+    3. Ratio: Unidentical Group</br>
+    4. Supposition: Least</br>
     <hr>
     5. Volume: Grouping</br>
     6. Volume: Meet Up</br>
     <hr>
     7. Geometry: Repeated Identity Area</br>
     8. Geometry: Manipulation of Dimension: Overlapping Figure</br>
+    <hr>
+    1. Speed: Surrogation: Beyond </br>
+    2. Speed: Meet up</br>
+    3. Speed: Catch up</br>
+    4. Speed: Double Triangle</br>
     <hr>
     99. All`;
   }

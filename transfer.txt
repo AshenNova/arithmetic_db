@@ -1,0 +1,999 @@
+From calFive to calFiveb: Shifting ratios to calFiveb
+
+->[content]
+ 
+    13. Ratio: Simplification and Expansion</br>
+      14. Ratio: Possible</br>
+      15. Ratio: Shapes</br>
+      16. Ratio: Repeated Identity</br>
+      17. Ratio: Identical Total</br>
+      18. Ratio: Wipe on wipe off</br>
+      <hr></hr>
+-->[setting]
+
+ // RATIO: SIMPLIFICATION AND EXPANSION
+    if (setting == 13) {
+      return {
+        numA: genNumbers(9) + 1,
+        numB: genNumbers(9) + 1,
+        numC: genNumbers(9) + 1,
+        process: ["up", "down", "updown"][genNumbers(3)],
+        ratioArr: undefined,
+        answer: undefined,
+      };
+    }
+    //RATIO: POSSIBLE RATIOS
+    if (setting == 14) {
+      return {
+        number: genNumbers(70) + 30,
+        optionOne: [],
+        optionTwo: [],
+        optionThree: [],
+        optionFour: [],
+        chosen: genNumbers(4),
+      };
+    }
+
+    //REPEATED IDENTITY: SHAPES
+    if (setting == 15) {
+      return {
+        shapes: ["square", "triangle", "rectangle", "circle"][genNumbers(4)],
+        shaded: undefined,
+        total: undefined,
+        secondVar: ["unshaded", "total"][genNumbers(2)],
+        want: "shaded",
+        bigY: (genNumbers(5) + 10) * 10,
+      };
+    }
+    //repeated identity [Ratio]
+    if (setting == 16) {
+      const arrSomething = ["books", "homeworks", "pencils", "pens"];
+      return {
+        something: arrSomething[genNumbers(arrSomething.length)],
+        personOne: ["Liam", "Noah", "Oliver", "Elijah", "Jake"][genNumbers(5)],
+        personTwo: ["Tammy", "Emma", "Charlotte", "Amelia", "Camila"][
+          genNumbers(5)
+        ],
+        repeatedId: undefined,
+        personThree: ["Theodore", "Harper", "Luna", "Jack", "Ella"][
+          genNumbers(5)
+        ],
+        unitOne: genNumbers(5) + 2,
+        unitTwo: genNumbers(5) + 2,
+        unitThree: genNumbers(5) + 2,
+        unitFour: genNumbers(5) + 2,
+        firstSentence: ["unit", "ratio"][genNumbers(2)],
+        secondSentence: ["unit", "ratio"][genNumbers(2)],
+      };
+    }
+
+    // RATIO: IDENTICAL TOTAL
+    if (setting == 17) {
+      const genObjects = genNumbers(3);
+      return {
+        position: genObjects,
+        objects: [
+          ["girls", "boys"],
+          ["males", "females"],
+          ["chocolates", "sweets"],
+        ][genObjects],
+        ratioA: genNumbers(5) + 1,
+        ratioB: genNumbers(5) + 1,
+        ratioC: genNumbers(5) + 1,
+        ratioD: genNumbers(5) + 1,
+        question: [1, 2, 3][genNumbers(3)],
+      };
+    }
+
+    // RATIO: WIPE ON WIPE OFF
+    if (setting == 18) {
+      return {
+        version: ["difference", "total", "object"][genNumbers(3)],
+        length: genNumbers(5) + 5,
+        breadth: genNumbers(2) + 3,
+        change: genNumbers(16) - 8,
+        shaded: undefined,
+        unshaded: undefined,
+      };
+    }
+
+
+--->[display]
+
+ // RATIO: SIMPLIFICATION AND EXPANSION
+    if (setting == 13) {
+      normalDisplay();
+      p.ratioArr = [];
+      const quantity = genNumbers(2) + 2;
+      if (quantity == 2) {
+        p.ratioArr.push(p.numA, p.numB);
+      } else {
+        p.ratioArr.push(p.numA, p.numB, p.numC);
+      }
+      if ([...new Set(p.ratioArr)].length != quantity) {
+        console.log("Same value");
+        return updateCalc();
+      }
+      if (p.process == "up") {
+        const multiA = genNumbers(3) + 2;
+        let equalArr = p.ratioArr.map((i) => i * multiA);
+        const replace = genNumbers(quantity);
+        p.answer = equalArr[replace];
+        equalArr[replace] = "?";
+        displayProblem.innerHTML = `Find the missing number.<br><p class="center">${p.ratioArr.join(
+          " : "
+        )} = ${equalArr.join(" : ")}</p>`;
+      }
+
+      if (p.process == "down") {
+        const multiA = genNumbers(3) + 2;
+        let equalArr = p.ratioArr.map((i) => i * multiA);
+        const replace = genNumbers(quantity);
+        p.answer = p.ratioArr[replace];
+        p.ratioArr[replace] = "?";
+        displayProblem.innerHTML = `Find the missing number.<br><p class="center">${equalArr.join(
+          " : "
+        )} = ${p.ratioArr.join(" : ")}</p>`;
+      }
+
+      if (p.process == "updown") {
+        const multiA = [2, 6, 8][genNumbers(3)];
+        const multiB = [3, 5, 7][genNumbers(3)];
+        // while (multiA == multiB) {
+        //   multiB = genNumbers(3) + 2;
+        // }
+        let equalArr = p.ratioArr.map((i) => i * multiA);
+        let equalArrB = p.ratioArr.map((i) => i * multiB);
+        const replace = genNumbers(quantity);
+        p.answer = equalArrB[replace];
+        equalArrB[replace] = "?";
+        displayProblem.innerHTML = `Find the missing number.<br><p class="center">${equalArr.join(
+          " : "
+        )} = ${equalArrB.join(" : ")}</p>`;
+      }
+    }
+
+    // RATIO: POSSIBLE
+    if (setting == 14) {
+      normalDisplay();
+      function getFactors(num) {
+        let factors = [];
+        for (let i = 1; i <= num; i++) {
+          if (num % i == 0) factors.push(i);
+        }
+        return factors;
+      }
+      let factors = getFactors(p.number);
+      console.log(factors);
+      if (factors.length < 4) {
+        // p.number +=1
+        return updateCalc();
+        // factors = getFactors(p.number);
+      }
+      let arr = [p.optionOne, p.optionTwo, p.optionThree, p.optionFour];
+      //FILL UP THE OPTIONS
+      arr.forEach((item) => {
+        for (let i = 0; i < 3; i++) {
+          const num = genNumbers(5) + 1;
+          item.push(num);
+        }
+      });
+      //CHECK THE ARRAYS
+      arr.forEach((item, index) => {
+        let sum = 0;
+        item.map((x) => {
+          sum += x;
+        });
+        if (sum > p.number) return updateCalc();
+        while (index == p.chosen && p.number % sum != 0) {
+          item[genNumbers(item.length)] += 1;
+          sum += 1;
+          if (sum > p.number) return updateCalc();
+        }
+        while (index != p.chosen && p.number % sum == 0) {
+          item[genNumbers(item.length)] += 1;
+          sum += 1;
+          if (sum > p.number) return updateCalc();
+        }
+      });
+      function simplifyAll(arr) {
+        const sorting = [...arr];
+        sorting.sort((a, b) => b - a);
+        const largest = sorting[0];
+
+        for (let i = 2; i <= largest; i++) {
+          while (arr[0] % i == 0 && arr[1] % i == 0 && arr[2] % i == 0) {
+            arr[0] /= i;
+            arr[1] /= i;
+            arr[2] /= i;
+          }
+        }
+        return arr;
+      }
+      console.log("simplfying");
+      simplifyAll(p.optionOne);
+      console.log("Done 1");
+      simplifyAll(p.optionTwo);
+      console.log("Done 2");
+      simplifyAll(p.optionThree);
+      console.log("Done 3");
+      simplifyAll(p.optionFour);
+      console.log("Done 4");
+      arr.forEach((item, index) => {
+        console.log(`Option: ${index + 1} ${item}`);
+        // SKIP EVERYTHING BELOW IF ITS THE ANSWER
+        if (p.chosen == index) {
+          console.log("HUH?");
+          return;
+        }
+
+        //CHECKING IF OTHER OPTIONS MIGHT LEAD TO ANOTHER ANSWER
+        let summation = 0;
+        item.map((x) => (summation += x));
+        console.log(`The summation is :${summation}`);
+        if (p.number % summation == 0) {
+          console.log(p.number);
+          console.log(summation);
+          return updateCalc();
+        }
+
+        //CHECKING IF THERE ARE ANY IDENTICAL ARRAYS
+        for (let i = 0; i < 4; i++) {
+          // DO NOT CHECK IF OPTIONS IS THE SAME OPTION
+          if (index != i) {
+            if (item.toString() == arr[i].toString()) {
+              console.log("Repeat detected");
+              return updateCalc();
+            }
+          }
+        }
+      });
+      let optionOneSum;
+      let optionTwoSum;
+      let optionThreeSum;
+      let optionFourSum;
+      p.optionOne.map((x) => {
+        optionOneSum += x;
+      });
+      p.optionTwo.map((x) => {
+        optionTwoSum += x;
+      });
+      p.optionThree.map((x) => {
+        optionThreeSum += x;
+      });
+      p.optionFour.map((x) => {
+        optionFourSum += x;
+      });
+      // let unique = [
+      //   ...new Set([optionOneSum, optionTwoSum, optionThreeSum, optionFourSum]),
+      // ];
+      // if (unique.length < 4) {
+      //   console.log("Repeated Sum")
+      //   return updateCalc();
+      // }
+      let possibility = 0;
+      if (p.number % optionOneSum == 0) possibility += 1;
+      if (p.number % optionTwoSum == 0) possibility += 1;
+      if (p.number % optionThreeSum == 0) possibility += 1;
+      if (p.number % optionFourSum == 0) possibility += 1;
+      if (possibility > 1) {
+        console.log("More than 1 possible option");
+        return updateCalc();
+      }
+      displayProblem.innerHTML = `
+      Which set of ratio is possible to give the value ${p.number}?
+      <hr>
+      <table>
+        <tr>
+          <td>1) ${p.optionOne.join(" : ")}</br></td>
+          <td>2) ${p.optionTwo.join(" : ")}</br></td>
+        </tr>
+        <tr>
+          <td>3) ${p.optionThree.join(" : ")}</br></td>
+          <td>4) ${p.optionFour.join(" : ")}</br></td>   
+         </tr>
+      </table>
+      `;
+    }
+
+    //RATIO: SHAPES
+    if (setting == 15) {
+      drawingDisplay();
+      drawForFraction(state, "ratio");
+      // console.log(mediumColumn, smallRow, p.shaded, p.total);
+      if (p.shaded == 0) {
+        ctx.restore();
+        return updateCalc();
+      }
+      ctx.restore(); //1st
+    }
+    // RATIO: REPEATED IDENTITY
+    if (setting == 16) {
+      normalDisplay();
+      let lineOne = "";
+      if (p.firstSentence == "unit") {
+        p.unitTwo = 1;
+        lineOne = `
+        ${p.personOne} has ${p.unitOne} times as many ${p.something} as ${p.personTwo}.</p>
+        `;
+      }
+      if (p.firstSentence == "ratio") {
+        if (p.unitOne == p.unitTwo) p.unitTwo += 1;
+        [p.unitOne, p.unitTwo] = simplify(p.unitOne, p.unitTwo);
+        lineOne = `
+        ${p.personOne}'s ratio of ${p.something} is ${p.unitOne}:${p.unitTwo} to ${p.personTwo}.</p>
+        `;
+      }
+      const position = genNumbers(2);
+      p.repeatedId = [p.personOne, p.personTwo][position];
+      let lineTwo = "";
+      if (p.secondSentence == "unit") {
+        p.unitFour = 1;
+        lineTwo = `
+        ${p.repeatedId} has ${p.unitThree} times as many ${p.something} as ${p.personThree}.</p>
+        `;
+      }
+      if (p.secondSentence == "ratio") {
+        if (p.unitThree == p.unitFour) p.unitFour += 1;
+        [p.unitThree, p.unitFour] = simplify(p.unitThree, p.unitFour);
+        lineTwo = `
+        ${p.repeatedId}'s ratio of ${p.something} is ${p.unitThree}:${p.unitFour} to ${p.personThree}.</p>
+        `;
+      }
+      calArrQns.push(p.unitOne);
+      calArrQns.push(p.unitTwo);
+      position == 0 ? calArrQns.push(p.unitOne) : calArrQns.push(p.unitTwo);
+      calArrQns.push(p.unitThree);
+      calArrQns.push(p.unitFour);
+      if (calArrQns[3] == calArrQns[4]) {
+        calArrQns = [];
+        return updateCalc();
+      }
+
+      let i = 0;
+      let count = 1;
+      while ((calArrQns[2] + i) % calArrQns[3] != 0) {
+        i += calArrQns[2];
+        count += 1;
+        console.log(i, count);
+      }
+      calArrQns.push(calArrQns[0] * count);
+      calArrQns.push(calArrQns[1] * count);
+      const multiTwo = (calArrQns[2] * count) / calArrQns[3];
+      calArrQns.push(calArrQns[3] * multiTwo);
+      calArrQns.push(calArrQns[4] * multiTwo);
+      const lineThree = `What is the ratio of ${p.personOne} to ${p.personTwo} to ${p.personThree}?`;
+
+      displayProblem.innerHTML = `
+      ${lineOne}</p>
+      ${lineTwo}</p>
+      ${lineThree}
+      `;
+    }
+    // RATIO: IDENTICAL TOTAL
+    if (setting == 17) {
+      normalDisplay();
+      console.log(p.objects);
+      const objectA = p.objects[0];
+      const objectB = p.objects[1];
+      [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
+      [p.ratioC, p.ratioD] = simplify(p.ratioC, p.ratioD);
+      if (((p.ratioA == p.ratioB) == p.ratioC) == p.ratioD) return updateCalc();
+      if (manipulation > 0 && p.ratioA + p.ratioB == p.ratioC + p.ratioD) {
+        console.log("Manipulated!");
+        return updateCalc();
+      }
+      if (p.ratioA + p.ratioB == p.ratioC + p.ratioD) manipulation += 1;
+      displayProblem.innerHTML = `
+      Group A and B have ${
+        p.position == 2
+          ? "the same chocolates and sweets"
+          : "the same number of people"
+      }.</p>
+      Group A is made up of ${objectA} and ${objectB} in the ratio of ${
+        p.ratioA
+      } : ${p.ratioB}.</p>
+      Group B is made up of ${objectA} and ${objectB} in the ratio of ${
+        p.ratioC
+      } : ${p.ratioD}.</p>
+      
+      `;
+      if (p.question == 1) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What is the ratio of total ${objectA} to ${objectB}?`
+        );
+      }
+      if (p.question == 2) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What is the ratio of ${objectA} in A to the ratio of ${objectA} in B?`
+        );
+      }
+      if (p.question == 3) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What is the ratio of ${objectB} in A to the ratio of ${objectB} in B?`
+        );
+      }
+    }
+
+    // RATIO: WIPE ON WIPE OFF
+    if (setting == 18) {
+      normalDisplay();
+      // displayProblem.innerHTML = `
+      // How many more dark squares have to be added for the ratio to be ???`;
+      displayProblem.innerHTML = ``;
+      let lengthArr = [];
+      let shaded = 0;
+      let unshaded = 0;
+      for (let x = 0; x < p.breadth; x++) {
+        for (let i = 0; i < p.length; i++) {
+          let generate = ["shaded", "unshaded"][genNumbers(2)];
+          if (generate == "shaded") {
+            lengthArr.push("◼️");
+            shaded += 1;
+          }
+          if (generate == "unshaded") {
+            lengthArr.push("◻️");
+            unshaded += 1;
+          }
+        }
+
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `<p class="center">${lengthArr.join(" ")}`
+        );
+        lengthArr = [];
+      }
+      let difference = "added";
+      if (p.version == "difference") {
+        if (shaded == unshaded) return updateCalc();
+        console.log("Shaded: " + shaded, "Unshaded: " + unshaded);
+        p.shaded = shaded;
+        p.unshaded = unshaded;
+      }
+
+      //UNCHANGED TOTAL
+      if (p.version == "total") {
+        p.change = Math.abs(p.change);
+      }
+      if (p.change == 0) {
+        p.change = [-1, 1][genNumbers(2)] * (genNumbers(8) + 1);
+      }
+      if (p.change < 0) {
+        difference = "removed";
+      }
+      let shadedEnd = (shaded += p.change);
+
+      let unshadedEnd = unshaded;
+      if (p.version == "total") {
+        unshadedEnd = unshaded += p.change * -1;
+      }
+
+      if (p.version == "difference") {
+        if (p.change == 0) {
+          p.change = [-1, 1][genNumbers(2)] * (genNumbers(8) + 1);
+        }
+        shadedEnd = shaded += p.change;
+        unshadedEnd = unshaded += p.change;
+        if (
+          Math.abs(p.shaded - p.unshaded) % Math.abs(shadedEnd - unshadedEnd) !=
+          0
+        )
+          return updateCalc();
+        if (shadedEnd == unshadedEnd || shadedEnd <= 0 || unshaded <= 0) {
+          return updateCalc();
+        }
+      }
+
+      [shadedEnd, unshadedEnd] = simplify(shadedEnd, unshadedEnd);
+      if (unshadedEnd == unshaded) {
+        console.log("No change in ratio for unshaded");
+        return updateCalc();
+      }
+      //UNCHANGED DIFFERENCE
+      if (p.version == "difference") {
+        displayProblem.insertAdjacentHTML(
+          "afterbegin",
+          `An equal number of white and black squares have been ${difference} for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?</br>How many black squares were ${difference}?`
+        );
+      }
+      //UNCHANGED OBJ
+      if (p.version == "object") {
+        displayProblem.insertAdjacentHTML(
+          "afterbegin",
+          `How many black squares have to be ${difference} for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?`
+        );
+      }
+      //UNCHANGED TOTAL
+      if (p.version == "total") {
+        displayProblem.insertAdjacentHTML(
+          "afterbegin",
+          `How many white squares have to be replaced with black squares for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?`
+        );
+      }
+    }
+
+---->[answer]
+
+//RATIO: SIMPLIFICATION AND EXPANSION
+      if (setting == 13) {
+        correctAnswer = p.answer;
+      }
+
+      //RATIO: POSSIBLE
+      if (setting == 14) {
+        console.log(p.chosen);
+        correctAnswer = p.chosen + 1;
+      }
+
+      //RATIO: SHAPES
+      if (setting == 15) {
+        let shaded = p.shaded;
+        let unshaded = p.total - shaded;
+        [shaded, unshaded] = simplify(shaded, unshaded);
+        if (p.secondVar == "unshaded") correctAnswer = `${shaded}:${unshaded}`;
+        if (p.secondVar == "total")
+          correctAnswer = `${shaded}:${shaded + unshaded}`;
+
+        // }
+      }
+      // RATIO: REPEATED IDENTITY
+      if (setting == 16) {
+        calArrQns = simplestForm(calArrQns);
+        correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
+      }
+
+      // RATIO: IDENTICAL TOTAL
+      if (setting == 17) {
+        let totalA = p.ratioA + p.ratioB;
+        let totalB = p.ratioC + p.ratioD;
+        const commonTotal = commonDeno(totalA, totalB);
+        const multiOne = commonTotal / totalA;
+        const multiTwo = commonTotal / totalB;
+        let newA = p.ratioA * multiOne;
+        let newB = p.ratioB * multiOne;
+        let newC = p.ratioC * multiTwo;
+        let newD = p.ratioD * multiTwo;
+
+        if (p.question == 1) {
+          let newTotalA = newA + newC;
+          let newTotalB = newB + newD;
+          [newTotalA, newTotalB] = simplify(newTotalA, newTotalB);
+          correctAnswer = `${newTotalA}:${newTotalB}`;
+        }
+        if (p.question == 2) {
+          [newA, newC] = simplify(newA, newC);
+          correctAnswer = `${newA}:${newC}`;
+        }
+        if (p.question == 3) {
+          [newB, newD] = simplify(newB, newD);
+          correctAnswer = `${newB}:${newD}`;
+        }
+      }
+
+      //RATIO: WIPE ON WIPE OFF
+      if (setting == 18) {
+        correctAnswer = Math.abs(p.change);
+        if (p.version == "difference") {
+          const differenceAtFirst = Math.abs(p.shaded - p.unshaded);
+          let shadedEnd = (p.shaded += p.change);
+          let unshadedEnd = (p.unshaded += p.change);
+          [shadedEnd, unshadedEnd] = simplify(shadedEnd, unshadedEnd);
+          const differenceEnd = Math.abs(shadedEnd - unshadedEnd);
+          const commonNum = commonDeno(differenceAtFirst, differenceEnd);
+          correctAnswer =
+            (commonNum / differenceAtFirst) * p.shaded -
+            (commonNum / differenceEnd) * shadedEnd;
+        }
+      }
+
+
+
+
+
+From calFiveb to calFive: Shifting fractions to calFive
+
+->[content]
+
+1. Fractions: Closest and Furthest</br>
+    2. Fractions: Before and After</br>
+    3. Fractions: Under the same unit (Level 2)</br>
+    4. Fractions: Overlapping Model</br>
+    5. Fractions: Identical Numerator (Type 2)</br>
+    <hr>
+
+-->[setting]
+
+ // FRACTIONS: CLOSEST AND FURTHEST
+    if (setting == 1) {
+      let denominators = [];
+      while (denominators.length < 6) {
+        const num = genNumbers(7) + 4;
+        if (!denominators.includes(num)) {
+          denominators.push(num);
+        }
+      }
+      return {
+        denoComp: denominators[4],
+        numeComp: genNumbers(denominators[4] - 1) + 1,
+        choice: ["furthest", "closest"][genNumbers(2)],
+        denoZero: denominators[0],
+        denoOne: denominators[1],
+        denoTwo: denominators[2],
+        denoThree: denominators[3],
+        numeZero: denominators[0] + genNumbers(4) - 2,
+        numeOne: denominators[1] + genNumbers(4) - 2,
+        numeTwo: denominators[2] + genNumbers(4) - 2,
+        numeThree: denominators[3] + genNumbers(4) - 2,
+      };
+    }
+
+    //REMAINDER CONCEPT: BEFORE AND AFTER
+
+    if (setting == 2) {
+      const gen_denoA = genNumbers(6) + 2;
+      const gen_denoB = genNumbers(6) + 2;
+      return {
+        denoA: gen_denoA,
+        numeA: genNumbers(gen_denoA - 1) + 1,
+        denoB: gen_denoB,
+        numeB: genNumbers(gen_denoB - 1) + 1,
+        end: ["the same", "the twice", "the thrice"][genNumbers(3)],
+        oneUnit: genNumbers(200) + 100,
+        atFirstUnits: undefined,
+        value: undefined,
+      };
+    }
+
+    //REMAINDER CONCEPT: UNDER THE SAME UNIT
+    if (setting == 3) {
+      const gen_denoA = genNumbers(6) + 2;
+      const gen_denoB = genNumbers(6) + 2;
+      const gen_objPosition = genNumbers(2);
+      const gen_unitA = genNumbers(4) + 2;
+      return {
+        objectA: ["pens", "shirts"][gen_objPosition],
+        objectB: ["pencils", "pants"][gen_objPosition],
+        unitA: gen_unitA,
+        unitB: genNumbers(gen_unitA - 1) + 1,
+        quantityA: genNumbers(5) + 2,
+        quantityB: genNumbers(5) + 2,
+        denoA: gen_denoA,
+        numeA: genNumbers(gen_denoA - 1) + 1,
+        denoB: gen_denoB,
+        numeB: genNumbers(gen_denoB - 1) + 1,
+        chosen: ["A", "B"][genNumbers(2)],
+        extraBought: undefined,
+      };
+    }
+
+    //FRACTIONS: OVERLAPPING MODEL
+    if (setting == 4) {
+      const gen_deno = (genNumbers(2) + 3) * 2;
+      return {
+        question: ["A", "B", "total"][genNumbers(3)],
+        denoA: gen_deno,
+        numeA: genNumbers(gen_deno / 2 - 1) + 1,
+        difference: [-1, 1][genNumbers(2)] * (genNumbers(50) + 10),
+        // remaining: undefined,
+        oneUnit: genNumbers(90) + 10,
+        // answer: undefined,
+      };
+    }
+
+    // IDENTICAL NUMERATOR TYPE 2
+    if (setting == 5) {
+      const denominator = genNumbers(6) + 2;
+      const numerator = genNumbers(denominator - 1) + 1;
+      const denominatorTwo = genNumbers(10) + 2;
+      return {
+        person: ["Jonathan", "Javen", "Jeremy"][genNumbers(3)],
+        deno: denominator,
+        nume: numerator,
+        numOne: undefined,
+        denoTwo: denominatorTwo,
+        numeTwo: genNumbers(denominatorTwo - 1) + 1,
+        answer: undefined,
+        version: [1, 0][genNumbers(2)],
+        somethingElse: ["toys", "sweets", "games", "pens"][genNumbers(4)],
+      };
+    }
+--->[display]
+// FRACTIONS: CLOSEST AND FURTHEST
+    if (setting == 1) {
+      normalDisplay();
+      [p.denoComp, p.numeComp] = simplify(p.denoComp, p.numeComp);
+      [p.numeZero, p.denoZero] = simplify(p.numeZero, p.denoZero);
+      [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
+      [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
+      [p.numeThree, p.denoThree] = simplify(p.numeThree, p.denoThree);
+      const array = [
+        p.numeZero / p.denoZero,
+        p.numeOne / p.denoOne,
+        p.numeTwo / p.denoTwo,
+        p.numeThree / p.denoThree,
+      ];
+      const unique = [...new Set(array)];
+      console.log(unique);
+      if (unique.length < 4 || unique.includes(1)) return updateCalc();
+      displayProblem.innerHTML = `
+          Which option is the ${p.choice} to/from ${displaySimpleFraction(
+        p.numeComp,
+        p.denoComp
+      )}?</br>
+          <hr>
+          <table>
+            <tr>
+              <td>
+                1) ${displaySimpleFraction(p.numeZero, p.denoZero)}</br>
+              </td>
+              <td>
+               2) ${displaySimpleFraction(p.numeOne, p.denoOne)}</br>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                3) ${displaySimpleFraction(p.numeTwo, p.denoTwo)}</br>
+              </td>
+              <td>
+               4) ${displaySimpleFraction(p.numeThree, p.denoThree)}</br>
+              </td>
+            </tr>
+
+          </table>
+          `;
+    }
+
+    //REMAINDER CONCEPT: BEFORE AND AFTER
+    if (setting == 2) {
+      normalDisplay();
+      [p.denoA, p.numeA] = simplify(p.denoA, p.numeA);
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      let numeL = (p.denoA - p.numeA) * (p.denoB - p.numeB);
+      let numeD = p.denoA * p.denoB;
+      console.log(`${numeL}/${numeD}`);
+      [numeL, numeD] = simplify(numeL, numeD);
+      const denominator = commonDeno(p.denoA, numeD);
+      console.log(commonDeno(p.denoA, numeD));
+      const multiplierA = denominator / p.denoA;
+      const multiplierL = denominator / numeD;
+      const newNumeL = multiplierL * numeL;
+      console.log(`${numeL}/${denominator}`);
+      let finalDeno = denominator;
+      if (p.end == "the twice") finalDeno *= 2;
+      if (p.end == "the thrice") finalDeno *= 3;
+      const difference = finalDeno - newNumeL;
+      console.log(`${difference} Units`);
+      p.value = difference * p.oneUnit;
+      p.atFirstUnits = denominator;
+
+      const person = girlNames[genNumbers(girlNames.length)];
+      // let endSituation;
+      // if (p.end == "same") {
+      //   endSituation = "the same amount she had at first.";
+      // }
+      // if (p.end == "twice the") {
+      //   endSituation = "twice the amount she had at first.";
+      // }
+      // if (p.end == "thrice the") {
+      //   endSituation = "thrice the amount she had at first.";
+      // }
+      displayProblem.innerHTML = `
+      ${person} spent ${displaySimpleFraction(
+        p.numeA,
+        p.denoA
+      )} of her money on something.</br>
+      She then spent ${displaySimpleFraction(p.numeB, p.denoB)} ${
+        genNumbers(2) == 0 ? "of the remainder" : "of the amount left"
+      } on something else.</br>
+      Her mother gave her another $${p.value} so she now has ${
+        p.end
+      } amount she had at first.</br>
+      How much did ${person} have at first?
+
+      
+      `;
+    }
+    //REMAINDER CONCEPT: UNDER THE SAME UNIT
+    if (setting == 3) {
+      normalDisplay();
+      const person = boyNames[genNumbers(boyNames.length)];
+      [p.denoA, p.numeA] = simplify(p.denoA, p.numeA);
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
+
+      const totalUnits = p.quantityA * p.unitA + p.quantityB * p.unitB;
+
+      if (totalUnits % p.numeA != 0) {
+        console.log("ugly Units");
+        return updateCalc();
+      }
+      // console.log(p.unitA, p.quantityA, p.unitB, p.quantityB);
+      // console.log(totalUnits);
+
+      const oneTopNume = totalUnits / p.numeA;
+      if (oneTopNume % 1 != 0) {
+        console.log("ugly Units");
+        return updateCalc();
+      }
+      const oneTopOtherNume = oneTopNume * (p.denoA - p.numeA);
+      console.log(oneTopOtherNume);
+      const oneBottomNume = oneTopOtherNume / p.denoB;
+      if (oneBottomNume % 1 != 0) {
+        console.log("ugly Units");
+        return updateCalc();
+      }
+      const numberOfExtraUnitsUsed = oneBottomNume * p.numeB;
+      // console.log(`${numberOfExtraUnitsUsed} extra units`);
+      if (p.chosen == "A") p.extraBought = numberOfExtraUnitsUsed / p.unitA;
+      if (p.chosen == "B") p.extraBought = numberOfExtraUnitsUsed / p.unitB;
+
+      // console.log(p.extraBought);
+      if (p.extraBought <= 0) {
+        console.log("No extra bought");
+        return updateCalc();
+      }
+      displayProblem.innerHTML = `
+      A ${p.objectA.slice(
+        0,
+        p.objectA.length - 1
+      )} costs ${displaySimpleFraction(
+        p.unitA,
+        p.unitB
+      )} of a ${p.objectB.slice(0, p.objectB.length - 1)}.</br>
+      ${person} bought ${p.quantityA} ${p.objectA} and ${p.quantityB} ${
+        p.objectB
+      }  with ${displaySimpleFraction(p.numeA, p.denoA)} of his money.</br>
+      He then bought ${p.extraBought % 1 != 0 ? "as many" : "more"} ${
+        p.chosen == "A" ? p.objectA : p.objectB
+      } with ${displaySimpleFraction(
+        p.numeB,
+        p.denoB
+      )} of his remaining money.</br>
+      How many ${
+        p.chosen == "A" ? p.objectA : p.objectB
+      } did he have in the end?
+      `;
+    }
+    // FRACTIONS: OVERLAPPING MODEL
+    if (setting == 4) {
+      normalDisplay();
+      const stuff = ["pens", "pencils", "erasers", "stamps"][genNumbers(4)];
+      const personA = boyNames[genNumbers(boyNames.length)];
+      const personB = girlNames[genNumbers(girlNames.length)];
+      let personC = boyNames[genNumbers(boyNames.length)];
+      while (personC == personA) {
+        personC = boyNames[genNumbers(boyNames.length)];
+      }
+      [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
+      if (p.denoA == 2) p.denoA += 1;
+      const totalValue = p.oneUnit * p.denoA;
+      const personAValue = p.oneUnit * p.numeA;
+      const personBValue = personAValue + p.difference;
+
+      const personCValue = totalValue - personAValue - personBValue;
+      if (personBValue <= 0 || personCValue <= 0) {
+        // p.difference = [-1, 1][genNumbers(2)] * genNumbers(50) + 10;
+        // personBValue + p.difference;
+        return updateCalc();
+      }
+      displayProblem.innerHTML = `
+  ${personA} took ${displaySimpleFraction(
+        p.numeA,
+        p.denoA
+      )} of the ${stuff}.</br>
+  ${personB} took ${Math.abs(p.difference)} ${
+        p.difference > 0 ? "more" : "less"
+      } ${stuff} than ${personA}.</br>
+  ${personC} took the remaining ${personCValue} ${stuff}.</br>
+  `;
+      if (p.question == "A")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How many ${stuff} did ${personA} take?`
+        );
+      if (p.question == "B")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How many ${stuff} did ${personB} take?`
+        );
+      if (p.question == "total")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How many ${stuff} were there at first?`
+        );
+    }
+    //IDENTICAL NUMERATOR (TYPE 2)
+    if (setting == 5) {
+      normalDisplay();
+      [p.nume, p.deno] = simplify(p.nume, p.deno);
+      [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
+      const commonNumber = commonDeno(p.deno - p.nume, p.numeTwo);
+      const multiOne = commonNumber / (p.deno - p.nume);
+      const multiTwo = commonNumber / p.numeTwo;
+      const newDenoOne = p.deno * multiOne;
+      const newDenoTwo = p.denoTwo * multiTwo;
+      console.log(commonNumber, multiOne, multiTwo, newDenoOne, newDenoTwo);
+      if (newDenoOne >= newDenoTwo) return updateCalc();
+      p.numOne = (genNumbers(10) + 2) * (newDenoTwo - newDenoOne);
+
+      displayProblem.innerHTML = `
+      ${p.person} ${genNumbers(2) == 0 ? "used" : "spent"} $${
+        p.numOne
+      } on something.</p>
+      He then ${
+        genNumbers(2) == 0 ? "used" : "spent"
+      } another ${displaySimpleFraction(p.nume, p.deno)} of ${
+        genNumbers(2) == 0 ? "the remainder" : "the amount left"
+      } on ${p.somethingElse}.</p>
+      He is left with ${displaySimpleFraction(p.numeTwo, p.denoTwo)} of ${
+        genNumbers(2) == 0 ? "what he has at first" : "the total"
+      }.</p>
+      `;
+      if (p.version == 0) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "How much does he have at first?"
+        );
+        p.answer = (p.numOne / (newDenoTwo - newDenoOne)) * newDenoTwo;
+      }
+      if (p.version == 1) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How much did he spend on ${p.somethingElse}?`
+        );
+        p.answer = (p.numOne / (newDenoTwo - newDenoOne)) * (p.nume * multiOne);
+      }
+    }
+ 
+
+
+---->[answer]
+if (setting == 1) {
+        const array = [
+          p.numeZero / p.denoZero,
+          p.numeOne / p.denoOne,
+          p.numeTwo / p.denoTwo,
+          p.numeThree / p.denoThree,
+        ];
+        const newArray = array.map((item) =>
+          Math.abs(item - p.numeComp / p.denoComp)
+        );
+        let sortedArray = [...newArray];
+        sortedArray.sort(function (a, b) {
+          return a - b;
+        });
+        console.log(newArray);
+        console.log(sortedArray);
+        if (p.choice == "closest") {
+          correctAnswer = newArray.indexOf(sortedArray[0]) + 1;
+        }
+        if (p.choice == "furthest") {
+          correctAnswer = newArray.indexOf(sortedArray[3]) + 1;
+        }
+      }
+
+      // FRACTIONS: REMAINDER CONCEPT: BEFORE AND AFTER
+      if (setting == 2) {
+        correctAnswer = p.atFirstUnits * p.oneUnit;
+      }
+      // FRACTIONS: REMAINDER CONCEPT: UNDER THE SAME UNIT
+      if (setting == 3) {
+        if (p.chosen == "A")
+          correctAnswer = p.quantityA + Math.floor(p.extraBought);
+        if (p.chosen == "B")
+          correctAnswer = p.quantityB + Math.floor(p.extraBought);
+      }
+      //FRACTIONS: OVERLAPPING MODEL
+      if (setting == 4) {
+        if (p.question == "A") correctAnswer = p.oneUnit * p.numeA;
+        if (p.question == "B")
+          correctAnswer = p.oneUnit * p.numeA + p.difference;
+        if (p.question == "total") correctAnswer = p.oneUnit * p.denoA;
+      }
+
+      if (setting == 5) {
+        correctAnswer = p.answer;
+      }

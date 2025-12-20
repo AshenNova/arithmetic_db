@@ -10670,10 +10670,13 @@ function updateProblems() {
     }
   }
   // DISPLAY
+  // DISPLAY
+  // DISPLAY
+
   if (level == "calFive") {
     //ALLOW CALCULATOR
 
-    const calculatorNotAllowed = [0, 1, 2, 3, 14, 21, 22];
+    const calculatorNotAllowed = [0, 1, 2, 3, 21, 22];
     if (calculatorNotAllowed.includes(setting * 1)) {
       calculatorSymbol.classList.add("hidden");
       // calculatorSymbol.
@@ -11506,417 +11509,322 @@ function updateProblems() {
       );
       if (check == "Error") return updateCalc();
     }
-    // RATIO: SIMPLIFICATION AND EXPANSION
+
+    // FRACTIONS: CLOSEST AND FURTHEST
     if (setting == 13) {
       normalDisplay();
-      p.ratioArr = [];
-      const quantity = genNumbers(2) + 2;
-      if (quantity == 2) {
-        p.ratioArr.push(p.numA, p.numB);
-      } else {
-        p.ratioArr.push(p.numA, p.numB, p.numC);
-      }
-      if ([...new Set(p.ratioArr)].length != quantity) {
-        console.log("Same value");
-        return updateCalc();
-      }
-      if (p.process == "up") {
-        const multiA = genNumbers(3) + 2;
-        let equalArr = p.ratioArr.map((i) => i * multiA);
-        const replace = genNumbers(quantity);
-        p.answer = equalArr[replace];
-        equalArr[replace] = "?";
-        displayProblem.innerHTML = `Find the missing number.<br><p class="center">${p.ratioArr.join(
-          " : "
-        )} = ${equalArr.join(" : ")}</p>`;
-      }
+      [p.denoComp, p.numeComp] = simplify(p.denoComp, p.numeComp);
+      [p.numeZero, p.denoZero] = simplify(p.numeZero, p.denoZero);
+      [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
+      [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
+      [p.numeThree, p.denoThree] = simplify(p.numeThree, p.denoThree);
+      const array = [
+        p.numeZero / p.denoZero,
+        p.numeOne / p.denoOne,
+        p.numeTwo / p.denoTwo,
+        p.numeThree / p.denoThree,
+      ];
+      const unique = [...new Set(array)];
+      console.log(unique);
+      if (unique.length < 4 || unique.includes(1)) return updateCalc();
+      displayProblem.innerHTML = `
+          Which option is the ${p.choice} to/from ${displaySimpleFraction(
+        p.numeComp,
+        p.denoComp
+      )}?</br>
+          <hr>
+          <table>
+            <tr>
+              <td>
+                1) ${displaySimpleFraction(p.numeZero, p.denoZero)}</br>
+              </td>
+              <td>
+               2) ${displaySimpleFraction(p.numeOne, p.denoOne)}</br>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                3) ${displaySimpleFraction(p.numeTwo, p.denoTwo)}</br>
+              </td>
+              <td>
+               4) ${displaySimpleFraction(p.numeThree, p.denoThree)}</br>
+              </td>
+            </tr>
 
-      if (p.process == "down") {
-        const multiA = genNumbers(3) + 2;
-        let equalArr = p.ratioArr.map((i) => i * multiA);
-        const replace = genNumbers(quantity);
-        p.answer = p.ratioArr[replace];
-        p.ratioArr[replace] = "?";
-        displayProblem.innerHTML = `Find the missing number.<br><p class="center">${equalArr.join(
-          " : "
-        )} = ${p.ratioArr.join(" : ")}</p>`;
-      }
-
-      if (p.process == "updown") {
-        const multiA = [2, 6, 8][genNumbers(3)];
-        const multiB = [3, 5, 7][genNumbers(3)];
-        // while (multiA == multiB) {
-        //   multiB = genNumbers(3) + 2;
-        // }
-        let equalArr = p.ratioArr.map((i) => i * multiA);
-        let equalArrB = p.ratioArr.map((i) => i * multiB);
-        const replace = genNumbers(quantity);
-        p.answer = equalArrB[replace];
-        equalArrB[replace] = "?";
-        displayProblem.innerHTML = `Find the missing number.<br><p class="center">${equalArr.join(
-          " : "
-        )} = ${equalArrB.join(" : ")}</p>`;
-      }
+          </table>
+          `;
     }
 
-    // RATIO: POSSIBLE
+    //REMAINDER CONCEPT: BEFORE AND AFTER
     if (setting == 14) {
       normalDisplay();
-      function getFactors(num) {
-        let factors = [];
-        for (let i = 1; i <= num; i++) {
-          if (num % i == 0) factors.push(i);
-        }
-        return factors;
-      }
-      let factors = getFactors(p.number);
-      console.log(factors);
-      if (factors.length < 4) {
-        // p.number +=1
-        return updateCalc();
-        // factors = getFactors(p.number);
-      }
-      let arr = [p.optionOne, p.optionTwo, p.optionThree, p.optionFour];
-      //FILL UP THE OPTIONS
-      arr.forEach((item) => {
-        for (let i = 0; i < 3; i++) {
-          const num = genNumbers(5) + 1;
-          item.push(num);
-        }
-      });
-      //CHECK THE ARRAYS
-      arr.forEach((item, index) => {
-        let sum = 0;
-        item.map((x) => {
-          sum += x;
-        });
-        if (sum > p.number) return updateCalc();
-        while (index == p.chosen && p.number % sum != 0) {
-          item[genNumbers(item.length)] += 1;
-          sum += 1;
-          if (sum > p.number) return updateCalc();
-        }
-        while (index != p.chosen && p.number % sum == 0) {
-          item[genNumbers(item.length)] += 1;
-          sum += 1;
-          if (sum > p.number) return updateCalc();
-        }
-      });
-      function simplifyAll(arr) {
-        const sorting = [...arr];
-        sorting.sort((a, b) => b - a);
-        const largest = sorting[0];
+      [p.denoA, p.numeA] = simplify(p.denoA, p.numeA);
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      let numeL = (p.denoA - p.numeA) * (p.denoB - p.numeB);
+      let numeD = p.denoA * p.denoB;
+      console.log(`${numeL}/${numeD}`);
+      [numeL, numeD] = simplify(numeL, numeD);
+      const denominator = commonDeno(p.denoA, numeD);
+      console.log(commonDeno(p.denoA, numeD));
+      const multiplierA = denominator / p.denoA;
+      const multiplierL = denominator / numeD;
+      const newNumeL = multiplierL * numeL;
+      console.log(`${numeL}/${denominator}`);
+      let finalDeno = denominator;
+      if (p.end == "the twice") finalDeno *= 2;
+      if (p.end == "the thrice") finalDeno *= 3;
+      const difference = finalDeno - newNumeL;
+      console.log(`${difference} Units`);
+      p.value = difference * p.oneUnit;
+      p.atFirstUnits = denominator;
 
-        for (let i = 2; i <= largest; i++) {
-          while (arr[0] % i == 0 && arr[1] % i == 0 && arr[2] % i == 0) {
-            arr[0] /= i;
-            arr[1] /= i;
-            arr[2] /= i;
-          }
-        }
-        return arr;
-      }
-      console.log("simplfying");
-      simplifyAll(p.optionOne);
-      console.log("Done 1");
-      simplifyAll(p.optionTwo);
-      console.log("Done 2");
-      simplifyAll(p.optionThree);
-      console.log("Done 3");
-      simplifyAll(p.optionFour);
-      console.log("Done 4");
-      arr.forEach((item, index) => {
-        console.log(`Option: ${index + 1} ${item}`);
-        // SKIP EVERYTHING BELOW IF ITS THE ANSWER
-        if (p.chosen == index) {
-          console.log("HUH?");
-          return;
-        }
-
-        //CHECKING IF OTHER OPTIONS MIGHT LEAD TO ANOTHER ANSWER
-        let summation = 0;
-        item.map((x) => (summation += x));
-        console.log(`The summation is :${summation}`);
-        if (p.number % summation == 0) {
-          console.log(p.number);
-          console.log(summation);
-          return updateCalc();
-        }
-
-        //CHECKING IF THERE ARE ANY IDENTICAL ARRAYS
-        for (let i = 0; i < 4; i++) {
-          // DO NOT CHECK IF OPTIONS IS THE SAME OPTION
-          if (index != i) {
-            if (item.toString() == arr[i].toString()) {
-              console.log("Repeat detected");
-              return updateCalc();
-            }
-          }
-        }
-      });
-      let optionOneSum;
-      let optionTwoSum;
-      let optionThreeSum;
-      let optionFourSum;
-      p.optionOne.map((x) => {
-        optionOneSum += x;
-      });
-      p.optionTwo.map((x) => {
-        optionTwoSum += x;
-      });
-      p.optionThree.map((x) => {
-        optionThreeSum += x;
-      });
-      p.optionFour.map((x) => {
-        optionFourSum += x;
-      });
-      // let unique = [
-      //   ...new Set([optionOneSum, optionTwoSum, optionThreeSum, optionFourSum]),
-      // ];
-      // if (unique.length < 4) {
-      //   console.log("Repeated Sum")
-      //   return updateCalc();
+      const person = girlNames[genNumbers(girlNames.length)];
+      // let endSituation;
+      // if (p.end == "same") {
+      //   endSituation = "the same amount she had at first.";
       // }
-      let possibility = 0;
-      if (p.number % optionOneSum == 0) possibility += 1;
-      if (p.number % optionTwoSum == 0) possibility += 1;
-      if (p.number % optionThreeSum == 0) possibility += 1;
-      if (p.number % optionFourSum == 0) possibility += 1;
-      if (possibility > 1) {
-        console.log("More than 1 possible option");
-        return updateCalc();
-      }
+      // if (p.end == "twice the") {
+      //   endSituation = "twice the amount she had at first.";
+      // }
+      // if (p.end == "thrice the") {
+      //   endSituation = "thrice the amount she had at first.";
+      // }
       displayProblem.innerHTML = `
-      Which set of ratio is possible to give the value ${p.number}?
-      <hr>
-      <table>
-        <tr>
-          <td>1) ${p.optionOne.join(" : ")}</br></td>
-          <td>2) ${p.optionTwo.join(" : ")}</br></td>
-        </tr>
-        <tr>
-          <td>3) ${p.optionThree.join(" : ")}</br></td>
-          <td>4) ${p.optionFour.join(" : ")}</br></td>   
-         </tr>
-      </table>
-      `;
-    }
+      ${person} spent ${displaySimpleFraction(
+        p.numeA,
+        p.denoA
+      )} of her money on something.</br>
+      She then spent ${displaySimpleFraction(p.numeB, p.denoB)} ${
+        genNumbers(2) == 0 ? "of the remainder" : "of the amount left"
+      } on something else.</br>
+      Her mother gave her another $${p.value} so she now has ${
+        p.end
+      } amount she had at first.</br>
+      How much did ${person} have at first?
 
-    //RATIO: SHAPES
-    if (setting == 15) {
-      drawingDisplay();
-      drawForFraction(state, "ratio");
-      // console.log(mediumColumn, smallRow, p.shaded, p.total);
-      if (p.shaded == 0) {
-        ctx.restore();
-        return updateCalc();
-      }
-      ctx.restore(); //1st
-    }
-    // RATIO: REPEATED IDENTITY
-    if (setting == 16) {
-      normalDisplay();
-      let lineOne = "";
-      if (p.firstSentence == "unit") {
-        p.unitTwo = 1;
-        lineOne = `
-        ${p.personOne} has ${p.unitOne} times as many ${p.something} as ${p.personTwo}.</p>
-        `;
-      }
-      if (p.firstSentence == "ratio") {
-        if (p.unitOne == p.unitTwo) p.unitTwo += 1;
-        [p.unitOne, p.unitTwo] = simplify(p.unitOne, p.unitTwo);
-        lineOne = `
-        ${p.personOne}'s ratio of ${p.something} is ${p.unitOne}:${p.unitTwo} to ${p.personTwo}.</p>
-        `;
-      }
-      const position = genNumbers(2);
-      p.repeatedId = [p.personOne, p.personTwo][position];
-      let lineTwo = "";
-      if (p.secondSentence == "unit") {
-        p.unitFour = 1;
-        lineTwo = `
-        ${p.repeatedId} has ${p.unitThree} times as many ${p.something} as ${p.personThree}.</p>
-        `;
-      }
-      if (p.secondSentence == "ratio") {
-        if (p.unitThree == p.unitFour) p.unitFour += 1;
-        [p.unitThree, p.unitFour] = simplify(p.unitThree, p.unitFour);
-        lineTwo = `
-        ${p.repeatedId}'s ratio of ${p.something} is ${p.unitThree}:${p.unitFour} to ${p.personThree}.</p>
-        `;
-      }
-      calArrQns.push(p.unitOne);
-      calArrQns.push(p.unitTwo);
-      position == 0 ? calArrQns.push(p.unitOne) : calArrQns.push(p.unitTwo);
-      calArrQns.push(p.unitThree);
-      calArrQns.push(p.unitFour);
-      if (calArrQns[3] == calArrQns[4]) {
-        calArrQns = [];
-        return updateCalc();
-      }
-
-      let i = 0;
-      let count = 1;
-      while ((calArrQns[2] + i) % calArrQns[3] != 0) {
-        i += calArrQns[2];
-        count += 1;
-        console.log(i, count);
-      }
-      calArrQns.push(calArrQns[0] * count);
-      calArrQns.push(calArrQns[1] * count);
-      const multiTwo = (calArrQns[2] * count) / calArrQns[3];
-      calArrQns.push(calArrQns[3] * multiTwo);
-      calArrQns.push(calArrQns[4] * multiTwo);
-      const lineThree = `What is the ratio of ${p.personOne} to ${p.personTwo} to ${p.personThree}?`;
-
-      displayProblem.innerHTML = `
-      ${lineOne}</p>
-      ${lineTwo}</p>
-      ${lineThree}
-      `;
-    }
-    // RATIO: IDENTICAL TOTAL
-    if (setting == 17) {
-      normalDisplay();
-      console.log(p.objects);
-      const objectA = p.objects[0];
-      const objectB = p.objects[1];
-      [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
-      [p.ratioC, p.ratioD] = simplify(p.ratioC, p.ratioD);
-      if (((p.ratioA == p.ratioB) == p.ratioC) == p.ratioD) return updateCalc();
-      if (manipulation > 0 && p.ratioA + p.ratioB == p.ratioC + p.ratioD) {
-        console.log("Manipulated!");
-        return updateCalc();
-      }
-      if (p.ratioA + p.ratioB == p.ratioC + p.ratioD) manipulation += 1;
-      displayProblem.innerHTML = `
-      Group A and B have ${
-        p.position == 2
-          ? "the same chocolates and sweets"
-          : "the same number of people"
-      }.</p>
-      Group A is made up of ${objectA} and ${objectB} in the ratio of ${
-        p.ratioA
-      } : ${p.ratioB}.</p>
-      Group B is made up of ${objectA} and ${objectB} in the ratio of ${
-        p.ratioC
-      } : ${p.ratioD}.</p>
       
       `;
-      if (p.question == 1) {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `What is the ratio of total ${objectA} to ${objectB}?`
-        );
-      }
-      if (p.question == 2) {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `What is the ratio of ${objectA} in A to the ratio of ${objectA} in B?`
-        );
-      }
-      if (p.question == 3) {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `What is the ratio of ${objectB} in A to the ratio of ${objectB} in B?`
-        );
-      }
     }
-
-    // RATIO: WIPE ON WIPE OFF
-    if (setting == 18) {
+    //REMAINDER CONCEPT: UNDER THE SAME UNIT
+    if (setting == 15) {
       normalDisplay();
-      // displayProblem.innerHTML = `
-      // How many more dark squares have to be added for the ratio to be ???`;
-      displayProblem.innerHTML = ``;
-      let lengthArr = [];
-      let shaded = 0;
-      let unshaded = 0;
-      for (let x = 0; x < p.breadth; x++) {
-        for (let i = 0; i < p.length; i++) {
-          let generate = ["shaded", "unshaded"][genNumbers(2)];
-          if (generate == "shaded") {
-            lengthArr.push("◼️");
-            shaded += 1;
-          }
-          if (generate == "unshaded") {
-            lengthArr.push("◻️");
-            unshaded += 1;
-          }
-        }
+      const person = boyNames[genNumbers(boyNames.length)];
+      [p.denoA, p.numeA] = simplify(p.denoA, p.numeA);
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
 
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `<p class="center">${lengthArr.join(" ")}`
-        );
-        lengthArr = [];
-      }
-      let difference = "added";
-      if (p.version == "difference") {
-        if (shaded == unshaded) return updateCalc();
-        console.log("Shaded: " + shaded, "Unshaded: " + unshaded);
-        p.shaded = shaded;
-        p.unshaded = unshaded;
-      }
+      const totalUnits = p.quantityA * p.unitA + p.quantityB * p.unitB;
 
-      //UNCHANGED TOTAL
-      if (p.version == "total") {
-        p.change = Math.abs(p.change);
-      }
-      if (p.change == 0) {
-        p.change = [-1, 1][genNumbers(2)] * (genNumbers(8) + 1);
-      }
-      if (p.change < 0) {
-        difference = "removed";
-      }
-      let shadedEnd = (shaded += p.change);
-
-      let unshadedEnd = unshaded;
-      if (p.version == "total") {
-        unshadedEnd = unshaded += p.change * -1;
-      }
-
-      if (p.version == "difference") {
-        if (p.change == 0) {
-          p.change = [-1, 1][genNumbers(2)] * (genNumbers(8) + 1);
-        }
-        shadedEnd = shaded += p.change;
-        unshadedEnd = unshaded += p.change;
-        if (
-          Math.abs(p.shaded - p.unshaded) % Math.abs(shadedEnd - unshadedEnd) !=
-          0
-        )
-          return updateCalc();
-        if (shadedEnd == unshadedEnd || shadedEnd <= 0 || unshaded <= 0) {
-          return updateCalc();
-        }
-      }
-
-      [shadedEnd, unshadedEnd] = simplify(shadedEnd, unshadedEnd);
-      if (unshadedEnd == unshaded) {
-        console.log("No change in ratio for unshaded");
+      if (totalUnits % p.numeA != 0) {
+        console.log("ugly Units");
         return updateCalc();
       }
-      //UNCHANGED DIFFERENCE
-      if (p.version == "difference") {
-        displayProblem.insertAdjacentHTML(
-          "afterbegin",
-          `An equal number of white and black squares have been ${difference} for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?</br>How many black squares were ${difference}?`
-        );
+      // console.log(p.unitA, p.quantityA, p.unitB, p.quantityB);
+      // console.log(totalUnits);
+
+      const oneTopNume = totalUnits / p.numeA;
+      if (oneTopNume % 1 != 0) {
+        console.log("ugly Units");
+        return updateCalc();
       }
-      //UNCHANGED OBJ
-      if (p.version == "object") {
-        displayProblem.insertAdjacentHTML(
-          "afterbegin",
-          `How many black squares have to be ${difference} for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?`
-        );
+      const oneTopOtherNume = oneTopNume * (p.denoA - p.numeA);
+      console.log(oneTopOtherNume);
+      const oneBottomNume = oneTopOtherNume / p.denoB;
+      if (oneBottomNume % 1 != 0) {
+        console.log("ugly Units");
+        return updateCalc();
       }
-      //UNCHANGED TOTAL
-      if (p.version == "total") {
+      const numberOfExtraUnitsUsed = oneBottomNume * p.numeB;
+      // console.log(`${numberOfExtraUnitsUsed} extra units`);
+      if (p.chosen == "A") p.extraBought = numberOfExtraUnitsUsed / p.unitA;
+      if (p.chosen == "B") p.extraBought = numberOfExtraUnitsUsed / p.unitB;
+
+      // console.log(p.extraBought);
+      if (p.extraBought <= 0) {
+        console.log("No extra bought");
+        return updateCalc();
+      }
+      displayProblem.innerHTML = `
+      A ${p.objectA.slice(
+        0,
+        p.objectA.length - 1
+      )} costs ${displaySimpleFraction(
+        p.unitA,
+        p.unitB
+      )} of a ${p.objectB.slice(0, p.objectB.length - 1)}.</br>
+      ${person} bought ${p.quantityA} ${p.objectA} and ${p.quantityB} ${
+        p.objectB
+      }  with ${displaySimpleFraction(p.numeA, p.denoA)} of his money.</br>
+      He then bought ${p.extraBought % 1 != 0 ? "as many" : "more"} ${
+        p.chosen == "A" ? p.objectA : p.objectB
+      } with ${displaySimpleFraction(
+        p.numeB,
+        p.denoB
+      )} of his remaining money.</br>
+      How many ${
+        p.chosen == "A" ? p.objectA : p.objectB
+      } did he have in the end?
+      `;
+    }
+    // FRACTIONS: OVERLAPPING MODEL
+    if (setting == 16) {
+      normalDisplay();
+      const stuff = ["pens", "pencils", "erasers", "stamps"][genNumbers(4)];
+      const personA = boyNames[genNumbers(boyNames.length)];
+      const personB = girlNames[genNumbers(girlNames.length)];
+      let personC = boyNames[genNumbers(boyNames.length)];
+      while (personC == personA) {
+        personC = boyNames[genNumbers(boyNames.length)];
+      }
+      [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
+      if (p.denoA == 2) p.denoA += 1;
+      const totalValue = p.oneUnit * p.denoA;
+      const personAValue = p.oneUnit * p.numeA;
+      const personBValue = personAValue + p.difference;
+
+      const personCValue = totalValue - personAValue - personBValue;
+      if (personBValue <= 0 || personCValue <= 0) {
+        // p.difference = [-1, 1][genNumbers(2)] * genNumbers(50) + 10;
+        // personBValue + p.difference;
+        return updateCalc();
+      }
+      displayProblem.innerHTML = `
+  ${personA} took ${displaySimpleFraction(
+        p.numeA,
+        p.denoA
+      )} of the ${stuff}.</br>
+  ${personB} took ${Math.abs(p.difference)} ${
+        p.difference > 0 ? "more" : "less"
+      } ${stuff} than ${personA}.</br>
+  ${personC} took the remaining ${personCValue} ${stuff}.</br>
+  `;
+      if (p.question == "A")
         displayProblem.insertAdjacentHTML(
-          "afterbegin",
-          `How many white squares have to be replaced with black squares for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?`
+          "beforeend",
+          `How many ${stuff} did ${personA} take?`
+        );
+      if (p.question == "B")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How many ${stuff} did ${personB} take?`
+        );
+      if (p.question == "total")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How many ${stuff} were there at first?`
+        );
+    }
+    //IDENTICAL NUMERATOR (TYPE 2)
+    if (setting == 17) {
+      normalDisplay();
+      [p.nume, p.deno] = simplify(p.nume, p.deno);
+      [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
+      const commonNumber = commonDeno(p.deno - p.nume, p.numeTwo);
+      const multiOne = commonNumber / (p.deno - p.nume);
+      const multiTwo = commonNumber / p.numeTwo;
+      const newDenoOne = p.deno * multiOne;
+      const newDenoTwo = p.denoTwo * multiTwo;
+      console.log(commonNumber, multiOne, multiTwo, newDenoOne, newDenoTwo);
+      if (newDenoOne >= newDenoTwo) return updateCalc();
+      p.numOne = (genNumbers(10) + 2) * (newDenoTwo - newDenoOne);
+
+      displayProblem.innerHTML = `
+      ${p.person} ${genNumbers(2) == 0 ? "used" : "spent"} $${
+        p.numOne
+      } on something.</p>
+      He then ${
+        genNumbers(2) == 0 ? "used" : "spent"
+      } another ${displaySimpleFraction(p.nume, p.deno)} of ${
+        genNumbers(2) == 0 ? "the remainder" : "the amount left"
+      } on ${p.somethingElse}.</p>
+      He is left with ${displaySimpleFraction(p.numeTwo, p.denoTwo)} of ${
+        genNumbers(2) == 0 ? "what he has at first" : "the total"
+      }.</p>
+      `;
+      if (p.version == 0) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "How much does he have at first?"
+        );
+        p.answer = (p.numOne / (newDenoTwo - newDenoOne)) * newDenoTwo;
+      }
+      if (p.version == 1) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How much did he spend on ${p.somethingElse}?`
+        );
+        p.answer = (p.numOne / (newDenoTwo - newDenoOne)) * (p.nume * multiOne);
+      }
+    }
+    // PATTERN: CONTINUOUS PATTERN (SETS)
+    if (setting == 18) {
+      normalDisplay();
+      p.second = p.first + p.secondDiff;
+      displayProblem.innerHTML = `
+  Solve for the pattern below:
+  <table class="table table-bordered tableEnd">
+    <thead>
+      <tr>
+        <th>Pattern</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>1</td>
+      <td>${p.start}</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>${p.start + p.first}</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>${p.start + p.first + p.second}</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>${p.start + p.first * 2 + p.second}</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>${p.start + p.first * 2 + p.second * 2}</td>
+    </tr>
+    <tr>
+       <td colspan="2">...</td> 
+    </tr>
+    </table>
+  `;
+
+      const sets = Math.floor((p.pattern - 1) / 2);
+      const remainder = (p.pattern - 1) % 2;
+      p.value = sets * (p.first + p.second);
+      p.value = p.value + p.start;
+      if (remainder == 1) p.value += p.first;
+      if (p.question == "pattern") {
+        document.querySelector(".tableEnd").insertAdjacentHTML(
+          "beforeend",
+          `
+    <tr>
+      <td>${p.pattern}</td>
+      <td>?</td>
+    </tr>`
+        );
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What is the value for pattern ${p.pattern}?`
+        );
+      } else {
+        document.querySelector(".tableEnd").insertAdjacentHTML(
+          "beforeend",
+          `
+    <tr>
+      <td>?</td>
+      <td>${p.value}</td>
+    </tr>`
+        );
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `Which pattern gives a value of ${p.value}?`
         );
       }
     }
@@ -12337,6 +12245,8 @@ function updateProblems() {
   }
 
   //DISPLAY
+  //DISPLAY
+  //DISPLAY
   if (level == "calFiveb") {
     console.log("Display");
     console.log(level, setting);
@@ -12347,254 +12257,8 @@ function updateProblems() {
     } else {
       calculatorSymbol.classList.remove("hidden");
     }
-    // FRACTIONS: CLOSEST AND FURTHEST
-    if (setting == 1) {
-      normalDisplay();
-      [p.denoComp, p.numeComp] = simplify(p.denoComp, p.numeComp);
-      [p.numeZero, p.denoZero] = simplify(p.numeZero, p.denoZero);
-      [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
-      [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
-      [p.numeThree, p.denoThree] = simplify(p.numeThree, p.denoThree);
-      const array = [
-        p.numeZero / p.denoZero,
-        p.numeOne / p.denoOne,
-        p.numeTwo / p.denoTwo,
-        p.numeThree / p.denoThree,
-      ];
-      const unique = [...new Set(array)];
-      console.log(unique);
-      if (unique.length < 4 || unique.includes(1)) return updateCalc();
-      displayProblem.innerHTML = `
-          Which option is the ${p.choice} to/from ${displaySimpleFraction(
-        p.numeComp,
-        p.denoComp
-      )}?</br>
-          <hr>
-          <table>
-            <tr>
-              <td>
-                1) ${displaySimpleFraction(p.numeZero, p.denoZero)}</br>
-              </td>
-              <td>
-               2) ${displaySimpleFraction(p.numeOne, p.denoOne)}</br>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                3) ${displaySimpleFraction(p.numeTwo, p.denoTwo)}</br>
-              </td>
-              <td>
-               4) ${displaySimpleFraction(p.numeThree, p.denoThree)}</br>
-              </td>
-            </tr>
-
-          </table>
-          `;
-    }
-
-    //REMAINDER CONCEPT: BEFORE AND AFTER
-    if (setting == 2) {
-      normalDisplay();
-      [p.denoA, p.numeA] = simplify(p.denoA, p.numeA);
-      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
-      let numeL = (p.denoA - p.numeA) * (p.denoB - p.numeB);
-      let numeD = p.denoA * p.denoB;
-      console.log(`${numeL}/${numeD}`);
-      [numeL, numeD] = simplify(numeL, numeD);
-      const denominator = commonDeno(p.denoA, numeD);
-      console.log(commonDeno(p.denoA, numeD));
-      const multiplierA = denominator / p.denoA;
-      const multiplierL = denominator / numeD;
-      const newNumeL = multiplierL * numeL;
-      console.log(`${numeL}/${denominator}`);
-      let finalDeno = denominator;
-      if (p.end == "the twice") finalDeno *= 2;
-      if (p.end == "the thrice") finalDeno *= 3;
-      const difference = finalDeno - newNumeL;
-      console.log(`${difference} Units`);
-      p.value = difference * p.oneUnit;
-      p.atFirstUnits = denominator;
-
-      const person = girlNames[genNumbers(girlNames.length)];
-      // let endSituation;
-      // if (p.end == "same") {
-      //   endSituation = "the same amount she had at first.";
-      // }
-      // if (p.end == "twice the") {
-      //   endSituation = "twice the amount she had at first.";
-      // }
-      // if (p.end == "thrice the") {
-      //   endSituation = "thrice the amount she had at first.";
-      // }
-      displayProblem.innerHTML = `
-      ${person} spent ${displaySimpleFraction(
-        p.numeA,
-        p.denoA
-      )} of her money on something.</br>
-      She then spent ${displaySimpleFraction(p.numeB, p.denoB)} ${
-        genNumbers(2) == 0 ? "of the remainder" : "of the amount left"
-      } on something else.</br>
-      Her mother gave her another $${p.value} so she now has ${
-        p.end
-      } amount she had at first.</br>
-      How much did ${person} have at first?
-
-      
-      `;
-    }
-    //REMAINDER CONCEPT: UNDER THE SAME UNIT
-    if (setting == 3) {
-      normalDisplay();
-      const person = boyNames[genNumbers(boyNames.length)];
-      [p.denoA, p.numeA] = simplify(p.denoA, p.numeA);
-      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
-      [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
-
-      const totalUnits = p.quantityA * p.unitA + p.quantityB * p.unitB;
-
-      if (totalUnits % p.numeA != 0) {
-        console.log("ugly Units");
-        return updateCalc();
-      }
-      // console.log(p.unitA, p.quantityA, p.unitB, p.quantityB);
-      // console.log(totalUnits);
-
-      const oneTopNume = totalUnits / p.numeA;
-      if (oneTopNume % 1 != 0) {
-        console.log("ugly Units");
-        return updateCalc();
-      }
-      const oneTopOtherNume = oneTopNume * (p.denoA - p.numeA);
-      console.log(oneTopOtherNume);
-      const oneBottomNume = oneTopOtherNume / p.denoB;
-      if (oneBottomNume % 1 != 0) {
-        console.log("ugly Units");
-        return updateCalc();
-      }
-      const numberOfExtraUnitsUsed = oneBottomNume * p.numeB;
-      // console.log(`${numberOfExtraUnitsUsed} extra units`);
-      if (p.chosen == "A") p.extraBought = numberOfExtraUnitsUsed / p.unitA;
-      if (p.chosen == "B") p.extraBought = numberOfExtraUnitsUsed / p.unitB;
-
-      // console.log(p.extraBought);
-      if (p.extraBought <= 0) {
-        console.log("No extra bought");
-        return updateCalc();
-      }
-      displayProblem.innerHTML = `
-      A ${p.objectA.slice(
-        0,
-        p.objectA.length - 1
-      )} costs ${displaySimpleFraction(
-        p.unitA,
-        p.unitB
-      )} of a ${p.objectB.slice(0, p.objectB.length - 1)}.</br>
-      ${person} bought ${p.quantityA} ${p.objectA} and ${p.quantityB} ${
-        p.objectB
-      }  with ${displaySimpleFraction(p.numeA, p.denoA)} of his money.</br>
-      He then bought ${p.extraBought % 1 != 0 ? "as many" : "more"} ${
-        p.chosen == "A" ? p.objectA : p.objectB
-      } with ${displaySimpleFraction(
-        p.numeB,
-        p.denoB
-      )} of his remaining money.</br>
-      How many ${
-        p.chosen == "A" ? p.objectA : p.objectB
-      } did he have in the end?
-      `;
-    }
-    // FRACTIONS: OVERLAPPING MODEL
-    if (setting == 4) {
-      normalDisplay();
-      const stuff = ["pens", "pencils", "erasers", "stamps"][genNumbers(4)];
-      const personA = boyNames[genNumbers(boyNames.length)];
-      const personB = girlNames[genNumbers(girlNames.length)];
-      let personC = boyNames[genNumbers(boyNames.length)];
-      while (personC == personA) {
-        personC = boyNames[genNumbers(boyNames.length)];
-      }
-      [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
-      if (p.denoA == 2) p.denoA += 1;
-      const totalValue = p.oneUnit * p.denoA;
-      const personAValue = p.oneUnit * p.numeA;
-      const personBValue = personAValue + p.difference;
-
-      const personCValue = totalValue - personAValue - personBValue;
-      if (personBValue <= 0 || personCValue <= 0) {
-        // p.difference = [-1, 1][genNumbers(2)] * genNumbers(50) + 10;
-        // personBValue + p.difference;
-        return updateCalc();
-      }
-      displayProblem.innerHTML = `
-  ${personA} took ${displaySimpleFraction(
-        p.numeA,
-        p.denoA
-      )} of the ${stuff}.</br>
-  ${personB} took ${Math.abs(p.difference)} ${
-        p.difference > 0 ? "more" : "less"
-      } ${stuff} than ${personA}.</br>
-  ${personC} took the remaining ${personCValue} ${stuff}.</br>
-  `;
-      if (p.question == "A")
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `How many ${stuff} did ${personA} take?`
-        );
-      if (p.question == "B")
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `How many ${stuff} did ${personB} take?`
-        );
-      if (p.question == "total")
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `How many ${stuff} were there at first?`
-        );
-    }
-    //IDENTICAL NUMERATOR (TYPE 2)
-    if (setting == 5) {
-      normalDisplay();
-      [p.nume, p.deno] = simplify(p.nume, p.deno);
-      [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
-      const commonNumber = commonDeno(p.deno - p.nume, p.numeTwo);
-      const multiOne = commonNumber / (p.deno - p.nume);
-      const multiTwo = commonNumber / p.numeTwo;
-      const newDenoOne = p.deno * multiOne;
-      const newDenoTwo = p.denoTwo * multiTwo;
-      console.log(commonNumber, multiOne, multiTwo, newDenoOne, newDenoTwo);
-      if (newDenoOne >= newDenoTwo) return updateCalc();
-      p.numOne = (genNumbers(10) + 2) * (newDenoTwo - newDenoOne);
-
-      displayProblem.innerHTML = `
-      ${p.person} ${genNumbers(2) == 0 ? "used" : "spent"} $${
-        p.numOne
-      } on something.</p>
-      He then ${
-        genNumbers(2) == 0 ? "used" : "spent"
-      } another ${displaySimpleFraction(p.nume, p.deno)} of ${
-        genNumbers(2) == 0 ? "the remainder" : "the amount left"
-      } on ${p.somethingElse}.</p>
-      He is left with ${displaySimpleFraction(p.numeTwo, p.denoTwo)} of ${
-        genNumbers(2) == 0 ? "what he has at first" : "the total"
-      }.</p>
-      `;
-      if (p.version == 0) {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          "How much does he have at first?"
-        );
-        p.answer = (p.numOne / (newDenoTwo - newDenoOne)) * newDenoTwo;
-      }
-      if (p.version == 1) {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `How much did he spend on ${p.somethingElse}?`
-        );
-        p.answer = (p.numOne / (newDenoTwo - newDenoOne)) * (p.nume * multiOne);
-      }
-    }
     // GEOMETRY: AREA OF RIGHT ANGLED TRIANGLE
-    if (setting == 6) {
+    if (setting == 1) {
       drawingDisplay();
       ctx.font = "1em serif";
       ctx.save();
@@ -12798,7 +12462,7 @@ function updateProblems() {
       ctx.restore();
     }
     // GEOMETRY: AREA OF FIGURE : CUTTING
-    if (setting == 7) {
+    if (setting == 2) {
       drawingDisplay();
       ctx.save(); //1st
       const y = fillTextSplit(
@@ -12863,7 +12527,7 @@ function updateProblems() {
     }
 
     //GEOMETRY: MANIPULATION OF DIMENSION
-    if (setting == 8) {
+    if (setting == 3) {
       drawingDisplay();
       const y = fillTextSplit(
         `Find the area of the ${
@@ -12913,7 +12577,7 @@ function updateProblems() {
     }
 
     //GEOMETRY: MANIPULATION OF DIMENSION LEVEL 2
-    if (setting == 9) {
+    if (setting == 4) {
       drawingDisplay();
       // if (p.label == 1) {
       if (p.givenLabel == "A") p.findPart = "C";
@@ -13020,7 +12684,7 @@ function updateProblems() {
       ctx.restore();
     }
     // AREA OF FIGURE: DIFFERENT UNITS
-    if (setting == 10) {
+    if (setting == 5) {
       drawingDisplay();
       ctx.save();
       ctx.font = "1em serif";
@@ -13141,8 +12805,802 @@ function updateProblems() {
       ctx.restore();
     }
 
-    //  REPEATED GROUP RATIO
+    // RATIO: REPEATED GROUP
+    if (setting == 6) {
+      console.log("Repeated Group");
+      normalDisplay();
+      const displayA = p.percA;
+      const displayB = p.percB;
+      if (p.firstSentence == "the total" && p.secondSentence == "the total") {
+        if (p.percA + p.percB >= 100) return updateCalc();
+      }
+      let commonGroup = undefined;
+      let newA = undefined;
+      let newB = undefined;
+      let newC = undefined;
+      if (p.firstSentence == "B and C" && p.secondSentence == "C") {
+        let bAndc = 100;
+        [p.percA, bAndc] = simplify(p.percA, bAndc);
+        let c = 100;
+        [p.percB, c] = simplify(p.percB, c);
+        commonGroup = commonDeno(bAndc, p.percB + c);
+        if (commonGroup == "Error") return updateCalc();
+        const multiplierOne = commonGroup / bAndc;
+        newA = p.percA * multiplierOne;
+        const multiplierTwo = commonGroup / (p.percB + c);
+        newB = p.percB * multiplierTwo;
+        newC = c * multiplierTwo;
+        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
+        [newA, newB, newC] = simplifyThree(newA, newB, newC);
+        p.answer = `${newA}:${newB}:${newC}`;
+      }
+      if (p.firstSentence == "the total" && p.secondSentence == "C") {
+        let bAndc = 100 - p.percA;
+        [p.percA, bAndc] = simplify(p.percA, bAndc);
+        let c = 100;
+        [p.percB, c] = simplify(p.percB, c);
+        commonGroup = commonDeno(bAndc, p.percB + c);
+        if (commonGroup == "Error") return updateCalc();
+        const multiplierOne = commonGroup / bAndc;
+        newA = p.percA * multiplierOne;
+        const multiplierTwo = commonGroup / (p.percB + c);
+        newB = p.percB * multiplierTwo;
+        newC = c * multiplierTwo;
+        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
+        [newA, newB, newC] = simplifyThree(newA, newB, newC);
+        p.answer = `${newA}:${newB}:${newC}`;
+      }
+      if (p.firstSentence == "B and C" && p.secondSentence == "the total") {
+        let bAndc = 100;
+        [p.percA, bAndc] = simplify(p.percA, bAndc);
+        let aAndc = 100 - p.percB;
+        [p.percB, aAndc] = simplify(p.percB, aAndc);
+        commonGroup = commonDeno(p.percA + bAndc, p.percB + aAndc);
+        if (commonGroup == "Error") return updateCalc();
+        const multiplierOne = commonGroup / (p.percA + bAndc);
+        newA = p.percA * multiplierOne;
+        const multiplierTwo = commonGroup / (p.percB + aAndc);
+        newB = p.percB * multiplierTwo;
+        newC = aAndc * multiplierTwo - newA;
+        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
+        [newA, newB, newC] = simplifyThree(newA, newB, newC);
+        p.answer = `${newA}:${newB}:${newC}`;
+      }
+      if (p.firstSentence == "the total" && p.secondSentence == "the total") {
+        let bAndc = 100 - p.percA;
+        [p.percA, bAndc] = simplify(p.percA, bAndc);
+        let aAndc = 100 - p.percB;
+        [p.percB, aAndc] = simplify(p.percB, aAndc);
+        commonGroup = commonDeno(p.percA + bAndc, p.percB + aAndc);
+        if (commonGroup == "Error") return updateCalc();
+        const multiplierOne = commonGroup / (p.percA + bAndc);
+        newA = p.percA * multiplierOne;
+        const multiplierTwo = commonGroup / (p.percB + aAndc);
+        newB = p.percB * multiplierTwo;
+        newC = aAndc * multiplierTwo - newA;
+        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
+        [newA, newB, newC] = simplifyThree(newA, newB, newC);
+        p.answer = `${newA}:${newB}:${newC}`;
+      }
+      if (newA > 150 || newB > 150 || newC > 150) return updateCalc();
+      displayProblem.innerHTML = `
+      A is ${displayA}% of ${p.firstSentence}.</p>
+      B is ${displayB}% of ${p.secondSentence}.</p>
+      What is the ratio of A : B : C?
+      `;
+    }
+
+    // PERCENTAGE: OVERLAPPING MODEL
+    if (setting == 7) {
+      normalDisplay();
+      const stuff = ["pen", "pencils", "erasers", "stamps"][genNumbers(4)];
+      const personA = boyNames[genNumbers(boyNames.length)];
+      const personB = girlNames[genNumbers(girlNames.length)];
+      let personC = boyNames[genNumbers(boyNames.length)];
+      while (personC == personA) {
+        personC = boyNames[genNumbers(boyNames.length)];
+      }
+      const percentageA = (p.numeA / p.denoA) * 100;
+      const totalValue = p.oneUnit * p.denoA;
+      const personAValue = p.oneUnit * p.numeA;
+      const personBValue = personAValue + p.difference;
+      while (personBValue <= 0) {
+        p.difference = [-1, 1][genNumbers(2)] * (genNumbers(50) + 10);
+        personBValue + p.difference;
+      }
+      const personCValue = totalValue - personAValue - personBValue;
+
+      displayProblem.innerHTML = `
+  ${personA} took ${percentageA}% of the ${stuff}.</br>
+  ${personB} took ${Math.abs(p.difference)} ${
+        p.difference > 0 ? "more" : "less"
+      } ${stuff} than ${personA}.</br>
+  ${personC} took the remaining ${personCValue} ${stuff}.</br>
+  `;
+      if (personCValue <= 0) return updateCalc();
+      if (p.question == "A")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How many ${stuff} did ${personA} take?`
+        );
+      if (p.question == "B")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How many ${stuff} did ${personB} take?`
+        );
+      if (p.question == "total")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How many ${stuff} were there at first?`
+        );
+    }
+
+    // PERCENTAGE: GST AND SERVICE CHARGE
+    if (setting == 8) {
+      normalDisplay();
+      if (p.optionOne == "simple gst") {
+        displayProblem.innerHTML = `
+      Person ${
+        p.person
+      } wanted to buy something which cost $${p.value.toLocaleString(
+          "en-US"
+        )}.</p>
+      He has to also pay a GST of ${p.gst}%.</p>
+      `;
+        if (p.optionTwo == "gst") {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            "How much is the GST?"
+          );
+        }
+        if (p.optionTwo == "cost") {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            "How much did he have to pay in the end?"
+          );
+        }
+      }
+
+      if (p.optionOne == "service") {
+        // const serviceCharge = (p.value / 100) * 10;
+        // if (serviceCharge.toString().split(".")[1] > 2) return updateCalc();
+        // const gst = (serviceCharge / 100) * p.gst;
+        // if (gst.toString().split(".")[1] > 2) return updateCalc();
+        // const bill = p.value + serviceCharge + gst;
+        const furtherIncrease = (110 / 100) * 108;
+        console.log(accDecimal(furtherIncrease));
+        p.value = genNumbers(89) + 10;
+        const bill = p.value * furtherIncrease;
+        // p.value = bill / furtherIncrease;
+        if (bill.toString().split(".")[1].length > 2) return updateCalc();
+        displayProblem.innerHTML = `
+        Person ${p.person} hosted a party at a ${
+          genNumbers(2) == 0 ? "restaurant" : "cafe"
+        }.</p>
+        There was a 10% service charge,</p>
+        and GST of ${p.gst}%.</p>
+        The final bill was $${bill.toFixed(2)}.</p>
+        How much was cost of the sub-total?</p>
+        `;
+      }
+      if (p.optionOne == "discount gst") {
+        if (p.optionThree == "final cost") {
+          displayProblem.innerHTML = `
+        Person ${
+          p.person
+        } wanted to buy something which cost $${p.value.toLocaleString(
+            "en-US"
+          )}.</p>
+        He was given a ${p.discount}% discount,</p>
+        and has to pay ${p.gst}% GST.</p>
+        What was the final cost?</p>
+        <i>Round off your answer to 2 decimal places if needed</i>`;
+        }
+        if (p.optionThree == "initial cost") {
+          const percFinal = ((100 - p.discount) / 100) * (100 + p.gst);
+          const bill = ((genNumbers(89) + 10) / 100) * percFinal;
+          console.log(bill.toString().split(".")[1].length > 2);
+          if (bill.toString().split(".")[1].length > 2) return updateCalc();
+          p.value = bill / (percFinal / 100);
+          displayProblem.innerHTML = `
+        Person ${p.person} bought something.</p>
+        He was given a ${p.discount}% discount,</p>
+        and has to pay ${p.gst}% GST.</p>
+        The final cost was $${bill.toLocaleString("en-US")}.</p>
+        How much did the item cost at first?
+        `;
+        }
+      }
+    }
+
+    // PERCENTAGE: IDENTICAL EFFECT
+    if (setting == 9) {
+      normalDisplay();
+      const person = [...boyNames, ...girlNames][
+        genNumbers(boyNames.length + girlNames.length)
+      ];
+      let gender = undefined;
+      boyNames.includes(person) ? (gender = "his") : (gender = "her");
+      let genderB = undefined;
+      boyNames.includes(person) ? (genderB = "he") : (genderB = "she");
+      console.log(person);
+      console.log(p.salary, p.saves);
+      const oldSave = (p.salary / 100) * p.saves;
+      const newSave = accDecimal(
+        (((p.salary / 100) * p.saves) / 100) * (100 + p.change)
+      );
+      console.log(oldSave, newSave);
+      if (newSave.toString().split(".")[1]) {
+        if (newSave.toString().split(".")[1].length > 2) return updateCalc();
+      }
+      const changeSaving = newSave - oldSave;
+      displayProblem.innerHTML = `
+      ${person} saves ${p.saves}% of ${gender} salary.</br>
+      If ${gender} salary ${
+        p.change > 0 ? "increase" : "decrease"
+      } by ${Math.abs(accDecimal(p.change))}%</br>
+      ${
+        genNumbers(2) == 0
+          ? `The amount ${genderB} saves would become $${newSave}.`
+          : `The amount ${genderB} saves would ${
+              p.change > 0 ? "increase" : "decrease"
+            } by $${Math.abs(accDecimal(changeSaving))}.`
+      }
+      </br>
+      What is ${gender} salary?
+
+      `;
+    }
+
+    //PERCENTAGE: SOLVING IN UNITS
+    if (setting == 10) {
+      normalDisplay();
+      const itemName = ["pies", "cakes", "sandwiches", "hotdogs"][
+        genNumbers(4)
+      ];
+      p.quantitySoldAtOriginalPrice = (p.items * p.originalPerc) / 100;
+      p.quantitySoldAtDiscountedPrice =
+        ((p.items - p.quantitySoldAtOriginalPrice) * p.remainderPerc) / 100;
+      const leftOvers =
+        p.items -
+        p.quantitySoldAtDiscountedPrice -
+        p.quantitySoldAtOriginalPrice;
+      if (leftOvers % 1 != 0) return updateCalc();
+      const received =
+        p.price * p.quantitySoldAtOriginalPrice +
+        ((p.price * (100 - p.discount)) / 100) *
+          p.quantitySoldAtDiscountedPrice;
+      displayProblem.innerHTML = `
+      At a carnival, ${
+        p.originalPerc
+      }% of the ${itemName} were sold at the original price.</br>
+      ${
+        p.remainderPerc
+      }% of the remaining ${itemName} were sold at discount of ${
+        p.discount
+      }%.</br>
+      All ${leftOvers} leftovers were donated to charity.</br>
+      $${
+        received % 1 != 0 ? received.toFixed(2) : received
+      } was collected at the end of the carnival.</p>
+      `;
+      if (p.question == "A") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How much was collected from selling the ${itemName} that were sold at original price?`
+        );
+      }
+      if (p.question == "B") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How much was collected from selling the ${itemName} that were sold at discounted price?`
+        );
+      }
+    }
+    //AVERAGE: EXTERNAL CHANGE
     if (setting == 11) {
+      normalDisplay();
+      if (p.changeQuantity == 0) return updateCalc();
+      p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
+      const oldTotal = p.oldQuantity * p.oldAverage;
+      // const newTotal = (p.oldQuantity + p.changeQuantity) * p.newAverage;
+      const newTotal = oldTotal + p.changeQuantity * p.average;
+      if (p.oldQuantity + p.changeQuantity == 0) return updateCalc();
+      const newAverage = newTotal / (p.oldQuantity + p.changeQuantity);
+
+      if (newAverage <= 0) return updateCalc();
+      if (newAverage % 1 != 0) {
+        if (newAverage.toString().split(".")[1] > 3) return updateCalc();
+      }
+
+      if (p.average == newAverage || p.oldAverage == newAverage) {
+        console.log("Same average");
+        return updateCalc();
+      }
+      displayProblem.innerHTML = `
+      A group's average at first was ${p.oldAverage}.</p>
+      After ${Math.abs(p.changeQuantity)} ${
+        p.changeQuantity == 1 ? "student" : "students "
+      } ${p.situation}, ${
+        p.changeQuantity == 1 ? "whose" : "their"
+      } average is ${p.average}.</p>
+      The average became ${newAverage}.</p>
+      How many students were there ${p.question}?
+      `;
+    }
+
+    //AVERAGE: CONSECUTIVE DAYS
+    if (setting == 12) {
+      normalDisplay();
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
+      // if 5 days.. Then find the total of 1 -- 4 which is 5 x 4 /2.
+      console.log(p.dayOne);
+      if (p.days % 2 == 0) p.days += 1;
+      p.chosen = genNumbers(p.days - 1) + 1;
+      const triangleNum = (p.days * (p.days - 1)) / 2;
+      p.total = p.dayOne * p.days + triangleNum * p.increase;
+      console.log(triangleNum);
+      if (p.chosen == Math.ceil(p.days / 2)) {
+        p.chosen += 1;
+      }
+      const gender = ["he", "she"][genNumbers(2)];
+      let obj = "aeroplane";
+      if (gender == "she") obj = "heart";
+      displayProblem.innerHTML = `
+      Someone made paper ${obj} for ${p.days} days.</p>
+      Everyday ${gender} would make ${p.increase} more than the previous day.</p>
+      A total of ${p.total} paper ${obj}s were made.</p>
+      How many ${obj}s were made on day ${p.chosen}?
+      `;
+    }
+    // BOTTOM OF CALFIVEB
+  }
+
+  // DISPLAY
+  if (level == "calSix") {
+    if (setting == 2) {
+      calculatorSymbol.classList.add("hidden");
+    } else {
+      calculatorSymbol.classList.remove("hidden");
+    }
+
+    if (setting == 1) {
+      normalDisplay();
+      const person = ["John", "Emma", "Javen", "Vamika", "Matthias", "Isaac"][
+        genNumbers(6)
+      ];
+      [p.numerator, p.denominator] = simplify(p.numerator, p.denominator);
+      [p.numeratorTwo, p.denominatorTwo] = simplify(
+        p.numeratorTwo,
+        p.denominatorTwo
+      );
+      if (p.numeratorTwo == p.denominatorTwo) p.denominatorTwo += 1;
+
+      // WHOLE NUMBER
+      if (p.type == "whole") {
+        p.numerator = 0;
+        p.denominator = 0;
+        if ((p.whole * p.denominatorTwo) % p.numeratorTwo == 0) {
+          console.log("No remainders");
+          return updateCalc();
+        }
+
+        displayProblem.innerHTML = `
+        ${person} has ${p.whole} m of cloth at first.</p>
+        ${displaySimpleFraction(
+          p.numeratorTwo,
+          p.denominatorTwo
+        )} m is needed to make a shirt.</p>
+        The greatest number of shirts were made.</p>
+        `;
+      }
+
+      //SIMPLE FRACTIONS
+      else if (p.type == "simple fractions") {
+        p.whole = 0;
+        const setOne = p.numerator / p.denominator;
+        const setTwo = p.numeratorTwo / p.denominatorTwo;
+        if (setTwo >= setOne) {
+          console.log("Numbers are too small");
+          return updateCalc();
+        }
+        displayProblem.innerHTML = `
+        ${person} has ${displaySimpleFraction(
+          p.numerator,
+          p.denominator
+        )} m of cloth at first.</p>
+        ${displaySimpleFraction(
+          p.numeratorTwo,
+          p.denominatorTwo
+        )} m is needed to make a shirt.</p>
+        The greatest number of shirts were made.</p>
+        `;
+      }
+      // MIXED FRACTIONS
+      else {
+        const numeTotal = p.whole * p.denominator + p.numerator;
+        if (
+          (numeTotal * p.denominatorTwo) % (p.denominator * p.numeratorTwo) ==
+          0
+        ) {
+          return updateCalc();
+        }
+
+        displayProblem.innerHTML = `
+        ${person} has ${p.whole} ${displaySimpleFraction(
+          p.numerator,
+          p.denominator
+        )} m of cloth at first.</p>
+        ${displaySimpleFraction(
+          p.numeratorTwo,
+          p.denominatorTwo
+        )} m is needed to make a shirt.</p>
+        The greatest number of shirts were made.</p>
+        `;
+      }
+
+      if (p.question == "quotient") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "How many shirts were made?"
+        );
+      }
+      if (p.question == "remainder") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "How much cloth was left?"
+        );
+      }
+    }
+    // FRACTIONS: NUMERTOR OF A VALUE
+    if (setting == 2) {
+      [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      normalDisplay();
+      let item;
+      if (p.unit == "kg") {
+        item = "packet";
+      }
+      if (p.unit == "ℓ") {
+        item = "bottle";
+      }
+      displayProblem.innerHTML = `
+      <div class="frac">
+      <span>${p.numeA}</span>
+      <span class="symbol">/</span>
+      <span class="bottom">${p.denoA}</span>
+      </div>
+      of a ${item} is
+      <div class="frac">
+      <span>${p.numeB}</span>
+      <span class="symbol">/</span>
+      <span class="bottom">${p.denoB}</span>
+      </div> ${p.unit}.</br>
+      How many ${p.unit} are ${p.question} ${item}s?
+      `;
+    }
+
+    // RATIO: SIMPLIFICATION AND EXPANSION
+    if (setting == 3) {
+      normalDisplay();
+      p.ratioArr = [];
+      const quantity = genNumbers(2) + 2;
+      if (quantity == 2) {
+        p.ratioArr.push(p.numA, p.numB);
+      } else {
+        p.ratioArr.push(p.numA, p.numB, p.numC);
+      }
+      if ([...new Set(p.ratioArr)].length != quantity) {
+        console.log("Same value");
+        return updateCalc();
+      }
+      if (p.process == "up") {
+        const multiA = genNumbers(3) + 2;
+        let equalArr = p.ratioArr.map((i) => i * multiA);
+        const replace = genNumbers(quantity);
+        p.answer = equalArr[replace];
+        equalArr[replace] = "?";
+        displayProblem.innerHTML = `Find the missing number.<br><p class="center">${p.ratioArr.join(
+          " : "
+        )} = ${equalArr.join(" : ")}</p>`;
+      }
+
+      if (p.process == "down") {
+        const multiA = genNumbers(3) + 2;
+        let equalArr = p.ratioArr.map((i) => i * multiA);
+        const replace = genNumbers(quantity);
+        p.answer = p.ratioArr[replace];
+        p.ratioArr[replace] = "?";
+        displayProblem.innerHTML = `Find the missing number.<br><p class="center">${equalArr.join(
+          " : "
+        )} = ${p.ratioArr.join(" : ")}</p>`;
+      }
+
+      if (p.process == "updown") {
+        const multiA = [2, 6, 8][genNumbers(3)];
+        const multiB = [3, 5, 7][genNumbers(3)];
+        // while (multiA == multiB) {
+        //   multiB = genNumbers(3) + 2;
+        // }
+        let equalArr = p.ratioArr.map((i) => i * multiA);
+        let equalArrB = p.ratioArr.map((i) => i * multiB);
+        const replace = genNumbers(quantity);
+        p.answer = equalArrB[replace];
+        equalArrB[replace] = "?";
+        displayProblem.innerHTML = `Find the missing number.<br><p class="center">${equalArr.join(
+          " : "
+        )} = ${equalArrB.join(" : ")}</p>`;
+      }
+    }
+
+    // RATIO: POSSIBLE
+    if (setting == 4) {
+      normalDisplay();
+      function getFactors(num) {
+        let factors = [];
+        for (let i = 1; i <= num; i++) {
+          if (num % i == 0) factors.push(i);
+        }
+        return factors;
+      }
+      let factors = getFactors(p.number);
+      console.log(factors);
+      if (factors.length < 4) {
+        // p.number +=1
+        return updateCalc();
+        // factors = getFactors(p.number);
+      }
+      let arr = [p.optionOne, p.optionTwo, p.optionThree, p.optionFour];
+      //FILL UP THE OPTIONS
+      arr.forEach((item) => {
+        for (let i = 0; i < 3; i++) {
+          const num = genNumbers(5) + 1;
+          item.push(num);
+        }
+      });
+      //CHECK THE ARRAYS
+      arr.forEach((item, index) => {
+        let sum = 0;
+        item.map((x) => {
+          sum += x;
+        });
+        if (sum > p.number) return updateCalc();
+        while (index == p.chosen && p.number % sum != 0) {
+          item[genNumbers(item.length)] += 1;
+          sum += 1;
+          if (sum > p.number) return updateCalc();
+        }
+        while (index != p.chosen && p.number % sum == 0) {
+          item[genNumbers(item.length)] += 1;
+          sum += 1;
+          if (sum > p.number) return updateCalc();
+        }
+      });
+      function simplifyAll(arr) {
+        const sorting = [...arr];
+        sorting.sort((a, b) => b - a);
+        const largest = sorting[0];
+
+        for (let i = 2; i <= largest; i++) {
+          while (arr[0] % i == 0 && arr[1] % i == 0 && arr[2] % i == 0) {
+            arr[0] /= i;
+            arr[1] /= i;
+            arr[2] /= i;
+          }
+        }
+        return arr;
+      }
+      console.log("simplfying");
+      simplifyAll(p.optionOne);
+      console.log("Done 1");
+      simplifyAll(p.optionTwo);
+      console.log("Done 2");
+      simplifyAll(p.optionThree);
+      console.log("Done 3");
+      simplifyAll(p.optionFour);
+      console.log("Done 4");
+      arr.forEach((item, index) => {
+        console.log(`Option: ${index + 1} ${item}`);
+        // SKIP EVERYTHING BELOW IF ITS THE ANSWER
+        if (p.chosen == index) {
+          console.log("HUH?");
+          return;
+        }
+
+        //CHECKING IF OTHER OPTIONS MIGHT LEAD TO ANOTHER ANSWER
+        let summation = 0;
+        item.map((x) => (summation += x));
+        console.log(`The summation is :${summation}`);
+        if (p.number % summation == 0) {
+          console.log(p.number);
+          console.log(summation);
+          return updateCalc();
+        }
+
+        //CHECKING IF THERE ARE ANY IDENTICAL ARRAYS
+        for (let i = 0; i < 4; i++) {
+          // DO NOT CHECK IF OPTIONS IS THE SAME OPTION
+          if (index != i) {
+            if (item.toString() == arr[i].toString()) {
+              console.log("Repeat detected");
+              return updateCalc();
+            }
+          }
+        }
+      });
+      let optionOneSum;
+      let optionTwoSum;
+      let optionThreeSum;
+      let optionFourSum;
+      p.optionOne.map((x) => {
+        optionOneSum += x;
+      });
+      p.optionTwo.map((x) => {
+        optionTwoSum += x;
+      });
+      p.optionThree.map((x) => {
+        optionThreeSum += x;
+      });
+      p.optionFour.map((x) => {
+        optionFourSum += x;
+      });
+      // let unique = [
+      //   ...new Set([optionOneSum, optionTwoSum, optionThreeSum, optionFourSum]),
+      // ];
+      // if (unique.length < 4) {
+      //   console.log("Repeated Sum")
+      //   return updateCalc();
+      // }
+      let possibility = 0;
+      if (p.number % optionOneSum == 0) possibility += 1;
+      if (p.number % optionTwoSum == 0) possibility += 1;
+      if (p.number % optionThreeSum == 0) possibility += 1;
+      if (p.number % optionFourSum == 0) possibility += 1;
+      if (possibility > 1) {
+        console.log("More than 1 possible option");
+        return updateCalc();
+      }
+      displayProblem.innerHTML = `
+        Which set of ratio is possible to give the value ${p.number}?
+        <hr>
+        <table>
+          <tr>
+            <td>1) ${p.optionOne.join(" : ")}</br></td>
+            <td>2) ${p.optionTwo.join(" : ")}</br></td>
+          </tr>
+          <tr>
+            <td>3) ${p.optionThree.join(" : ")}</br></td>
+            <td>4) ${p.optionFour.join(" : ")}</br></td>   
+           </tr>
+        </table>
+        `;
+    }
+
+    //RATIO: SHAPES
+    if (setting == 5) {
+      drawingDisplay();
+      drawForFraction(state, "ratio");
+      // console.log(mediumColumn, smallRow, p.shaded, p.total);
+      if (p.shaded == 0) {
+        ctx.restore();
+        return updateCalc();
+      }
+      ctx.restore(); //1st
+    }
+    // RATIO: REPEATED IDENTITY
+    if (setting == 6) {
+      normalDisplay();
+      let lineOne = "";
+      if (p.firstSentence == "unit") {
+        p.unitTwo = 1;
+        lineOne = `
+          ${p.personOne} has ${p.unitOne} times as many ${p.something} as ${p.personTwo}.</p>
+          `;
+      }
+      if (p.firstSentence == "ratio") {
+        if (p.unitOne == p.unitTwo) p.unitTwo += 1;
+        [p.unitOne, p.unitTwo] = simplify(p.unitOne, p.unitTwo);
+        lineOne = `
+          ${p.personOne}'s ratio of ${p.something} is ${p.unitOne}:${p.unitTwo} to ${p.personTwo}.</p>
+          `;
+      }
+      const position = genNumbers(2);
+      p.repeatedId = [p.personOne, p.personTwo][position];
+      let lineTwo = "";
+      if (p.secondSentence == "unit") {
+        p.unitFour = 1;
+        lineTwo = `
+          ${p.repeatedId} has ${p.unitThree} times as many ${p.something} as ${p.personThree}.</p>
+          `;
+      }
+      if (p.secondSentence == "ratio") {
+        if (p.unitThree == p.unitFour) p.unitFour += 1;
+        [p.unitThree, p.unitFour] = simplify(p.unitThree, p.unitFour);
+        lineTwo = `
+          ${p.repeatedId}'s ratio of ${p.something} is ${p.unitThree}:${p.unitFour} to ${p.personThree}.</p>
+          `;
+      }
+      calArrQns.push(p.unitOne);
+      calArrQns.push(p.unitTwo);
+      position == 0 ? calArrQns.push(p.unitOne) : calArrQns.push(p.unitTwo);
+      calArrQns.push(p.unitThree);
+      calArrQns.push(p.unitFour);
+      if (calArrQns[3] == calArrQns[4]) {
+        calArrQns = [];
+        return updateCalc();
+      }
+
+      let i = 0;
+      let count = 1;
+      while ((calArrQns[2] + i) % calArrQns[3] != 0) {
+        i += calArrQns[2];
+        count += 1;
+        console.log(i, count);
+      }
+      calArrQns.push(calArrQns[0] * count);
+      calArrQns.push(calArrQns[1] * count);
+      const multiTwo = (calArrQns[2] * count) / calArrQns[3];
+      calArrQns.push(calArrQns[3] * multiTwo);
+      calArrQns.push(calArrQns[4] * multiTwo);
+      const lineThree = `What is the ratio of ${p.personOne} to ${p.personTwo} to ${p.personThree}?`;
+
+      displayProblem.innerHTML = `
+        ${lineOne}</p>
+        ${lineTwo}</p>
+        ${lineThree}
+        `;
+    }
+    // RATIO: IDENTICAL TOTAL
+    if (setting == 7) {
+      normalDisplay();
+      console.log(p.objects);
+      const objectA = p.objects[0];
+      const objectB = p.objects[1];
+      [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
+      [p.ratioC, p.ratioD] = simplify(p.ratioC, p.ratioD);
+      if (((p.ratioA == p.ratioB) == p.ratioC) == p.ratioD) return updateCalc();
+      if (manipulation > 0 && p.ratioA + p.ratioB == p.ratioC + p.ratioD) {
+        console.log("Manipulated!");
+        return updateCalc();
+      }
+      if (p.ratioA + p.ratioB == p.ratioC + p.ratioD) manipulation += 1;
+      displayProblem.innerHTML = `
+        Group A and B have ${
+          p.position == 2
+            ? "the same chocolates and sweets"
+            : "the same number of people"
+        }.</p>
+        Group A is made up of ${objectA} and ${objectB} in the ratio of ${
+        p.ratioA
+      } : ${p.ratioB}.</p>
+        Group B is made up of ${objectA} and ${objectB} in the ratio of ${
+        p.ratioC
+      } : ${p.ratioD}.</p>
+        
+        `;
+      if (p.question == 1) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What is the ratio of total ${objectA} to ${objectB}?`
+        );
+      }
+      if (p.question == 2) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What is the ratio of ${objectA} in A to the ratio of ${objectA} in B?`
+        );
+      }
+      if (p.question == 3) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What is the ratio of ${objectB} in A to the ratio of ${objectB} in B?`
+        );
+      }
+    }
+
+    //  REPEATED GROUP RATIO
+    if (setting == 8) {
       normalDisplay();
       let total = p.varA + p.varB + p.varC;
       let firstTotal = undefined;
@@ -13198,7 +13656,7 @@ function updateProblems() {
       }
     }
     //RATIO: UNCHANGED OBJECT
-    if (setting == 12) {
+    if (setting == 9) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -13381,7 +13839,7 @@ function updateProblems() {
       `;
     }
     // RATIO: UNCHANGED TOTAL
-    if (setting == 13) {
+    if (setting == 10) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -13505,7 +13963,7 @@ function updateProblems() {
       ${lineFour}`;
     }
     //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 14) {
+    if (setting == 11) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -13610,7 +14068,7 @@ function updateProblems() {
       `;
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 15) {
+    if (setting == 12) {
       normalDisplay();
       [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
@@ -13627,7 +14085,7 @@ function updateProblems() {
       `;
     }
     // REPEATED IDENTITY GEOMETRY
-    if (setting == 16) {
+    if (setting == 13) {
       drawingDisplay();
       const heightNeeded = 140 + p.rectBreadth * 10 + p.triangleHeight * 10;
       if (heightNeeded > 275) {
@@ -13834,710 +14292,8 @@ function updateProblems() {
       );
       p.answer = `${newUnshadedFirst}:${newUnshadedSecond}`;
     }
-    // RATIO: REPEATED GROUP
-    if (setting == 17) {
-      console.log("Repeated Group");
-      normalDisplay();
-      const displayA = p.percA;
-      const displayB = p.percB;
-      if (p.firstSentence == "the total" && p.secondSentence == "the total") {
-        if (p.percA + p.percB >= 100) return updateCalc();
-      }
-      let commonGroup = undefined;
-      let newA = undefined;
-      let newB = undefined;
-      let newC = undefined;
-      if (p.firstSentence == "B and C" && p.secondSentence == "C") {
-        let bAndc = 100;
-        [p.percA, bAndc] = simplify(p.percA, bAndc);
-        let c = 100;
-        [p.percB, c] = simplify(p.percB, c);
-        commonGroup = commonDeno(bAndc, p.percB + c);
-        if (commonGroup == "Error") return updateCalc();
-        const multiplierOne = commonGroup / bAndc;
-        newA = p.percA * multiplierOne;
-        const multiplierTwo = commonGroup / (p.percB + c);
-        newB = p.percB * multiplierTwo;
-        newC = c * multiplierTwo;
-        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
-        [newA, newB, newC] = simplifyThree(newA, newB, newC);
-        p.answer = `${newA}:${newB}:${newC}`;
-      }
-      if (p.firstSentence == "the total" && p.secondSentence == "C") {
-        let bAndc = 100 - p.percA;
-        [p.percA, bAndc] = simplify(p.percA, bAndc);
-        let c = 100;
-        [p.percB, c] = simplify(p.percB, c);
-        commonGroup = commonDeno(bAndc, p.percB + c);
-        if (commonGroup == "Error") return updateCalc();
-        const multiplierOne = commonGroup / bAndc;
-        newA = p.percA * multiplierOne;
-        const multiplierTwo = commonGroup / (p.percB + c);
-        newB = p.percB * multiplierTwo;
-        newC = c * multiplierTwo;
-        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
-        [newA, newB, newC] = simplifyThree(newA, newB, newC);
-        p.answer = `${newA}:${newB}:${newC}`;
-      }
-      if (p.firstSentence == "B and C" && p.secondSentence == "the total") {
-        let bAndc = 100;
-        [p.percA, bAndc] = simplify(p.percA, bAndc);
-        let aAndc = 100 - p.percB;
-        [p.percB, aAndc] = simplify(p.percB, aAndc);
-        commonGroup = commonDeno(p.percA + bAndc, p.percB + aAndc);
-        if (commonGroup == "Error") return updateCalc();
-        const multiplierOne = commonGroup / (p.percA + bAndc);
-        newA = p.percA * multiplierOne;
-        const multiplierTwo = commonGroup / (p.percB + aAndc);
-        newB = p.percB * multiplierTwo;
-        newC = aAndc * multiplierTwo - newA;
-        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
-        [newA, newB, newC] = simplifyThree(newA, newB, newC);
-        p.answer = `${newA}:${newB}:${newC}`;
-      }
-      if (p.firstSentence == "the total" && p.secondSentence == "the total") {
-        let bAndc = 100 - p.percA;
-        [p.percA, bAndc] = simplify(p.percA, bAndc);
-        let aAndc = 100 - p.percB;
-        [p.percB, aAndc] = simplify(p.percB, aAndc);
-        commonGroup = commonDeno(p.percA + bAndc, p.percB + aAndc);
-        if (commonGroup == "Error") return updateCalc();
-        const multiplierOne = commonGroup / (p.percA + bAndc);
-        newA = p.percA * multiplierOne;
-        const multiplierTwo = commonGroup / (p.percB + aAndc);
-        newB = p.percB * multiplierTwo;
-        newC = aAndc * multiplierTwo - newA;
-        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
-        [newA, newB, newC] = simplifyThree(newA, newB, newC);
-        p.answer = `${newA}:${newB}:${newC}`;
-      }
-      if (newA > 150 || newB > 150 || newC > 150) return updateCalc();
-      displayProblem.innerHTML = `
-      A is ${displayA}% of ${p.firstSentence}.</p>
-      B is ${displayB}% of ${p.secondSentence}.</p>
-      What is the ratio of A : B : C?
-      `;
-    }
-
-    // PERCENTAGE: OVERLAPPING MODEL
-    if (setting == 18) {
-      normalDisplay();
-      const stuff = ["pen", "pencils", "erasers", "stamps"][genNumbers(4)];
-      const personA = boyNames[genNumbers(boyNames.length)];
-      const personB = girlNames[genNumbers(girlNames.length)];
-      let personC = boyNames[genNumbers(boyNames.length)];
-      while (personC == personA) {
-        personC = boyNames[genNumbers(boyNames.length)];
-      }
-      const percentageA = (p.numeA / p.denoA) * 100;
-      const totalValue = p.oneUnit * p.denoA;
-      const personAValue = p.oneUnit * p.numeA;
-      const personBValue = personAValue + p.difference;
-      while (personBValue <= 0) {
-        p.difference = [-1, 1][genNumbers(2)] * (genNumbers(50) + 10);
-        personBValue + p.difference;
-      }
-      const personCValue = totalValue - personAValue - personBValue;
-
-      displayProblem.innerHTML = `
-  ${personA} took ${percentageA}% of the ${stuff}.</br>
-  ${personB} took ${Math.abs(p.difference)} ${
-        p.difference > 0 ? "more" : "less"
-      } ${stuff} than ${personA}.</br>
-  ${personC} took the remaining ${personCValue} ${stuff}.</br>
-  `;
-      if (personCValue <= 0) return updateCalc();
-      if (p.question == "A")
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `How many ${stuff} did ${personA} take?`
-        );
-      if (p.question == "B")
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `How many ${stuff} did ${personB} take?`
-        );
-      if (p.question == "total")
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `How many ${stuff} were there at first?`
-        );
-    }
-
-    // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 19) {
-      normalDisplay();
-      if (p.optionOne == "simple gst") {
-        displayProblem.innerHTML = `
-      Person ${
-        p.person
-      } wanted to buy something which cost $${p.value.toLocaleString(
-          "en-US"
-        )}.</p>
-      He has to also pay a GST of ${p.gst}%.</p>
-      `;
-        if (p.optionTwo == "gst") {
-          displayProblem.insertAdjacentHTML(
-            "beforeend",
-            "How much is the GST?"
-          );
-        }
-        if (p.optionTwo == "cost") {
-          displayProblem.insertAdjacentHTML(
-            "beforeend",
-            "How much did he have to pay in the end?"
-          );
-        }
-      }
-
-      if (p.optionOne == "service") {
-        // const serviceCharge = (p.value / 100) * 10;
-        // if (serviceCharge.toString().split(".")[1] > 2) return updateCalc();
-        // const gst = (serviceCharge / 100) * p.gst;
-        // if (gst.toString().split(".")[1] > 2) return updateCalc();
-        // const bill = p.value + serviceCharge + gst;
-        const furtherIncrease = (110 / 100) * 108;
-        console.log(accDecimal(furtherIncrease));
-        p.value = genNumbers(89) + 10;
-        const bill = p.value * furtherIncrease;
-        // p.value = bill / furtherIncrease;
-        if (bill.toString().split(".")[1].length > 2) return updateCalc();
-        displayProblem.innerHTML = `
-        Person ${p.person} hosted a party at a ${
-          genNumbers(2) == 0 ? "restaurant" : "cafe"
-        }.</p>
-        There was a 10% service charge,</p>
-        and GST of ${p.gst}%.</p>
-        The final bill was $${bill.toFixed(2)}.</p>
-        How much was cost of the sub-total?</p>
-        `;
-      }
-      if (p.optionOne == "discount gst") {
-        if (p.optionThree == "final cost") {
-          displayProblem.innerHTML = `
-        Person ${
-          p.person
-        } wanted to buy something which cost $${p.value.toLocaleString(
-            "en-US"
-          )}.</p>
-        He was given a ${p.discount}% discount,</p>
-        and has to pay ${p.gst}% GST.</p>
-        What was the final cost?</p>
-        <i>Round off your answer to 2 decimal places if needed</i>`;
-        }
-        if (p.optionThree == "initial cost") {
-          const percFinal = ((100 - p.discount) / 100) * (100 + p.gst);
-          const bill = ((genNumbers(89) + 10) / 100) * percFinal;
-          console.log(bill.toString().split(".")[1].length > 2);
-          if (bill.toString().split(".")[1].length > 2) return updateCalc();
-          p.value = bill / (percFinal / 100);
-          displayProblem.innerHTML = `
-        Person ${p.person} bought something.</p>
-        He was given a ${p.discount}% discount,</p>
-        and has to pay ${p.gst}% GST.</p>
-        The final cost was $${bill.toLocaleString("en-US")}.</p>
-        How much did the item cost at first?
-        `;
-        }
-      }
-    }
-
-    // PERCENTAGE: IDENTICAL EFFECT
-    if (setting == 20) {
-      normalDisplay();
-      const person = [...boyNames, ...girlNames][
-        genNumbers(boyNames.length + girlNames.length)
-      ];
-      let gender = undefined;
-      boyNames.includes(person) ? (gender = "his") : (gender = "her");
-      let genderB = undefined;
-      boyNames.includes(person) ? (genderB = "he") : (genderB = "she");
-      console.log(person);
-      console.log(p.salary, p.saves);
-      const oldSave = (p.salary / 100) * p.saves;
-      const newSave = accDecimal(
-        (((p.salary / 100) * p.saves) / 100) * (100 + p.change)
-      );
-      console.log(oldSave, newSave);
-      if (newSave.toString().split(".")[1]) {
-        if (newSave.toString().split(".")[1].length > 2) return updateCalc();
-      }
-      const changeSaving = newSave - oldSave;
-      displayProblem.innerHTML = `
-      ${person} saves ${p.saves}% of ${gender} salary.</br>
-      If ${gender} salary ${
-        p.change > 0 ? "increase" : "decrease"
-      } by ${Math.abs(accDecimal(p.change))}%</br>
-      ${
-        genNumbers(2) == 0
-          ? `The amount ${genderB} saves would become $${newSave}.`
-          : `The amount ${genderB} saves would ${
-              p.change > 0 ? "increase" : "decrease"
-            } by $${Math.abs(accDecimal(changeSaving))}.`
-      }
-      </br>
-      What is ${gender} salary?
-
-      `;
-    }
-
-    //PERCENTAGE: SOLVING IN UNITS
-    if (setting == 21) {
-      normalDisplay();
-      const itemName = ["pies", "cakes", "sandwiches", "hotdogs"][
-        genNumbers(4)
-      ];
-      p.quantitySoldAtOriginalPrice = (p.items * p.originalPerc) / 100;
-      p.quantitySoldAtDiscountedPrice =
-        ((p.items - p.quantitySoldAtOriginalPrice) * p.remainderPerc) / 100;
-      const leftOvers =
-        p.items -
-        p.quantitySoldAtDiscountedPrice -
-        p.quantitySoldAtOriginalPrice;
-      if (leftOvers % 1 != 0) return updateCalc();
-      const received =
-        p.price * p.quantitySoldAtOriginalPrice +
-        ((p.price * (100 - p.discount)) / 100) *
-          p.quantitySoldAtDiscountedPrice;
-      displayProblem.innerHTML = `
-      At a carnival, ${
-        p.originalPerc
-      }% of the ${itemName} were sold at the original price.</br>
-      ${
-        p.remainderPerc
-      }% of the remaining ${itemName} were sold at discount of ${
-        p.discount
-      }%.</br>
-      All ${leftOvers} leftovers were donated to charity.</br>
-      $${
-        received % 1 != 0 ? received.toFixed(2) : received
-      } was collected at the end of the carnival.</p>
-      `;
-      if (p.question == "A") {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `How much was collected from selling the ${itemName} that were sold at original price?`
-        );
-      }
-      if (p.question == "B") {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `How much was collected from selling the ${itemName} that were sold at discounted price?`
-        );
-      }
-    }
-    //AVERAGE: EXTERNAL CHANGE
-    if (setting == 22) {
-      normalDisplay();
-      if (p.changeQuantity == 0) return updateCalc();
-      p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
-      const oldTotal = p.oldQuantity * p.oldAverage;
-      // const newTotal = (p.oldQuantity + p.changeQuantity) * p.newAverage;
-      const newTotal = oldTotal + p.changeQuantity * p.average;
-      if (p.oldQuantity + p.changeQuantity == 0) return updateCalc();
-      const newAverage = newTotal / (p.oldQuantity + p.changeQuantity);
-
-      if (newAverage <= 0) return updateCalc();
-      if (newAverage % 1 != 0) {
-        if (newAverage.toString().split(".")[1] > 3) return updateCalc();
-      }
-
-      if (p.average == newAverage || p.oldAverage == newAverage) {
-        console.log("Same average");
-        return updateCalc();
-      }
-      displayProblem.innerHTML = `
-      A group's average at first was ${p.oldAverage}.</p>
-      After ${Math.abs(p.changeQuantity)} ${
-        p.changeQuantity == 1 ? "student" : "students "
-      } ${p.situation}, ${
-        p.changeQuantity == 1 ? "whose" : "their"
-      } average is ${p.average}.</p>
-      The average became ${newAverage}.</p>
-      How many students were there ${p.question}?
-      `;
-    }
-
-    //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 23) {
-      normalDisplay();
-      displayProblem.style.fontSize = "18px";
-      displayProblem.style.textAlign = "left";
-      // if 5 days.. Then find the total of 1 -- 4 which is 5 x 4 /2.
-      console.log(p.dayOne);
-      if (p.days % 2 == 0) p.days += 1;
-      p.chosen = genNumbers(p.days - 1) + 1;
-      const triangleNum = (p.days * (p.days - 1)) / 2;
-      p.total = p.dayOne * p.days + triangleNum * p.increase;
-      console.log(triangleNum);
-      if (p.chosen == Math.ceil(p.days / 2)) {
-        p.chosen += 1;
-      }
-      const gender = ["he", "she"][genNumbers(2)];
-      let obj = "aeroplane";
-      if (gender == "she") obj = "heart";
-      displayProblem.innerHTML = `
-      Someone made paper ${obj} for ${p.days} days.</p>
-      Everyday ${gender} would make ${p.increase} more than the previous day.</p>
-      A total of ${p.total} paper ${obj}s were made.</p>
-      How many ${obj}s were made on day ${p.chosen}?
-      `;
-    }
-    //RATIO: MANIPULATION OF UNITS WITH VALUE
-    if (setting == 24) {
-      normalDisplay();
-      const multi = genNumbers(50) + 50;
-      p.total = (p.unitA + p.unitB) * multi;
-      let unitSentence;
-      let valueSentence;
-      if (p.situation == "A") {
-        let tempA = p.unitA;
-        let tempSituationA = p.situationA;
-        [tempA, tempSituationA] = simplify(tempA, tempSituationA);
-        let changeUnit;
-        p.situationA < 0
-          ? (changeUnit = "decreased")
-          : (changeUnit = "increased");
-        unitSentence = `A ${changeUnit} by ${Math.abs(
-          tempSituationA
-        )}/${tempA}.`;
-        let changeValue;
-        p.valueB < 0
-          ? (changeValue = "decreased")
-          : (changeValue = "increased");
-        valueSentence = `B ${changeValue} by ${Math.abs(p.valueB)}.`;
-
-        const valueAEnd = multi * (p.unitA + p.situationA);
-        const valueBEnd = multi * p.unitB + p.valueB;
-        p.end = valueAEnd + valueBEnd;
-        //CHANGE UNIT INTO SIMPLIFIEST FORM.
-        // [p.unitA, p.situationA] = simplify(p.unitA, p.situationA);
-      }
-      if (p.situation == "B") {
-        let tempB = p.unitB;
-        let tempSituationB = p.situationB;
-        [tempB, tempSituationB] = simplify(tempB, tempSituationB);
-        let changeUnit;
-        p.situationB < 0
-          ? (changeUnit = "decreased")
-          : (changeUnit = "increased");
-        unitSentence = `B ${changeUnit} by ${Math.abs(
-          tempSituationB
-        )}/${tempB}.`;
-        let changeValue;
-        p.valueA < 0
-          ? (changeValue = "decreased")
-          : (changeValue = "increased");
-        valueSentence = `A ${changeValue} by ${Math.abs(p.valueA)}.`;
-
-        const valueBEnd = multi * (p.unitB + p.situationB);
-        const valueAEnd = multi * p.unitA + p.valueA;
-        p.end = valueAEnd + valueBEnd;
-        //CHANGE UNIT INTO SIMPLIFIEST FORM.
-        // [p.unitB, p.situationB] = simplify(p.unitB, p.situationB);
-      }
-      if (p.end <= 0) {
-        console.log("Negative end");
-        return updateCalc();
-      }
-      [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
-      displayProblem.innerHTML = `
-      A and B's ratios at first were ${p.unitA} : ${p.unitB}.</br>
-      ${unitSentence}</br>
-      ${valueSentence}</br>
-      The total in the end is ${p.end}.</br>
-      What was the total at first?
-      `;
-    }
-
-    // PATTERN: CONTINUOUS PATTERN (SETS)
-    if (setting == 25) {
-      normalDisplay();
-      p.second = p.first + p.secondDiff;
-      displayProblem.innerHTML = `
-      Solve for the pattern below:
-      <table class="table table-bordered tableEnd">
-        <thead>
-          <tr>
-            <th>Pattern</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tr>
-          <td>1</td>
-          <td>${p.start}</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>${p.start + p.first}</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>${p.start + p.first + p.second}</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>${p.start + p.first * 2 + p.second}</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>${p.start + p.first * 2 + p.second * 2}</td>
-        </tr>
-        <tr>
-           <td colspan="2">...</td> 
-        </tr>
-        </table>
-      `;
-
-      const sets = Math.floor((p.pattern - 1) / 2);
-      const remainder = (p.pattern - 1) % 2;
-      p.value = sets * (p.first + p.second);
-      p.value = p.value + p.start;
-      if (remainder == 1) p.value += p.first;
-      if (p.question == "pattern") {
-        document.querySelector(".tableEnd").insertAdjacentHTML(
-          "beforeend",
-          `
-        <tr>
-          <td>${p.pattern}</td>
-          <td>?</td>
-        </tr>`
-        );
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `What is the value for pattern ${p.pattern}?`
-        );
-      } else {
-        document.querySelector(".tableEnd").insertAdjacentHTML(
-          "beforeend",
-          `
-        <tr>
-          <td>?</td>
-          <td>${p.value}</td>
-        </tr>`
-        );
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `Which pattern gives a value of ${p.value}?`
-        );
-      }
-    }
-    // RATIO: UNIDENTICAL GROUP
-    if (setting == 26) {
-      normalDisplay();
-
-      [p.A1, p.A2] = simplify(p.A1, p.A2);
-      [p.B1, p.B2] = simplify(p.B1, p.B2);
-
-      p.totalA = [p.A1 + p.A2];
-      p.totalB = [p.B1 + p.B2];
-
-      while (
-        p.totalB[p.totalB.length - 1] * p.multiples !=
-        p.totalA[p.totalA.length - 1]
-      ) {
-        let lastA = p.totalA[p.totalA.length - 1];
-        let lastB = p.totalB[p.totalB.length - 1];
-        // console.log(lastA, lastB);
-        if (lastA / lastB < p.multiples) {
-          p.totalA.push(lastA + p.totalA[0]);
-        }
-        // if (lastB / p.multiples > lastA){
-        if (lastB * p.multiples < lastA) {
-          p.totalB.push(lastB + p.totalB[0]);
-        }
-
-        // }
-
-        if (lastA > 100 || lastB > 100) return updateCalc();
-      }
-      console.log(p.totalA, p.totalB);
-      let final;
-      if (p.question == "FM")
-        final = `What is the ratio of the females in group A and the males in group B?`;
-      if (p.question == "FF")
-        final = `What is the ratio of the females in group A and the female in group B?`;
-      if (p.question == "MF")
-        final = `What is the ratio of the males in group A and the females in group B?`;
-      if (p.question == "MM")
-        final = `What is the ratio of the males in group A and the males in group B?`;
-
-      let orderA;
-      const A = genNumbers(2);
-      if (A == 0) {
-        orderA = `The ratio of the male to female students in group A is ${p.A1} : ${p.A2}.</br>`;
-      }
-      if (A == 1) {
-        orderA = `The ratio of the female to male students in group A is ${p.A2} : ${p.A1}.</br>`;
-      }
-      let orderB;
-      const B = genNumbers(2);
-      if (B == 0) {
-        orderB = `The ratio of the male to female students in group B is ${p.B1} : ${p.B2}.</br>`;
-      }
-      if (B == 1) {
-        orderB = `The ratio of the female to male students in group B is ${p.B2} : ${p.B1}.</br>`;
-      }
-
-      displayProblem.innerHTML = `
-      Group A is ${p.multiples} times of group B.</br>
-      ${orderA}
-      ${orderB}
-      ${final}
-      `;
-      p.A1 = p.totalA.length * p.A1;
-      p.A2 = p.totalA.length * p.A2;
-      p.B1 = p.totalB.length * p.B1;
-      p.B2 = p.totalB.length * p.B2;
-    }
-    if (setting == 27) {
-      normalDisplay();
-
-      let large = Math.floor(p.quantity / p.largeTray);
-      let remainder = p.quantity % p.largeTray;
-      if (remainder == 0) return updateCalc();
-      while (remainder % p.smallTray != 0) {
-        large -= 1;
-        remainder += p.largeTray;
-        if (large <= 0) return updateCalc();
-      }
-      p.largeTrayQuantity = large;
-      p.smallTrayQuantity = remainder / p.smallTray;
-      displayProblem.innerHTML = `
-      There is a total of ${p.quantity} eggs.</br>
-      A large tray can hold ${p.largeTray} eggs while a small tray can hold ${p.smallTray} eggs.</p>
-      What is the least number of trays needed to hold all the eggs?
-      `;
-    }
-    // BOTTOM OF CALFIVEB
-  }
-
-  // DISPLAY
-  if (level == "calSix") {
-    if (setting == 2) {
-      calculatorSymbol.classList.add("hidden");
-    } else {
-      calculatorSymbol.classList.remove("hidden");
-    }
-
-    if (setting == 1) {
-      normalDisplay();
-      const person = ["John", "Emma", "Javen", "Vamika", "Matthias", "Isaac"][
-        genNumbers(6)
-      ];
-      [p.numerator, p.denominator] = simplify(p.numerator, p.denominator);
-      [p.numeratorTwo, p.denominatorTwo] = simplify(
-        p.numeratorTwo,
-        p.denominatorTwo
-      );
-      if (p.numeratorTwo == p.denominatorTwo) p.denominatorTwo += 1;
-
-      // WHOLE NUMBER
-      if (p.type == "whole") {
-        p.numerator = 0;
-        p.denominator = 0;
-        if ((p.whole * p.denominatorTwo) % p.numeratorTwo == 0) {
-          console.log("No remainders");
-          return updateCalc();
-        }
-
-        displayProblem.innerHTML = `
-        ${person} has ${p.whole} m of cloth at first.</p>
-        ${displaySimpleFraction(
-          p.numeratorTwo,
-          p.denominatorTwo
-        )} m is needed to make a shirt.</p>
-        The greatest number of shirts were made.</p>
-        `;
-      }
-
-      //SIMPLE FRACTIONS
-      else if (p.type == "simple fractions") {
-        p.whole = 0;
-        const setOne = p.numerator / p.denominator;
-        const setTwo = p.numeratorTwo / p.denominatorTwo;
-        if (setTwo >= setOne) {
-          console.log("Numbers are too small");
-          return updateCalc();
-        }
-        displayProblem.innerHTML = `
-        ${person} has ${displaySimpleFraction(
-          p.numerator,
-          p.denominator
-        )} m of cloth at first.</p>
-        ${displaySimpleFraction(
-          p.numeratorTwo,
-          p.denominatorTwo
-        )} m is needed to make a shirt.</p>
-        The greatest number of shirts were made.</p>
-        `;
-      }
-      // MIXED FRACTIONS
-      else {
-        const numeTotal = p.whole * p.denominator + p.numerator;
-        if (
-          (numeTotal * p.denominatorTwo) % (p.denominator * p.numeratorTwo) ==
-          0
-        ) {
-          return updateCalc();
-        }
-
-        displayProblem.innerHTML = `
-        ${person} has ${p.whole} ${displaySimpleFraction(
-          p.numerator,
-          p.denominator
-        )} m of cloth at first.</p>
-        ${displaySimpleFraction(
-          p.numeratorTwo,
-          p.denominatorTwo
-        )} m is needed to make a shirt.</p>
-        The greatest number of shirts were made.</p>
-        `;
-      }
-
-      if (p.question == "quotient") {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          "How many shirts were made?"
-        );
-      }
-      if (p.question == "remainder") {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          "How much cloth was left?"
-        );
-      }
-    }
-    // FRACTIONS: NUMERTOR OF A VALUE
-    if (setting == 2) {
-      [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
-      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
-      normalDisplay();
-      let item;
-      if (p.unit == "kg") {
-        item = "packet";
-      }
-      if (p.unit == "ℓ") {
-        item = "bottle";
-      }
-      displayProblem.innerHTML = `
-      <div class="frac">
-      <span>${p.numeA}</span>
-      <span class="symbol">/</span>
-      <span class="bottom">${p.denoA}</span>
-      </div>
-      of a ${item} is
-      <div class="frac">
-      <span>${p.numeB}</span>
-      <span class="symbol">/</span>
-      <span class="bottom">${p.denoB}</span>
-      </div> ${p.unit}.</br>
-      How many ${p.unit} are ${p.question} ${item}s?
-      `;
-    }
-
     // CIRCLES
-    if (setting == 3) {
+    if (setting == 14) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, 400, 275);
       drawingDisplay();
@@ -14618,7 +14374,7 @@ function updateProblems() {
       }
     }
     //CIRCLES: INNER SQUARE
-    if (setting == 4) {
+    if (setting == 15) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, 400, 275);
       drawingDisplay();
@@ -14668,7 +14424,7 @@ function updateProblems() {
       ctx.restore();
     }
 
-    if (setting == 5) {
+    if (setting == 16) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, 400, 275);
       drawingDisplay();
@@ -14913,7 +14669,7 @@ function updateProblems() {
       ctx.restore();
     }
     //SPEED: AVERAGE SPEED OF WHOLE JOURNEY
-    if (setting == 6) {
+    if (setting == 17) {
       normalDisplay();
       if (p.roll == "A") {
         displayProblem.innerHTML = `
@@ -14958,7 +14714,7 @@ function updateProblems() {
       );
     }
     // SPEED: MOVING APART
-    if (setting == 7) {
+    if (setting == 18) {
       normalDisplay();
       const position = genNumbers(3);
       p.distance = p.speedA * p.time + p.speedB * p.time;
@@ -15026,7 +14782,7 @@ function updateProblems() {
     }
 
     //SPEED: DIFFERENCE IN SPEED (MID)
-    if (setting == 8) {
+    if (setting == 19) {
       normalDisplay();
       const personA = boyNames[genNumbers(boyNames.length)];
       const personB = girlNames[genNumbers(girlNames.length)];
@@ -15108,7 +14864,7 @@ How far is apart is Town A and Town B?
     }
 
     // SPEED: SURROGATE
-    if (setting == 9) {
+    if (setting == 20) {
       normalDisplay();
       const personA = boyNames[genNumbers(boyNames.length)];
       const personB = girlNames[genNumbers(girlNames.length)];
@@ -15131,7 +14887,7 @@ How far is apart is Town A and Town B?
     }
 
     // PIECHART
-    if (setting == 10) {
+    if (setting == 21) {
       drawingDisplay();
       let types = ["fraction", "decimal", "ratio", "percentage", "angle"];
       const index = types.indexOf(p.choice);
@@ -15163,253 +14919,504 @@ How far is apart is Town A and Town B?
   // DISPLAY
   if (level == "calSixb") {
     calculatorSymbol.classList.remove("hidden");
-    //SPEED; SURROGATE: BEYOND
+    //RATIO: MANIPULATION OF UNITS WITH VALUE
     if (setting == 1) {
-      while (p.speedA < p.speedB || p.speedA == p.speedB) {
-        p.speedA = (genNumbers(5) + 1) * 5;
-        p.speedB = (genNumbers(5) + 1) * 5;
-      }
-      const diffSpeed = p.speedA - p.speedB;
+      normalDisplay();
+      const multi = genNumbers(50) + 50;
+      p.total = (p.unitA + p.unitB) * multi;
+      let unitSentence;
+      let valueSentence;
+      if (p.situation == "A") {
+        let tempA = p.unitA;
+        let tempSituationA = p.situationA;
+        [tempA, tempSituationA] = simplify(tempA, tempSituationA);
+        let changeUnit;
+        p.situationA < 0
+          ? (changeUnit = "decreased")
+          : (changeUnit = "increased");
+        unitSentence = `A ${changeUnit} by ${Math.abs(
+          tempSituationA
+        )}/${tempA}.`;
+        let changeValue;
+        p.valueB < 0
+          ? (changeValue = "decreased")
+          : (changeValue = "increased");
+        valueSentence = `B ${changeValue} by ${Math.abs(p.valueB)}.`;
 
+        const valueAEnd = multi * (p.unitA + p.situationA);
+        const valueBEnd = multi * p.unitB + p.valueB;
+        p.end = valueAEnd + valueBEnd;
+        //CHANGE UNIT INTO SIMPLIFIEST FORM.
+        // [p.unitA, p.situationA] = simplify(p.unitA, p.situationA);
+      }
+      if (p.situation == "B") {
+        let tempB = p.unitB;
+        let tempSituationB = p.situationB;
+        [tempB, tempSituationB] = simplify(tempB, tempSituationB);
+        let changeUnit;
+        p.situationB < 0
+          ? (changeUnit = "decreased")
+          : (changeUnit = "increased");
+        unitSentence = `B ${changeUnit} by ${Math.abs(
+          tempSituationB
+        )}/${tempB}.`;
+        let changeValue;
+        p.valueA < 0
+          ? (changeValue = "decreased")
+          : (changeValue = "increased");
+        valueSentence = `A ${changeValue} by ${Math.abs(p.valueA)}.`;
+
+        const valueBEnd = multi * (p.unitB + p.situationB);
+        const valueAEnd = multi * p.unitA + p.valueA;
+        p.end = valueAEnd + valueBEnd;
+        //CHANGE UNIT INTO SIMPLIFIEST FORM.
+        // [p.unitB, p.situationB] = simplify(p.unitB, p.situationB);
+      }
+      if (p.end <= 0) {
+        console.log("Negative end");
+        return updateCalc();
+      }
+      [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
       displayProblem.innerHTML = `
-  Person A runs at a speed of ${
-    p.speedA
-  } m/s and is also faster than person B by ${diffSpeed} m/s.</br>
-  By the time Person B completes ${displaySimpleFraction(
-    1,
-    p.denominator
-  )} of the race, person A would be ${p.diffPartDistance} m ahead.</br>
-  How long did person ${
-    p.duration == "A" ? "A" : "B"
-  } take to reach the finish line?</br>
-  <i>Round off your answer to 2 decimal place when needed.</i>
-  `;
+      A and B's ratios at first were ${p.unitA} : ${p.unitB}.</br>
+      ${unitSentence}</br>
+      ${valueSentence}</br>
+      The total in the end is ${p.end}.</br>
+      What was the total at first?
+      `;
     }
 
-    //SPEED: MEET UP
+    // RATIO: WIPE ON WIPE OFF
     if (setting == 2) {
-      p.distance = p.speedA * p.timeA + p.speedB * p.timeB;
-      // normal
-      if (p.roll == "A") {
-        while (p.distance % (p.speedA + p.speedB) != 0) {
-          p.distance += 1;
+      normalDisplay();
+      // displayProblem.innerHTML = `
+      // How many more dark squares have to be added for the ratio to be ???`;
+      displayProblem.innerHTML = ``;
+      let lengthArr = [];
+      let shaded = 0;
+      let unshaded = 0;
+      for (let x = 0; x < p.breadth; x++) {
+        for (let i = 0; i < p.length; i++) {
+          let generate = ["shaded", "unshaded"][genNumbers(2)];
+          if (generate == "shaded") {
+            lengthArr.push("◼️");
+            shaded += 1;
+          }
+          if (generate == "unshaded") {
+            lengthArr.push("◻️");
+            unshaded += 1;
+          }
         }
-        displayProblem.innerHTML = `
-        The distance between A and B is ${p.distance} units. </p>
-        A moves towards B at ${p.speedA} units/sec. </p>
-        B moves towards A at ${p.speedB} units/sec.  </p>
-        How long did it take both to meet?
-  
-        `;
-      }
-      if (p.roll == "B") {
-        // Natural
-        let remainingDistance = p.distance - p.timeA * p.speedA;
-        while (remainingDistance % (p.speedA + p.speedB) != 0) {
-          p.distance += 1;
-          remainingDistance = p.distance - p.timeA * p.speedA;
-        }
-        displayProblem.innerHTML = `
-        The distance between A and B is ${p.distance} units. </p>
-        A travels towards B for ${p.speedA * p.timeA} units at ${
-          p.speedA
-        } units/sec first. </p>
-        B <u>then</u> sets off towards A at ${p.speedB} units/sec.  </p>
-        How long did it take both to meet from the start?
-  
-        `;
-      }
-      if (p.roll == "C") {
-        // Head Start
-        let remainingDistance = p.distance - p.timeA * p.speedA;
-        while (remainingDistance % (p.speedA + p.speedB) != 0) {
-          p.distance += 1;
-          remainingDistance = p.distance - p.timeA * p.speedA;
-        }
-        displayProblem.innerHTML = `
-        The distance between A and B is ${p.distance} units. </p>
-        A sets off first towards B at ${p.speedA} units/sec for ${p.timeA}secs. </p>
-        B <u>then</u> sets off towards A at ${p.speedB} units/sec.  </p>
-        How long did it take both to meet from the start?
-  
-        `;
-      }
-      if (p.roll == "D") {
-        // Finding Distance
 
-        displayProblem.innerHTML = `
-         A and B are moving towards each other at the same time. </p>
-         A moves towards B at ${p.speedA} units/sec. </p>
-         B moves towards A at ${p.speedB} units/sec.  </p>
-        It took ${p.timeA + p.timeB} secs to meet up.</p>
-        How far apart are they?
-  
-        `;
-      }
-    }
-    //SPEED: CATCH UP
-    if (setting == 3) {
-      if (p.speedA == p.speedB) p.speedB += 1;
-      p.gap = genNumbers(20) + 10;
-      p.diffSpeed = p.speedB - p.speedA;
-      if (p.roll == "A") {
-        while (p.gap % p.diffSpeed != 0) {
-          console.log(`Gap +1, ${p.speedA}, ${p.speedB}`);
-          p.gap += 1;
-        }
-        displayProblem.innerHTML = `
-        A is ${p.gap} units ahead of B.</p>
-        A travels at a speed of ${p.speedA} units/s.</p>
-        B travels at a speed of ${p.speedB} units/s.</p>
-        How long does it take B to catch up to A?</p>
-        
-        `;
-      }
-
-      if (p.roll == "B") {
-        p.gap = p.timeA * p.speedA;
-        while (p.gap % p.diffSpeed != 0) {
-          p.timeA += 1;
-          p.gap = p.timeA * p.speedA;
-        }
-        displayProblem.innerHTML = `
-        A and B started from the same place and were headed in the same direction.</p>
-        A left ${p.timeA} mins earlier travelling at ${p.speedA} units/min.</p>
-        B then left and travelled at ${p.speedB} units/min.</p>
-        How long did it take B to catch up to A?</p>
-        `;
-      }
-
-      //NATURAL GAP
-      if (p.roll == "C") {
-        let catchUp = p.gap / (p.speedB - p.speedA);
-        while (catchUp % p.diffSpeed != 0) {
-          p.gap += 1;
-          catchUp = p.gap / (p.speedB - p.speedA);
-        }
-        displayProblem.innerHTML = `
-        A left earlier than B.</p>
-        A moves at ${p.speedA} units/min.</p>
-        B moves at ${p.speedB} units/min.</p>
-        B took ${catchUp} mins to catch up.</p>
-        How far ahead was A before B set off?
-        
-        `;
-      }
-      if (p.roll == "D") {
-        while (p.gap % p.diffSpeed != 0) p.gap += 1;
-        const catchUp = p.gap / p.diffSpeed;
-        displayProblem.innerHTML = `
-        A was ${p.gap} units ahead of B.</p>
-        A moves at ${p.speedA} units/min.</p>
-        B took ${catchUp} mins to catch up to A.</p>
-        What was B's speed?</p>
-        `;
-      }
-      if (p.roll == "E") {
-        while (p.gap % p.diffSpeed != 0) p.gap += 1;
-        const catchUp = p.gap / p.diffSpeed;
-        displayProblem.innerHTML = `
-        A was ${p.gap} units ahead of B.</p>
-        B moves at ${p.speedB} units/min.</p>
-        B took ${catchUp} mins to catch up to A.</p>
-        What was A's speed?</p>
-        `;
-      }
-    }
-
-    // DOUBLE TRIANGLE
-    if (setting == 4) {
-      if (p.type == "normalSpeedToTime") {
-        if (p.speedA == p.speedB) {
-          p.speedB += 10;
-        }
-        [p.timeA, p.timeB] = simplify(p.speedB, p.speedA);
-        p.differenceTime =
-          Math.abs(p.timeA - p.timeB) * ((genNumbers(12 - 1) + 1) * 5);
-        console.log(`A: ${p.speedA}, ${p.timeA}`);
-        console.log(`B: ${p.speedB}, ${p.timeB}`);
-        displayProblem.innerHTML = `
-        Car A and Car B started at the same Town travelling to Town Z.</p>
-        Car A travels at ${p.speedA} km/h.</p>
-        Car B travels at ${p.speedB} km/h.</p>
-        `;
-        if (p.speedA > p.speedB) {
-          displayProblem.insertAdjacentHTML(
-            "beforeend",
-            `Car A reached town Z ${p.differenceTime} mins earlier than Car B.</p>`
-          );
-        } else {
-          displayProblem.insertAdjacentHTML(
-            "beforeend",
-            `Car B reached town Z ${p.differenceTime} mins earlier than Car A.</p>`
-          );
-        }
         displayProblem.insertAdjacentHTML(
           "beforeend",
-          "What is the distance between the 2 towns?"
+          `<p class="center">${lengthArr.join(" ")}`
+        );
+        lengthArr = [];
+      }
+      let difference = "added";
+      if (p.version == "difference") {
+        if (shaded == unshaded) return updateCalc();
+        console.log("Shaded: " + shaded, "Unshaded: " + unshaded);
+        p.shaded = shaded;
+        p.unshaded = unshaded;
+      }
+
+      //UNCHANGED TOTAL
+      if (p.version == "total") {
+        p.change = Math.abs(p.change);
+      }
+      if (p.change == 0) {
+        p.change = [-1, 1][genNumbers(2)] * (genNumbers(8) + 1);
+      }
+      if (p.change < 0) {
+        difference = "removed";
+      }
+      let shadedEnd = (shaded += p.change);
+
+      let unshadedEnd = unshaded;
+      if (p.version == "total") {
+        unshadedEnd = unshaded += p.change * -1;
+      }
+
+      if (p.version == "difference") {
+        if (p.change == 0) {
+          p.change = [-1, 1][genNumbers(2)] * (genNumbers(8) + 1);
+        }
+        shadedEnd = shaded += p.change;
+        unshadedEnd = unshaded += p.change;
+        if (
+          Math.abs(p.shaded - p.unshaded) % Math.abs(shadedEnd - unshadedEnd) !=
+          0
+        )
+          return updateCalc();
+        if (shadedEnd == unshadedEnd || shadedEnd <= 0 || unshaded <= 0) {
+          return updateCalc();
+        }
+      }
+
+      [shadedEnd, unshadedEnd] = simplify(shadedEnd, unshadedEnd);
+      if (unshadedEnd == unshaded) {
+        console.log("No change in ratio for unshaded");
+        return updateCalc();
+      }
+      //UNCHANGED DIFFERENCE
+      if (p.version == "difference") {
+        displayProblem.insertAdjacentHTML(
+          "afterbegin",
+          `An equal number of white and black squares have been ${difference} for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?</br>How many black squares were ${difference}?`
         );
       }
-      if (p.type == "normalTimeToSpeed") {
-        // console.log(p.speedA, p.speedB);
-        if (p.timeA == p.timeB) {
-          p.timeB += 10;
-        }
-        [p.speedA, p.speedB] = simplify(p.timeB, p.timeA);
-        p.differenceSpeed =
-          Math.abs(p.speedA - p.speedB) * ((genNumbers(5) + 1) * 5);
-        console.log(`A: ${p.speedA}, ${p.timeA}`);
-        console.log(`B: ${p.speedB}, ${p.timeB}`);
-        displayProblem.innerHTML = `
-        Car A and Car B started at the same Town travelling to Town Z.</p>
-        Car A took ${p.timeA} mins.</p>
-        Car B took ${p.timeB} mins.</p>
-        `;
-        if (p.speedA > p.speedB) {
-          displayProblem.insertAdjacentHTML(
-            "beforeend",
-            `Car A drove at ${p.differenceSpeed} km/h faster than Car B.</p>`
-          );
-        } else {
-          displayProblem.insertAdjacentHTML(
-            "beforeend",
-            `Car B drove at ${p.differenceSpeed} km/h faster than Car A.</p>`
-          );
-        }
-        let html = undefined;
-        if (p.question == 1) {
-          html = "What is the distance between the 2 towns?";
-        }
-        if (p.question == 2) {
-          html = "What is Car A's speed?";
-        }
-        if (p.question == 3) {
-          html = "What is Car B's speed?";
-        }
-        displayProblem.insertAdjacentHTML("beforeend", html);
+      //UNCHANGED OBJ
+      if (p.version == "object") {
+        displayProblem.insertAdjacentHTML(
+          "afterbegin",
+          `How many black squares have to be ${difference} for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?`
+        );
       }
-      if (p.type == "meet up") {
-        // console.log(p.speedA, p.speedB);
-        if (p.timeA == p.timeB) {
-          p.timeB += 10;
-        }
-        [p.speedA, p.speedB] = simplify(p.timeB, p.timeA);
-        p.differenceSpeed =
-          Math.abs(p.speedA - p.speedB) * ((genNumbers(5) + 1) * 5);
-        console.log(`A: ${p.speedA}, ${p.timeA}`);
-        console.log(`B: ${p.speedB}, ${p.timeB}`);
-        displayProblem.innerHTML = `
-        Car A and Car B started at different Towns and moved towards each other.</p>
-        Car A would take ${p.timeA} mins to reach the other Town.</p>
-        Car B would take ${p.timeB} mins to reach the other Town.</p>
-        How long did it take both Cars to meet?
-        `;
+      //UNCHANGED TOTAL
+      if (p.version == "total") {
+        displayProblem.insertAdjacentHTML(
+          "afterbegin",
+          `How many white squares have to be replaced with black squares for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?`
+        );
       }
-      displayProblem.insertAdjacentHTML(
-        "beforeend",
-        "<p><i>Leave your answer in fraction if needed.</i></p>"
-      );
     }
+    // RATIO: UNIDENTICAL GROUP
+    if (setting == 3) {
+      normalDisplay();
+
+      [p.A1, p.A2] = simplify(p.A1, p.A2);
+      [p.B1, p.B2] = simplify(p.B1, p.B2);
+
+      p.totalA = [p.A1 + p.A2];
+      p.totalB = [p.B1 + p.B2];
+
+      while (
+        p.totalB[p.totalB.length - 1] * p.multiples !=
+        p.totalA[p.totalA.length - 1]
+      ) {
+        let lastA = p.totalA[p.totalA.length - 1];
+        let lastB = p.totalB[p.totalB.length - 1];
+        // console.log(lastA, lastB);
+        if (lastA / lastB < p.multiples) {
+          p.totalA.push(lastA + p.totalA[0]);
+        }
+        // if (lastB / p.multiples > lastA){
+        if (lastB * p.multiples < lastA) {
+          p.totalB.push(lastB + p.totalB[0]);
+        }
+
+        // }
+
+        if (lastA > 100 || lastB > 100) return updateCalc();
+      }
+      console.log(p.totalA, p.totalB);
+      let final;
+      if (p.question == "FM")
+        final = `What is the ratio of the females in group A and the males in group B?`;
+      if (p.question == "FF")
+        final = `What is the ratio of the females in group A and the female in group B?`;
+      if (p.question == "MF")
+        final = `What is the ratio of the males in group A and the females in group B?`;
+      if (p.question == "MM")
+        final = `What is the ratio of the males in group A and the males in group B?`;
+
+      let orderA;
+      const A = genNumbers(2);
+      if (A == 0) {
+        orderA = `The ratio of the male to female students in group A is ${p.A1} : ${p.A2}.</br>`;
+      }
+      if (A == 1) {
+        orderA = `The ratio of the female to male students in group A is ${p.A2} : ${p.A1}.</br>`;
+      }
+      let orderB;
+      const B = genNumbers(2);
+      if (B == 0) {
+        orderB = `The ratio of the male to female students in group B is ${p.B1} : ${p.B2}.</br>`;
+      }
+      if (B == 1) {
+        orderB = `The ratio of the female to male students in group B is ${p.B2} : ${p.B1}.</br>`;
+      }
+
+      displayProblem.innerHTML = `
+      Group A is ${p.multiples} times of group B.</br>
+      ${orderA}
+      ${orderB}
+      ${final}
+      `;
+      p.A1 = p.totalA.length * p.A1;
+      p.A2 = p.totalA.length * p.A2;
+      p.B1 = p.totalB.length * p.B1;
+      p.B2 = p.totalB.length * p.B2;
+    }
+    if (setting == 4) {
+      normalDisplay();
+
+      let large = Math.floor(p.quantity / p.largeTray);
+      let remainder = p.quantity % p.largeTray;
+      if (remainder == 0) return updateCalc();
+      while (remainder % p.smallTray != 0) {
+        large -= 1;
+        remainder += p.largeTray;
+        if (large <= 0) return updateCalc();
+      }
+      p.largeTrayQuantity = large;
+      p.smallTrayQuantity = remainder / p.smallTray;
+      displayProblem.innerHTML = `
+      There is a total of ${p.quantity} eggs.</br>
+      A large tray can hold ${p.largeTray} eggs while a small tray can hold ${p.smallTray} eggs.</p>
+      What is the least number of trays needed to hold all the eggs?
+      `;
+    }
+
+    //   //SPEED; SURROGATE: BEYOND
+    //   if (setting == 1) {
+    //     while (p.speedA < p.speedB || p.speedA == p.speedB) {
+    //       p.speedA = (genNumbers(5) + 1) * 5;
+    //       p.speedB = (genNumbers(5) + 1) * 5;
+    //     }
+    //     const diffSpeed = p.speedA - p.speedB;
+
+    //     displayProblem.innerHTML = `
+    // Person A runs at a speed of ${
+    //   p.speedA
+    // } m/s and is also faster than person B by ${diffSpeed} m/s.</br>
+    // By the time Person B completes ${displaySimpleFraction(
+    //   1,
+    //   p.denominator
+    // )} of the race, person A would be ${p.diffPartDistance} m ahead.</br>
+    // How long did person ${
+    //   p.duration == "A" ? "A" : "B"
+    // } take to reach the finish line?</br>
+    // <i>Round off your answer to 2 decimal place when needed.</i>
+    // `;
+    //   }
+
+    //   //SPEED: MEET UP
+    //   if (setting == 2) {
+    //     p.distance = p.speedA * p.timeA + p.speedB * p.timeB;
+    //     // normal
+    //     if (p.roll == "A") {
+    //       while (p.distance % (p.speedA + p.speedB) != 0) {
+    //         p.distance += 1;
+    //       }
+    //       displayProblem.innerHTML = `
+    //       The distance between A and B is ${p.distance} units. </p>
+    //       A moves towards B at ${p.speedA} units/sec. </p>
+    //       B moves towards A at ${p.speedB} units/sec.  </p>
+    //       How long did it take both to meet?
+
+    //       `;
+    //     }
+    //     if (p.roll == "B") {
+    //       // Natural
+    //       let remainingDistance = p.distance - p.timeA * p.speedA;
+    //       while (remainingDistance % (p.speedA + p.speedB) != 0) {
+    //         p.distance += 1;
+    //         remainingDistance = p.distance - p.timeA * p.speedA;
+    //       }
+    //       displayProblem.innerHTML = `
+    //       The distance between A and B is ${p.distance} units. </p>
+    //       A travels towards B for ${p.speedA * p.timeA} units at ${
+    //         p.speedA
+    //       } units/sec first. </p>
+    //       B <u>then</u> sets off towards A at ${p.speedB} units/sec.  </p>
+    //       How long did it take both to meet from the start?
+
+    //       `;
+    //     }
+    //     if (p.roll == "C") {
+    //       // Head Start
+    //       let remainingDistance = p.distance - p.timeA * p.speedA;
+    //       while (remainingDistance % (p.speedA + p.speedB) != 0) {
+    //         p.distance += 1;
+    //         remainingDistance = p.distance - p.timeA * p.speedA;
+    //       }
+    //       displayProblem.innerHTML = `
+    //       The distance between A and B is ${p.distance} units. </p>
+    //       A sets off first towards B at ${p.speedA} units/sec for ${p.timeA}secs. </p>
+    //       B <u>then</u> sets off towards A at ${p.speedB} units/sec.  </p>
+    //       How long did it take both to meet from the start?
+
+    //       `;
+    //     }
+    //     if (p.roll == "D") {
+    //       // Finding Distance
+
+    //       displayProblem.innerHTML = `
+    //        A and B are moving towards each other at the same time. </p>
+    //        A moves towards B at ${p.speedA} units/sec. </p>
+    //        B moves towards A at ${p.speedB} units/sec.  </p>
+    //       It took ${p.timeA + p.timeB} secs to meet up.</p>
+    //       How far apart are they?
+
+    //       `;
+    //     }
+    //   }
+    //   //SPEED: CATCH UP
+    //   if (setting == 3) {
+    //     if (p.speedA == p.speedB) p.speedB += 1;
+    //     p.gap = genNumbers(20) + 10;
+    //     p.diffSpeed = p.speedB - p.speedA;
+    //     if (p.roll == "A") {
+    //       while (p.gap % p.diffSpeed != 0) {
+    //         console.log(`Gap +1, ${p.speedA}, ${p.speedB}`);
+    //         p.gap += 1;
+    //       }
+    //       displayProblem.innerHTML = `
+    //       A is ${p.gap} units ahead of B.</p>
+    //       A travels at a speed of ${p.speedA} units/s.</p>
+    //       B travels at a speed of ${p.speedB} units/s.</p>
+    //       How long does it take B to catch up to A?</p>
+
+    //       `;
+    //     }
+
+    //     if (p.roll == "B") {
+    //       p.gap = p.timeA * p.speedA;
+    //       while (p.gap % p.diffSpeed != 0) {
+    //         p.timeA += 1;
+    //         p.gap = p.timeA * p.speedA;
+    //       }
+    //       displayProblem.innerHTML = `
+    //       A and B started from the same place and were headed in the same direction.</p>
+    //       A left ${p.timeA} mins earlier travelling at ${p.speedA} units/min.</p>
+    //       B then left and travelled at ${p.speedB} units/min.</p>
+    //       How long did it take B to catch up to A?</p>
+    //       `;
+    //     }
+
+    //     //NATURAL GAP
+    //     if (p.roll == "C") {
+    //       let catchUp = p.gap / (p.speedB - p.speedA);
+    //       while (catchUp % p.diffSpeed != 0) {
+    //         p.gap += 1;
+    //         catchUp = p.gap / (p.speedB - p.speedA);
+    //       }
+    //       displayProblem.innerHTML = `
+    //       A left earlier than B.</p>
+    //       A moves at ${p.speedA} units/min.</p>
+    //       B moves at ${p.speedB} units/min.</p>
+    //       B took ${catchUp} mins to catch up.</p>
+    //       How far ahead was A before B set off?
+
+    //       `;
+    //     }
+    //     if (p.roll == "D") {
+    //       while (p.gap % p.diffSpeed != 0) p.gap += 1;
+    //       const catchUp = p.gap / p.diffSpeed;
+    //       displayProblem.innerHTML = `
+    //       A was ${p.gap} units ahead of B.</p>
+    //       A moves at ${p.speedA} units/min.</p>
+    //       B took ${catchUp} mins to catch up to A.</p>
+    //       What was B's speed?</p>
+    //       `;
+    //     }
+    //     if (p.roll == "E") {
+    //       while (p.gap % p.diffSpeed != 0) p.gap += 1;
+    //       const catchUp = p.gap / p.diffSpeed;
+    //       displayProblem.innerHTML = `
+    //       A was ${p.gap} units ahead of B.</p>
+    //       B moves at ${p.speedB} units/min.</p>
+    //       B took ${catchUp} mins to catch up to A.</p>
+    //       What was A's speed?</p>
+    //       `;
+    //     }
+    //   }
+
+    //   // DOUBLE TRIANGLE
+    //   if (setting == 4) {
+    //     if (p.type == "normalSpeedToTime") {
+    //       if (p.speedA == p.speedB) {
+    //         p.speedB += 10;
+    //       }
+    //       [p.timeA, p.timeB] = simplify(p.speedB, p.speedA);
+    //       p.differenceTime =
+    //         Math.abs(p.timeA - p.timeB) * ((genNumbers(12 - 1) + 1) * 5);
+    //       console.log(`A: ${p.speedA}, ${p.timeA}`);
+    //       console.log(`B: ${p.speedB}, ${p.timeB}`);
+    //       displayProblem.innerHTML = `
+    //       Car A and Car B started at the same Town travelling to Town Z.</p>
+    //       Car A travels at ${p.speedA} km/h.</p>
+    //       Car B travels at ${p.speedB} km/h.</p>
+    //       `;
+    //       if (p.speedA > p.speedB) {
+    //         displayProblem.insertAdjacentHTML(
+    //           "beforeend",
+    //           `Car A reached town Z ${p.differenceTime} mins earlier than Car B.</p>`
+    //         );
+    //       } else {
+    //         displayProblem.insertAdjacentHTML(
+    //           "beforeend",
+    //           `Car B reached town Z ${p.differenceTime} mins earlier than Car A.</p>`
+    //         );
+    //       }
+    //       displayProblem.insertAdjacentHTML(
+    //         "beforeend",
+    //         "What is the distance between the 2 towns?"
+    //       );
+    //     }
+    //     if (p.type == "normalTimeToSpeed") {
+    //       // console.log(p.speedA, p.speedB);
+    //       if (p.timeA == p.timeB) {
+    //         p.timeB += 10;
+    //       }
+    //       [p.speedA, p.speedB] = simplify(p.timeB, p.timeA);
+    //       p.differenceSpeed =
+    //         Math.abs(p.speedA - p.speedB) * ((genNumbers(5) + 1) * 5);
+    //       console.log(`A: ${p.speedA}, ${p.timeA}`);
+    //       console.log(`B: ${p.speedB}, ${p.timeB}`);
+    //       displayProblem.innerHTML = `
+    //       Car A and Car B started at the same Town travelling to Town Z.</p>
+    //       Car A took ${p.timeA} mins.</p>
+    //       Car B took ${p.timeB} mins.</p>
+    //       `;
+    //       if (p.speedA > p.speedB) {
+    //         displayProblem.insertAdjacentHTML(
+    //           "beforeend",
+    //           `Car A drove at ${p.differenceSpeed} km/h faster than Car B.</p>`
+    //         );
+    //       } else {
+    //         displayProblem.insertAdjacentHTML(
+    //           "beforeend",
+    //           `Car B drove at ${p.differenceSpeed} km/h faster than Car A.</p>`
+    //         );
+    //       }
+    //       let html = undefined;
+    //       if (p.question == 1) {
+    //         html = "What is the distance between the 2 towns?";
+    //       }
+    //       if (p.question == 2) {
+    //         html = "What is Car A's speed?";
+    //       }
+    //       if (p.question == 3) {
+    //         html = "What is Car B's speed?";
+    //       }
+    //       displayProblem.insertAdjacentHTML("beforeend", html);
+    //     }
+    //     if (p.type == "meet up") {
+    //       // console.log(p.speedA, p.speedB);
+    //       if (p.timeA == p.timeB) {
+    //         p.timeB += 10;
+    //       }
+    //       [p.speedA, p.speedB] = simplify(p.timeB, p.timeA);
+    //       p.differenceSpeed =
+    //         Math.abs(p.speedA - p.speedB) * ((genNumbers(5) + 1) * 5);
+    //       console.log(`A: ${p.speedA}, ${p.timeA}`);
+    //       console.log(`B: ${p.speedB}, ${p.timeB}`);
+    //       displayProblem.innerHTML = `
+    //       Car A and Car B started at different Towns and moved towards each other.</p>
+    //       Car A would take ${p.timeA} mins to reach the other Town.</p>
+    //       Car B would take ${p.timeB} mins to reach the other Town.</p>
+    //       How long did it take both Cars to meet?
+    //       `;
+    //     }
+    //     displayProblem.insertAdjacentHTML(
+    //       "beforeend",
+    //       "<p><i>Leave your answer in fraction if needed.</i></p>"
+    //     );
+    //   }
     // VOLUME: GROUPING
     if (setting == 5) {
       [p.finalHeightUnitA, p.finalHeightUnitB] = simplify(
@@ -23403,76 +23410,57 @@ function handleSubmit(e) {
         }
       }
 
-      //RATIO: SIMPLIFICATION AND EXPANSION
       if (setting == 13) {
+        const array = [
+          p.numeZero / p.denoZero,
+          p.numeOne / p.denoOne,
+          p.numeTwo / p.denoTwo,
+          p.numeThree / p.denoThree,
+        ];
+        const newArray = array.map((item) =>
+          Math.abs(item - p.numeComp / p.denoComp)
+        );
+        let sortedArray = [...newArray];
+        sortedArray.sort(function (a, b) {
+          return a - b;
+        });
+        console.log(newArray);
+        console.log(sortedArray);
+        if (p.choice == "closest") {
+          correctAnswer = newArray.indexOf(sortedArray[0]) + 1;
+        }
+        if (p.choice == "furthest") {
+          correctAnswer = newArray.indexOf(sortedArray[3]) + 1;
+        }
+      }
+
+      // FRACTIONS: REMAINDER CONCEPT: BEFORE AND AFTER
+      if (setting == 14) {
+        correctAnswer = p.atFirstUnits * p.oneUnit;
+      }
+      // FRACTIONS: REMAINDER CONCEPT: UNDER THE SAME UNIT
+      if (setting == 15) {
+        if (p.chosen == "A")
+          correctAnswer = p.quantityA + Math.floor(p.extraBought);
+        if (p.chosen == "B")
+          correctAnswer = p.quantityB + Math.floor(p.extraBought);
+      }
+      //FRACTIONS: OVERLAPPING MODEL
+      if (setting == 16) {
+        if (p.question == "A") correctAnswer = p.oneUnit * p.numeA;
+        if (p.question == "B")
+          correctAnswer = p.oneUnit * p.numeA + p.difference;
+        if (p.question == "total") correctAnswer = p.oneUnit * p.denoA;
+      }
+
+      if (setting == 17) {
         correctAnswer = p.answer;
       }
 
-      //RATIO: POSSIBLE
-      if (setting == 14) {
-        console.log(p.chosen);
-        correctAnswer = p.chosen + 1;
-      }
-
-      //RATIO: SHAPES
-      if (setting == 15) {
-        let shaded = p.shaded;
-        let unshaded = p.total - shaded;
-        [shaded, unshaded] = simplify(shaded, unshaded);
-        if (p.secondVar == "unshaded") correctAnswer = `${shaded}:${unshaded}`;
-        if (p.secondVar == "total")
-          correctAnswer = `${shaded}:${shaded + unshaded}`;
-
-        // }
-      }
-      // RATIO: REPEATED IDENTITY
-      if (setting == 16) {
-        calArrQns = simplestForm(calArrQns);
-        correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
-      }
-
-      // RATIO: IDENTICAL TOTAL
-      if (setting == 17) {
-        let totalA = p.ratioA + p.ratioB;
-        let totalB = p.ratioC + p.ratioD;
-        const commonTotal = commonDeno(totalA, totalB);
-        const multiOne = commonTotal / totalA;
-        const multiTwo = commonTotal / totalB;
-        let newA = p.ratioA * multiOne;
-        let newB = p.ratioB * multiOne;
-        let newC = p.ratioC * multiTwo;
-        let newD = p.ratioD * multiTwo;
-
-        if (p.question == 1) {
-          let newTotalA = newA + newC;
-          let newTotalB = newB + newD;
-          [newTotalA, newTotalB] = simplify(newTotalA, newTotalB);
-          correctAnswer = `${newTotalA}:${newTotalB}`;
-        }
-        if (p.question == 2) {
-          [newA, newC] = simplify(newA, newC);
-          correctAnswer = `${newA}:${newC}`;
-        }
-        if (p.question == 3) {
-          [newB, newD] = simplify(newB, newD);
-          correctAnswer = `${newB}:${newD}`;
-        }
-      }
-
-      //RATIO: WIPE ON WIPE OFF
+      // PATTERN: CONTINUOUS PATTERN (SETS)
       if (setting == 18) {
-        correctAnswer = Math.abs(p.change);
-        if (p.version == "difference") {
-          const differenceAtFirst = Math.abs(p.shaded - p.unshaded);
-          let shadedEnd = (p.shaded += p.change);
-          let unshadedEnd = (p.unshaded += p.change);
-          [shadedEnd, unshadedEnd] = simplify(shadedEnd, unshadedEnd);
-          const differenceEnd = Math.abs(shadedEnd - unshadedEnd);
-          const commonNum = commonDeno(differenceAtFirst, differenceEnd);
-          correctAnswer =
-            (commonNum / differenceAtFirst) * p.shaded -
-            (commonNum / differenceEnd) * shadedEnd;
-        }
+        if (p.question == "pattern") correctAnswer = p.value;
+        if (p.question == "number") correctAnswer = p.pattern;
       }
 
       if (setting == 19) {
@@ -23618,56 +23606,11 @@ function handleSubmit(e) {
     }
 
     //ANSWERS
+    //ANSWERS
+    //ANSWERS
     if (level == "calFiveb") {
-      if (setting == 1) {
-        const array = [
-          p.numeZero / p.denoZero,
-          p.numeOne / p.denoOne,
-          p.numeTwo / p.denoTwo,
-          p.numeThree / p.denoThree,
-        ];
-        const newArray = array.map((item) =>
-          Math.abs(item - p.numeComp / p.denoComp)
-        );
-        let sortedArray = [...newArray];
-        sortedArray.sort(function (a, b) {
-          return a - b;
-        });
-        console.log(newArray);
-        console.log(sortedArray);
-        if (p.choice == "closest") {
-          correctAnswer = newArray.indexOf(sortedArray[0]) + 1;
-        }
-        if (p.choice == "furthest") {
-          correctAnswer = newArray.indexOf(sortedArray[3]) + 1;
-        }
-      }
-
-      // FRACTIONS: REMAINDER CONCEPT: BEFORE AND AFTER
-      if (setting == 2) {
-        correctAnswer = p.atFirstUnits * p.oneUnit;
-      }
-      // FRACTIONS: REMAINDER CONCEPT: UNDER THE SAME UNIT
-      if (setting == 3) {
-        if (p.chosen == "A")
-          correctAnswer = p.quantityA + Math.floor(p.extraBought);
-        if (p.chosen == "B")
-          correctAnswer = p.quantityB + Math.floor(p.extraBought);
-      }
-      //FRACTIONS: OVERLAPPING MODEL
-      if (setting == 4) {
-        if (p.question == "A") correctAnswer = p.oneUnit * p.numeA;
-        if (p.question == "B")
-          correctAnswer = p.oneUnit * p.numeA + p.difference;
-        if (p.question == "total") correctAnswer = p.oneUnit * p.denoA;
-      }
-
-      if (setting == 5) {
-        correctAnswer = p.answer;
-      }
-
       // AREA OF OBTUSE TRIANGLE
-      if (setting == 6) {
+      if (setting == 1) {
         if (p.chosenHeight == "A") correctAnswer = (1 / 2) * p.base * p.height;
         if (p.chosenHeight == "B")
           correctAnswer = (1 / 2) * p.lengthAB * p.lengthSecondH;
@@ -23675,17 +23618,17 @@ function handleSubmit(e) {
           correctAnswer = (1 / 2) * p.lengthBC * p.lengthThirdH;
       }
       //GEOMETRY: AREA OF FIGURE: CUTTING
-      if (setting == 7) {
+      if (setting == 2) {
         const baseA = p.valueA - p.valueB - p.adjust;
         const triangleA = (1 / 2) * baseA * p.valueA;
         const triangleB = (1 / 2) * p.valueB * (p.valueB + p.adjust);
         correctAnswer = triangleA + triangleB;
       }
       //GEOMETRY: MANIPULATION OF DIMENSION
-      if (setting == 8) {
+      if (setting == 3) {
         correctAnswer = (1 / 2) * p.length * p.breadth;
       }
-      if (setting == 9) {
+      if (setting == 4) {
         // if (p.label == 1) {
         const half = (1 / 2) * p.length * p.breadth;
         if (p.givenLabel == "A") correctAnswer = half - p.areaA;
@@ -23695,7 +23638,7 @@ function handleSubmit(e) {
         // }
       }
       // AREA OF FIGURE: DOUBLE UNITS
-      if (setting == 10) {
+      if (setting == 5) {
         let pointDF = p.firstTriangleBase;
         let pointCF = p.length - p.firstTriangleBase;
         [pointDF, pointCF] = simplify(pointDF, pointCF);
@@ -23719,50 +23662,8 @@ function handleSubmit(e) {
         [shaded, area] = simplify(shaded, area);
         correctAnswer = `${shaded}/${area}`;
       }
-      // RATIO: REPEATED GROUP
-      if (setting == 11) {
-        p.answer = simplestForm(p.answer);
-        console.log(p.answer);
-        // if (p.firstScene == "total" && p.secondScene == "total") {
-        correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
-        // }
-      }
-      // RATIO: UNCHANGED OBJ
-      if (setting == 12) {
-        console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
-        // if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-        // if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-        // if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-        // if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
-        correctAnswer = p.answer;
-      }
-      // RATIO: UNCHANGED TOTAL
-      if (setting == 13) {
-        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
-      }
-      // RATIO: UNCHANGED DIFFERENCE
-      if (setting == 14) {
-        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
-      }
-      // RATIO: MANIPULATION IN UNITS
-      if (setting == 15) {
-        const commonNumber = commonDeno(p.denoA, p.denoB);
-        let end_A = ((p.ratioA * (p.denoA - p.numeA)) / p.denoA) * commonNumber;
-        let end_B = ((p.ratioB * (p.denoB - p.numeB)) / p.denoB) * commonNumber;
-        [end_A, end_B] = simplify(end_A, end_B);
-        correctAnswer = `${end_A}:${end_B}`;
-      }
-      // RATIO: REPEATED IDENTITY (GEOMETRY)
-      if (setting == 16) {
-        correctAnswer = p.answer;
-      }
-      if (setting == 17) {
+
+      if (setting == 6) {
         console.log(p.answer);
         // got to change to an array
         p.answer = p.answer.split(":");
@@ -23771,14 +23672,14 @@ function handleSubmit(e) {
         correctAnswer = p.answer;
       }
       //PERCENTAGE: OVERLAPPING MODEL
-      if (setting == 18) {
+      if (setting == 7) {
         if (p.question == "A") correctAnswer = p.oneUnit * p.numeA;
         if (p.question == "B")
           correctAnswer = p.oneUnit * p.numeA + p.difference;
         if (p.question == "total") correctAnswer = p.oneUnit * p.denoA;
       }
       // PERCENTAGE: GST, DISCOUNT AND SERVICE CHARGE
-      if (setting == 19) {
+      if (setting == 8) {
         if (p.optionOne == "simple gst") {
           if (p.optionTwo == "gst") {
             correctAnswer = (p.value / 100) * p.gst;
@@ -23812,10 +23713,10 @@ function handleSubmit(e) {
         }
       }
       // PERCENTAG: IDENTICAL EFFECT
-      if (setting == 20) correctAnswer = p.salary;
+      if (setting == 9) correctAnswer = p.salary;
 
       //PERCENTAGE: SOLVING IN UNITS
-      if (setting == 21) {
+      if (setting == 10) {
         if (p.question == "A")
           correctAnswer = p.price * p.quantitySoldAtOriginalPrice;
         if (p.question == "B")
@@ -23823,7 +23724,7 @@ function handleSubmit(e) {
             ((p.price * (100 - p.discount)) / 100) *
             p.quantitySoldAtDiscountedPrice;
       }
-      if (setting == 22) {
+      if (setting == 11) {
         if (p.question == "at first") {
           correctAnswer = p.oldQuantity;
         }
@@ -23832,43 +23733,8 @@ function handleSubmit(e) {
         }
       }
       //AVERAGE: CONSECUTIVE DAYS
-      if (setting == 23) {
+      if (setting == 12) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
-      }
-
-      //RATIO: MANIPULATION OF UNITS WITH VALUE
-      if (setting == 24) {
-        correctAnswer = p.total;
-      }
-
-      // PATTERN: CONTINUOUS PATTERN (SETS)
-      if (setting == 25) {
-        if (p.question == "pattern") correctAnswer = p.value;
-        if (p.question == "number") correctAnswer = p.pattern;
-      }
-
-      // RATIO: UNIDENTICAL GROUP
-
-      if (setting == 26) {
-        if (p.question == "FM") {
-          [p.A2, p.B1] = simplify(p.A2, p.B1);
-          correctAnswer = `${p.A2}:${p.B1}`;
-        }
-        if (p.question == "FF") {
-          [p.A2, p.B2] = simplify(p.A2, p.B2);
-          correctAnswer = `${p.A2}:${p.B2}`;
-        }
-        if (p.question == "MF") {
-          [p.A1, p.B2] = simplify(p.A1, p.B2);
-          correctAnswer = `${p.A1}:${p.B2}`;
-        }
-        if (p.question == "MM") {
-          [p.A1, p.B1] = simplify(p.A1, p.B1);
-          correctAnswer = `${p.A1}:${p.B1}`;
-        }
-      }
-      if (setting == 27) {
-        correctAnswer = p.largeTrayQuantity + p.smallTrayQuantity;
       }
     }
 
@@ -23914,8 +23780,108 @@ function handleSubmit(e) {
           correctAnswer = `${whole} ${remainder}/${deno}`;
         }
       }
-      // CIRCLES
+      //RATIO: SIMPLIFICATION AND EXPANSION
       if (setting == 3) {
+        correctAnswer = p.answer;
+      }
+
+      //RATIO: POSSIBLE
+      if (setting == 4) {
+        console.log(p.chosen);
+        correctAnswer = p.chosen + 1;
+      }
+
+      //RATIO: SHAPES
+      if (setting == 5) {
+        let shaded = p.shaded;
+        let unshaded = p.total - shaded;
+        [shaded, unshaded] = simplify(shaded, unshaded);
+        if (p.secondVar == "unshaded") correctAnswer = `${shaded}:${unshaded}`;
+        if (p.secondVar == "total")
+          correctAnswer = `${shaded}:${shaded + unshaded}`;
+
+        // }
+      }
+      // RATIO: REPEATED IDENTITY
+      if (setting == 6) {
+        calArrQns = simplestForm(calArrQns);
+        correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
+      }
+
+      // RATIO: IDENTICAL TOTAL
+      if (setting == 7) {
+        let totalA = p.ratioA + p.ratioB;
+        let totalB = p.ratioC + p.ratioD;
+        const commonTotal = commonDeno(totalA, totalB);
+        const multiOne = commonTotal / totalA;
+        const multiTwo = commonTotal / totalB;
+        let newA = p.ratioA * multiOne;
+        let newB = p.ratioB * multiOne;
+        let newC = p.ratioC * multiTwo;
+        let newD = p.ratioD * multiTwo;
+
+        if (p.question == 1) {
+          let newTotalA = newA + newC;
+          let newTotalB = newB + newD;
+          [newTotalA, newTotalB] = simplify(newTotalA, newTotalB);
+          correctAnswer = `${newTotalA}:${newTotalB}`;
+        }
+        if (p.question == 2) {
+          [newA, newC] = simplify(newA, newC);
+          correctAnswer = `${newA}:${newC}`;
+        }
+        if (p.question == 3) {
+          [newB, newD] = simplify(newB, newD);
+          correctAnswer = `${newB}:${newD}`;
+        }
+      }
+
+      // RATIO: REPEATED GROUP
+      if (setting == 8) {
+        p.answer = simplestForm(p.answer);
+        console.log(p.answer);
+        // if (p.firstScene == "total" && p.secondScene == "total") {
+        correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
+        // }
+      }
+      // RATIO: UNCHANGED OBJ
+      if (setting == 9) {
+        console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
+        // if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        // if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        // if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        // if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+        correctAnswer = p.answer;
+      }
+      // RATIO: UNCHANGED TOTAL
+      if (setting == 10) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      // RATIO: UNCHANGED DIFFERENCE
+      if (setting == 11) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      // RATIO: MANIPULATION IN UNITS
+      if (setting == 12) {
+        const commonNumber = commonDeno(p.denoA, p.denoB);
+        let end_A = ((p.ratioA * (p.denoA - p.numeA)) / p.denoA) * commonNumber;
+        let end_B = ((p.ratioB * (p.denoB - p.numeB)) / p.denoB) * commonNumber;
+        [end_A, end_B] = simplify(end_A, end_B);
+        correctAnswer = `${end_A}:${end_B}`;
+      }
+      // RATIO: REPEATED IDENTITY (GEOMETRY)
+      if (setting == 13) {
+        correctAnswer = p.answer;
+      }
+
+      // CIRCLES
+      if (setting == 14) {
         if (p.type == "area") {
           let pi = 3.14;
           if (p.radius % 7 == 0) pi = 22 / 7;
@@ -23956,7 +23922,7 @@ function handleSubmit(e) {
       }
 
       // CIRCLES: INNER SQUARE
-      if (setting == 4) {
+      if (setting == 15) {
         if (p.given == "radius") {
           correctAnswer = 2 * p.radius * p.radius;
         }
@@ -23965,7 +23931,7 @@ function handleSubmit(e) {
         }
       }
       //CIRCLES: OTHERS
-      if (setting == 5) {
+      if (setting == 16) {
         if (p.rollType == "triangle") {
           correctAnswer = ((1 / 2) * p.triangleSide * p.triangleSide) / 2;
         }
@@ -23987,7 +23953,7 @@ function handleSubmit(e) {
         correctAnswer = accDecimal(correctAnswer);
       }
       // SPEED: AVERAGE SPEED OF WHOLE JOURNEY
-      if (setting == 6) {
+      if (setting == 17) {
         // average speed whole journey
         if (p.roll == "A") {
           correctAnswer =
@@ -24034,7 +24000,7 @@ function handleSubmit(e) {
         }
       }
       // SPEED: MOVING APART
-      if (setting == 7) {
+      if (setting == 18) {
         if (p.version == "A") {
           correctAnswer = p.distance;
         }
@@ -24054,7 +24020,7 @@ function handleSubmit(e) {
       }
 
       //SPEED: DIFFERENCE IN SPEED (MID)
-      if (setting == 8) {
+      if (setting == 19) {
         if (p.question == "A") correctAnswer = (p.speedA * p.time) / 60;
         if (p.question == "B") correctAnswer = (p.speedB * p.time) / 60;
         if (p.question == "total")
@@ -24066,12 +24032,12 @@ function handleSubmit(e) {
       }
 
       // SPEED: SURROGATE
-      if (setting == 9) {
+      if (setting == 20) {
         if (p.question == "A") correctAnswer = p.speedA;
         if (p.question == "B") correctAnswer = p.speedB;
       }
       //PIE CHART
-      if (setting == 10) {
+      if (setting == 21) {
         if (p.choice == "fraction") correctAnswer = p.fractions;
         if (p.choice == "decimal") correctAnswer = p.decimals;
         if (p.choice == "ratio") correctAnswer = p.ratio;
@@ -24081,120 +24047,163 @@ function handleSubmit(e) {
     }
     // ANSWERS
     if (level == "calSixb") {
-      //SPEED; SURROGATE: BEYOND
+      //RATIO: MANIPULATION OF UNITS WITH VALUE
       if (setting == 1) {
-        const diffInDistance = p.diffPartDistance * p.denominator;
-        const duration = diffInDistance / (p.speedA - p.speedB);
-        const durationExtraA = diffInDistance / p.speedA;
-        let durationA = duration - durationExtraA;
-        let durationB = duration;
-        if (p.duration == "A") correctAnswer = durationA;
-        if (p.duration == "B") correctAnswer = durationB;
-        // console.log(correctAnswer.toString().split(".")[1] > 3);
-        const checkRecurringDecimal = correctAnswer.toString().split(".")[1];
-        if (checkRecurringDecimal && checkRecurringDecimal.length > 3) {
-          console.log("Splitting answer");
-          correctAnswer = Math.round(correctAnswer * 100) / 100;
-        }
+        correctAnswer = p.total;
       }
 
-      //SPEED: MEET UP
+      //RATIO: WIPE ON WIPE OFF
       if (setting == 2) {
-        if (p.roll == "A") {
-          correctAnswer = p.distance / (p.speedA + p.speedB);
-        }
-        // natural
-        if (p.roll == "B") {
-          // correctAnswer = `(${p.distance}-${p.speedA * p.timeA})/(${p.speedA}+${
-          //   p.speedB
-          // })`;
+        correctAnswer = Math.abs(p.change);
+        if (p.version == "difference") {
+          const differenceAtFirst = Math.abs(p.shaded - p.unshaded);
+          let shadedEnd = (p.shaded += p.change);
+          let unshadedEnd = (p.unshaded += p.change);
+          [shadedEnd, unshadedEnd] = simplify(shadedEnd, unshadedEnd);
+          const differenceEnd = Math.abs(shadedEnd - unshadedEnd);
+          const commonNum = commonDeno(differenceAtFirst, differenceEnd);
           correctAnswer =
-            (p.distance - p.timeA * p.speedA) / (p.speedA + p.speedB) + p.timeA;
-        }
-        // headstart
-        if (p.roll == "C") {
-          // correctAnswer = `(${p.distance}-${p.speedA * p.timeA})/(${p.speedA}+${
-          //   p.speedB
-          // })`;
-          correctAnswer =
-            (p.distance - p.speedA * p.timeA) / (p.speedA + p.speedB) + p.timeA;
-        }
-
-        // distance
-        if (p.roll == "D") {
-          // correctAnswer = `(${p.speedA}+${p.speedB})x${p.timeA + p.timeB}`;
-          correctAnswer = (p.speedA + p.speedB) * (p.timeA + p.timeB);
+            (commonNum / differenceAtFirst) * p.shaded -
+            (commonNum / differenceEnd) * shadedEnd;
         }
       }
-      //SPEED: CATCH UP
+      // RATIO: UNIDENTICAL GROUP
       if (setting == 3) {
-        if (p.roll == "A" || p.roll == "B") {
-          // console.log(p.diffSpeed);
-          correctAnswer = p.gap / p.diffSpeed;
+        if (p.question == "FM") {
+          [p.A2, p.B1] = simplify(p.A2, p.B1);
+          correctAnswer = `${p.A2}:${p.B1}`;
         }
-        if (p.roll == "C") {
-          correctAnswer = p.gap;
+        if (p.question == "FF") {
+          [p.A2, p.B2] = simplify(p.A2, p.B2);
+          correctAnswer = `${p.A2}:${p.B2}`;
         }
-        if (p.roll == "D") {
-          correctAnswer = p.speedB;
+        if (p.question == "MF") {
+          [p.A1, p.B2] = simplify(p.A1, p.B2);
+          correctAnswer = `${p.A1}:${p.B2}`;
         }
-        if (p.roll == "E") {
-          correctAnswer = p.speedA;
+        if (p.question == "MM") {
+          [p.A1, p.B1] = simplify(p.A1, p.B1);
+          correctAnswer = `${p.A1}:${p.B1}`;
         }
+      }
+      if (setting == 4) {
+        correctAnswer = p.largeTrayQuantity + p.smallTrayQuantity;
       }
 
-      if (setting == 4) {
-        if (p.type == "normalSpeedToTime") {
-          const oneUnit = p.differenceTime / Math.abs(p.timeA - p.timeB);
-          const actualTimeA = oneUnit * p.timeA;
-          correctAnswer = (actualTimeA / 60) * p.speedA;
-          if (correctAnswer % 1 != 0) {
-            let remainder = (actualTimeA * p.speedA) % 60;
-            let time = 60;
-            let whole = Math.floor(correctAnswer);
-            [remainder, time] = simplify(remainder, time);
-            correctAnswer = `${whole} ${remainder}/${time}`;
-          }
-        }
-        if (p.type == "normalTimeToSpeed") {
-          const oneUnit = p.differenceSpeed / Math.abs(p.speedA - p.speedB);
-          console.log(`one unit is ${oneUnit}`);
-          if (p.question == 1) {
-            correctAnswer = (oneUnit * p.speedA * p.timeA) / 60;
-            if (correctAnswer % 1 != 0) {
-              let remainder = (oneUnit * p.speedA * p.timeA) % 60;
-              let time = 60;
-              let whole = Math.floor(correctAnswer);
-              [remainder, time] = simplify(remainder, time);
-              correctAnswer = `${whole} ${remainder}/${time}`;
-            }
-          }
-          if (p.question == 2) {
-            correctAnswer = oneUnit * p.speedA;
-          }
-          if (p.question == 3) {
-            correctAnswer = oneUnit * p.speedB;
-          }
-        }
-        if (p.type == "meet up") {
-          let speedAUnits;
-          let speedBUnits;
-          [speedBUnits, speedAUnits] = simplify(p.timeA, p.timeB);
-          console.log(speedBUnits);
-          const distance = speedAUnits * p.timeA;
-          const meetUp = distance / (p.speedA + p.speedB);
-          console.log(distance, meetUp);
-          if (meetUp % 1 == 0) {
-            correctAnswer = meetUp;
-          } else {
-            const quotient = Math.floor(meetUp);
-            let remainder = distance % (p.speedA + p.speedB);
-            let deno = p.speedA + p.speedB;
-            [remainder, deno] = simplify(remainder, deno);
-            correctAnswer = `${quotient} ${remainder}/${deno}`;
-          }
-        }
-      }
+      // //SPEED; SURROGATE: BEYOND
+      // if (setting == 1) {
+      //   const diffInDistance = p.diffPartDistance * p.denominator;
+      //   const duration = diffInDistance / (p.speedA - p.speedB);
+      //   const durationExtraA = diffInDistance / p.speedA;
+      //   let durationA = duration - durationExtraA;
+      //   let durationB = duration;
+      //   if (p.duration == "A") correctAnswer = durationA;
+      //   if (p.duration == "B") correctAnswer = durationB;
+      //   // console.log(correctAnswer.toString().split(".")[1] > 3);
+      //   const checkRecurringDecimal = correctAnswer.toString().split(".")[1];
+      //   if (checkRecurringDecimal && checkRecurringDecimal.length > 3) {
+      //     console.log("Splitting answer");
+      //     correctAnswer = Math.round(correctAnswer * 100) / 100;
+      //   }
+      // }
+
+      // //SPEED: MEET UP
+      // if (setting == 2) {
+      //   if (p.roll == "A") {
+      //     correctAnswer = p.distance / (p.speedA + p.speedB);
+      //   }
+      //   // natural
+      //   if (p.roll == "B") {
+      //     // correctAnswer = `(${p.distance}-${p.speedA * p.timeA})/(${p.speedA}+${
+      //     //   p.speedB
+      //     // })`;
+      //     correctAnswer =
+      //       (p.distance - p.timeA * p.speedA) / (p.speedA + p.speedB) + p.timeA;
+      //   }
+      //   // headstart
+      //   if (p.roll == "C") {
+      //     // correctAnswer = `(${p.distance}-${p.speedA * p.timeA})/(${p.speedA}+${
+      //     //   p.speedB
+      //     // })`;
+      //     correctAnswer =
+      //       (p.distance - p.speedA * p.timeA) / (p.speedA + p.speedB) + p.timeA;
+      //   }
+
+      //   // distance
+      //   if (p.roll == "D") {
+      //     // correctAnswer = `(${p.speedA}+${p.speedB})x${p.timeA + p.timeB}`;
+      //     correctAnswer = (p.speedA + p.speedB) * (p.timeA + p.timeB);
+      //   }
+      // }
+      // //SPEED: CATCH UP
+      // if (setting == 3) {
+      //   if (p.roll == "A" || p.roll == "B") {
+      //     // console.log(p.diffSpeed);
+      //     correctAnswer = p.gap / p.diffSpeed;
+      //   }
+      //   if (p.roll == "C") {
+      //     correctAnswer = p.gap;
+      //   }
+      //   if (p.roll == "D") {
+      //     correctAnswer = p.speedB;
+      //   }
+      //   if (p.roll == "E") {
+      //     correctAnswer = p.speedA;
+      //   }
+      // }
+
+      // if (setting == 4) {
+      //   if (p.type == "normalSpeedToTime") {
+      //     const oneUnit = p.differenceTime / Math.abs(p.timeA - p.timeB);
+      //     const actualTimeA = oneUnit * p.timeA;
+      //     correctAnswer = (actualTimeA / 60) * p.speedA;
+      //     if (correctAnswer % 1 != 0) {
+      //       let remainder = (actualTimeA * p.speedA) % 60;
+      //       let time = 60;
+      //       let whole = Math.floor(correctAnswer);
+      //       [remainder, time] = simplify(remainder, time);
+      //       correctAnswer = `${whole} ${remainder}/${time}`;
+      //     }
+      //   }
+      //   if (p.type == "normalTimeToSpeed") {
+      //     const oneUnit = p.differenceSpeed / Math.abs(p.speedA - p.speedB);
+      //     console.log(`one unit is ${oneUnit}`);
+      //     if (p.question == 1) {
+      //       correctAnswer = (oneUnit * p.speedA * p.timeA) / 60;
+      //       if (correctAnswer % 1 != 0) {
+      //         let remainder = (oneUnit * p.speedA * p.timeA) % 60;
+      //         let time = 60;
+      //         let whole = Math.floor(correctAnswer);
+      //         [remainder, time] = simplify(remainder, time);
+      //         correctAnswer = `${whole} ${remainder}/${time}`;
+      //       }
+      //     }
+      //     if (p.question == 2) {
+      //       correctAnswer = oneUnit * p.speedA;
+      //     }
+      //     if (p.question == 3) {
+      //       correctAnswer = oneUnit * p.speedB;
+      //     }
+      //   }
+      //   if (p.type == "meet up") {
+      //     let speedAUnits;
+      //     let speedBUnits;
+      //     [speedBUnits, speedAUnits] = simplify(p.timeA, p.timeB);
+      //     console.log(speedBUnits);
+      //     const distance = speedAUnits * p.timeA;
+      //     const meetUp = distance / (p.speedA + p.speedB);
+      //     console.log(distance, meetUp);
+      //     if (meetUp % 1 == 0) {
+      //       correctAnswer = meetUp;
+      //     } else {
+      //       const quotient = Math.floor(meetUp);
+      //       let remainder = distance % (p.speedA + p.speedB);
+      //       let deno = p.speedA + p.speedB;
+      //       [remainder, deno] = simplify(remainder, deno);
+      //       correctAnswer = `${quotient} ${remainder}/${deno}`;
+      //     }
+      //   }
+      // }
       // VOLUME: GROUPING
       if (setting == 5) {
         if (p.question == "transfer") correctAnswer = p.answer;
@@ -28469,6 +28478,9 @@ function genProblems() {
   }
 
   //SETTINGS
+  //SETTINGS
+  //SETTINGS
+
   if (level == "calFive") {
     setting = calArrAll(27, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
@@ -28664,92 +28676,116 @@ function genProblems() {
         type: [4, 3, 2, 1][genNumbers(4)],
       };
     }
-    // RATIO: SIMPLIFICATION AND EXPANSION
+
+    // FRACTIONS: CLOSEST AND FURTHEST
     if (setting == 13) {
+      let denominators = [];
+      while (denominators.length < 6) {
+        const num = genNumbers(7) + 4;
+        if (!denominators.includes(num)) {
+          denominators.push(num);
+        }
+      }
       return {
-        numA: genNumbers(9) + 1,
-        numB: genNumbers(9) + 1,
-        numC: genNumbers(9) + 1,
-        process: ["up", "down", "updown"][genNumbers(3)],
-        ratioArr: undefined,
-        answer: undefined,
+        denoComp: denominators[4],
+        numeComp: genNumbers(denominators[4] - 1) + 1,
+        choice: ["furthest", "closest"][genNumbers(2)],
+        denoZero: denominators[0],
+        denoOne: denominators[1],
+        denoTwo: denominators[2],
+        denoThree: denominators[3],
+        numeZero: denominators[0] + genNumbers(4) - 2,
+        numeOne: denominators[1] + genNumbers(4) - 2,
+        numeTwo: denominators[2] + genNumbers(4) - 2,
+        numeThree: denominators[3] + genNumbers(4) - 2,
       };
     }
-    //RATIO: POSSIBLE RATIOS
+
+    //REMAINDER CONCEPT: BEFORE AND AFTER
+
     if (setting == 14) {
+      const gen_denoA = genNumbers(6) + 2;
+      const gen_denoB = genNumbers(6) + 2;
       return {
-        number: genNumbers(70) + 30,
-        optionOne: [],
-        optionTwo: [],
-        optionThree: [],
-        optionFour: [],
-        chosen: genNumbers(4),
+        denoA: gen_denoA,
+        numeA: genNumbers(gen_denoA - 1) + 1,
+        denoB: gen_denoB,
+        numeB: genNumbers(gen_denoB - 1) + 1,
+        end: ["the same", "the twice", "the thrice"][genNumbers(3)],
+        oneUnit: genNumbers(200) + 100,
+        atFirstUnits: undefined,
+        value: undefined,
       };
     }
 
-    //REPEATED IDENTITY: SHAPES
+    //REMAINDER CONCEPT: UNDER THE SAME UNIT
     if (setting == 15) {
+      const gen_denoA = genNumbers(6) + 2;
+      const gen_denoB = genNumbers(6) + 2;
+      const gen_objPosition = genNumbers(2);
+      const gen_unitA = genNumbers(4) + 2;
       return {
-        shapes: ["square", "triangle", "rectangle", "circle"][genNumbers(4)],
-        shaded: undefined,
-        total: undefined,
-        secondVar: ["unshaded", "total"][genNumbers(2)],
-        want: "shaded",
-        bigY: (genNumbers(5) + 10) * 10,
+        objectA: ["pens", "shirts"][gen_objPosition],
+        objectB: ["pencils", "pants"][gen_objPosition],
+        unitA: gen_unitA,
+        unitB: genNumbers(gen_unitA - 1) + 1,
+        quantityA: genNumbers(5) + 2,
+        quantityB: genNumbers(5) + 2,
+        denoA: gen_denoA,
+        numeA: genNumbers(gen_denoA - 1) + 1,
+        denoB: gen_denoB,
+        numeB: genNumbers(gen_denoB - 1) + 1,
+        chosen: ["A", "B"][genNumbers(2)],
+        extraBought: undefined,
       };
     }
-    //repeated identity [Ratio]
+
+    //FRACTIONS: OVERLAPPING MODEL
     if (setting == 16) {
-      const arrSomething = ["books", "homeworks", "pencils", "pens"];
+      const gen_deno = (genNumbers(2) + 3) * 2;
       return {
-        something: arrSomething[genNumbers(arrSomething.length)],
-        personOne: ["Liam", "Noah", "Oliver", "Elijah", "Jake"][genNumbers(5)],
-        personTwo: ["Tammy", "Emma", "Charlotte", "Amelia", "Camila"][
-          genNumbers(5)
-        ],
-        repeatedId: undefined,
-        personThree: ["Theodore", "Harper", "Luna", "Jack", "Ella"][
-          genNumbers(5)
-        ],
-        unitOne: genNumbers(5) + 2,
-        unitTwo: genNumbers(5) + 2,
-        unitThree: genNumbers(5) + 2,
-        unitFour: genNumbers(5) + 2,
-        firstSentence: ["unit", "ratio"][genNumbers(2)],
-        secondSentence: ["unit", "ratio"][genNumbers(2)],
+        question: ["A", "B", "total"][genNumbers(3)],
+        denoA: gen_deno,
+        numeA: genNumbers(gen_deno / 2 - 1) + 1,
+        difference: [-1, 1][genNumbers(2)] * (genNumbers(50) + 10),
+        // remaining: undefined,
+        oneUnit: genNumbers(90) + 10,
+        // answer: undefined,
       };
     }
 
-    // RATIO: IDENTICAL TOTAL
+    // IDENTICAL NUMERATOR TYPE 2
     if (setting == 17) {
-      const genObjects = genNumbers(3);
+      const denominator = genNumbers(6) + 2;
+      const numerator = genNumbers(denominator - 1) + 1;
+      const denominatorTwo = genNumbers(10) + 2;
       return {
-        position: genObjects,
-        objects: [
-          ["girls", "boys"],
-          ["males", "females"],
-          ["chocolates", "sweets"],
-        ][genObjects],
-        ratioA: genNumbers(5) + 1,
-        ratioB: genNumbers(5) + 1,
-        ratioC: genNumbers(5) + 1,
-        ratioD: genNumbers(5) + 1,
-        question: [1, 2, 3][genNumbers(3)],
+        person: ["Jonathan", "Javen", "Jeremy"][genNumbers(3)],
+        deno: denominator,
+        nume: numerator,
+        numOne: undefined,
+        denoTwo: denominatorTwo,
+        numeTwo: genNumbers(denominatorTwo - 1) + 1,
+        answer: undefined,
+        version: [1, 0][genNumbers(2)],
+        somethingElse: ["toys", "sweets", "games", "pens"][genNumbers(4)],
       };
     }
 
-    // RATIO: WIPE ON WIPE OFF
+    // PATTERN: CONTINUOUS PATTERN (SETS)
     if (setting == 18) {
       return {
-        version: ["difference", "total", "object"][genNumbers(3)],
-        length: genNumbers(5) + 5,
-        breadth: genNumbers(2) + 3,
-        change: genNumbers(16) - 8,
-        shaded: undefined,
-        unshaded: undefined,
+        start: genNumbers(8) + 2,
+        first: genNumbers(5) + 1,
+        second: undefined,
+        secondDiff: genNumbers(4) + 1,
+        pattern: genNumbers(50) + 50,
+        question: ["pattern", "number"][genNumbers(2)],
+        value: undefined,
+        totalA: undefined,
+        totalB: undefined,
       };
     }
-
     // RATES: PARTTHEREOF & PARTTHEREAFTER
     if (setting == 19) {
       return {
@@ -28871,8 +28907,10 @@ function genProblems() {
   }
 
   //SETTINGS
+  //SETTINGS
+  //SETTINGS
+
   if (level == "calFiveb") {
-    console.log("HERE I AM!");
     if (regen > 20) {
       console.log("⭐️Regen activated!⭐️");
       skipGlobalUpdateProblem = 0;
@@ -28881,107 +28919,13 @@ function genProblems() {
       setting = calArr[genNumbers(calArr.length)];
       console.log("Whats the regen?");
     } else {
-      setting = calArrAll(27, calArr, setting, 99);
+      setting = calArrAll(12, calArr, setting, 99);
       setting = checkRange(setting, calArr, skipArr);
     }
     console.log(`THE SETTING IS ${setting}`);
-    // FRACTIONS: CLOSEST AND FURTHEST
-    if (setting == 1) {
-      let denominators = [];
-      while (denominators.length < 6) {
-        const num = genNumbers(7) + 4;
-        if (!denominators.includes(num)) {
-          denominators.push(num);
-        }
-      }
-      return {
-        denoComp: denominators[4],
-        numeComp: genNumbers(denominators[4] - 1) + 1,
-        choice: ["furthest", "closest"][genNumbers(2)],
-        denoZero: denominators[0],
-        denoOne: denominators[1],
-        denoTwo: denominators[2],
-        denoThree: denominators[3],
-        numeZero: denominators[0] + genNumbers(4) - 2,
-        numeOne: denominators[1] + genNumbers(4) - 2,
-        numeTwo: denominators[2] + genNumbers(4) - 2,
-        numeThree: denominators[3] + genNumbers(4) - 2,
-      };
-    }
-
-    //REMAINDER CONCEPT: BEFORE AND AFTER
-
-    if (setting == 2) {
-      const gen_denoA = genNumbers(6) + 2;
-      const gen_denoB = genNumbers(6) + 2;
-      return {
-        denoA: gen_denoA,
-        numeA: genNumbers(gen_denoA - 1) + 1,
-        denoB: gen_denoB,
-        numeB: genNumbers(gen_denoB - 1) + 1,
-        end: ["the same", "the twice", "the thrice"][genNumbers(3)],
-        oneUnit: genNumbers(200) + 100,
-        atFirstUnits: undefined,
-        value: undefined,
-      };
-    }
-
-    //REMAINDER CONCEPT: UNDER THE SAME UNIT
-    if (setting == 3) {
-      const gen_denoA = genNumbers(6) + 2;
-      const gen_denoB = genNumbers(6) + 2;
-      const gen_objPosition = genNumbers(2);
-      const gen_unitA = genNumbers(4) + 2;
-      return {
-        objectA: ["pens", "shirts"][gen_objPosition],
-        objectB: ["pencils", "pants"][gen_objPosition],
-        unitA: gen_unitA,
-        unitB: genNumbers(gen_unitA - 1) + 1,
-        quantityA: genNumbers(5) + 2,
-        quantityB: genNumbers(5) + 2,
-        denoA: gen_denoA,
-        numeA: genNumbers(gen_denoA - 1) + 1,
-        denoB: gen_denoB,
-        numeB: genNumbers(gen_denoB - 1) + 1,
-        chosen: ["A", "B"][genNumbers(2)],
-        extraBought: undefined,
-      };
-    }
-
-    //FRACTIONS: OVERLAPPING MODEL
-    if (setting == 4) {
-      const gen_deno = (genNumbers(2) + 3) * 2;
-      return {
-        question: ["A", "B", "total"][genNumbers(3)],
-        denoA: gen_deno,
-        numeA: genNumbers(gen_deno / 2 - 1) + 1,
-        difference: [-1, 1][genNumbers(2)] * (genNumbers(50) + 10),
-        // remaining: undefined,
-        oneUnit: genNumbers(90) + 10,
-        // answer: undefined,
-      };
-    }
-
-    // IDENTICAL NUMERATOR TYPE 2
-    if (setting == 5) {
-      const denominator = genNumbers(6) + 2;
-      const numerator = genNumbers(denominator - 1) + 1;
-      const denominatorTwo = genNumbers(10) + 2;
-      return {
-        person: ["Jonathan", "Javen", "Jeremy"][genNumbers(3)],
-        deno: denominator,
-        nume: numerator,
-        numOne: undefined,
-        denoTwo: denominatorTwo,
-        numeTwo: genNumbers(denominatorTwo - 1) + 1,
-        answer: undefined,
-        version: [1, 0][genNumbers(2)],
-        somethingElse: ["toys", "sweets", "games", "pens"][genNumbers(4)],
-      };
-    }
 
     // GEOMETRY: OBTUSE TRIANGLE
-    if (setting == 6) {
+    if (setting == 1) {
       return {
         base: genNumbers(9) + 5,
         height: genNumbers(3) + 5,
@@ -28993,7 +28937,7 @@ function genProblems() {
       };
     }
     //GEOMETRY: AREA OF FIGURE: CUTTING
-    if (setting == 7) {
+    if (setting == 2) {
       const gen_squareA = genNumbers(50) + 100;
       return {
         squareA: gen_squareA,
@@ -29005,7 +28949,7 @@ function genProblems() {
     }
 
     // GEOMETRY: MANIPULATION OF DIMENSION
-    if (setting == 8) {
+    if (setting == 3) {
       const gen_length = (genNumbers(10) + 10) * 4;
       return {
         type: [2, 1][genNumbers(2)],
@@ -29015,7 +28959,7 @@ function genProblems() {
     }
 
     // GEOMETRY: MANIPULATION OF DIMENSION LEVEL 2
-    if (setting == 9) {
+    if (setting == 4) {
       const gen_length = (genNumbers(10) + 10) * 4;
       return {
         // part: ["A", "B", "C", "D"][genNumbers(4)],
@@ -29031,7 +28975,7 @@ function genProblems() {
       };
     }
     // AREA OF FIGURE: DIFFERENT UNITS
-    if (setting == 10) {
+    if (setting == 5) {
       const gen_length = genNumbers(5) + 10;
       const gen_breadth = genNumbers(gen_length - 8) + 8;
       return {
@@ -29041,101 +28985,9 @@ function genProblems() {
         thirdTriangleHeight: genNumbers(gen_breadth - 3) + 3,
       };
     }
-    // REPEATED GROUP RATIO
-    if (setting == 11) {
-      let A = genNumbers(10) + 1;
-      return {
-        varA: A,
-        firstScene: ["B and C", "total"][genNumbers(2)],
-        varB: genNumbers(9) + 1,
-        secondScene: ["C", "total"][genNumbers(2)],
-        varC: genNumbers(9) + 1,
-        answer: [],
-      };
-    }
 
-    if (setting == 12) {
-      // console.log("Unchanged Object");
-      return {
-        object: ["sweets", "toys", "books"][genNumbers(3)],
-        valueAFirst: genNumbers(40) + 10,
-        valueBFirst: genNumbers(40) + 10,
-        multiplier: genNumbers(5) + 2,
-        happensTo: ["A", "B"][genNumbers(2)],
-        valueAEnd: genNumbers(40) + 10,
-        valueBEnd: genNumbers(40) + 10,
-        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
-        answer: undefined,
-      };
-    }
-
-    if (setting == 13) {
-      // console.log("Unchanged Total");
-      const valueA = (genNumbers(40) + 10) * 5;
-      const valueB = (genNumbers(40) + 10) * 5;
-      return {
-        object: ["sweets", "toys", "books"][genNumbers(3)],
-        valueAFirst: valueA,
-        valueBFirst: valueB,
-        situationA: genNumbers(valueA) * [-1, 1][genNumbers(2)],
-        situationB: genNumbers(valueB) * [-1, 1][genNumbers(2)],
-        // multiplier: genNumbers(5) + 2,
-        multiplier: 1,
-        valueAEnd: undefined,
-        valueBEnd: undefined,
-        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
-      };
-    }
-
-    //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 14) {
-      // console.log("Unchanged Difference");
-      const valueA = genNumbers(50) + 5;
-      const valueB = genNumbers(50) + 5;
-      let minValue = 0;
-      valueA > valueB ? (minValue = valueA) : (minValue = valueB);
-      return {
-        object: ["sweets", "toys", "books"][genNumbers(3)],
-        valueAFirst: valueA,
-        valueBFirst: valueB,
-        situation: genNumbers(minValue) * [-1, 1][genNumbers(2)],
-        // multiplier: genNumbers(5) + 2,
-        multiplier: 1,
-        valueAEnd: undefined,
-        valueBEnd: undefined,
-        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
-      };
-    }
-    // RATIO: MANIPULATION IN UNITS
-    if (setting == 15) {
-      const gen_A = genNumbers(5) + 2;
-      const gen_B = genNumbers(5) + 2;
-      const genDeno_A = [genNumbers(gen_A - 2) + 2, gen_A * 2][genNumbers(2)];
-      const genDeno_B = [genNumbers(gen_B - 2) + 2, gen_A * 2][genNumbers(2)];
-      return {
-        ratioA: gen_A,
-        ratioB: gen_B,
-        numeA: genNumbers(genDeno_A - 1) + 1,
-        denoA: genDeno_A,
-        numeB: genNumbers(genDeno_B - 1) + 1,
-        denoB: genDeno_B,
-      };
-    }
-
-    // REPEATED IDENTITY (GEOMETRY)
-    if (setting == 16) {
-      return {
-        rectLength: genNumbers(5) + 5,
-        rectBreadth: genNumbers(5) + 5,
-        secRectLength: genNumbers(5) + 5,
-        secRectBreadth: genNumbers(5) + 5,
-        triangleBase: genNumbers(5) + 5,
-        triangleHeight: genNumbers(5) + 5,
-        answer: undefined,
-      };
-    }
     //PERCETAGE: REPEATED GROUP
-    if (setting == 17) {
+    if (setting == 6) {
       return {
         percA: (genNumbers(20) + 1) * 5,
         firstSentence: ["B and C", "the total"][genNumbers(2)],
@@ -29146,7 +28998,7 @@ function genProblems() {
     }
 
     //PERCENTAGE: OVERLAPPING MODEL
-    if (setting == 18) {
+    if (setting == 7) {
       const gen_deno = 10;
       return {
         question: ["A", "B", "total"][genNumbers(3)],
@@ -29160,7 +29012,7 @@ function genProblems() {
     }
 
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 19) {
+    if (setting == 8) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         optionOne: ["discount gst", "service", "simple gst"][genNumbers(3)],
@@ -29172,7 +29024,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: IDENTICAL EFFECT
-    if (setting == 20) {
+    if (setting == 9) {
       // console.log("This is setting: 20")
       return {
         saves: (genNumbers(8) + 1) * 5,
@@ -29184,7 +29036,7 @@ function genProblems() {
     }
 
     // PERCENRAGE: SOLVING IN UNITS
-    if (setting == 21) {
+    if (setting == 10) {
       return {
         items: genNumbers(50) * 10 + 500,
         originalPerc: (genNumbers(3) + 1) * 10,
@@ -29197,7 +29049,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 22) {
+    if (setting == 11) {
       return {
         oldQuantity: genNumbers(6) + 3,
         oldAverage: genNumbers(40) + 10,
@@ -29210,69 +29062,13 @@ function genProblems() {
       };
     }
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 23) {
+    if (setting == 12) {
       return {
         dayOne: genNumbers(20) + 5,
         days: genNumbers(5) + 5,
         total: undefined,
         chosen: undefined,
         increase: genNumbers(5) + 3,
-      };
-    }
-
-    //RATIO: MANIPULATION OF UNITS WITH VALUE
-    if (setting == 24) {
-      const gen_unitA = genNumbers(10) + 2;
-      const gen_unitB = genNumbers(10) + 2;
-      return {
-        unitA: gen_unitA,
-        unitB: gen_unitB,
-        situationA: [-1, 1][genNumbers(2)] * (gen_unitA - 1),
-        situationB: [-1, 1][genNumbers(2)] * (gen_unitB - 1),
-        situation: ["A", "B"][genNumbers(2)],
-        valueA: [-1, 1][genNumbers(2)] * (genNumbers(899) + 100),
-        valueB: [-1, 1][genNumbers(2)] * (genNumbers(899) + 100),
-        total: undefined,
-        end: undefined,
-      };
-    }
-
-    // PATTERN: CONTINUOUS PATTERN (SETS)
-    if (setting == 25) {
-      return {
-        start: genNumbers(8) + 2,
-        first: genNumbers(5) + 1,
-        second: undefined,
-        secondDiff: genNumbers(4) + 1,
-        pattern: genNumbers(50) + 50,
-        question: ["pattern", "number"][genNumbers(2)],
-        value: undefined,
-        totalA: undefined,
-        totalB: undefined,
-      };
-    }
-
-    // RATIO: UNIDENTICAL GROUP
-    if (setting == 26) {
-      return {
-        A1: genNumbers(5) + 1,
-        A2: genNumbers(5) + 1,
-        B1: genNumbers(5) + 1,
-        B2: genNumbers(5) + 1,
-        multiples: genNumbers(4) + 2,
-        question: ["FM", "FF", "MF", "MM"][genNumbers(4)],
-      };
-    }
-
-    // LEAST NUMBER
-    if (setting == 27) {
-      const gen_smallTray = genNumbers(5) + 2;
-      return {
-        quantity: genNumbers(200) + 100,
-        smallTray: gen_smallTray,
-        largeTray: gen_smallTray + genNumbers(5) + 2,
-        largeTrayQuantity: undefined,
-        smallTrayQuantity: undefined,
       };
     }
   }
@@ -29286,7 +29082,8 @@ function genProblems() {
       setting = calArr[genNumbers(calArr.length)];
       console.log("Whats the regen?");
     } else {
-      setting = calArrAll(9, calArr, setting, 99);
+      //20 to exclude pie chart
+      setting = calArrAll(16, calArr, setting, 99);
       setting = checkRange(setting, calArr, skipArr);
     }
 
@@ -29317,8 +29114,177 @@ function genProblems() {
         question: genNumbers(10) + 1,
       };
     }
-    // CIRCLES: AREA AND PERIMETER
+
+    // RATIO: SIMPLIFICATION AND EXPANSION
     if (setting == 3) {
+      return {
+        numA: genNumbers(9) + 1,
+        numB: genNumbers(9) + 1,
+        numC: genNumbers(9) + 1,
+        process: ["up", "down", "updown"][genNumbers(3)],
+        ratioArr: undefined,
+        answer: undefined,
+      };
+    }
+    //RATIO: POSSIBLE RATIOS
+    if (setting == 4) {
+      return {
+        number: genNumbers(70) + 30,
+        optionOne: [],
+        optionTwo: [],
+        optionThree: [],
+        optionFour: [],
+        chosen: genNumbers(4),
+      };
+    }
+
+    //REPEATED IDENTITY: SHAPES
+    if (setting == 5) {
+      return {
+        shapes: ["square", "triangle", "rectangle", "circle"][genNumbers(4)],
+        shaded: undefined,
+        total: undefined,
+        secondVar: ["unshaded", "total"][genNumbers(2)],
+        want: "shaded",
+        bigY: (genNumbers(5) + 10) * 10,
+      };
+    }
+    //repeated identity [Ratio]
+    if (setting == 6) {
+      const arrSomething = ["books", "homeworks", "pencils", "pens"];
+      return {
+        something: arrSomething[genNumbers(arrSomething.length)],
+        personOne: ["Liam", "Noah", "Oliver", "Elijah", "Jake"][genNumbers(5)],
+        personTwo: ["Tammy", "Emma", "Charlotte", "Amelia", "Camila"][
+          genNumbers(5)
+        ],
+        repeatedId: undefined,
+        personThree: ["Theodore", "Harper", "Luna", "Jack", "Ella"][
+          genNumbers(5)
+        ],
+        unitOne: genNumbers(5) + 2,
+        unitTwo: genNumbers(5) + 2,
+        unitThree: genNumbers(5) + 2,
+        unitFour: genNumbers(5) + 2,
+        firstSentence: ["unit", "ratio"][genNumbers(2)],
+        secondSentence: ["unit", "ratio"][genNumbers(2)],
+      };
+    }
+
+    // RATIO: IDENTICAL TOTAL
+    if (setting == 7) {
+      const genObjects = genNumbers(3);
+      return {
+        position: genObjects,
+        objects: [
+          ["girls", "boys"],
+          ["males", "females"],
+          ["chocolates", "sweets"],
+        ][genObjects],
+        ratioA: genNumbers(5) + 1,
+        ratioB: genNumbers(5) + 1,
+        ratioC: genNumbers(5) + 1,
+        ratioD: genNumbers(5) + 1,
+        question: [1, 2, 3][genNumbers(3)],
+      };
+    }
+
+    // REPEATED GROUP RATIO
+    if (setting == 8) {
+      let A = genNumbers(10) + 1;
+      return {
+        varA: A,
+        firstScene: ["B and C", "total"][genNumbers(2)],
+        varB: genNumbers(9) + 1,
+        secondScene: ["C", "total"][genNumbers(2)],
+        varC: genNumbers(9) + 1,
+        answer: [],
+      };
+    }
+
+    if (setting == 9) {
+      // console.log("Unchanged Object");
+      return {
+        object: ["sweets", "toys", "books"][genNumbers(3)],
+        valueAFirst: genNumbers(40) + 10,
+        valueBFirst: genNumbers(40) + 10,
+        multiplier: genNumbers(5) + 2,
+        happensTo: ["A", "B"][genNumbers(2)],
+        valueAEnd: genNumbers(40) + 10,
+        valueBEnd: genNumbers(40) + 10,
+        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
+        answer: undefined,
+      };
+    }
+
+    if (setting == 10) {
+      // console.log("Unchanged Total");
+      const valueA = (genNumbers(40) + 10) * 5;
+      const valueB = (genNumbers(40) + 10) * 5;
+      return {
+        object: ["sweets", "toys", "books"][genNumbers(3)],
+        valueAFirst: valueA,
+        valueBFirst: valueB,
+        situationA: genNumbers(valueA) * [-1, 1][genNumbers(2)],
+        situationB: genNumbers(valueB) * [-1, 1][genNumbers(2)],
+        // multiplier: genNumbers(5) + 2,
+        multiplier: 1,
+        valueAEnd: undefined,
+        valueBEnd: undefined,
+        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
+      };
+    }
+
+    //RATIO: UNCHANGED DIFFERENCE
+    if (setting == 11) {
+      // console.log("Unchanged Difference");
+      const valueA = genNumbers(50) + 5;
+      const valueB = genNumbers(50) + 5;
+      let minValue = 0;
+      valueA > valueB ? (minValue = valueA) : (minValue = valueB);
+      return {
+        object: ["sweets", "toys", "books"][genNumbers(3)],
+        valueAFirst: valueA,
+        valueBFirst: valueB,
+        situation: genNumbers(minValue) * [-1, 1][genNumbers(2)],
+        // multiplier: genNumbers(5) + 2,
+        multiplier: 1,
+        valueAEnd: undefined,
+        valueBEnd: undefined,
+        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
+      };
+    }
+    // RATIO: MANIPULATION IN UNITS
+    if (setting == 12) {
+      const gen_A = genNumbers(5) + 2;
+      const gen_B = genNumbers(5) + 2;
+      const genDeno_A = [genNumbers(gen_A - 2) + 2, gen_A * 2][genNumbers(2)];
+      const genDeno_B = [genNumbers(gen_B - 2) + 2, gen_A * 2][genNumbers(2)];
+      return {
+        ratioA: gen_A,
+        ratioB: gen_B,
+        numeA: genNumbers(genDeno_A - 1) + 1,
+        denoA: genDeno_A,
+        numeB: genNumbers(genDeno_B - 1) + 1,
+        denoB: genDeno_B,
+      };
+    }
+
+    // REPEATED IDENTITY (GEOMETRY)
+    if (setting == 13) {
+      return {
+        rectLength: genNumbers(5) + 5,
+        rectBreadth: genNumbers(5) + 5,
+        secRectLength: genNumbers(5) + 5,
+        secRectBreadth: genNumbers(5) + 5,
+        triangleBase: genNumbers(5) + 5,
+        triangleHeight: genNumbers(5) + 5,
+        answer: undefined,
+      };
+    }
+
+    // CIRCLES: AREA AND PERIMETER
+    if (setting == 14) {
       return {
         radius: (genNumbers(7) + 5) * 10,
         // radius: 70,
@@ -29343,7 +29309,7 @@ function genProblems() {
 
     // CIRCLES: INNER SQUARE
 
-    if (setting == 4) {
+    if (setting == 15) {
       return {
         given: ["square", "radius"][genNumbers(2)],
         radius: genNumbers(10) + 5,
@@ -29351,7 +29317,7 @@ function genProblems() {
       };
     }
     //CIRCLES: OTHERS
-    if (setting == 5) {
+    if (setting == 16) {
       return {
         rotation: genNumbers(7) * 45,
         rollType: ["square2", "square", "angle", "radius", "triangle"][
@@ -29369,7 +29335,7 @@ function genProblems() {
       };
     }
     //AVERAGE SPEED OF WHOLE JOURNEY
-    if (setting == 6) {
+    if (setting == 17) {
       return {
         roll: ["A", "B", "C"][genNumbers(2)],
         speedA: genNumbers(5) + 2,
@@ -29387,7 +29353,7 @@ function genProblems() {
     }
     // SPEED: MOVING APART
 
-    if (setting == 7) {
+    if (setting == 18) {
       return {
         version: ["E", "D", "C", "B", "A"][genNumbers(5)],
         which: ["A", "B"][genNumbers(2)],
@@ -29399,7 +29365,7 @@ function genProblems() {
     }
 
     //SPEED: DIFFERENCE IN SPEED (MID)
-    if (setting == 8) {
+    if (setting == 19) {
       return {
         type: ["A", "B", "C"][genNumbers(3)],
         speedA: genNumbers(50) + 50,
@@ -29411,7 +29377,7 @@ function genProblems() {
     }
 
     // SPEED: SURROGATE
-    if (setting == 9) {
+    if (setting == 20) {
       return {
         speedA: (genNumbers(5) + 5) * 10,
         speedB: undefined,
@@ -29422,7 +29388,7 @@ function genProblems() {
     }
 
     // PIECHART
-    if (setting == 10) {
+    if (setting == 21) {
       return {
         fractions: (genNumbers(10) + 1) * 4,
         decimals: (genNumbers(10) + 1) * 4,
@@ -29451,57 +29417,110 @@ function genProblems() {
       setting = checkRange(setting, calArr, skipArr);
     }
 
-    //SPEED; SURROGATE: BEYOND
+    // //SPEED; SURROGATE: BEYOND
+    // if (setting == 1) {
+    //   return {
+    //     speedA: (genNumbers(5) + 1) * 5,
+    //     speedB: (genNumbers(5) + 1) * 5,
+    //     denominator: genNumbers(4) + 2,
+    //     diffPartDistance: (genNumbers(20) + 10) * 5,
+    //     duration: ["A", "B"][genNumbers(2)],
+    //     // durationA: (genNumbers(5) + 5) * 15,
+    //   };
+    // }
+
+    // //MEET UP
+    // if (setting == 2) {
+    //   return {
+    //     roll: ["D", "A", "B", "C"][genNumbers(4)],
+    //     distance: undefined,
+    //     speedA: genNumbers(5) + 5,
+    //     timeA: genNumbers(8) + 2,
+    //     speedB: genNumbers(5) + 5,
+    //     timeB: genNumbers(8) + 2,
+    //   };
+    // }
+    // // CATCH UP
+    // if (setting == 3) {
+    //   const genSpeedB = genNumbers(10) + 5;
+    //   return {
+    //     roll: ["E", "D", "C", "B", "A"][genNumbers(5)],
+    //     gap: undefined,
+    //     speedA: genNumbers(genSpeedB) + 1,
+    //     timeA: genNumbers(8) + 2,
+    //     speedB: genSpeedB,
+    //     timeB: genNumbers(8) + 2,
+    //     diffSpeed: undefined,
+    //   };
+    // }
+    // if (setting == 4) {
+    //   return {
+    //     type: ["meet up", "normalTimeToSpeed", "normalSpeedToTime"][
+    //       genNumbers(3)
+    //     ],
+    //     question: [1, 2, 3][genNumbers(3)],
+    //     // type: ["normalSpeedToTime", "meet up", "catch up"][genNumbers(1)],
+    //     speedA: (genNumbers(9) + 2) * 10,
+    //     speedB: (genNumbers(9) + 2) * 10,
+    //     timeA: (genNumbers(12 - 1) + 1) * 5,
+    //     timeB: (genNumbers(12 - 1) + 1) * 5,
+    //     differenceTime: undefined,
+    //     differenceSpeed: undefined,
+    //   };
+    // }
+
+    //RATIO: MANIPULATION OF UNITS WITH VALUE
     if (setting == 1) {
+      const gen_unitA = genNumbers(10) + 2;
+      const gen_unitB = genNumbers(10) + 2;
       return {
-        speedA: (genNumbers(5) + 1) * 5,
-        speedB: (genNumbers(5) + 1) * 5,
-        denominator: genNumbers(4) + 2,
-        diffPartDistance: (genNumbers(20) + 10) * 5,
-        duration: ["A", "B"][genNumbers(2)],
-        // durationA: (genNumbers(5) + 5) * 15,
+        unitA: gen_unitA,
+        unitB: gen_unitB,
+        situationA: [-1, 1][genNumbers(2)] * (gen_unitA - 1),
+        situationB: [-1, 1][genNumbers(2)] * (gen_unitB - 1),
+        situation: ["A", "B"][genNumbers(2)],
+        valueA: [-1, 1][genNumbers(2)] * (genNumbers(899) + 100),
+        valueB: [-1, 1][genNumbers(2)] * (genNumbers(899) + 100),
+        total: undefined,
+        end: undefined,
       };
     }
 
-    //MEET UP
+    // RATIO: WIPE ON WIPE OFF
     if (setting == 2) {
       return {
-        roll: ["D", "A", "B", "C"][genNumbers(4)],
-        distance: undefined,
-        speedA: genNumbers(5) + 5,
-        timeA: genNumbers(8) + 2,
-        speedB: genNumbers(5) + 5,
-        timeB: genNumbers(8) + 2,
+        version: ["difference", "total", "object"][genNumbers(3)],
+        length: genNumbers(5) + 5,
+        breadth: genNumbers(2) + 3,
+        change: genNumbers(16) - 8,
+        shaded: undefined,
+        unshaded: undefined,
       };
     }
-    // CATCH UP
+    // RATIO: UNIDENTICAL GROUP
     if (setting == 3) {
-      const genSpeedB = genNumbers(10) + 5;
       return {
-        roll: ["E", "D", "C", "B", "A"][genNumbers(5)],
-        gap: undefined,
-        speedA: genNumbers(genSpeedB) + 1,
-        timeA: genNumbers(8) + 2,
-        speedB: genSpeedB,
-        timeB: genNumbers(8) + 2,
-        diffSpeed: undefined,
+        A1: genNumbers(5) + 1,
+        A2: genNumbers(5) + 1,
+        B1: genNumbers(5) + 1,
+        B2: genNumbers(5) + 1,
+        multiples: genNumbers(4) + 2,
+        question: ["FM", "FF", "MF", "MM"][genNumbers(4)],
       };
     }
+
+    // LEAST NUMBER
     if (setting == 4) {
+      const gen_smallTray = genNumbers(5) + 2;
       return {
-        type: ["meet up", "normalTimeToSpeed", "normalSpeedToTime"][
-          genNumbers(3)
-        ],
-        question: [1, 2, 3][genNumbers(3)],
-        // type: ["normalSpeedToTime", "meet up", "catch up"][genNumbers(1)],
-        speedA: (genNumbers(9) + 2) * 10,
-        speedB: (genNumbers(9) + 2) * 10,
-        timeA: (genNumbers(12 - 1) + 1) * 5,
-        timeB: (genNumbers(12 - 1) + 1) * 5,
-        differenceTime: undefined,
-        differenceSpeed: undefined,
+        quantity: genNumbers(200) + 100,
+        smallTray: gen_smallTray,
+        largeTray: gen_smallTray + genNumbers(5) + 2,
+        largeTrayQuantity: undefined,
+        smallTrayQuantity: undefined,
       };
     }
+
     // VOLUME: GROUPING
     if (setting == 5) {
       const gen_heightA = genNumbers(30) + 10;
@@ -32118,7 +32137,7 @@ function buttonLevelSetting() {
         optionsBox.classList.add("hidden");
         setting = 99;
       }
-      accepted = [...Array.from({ length: 27 }, (_, i) => i + 1), 99];
+      accepted = [...Array.from({ length: 12 }, (_, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
       console.log(`What is the setting? ${setting}`);
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -32139,7 +32158,7 @@ function buttonLevelSetting() {
         setting = 99;
       }
       //IF THERE ARE 7 TYPES, PUT 6. SINCE THE MAP FUNCTION WILL +1
-      accepted = [...Array.from(Array(10)).map((e, i) => i + 1), 99];
+      accepted = [...Array.from(Array(15)).map((e, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
@@ -32157,12 +32176,8 @@ function buttonLevelSetting() {
         optionsBox.classList.add("hidden");
         setting = 99;
       }
-      accepted = [1, 2, 3, 4, 5, 6, 7, 8, 99];
-      // if (
-      //   ![1, 2, 3, 4, 5, 6, 7, 99].includes(setting * 1) &&
-      //   !setting.split("").includes("-")
-      // )
-      //   setting = 99;
+      //IF THERE ARE 7 TYPES, PUT 6. SINCE THE MAP FUNCTION WILL +1
+      accepted = [...Array.from(Array(7)).map((e, i) => i + 1), 99];
       setting = settingCheck(setting, accepted, level);
       optionsBox.classList.remove("hidden");
       optionsBox.textContent = `Available settings:`;
