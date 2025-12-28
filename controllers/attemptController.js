@@ -1256,18 +1256,20 @@ const update = catchAsync(async (req, res, next) => {
 const updateMany = catchAsync(async (req, res, next) => {
   // try {
   const query = {
-    level: "4.13",
+    level: "4.17",
   };
 
   const set = {
     $set: {
-      level: "3.13",
+      // level: "3.13",
+      recommendCheck: false,
     },
   };
 
   const updateAttempt = await Attempt.updateMany(query, set);
-  const updateHighscore = await Highscore.updateMany(query, set);
-  console.log(updateAttempt, updateHighscore);
+  // const updateHighscore = await Highscore.updateMany(query, set);
+  // console.log(updateHighscore);
+  console.log(updateAttempt);
 });
 
 // updateMany();

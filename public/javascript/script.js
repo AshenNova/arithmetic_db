@@ -27179,7 +27179,7 @@ function genProblems() {
       numerator: genNumbers(10) + 1,
       denominator: [10, 100, 1000][genNumbers(3)],
       rollA: ["fraction", "decimal", "percentage"][genNumbers(3)],
-      rollB: ["fraction", "decimal", "ratio"][genNumbers(3)],
+      rollB: ["fraction", "decimal", "ratio"][genNumbers(2)],
       percentageDisplay: undefined,
     };
   }
