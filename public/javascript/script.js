@@ -20901,15 +20901,19 @@ function handleSubmit(e) {
       if (p.acuteOrObtuse == "acute") {
         if (p.arcAngle < 90) {
           correctAnswer = "a";
+          correctAnswerTwo = 1;
         } else {
           correctAnswer = "b";
+          correctAnswerTwo = 2;
         }
       }
       if (p.acuteOrObtuse == "obtuse") {
         if (p.arcAngle < 90) {
           correctAnswer = "b";
+          correctAnswerTwo = 2;
         } else {
           correctAnswer = "a";
+          correctAnswerTwo = 1;
         }
       }
     }
