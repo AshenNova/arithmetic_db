@@ -2994,6 +2994,13 @@ function updateProblems() {
   }
 
   if (level == 3.17) {
+    if (p.arcAngle > 80 && p.arcAngle < 100) {
+      if (p.arcAngle > 90) {
+        p.arcAngle += +20;
+      } else {
+        p.arcAngle -= 20;
+      }
+    }
     ctx.save();
     ctx.font = "1em serif";
     let arcAngleRad = (p.arcAngle * Math.PI) / 180;
@@ -20891,13 +20898,6 @@ function handleSubmit(e) {
     }
 
     if (level == 3.17) {
-      if (p.arcAngle > 80 && p.arcAngle < 100) {
-        if (p.arcAngle > 90) {
-          p.arcAngle += +20;
-        } else {
-          p.arcAngle -= 20;
-        }
-      }
       if (p.acuteOrObtuse == "acute") {
         if (p.arcAngle < 90) {
           correctAnswer = "a";
@@ -28486,7 +28486,7 @@ function genProblems() {
   //SETTINGS
 
   if (level == "calFive") {
-    setting = calArrAll(27, calArr, setting, 99);
+    setting = calArrAll(25, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
 
     // while (setting == 14) {
@@ -32123,7 +32123,7 @@ function buttonLevelSetting() {
       //   !setting.split("").includes("-")
       // )
       //   setting = 99;
-      accepted = [...Array(28).keys(), 99];
+      accepted = [...Array(25).keys(), 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
