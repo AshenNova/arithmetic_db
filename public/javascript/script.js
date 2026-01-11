@@ -11081,7 +11081,6 @@ function updateProblems() {
       ${displaySimpleFraction(p.numA, p.denoA)} of A is ${
           genNumbers(2) == 0 ? "the same as" : "equal to"
         } ${displaySimpleFraction(p.numB, p.denoB)} of B.</p>
-      What is the ratio of A : B?
       `;
       }
       if (p.version == 2) {
@@ -11089,7 +11088,6 @@ function updateProblems() {
       ${displaySimpleFraction(p.numA, p.denoA)} of A are ${p.colors}.</p>
       ${displaySimpleFraction(p.numB, p.denoB)} of B are ${p.colors}.</p>
       A and B have the same number of ${p.colors}.</p>
-      What is the ratio of A : B?
       `;
       }
       if (p.version == 3) {
@@ -11099,9 +11097,16 @@ function updateProblems() {
         A and B has the same amount ${
           p.choice == "left" ? "removed" : "left"
         }.</p>
-        What is the ratio of A : B at first?
         `;
       }
+      displayProblem.insertAdjacentHTML(
+        "beforeend",
+        `${
+          p.question == "A"
+            ? `How many unit(s) does A have at first?`
+            : `How many unit(s) does B have at first?`
+        }`
+      );
     }
     if (setting == 6) {
       normalDisplay();
@@ -23316,8 +23321,10 @@ function handleSubmit(e) {
           const multiTwo = commonNum / p.numB;
           let unitA = p.denoA * multiOne;
           let unitB = p.denoB * multiTwo;
-          [unitA, unitB] = simplify(unitA, unitB);
-          correctAnswer = `${unitA}:${unitB}`;
+          // [unitA, unitB] = simplify(unitA, unitB);
+          // correctAnswer = `${unitA}:${unitB}`;
+          if (p.question == "A") correctAnswer = unitA;
+          if (p.question == "B") correctAnswer = unitB;
         }
         if (p.version == 3) {
           const otherNumA = p.denoA - p.numA;
@@ -23327,8 +23334,10 @@ function handleSubmit(e) {
           const multiTwo = commonNum / otherNumB;
           let lastA = p.denoA * multiOne;
           let lastB = p.denoB * multiTwo;
-          [lastA, lastB] = simplify(lastA, lastB);
-          correctAnswer = `${lastA}:${lastB}`;
+          // [lastA, lastB] = simplify(lastA, lastB);
+          // correctAnswer = `${lastA}:${lastB}`;
+          if (p.question == "A") correctAnswer = lastA;
+          if (p.question == "B") correctAnswer = lastB;
         }
       }
       if (setting == 6) {
@@ -28570,10 +28579,10 @@ function genProblems() {
     }
     // FRACTIONS: Identical Numerator
     if (setting == 5) {
-      const A = genNumbers(9) + 2;
-      const B = genNumbers(9) + 2;
-      const ANum = genNumbers(A - 1) + 1;
-      const BNum = genNumbers(B - 1) + 1;
+      const A = genNumbers(8) + 2;
+      const B = genNumbers(8) + 2;
+      const ANum = genNumbers(A - 1)+1;
+      const BNum = genNumbers(B - 2)+2;
       return {
         denoA: A,
         denoB: B,
@@ -28584,6 +28593,7 @@ function genProblems() {
           genNumbers(7)
         ],
         choice: ["left", "removed"][genNumbers(2)],
+        question: ["A", "B"][genNumbers(2)],
       };
     }
     // FRACTIONS: UNLIKE FRACTIONS WITH PERMISSION
