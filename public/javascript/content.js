@@ -293,10 +293,6 @@ export const displayContent = (level) => {
       
       24. Percentage: Remainder Concept</br>
       25. Percentage: Simple and Further discount</br>
-
-      <hr></hr>
-      26. Average: Internal change</br>
-      27. Average: Triangle Numbers</br>
       <hr></hr>
       </p>99. All
       
@@ -315,9 +311,6 @@ export const displayContent = (level) => {
     8. Percentage: GST, discount and Service Charge</br>
     9. Percentage: Identical Effect</br>
     10. Percentage: Solving in units</br>
-    <hr>
-    11. Average: External Change</br>
-    12. Average: Odd consecutive days</br>
     <hr>
     99. All
     
@@ -341,16 +334,20 @@ export const displayContent = (level) => {
     12. Ratio: Manipulation in units</br>
     13. Ratio: Repeated Identity (Geometry)</br>
     <hr>
-    14. Circles: Area and Perimeter</br>
-    15. Circles: Inner Square</br>
-    16. Circles: Others</br>
+    14. Average: Internal change</br>
+    15. Average: Triangle Numbers</br>
+    16. Average: External Change</br>
+    17. Average: Odd consecutive days</br>
+    18. Circles: Area and Perimeter</br>
+    19. Circles: Inner Square</br>
+    20. Circles: Others</br>
     <hr>
-    17. Speed: Average Speed</br>
-    18. Speed: Moving Apart</br>
-    19. Speed: Difference in speed (Mid)</br>
-    20. Speed: Surrogate</br>
+    91. Speed: Average Speed</br>
+    92. Speed: Moving Apart</br>
+    93. Speed: Difference in speed (Mid)</br>
+    94. Speed: Surrogate</br>
     <hr>
-    21. Pie Chart</br>
+    95. Pie Chart</br>
     <hr>
     99. All
     `;
