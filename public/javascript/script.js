@@ -28574,7 +28574,7 @@ function genProblems() {
       const A = genNumbers(8) + 2;
       const B = genNumbers(8) + 2;
       const ANum = genNumbers(A - 1) + 1;
-      const BNum = genNumbers(B - 2) + 2;
+      const BNum = genNumbers(B - 1) + 1;
       return {
         denoA: A,
         denoB: B,
