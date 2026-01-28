@@ -278,21 +278,21 @@ export const displayContent = (level) => {
       <hr></hr>
       13. Fractions: Closest and Furthest</br>
       14. Fractions: Before and After</br>
-      15. Fractions: Under the same unit (Level 2)</br>
-      16. Fractions: Overlapping Model</br>
-      17. Fractions: Identical Numerator (Type 2)</br>
-      <hr>
-      18. Pattern: Continuous Pattern (Sets) </br>
-      <hr>
-      19. Rates: Part thereof part thereafter</br>
-      20. Rates: Taps</br>
-      <hr></hr>
-      21. Percentage: Percentage of</br>
-      22. Percentage: Percentage change</br>
-      23. Percentage: Repeated Identity</br>
       
-      24. Percentage: Remainder Concept</br>
-      25. Percentage: Simple and Further discount</br>
+      15. Fractions: Overlapping Model</br>
+      16. Fractions: Identical Numerator (Type 2)</br>
+      <hr>
+      17. Pattern: Continuous Pattern (Sets) </br>
+      <hr>
+      18. Rates: Part thereof part thereafter</br>
+      19. Rates: Taps</br>
+      <hr></hr>
+      20. Percentage: Percentage of</br>
+      21. Percentage: Percentage change</br>
+      22. Percentage: Repeated Identity</br>
+      
+      23. Percentage: Remainder Concept</br>
+      24. Percentage: Simple and Further discount</br>
       <hr></hr>
       </p>99. All
       
@@ -306,7 +306,7 @@ export const displayContent = (level) => {
     4. Geometry: Manipulation of Dimension: level 2</br>
     5. Geometry: Area of Figure: Using 2 different Units</br>
     <hr>
-    6. Percentage: Repeated Group</br>
+    6. Fractions: Under the same unit (Level 2)</br>
     7. Percentage: Overlapping Model</br>
     8. Percentage: GST, discount and Service Charge</br>
     9. Percentage: Identical Effect</br>
@@ -360,6 +360,7 @@ export const displayContent = (level) => {
     3. Ratio: Unidentical Group</br>
     4. Supposition: Least</br>
     <hr>
+    6. Percentage: Repeated Group</br>
     5. Volume: Grouping</br>
     6. Volume: Meet Up</br>
     <hr>

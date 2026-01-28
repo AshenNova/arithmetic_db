@@ -11609,69 +11609,9 @@ function updateProblems() {
       
       `;
     }
-    //REMAINDER CONCEPT: UNDER THE SAME UNIT
-    if (setting == 15) {
-      normalDisplay();
-      const person = boyNames[genNumbers(boyNames.length)];
-      [p.denoA, p.numeA] = simplify(p.denoA, p.numeA);
-      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
-      [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
 
-      const totalUnits = p.quantityA * p.unitA + p.quantityB * p.unitB;
-
-      if (totalUnits % p.numeA != 0) {
-        console.log("ugly Units");
-        return updateCalc();
-      }
-      // console.log(p.unitA, p.quantityA, p.unitB, p.quantityB);
-      // console.log(totalUnits);
-
-      const oneTopNume = totalUnits / p.numeA;
-      if (oneTopNume % 1 != 0) {
-        console.log("ugly Units");
-        return updateCalc();
-      }
-      const oneTopOtherNume = oneTopNume * (p.denoA - p.numeA);
-      console.log(oneTopOtherNume);
-      const oneBottomNume = oneTopOtherNume / p.denoB;
-      if (oneBottomNume % 1 != 0) {
-        console.log("ugly Units");
-        return updateCalc();
-      }
-      const numberOfExtraUnitsUsed = oneBottomNume * p.numeB;
-      // console.log(`${numberOfExtraUnitsUsed} extra units`);
-      if (p.chosen == "A") p.extraBought = numberOfExtraUnitsUsed / p.unitA;
-      if (p.chosen == "B") p.extraBought = numberOfExtraUnitsUsed / p.unitB;
-
-      // console.log(p.extraBought);
-      if (p.extraBought <= 0) {
-        console.log("No extra bought");
-        return updateCalc();
-      }
-      displayProblem.innerHTML = `
-      A ${p.objectA.slice(
-        0,
-        p.objectA.length - 1
-      )} costs ${displaySimpleFraction(
-        p.unitA,
-        p.unitB
-      )} of a ${p.objectB.slice(0, p.objectB.length - 1)}.</br>
-      ${person} bought ${p.quantityA} ${p.objectA} and ${p.quantityB} ${
-        p.objectB
-      }  with ${displaySimpleFraction(p.numeA, p.denoA)} of his money.</br>
-      He then bought ${p.extraBought % 1 != 0 ? "as many" : "more"} ${
-        p.chosen == "A" ? p.objectA : p.objectB
-      } with ${displaySimpleFraction(
-        p.numeB,
-        p.denoB
-      )} of his remaining money.</br>
-      How many ${
-        p.chosen == "A" ? p.objectA : p.objectB
-      } did he have in the end?
-      `;
-    }
     // FRACTIONS: OVERLAPPING MODEL
-    if (setting == 16) {
+    if (setting == 15) {
       normalDisplay();
       const stuff = ["pens", "pencils", "erasers", "stamps"][genNumbers(4)];
       const personA = boyNames[genNumbers(boyNames.length)];
@@ -11719,7 +11659,7 @@ function updateProblems() {
         );
     }
     //IDENTICAL NUMERATOR (TYPE 2)
-    if (setting == 17) {
+    if (setting == 16) {
       normalDisplay();
       [p.nume, p.deno] = simplify(p.nume, p.deno);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
@@ -11761,7 +11701,7 @@ function updateProblems() {
       }
     }
     // PATTERN: CONTINUOUS PATTERN (SETS)
-    if (setting == 18) {
+    if (setting == 17) {
       normalDisplay();
       p.second = p.first + p.secondDiff;
       displayProblem.innerHTML = `
@@ -11833,7 +11773,7 @@ function updateProblems() {
       }
     }
     //PART THEREOF & PART THEREAFTER
-    if (setting == 19) {
+    if (setting == 18) {
       normalDisplay();
       const durationHours = Math.floor(p.duration / 60);
       const durationMins = p.duration % 60;
@@ -11855,7 +11795,7 @@ function updateProblems() {
       `;
     }
     // RATES: TAPS
-    if (setting == 20) {
+    if (setting == 19) {
       normalDisplay();
       [p.nume, p.deno] = simplify(p.nume, p.deno);
       let lineOne = `The dimensions of a container is ${p.length} cm, ${p.breadth} cm, ${p.height} cm.`;
@@ -11908,7 +11848,7 @@ function updateProblems() {
     }
 
     // PERCENTAGE: PERCENTAGE OF
-    if (setting == 21) {
+    if (setting == 20) {
       normalDisplay();
       const statement = genNumbers(2);
       if (p.start == "fractions") {
@@ -11945,7 +11885,7 @@ function updateProblems() {
       }
     }
     // PERCENTAGE: PERCENTAGE CHANGE
-    if (setting == 22) {
+    if (setting == 21) {
       normalDisplay();
 
       if (p.version == "change") {
@@ -11991,7 +11931,7 @@ function updateProblems() {
       }
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 23) {
+    if (setting == 22) {
       normalDisplay();
       let lineOne = undefined;
       let tempArr = [];
@@ -12024,7 +11964,7 @@ function updateProblems() {
     }
 
     // PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 24) {
+    if (setting == 23) {
       normalDisplay();
       displayProblem.innerHTML = `
       Person A spent ${p.percA}% of his money on ${p.itemOne}.</p>
@@ -12087,7 +12027,7 @@ function updateProblems() {
       }
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 25) {
+    if (setting == 24) {
       normalDisplay();
       if (p.frontBack == "front") {
         if (p.moreDiscount == 0) {
@@ -12623,11 +12563,9 @@ function updateProblems() {
       const choiceFirst = genNumbers(3);
       if (choiceFirst == 0) {
         ctx.fillText(`Point DF is ${pointDF}/${pointCF} CF.`, 20, 20);
-      } else if (choiceFirst == 1) {
-        ctx.fillText(`Point DF is ${pointDF} : ${pointCF} to CF.`, 20, 20);
       } else {
         ctx.fillText(
-          `Point DF is ${pointDF} : ${pointCF + pointDF} to CD.`,
+          `Point DF is ${pointDF}/${pointCF + pointDF} to CD.`,
           20,
           20
         );
@@ -12637,11 +12575,9 @@ function updateProblems() {
       const choiceSecond = genNumbers(3);
       if (choiceSecond == 0) {
         ctx.fillText(`Point BE is ${pointBE}/${pointCE} CE.`, 20, 40);
-      } else if (choiceSecond == 1) {
-        ctx.fillText(`Point BE is ${pointBE} : ${pointCE} to CE.`, 20, 40);
       } else {
         ctx.fillText(
-          `Point BE is ${pointBE} : ${pointCE + pointBE} to BC.`,
+          `Point BE is ${pointBE}/${pointCE + pointBE} to BC.`,
           20,
           40
         );
@@ -12719,88 +12655,65 @@ function updateProblems() {
       ctx.restore();
     }
 
-    // RATIO: REPEATED GROUP
+    //REMAINDER CONCEPT: UNDER THE SAME UNIT
     if (setting == 6) {
-      console.log("Repeated Group");
       normalDisplay();
-      const displayA = p.percA;
-      const displayB = p.percB;
-      if (p.firstSentence == "the total" && p.secondSentence == "the total") {
-        if (p.percA + p.percB >= 100) return updateCalc();
+      const person = boyNames[genNumbers(boyNames.length)];
+      [p.denoA, p.numeA] = simplify(p.denoA, p.numeA);
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
+
+      const totalUnits = p.quantityA * p.unitA + p.quantityB * p.unitB;
+
+      if (totalUnits % p.numeA != 0) {
+        console.log("ugly Units");
+        return updateCalc();
       }
-      let commonGroup = undefined;
-      let newA = undefined;
-      let newB = undefined;
-      let newC = undefined;
-      if (p.firstSentence == "B and C" && p.secondSentence == "C") {
-        let bAndc = 100;
-        [p.percA, bAndc] = simplify(p.percA, bAndc);
-        let c = 100;
-        [p.percB, c] = simplify(p.percB, c);
-        commonGroup = commonDeno(bAndc, p.percB + c);
-        if (commonGroup == "Error") return updateCalc();
-        const multiplierOne = commonGroup / bAndc;
-        newA = p.percA * multiplierOne;
-        const multiplierTwo = commonGroup / (p.percB + c);
-        newB = p.percB * multiplierTwo;
-        newC = c * multiplierTwo;
-        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
-        [newA, newB, newC] = simplifyThree(newA, newB, newC);
-        p.answer = `${newA}:${newB}:${newC}`;
+      // console.log(p.unitA, p.quantityA, p.unitB, p.quantityB);
+      // console.log(totalUnits);
+
+      const oneTopNume = totalUnits / p.numeA;
+      if (oneTopNume % 1 != 0) {
+        console.log("ugly Units");
+        return updateCalc();
       }
-      if (p.firstSentence == "the total" && p.secondSentence == "C") {
-        let bAndc = 100 - p.percA;
-        [p.percA, bAndc] = simplify(p.percA, bAndc);
-        let c = 100;
-        [p.percB, c] = simplify(p.percB, c);
-        commonGroup = commonDeno(bAndc, p.percB + c);
-        if (commonGroup == "Error") return updateCalc();
-        const multiplierOne = commonGroup / bAndc;
-        newA = p.percA * multiplierOne;
-        const multiplierTwo = commonGroup / (p.percB + c);
-        newB = p.percB * multiplierTwo;
-        newC = c * multiplierTwo;
-        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
-        [newA, newB, newC] = simplifyThree(newA, newB, newC);
-        p.answer = `${newA}:${newB}:${newC}`;
+      const oneTopOtherNume = oneTopNume * (p.denoA - p.numeA);
+      console.log(oneTopOtherNume);
+      const oneBottomNume = oneTopOtherNume / p.denoB;
+      if (oneBottomNume % 1 != 0) {
+        console.log("ugly Units");
+        return updateCalc();
       }
-      if (p.firstSentence == "B and C" && p.secondSentence == "the total") {
-        let bAndc = 100;
-        [p.percA, bAndc] = simplify(p.percA, bAndc);
-        let aAndc = 100 - p.percB;
-        [p.percB, aAndc] = simplify(p.percB, aAndc);
-        commonGroup = commonDeno(p.percA + bAndc, p.percB + aAndc);
-        if (commonGroup == "Error") return updateCalc();
-        const multiplierOne = commonGroup / (p.percA + bAndc);
-        newA = p.percA * multiplierOne;
-        const multiplierTwo = commonGroup / (p.percB + aAndc);
-        newB = p.percB * multiplierTwo;
-        newC = aAndc * multiplierTwo - newA;
-        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
-        [newA, newB, newC] = simplifyThree(newA, newB, newC);
-        p.answer = `${newA}:${newB}:${newC}`;
+      const numberOfExtraUnitsUsed = oneBottomNume * p.numeB;
+      // console.log(`${numberOfExtraUnitsUsed} extra units`);
+      if (p.chosen == "A") p.extraBought = numberOfExtraUnitsUsed / p.unitA;
+      if (p.chosen == "B") p.extraBought = numberOfExtraUnitsUsed / p.unitB;
+
+      // console.log(p.extraBought);
+      if (p.extraBought <= 0) {
+        console.log("No extra bought");
+        return updateCalc();
       }
-      if (p.firstSentence == "the total" && p.secondSentence == "the total") {
-        let bAndc = 100 - p.percA;
-        [p.percA, bAndc] = simplify(p.percA, bAndc);
-        let aAndc = 100 - p.percB;
-        [p.percB, aAndc] = simplify(p.percB, aAndc);
-        commonGroup = commonDeno(p.percA + bAndc, p.percB + aAndc);
-        if (commonGroup == "Error") return updateCalc();
-        const multiplierOne = commonGroup / (p.percA + bAndc);
-        newA = p.percA * multiplierOne;
-        const multiplierTwo = commonGroup / (p.percB + aAndc);
-        newB = p.percB * multiplierTwo;
-        newC = aAndc * multiplierTwo - newA;
-        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
-        [newA, newB, newC] = simplifyThree(newA, newB, newC);
-        p.answer = `${newA}:${newB}:${newC}`;
-      }
-      if (newA > 150 || newB > 150 || newC > 150) return updateCalc();
       displayProblem.innerHTML = `
-      A is ${displayA}% of ${p.firstSentence}.</p>
-      B is ${displayB}% of ${p.secondSentence}.</p>
-      What is the ratio of A : B : C?
+      A ${p.objectA.slice(
+        0,
+        p.objectA.length - 1
+      )} costs ${displaySimpleFraction(
+        p.unitA,
+        p.unitB
+      )} of a ${p.objectB.slice(0, p.objectB.length - 1)}.</br>
+      ${person} bought ${p.quantityA} ${p.objectA} and ${p.quantityB} ${
+        p.objectB
+      }  with ${displaySimpleFraction(p.numeA, p.denoA)} of his money.</br>
+      He then bought ${p.extraBought % 1 != 0 ? "as many" : "more"} ${
+        p.chosen == "A" ? p.objectA : p.objectB
+      } with ${displaySimpleFraction(
+        p.numeB,
+        p.denoB
+      )} of his remaining money.</br>
+      How many ${
+        p.chosen == "A" ? p.objectA : p.objectB
+      } did he have in the end?
       `;
     }
 
@@ -15422,8 +15335,94 @@ How far is apart is Town A and Town B?
     //       "<p><i>Leave your answer in fraction if needed.</i></p>"
     //     );
     //   }
-    // VOLUME: GROUPING
+
+    // RATIO: REPEATED GROUP
     if (setting == 5) {
+      console.log("Repeated Group");
+      normalDisplay();
+      const displayA = p.percA;
+      const displayB = p.percB;
+      if (p.firstSentence == "the total" && p.secondSentence == "the total") {
+        if (p.percA + p.percB >= 100) return updateCalc();
+      }
+      let commonGroup = undefined;
+      let newA = undefined;
+      let newB = undefined;
+      let newC = undefined;
+      if (p.firstSentence == "B and C" && p.secondSentence == "C") {
+        let bAndc = 100;
+        [p.percA, bAndc] = simplify(p.percA, bAndc);
+        let c = 100;
+        [p.percB, c] = simplify(p.percB, c);
+        commonGroup = commonDeno(bAndc, p.percB + c);
+        if (commonGroup == "Error") return updateCalc();
+        const multiplierOne = commonGroup / bAndc;
+        newA = p.percA * multiplierOne;
+        const multiplierTwo = commonGroup / (p.percB + c);
+        newB = p.percB * multiplierTwo;
+        newC = c * multiplierTwo;
+        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
+        [newA, newB, newC] = simplifyThree(newA, newB, newC);
+        p.answer = `${newA}:${newB}:${newC}`;
+      }
+      if (p.firstSentence == "the total" && p.secondSentence == "C") {
+        let bAndc = 100 - p.percA;
+        [p.percA, bAndc] = simplify(p.percA, bAndc);
+        let c = 100;
+        [p.percB, c] = simplify(p.percB, c);
+        commonGroup = commonDeno(bAndc, p.percB + c);
+        if (commonGroup == "Error") return updateCalc();
+        const multiplierOne = commonGroup / bAndc;
+        newA = p.percA * multiplierOne;
+        const multiplierTwo = commonGroup / (p.percB + c);
+        newB = p.percB * multiplierTwo;
+        newC = c * multiplierTwo;
+        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
+        [newA, newB, newC] = simplifyThree(newA, newB, newC);
+        p.answer = `${newA}:${newB}:${newC}`;
+      }
+      if (p.firstSentence == "B and C" && p.secondSentence == "the total") {
+        let bAndc = 100;
+        [p.percA, bAndc] = simplify(p.percA, bAndc);
+        let aAndc = 100 - p.percB;
+        [p.percB, aAndc] = simplify(p.percB, aAndc);
+        commonGroup = commonDeno(p.percA + bAndc, p.percB + aAndc);
+        if (commonGroup == "Error") return updateCalc();
+        const multiplierOne = commonGroup / (p.percA + bAndc);
+        newA = p.percA * multiplierOne;
+        const multiplierTwo = commonGroup / (p.percB + aAndc);
+        newB = p.percB * multiplierTwo;
+        newC = aAndc * multiplierTwo - newA;
+        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
+        [newA, newB, newC] = simplifyThree(newA, newB, newC);
+        p.answer = `${newA}:${newB}:${newC}`;
+      }
+      if (p.firstSentence == "the total" && p.secondSentence == "the total") {
+        let bAndc = 100 - p.percA;
+        [p.percA, bAndc] = simplify(p.percA, bAndc);
+        let aAndc = 100 - p.percB;
+        [p.percB, aAndc] = simplify(p.percB, aAndc);
+        commonGroup = commonDeno(p.percA + bAndc, p.percB + aAndc);
+        if (commonGroup == "Error") return updateCalc();
+        const multiplierOne = commonGroup / (p.percA + bAndc);
+        newA = p.percA * multiplierOne;
+        const multiplierTwo = commonGroup / (p.percB + aAndc);
+        newB = p.percB * multiplierTwo;
+        newC = aAndc * multiplierTwo - newA;
+        if (newA < 1 || newB < 1 || newC < 1) return updateCalc();
+        [newA, newB, newC] = simplifyThree(newA, newB, newC);
+        p.answer = `${newA}:${newB}:${newC}`;
+      }
+      if (newA > 150 || newB > 150 || newC > 150) return updateCalc();
+      displayProblem.innerHTML = `
+      A is ${displayA}% of ${p.firstSentence}.</p>
+      B is ${displayB}% of ${p.secondSentence}.</p>
+      What is the ratio of A : B : C?
+      `;
+    }
+
+    // VOLUME: GROUPING
+    if (setting == 6) {
       [p.finalHeightUnitA, p.finalHeightUnitB] = simplify(
         p.finalHeightUnitA,
         p.finalHeightUnitB
@@ -15487,7 +15486,7 @@ How far is apart is Town A and Town B?
       `;
     }
     // VOLUME: CATCH UP
-    if (setting == 6) {
+    if (setting == 7) {
       const volumeAFirst = p.lengthA * p.breadthA * p.waterLevelA;
       const volumeBFirst = p.lengthB * p.breadthB * p.waterLevelB;
       const heightAPerMin = (p.tapA * 1000) / (p.lengthA * p.breadthA);
@@ -15533,7 +15532,7 @@ How far is apart is Town A and Town B?
       );
     }
     // GEOMETRY: REPEATED IDENTITY
-    if (setting == 7) {
+    if (setting == 8) {
       drawingDisplay();
       // let startYAxis = 135;
       const multiplier = 15;
@@ -15725,7 +15724,7 @@ How far is apart is Town A and Town B?
       ctx.restore(); // FIRST RESTORE
     }
     //GEOMETRY: MANIPULATION OF DIMENSION: OVERLAPPING AREA
-    if (setting == 8) {
+    if (setting == 9) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, 400, 275);
       drawingDisplay();
@@ -23444,32 +23443,26 @@ function handleSubmit(e) {
       if (setting == 14) {
         correctAnswer = p.atFirstUnits * p.oneUnit;
       }
-      // FRACTIONS: REMAINDER CONCEPT: UNDER THE SAME UNIT
-      if (setting == 15) {
-        if (p.chosen == "A")
-          correctAnswer = p.quantityA + Math.floor(p.extraBought);
-        if (p.chosen == "B")
-          correctAnswer = p.quantityB + Math.floor(p.extraBought);
-      }
+
       //FRACTIONS: OVERLAPPING MODEL
-      if (setting == 16) {
+      if (setting == 15) {
         if (p.question == "A") correctAnswer = p.oneUnit * p.numeA;
         if (p.question == "B")
           correctAnswer = p.oneUnit * p.numeA + p.difference;
         if (p.question == "total") correctAnswer = p.oneUnit * p.denoA;
       }
 
-      if (setting == 17) {
+      if (setting == 16) {
         correctAnswer = p.answer;
       }
 
       // PATTERN: CONTINUOUS PATTERN (SETS)
-      if (setting == 18) {
+      if (setting == 17) {
         if (p.question == "pattern") correctAnswer = p.value;
         if (p.question == "number") correctAnswer = p.pattern;
       }
 
-      if (setting == 19) {
+      if (setting == 18) {
         if (p.type == "part thereof") {
           correctAnswer = Math.ceil(p.duration / p.group) * p.rates;
         }
@@ -23478,7 +23471,7 @@ function handleSubmit(e) {
         }
       }
 
-      if (setting == 20) {
+      if (setting == 19) {
         const capacity = p.length * p.breadth * p.height;
         const fill = (capacity / p.deno) * (p.deno - p.nume);
         const drain = (capacity / p.deno) * p.nume;
@@ -23501,7 +23494,7 @@ function handleSubmit(e) {
       }
 
       //PERCENTAGE: PERCENTAGE OF
-      if (setting == 21) {
+      if (setting == 20) {
         if (p.start == "fractions" || p.start == "decimals") {
           correctAnswer = `${accDecimal((p.nume / p.deno) * 100)}%`;
         }
@@ -23516,7 +23509,7 @@ function handleSubmit(e) {
         }
       }
       //PERCENRAGE: PERCENTAGE CHANGE
-      if (setting == 22) {
+      if (setting == 21) {
         const change = Math.abs(p.next - p.previous);
         if (p.version == "change")
           correctAnswer = `${accDecimal((change / p.previous) * 100)}%`;
@@ -23526,13 +23519,13 @@ function handleSubmit(e) {
           correctAnswer = accDecimal((p.next / (100 + p.change)) * 100);
       }
       // PERCENTAGE: REPEATED IDENTITY
-      if (setting == 23) {
+      if (setting == 22) {
         p.answer = simplestForm(p.answer);
         correctAnswer = p.answer.join(":");
       }
 
       // PERCENTAGE: REMAINDER CONCEPT
-      if (setting == 24) {
+      if (setting == 23) {
         if (p.question == "percentage") {
           const remaining = 100 - p.percA;
           const itemTwoP = (remaining / 100) * p.percR;
@@ -23546,7 +23539,7 @@ function handleSubmit(e) {
         }
       }
       // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-      if (setting == 25) {
+      if (setting == 24) {
         if (p.frontBack == "front") {
           if (p.moreDiscount == 0) {
             if (p.discountOrPrice == "price") {
@@ -23653,14 +23646,14 @@ function handleSubmit(e) {
         correctAnswer = `${shaded}/${area}`;
       }
 
+      // FRACTIONS: REMAINDER CONCEPT: UNDER THE SAME UNIT
       if (setting == 6) {
-        console.log(p.answer);
-        // got to change to an array
-        p.answer = p.answer.split(":");
-        console.log(p.answer, typeof p.answer);
-        p.answer = simplestForm(p.answer).join(":");
-        correctAnswer = p.answer;
+        if (p.chosen == "A")
+          correctAnswer = p.quantityA + Math.floor(p.extraBought);
+        if (p.chosen == "B")
+          correctAnswer = p.quantityB + Math.floor(p.extraBought);
       }
+
       //PERCENTAGE: OVERLAPPING MODEL
       if (setting == 7) {
         if (p.question == "A") correctAnswer = p.oneUnit * p.numeA;
@@ -24211,8 +24204,18 @@ function handleSubmit(e) {
       //     }
       //   }
       // }
-      // VOLUME: GROUPING
+
       if (setting == 5) {
+        console.log(p.answer);
+        // got to change to an array
+        p.answer = p.answer.split(":");
+        console.log(p.answer, typeof p.answer);
+        p.answer = simplestForm(p.answer).join(":");
+        correctAnswer = p.answer;
+      }
+
+      // VOLUME: GROUPING
+      if (setting == 6) {
         if (p.question == "transfer") correctAnswer = p.answer;
         if (p.question == "finalA")
           correctAnswer = p.groups * p.finalHeightUnitA;
@@ -24221,7 +24224,7 @@ function handleSubmit(e) {
       }
 
       // VOLUME: CATCH UP
-      if (setting == 6) {
+      if (setting == 7) {
         const heightAPerMin = (p.tapA * 1000) / (p.lengthA * p.breadthA);
         const heightBPerMin = (p.tapB * 1000) / (p.lengthB * p.breadthB);
         const differenceHeight = Math.abs(p.waterLevelA - p.waterLevelB);
@@ -24242,7 +24245,7 @@ function handleSubmit(e) {
         }
       }
       // GEOMETRY: REPEATED IDENTITY
-      if (setting == 7) {
+      if (setting == 8) {
         if (p.type == 1) {
           const rect = p.rectLength * p.rectBreadth;
           const triangle = (1 / 2) * p.triangleBase * p.rectLength;
@@ -24260,7 +24263,7 @@ function handleSubmit(e) {
 
       // GEOMETRY: MANIPULATION OF DIMENSION: OVERLAPPING TRIANGLE
 
-      if (setting == 8) {
+      if (setting == 9) {
         const overlappingArea = (1 / 2) * p.rectLength * p.rectBreadth;
         const unshaded = overlappingArea - p.quadrilateral;
         const figure = p.rectLength * p.rectBreadth;
@@ -28478,7 +28481,7 @@ function genProblems() {
   //SETTINGS
 
   if (level == "calFive") {
-    setting = calArrAll(25, calArr, setting, 99);
+    setting = calArrAll(24, calArr, setting, 99);
     setting = checkRange(setting, calArr, skipArr);
 
     // while (setting == 14) {
@@ -28715,30 +28718,8 @@ function genProblems() {
       };
     }
 
-    //REMAINDER CONCEPT: UNDER THE SAME UNIT
-    if (setting == 15) {
-      const gen_denoA = genNumbers(6) + 2;
-      const gen_denoB = genNumbers(6) + 2;
-      const gen_objPosition = genNumbers(2);
-      const gen_unitA = genNumbers(4) + 2;
-      return {
-        objectA: ["pens", "shirts"][gen_objPosition],
-        objectB: ["pencils", "pants"][gen_objPosition],
-        unitA: gen_unitA,
-        unitB: genNumbers(gen_unitA - 1) + 1,
-        quantityA: genNumbers(5) + 2,
-        quantityB: genNumbers(5) + 2,
-        denoA: gen_denoA,
-        numeA: genNumbers(gen_denoA - 1) + 1,
-        denoB: gen_denoB,
-        numeB: genNumbers(gen_denoB - 1) + 1,
-        chosen: ["A", "B"][genNumbers(2)],
-        extraBought: undefined,
-      };
-    }
-
     //FRACTIONS: OVERLAPPING MODEL
-    if (setting == 16) {
+    if (setting == 15) {
       const gen_deno = (genNumbers(2) + 3) * 2;
       return {
         question: ["A", "B", "total"][genNumbers(3)],
@@ -28752,7 +28733,7 @@ function genProblems() {
     }
 
     // IDENTICAL NUMERATOR TYPE 2
-    if (setting == 17) {
+    if (setting == 16) {
       const denominator = genNumbers(6) + 2;
       const numerator = genNumbers(denominator - 1) + 1;
       const denominatorTwo = genNumbers(10) + 2;
@@ -28770,7 +28751,7 @@ function genProblems() {
     }
 
     // PATTERN: CONTINUOUS PATTERN (SETS)
-    if (setting == 18) {
+    if (setting == 17) {
       return {
         start: genNumbers(8) + 2,
         first: genNumbers(5) + 1,
@@ -28784,7 +28765,7 @@ function genProblems() {
       };
     }
     // RATES: PARTTHEREOF & PARTTHEREAFTER
-    if (setting == 19) {
+    if (setting == 18) {
       return {
         startHour: genNumbers(5) + 1,
         startMins: genNumbers(60 - 1) + 1,
@@ -28796,7 +28777,7 @@ function genProblems() {
     }
 
     // RATES: TAPS
-    if (setting == 20) {
+    if (setting == 19) {
       const gen_height = genNumbers(40) + 20;
       return {
         length: genNumbers(50) + 50,
@@ -28809,7 +28790,7 @@ function genProblems() {
     }
 
     // PERCENTAGE: PERCENTAGE OF
-    if (setting == 21) {
+    if (setting == 20) {
       const gen_deno = [2, 4, 5, 8, 10, 20, 50, 100, 1000][genNumbers(9)];
       // const position = genNumbers(6);
       return {
@@ -28823,7 +28804,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: PERCENTAGE CHANGE
-    if (setting == 22) {
+    if (setting == 21) {
       return {
         previous: (genNumbers(20) + 1) * 5,
         next: (genNumbers(20) + 1) * 5,
@@ -28834,7 +28815,7 @@ function genProblems() {
       };
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 23) {
+    if (setting == 22) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -28847,7 +28828,7 @@ function genProblems() {
     }
 
     //PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 24) {
+    if (setting == 23) {
       return {
         percA: (genNumbers(20 - 1) + 1) * 5,
         itemOne: ["toys", "chocolates", "food"][genNumbers(3)],
@@ -28864,7 +28845,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 25) {
+    if (setting == 24) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         cost: genNumbers(899) + 100,
@@ -28957,14 +28938,25 @@ function genProblems() {
       };
     }
 
-    //PERCETAGE: REPEATED GROUP
+    //REMAINDER CONCEPT: UNDER THE SAME UNIT
     if (setting == 6) {
+      const gen_denoA = genNumbers(6) + 2;
+      const gen_denoB = genNumbers(6) + 2;
+      const gen_objPosition = genNumbers(2);
+      const gen_unitA = genNumbers(4) + 2;
       return {
-        percA: (genNumbers(20) + 1) * 5,
-        firstSentence: ["B and C", "the total"][genNumbers(2)],
-        percB: (genNumbers(20) + 1) * 5,
-        secondSentence: ["C", "the total"][genNumbers(2)],
-        answer: undefined,
+        objectA: ["pens", "shirts"][gen_objPosition],
+        objectB: ["pencils", "pants"][gen_objPosition],
+        unitA: gen_unitA,
+        unitB: genNumbers(gen_unitA - 1) + 1,
+        quantityA: genNumbers(5) + 2,
+        quantityB: genNumbers(5) + 2,
+        denoA: gen_denoA,
+        numeA: genNumbers(gen_denoA - 1) + 1,
+        denoB: gen_denoB,
+        numeB: genNumbers(gen_denoB - 1) + 1,
+        chosen: ["A", "B"][genNumbers(2)],
+        extraBought: undefined,
       };
     }
 
@@ -29518,8 +29510,19 @@ function genProblems() {
       };
     }
 
-    // VOLUME: GROUPING
+    //PERCETAGE: REPEATED GROUP
     if (setting == 5) {
+      return {
+        percA: (genNumbers(20) + 1) * 5,
+        firstSentence: ["B and C", "the total"][genNumbers(2)],
+        percB: (genNumbers(20) + 1) * 5,
+        secondSentence: ["C", "the total"][genNumbers(2)],
+        answer: undefined,
+      };
+    }
+
+    // VOLUME: GROUPING
+    if (setting == 6) {
       const gen_heightA = genNumbers(30) + 10;
       const gen_heightB = genNumbers(30) + 10;
       return {
@@ -29540,7 +29543,7 @@ function genProblems() {
     }
 
     //VOLUME: CATCH UP
-    if (setting == 6) {
+    if (setting == 7) {
       const gen_lengthA = (genNumbers(10) + 1) * 10;
       const gen_breadthA = (genNumbers(10) + 1) * 10;
       const gen_heightA = (genNumbers(10) + 1) * 10;
@@ -29563,7 +29566,7 @@ function genProblems() {
       };
     }
     // GEOMETRY: REPEATED IDENTITY
-    if (setting == 7) {
+    if (setting == 8) {
       return {
         type: [4, 3, 2, 1][genNumbers(4)],
         squareSides: genNumbers(2) + 13,
@@ -29575,7 +29578,7 @@ function genProblems() {
     }
 
     //GEOMETRY: MANIPULATION OF DIMENSION: OVERLAPPING AREA
-    if (setting == 8) {
+    if (setting == 9) {
       const gen_length = (genNumbers(20) + 20) * 4;
       return {
         type: [1][genNumbers(1)],
@@ -32125,7 +32128,7 @@ function buttonLevelSetting() {
       //   !setting.split("").includes("-")
       // )
       //   setting = 99;
-      accepted = [...Array(26).keys(), 99];
+      accepted = [...Array(25).keys(), 99];
       setting = settingCheck(setting, accepted, level);
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
