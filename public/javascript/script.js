@@ -7307,51 +7307,7 @@ function updateProblems() {
   //   }
   //   ctx.restore();
   // }
-  //AVERAGE: SIMPLE
-  if (level == 5.17) {
-    calculatorSymbol.classList.remove("hidden");
-    normalDisplay();
 
-    const averageList = [];
-    for (let i = 0; i < p.variables; i++) {
-      const zero = genNumbers(5);
-      if (zero == 0 && !averageList.includes(0)) {
-        averageList.push(0);
-      } else {
-        averageList.push(genNumbers(50) + 1);
-      }
-    }
-    const sum = averageList.reduce(function (a, b) {
-      return a + b;
-    });
-    const average = sum / averageList.length;
-    // console.log(p.answer.toString().split(".")[1].length > 3);
-    if (average % 1 != 0) {
-      if (average.toString().split(".")[1].length > 3) return updateCalc();
-    }
-    // if (p.answer.toString().split(".")[1].length > 3) return updateCalc();
-    if (p.version == 0) {
-      p.answer = average;
-      displayProblem.innerHTML = `
-  Find the average of: </p>${averageList.join(", ")}
-  `;
-    }
-    if (p.version == 1) {
-      const index = genNumbers(averageList.length);
-      const unknownNum = averageList[index];
-      console.log(unknownNum, averageList);
-      p.answer = unknownNum;
-      averageList[index] = "?";
-      let str = averageList.join(", ");
-      console.log(str);
-      // str = str.replace(unknownNum, "? ");
-      displayProblem.innerHTML = `
-    Find the missing number.</p>
-    The average of the following numbers is ${sum / averageList.length}.</p>
-    ${str}
-    `;
-    }
-  }
   if (level == 5.18) {
     if (
       p.numOne == p.denoOne ||
@@ -8246,48 +8202,94 @@ function updateProblems() {
     }
   }
 
+  // if (level == 6.07) {
+  //   p.distance = p.speedA * p.timeA + p.speedB * p.timeB;
+  //   // normal
+  //   if (p.roll == "A") {
+  //     displayProblem.innerHTML = `
+  //     The distance between A and B is ${p.distance} units. </br>
+  //     A moves at ${p.speedA} units/sec. </br>
+  //     B moves at ${p.speedB} units/sec.  </br>
+  //     How long did it take both to meet?
+
+  //     `;
+  //   }
+  //   if (p.roll == "B") {
+  //     // Natural
+  //     displayProblem.innerHTML = `
+  //     The distance between A and B is ${p.distance} units. </br>
+  //     A travels ${p.speedA * p.timeA} units at ${p.speedA} units/sec. </br>
+  //     B then sets off at ${p.speedB} units/sec.  </br>
+  //     How long did it take both to meet?
+
+  //     `;
+  //   }
+  //   if (p.roll == "C") {
+  //     // Head Start
+  //     displayProblem.innerHTML = `
+  //     The distance between A and B is ${p.distance} units. </br>
+  //     A sets off first at ${p.speedA} units/sec for ${p.timeA}secs. </br>
+  //     B then sets off at ${p.speedB} units/sec.  </br>
+  //     How long did it take both to meet?
+
+  //     `;
+  //   }
+  //   if (p.roll == "D") {
+  //     // Finding Distance
+  //     displayProblem.innerHTML = `
+  //      A and B are moving towards each other at the same time. </br>
+  //      A moves at ${p.speedA} units/sec. </br>
+  //      B moves at ${p.speedB} units/sec.  </br>
+  //     It took ${p.timeA + p.timeB} secs to meet up.</br>
+  //     How far apart are they?
+
+  //     `;
+  //   }
+  // }
+
+  //AVERAGE: SIMPLE
   if (level == 6.07) {
-    p.distance = p.speedA * p.timeA + p.speedB * p.timeB;
-    // normal
-    if (p.roll == "A") {
-      displayProblem.innerHTML = `
-      The distance between A and B is ${p.distance} units. </br>
-      A moves at ${p.speedA} units/sec. </br>
-      B moves at ${p.speedB} units/sec.  </br>
-      How long did it take both to meet?
+    calculatorSymbol.classList.remove("hidden");
+    normalDisplay();
 
-      `;
+    const averageList = [];
+    for (let i = 0; i < p.variables; i++) {
+      const zero = genNumbers(5);
+      if (zero == 0 && !averageList.includes(0)) {
+        averageList.push(0);
+      } else {
+        averageList.push(genNumbers(50) + 1);
+      }
     }
-    if (p.roll == "B") {
-      // Natural
-      displayProblem.innerHTML = `
-      The distance between A and B is ${p.distance} units. </br>
-      A travels ${p.speedA * p.timeA} units at ${p.speedA} units/sec. </br>
-      B then sets off at ${p.speedB} units/sec.  </br>
-      How long did it take both to meet?
-
-      `;
+    const sum = averageList.reduce(function (a, b) {
+      return a + b;
+    });
+    const average = sum / averageList.length;
+    // console.log(p.answer.toString().split(".")[1].length > 3);
+    if (average % 1 != 0) {
+      if (average.toString().split(".")[1].length > 3) return updateCalc();
     }
-    if (p.roll == "C") {
-      // Head Start
+    // if (p.answer.toString().split(".")[1].length > 3) return updateCalc();
+    if (p.version == 0) {
+      p.answer = average;
       displayProblem.innerHTML = `
-      The distance between A and B is ${p.distance} units. </br>
-      A sets off first at ${p.speedA} units/sec for ${p.timeA}secs. </br>
-      B then sets off at ${p.speedB} units/sec.  </br>
-      How long did it take both to meet?
-
-      `;
+  Find the average of: </p>${averageList.join(", ")}
+  `;
     }
-    if (p.roll == "D") {
-      // Finding Distance
+    if (p.version == 1) {
+      const index = genNumbers(averageList.length);
+      const unknownNum = averageList[index];
+      console.log(unknownNum, averageList);
+      p.answer = unknownNum;
+      averageList[index] = "?";
+      let str = averageList.join(", ");
+      console.log(str);
+      // str = str.replace(unknownNum, "? ");
       displayProblem.innerHTML = `
-       A and B are moving towards each other at the same time. </br>
-       A moves at ${p.speedA} units/sec. </br>
-       B moves at ${p.speedB} units/sec.  </br>
-      It took ${p.timeA + p.timeB} secs to meet up.</br>
-      How far apart are they?
-
-      `;
+    Find the missing number.</p>
+    The average of the following numbers is ${sum / averageList.length}.</p>
+    ${str}
+    `;
     }
   }
 
@@ -22111,10 +22113,6 @@ function handleSubmit(e) {
     //   correctAnswer = (p.layerOne + countLayers) * 2;
     // }
 
-    if (level == 5.17) {
-      correctAnswer = p.answer;
-    }
-
     if (level == 5.18) {
       if (p.choiceBC == "B" && p.choiceOne == "percentage") {
         if (p.situationA == "increased by") {
@@ -22405,27 +22403,31 @@ function handleSubmit(e) {
     //   }
     // }
 
+    // if (level == 6.07) {
+    //   // normal
+    //   if (p.roll == "A") {
+    //     correctAnswer = `${p.distance}/(${p.speedA}+${p.speedB})`;
+    //   }
+    //   // natural
+    //   if (p.roll == "B") {
+    //     correctAnswer = `(${p.distance}-${p.speedA * p.timeA})/(${p.speedA}+${
+    //       p.speedB
+    //     })`;
+    //   }
+    //   // headstart
+    //   if (p.roll == "C") {
+    //     correctAnswer = `(${p.distance}-${p.speedA * p.timeA})/(${p.speedA}+${
+    //       p.speedB
+    //     })`;
+    //   }
+    //   // distance
+    //   if (p.roll == "D") {
+    //     correctAnswer = `(${p.speedA}+${p.speedB})x${p.timeA + p.timeB}`;
+    //   }
+    // }
+
     if (level == 6.07) {
-      // normal
-      if (p.roll == "A") {
-        correctAnswer = `${p.distance}/(${p.speedA}+${p.speedB})`;
-      }
-      // natural
-      if (p.roll == "B") {
-        correctAnswer = `(${p.distance}-${p.speedA * p.timeA})/(${p.speedA}+${
-          p.speedB
-        })`;
-      }
-      // headstart
-      if (p.roll == "C") {
-        correctAnswer = `(${p.distance}-${p.speedA * p.timeA})/(${p.speedA}+${
-          p.speedB
-        })`;
-      }
-      // distance
-      if (p.roll == "D") {
-        correctAnswer = `(${p.speedA}+${p.speedB})x${p.timeA + p.timeB}`;
-      }
+      correctAnswer = p.answer;
     }
 
     if (level == 7) {
@@ -27436,16 +27438,6 @@ function genProblems() {
   //   };
   // }
 
-  // AVERAGE: SIMPLE
-  if (level == 5.17) {
-    return {
-      version: genNumbers(2),
-      // version: 1,
-      variables: genNumbers(5) + 2,
-      answer: undefined,
-    };
-  }
-
   if (level == 5.18) {
     return {
       percentageOne: (genNumbers(18) + 1) * 5,
@@ -27560,14 +27552,13 @@ function genProblems() {
     };
   }
 
+  // AVERAGE: SIMPLE
   if (level == 6.07) {
     return {
-      roll: ["D", "A", "B", "C"][genNumbers(4)],
-      distance: undefined,
-      speedA: genNumbers(5) + 5,
-      timeA: genNumbers(8) + 2,
-      speedB: genNumbers(5) + 5,
-      timeB: genNumbers(8) + 2,
+      version: genNumbers(2),
+      // version: 1,
+      variables: genNumbers(5) + 2,
+      answer: undefined,
     };
   }
 
@@ -31933,14 +31924,14 @@ function buttonLevelSetting() {
         `;
       break;
 
-    case "Level 5.17":
-      level = 5.17;
-      scoreNeeded = 10;
-      displayProblem.style.fontSize = "1.5em";
-      document.querySelector("#user-input").setAttribute("type", "text");
-      // wholeNumberContainer.classList.add("hidden");
-      // firstCanvas.classList.remove("hidden");
-      break;
+    // case "Level 5.17":
+    //   level = 5.17;
+    //   scoreNeeded = 10;
+    //   displayProblem.style.fontSize = "1.5em";
+    //   document.querySelector("#user-input").setAttribute("type", "text");
+    //   // wholeNumberContainer.classList.add("hidden");
+    //   // firstCanvas.classList.remove("hidden");
+    //   break;
 
     case "Level 5.18":
       level = 5.18;
@@ -32038,6 +32029,15 @@ function buttonLevelSetting() {
       scoreNeeded = 10;
       document.querySelector("#user-input").setAttribute("type", "text");
       document.querySelector("#user-input").style.width = "250px";
+      break;
+
+    case "Level 6.07":
+      level = 6.07;
+      scoreNeeded = 10;
+      displayProblem.style.fontSize = "1.5em";
+      document.querySelector("#user-input").setAttribute("type", "text");
+      // wholeNumberContainer.classList.add("hidden");
+      // firstCanvas.classList.remove("hidden");
       break;
 
     case "Level 7":
