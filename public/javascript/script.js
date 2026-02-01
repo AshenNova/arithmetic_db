@@ -19967,9 +19967,8 @@ function handleSubmit(e) {
       }
     }
 
-    if (level == 1.09 || level == 2.11) {
-      if (p.type == 0) correctAnswer = p.value * p.end;
-      if (p.type == 1) correctAnswer = p.end * p.starter;
+    if (level == 1.09) {
+      correctAnswer = p.value * p.end;
     }
 
     if (level == 1.1) {
@@ -20519,6 +20518,12 @@ function handleSubmit(e) {
     if (level == 2.1) {
       correctAnswer = `${p.hour}.${p.min.toString().padStart(2, "0")}`;
     }
+
+    if (level == 2.11) {
+      if (p.type == 0) correctAnswer = p.value * p.end;
+      if (p.type == 1) correctAnswer = p.end * p.starter;
+    }
+
     if (level == 3.02) {
       if (p.option == "1") {
         correctAnswer = p.numOne * p.numMultiTwo * p.numMulti;
@@ -26223,6 +26228,7 @@ function genProblems() {
       starter: genNumbers(4) + 2,
       value: genNumbers(3) + 2,
       end: genNumbers(3) + 2,
+      // type: genNumbers(0),
     };
   }
 
