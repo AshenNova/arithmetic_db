@@ -11853,9 +11853,15 @@ function updateProblems() {
       const statement = genNumbers(2);
       if (p.start == "fractions") {
         if (statement == 0) {
-          displayProblem.innerHTML = `What is the percentage of ${p.nume}/${p.deno}?`;
+          displayProblem.innerHTML = `What is the percentage of ${displaySimpleFraction(
+            p.nume,
+            p.deno
+          )}?`;
         } else {
-          displayProblem.innerHTML = `What is ${p.nume}/${p.deno} in percentage?`;
+          displayProblem.innerHTML = `What is ${displaySimpleFraction(
+            p.nume,
+            p.deno
+          )} in percentage?`;
         }
       }
 
