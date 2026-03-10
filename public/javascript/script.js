@@ -7162,34 +7162,6 @@ function updateProblems() {
     ctx.restore();
   }
 
-  if (level == 5.15) {
-    let syntext = genNumbers(2);
-    let largestValue = 0;
-    while (p.objectOneV == p.objectTwoV) {
-      p.objectOneV = (genNumbers(10) + 1) * 10;
-    }
-    if (p.objectOneV > p.objectTwoV) {
-      largestValue = p.objectOneV;
-    } else {
-      largestValue = p.objectTwoV;
-    }
-    p.objectOneSF = p.objectOneV;
-    p.objectTwoSF = p.objectTwoV;
-    for (let i = 2; i <= largestValue; i++) {
-      while (p.objectOneSF % i == 0 && p.objectTwoSF % i == 0) {
-        p.objectOneSF /= i;
-        p.objectTwoSF /= i;
-        console.log(i);
-      }
-    }
-
-    displayProblem.innerHTML = `
-    ${p.objectOneV}% of ${p.objectOne} ${syntext == 0 ? "=" : "is equal to"} ${
-      p.objectTwoV
-    }% of ${p.objectTwo}
-    `;
-  }
-
   if (level == 5.16) {
     if (p.choice2 == "B") {
       p.objectTwoV = p.objectOneV * (genNumbers(5) + 2);
@@ -7841,6 +7813,34 @@ function updateProblems() {
         displayProblem.textContent = `${p.rollAlp} ${p.rollSymTwo} ${p.rollAlp}`;
       }
     }
+  }
+
+  if (level == 6.04) {
+    let syntext = genNumbers(2);
+    let largestValue = 0;
+    while (p.objectOneV == p.objectTwoV) {
+      p.objectOneV = (genNumbers(10) + 1) * 10;
+    }
+    if (p.objectOneV > p.objectTwoV) {
+      largestValue = p.objectOneV;
+    } else {
+      largestValue = p.objectTwoV;
+    }
+    p.objectOneSF = p.objectOneV;
+    p.objectTwoSF = p.objectTwoV;
+    for (let i = 2; i <= largestValue; i++) {
+      while (p.objectOneSF % i == 0 && p.objectTwoSF % i == 0) {
+        p.objectOneSF /= i;
+        p.objectTwoSF /= i;
+        console.log(i);
+      }
+    }
+
+    displayProblem.innerHTML = `
+    ${p.objectOneV}% of ${p.objectOne} ${syntext == 0 ? "=" : "is equal to"} ${
+      p.objectTwoV
+    }% of ${p.objectTwo}
+    `;
   }
 
   if (level == 6.05) {
@@ -11884,10 +11884,9 @@ function updateProblems() {
         }
       }
       if (p.start == "fractions" || p.start == "decimals") {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          "<p><i>Include percentage symbol in the answer.</i></p>"
-        );
+        displayProblem.insertAdjacentHTML =
+          ("beforeend",
+          "<p><i>Include percentage symbol in the answer.</i></p>");
       }
     }
     // PERCENTAGE: PERCENTAGE CHANGE
@@ -22077,14 +22076,6 @@ function handleSubmit(e) {
       }
     }
 
-    if (level == 5.15) {
-      if (p.objectOneSF == p.objectOneV) {
-        correctAnswer = `${p.objectOne}:${p.objectTwo}=${p.objectTwoV}:${p.objectOneV}`;
-      } else {
-        correctAnswer = `${p.objectOne}:${p.objectTwo}=${p.objectTwoV}:${p.objectOneV}=${p.objectTwoSF}:${p.objectOneSF}`;
-      }
-    }
-
     if (level == 5.16) {
       //Whole Number
       if (p.choice2 == "B") {
@@ -22366,6 +22357,14 @@ function handleSubmit(e) {
             correctAnswer = `${p.rollAlp}`;
           }
         }
+      }
+    }
+
+    if (level == 6.04) {
+      if (p.objectOneSF == p.objectOneV) {
+        correctAnswer = `${p.objectOne}:${p.objectTwo}=${p.objectTwoV}:${p.objectOneV}`;
+      } else {
+        correctAnswer = `${p.objectOne}:${p.objectTwo}=${p.objectTwoV}:${p.objectOneV}=${p.objectTwoSF}:${p.objectOneSF}`;
       }
     }
 
@@ -27422,17 +27421,6 @@ function genProblems() {
     };
   }
 
-  if (level == 5.15) {
-    return {
-      objectOne: ["A", "B", "C"][genNumbers(3)],
-      objectTwo: ["X", "Y", "Z"][genNumbers(3)],
-      objectOneV: genNumbers(50) + 1,
-      objectTwoV: genNumbers(50) + 1,
-      objectOneSF: undefined,
-      objectTwoSF: undefined,
-    };
-  }
-
   if (level == 5.16) {
     return {
       unit: ["kg", "g", "ml", "m", "cm"][genNumbers(5)],
@@ -27530,6 +27518,17 @@ function genProblems() {
       rollAlp: ["a", "b", "c", "y", "z", "i"][genNumbers(6)],
       rollSym: ["x", "÷", "+", "-"][genNumbers(4)],
       rollSymTwo: ["+", "-"][genNumbers(2)],
+    };
+  }
+
+  if (level == 6.04) {
+    return {
+      objectOne: ["A", "B", "C"][genNumbers(3)],
+      objectTwo: ["X", "Y", "Z"][genNumbers(3)],
+      objectOneV: genNumbers(50) + 1,
+      objectTwoV: genNumbers(50) + 1,
+      objectOneSF: undefined,
+      objectTwoSF: undefined,
     };
   }
 
@@ -31919,15 +31918,6 @@ function buttonLevelSetting() {
       firstCanvas.classList.remove("hidden");
       break;
 
-    case "Level 5.15":
-      level = 5.15;
-      scoreNeeded = 10;
-      document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "18px";
-      displayProblem.style.textAlign = "left";
-      document.querySelector("#user-input").style.width = "300px";
-      break;
-
     case "Level 5.16":
       level = 5.16;
       scoreNeeded = 10;
@@ -32020,9 +32010,11 @@ function buttonLevelSetting() {
 
     case "Level 6.04":
       level = 6.04;
-      scoreNeeded = 20;
+      scoreNeeded = 10;
       document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "25px";
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
+      document.querySelector("#user-input").style.width = "300px";
       break;
 
     case "Level 6.05":

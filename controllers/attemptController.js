@@ -1256,12 +1256,12 @@ const update = catchAsync(async (req, res, next) => {
 const updateMany = catchAsync(async (req, res, next) => {
   // try {
   const query = {
-    level: "5.17",
+    level: "5.15",
   };
 
   const set = {
     $set: {
-      level: "6.07",
+      level: "6.04",
       // recommendCheck: false,
     },
   };
@@ -1272,7 +1272,7 @@ const updateMany = catchAsync(async (req, res, next) => {
   console.log(updateAttempt);
 });
 
-// updateMany();
+updateMany();
 
 const deleteMany = async (req, res) => {
   const deleteNow = { level: "2.06" };
