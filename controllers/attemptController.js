@@ -1272,7 +1272,7 @@ const updateMany = catchAsync(async (req, res, next) => {
   console.log(updateAttempt);
 });
 
-updateMany();
+// updateMany();
 
 const deleteMany = async (req, res) => {
   const deleteNow = { level: "2.06" };

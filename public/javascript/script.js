@@ -11884,8 +11884,7 @@ function updateProblems() {
         }
       }
       if (p.start == "fractions" || p.start == "decimals") {
-        displayProblem.insertAdjacentHTML =
-          ("beforeend",
+        displayProblem.insertAdjacentHTML("beforeend",
           "<p><i>Include percentage symbol in the answer.</i></p>");
       }
     }
