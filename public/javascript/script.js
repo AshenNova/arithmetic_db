@@ -5529,7 +5529,7 @@ function updateProblems() {
     if (p.numerator == p.denominator) {
       p.numerator -= 1;
     }
-    console.log(p.numerator, p.denominator, p.numerator / p.denominator);
+    // console.log(p.numerator, p.denominator, p.numerator / p.denominator);
     p.percentageDisplay = p.numerator / (p.denominator / 100);
 
     if (p.percentageDisplay % 1 != 0) {
@@ -21812,6 +21812,7 @@ function handleSubmit(e) {
     if (level == 5.03) {
       if (p.rollA == "decimal") {
         correctAnswer = accDecimal(p.numerator / (p.denominator / 100));
+        correctAnswerTwo = `${accDecimal(p.numerator / p.denominator)}x100`;
       }
       if (p.rollA == "fraction") {
         correctAnswer = `${p.numerator}/${p.denominator}x100`;
@@ -21822,6 +21823,7 @@ function handleSubmit(e) {
         }
         if (p.rollB == "decimal") {
           correctAnswer = `${accDecimal(p.percentageDisplay / 100)}`;
+          correctAnswerTwo = `${p.percentageDisplay}/100`;
         }
         if (p.rollB == "ratio") {
           correctAnswer = `${p.percentageDisplay}:100`;
