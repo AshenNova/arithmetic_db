@@ -3346,9 +3346,13 @@ function updateProblems() {
     if (p.placeValue == "thousands") {
       p.numOne = Math.round(p.numOne / 1000) * 1000;
     }
-
+    if (p.choice == "Largest" && p.oddEvenNormal == "odd") p.oddEvenNormal = "";
+    if (p.choice == "Smallest" && p.oddEvenNormal == "even")
+      p.oddEvenNormal = "";
     displayProblem.innerHTML = `
-    <u>${p.choice}</u> value before rounding off to the <u>${p.placeValue}</u> place?</br>
+    <u>${p.choice}</u> ${
+      p.oddEvenNormal == "" ? "" : `<u>${p.oddEvenNormal}</u> `
+    }value before rounding off to the <u>${p.placeValue}</u> place?</br>
     <br>
     _______ ≈ ${p.numOne}`;
 
@@ -11878,8 +11882,10 @@ function updateProblems() {
         }
       }
       if (p.start == "fractions" || p.start == "decimals") {
-        displayProblem.insertAdjacentHTML("beforeend",
-          "<p><i>Include percentage symbol in the answer.</i></p>");
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "<p><i>Include percentage symbol in the answer.</i></p>"
+        );
       }
     }
     // PERCENTAGE: PERCENTAGE CHANGE
@@ -20991,6 +20997,18 @@ function handleSubmit(e) {
     }
     if (level == 4.02) {
       correctAnswer = p.numOne;
+      if (p.oddEvenNormal == "odd") {
+        const array = p.numOne.toString().split("");
+        const length = array.length;
+        array[length - 1] = 1;
+        correctAnswer = array.join("");
+      }
+      if (p.oddEvenNormal == "even") {
+        const array = p.numOne.toString().split("");
+        const length = array.length;
+        array[length - 1] = 8;
+        correctAnswer = array.join("");
+      }
     }
     if (level == 4.161) {
       if (p.placeValue == "thousandths") correctAnswer = arr2[0];
@@ -26724,6 +26742,7 @@ function genProblems() {
       placeValue: ["tens", "hundreds", "thousands"][genNumbers(3)],
       numOne: genNumbers(99998) + 1,
       choice: ["Smallest", "Largest"][genNumbers(2)],
+      oddEvenNormal: ["odd", "even", ""][genNumbers(3)],
     };
   }
 
