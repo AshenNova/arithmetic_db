@@ -20997,16 +20997,18 @@ function handleSubmit(e) {
     }
     if (level == 4.02) {
       correctAnswer = p.numOne;
+      // Smallest odd
       if (p.oddEvenNormal == "odd") {
         const array = p.numOne.toString().split("");
         const length = array.length;
-        array[length - 1] = 1;
+        if (array[length-1] == 0) array[length - 1] = 1;
         correctAnswer = array.join("");
       }
+      // Largest even?
       if (p.oddEvenNormal == "even") {
         const array = p.numOne.toString().split("");
         const length = array.length;
-        array[length - 1] = 8;
+        if (array[length - 1] == 9) array[length - 1] = 8;
         correctAnswer = array.join("");
       }
     }
