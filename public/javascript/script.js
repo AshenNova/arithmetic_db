@@ -21001,7 +21001,7 @@ function handleSubmit(e) {
       if (p.oddEvenNormal == "odd") {
         const array = p.numOne.toString().split("");
         const length = array.length;
-        if (array[length-1] == 0) array[length - 1] = 1;
+        if (array[length - 1] == 0) array[length - 1] = 1;
         correctAnswer = array.join("");
       }
       // Largest even?
@@ -29869,8 +29869,8 @@ function genProblems() {
       return {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
-        numOne: (genNumbers(10) + 2) * 2,
-        numTwo: (genNumbers(10) + 2) * 2,
+        numOne: (genNumbers(100) + 50) * 2,
+        numTwo: (genNumbers(100) + 50) * 2,
         rollAnswer: genNumbers(2),
         rollz: 1,
       };
