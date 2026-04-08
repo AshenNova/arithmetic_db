@@ -101,10 +101,10 @@ export const displayContent = (level) => {
   if (level == "heuFive") {
     return `
     </p>
-    1. Grouping with Difference</br>
+    1. Identical Quantity with Difference</br>
     2. Supposition (Negative)</br>
     3. Supposition negative ( Difference)</br>
-    4. Identical Quantity with Difference</br>
+    4. Grouping with Difference</br>
     5. Substitution</br>
     6. Shaking Hands</br>
     7. Bonus</br>
@@ -121,10 +121,8 @@ export const displayContent = (level) => {
     2. Working Backwards (Type 2)</br>
     3. Working Backwards (Type 3) Independent</br>
     4. Either or</br>
-    5. Unchanged Total (if)</br>
-    6. Supposition (Units)</br>
-    7. Ratio: Continuous </br>
-    8. Difference Quantity with Difference </br>
+    5. Supposition (Units)</br>
+    6. Difference Quantity with Difference </br>
     <hr>9. All
     `;
   }
@@ -359,13 +357,15 @@ export const displayContent = (level) => {
     2. Ratio: Wipe on wipe off</br>
     3. Ratio: Unidentical Group</br>
     4. Supposition: Least</br>
+    5. Unchanged Total (if)</br>
+    6. Ratio: Continuous </br>
     <hr>
-    6. Percentage: Repeated Group</br>
-    5. Volume: Grouping</br>
-    6. Volume: Meet Up</br>
+    7. Percentage: Repeated Group</br>
+    8. Volume: Grouping</br>
+    9. Volume: Meet Up</br>
     <hr>
-    7. Geometry: Repeated Identity Area</br>
-    8. Geometry: Manipulation of Dimension: Overlapping Figure</br>
+    10. Geometry: Repeated Identity Area</br>
+    11. Geometry: Manipulation of Dimension: Overlapping Figure</br>
     <hr>
     1. Speed: Surrogation: Beyond </br>
     2. Speed: Meet up</br>
