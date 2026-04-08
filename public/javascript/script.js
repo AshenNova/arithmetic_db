@@ -25430,7 +25430,7 @@ function handleSubmit(e) {
             correctAnswerTwo = groupValue * groups;
           }
         }
-        if (p.type == 2) correctAnswer = p.days;
+        if (p.type == 2) correctAnswer = p.total;
       }
 
       if (
@@ -28930,7 +28930,7 @@ function genProblems() {
       const gen_squareA = genNumbers(50) + 100;
       return {
         squareA: gen_squareA,
-        squareB: genNumbers(gen_squareA - 10) + 10,
+        squareB: genNumbers(gen_squareA - 20) + 20,
         valueA: undefined,
         valueB: undefined,
         adjust: 0,
