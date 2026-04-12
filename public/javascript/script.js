@@ -20318,6 +20318,7 @@ function handleSubmit(e) {
 
     if (level == 2.08) {
       if (p.operator == "+") {
+        // CARRY
         if (p.numTwo + p.numFour >= 60) {
           correctAnswer = `${p.numOne + p.numThree}${p.minHours}${
             p.numTwo + p.numFour
@@ -20327,12 +20328,17 @@ function handleSubmit(e) {
           correctAnswerTwo = `${p.numOne + p.numThree + 1}${p.minHours}${
             p.numTwo + p.numFour - 60
           }${p.minSeconds}`;
+          if (p.numTwo + p.numFour - 60 == 0) {
+            correctAnswerTwo = `${p.numOne + p.numThree + 1}${p.minHours}`;
+          }
+          //IF FIRST UNIT IS 0.
         } else if (p.numOne == p.numThree && p.numOne == 0) {
           correctAnswer = `${p.numTwo + p.numFour}${p.minSeconds}`;
           correctAnswerTwo = `0${p.minHours}${p.numTwo + p.numFour}${
             p.minSeconds
           }`;
         } else {
+          //NORMAL ANSWER, NO CARRY
           correctAnswer = `${p.numOne + p.numThree}${p.minHours}${
             p.numTwo + p.numFour
           }${p.minSeconds}`;
@@ -20357,12 +20363,14 @@ function handleSubmit(e) {
               `${p.numTwo + 60 - p.numFour}${p.minSeconds}`
             );
           }
-
           //DONT HAVE TO BORROW
         } else {
           correctAnswer = `${p.numOne - p.numThree}${p.minHours}${
             p.numTwo - p.numFour
           }${p.minSeconds}`;
+          if (p.numTwo - p.numFour == 0) {
+            correctAnswerTwo = `${p.numOne - p.numThree}${p.minHours}`;
+          }
         }
         if (p.numOne == p.numThree) {
           correctAnswer = `${p.numTwo - p.numFour}${p.minSeconds}`;
@@ -26414,8 +26422,10 @@ function genProblems() {
       minSeconds: undefined,
       numOne: genNumbers(10),
       numTwo: genNumbers(59) + 1,
+      // numTwo: 59,
       numThree: genNumbers(10),
       numFour: genNumbers(59) + 1,
+      // numFour: 1,
     };
   }
 
