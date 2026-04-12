@@ -10689,7 +10689,7 @@ function updateProblems() {
   if (level == "calFive") {
     //ALLOW CALCULATOR
 
-    const calculatorNotAllowed = [0, 1, 2, 3, 21, 22];
+    const calculatorNotAllowed = [0, 1, 2, 3, 13];
     if (calculatorNotAllowed.includes(setting * 1)) {
       calculatorSymbol.classList.add("hidden");
       // calculatorSymbol.
