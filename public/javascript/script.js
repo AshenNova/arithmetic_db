@@ -19013,7 +19013,7 @@ How many items are there in each bag?
           .toString()
           .padStart(2, "0")}${timeZone} to ${endHours}.${endMins
           .toString()
-          .padStart(2, "0")}${endtimeZone}.</p>
+          .padStart(2, "0")}${endTimeZone}.</p>
       Only ${p.active} of them can be playing each time.</p>
       How much time did each of them get to play?</p>
       `;
