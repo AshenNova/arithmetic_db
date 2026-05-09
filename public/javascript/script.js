@@ -7327,19 +7327,25 @@ function updateProblems() {
       p.sentenceA = `B ${p.situationA} ${p.percentageOne}%.`;
     }
     if (p.choiceOne == "fraction") {
-      p.sentenceA = `B ${p.situationA} ${p.numOne}/${p.denoOne}.`;
+      p.sentenceA = `B ${p.situationA} ${displaySimpleFraction(
+        p.numOne,
+        p.denoOne
+      )}.`;
     }
     if (p.choiceTwo == "percentage") {
       p.sentenceB = `C ${p.situationB} ${p.percentageTwo}%.`;
     }
     if (p.choiceTwo == "fraction") {
-      p.sentenceB = `C ${p.situationB} ${p.numTwo}/${p.denoTwo}.`;
+      p.sentenceB = `C ${p.situationB} ${displaySimpleFraction(p.numTwo, p.denoTwo)}.`;
     }
     if (p.choiceThree == "ratio") {
       p.sentenceC = `The ratio of B to C is now, ${p.numThree}:${p.denoThree}.`;
     }
     if (p.choiceThree == "fraction") {
-      p.sentenceC = `B is ${p.numThree}/${p.denoThree} of C in the end.`;
+      p.sentenceC = `B is ${displaySimpleFraction(
+        p.numThree,
+        p.denoThree
+      )}of C in the end.`;
     }
     p.sentenceD = `What is ${p.choiceBC} at first?`;
     displayProblem.innerHTML = `
