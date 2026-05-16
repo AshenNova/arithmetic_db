@@ -7336,7 +7336,10 @@ function updateProblems() {
       p.sentenceB = `C ${p.situationB} ${p.percentageTwo}%.`;
     }
     if (p.choiceTwo == "fraction") {
-      p.sentenceB = `C ${p.situationB} ${displaySimpleFraction(p.numTwo, p.denoTwo)}.`;
+      p.sentenceB = `C ${p.situationB} ${displaySimpleFraction(
+        p.numTwo,
+        p.denoTwo
+      )}.`;
     }
     if (p.choiceThree == "ratio") {
       p.sentenceC = `The ratio of B to C is now, ${p.numThree}:${p.denoThree}.`;
@@ -18285,11 +18288,14 @@ How many items are there in each bag?
       if (p.type == 2) {
         const personALeft = p.total - p.days * p.personASpentEachDay;
         const personBLeft = p.total - p.days * p.personBSpentEachDay;
+        if (personBLeft <= 0 || personALeft <= 0) {
+          return updateCalc();
+        }
         if (Math.abs(p.personASpentEachDay - p.personBSpentEachDay) < 2) {
           console.log("Difference between spending too small");
           return updateCalc();
         }
-
+       
         displayProblem.innerHTML = `
        Student ${p.objectOne} and student ${p.objectTwo} has the same amount of money at first.</br>
        Each day, student ${p.objectOne} spends $${p.personASpentEachDay} while student ${p.objectTwo} spents $${p.personBSpentEachDay}.</br>
