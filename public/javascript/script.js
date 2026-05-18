@@ -20727,6 +20727,8 @@ function handleSubmit(e) {
       const hours = Math.trunc(diff/60)
       const remainder = diff%60
       correctAnswer = `${hours}h${remainder}mins`
+      if (hours == 0) correctAnswer = `${remainder}mins`
+      if (remainder == 0) correctAnswer = `${hours}h`
     }
 
     if (level == 3.09) {
