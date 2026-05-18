@@ -20698,29 +20698,35 @@ function handleSubmit(e) {
       if (p.amOrPmTwo == "pm") {
         p.hoursTwo += 12;
       }
-      if (p.minsTwo > p.minsOne) {
-        if (p.hoursOne == p.hoursTwo) {
-          correctAnswer = `${p.minsTwo - p.minsOne}mins`;
-        } else if (p.minsTwo == 0) {
-          correctAnswer = `${60 - p.minsOne}+${p.hoursTwo - p.hoursOne - 1}`;
-        } else {
-          correctAnswer = `${p.minsTwo - p.minsOne}mins+${
-            p.hoursTwo - p.hoursOne
-          }h`;
-        }
-      }
-      if (p.minsTwo < p.minsOne) {
-        if (p.hoursTwo - p.hoursOne == 1) {
-          correctAnswer = `${60 - p.minsOne}mins+${p.minsTwo}mins`;
-        } else {
-          correctAnswer = `${60 - p.minsOne}mins+${
-            p.hoursTwo - p.hoursOne - 1
-          }h+${p.minsTwo}mins`;
-        }
-      }
-      if (p.minsTwo == p.minsOne) {
-        correctAnswer = `${p.hoursTwo - p.hoursOne}h`;
-      }
+      // if (p.minsTwo > p.minsOne) {
+      //   if (p.hoursOne == p.hoursTwo) {
+      //     correctAnswer = `${p.minsTwo - p.minsOne}mins`;
+      //   } else if (p.minsTwo == 0) {
+      //     correctAnswer = `${60 - p.minsOne}+${p.hoursTwo - p.hoursOne - 1}`;
+      //   } else {
+      //     correctAnswer = `${p.minsTwo - p.minsOne}mins+${
+      //       p.hoursTwo - p.hoursOne
+      //     }h`;
+      //   }
+      // }
+      // if (p.minsTwo < p.minsOne) {
+      //   if (p.hoursTwo - p.hoursOne == 1) {
+      //     correctAnswer = `${60 - p.minsOne}mins+${p.minsTwo}mins`;
+      //   } else {
+      //     correctAnswer = `${60 - p.minsOne}mins+${
+      //       p.hoursTwo - p.hoursOne - 1
+      //     }h+${p.minsTwo}mins`;
+      //   }
+      // }
+      // if (p.minsTwo == p.minsOne) {
+      //   correctAnswer = `${p.hoursTwo - p.hoursOne}h`;
+      // }
+      const firstScene = p.hoursOne*60+p.minsOne
+      const secondScene = p.hoursTwo*60+p.minsTwo
+      const diff = secondScene - firstScene
+      const hours = Math.trunc(diff/60)
+      const remainder = diff%60
+      correctAnswer = `${hours}h${remainder}mins`
     }
 
     if (level == 3.09) {
