@@ -18923,36 +18923,35 @@ How many items are there in each bag?
     }
 
     if (setting == 5) {
+      console.log(p.valueA, p.valueB);
       // Quantity is the number of students
       let object = ["sweet", "chocolate", "pen", "pencil"];
       object = object[genNumbers(object.length)];
-      if (p.valueA == p.valueB) {
-        return updateCalc();
-      }
-      if (p.valueA > p.valueB) {
-        [p.valueA, p.valueB] = [p.valueB, p.valueA];
-      }
+      // if (p.valueA == p.valueB) {
+      //   return updateCalc();
+      // }
+      // if (p.valueA > p.valueB) {
+      //   [p.valueA, p.valueB] = [p.valueB, p.valueA];
+      // }
       p.totalQuantity = p.quantityA + p.quantityB;
       p.totalValue = p.valueA * p.quantityA + p.valueB * p.quantityB;
-      if (p.totalQuantity == p.totalValue) return updateCalc();
+      // if (p.totalQuantity == p.totalValue) return updateCalc();
       [p.totalQuantity, p.totalValue] = simplify(p.totalQuantity, p.totalValue);
 
-      let sentenceA = ["ratio", "fraction"][genNumbers(2)];
-      if (sentenceA == "fraction") {
-        sentenceA = `The fraction of the number of students to ${object}s is ${displaySimpleFraction(
-          p.totalQuantity,
-          p.totalValue
-        )}`;
-      } else {
-        sentenceA = `The ratio of the number of students to ${object}s is ${p.totalQuantity} : ${p.totalValue}`;
-      }
+      // let sentenceA = ["fraction"][genNumbers(1)];
+      // if (sentenceA == "fraction") {
+      const sentenceA = `The fraction of the number of students to ${object}s is ${displaySimpleFraction(
+        p.totalQuantity,
+        p.totalValue
+      )}`;
+      // }
       const theOther = p.totalQuantity * p.valueB;
       const bigDiff = p.totalValue - theOther;
       const smallDiff = p.valueB - p.valueA;
-      if (bigDiff / smallDiff < 0) {
-        console.log("Too Small");
-        return updateCalc();
-      }
+      // if (bigDiff / smallDiff < 0) {
+      //   console.log("Too Small");
+      //   return updateCalc();
+      // }
       displayProblem.innerHTML = `
       ${sentenceA}.</br>
       Each student receives either ${p.valueA} or ${p.valueB} ${object}s.</br>
@@ -30680,11 +30679,13 @@ function genProblems() {
 
     // SUPPOSITION (RATIO)
     if (setting == 5) {
+      const valueA = genNumbers(5) + 1;
+      const quantityA = genNumbers(5) + 1;
       return {
-        valueA: genNumbers(5) + 1,
-        quantityA: genNumbers(5) + 1,
-        valueB: genNumbers(5) + 1,
-        quantityB: genNumbers(5) + 1,
+        valueA,
+        quantityA,
+        valueB: valueA + genNumbers(5) + 1,
+        quantityB: quantityA + genNumbers(5) + 1,
         totalValue: undefined,
         totalQuantity: undefined,
       };
