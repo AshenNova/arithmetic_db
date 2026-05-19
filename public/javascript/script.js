@@ -2545,80 +2545,96 @@ function updateProblems() {
 
   if (level == 3.08) {
     if (p.hoursOne > p.hoursTwo) {
+      console.log("Swap");
       [p.hoursOne, p.hoursTwo] = [p.hoursTwo, p.hoursOne];
     }
-    if (p.amOrPmOne < 12) {
+    if (p.hoursOne < 12) {
       p.amOrPmOne = "am";
     }
-    if (p.amOrPmTwo < 12) {
+    if (p.hoursTwo < 12) {
       p.amOrPmTwo = "am";
     }
-    if (p.hoursOne > 12) {
-      p.hoursOne -= 12;
+    let displayHourOne = p.hoursOne;
+    let displayHourTwo = p.hoursTwo;
+    if (p.hoursOne >= 13) {
+      displayHourOne -= 12;
+      if (displayHourOne == 0) displayHourOne = 12;
     }
-    if (p.hoursTwo > 12) {
-      p.hoursTwo -= 12;
+    if (p.hoursTwo >= 13) {
+      displayHourTwo -= 12;
+      if (displayHourTwo == 0) displayHourTwo = 12;
     }
-    if (p.hoursOne > p.hoursTwo) {
-      [p.hoursOne, p.hoursTwo] = [p.hoursTwo, p.hoursOne];
-    }
+    // if (p.hoursOne > p.hoursTwo) {
+    //   [p.hoursOne, p.hoursTwo] = [p.hoursTwo, p.hoursOne];
+    // }
     // swap mins if hours same
-    if (p.hoursOne == p.hoursTwo && p.minsOne > p.minsTwo) {
-      [p.minsOne, p.minsTwo] = [p.minsTwo, p.minsOne];
-    }
-
+    // if (p.hoursOne == p.hoursTwo && p.minsOne > p.minsTwo) {
+    //   [p.minsOne, p.minsTwo] = [p.minsTwo, p.minsOne];
+    // }
+    // if (amOrPmOne == "pm" && amOrPmTwo == "pm"){
+    //   if (p.hoursOne < p.hoursTwo) return updateCalc()
+    // }
     ctx.save();
     ctx.save();
     ctx.font = "1em serif";
-    if (p.minsOne < 10 && p.minsTwo < 10) {
-      if (p.minsOne == 0 && p.minsTwo == 0) {
-        ctx.fillText(
-          `What is the duration between ${p.hoursOne} ${p.amOrPmOne} and ${p.hoursTwo} ${p.amOrPmTwo}`,
-          20,
-          20
-        );
-      } else {
-        ctx.fillText(
-          `What is the duration between ${p.hoursOne}.0${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.0${p.minsTwo} ${p.amOrPmTwo}`,
-          20,
-          20
-        );
-      }
-    } else if (p.minsOne < 10) {
-      if (p.minsOne == 0) {
-        ctx.fillText(
-          `What is the duration between ${p.hoursOne} ${p.amOrPmOne} and ${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`,
-          20,
-          20
-        );
-      } else {
-        ctx.fillText(
-          `What is the duration between ${p.hoursOne}.0${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`,
-          20,
-          20
-        );
-      }
-    } else if (p.minsTwo < 10) {
-      if (p.minsTwo == 0) {
-        ctx.fillText(
-          `What is the duration between ${p.hoursOne}.${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo} ${p.amOrPmTwo}`,
-          20,
-          20
-        );
-      } else {
-        ctx.fillText(
-          `What is the duration between ${p.hoursOne}.${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.0${p.minsTwo} ${p.amOrPmTwo}`,
-          20,
-          20
-        );
-      }
-    } else {
-      ctx.fillText(
-        `What is the duration between ${p.hoursOne}.${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`,
-        20,
-        20
-      );
-    }
+    ctx.fillText(
+      `What is the duration between ${displayHourOne}.${p.minsOne
+        .toString()
+        .padStart(2, 0)} ${p.amOrPmOne} and ${displayHourTwo}.${p.minsTwo
+        .toString()
+        .padStart(2, 0)} ${p.amOrPmTwo}`,
+      20,
+      20
+    );
+    // if (p.minsOne < 10 && p.minsTwo < 10) {
+    //   if (p.minsOne == 0 && p.minsTwo == 0) {
+    //     ctx.fillText(
+    //       `What is the duration between ${p.hoursOne} ${p.amOrPmOne} and ${p.hoursTwo} ${p.amOrPmTwo}`,
+    //       20,
+    //       20
+    //     );
+    //   } else {
+    //     ctx.fillText(
+    //       `What is the duration between ${p.hoursOne}.0${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.0${p.minsTwo} ${p.amOrPmTwo}`,
+    //       20,
+    //       20
+    //     );
+    //   }
+    // } else if (p.minsOne < 10) {
+    //   if (p.minsOne == 0) {
+    //     ctx.fillText(
+    //       `What is the duration between ${p.hoursOne} ${p.amOrPmOne} and ${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`,
+    //       20,
+    //       20
+    //     );
+    //   } else {
+    //     ctx.fillText(
+    //       `What is the duration between ${p.hoursOne}.0${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`,
+    //       20,
+    //       20
+    //     );
+    //   }
+    // } else if (p.minsTwo < 10) {
+    //   if (p.minsTwo == 0) {
+    //     ctx.fillText(
+    //       `What is the duration between ${p.hoursOne}.${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo} ${p.amOrPmTwo}`,
+    //       20,
+    //       20
+    //     );
+    //   } else {
+    //     ctx.fillText(
+    //       `What is the duration between ${p.hoursOne}.${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.0${p.minsTwo} ${p.amOrPmTwo}`,
+    //       20,
+    //       20
+    //     );
+    //   }
+    // } else {
+    //   ctx.fillText(
+    //     `What is the duration between ${p.hoursOne}.${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`,
+    //     20,
+    //     20
+    //   );
+    // }
     ctx.restore();
 
     ctx.save();
@@ -2650,54 +2666,74 @@ function updateProblems() {
     ctx.moveTo(-150, 15);
     ctx.lineTo(-150, -15);
     ctx.stroke();
-    if (p.minsOne < 10) {
-      ctx.fillText(`${p.hoursOne}.0${p.minsOne} ${p.amOrPmOne}`, -163, -17);
-    } else {
-      ctx.fillText(`${p.hoursOne}.${p.minsOne} ${p.amOrPmOne}`, -163, -17);
-    }
+    // if (p.minsOne < 10) {
+    //   ctx.fillText(`${p.hoursOne}.0${p.minsOne} ${p.amOrPmOne}`, -163, -17);
+    // }
+    // else {
+    //   ctx.fillText(`${p.hoursOne}.${p.minsOne} ${p.amOrPmOne}`, -163, -17);
+    // }
+    // if (p.minsOne < 10) {
+    ctx.fillText(
+      `${displayHourOne}.${p.minsOne.toString().padStart(2, 0)} ${p.amOrPmOne}`,
+      -163,
+      -17
+    );
+    // }
+    // else {
+    // ctx.fillText(`${p.hoursOne}.${p.minsOne} ${p.amOrPmOne}`, -163, -17);
+    // }
 
     // end label
     ctx.beginPath();
     ctx.moveTo(140, 15);
     ctx.lineTo(140, -15);
     ctx.stroke();
-    if (p.minsTwo < 10) {
-      ctx.fillText(`${p.hoursTwo}.0${p.minsTwo} ${p.amOrPmTwo}`, 120, -17);
-    } else {
-      ctx.fillText(`${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`, 120, -17);
-    }
+    // if (p.minsTwo < 10) {
+    //   ctx.fillText(`${p.hoursTwo}.0${p.minsTwo} ${p.amOrPmTwo}`, 120, -17);
+    // } else {
+    //   ctx.fillText(`${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`, 120, -17);
+    // }
+    // if (p.minsTwo < 10) {
+    ctx.fillText(
+      `${displayHourTwo}.${p.minsTwo.toString().padStart(2, 0)} ${p.amOrPmTwo}`,
+      120,
+      -17
+    );
+    // } else {
+    //   ctx.fillText(`${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`, 120, -17);
+    // }
 
-    ctx.save();
-    ctx.strokeStyle = "red";
-    if (p.minsTwo > p.minsOne) {
-      const totalTime =
-        (p.hoursTwo - p.hoursOne) * 60 + (p.minsTwo - p.minsOne);
-      const perPixel = totalTime / 290;
-      const xHelp = perPixel * (p.minsTwo - p.minsOne);
+    // ctx.save();
+    // ctx.strokeStyle = "red";
+    // if (p.minsTwo > p.minsOne) {
+    //   const totalTime =
+    //     (p.hoursTwo - p.hoursOne) * 60 + (p.minsTwo - p.minsOne);
+    //   const perPixel = totalTime / 290;
+    //   const xHelp = perPixel * (p.minsTwo - p.minsOne);
 
-      ctx.beginPath();
-      ctx.moveTo(xStart + xHelp, 10);
-      ctx.lineTo(xStart + xHelp, -10);
-      ctx.stroke();
-    }
-    if (p.minsTwo < p.minsOne) {
-      const totalTime =
-        (p.hoursTwo - p.hoursOne - 1) * 60 + (60 - p.minsOne) + p.minsTwo;
-      const perPixel = totalTime / 290;
-      const xHelp = perPixel * (60 - p.minsOne);
+    //   ctx.beginPath();
+    //   ctx.moveTo(xStart + xHelp, 10);
+    //   ctx.lineTo(xStart + xHelp, -10);
+    //   ctx.stroke();
+    // }
+    // if (p.minsTwo < p.minsOne) {
+    //   const totalTime =
+    //     (p.hoursTwo - p.hoursOne - 1) * 60 + (60 - p.minsOne) + p.minsTwo;
+    //   const perPixel = totalTime / 290;
+    //   const xHelp = perPixel * (60 - p.minsOne);
 
-      ctx.beginPath();
-      ctx.moveTo(xStart + xHelp, 10);
-      ctx.lineTo(xStart + xHelp, -10);
-      ctx.stroke();
+    //   ctx.beginPath();
+    //   ctx.moveTo(xStart + xHelp, 10);
+    //   ctx.lineTo(xStart + xHelp, -10);
+    //   ctx.stroke();
 
-      const xHelp2 = perPixel * (totalTime - p.minsTwo);
-      ctx.beginPath();
-      ctx.moveTo(xStart + xHelp2, 10);
-      ctx.lineTo(xStart + xHelp2, -10);
-      ctx.stroke();
-    }
-    ctx.restore();
+    //   const xHelp2 = perPixel * (totalTime - p.minsTwo);
+    //   ctx.beginPath();
+    //   ctx.moveTo(xStart + xHelp2, 10);
+    //   ctx.lineTo(xStart + xHelp2, -10);
+    //   ctx.stroke();
+    // }
+    // ctx.restore();
 
     ctx.restore();
 
@@ -18295,7 +18331,7 @@ How many items are there in each bag?
           console.log("Difference between spending too small");
           return updateCalc();
         }
-       
+
         displayProblem.innerHTML = `
        Student ${p.objectOne} and student ${p.objectTwo} has the same amount of money at first.</br>
        Each day, student ${p.objectOne} spends $${p.personASpentEachDay} while student ${p.objectTwo} spents $${p.personBSpentEachDay}.</br>
@@ -20692,12 +20728,12 @@ function handleSubmit(e) {
     }
 
     if (level == 3.08) {
-      if (p.amOrPmOne == "pm") {
-        p.hoursOne += 12;
-      }
-      if (p.amOrPmTwo == "pm") {
-        p.hoursTwo += 12;
-      }
+      // if (p.amOrPmOne == "pm") {
+      //   p.hoursOne += 12;
+      // }
+      // if (p.amOrPmTwo == "pm") {
+      //   p.hoursTwo += 12;
+      // }
       // if (p.minsTwo > p.minsOne) {
       //   if (p.hoursOne == p.hoursTwo) {
       //     correctAnswer = `${p.minsTwo - p.minsOne}mins`;
@@ -20721,14 +20757,14 @@ function handleSubmit(e) {
       // if (p.minsTwo == p.minsOne) {
       //   correctAnswer = `${p.hoursTwo - p.hoursOne}h`;
       // }
-      const firstScene = p.hoursOne*60+p.minsOne
-      const secondScene = p.hoursTwo*60+p.minsTwo
-      const diff = secondScene - firstScene
-      const hours = Math.trunc(diff/60)
-      const remainder = diff%60
-      correctAnswer = `${hours}h${remainder}mins`
-      if (hours == 0) correctAnswer = `${remainder}mins`
-      if (remainder == 0) correctAnswer = `${hours}h`
+      const firstScene = p.hoursOne * 60 + p.minsOne;
+      const secondScene = p.hoursTwo * 60 + p.minsTwo;
+      const diff = secondScene - firstScene;
+      const hours = Math.trunc(diff / 60);
+      const remainder = diff % 60;
+      correctAnswer = `${hours}h${remainder}mins`;
+      if (hours == 0) correctAnswer = `${remainder}mins`;
+      if (remainder == 0) correctAnswer = `${hours}h`;
     }
 
     if (level == 3.09) {
@@ -26578,9 +26614,9 @@ function genProblems() {
 
   if (level == 3.08) {
     return {
-      hoursOne: genNumbers(24) + 1,
+      hoursOne: genNumbers(24),
       minsOne: genNumbers(60),
-      hoursTwo: genNumbers(24) + 1,
+      hoursTwo: genNumbers(24),
       minsTwo: genNumbers(60),
       amOrPmOne: "pm",
       amOrPmTwo: "pm",
