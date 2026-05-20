@@ -9317,11 +9317,19 @@ function updateProblems() {
     }
 
     if (setting == 9) {
-      workingDisplay();
-      firstNum.textContent = p.numOne;
-      secondNum.textContent = p.multiple;
-      operator.textContent = "x";
-      workingAnswer.textContent = "?";
+      if (p.type == "working"){
+        workingDisplay();
+        firstNum.textContent = p.numOne;
+        secondNum.textContent = p.multiple;
+        operator.textContent = "x";
+        workingAnswer.textContent = "?";
+      }
+      if (p.type == "short"){
+        normalDisplay()
+        displayProblem.innerHTML = `
+        What is the product of ${p.numOne} and ${p.multiple}?`
+      }
+
     }
 
     // OVERLAPPING PLACE VALUE
@@ -28095,6 +28103,7 @@ function genProblems() {
       return {
         numOne: genNumbers(899) + 100,
         multiple: genNumbers(8) + 2,
+        type: ["working", "short"][genNumbers(2)],
       };
     }
 
