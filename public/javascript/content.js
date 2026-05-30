@@ -287,10 +287,8 @@ export const displayContent = (level) => {
       <hr></hr>
       20. Percentage: Percentage of</br>
       21. Percentage: Percentage change</br>
-      22. Percentage: Repeated Identity</br>
-      
-      23. Percentage: Remainder Concept</br>
-      24. Percentage: Simple and Further discount</br>
+      22. Percentage: Remainder Concept</br>
+      23. Percentage: Simple and Further discount</br>
       <hr></hr>
       </p>99. All
       
@@ -332,13 +330,15 @@ export const displayContent = (level) => {
     12. Ratio: Manipulation in units</br>
     13. Ratio: Repeated Identity (Geometry)</br>
     <hr>
-    14. Average: Internal change</br>
-    15. Average: Triangle Numbers</br>
-    16. Average: External Change</br>
-    17. Average: Odd consecutive days</br>
-    18. Circles: Area and Perimeter</br>
-    19. Circles: Inner Square</br>
-    20. Circles: Others</br>
+    14. Percentage: Repeated Identity</br>
+    <hr>
+    15. Average: Internal change</br>
+    16. Average: Triangle Numbers</br>
+    17. Average: External Change</br>
+    18. Average: Odd consecutive days</br>
+    19. Circles: Area and Perimeter</br>
+    20. Circles: Inner Square</br>
+    21. Circles: Others</br>
     <hr>
     91. Speed: Average Speed</br>
     92. Speed: Moving Apart</br>
