@@ -18956,10 +18956,8 @@ How many items are there in each bag?
       const theOther = p.totalQuantity * p.valueB;
       const bigDiff = p.totalValue - theOther;
       const smallDiff = p.valueB - p.valueA;
-      // if (bigDiff / smallDiff < 0) {
-      //   console.log("Too Small");
-      //   return updateCalc();
-      // }
+
+      if (p.totalValue % (p.valueA*p.totalQuantity-(p.valueB-p.valueA) != 0)) return updateCalc()
       displayProblem.innerHTML = `
       ${sentenceA}.</br>
       Each student receives either ${p.valueA} or ${p.valueB} ${object}s.</br>
