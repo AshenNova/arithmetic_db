@@ -18935,12 +18935,6 @@ How many items are there in each bag?
       // Quantity is the number of students
       let object = ["sweet", "chocolate", "pen", "pencil"];
       object = object[genNumbers(object.length)];
-      // if (p.valueA == p.valueB) {
-      //   return updateCalc();
-      // }
-      // if (p.valueA > p.valueB) {
-      //   [p.valueA, p.valueB] = [p.valueB, p.valueA];
-      // }
       p.totalQuantity = p.quantityA + p.quantityB;
       p.totalValue = p.valueA * p.quantityA + p.valueB * p.quantityB;
       // if (p.totalQuantity == p.totalValue) return updateCalc();
@@ -18953,15 +18947,19 @@ How many items are there in each bag?
         p.totalValue
       )}`;
       // }
+      const checkOne = p.valueA * p.totalQuantity;
+      const checkBigDiff = checkOne - p.totalValue;
+      const checkSmallDiff = p.valueA - p.valueB;
+      const divide = checkBigDiff / checkSmallDiff;
+      if (divide % 1 != 0) return updateCalc();
       const theOther = p.totalQuantity * p.valueB;
       const bigDiff = p.totalValue - theOther;
       const smallDiff = p.valueB - p.valueA;
 
-      if (p.totalValue % (p.valueA*p.totalQuantity-(p.valueB-p.valueA) != 0)) return updateCalc()
       displayProblem.innerHTML = `
       ${sentenceA}.</br>
       Each student receives either ${p.valueA} or ${p.valueB} ${object}s.</br>
-      What fraction of the total number of students received ${p.valueA} ${object}?
+      What fraction of the total number of students received ${p.valueA} ${object}s?
       `;
     }
     if (setting == 6) {
