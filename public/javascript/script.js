@@ -18942,10 +18942,10 @@ How many items are there in each bag?
 
       // let sentenceA = ["fraction"][genNumbers(1)];
       // if (sentenceA == "fraction") {
-      const sentenceA = `The fraction of the number of students to ${object}s is ${displaySimpleFraction(
+      const sentenceA = `The number of students is ${displaySimpleFraction(
         p.totalQuantity,
         p.totalValue
-      )}`;
+      )} of the number of ${object}s`;
       // }
       const checkOne = p.valueA * p.totalQuantity;
       const checkBigDiff = checkOne - p.totalValue;
