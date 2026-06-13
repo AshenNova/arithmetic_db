@@ -31540,7 +31540,7 @@ function buttonLevelSetting() {
 
     case "Level 3.08":
       level = 3.08;
-      scoreNeeded = 20;
+      scoreNeeded = 10;
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       document.querySelector("#user-input").setAttribute("type", "text");
