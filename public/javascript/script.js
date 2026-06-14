@@ -18870,6 +18870,7 @@ How many items are there in each bag?
       p.second = p.quanB * p.multiplierA;
       p.third = p.quanA * p.multiplierB;
       // const fourth = p.quanB * p.multiplierB;
+      if (first > p.second) return updateCalc();
       let answer = p.second - ((p.third / p.quanA) * p.quanB + p.fourth);
 
       if (p.version == 0) {
