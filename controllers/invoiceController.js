@@ -22,7 +22,7 @@ const months = [
 
 function generateInvoice() {
   let QR;
-  // schedule.scheduleJob("5 * * * * *", async function () {
+  // schedule.scheduleJob("1 * * * * *", async function () {
   schedule.scheduleJob("0 0 1 * *", async function () {
     console.count("Run");
     let event = new Date();
@@ -70,7 +70,7 @@ function generateInvoice() {
     }
 
     const students = await User.find({ private: true });
-
+    console.log(students);
     students.forEach(async (student) => {
       let studentDate = [];
       if (student.day.includes("Monday")) studentDate.push(monday);

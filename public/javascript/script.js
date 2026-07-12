@@ -10671,6 +10671,7 @@ function updateProblems() {
     if (setting == 21) {
       normalDisplay();
       p.numOne = p.numOne / p.convenientNumOne;
+      p.numTwo = p.numTwo / p.convenientNumTwo;
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
@@ -28540,6 +28541,7 @@ function genProblems() {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [10, 100, 1000][genNumbers(3)],
         numTwo: genNumbers(89) + 11,
+        convenientNumTwo: [1, 10, 100][genNumbers(3)],
       };
     }
     if (setting == 22) {
