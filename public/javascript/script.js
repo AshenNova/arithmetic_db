@@ -20042,9 +20042,7 @@ function handleSubmit(e) {
     }
 
     if (level == 1.1) {
-      console.log("Checking answer");
       const text = p.number.toString();
-      console.log(text, text.length);
       const single = [
         "zero",
         "one",
@@ -26333,49 +26331,67 @@ function genProblems() {
 
   if (level == 1.1) {
     // 0 to 10
-    if (setting == 0) {
-      return {
-        number: genNumbers(9) + 1,
-      };
+    let number = [];
+    console.log(number.length);
+    console.log(setting * 1 + 1);
+
+    while (number.length != setting * 1 + 1) {
+      let x = genNumbers(2) == 1 ? 0 : genNumbers(9) + 1;
+      console.log(x, number);
+      if (number.length == setting || number.length == 0) {
+        number.unshift(genNumbers(9) + 1);
+      } else {
+        number.unshift(x);
+      }
     }
-    // 11 to 100
-    if (setting == 1) {
-      return {
-        number: genNumbers(90) + 11,
-        // number: (genNumbers(9) + 1) * 10,
-      };
-    }
-    // 101 to 1000
-    if (setting == 2) {
-      return {
-        number: genNumbers(900) + 101,
-        // number: (genNumbers(9) + 1) * 100,
-      };
-    }
-    // 101 to 1000
-    if (setting == 3) {
-      return {
-        number: genNumbers(9000) + 1001,
-      };
-    }
-    // 101 to 1000
-    if (setting == 4) {
-      return {
-        number: genNumbers(90000) + 10001,
-      };
-    }
-    // 101 to 1000
-    if (setting == 5) {
-      return {
-        number: genNumbers(900000) + 100001,
-      };
-    }
-    // 101 to 1000
-    if (setting == 6) {
-      return {
-        number: genNumbers(9000000) + 1000001,
-      };
-    }
+
+    return {
+      number: Number(number.join("")),
+    };
+
+    // if (setting == 0) {
+    //   return {
+    //     number: genNumbers(9) + 1,
+    //   };
+    // }
+    // // 11 to 100
+    // if (setting == 1) {
+    //   return {
+    //     number: genNumbers(90) + 11,
+    //     // number: (genNumbers(9) + 1) * 10,
+    //   };
+    // }
+    // // 101 to 1000
+    // if (setting == 2) {
+    //   return {
+    //     number: genNumbers(900) + 101,
+    //     // number: (genNumbers(9) + 1) * 100,
+    //   };
+    // }
+    // // 101 to 1000
+    // if (setting == 3) {
+    //   return {
+    //     number: genNumbers(9000) + 1001,
+    //   };
+    // }
+    // // 101 to 1000
+    // if (setting == 4) {
+    //   return {
+    //     number: genNumbers(90000) + 10001,
+    //   };
+    // }
+    // // 101 to 1000
+    // if (setting == 5) {
+    //   return {
+    //     number: genNumbers(900000) + 100001,
+    //   };
+    // }
+    // // 101 to 1000
+    // if (setting == 6) {
+    //   return {
+    //     number: genNumbers(9000000) + 1000001,
+    //   };
+    // }
   }
   if (level == 1.11) {
     let shapes = [
