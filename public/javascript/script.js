@@ -23231,7 +23231,7 @@ function handleSubmit(e) {
       }
       if (setting == 21) {
         correctAnswer = p.numOne * p.numTwo;
-        correctAnswer = accDecimal(correctAnswer);
+        // correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 22) {
         correctAnswer = p.numOne / p.numTwo;
