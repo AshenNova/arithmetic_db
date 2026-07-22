@@ -2577,6 +2577,8 @@ function updateProblems() {
     ctx.save();
     ctx.save();
     ctx.font = "1em serif";
+    if (displayHourOne == 0) displayHourOne = 12;
+    if (displayHourTwo == 0) displayHourTwo = 12;
     ctx.fillText(
       `What is the duration between ${displayHourOne}.${p.minsOne
         .toString()
