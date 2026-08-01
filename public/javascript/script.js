@@ -18606,7 +18606,10 @@ How many items are there in each bag?
       }
       if (typeOne == "fractions") {
         // p.varBQuan = 1;
-        firstLine = `The number of A is ${p.varAQuan}/${p.varBQuan} of B.</p>`;
+        firstLine = `The number of A is ${displaySimpleFraction(
+          p.varAQuan,
+          p.varBQuan
+        )} of B.</p>`;
       }
       if (typeOne == "percentage") {
         let percentage = (p.varAQuan / p.varBQuan) * 100;
