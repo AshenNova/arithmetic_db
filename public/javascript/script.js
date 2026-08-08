@@ -23234,7 +23234,7 @@ function handleSubmit(e) {
       }
       if (setting == 21) {
         correctAnswer = p.numOne * p.numTwo;
-        // correctAnswer = accDecimal(correctAnswer);
+        correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 22) {
         correctAnswer = p.numOne / p.numTwo;
@@ -27307,7 +27307,7 @@ function genProblems() {
       numTwo: genNumbers(5) + 1,
       numThree: genNumbers(5) + 1,
       numFour: genNumbers(5) + 1,
-      sentenceChoice: ["is equal to", "the same as", "="][genNumbers(3)],
+      sentenceChoice: ["is equal to", "is the same as", "="][genNumbers(3)],
     };
   }
 
