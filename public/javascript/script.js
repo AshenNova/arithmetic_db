@@ -31378,12 +31378,18 @@ function buttonLevelSetting() {
 
     case "Level 1.10":
       level = 1.1;
-      scoreNeeded = 10;
+      // scoreNeeded = 10;
       document.querySelector("#user-input").setAttribute("type", "text");
       setting = prompt(
         "What is your level?\n0. Primary 1 ( 0 to 9 )\n1. Primary 1 (10 to 99)\n2. Primary 2 ( 100 to 999)\n3. Primary 3 (1 000 to 9999)\n4. Primary 4 (10 000 to 99 999)\n5. Primary 5 (100 000 to 999 999)\n6. Primary 6 (1 000 000 to 9 999 999)",
         6
       );
+      const normalScore = [0, 1, 2, 3, 4];
+      if (normalScore.includes(setting * 1)) {
+        scoreNeeded = 10;
+      } else {
+        scoreNeeded = 6;
+      }
       // setting = prompt(
       //   "What is your level?\n0. Primary 1 ( 0 to 10 )\n1. Primary 1\n2. Primary 2\n3. Primary 3\n4. Primary 4\n5. Primary 5\n6. Primary 6"
       // );
