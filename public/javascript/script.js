@@ -1923,7 +1923,7 @@ function updateProblems() {
     //   p.numTwo = genNumbers(5) + 1;
     // }
     arr.push(p.figureTwo);
-    let repeat = genNumbers(3) + 2;
+    let repeat = genNumbers(5) + 2;
     let repeatTwo = genNumbers(3) + 2;
     if ((repeat = repeatTwo)) {
       repeat -= 1;
@@ -18987,6 +18987,24 @@ How many items are there in each bag?
 
       `;
     }
+
+    if (setting == 7) {
+      const name = boyNames[genNumbers(boyNames.length)];
+      displayProblem.innerHTML = `
+      ${name} wants to purchase something at $${p.cost}.</br>
+      ${
+        p.startingAmount == 0
+          ? ""
+          : `He already has $${p.startingAmount} saved up.</br>`
+      }
+      His daily allowance is $${p.dailyAllowance} but he spents $${
+        p.dailyExpenditure
+      } on weekdays and saves the rest on weekends.</br>
+      He started saving on a ${p.startingDay}.</br>
+      a) How many days would it take him to save that amount?</br>
+      b) On which day would he have saved that amount?</br>
+      `;
+    }
   }
 
   // DISPLAY
@@ -25749,6 +25767,38 @@ function handleSubmit(e) {
       if (setting == 6) {
         correctAnswer = p.largeContainer * p.numLargeContainer * 2;
       }
+
+      //grouping days
+      if (setting == 7) {
+        const oneWeek = p.dailyAllowance * 7 - p.dailyExpenditure * 5;
+        const amountLeft = p.cost - p.startingAmount;
+        const numberOfWeeks = Math.trunc(amountLeft / oneWeek);
+        let remainingAmount = amountLeft % oneWeek;
+        console.log(numberOfWeeks, remainingAmount, p.startingDayNumber);
+        let fractionalDays = 0;
+        let currentDayNumber = p.startingDayNumber;
+        // if (p.startingDayNumber == 0) p.startingDayNumber = 7;
+        let currentDay = p.days[p.startingDayNumber];
+        console.log(`Current Day: ${currentDay}`);
+        while (remainingAmount > 0) {
+          if (currentDay == "saturday" || currentDay == "sunday") {
+            remainingAmount -= p.dailyAllowance;
+          } else {
+            remainingAmount -= p.dailyAllowance - p.dailyExpenditure;
+          }
+          fractionalDays += 1;
+          currentDayNumber += 1;
+          if (currentDayNumber == 7) currentDayNumber = 0;
+          currentDay = p.days[currentDayNumber];
+          console.log(`*Current Day: ${currentDay}`);
+        }
+        const daysNeeded = numberOfWeeks * 7 + fractionalDays;
+        console.log(p.startingDayNumber, fractionalDays);
+        let endDayNumber = p.startingDayNumber + fractionalDays - 1;
+        if (endDayNumber >= 7) endDayNumber -= 7;
+        const endDay = p.days[endDayNumber];
+        correctAnswer = `${daysNeeded}, ${endDay}`;
+      }
     }
     //ANSWERS
     if (level == "heuSix") {
@@ -30629,7 +30679,7 @@ function genProblems() {
       console.log("Chose: " + setting);
       console.log("Whats the regen?");
     } else {
-      setting = calArrAll(6, calArr, setting, 9);
+      setting = calArrAll(7, calArr, setting, 9);
       setting = checkRange(setting, calArr, skipArr);
     }
 
@@ -30726,6 +30776,30 @@ function genProblems() {
         smallContainer: gen_smallContainer,
         numSmallContainer: undefined,
         numLargeContainer: gen_numLargeContainer + genNumbers(20) + 10,
+      };
+    }
+
+    //Grouping days
+    if (setting == 7) {
+      const days = [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday",
+      ];
+      const dailyAllowance = genNumbers(10) + 2;
+      const startingDayNumber = genNumbers(days.length);
+      return {
+        days,
+        startingDayNumber: startingDayNumber,
+        startingDay: days[startingDayNumber],
+        startingAmount: [0, genNumbers(100) + 10][genNumbers(2)],
+        dailyAllowance,
+        dailyExpenditure: genNumbers(dailyAllowance - 2) + 1,
+        cost: genNumbers(500) + 500,
       };
     }
   }
@@ -32502,7 +32576,7 @@ function buttonLevelSetting() {
         optionsBox.classList.add("hidden");
         setting = 9;
       }
-      accepted = [1, 2, 3, 4, 5, 6, 9];
+      accepted = [1, 2, 3, 4, 5, 6, 7, 9];
       setting = settingCheck(setting, accepted, level);
       scoreNeeded = 5;
       displayProblem.style.fontSize = "18px";

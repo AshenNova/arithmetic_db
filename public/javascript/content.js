@@ -123,6 +123,7 @@ export const displayContent = (level) => {
     4. Either or</br>
     5. Supposition (Units)</br>
     6. Difference Quantity with Difference </br>
+    7. Groups (Days)<br>
     <hr>9. All
     `;
   }
