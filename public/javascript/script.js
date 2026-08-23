@@ -25774,12 +25774,12 @@ function handleSubmit(e) {
         const amountLeft = p.cost - p.startingAmount;
         const numberOfWeeks = Math.trunc(amountLeft / oneWeek);
         let remainingAmount = amountLeft % oneWeek;
-        console.log(numberOfWeeks, remainingAmount, p.startingDayNumber);
+        // console.log(numberOfWeeks, remainingAmount, p.startingDayNumber);
         let fractionalDays = 0;
         let currentDayNumber = p.startingDayNumber;
         // if (p.startingDayNumber == 0) p.startingDayNumber = 7;
         let currentDay = p.days[p.startingDayNumber];
-        console.log(`Current Day: ${currentDay}`);
+        // console.log(`Current Day: ${currentDay}`);
         while (remainingAmount > 0) {
           if (currentDay == "saturday" || currentDay == "sunday") {
             remainingAmount -= p.dailyAllowance;
@@ -25790,10 +25790,10 @@ function handleSubmit(e) {
           currentDayNumber += 1;
           if (currentDayNumber == 7) currentDayNumber = 0;
           currentDay = p.days[currentDayNumber];
-          console.log(`*Current Day: ${currentDay}`);
+          // console.log(`*Current Day: ${currentDay}`);
         }
         const daysNeeded = numberOfWeeks * 7 + fractionalDays;
-        console.log(p.startingDayNumber, fractionalDays);
+        // console.log(p.startingDayNumber, fractionalDays);
         let endDayNumber = p.startingDayNumber + fractionalDays - 1;
         if (endDayNumber >= 7) endDayNumber -= 7;
         const endDay = p.days[endDayNumber];
