@@ -7,7 +7,7 @@
   box-shadow: 0 5px 15px rgba(227, 252, 0, 0.4);
   /* font-size: 1.1em; */
 }
-
+/* 
 .menu {
   position: relative;
 }
@@ -57,6 +57,64 @@
 .submenu li:hover > .submenu3,
 .submenu li:hover > .submenu4 {
   display: block;
+} */
+.menu {
+  position: relative;
+}
+
+.menu .dropdown-menu {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: 0;
+}
+
+/* Each menu item with submenu */
+.menu .dropdown-menu li {
+  position: relative;
+}
+
+/* All submenus - unified styling */
+.menu .dropdown-menu .submenu1,
+.menu .dropdown-menu .submenu2,
+.menu .dropdown-menu .submenu3,
+.menu .dropdown-menu .submenu4 {
+  position: absolute;
+  left: 100%;
+  top: -10px;
+  min-width: 140px;
+  background: white;
+  display: none;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1050;
+  padding: 0.5rem 0;
+  margin: 0;
+  list-style: none;
+  border-radius: 0.375rem;
+}
+
+/* Show on hover */
+.menu .dropdown-menu li:hover > .submenu1,
+.menu .dropdown-menu li:hover > .submenu2,
+.menu .dropdown-menu li:hover > .submenu3,
+.menu .dropdown-menu li:hover > .submenu4 {
+  display: block;
+}
+
+/* Submenu items */
+.menu .dropdown-menu .submenu1 .dropdown-item,
+.menu .dropdown-menu .submenu2 .dropdown-item,
+.menu .dropdown-menu .submenu3 .dropdown-item,
+.menu .dropdown-menu .submenu4 .dropdown-item {
+  padding: 0.25rem 1rem;
+}
+
+.menu .dropdown-menu .submenu1 .dropdown-item:hover,
+.menu .dropdown-menu .submenu2 .dropdown-item:hover,
+.menu .dropdown-menu .submenu3 .dropdown-item:hover,
+.menu .dropdown-menu .submenu4 .dropdown-item:hover {
+  background-color: #e9ecef;
 }
 
 @media only screen and (max-width: 859px) {
