@@ -19076,9 +19076,10 @@ How many items are there in each bag?
       if (p.people >= p.active * p.courts) {
         p.version == 2;
       } else {
-        p.version = genNumbers(2);
+        p.version = 1
       }
 
+      // p.version = 1;
       if (p.version == 0) {
         displayProblem.innerHTML = `
       There are ${p.people} people playing a game from ${
