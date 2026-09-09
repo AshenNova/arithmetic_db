@@ -31310,7 +31310,7 @@ calBtn.forEach((item) => {
         wholeNumberContainer.classList.toggle("hidden");
         workingContainer.classList.toggle("hidden");
       }
-    }, 2000);
+    }, 500);
     // }
   });
 });
