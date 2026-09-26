@@ -422,7 +422,7 @@ exports.claimReward = catchAsync(async (req, res, next) => {
   }
   const user = await User.findOne({ username: req.body.user });
 
-  if (user.gift > 0 && req.body.name.includes("Mechnical Pencil")) {
+  if (user.gift > 0 && req.body.name.includes("Mechanical Pencil")) {
     const updateLog = await RewardLog.create({
       username: req.body.user,
       description: req.body.description,
