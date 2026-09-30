@@ -19076,7 +19076,7 @@ How many items are there in each bag?
       if (p.people >= p.active * p.courts) {
         p.version == 2;
       } else {
-        p.version = 1
+        p.version = 1;
       }
 
       // p.version = 1;
@@ -31719,7 +31719,7 @@ function buttonLevelSetting() {
 
     case "Level 3.19":
       setting = prompt("1. Basics\n2. Reverse\n\n9. All", 9);
-      if (![1, 2, 9].includes(setting)) setting = 9;
+      if (![1, 2, 9].includes(setting * 1)) setting = 9;
       level = 3.19;
       scoreNeeded = 20;
       wholeNumberContainer.classList.add("hidden");
