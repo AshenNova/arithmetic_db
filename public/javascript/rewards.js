@@ -6,8 +6,13 @@ const rewardIdCl = document.querySelectorAll(".rewardId");
 
 claimBtn.forEach((item, index) => {
   item.addEventListener("click", function (event) {
-    console.log(index);
-    console.log("I hear you!");
+    // Guard: prevent double-click from re-firing
+    if (item.disabled) return;
+
+    // Disable immediately + give feedback
+    item.disabled = true;
+    item.textContent = "Claiming...";
+
     const userName = $("#userName").text().trim();
 
     let claim = {
@@ -17,24 +22,34 @@ claimBtn.forEach((item, index) => {
       description: rewardDescriptionCl[index].textContent,
       requirement: rewardRequirementCl[index].textContent,
     };
-    console.log(claim);
+
     $.ajax({
       url: "/user/points/rewards/claim",
       method: "POST",
       data: claim,
       success: function (res) {
-        console.log("Received back");
-        if (res == "Nil") alert("Sorry, this reward has been fully claimed.");
+        if (res == "Nil") {
+          alert("Sorry, this reward has been fully claimed.");
+          // Re-enable so they can try another reward
+          item.disabled = false;
+          item.textContent = "Claim";
+        }
         if (res == "No") {
           alert("Not enough points");
+          // Re-enable — student may want to try a different reward
+          item.disabled = false;
+          item.textContent = "Claim";
         }
         if (res == "Yes") {
           alert("Congratulations! The reward has been claimed!");
-          location.reload();
+          location.reload(); // Page reloads → fresh buttons anyway
         }
       },
       error: function (e) {
         console.log(e);
+        // Re-enable on network/server error too
+        item.disabled = false;
+        item.textContent = "Claim";
       },
     });
   });

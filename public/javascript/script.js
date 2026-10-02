@@ -26972,7 +26972,7 @@ function genProblems() {
         rollChoice: 1,
         numOne: genNumbers(8) + 1,
         numTwo: genNumbers(8) + 2,
-        numMulti: genNumbers(8) + 2,
+        numMulti: genNumbers(3) + 1,
         value: undefined,
       };
     }
@@ -26981,7 +26981,7 @@ function genProblems() {
         rollChoice: 2,
         nume: genNumbers(8) + 1,
         deno: genNumbers(8) + 2,
-        numMulti: genNumbers(8) + 2,
+        numMulti: genNumbers(3) + 2,
         value: undefined,
       };
     }
