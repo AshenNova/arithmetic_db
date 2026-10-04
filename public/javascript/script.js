@@ -26784,7 +26784,7 @@ function genProblems() {
       return {
         numTwo: genNumbers(10) + 1,
         numThree: genNumbers(5) + 2,
-        numFour: genNumbers(5) + 5,
+        numFour: genNumbers(10) + 20,
         type: ["value", "pattern"][genNumbers(2)],
       };
     }
