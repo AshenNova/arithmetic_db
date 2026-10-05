@@ -84,8 +84,13 @@ function generateInvoice() {
 
       console.log(studentDate, student.endDate);
       console.log(student.endDate.getMonth());
-      console.log(new Date().getMonth());
-      if (student.endDate.getMonth() == new Date().getMonth()) {
+      // console.log(new Date().getMonth());
+      console.log(student.endDate.getFullYear());
+      console.log(new Date().getFullYear());
+      if (
+        student.endDate.getMonth() == new Date().getMonth() &&
+        student.endDate.getFullYear() == new Date().getFullYear()
+      ) {
         console.log("This is the last month.");
         const length = studentDate.length;
         for (let i = 0; i < length; i++) {
