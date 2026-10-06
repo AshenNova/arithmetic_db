@@ -20502,16 +20502,16 @@ function handleSubmit(e) {
             correctAnswer = `${p.timeHours}.${
               p.timeMinutes + p.changeMinutes
             }=${hours}.0${finalMinutes % 60}${amOrPm2}`;
-            correctAnswerTwo = `${hours}.0${finalMinutes % 60}${amOrPm2}`;
+            const minStr = (finalMinutes % 60).toString().padStart(2, "0");
+            correctAnswerTwo = `${hours}.${minStr}${amOrPm2}`;
           } else if (p.timeMinutes + p.changeMinutes >= 60) {
             correctAnswer = `${p.timeHours}.${
               p.timeMinutes + p.changeMinutes
             }=${hours}.${finalMinutes % 60}${amOrPm2}`;
             correctAnswerTwo = `${hours}.${finalMinutes % 60}${amOrPm2}`;
-          } else if (finalMinutes % 60 < 10) {
-            correctAnswer = `${hours}.0${finalMinutes % 60}${amOrPm2}`;
           } else {
-            correctAnswer = `${hours}.${finalMinutes % 60}${amOrPm2}`;
+            const minStr = (finalMinutes % 60).toString().padStart(2, "0");
+            correctAnswer = `${hours}.${minStr}${amOrPm2}`;
           }
         }
         if (p.roll == "hours") {
@@ -20532,10 +20532,11 @@ function handleSubmit(e) {
 
           if (finalMinutes % 60 == 0) {
             correctAnswer = `${hours}${amOrPm2}`;
-          } else if (finalMinutes % 60 < 10) {
-            correctAnswer = `${hours}.0${finalMinutes % 60}${amOrPm2}`;
+            correctAnswerTwo = `${hours}.00${amOrPm2}`;
           } else {
-            correctAnswer = `${hours}.${finalMinutes % 60}${amOrPm2}`;
+            // correctAnswer = `${hours}.0${finalMinutes % 60}${amOrPm2}`;
+            const minStr = (finalMinutes % 60).toString().padStart(2, "0");
+            correctAnswer = `${hours}.${minStr}${amOrPm2}`;
           }
         }
       }
@@ -20561,15 +20562,15 @@ function handleSubmit(e) {
 
           if (p.timeMinutes - p.changeMinutes == 0) {
             correctAnswer = `${hours}${amOrPm2}`;
+            correctAnswerTwo = `${hours}.00${amOrPm2}`;
           } else if (p.timeMinutes - p.changeMinutes < 0) {
             correctAnswer = `${hours}.${p.timeMinutes + 60},${hours}.${
               finalMinutes % 60
             }${amOrPm2}`;
             correctAnswerTwo = `${hours}.${finalMinutes % 60}${amOrPm2}`;
-          } else if (finalMinutes % 60 < 10) {
-            correctAnswer = `${hours}.0${finalMinutes % 60}${amOrPm2}`;
           } else {
-            correctAnswer = `${hours}.${finalMinutes % 60}${amOrPm2}`;
+            const minStr = (finalMinutes % 60).toString().padStart(2, "0");
+            correctAnswer = `${hours}.${minStr}${amOrPm2}`;
           }
 
           if (hours == 0) {
@@ -20601,10 +20602,9 @@ function handleSubmit(e) {
 
           if (finalMinutes % 60 == 0) {
             correctAnswer = `${hours}${amOrPm2}`;
-          } else if (finalMinutes % 60 < 10) {
-            correctAnswer = `${hours}.0${finalMinutes % 60}${amOrPm2}`;
           } else {
-            correctAnswer = `${hours}.${finalMinutes % 60}${amOrPm2}`;
+            const minStr = (finalMinutes % 60).toString().padStart(2, "0");
+            correctAnswer = `${hours}.${minStr}${amOrPm2}`;
           }
         }
       }

@@ -22,7 +22,7 @@ const months = [
 
 function generateInvoice() {
   let QR;
-  // schedule.scheduleJob("1 * * * * *", async function () {
+  // schedule.scheduleJob("*/10 * * * * *", async function () {
   schedule.scheduleJob("0 0 1 * *", async function () {
     console.count("Run");
     let event = new Date();
