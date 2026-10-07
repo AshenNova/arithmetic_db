@@ -923,20 +923,15 @@ export function helpMeFunc(level, state, setting) {
   ) {
     if (p.firstUnit == "$" || p.unitMeasurement == "$") {
       helpMe.textContent = `$1 = 100¢`;
-    }
-    if (p.firstUnit == "m" || p.unitMeasurement == "m") {
+    } else if (p.firstUnit == "m" || p.unitMeasurement == "m") {
       helpMe.textContent = `1 m  = 100 cm`;
-    }
-    if (p.firstUnit == "min" || p.unitMeasurement == "min") {
+    } else if (p.firstUnit == "min" || p.unitMeasurement == "min") {
       helpMe.textContent = `1 min  = 60 s`;
-    }
-    if (p.firstUnit == "km" || p.unitMeasurement == "km") {
+    } else if (p.firstUnit == "km" || p.unitMeasurement == "km") {
       helpMe.textContent = `1 km  = 1000 m`;
-    }
-    if (p.firstUnit == "kg" || p.unitMeasurement == "kg") {
+    } else if (p.firstUnit == "kg" || p.unitMeasurement == "kg") {
       helpMe.textContent = `1 kg  = 1000 g`;
-    }
-    if (p.firstUnit == "ℓ" || p.unitMeasurement == "ℓ") {
+    } else {
       helpMe.textContent = `1 ℓ  = 1000 mℓ`;
     }
   }
