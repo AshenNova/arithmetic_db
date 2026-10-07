@@ -16601,7 +16601,7 @@ How many items are there in each bag?
       while (p.objectOneV == p.objectTwoV) {
         p.objectOneV = genNumbers(3) + 2;
       }
-      p.total = (genNumbers(8) + 2) * (p.objectOneV + p.objectTwoV);
+      p.total = (genNumbers(9) + 10) * (p.objectOneV + p.objectTwoV);
       if (p.rollQn2 != "total") {
         const order = ["A", "B"][genNumbers(2)];
         if (order == "A") {
