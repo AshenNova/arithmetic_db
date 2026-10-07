@@ -3493,7 +3493,10 @@ function updateProblems() {
           p.numTwo /= i;
         }
       }
-      p.value = p.numOne * p.numMulti;
+      // p.numOne is numerator
+      // p.numTwo is denominator
+      // p.numMulti is multiplier
+      p.value = p.numOne * p.numMulti * p.numTwo;
       displayProblem.innerHTML = `
       <div class="frac">
       <span>${p.numOne}</span>
@@ -3517,7 +3520,7 @@ function updateProblems() {
         }
       }
 
-      p.value = p.deno * p.numMulti;
+      p.value = p.deno * p.numMulti * p.nume;
       displayProblem.innerHTML = `
       <div class="frac">
       <span>${p.nume}</span>
@@ -21231,10 +21234,10 @@ function handleSubmit(e) {
     }
     if (level == 4.05) {
       if (setting == 1 || (setting == 9 && p.rollChoice == 1)) {
-        correctAnswer = `${p.numMulti * p.numTwo}`;
+        correctAnswer = `${(p.value / p.numOne) * p.numTwo}`;
       }
       if (setting == 2 || (setting == 9 && p.rollChoice == 2)) {
-        correctAnswer = ((p.deno * p.numMulti) / p.deno) * p.nume;
+        correctAnswer = (p.value / p.deno) * p.nume;
       }
     }
 
@@ -26965,22 +26968,23 @@ function genProblems() {
 
     if (setting == 9) {
       roll = genNumbers(2) + 1;
+      // roll = 2;
     }
 
     if (setting == 1 || (setting == 9 && roll == 1)) {
       return {
         rollChoice: 1,
-        numOne: genNumbers(8) + 1,
-        numTwo: genNumbers(8) + 2,
-        numMulti: genNumbers(3) + 1,
+        numOne: genNumbers(5) + 1,
+        numTwo: genNumbers(5) + 2,
+        numMulti: genNumbers(3) + 2,
         value: undefined,
       };
     }
     if (setting == 2 || (setting == 9 && roll == 2)) {
       return {
         rollChoice: 2,
-        nume: genNumbers(8) + 1,
-        deno: genNumbers(8) + 2,
+        nume: genNumbers(5) + 1,
+        deno: genNumbers(5) + 2,
         numMulti: genNumbers(3) + 2,
         value: undefined,
       };
