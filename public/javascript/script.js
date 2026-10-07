@@ -16739,7 +16739,7 @@ How many items are there in each bag?
         if (p.rollObject == 0 || p.rollObject == 1 || p.rollObject == 2) {
           thirdSentence = `What is the maximum number of ${
             p.objects[p.rollObject][1]
-          } are completedly filled?`;
+          } are completely filled?`;
         }
         if (p.rollObject == 3) {
           thirdSentence = `What is the maximum number of people he can give?`;
@@ -30068,8 +30068,8 @@ function genProblems() {
           ["bicycle", "cars", "2", "4"],
         ],
         rollObj: genNumbers(4),
-        numOne: genNumbers(5) + 5,
-        numTwo: genNumbers(5) + 5,
+        numOne: genNumbers(10) + 5,
+        numTwo: genNumbers(10) + 5,
         rollAnswer: genNumbers(2),
         difference: undefined,
         objectOne: undefined,
