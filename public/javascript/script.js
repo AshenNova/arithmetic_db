@@ -954,9 +954,11 @@ function resetStuff() {
   //STYLES
   document.querySelector("#user-input").setAttribute("type", "number");
   document.querySelector("#user-input").setAttribute("step", "1");
+  document.querySelector("#user-input").removeAttribute("min");
   userInput.style.width = "175px";
   document.querySelector("#user-input").style.marginTop = "0";
   document.querySelector("#user-input").setAttribute("max", "99999");
+
   canvas.setAttribute("height", "275px");
   displayProblem.style.margin = "30px 0";
   displayProblem.style.textAlign = "center";
@@ -31817,6 +31819,7 @@ function buttonLevelSetting() {
     case "Level 4.1":
       level = 4.1;
       scoreNeeded = 30;
+      document.querySelector("#user-input").setAttribute("type", "number");
       document.querySelector("#user-input").setAttribute("step", "0.000001");
       break;
 
