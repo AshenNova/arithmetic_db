@@ -7207,6 +7207,54 @@ function updateProblems() {
     ctx.restore();
   }
 
+  //TRIANGLE PATTERN REVERSAL
+  if (level == 5.15) {
+    calculatorSymbol.classList.remove("hidden");
+    const sum = ((p.pattern + 1) * p.pattern) / 2;
+    if (p.type == "standard") {
+      displayProblem.innerHTML = `1 + 2 + 3 .... n = ${sum}.</br>
+      What is the value of n?
+      `;
+    }
+    if (p.type == "table") {
+      displayProblem.innerHTML = `
+      <table class="table">
+      <thead>
+        <tr>
+          <th>Pattern</th>
+          <th>Sum</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="text-center">...</td>
+        </tr>
+        <tr>
+          <td>n</td>
+          <td>${sum}</td>
+        </tr>
+      </tbody>
+    </table></br>
+    Which pattern gives a sum of ${sum}?
+      `;
+    }
+  }
   if (level == 5.16) {
     if (p.choice2 == "B") {
       p.objectTwoV = p.objectOneV * (genNumbers(5) + 2);
@@ -22198,6 +22246,9 @@ function handleSubmit(e) {
       }
     }
 
+    if (level == 5.15) {
+      correctAnswer = p.pattern;
+    }
     if (level == 5.16) {
       //Whole Number
       if (p.choice2 == "B") {
@@ -27593,6 +27644,15 @@ function genProblems() {
       triA: undefined,
     };
   }
+  //TRIANGLE PATTERN REVERSAL
+  if (level == 5.15) {
+    return {
+      // roll: ["rectangle", "updown", "down", "up"][genNumbers(4)],
+
+      type: ["table", "standard"][genNumbers(2)],
+      pattern: genNumbers(50) + 50,
+    };
+  }
 
   if (level == 5.16) {
     return {
@@ -32128,6 +32188,14 @@ function buttonLevelSetting() {
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
+      break;
+
+    case "Level 5.15":
+      level = 5.15;
+      scoreNeeded = 10;
+      displayProblem.style.fontSize = "18px";
+      document.querySelector("#user-input").setAttribute("type", "text");
+
       break;
 
     case "Level 5.16":

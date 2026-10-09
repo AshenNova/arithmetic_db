@@ -793,6 +793,7 @@ export function helpList(level) {
     "4.13",
     "4.26",
     "5.01",
+    "5.15",
     "5.16",
     "6.05",
     "heuTwo",
@@ -1314,6 +1315,30 @@ export function helpMeFunc(level, state, setting) {
       );
     }
   }
+
+  //TRIANGLE REVERSAL {
+  if (level == 5.15) {
+    helpMe.style.fontSize = "18px";
+    helpMe.style.textAlign = "left";
+    const sum = ((p.pattern + 1) * p.pattern) / 2;
+    const squareRoot = Math.sqrt(sum * 2);
+    helpMe.innerHTML = `
+    You must already know it is triangle pattern.</br>
+      1 + 2 + 3 ... n = ${sum}</br>
+      (n + 1) x n / 2 = ${sum}</br>
+      (n + 1) x n = ${sum} x 2 = ${sum * 2}</br>
+      Guess and check 2 numbers with a difference of 1 that gives you ${
+        sum * 2
+      } when multiplied together.</br>
+      or</br>
+      Use calculator and square root to see the closest 2 possibilities<br>
+      √${sum * 2} = ${squareRoot}</br>
+      From the above, you can tell its ${Math.ceil(
+        squareRoot
+      )} x <u>${Math.floor(squareRoot)}</u> = ${sum}.
+      `;
+  }
+
   if (level == 5.16) {
     helpMe.innerHTML = `
       ${p.objectOneV} ${p.gender} -> ${p.objectTwoV}</br>
