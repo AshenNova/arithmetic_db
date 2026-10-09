@@ -1335,7 +1335,7 @@ export function helpMeFunc(level, state, setting) {
       √${sum * 2} = ${squareRoot}</br>
       From the above, you can tell its ${Math.ceil(
         squareRoot
-      )} x <u>${Math.floor(squareRoot)}</u> = ${sum}.
+      )} x <u>${Math.floor(squareRoot)}</u> = ${sum * 2}.
       `;
   }
 
