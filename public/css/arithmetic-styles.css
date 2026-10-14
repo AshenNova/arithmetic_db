@@ -638,7 +638,11 @@ img {
   border-color: rgb(0, 255, 13);
   animation: rotate3 2s linear infinite;
 }
-
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+}
 @keyframes rotate1 {
   0% {
     transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);

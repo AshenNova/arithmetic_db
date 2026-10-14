@@ -1,12 +1,12 @@
 <% if (students && students.name && students.name.length) { %>
-  <div class="col-md-6">
+  <div class="mt-4 col-md-6 d-flex flex-column"> 
     <div class="hidden">
       <div id="studentNameId"><%= students.name %></div>
       <div id="studentCountId"><%= students.count %></div>
     </div>
     <h2>Daily Workdone</h2>
-    <div style="position: relative; height: 400px;">
-      <canvas id="myChart" style="width: 100%;"></canvas>
+    <div class="chart-wrapper flex-grow-1">
+      <canvas id="myChart"></canvas>
     </div>
   </div>
 <% } %>
