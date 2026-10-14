@@ -1,18 +1,17 @@
-<% if (logRewards)  {%>
-<div class="container mt-4">
-    <h2> Rewards Log</h2>
-            <% logRewards.forEach(item => { %>
-                <div>
-                <% if (currentUser.admin) { %>
-                    <a href="/user/rewardLog/delete/<%= item._id %>" style="text-decoration: none;">❌</a>
-                <% } %>
-                <% if (item.points){ %>
-                    🔔 <%= item.claimed.toLocaleDateString('en-GB') %> @ <%= item.claimed.toLocaleTimeString('en-US') %>: 👤 <b><%=  item.username %></b> claimed "<%= item.reward %>" with <%= item.points %> points.
-               <%  } else { %>
-                    🎓 <%= item.claimed.toLocaleDateString('en-GB') %> @ <%= item.claimed.toLocaleTimeString('en-US') %>: 👤 <b><%=  item.username %></b> claimed "<%= item.reward %>"" as a graduation gift.
-              <%  } %>
-                </p></div>
-           
-            <% }) %>
-  </div>
+<% if (logRewards) { %>
+    <div class="mt-4 <%= (typeof students !== 'undefined' && students.name[0]) ? 'col-md-6' : 'col-md-12' %>">
+      <h2>Rewards Log</h2>
+      <% logRewards.forEach(item => { %>
+        <div>
+          <% if (currentUser.admin) { %>
+            <a href="/user/rewardLog/delete/<%= item._id %>" style="text-decoration: none;">❌</a>
+          <% } %>
+          <% if (item.points) { %>
+            🔔 <%= item.claimed.toLocaleDateString('en-GB') %> @ <%= item.claimed.toLocaleTimeString('en-US') %>: 👤 <b><%= item.username %></b> claimed "<%= item.reward %>" with <%= item.points %> points.
+          <% } else { %>
+            🎓 <%= item.claimed.toLocaleDateString('en-GB') %> @ <%= item.claimed.toLocaleTimeString('en-US') %>: 👤 <b><%= item.username %></b> claimed "<%= item.reward %>" as a graduation gift.
+          <% } %>
+        </div>
+      <% }) %>
+    </div>
   <% } %>

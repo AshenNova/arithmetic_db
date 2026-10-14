@@ -32,15 +32,11 @@
   <!-- <div class="container"> -->
     <%- include("../partials/navbar") %>
     <div class="container">
-      <div class="row align-items-end">
-        <% if (latestAttemptObj){ %>
+      <div class="container">
+        <div class="row align-items-end">
           <%- include("../partials/rewardLog") %>
-        <% } else { %>
-          <div class="col">
-            <%- include("../partials/rewardLog") %>
-          </div>
-       <% } %>
           <%- include("../partials/workdone-chart") %>
+        </div>
       </div>
     </div>
    
