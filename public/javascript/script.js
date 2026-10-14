@@ -2546,37 +2546,45 @@ function updateProblems() {
   }
 
   if (level == 3.08) {
+    // if (p.hoursOne > p.hoursTwo) {
+    //   console.log("Swap");
+    //   [p.hoursOne, p.hoursTwo] = [p.hoursTwo, p.hoursOne];
+    // }
+    // if (p.hoursOne < 12) {
+    //   p.amOrPmOne = "am";
+    // }
+    // if (p.hoursTwo < 12) {
+    //   p.amOrPmTwo = "am";
+    // }
+    // let displayHourOne = p.hoursOne;
+    // let displayHourTwo = p.hoursTwo;
+    // if (p.hoursOne >= 13) {
+    //   displayHourOne -= 12;
+    //   if (displayHourOne == 0) displayHourOne = 12;
+    // }
+    // if (p.hoursTwo >= 13) {
+    //   displayHourTwo -= 12;
+    //   if (displayHourTwo == 0) displayHourTwo = 12;
+    // }
+    // ctx.save();
+
     if (p.hoursOne > p.hoursTwo) {
       console.log("Swap");
       [p.hoursOne, p.hoursTwo] = [p.hoursTwo, p.hoursOne];
+      [p.minsOne, p.minsTwo] = [p.minsTwo, p.minsOne];
     }
-    if (p.hoursOne < 12) {
-      p.amOrPmOne = "am";
-    }
-    if (p.hoursTwo < 12) {
-      p.amOrPmTwo = "am";
-    }
-    let displayHourOne = p.hoursOne;
-    let displayHourTwo = p.hoursTwo;
-    if (p.hoursOne >= 13) {
-      displayHourOne -= 12;
-      if (displayHourOne == 0) displayHourOne = 12;
-    }
-    if (p.hoursTwo >= 13) {
-      displayHourTwo -= 12;
-      if (displayHourTwo == 0) displayHourTwo = 12;
-    }
-    // if (p.hoursOne > p.hoursTwo) {
-    //   [p.hoursOne, p.hoursTwo] = [p.hoursTwo, p.hoursOne];
-    // }
-    // swap mins if hours same
-    // if (p.hoursOne == p.hoursTwo && p.minsOne > p.minsTwo) {
-    //   [p.minsOne, p.minsTwo] = [p.minsTwo, p.minsOne];
-    // }
-    // if (amOrPmOne == "pm" && amOrPmTwo == "pm"){
-    //   if (p.hoursOne < p.hoursTwo) return updateCalc()
-    // }
+
+    // Set am/pm for both — handles 0, 12, and 24-hour edge cases
+    p.amOrPmOne = p.hoursOne < 12 ? "am" : "pm";
+    p.amOrPmTwo = p.hoursTwo < 12 ? "am" : "pm";
+
+    // Convert to 12-hour format (0 and 12 both become 12)
+    const displayHourOne = p.hoursOne % 12 || 12;
+    const displayHourTwo = p.hoursTwo % 12 || 12;
+
     ctx.save();
+    ctx.font = "1em serif";
+
     ctx.save();
     ctx.font = "1em serif";
     ctx.fillText(
@@ -2588,55 +2596,7 @@ function updateProblems() {
       20,
       20
     );
-    // if (p.minsOne < 10 && p.minsTwo < 10) {
-    //   if (p.minsOne == 0 && p.minsTwo == 0) {
-    //     ctx.fillText(
-    //       `What is the duration between ${p.hoursOne} ${p.amOrPmOne} and ${p.hoursTwo} ${p.amOrPmTwo}`,
-    //       20,
-    //       20
-    //     );
-    //   } else {
-    //     ctx.fillText(
-    //       `What is the duration between ${p.hoursOne}.0${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.0${p.minsTwo} ${p.amOrPmTwo}`,
-    //       20,
-    //       20
-    //     );
-    //   }
-    // } else if (p.minsOne < 10) {
-    //   if (p.minsOne == 0) {
-    //     ctx.fillText(
-    //       `What is the duration between ${p.hoursOne} ${p.amOrPmOne} and ${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`,
-    //       20,
-    //       20
-    //     );
-    //   } else {
-    //     ctx.fillText(
-    //       `What is the duration between ${p.hoursOne}.0${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`,
-    //       20,
-    //       20
-    //     );
-    //   }
-    // } else if (p.minsTwo < 10) {
-    //   if (p.minsTwo == 0) {
-    //     ctx.fillText(
-    //       `What is the duration between ${p.hoursOne}.${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo} ${p.amOrPmTwo}`,
-    //       20,
-    //       20
-    //     );
-    //   } else {
-    //     ctx.fillText(
-    //       `What is the duration between ${p.hoursOne}.${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.0${p.minsTwo} ${p.amOrPmTwo}`,
-    //       20,
-    //       20
-    //     );
-    //   }
-    // } else {
-    //   ctx.fillText(
-    //     `What is the duration between ${p.hoursOne}.${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`,
-    //     20,
-    //     20
-    //   );
-    // }
+
     ctx.restore();
 
     ctx.save();
@@ -2701,41 +2661,6 @@ function updateProblems() {
       120,
       -17
     );
-    // } else {
-    //   ctx.fillText(`${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`, 120, -17);
-    // }
-
-    // ctx.save();
-    // ctx.strokeStyle = "red";
-    // if (p.minsTwo > p.minsOne) {
-    //   const totalTime =
-    //     (p.hoursTwo - p.hoursOne) * 60 + (p.minsTwo - p.minsOne);
-    //   const perPixel = totalTime / 290;
-    //   const xHelp = perPixel * (p.minsTwo - p.minsOne);
-
-    //   ctx.beginPath();
-    //   ctx.moveTo(xStart + xHelp, 10);
-    //   ctx.lineTo(xStart + xHelp, -10);
-    //   ctx.stroke();
-    // }
-    // if (p.minsTwo < p.minsOne) {
-    //   const totalTime =
-    //     (p.hoursTwo - p.hoursOne - 1) * 60 + (60 - p.minsOne) + p.minsTwo;
-    //   const perPixel = totalTime / 290;
-    //   const xHelp = perPixel * (60 - p.minsOne);
-
-    //   ctx.beginPath();
-    //   ctx.moveTo(xStart + xHelp, 10);
-    //   ctx.lineTo(xStart + xHelp, -10);
-    //   ctx.stroke();
-
-    //   const xHelp2 = perPixel * (totalTime - p.minsTwo);
-    //   ctx.beginPath();
-    //   ctx.moveTo(xStart + xHelp2, 10);
-    //   ctx.lineTo(xStart + xHelp2, -10);
-    //   ctx.stroke();
-    // }
-    // ctx.restore();
 
     ctx.restore();
 
