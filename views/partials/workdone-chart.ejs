@@ -1,4 +1,4 @@
-<% if (students && students.name[0]) { %>
+<% if (students && students.name && students.name.length) { %>
   <div class="col-md-6">
     <div class="hidden">
       <div id="studentNameId"><%= students.name %></div>
