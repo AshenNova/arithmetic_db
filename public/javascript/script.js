@@ -31247,6 +31247,8 @@ for (let i = 0; i < settingButton.length; i++) {
       buttonLevelSetting();
       levelBox();
       workingContainer.classList.add("hidden");
+
+      fireAjaxAttemptCheck(buttonLevel);
     }, 100);
   });
 }
@@ -31265,6 +31267,8 @@ for (let i = 0; i < heuristics.length; i++) {
       // if (this.textContent != "Heu.6") {
       document.querySelector(".input-box").classList.add("hidden");
       ourForm2.classList.remove("hidden");
+
+      fireAjaxAttemptCheck(buttonLevel);
     }, 100);
 
     // }
@@ -31302,6 +31306,7 @@ calBtn.forEach((item) => {
         wholeNumberContainer.classList.toggle("hidden");
         workingContainer.classList.toggle("hidden");
       }
+      fireAjaxAttemptCheck(buttonLevel);
     }, 500);
     // }
   });
@@ -32709,145 +32714,107 @@ function buttonLevelSetting() {
   }
   instructions.innerHTML = instructionsContent(level);
 }
-//FOR TIMINGS AND HIGHSCORE
-const allLevelButtons = [...settingButton].concat([...heuristics], [...calBtn]);
-allLevelButtons.forEach((item, index) => {
-  item.addEventListener("dblclick", function (e) {
-    console.log(e);
-    console.log(e.target.innerText);
-    let level = e.target.innerText;
 
-    if (level.startsWith("Level")) {
-      console.log("Normal level selected");
-      level = level.split(" ")[1];
-    }
-    if (level.startsWith("Cal")) {
-      console.log("Calculation selected");
-      level = level.split(".")[1];
-      if (level == 1) level = "calOne";
-      if (level == 2) level = "calTwo";
-      if (level == 3) level = "calThree";
-      if (level == 4) level = "calFour";
-      if (level == 5) level = "calFive";
-      if (level == "5b") level = "calFiveb";
-      if (level == 6) level = "calSix";
-      if (level == "6b") level = "calSixb";
-    }
-    if (level.startsWith("Heu")) {
-      console.log("Heuristics selected");
-      level = level.split(".")[1];
-      if (level == 1) level = "heuOne";
-      if (level == 2) level = "heuTwo";
-      if (level == "2b") level = "heuTwo";
-      if (level == 3) level = "heuThree";
-      if (level == "3b") level = "heuThreeb";
-      if (level == 4) level = "heuFour";
-      if (level == "4b") level = "heuFourb";
-      if (level == 5) level = "heuFive";
-      if (level == "5b") level = "heuFiveb";
-      if (level == 6) level = "heuSix";
-      if (level == "6b") level = "heuSixb";
-    }
-    console.log(level, range);
-    console.log("AJAXXX");
+function fireAjaxAttemptCheck(buttonText) {
+  let currentLevel = buttonText;
+  let currentRange = range;
 
-    let attempt = {
-      level: level,
-      setting: range,
-      mode: mode,
-    };
-    e.preventDefault();
-    // data = JSON.stringify({ data });
-    $.ajax({
-      url: "/attempts/previousAttempts",
-      method: "POST",
-      // data: JSON.stringify(attempt),
-      data: attempt,
-      // contentType: "application/json; charset=utf-8",
-      success: function (res) {
-        // setTimeout(function () {
-        console.log(`Response from the control is ${res}`);
-        // console.log(`Ajax: ${res}`);
-        // const data = JSON.parse(res);
-        const data = res;
-        console.log(data.highscore);
-        // highScoreName.textContent = data.highscore.user;
-        // highScoreTime.textContent = data.highscore.time;
-        // highScoreMistakes.textContent = data.highscore.mistake;
-        if (data.highscore) {
-          highscore.textContent = `
-            ${data.highscore.user}, ${data.highscore.time}s, ${data.highscore.mistake} mistakes.
-            `;
-        } else {
-          highscore.textContent = `No highscore has been set.`;
+  // Parse level strings
+  if (currentLevel.startsWith("Level")) {
+    currentLevel = currentLevel.split(" ")[1];
+  }
+  if (currentLevel.startsWith("Cal")) {
+    currentLevel = currentLevel.split(".")[1];
+    if (currentLevel == 1) currentLevel = "calOne";
+    if (currentLevel == 2) currentLevel = "calTwo";
+    if (currentLevel == 3) currentLevel = "calThree";
+    if (currentLevel == 4) currentLevel = "calFour";
+    if (currentLevel == 5) currentLevel = "calFive";
+    if (currentLevel == "5b") currentLevel = "calFiveb";
+    if (currentLevel == 6) currentLevel = "calSix";
+    if (currentLevel == "6b") currentLevel = "calSixb";
+  }
+  if (currentLevel.startsWith("Heu")) {
+    currentLevel = currentLevel.split(".")[1];
+    if (currentLevel == 1) currentLevel = "heuOne";
+    if (currentLevel == 2) currentLevel = "heuTwo";
+    if (currentLevel == "2b") currentLevel = "heuTwob";
+    if (currentLevel == 3) currentLevel = "heuThree";
+    if (currentLevel == "3b") currentLevel = "heuThreeb";
+    if (currentLevel == 4) currentLevel = "heuFour";
+    if (currentLevel == "4b") currentLevel = "heuFourb";
+    if (currentLevel == 5) currentLevel = "heuFive";
+    if (currentLevel == "5b") currentLevel = "heuFiveb";
+    if (currentLevel == 6) currentLevel = "heuSix";
+    if (currentLevel == "6b") currentLevel = "heuSixb";
+  }
+
+  let attempt = {
+    level: currentLevel,
+    setting: currentRange,
+    mode: mode,
+  };
+
+  $.ajax({
+    url: "/attempts/previousAttempts",
+    method: "POST",
+    data: attempt,
+    success: function (res) {
+      const data = res;
+
+      // 1. FIXED MODE COLUMN (Replaces the broken insertAdjacentHTML)
+      const modeCell = document.getElementById("mode");
+      if (mode == "Easy") {
+        modeCell.innerHTML = `<span class="btn btn-success w-100">Easy</span>`;
+      } else if (mode == "Hardcore") {
+        modeCell.innerHTML = `<span class="btn btn-danger w-100">Hardcore</span>`;
+      } else {
+        modeCell.innerHTML = `<span class="btn btn-secondary w-100">Normal</span>`;
+      }
+
+      // 2. HIGHSCORE LOGIC
+      if (data.highscore) {
+        highscore.textContent = `${data.highscore.user}, ${data.highscore.time}s, ${data.highscore.mistake} mistakes.`;
+      } else {
+        highscore.textContent = `No highscore has been set.`;
+      }
+
+      // 3. MEDALS LOGIC
+      if (data.gold) {
+        platinumStarter.textContent = `< ${Math.floor(data.gold.upper)}`;
+        goldStarter.textContent = `< ${Math.floor(data.gold.lower)}`;
+        silverStarter.textContent = `< ${Math.floor(data.silver.lower)}`;
+        bronzeStarter.textContent = `< ${Math.floor(data.bronze.lower)}`;
+
+        if (data.gold.lower < 0) {
+          goldStarter.textContent = `< ${Math.floor(data.silver.lower) - 1}`;
+          platinumStarter.textContent = `< ${
+            Math.floor(data.silver.lower) - 2
+          }`;
+        } else if (data.gold.upper < 0) {
+          platinumStarter.textContent = `< ${Math.floor(data.gold.lower) - 1}`;
         }
-        console.log(parent);
-        const elements = parent.getElementsByTagName("td");
-        console.log(elements);
-        parent.removeChild(elements[0]);
-        if (mode == "Easy") {
-          document
-            .querySelector("#modeSet")
-            .insertAdjacentHTML(
-              "afterbegin",
-              `<td><btn class="btn btn-success">Easy</td>`
-            );
-        } else if (mode == "Hardcore") {
-          document
-            .querySelector("#modeSet")
-            .insertAdjacentHTML(
-              "afterbegin",
-              `<td><btn class="btn btn-danger">Hardcore</td>`
-            );
-        } else {
-          document
-            .querySelector("#modeSet")
-            .insertAdjacentHTML(
-              "afterbegin",
-              `<td><btn class="btn btn-secondary">Normal</td>`
-            );
-        }
+      } else {
+        platinumStarter.textContent = `Nil`;
+        goldStarter.textContent = `Nil`;
+        silverStarter.textContent = `Nil`;
+        bronzeStarter.textContent = `Nil`;
+      }
 
-        if (data.gold) {
-          platinumStarter.textContent = `< ${Math.floor(data.gold.upper)}`;
-
-          goldStarter.textContent = `< ${Math.floor(data.gold.lower)}`;
-          silverStarter.textContent = `< ${Math.floor(data.silver.lower)}`;
-          bronzeStarter.textContent = `< ${Math.floor(data.bronze.lower)}`;
-          // IF NEGATIVES
-          if (data.gold.lower < 0) {
-            goldStarter.textContent = `< ${Math.floor(data.silver.lower) - 1}`;
-            platinumStarter.textContent = `< ${
-              Math.floor(data.silver.lower) - 2
-            }`;
-          } else if (data.gold.upper < 0)
-            platinumStarter.textContent = `< ${
-              Math.floor(data.gold.lower) - 1
-            }`;
-        } else {
-          platinumStarter.textContent = `Nil`;
-          goldStarter.textContent = `Nil`;
-          silverStarter.textContent = `Nil`;
-          bronzeStarter.textContent = `Nil`;
-        }
-
-        if (data.previous) {
-          previousAttempt.textContent = `Previous Attempt: ${Math.floor(
-            data.previous.time
-          )}s, ${data.previous.mistake} mistakes, ${data.daysAgo} days ago
-          `;
-        } else {
-          previousAttempt.textContent = ``;
-        }
-
-        // previousAttempt.textContent = `Age`;
-      },
-      error: function (res) {
-        console.log(`Some error. ${res}.`);
-      },
-    });
+      // 4. PREVIOUS ATTEMPT LOGIC
+      if (data.previous) {
+        previousAttempt.textContent = `Previous Attempt: ${Math.floor(
+          data.previous.time
+        )}s, ${data.previous.mistake} mistakes, ${data.daysAgo} days ago`;
+      } else {
+        previousAttempt.textContent = ``;
+      }
+    },
+    error: function (res) {
+      console.log(`Some error. ${res}.`);
+    },
   });
-});
+}
 
 reviewAnswer.addEventListener("click", function () {
   if (confirm("Are you sure? Your score will drop to 0.")) {
