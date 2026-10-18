@@ -5615,13 +5615,8 @@ function updateProblems() {
 
       ctx.translate(p.translateX, p.translateY);
       ctx.rotate((p.rotation * Math.PI) / 180);
-      // label
-      ctx.fillStyle = "black";
-      ctx.fillText(p.labelABC, -10, 0);
-      ctx.fillText(p.labelDEF, -10, p.pointY1 + 10);
-      ctx.fillText(p.labelGHI, p.pointX1, 0);
 
-      // triangle
+      // --- Draw the Triangle ---
       ctx.fillStyle = "orange";
       ctx.strokeStyle = "grey";
       ctx.lineWidth = 2;
@@ -5632,29 +5627,29 @@ function updateProblems() {
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
+
+      // --- Draw Upright Labels ---
+      ctx.fillStyle = "black";
+
+      // Label ABC
+      ctx.save();
+      ctx.translate(-10, 0);
+      ctx.rotate((-p.rotation * Math.PI) / 180); // Cancel the rotation
+      ctx.fillText(p.labelABC, 0, 0);
       ctx.restore();
 
+      // Label DEF
       ctx.save();
-      ctx.translate(p.translateX, p.translateY);
-      ctx.rotate((p.rotation * Math.PI) / 180);
-      let areaOfTriangle = (p.pointX1 * p.pointY1 * 1) / 2;
-      let hypotenuse = Math.sqrt(p.pointX1 * p.pointX1 + p.pointY1 * p.pointY1);
-      let otherHeight = (areaOfTriangle * 2) / hypotenuse;
-      let otherAngle = Math.acos(p.pointY1 / hypotenuse);
+      ctx.translate(-10, p.pointY1 + 10);
+      ctx.rotate((-p.rotation * Math.PI) / 180); // Cancel the rotation
+      ctx.fillText(p.labelDEF, 0, 0);
+      ctx.restore();
 
-      ctx.rotate(otherAngle);
-      console.log(areaOfTriangle, hypotenuse, otherHeight, otherAngle);
-      ctx.strokeStyle = "grey";
-      ctx.setLineDash([1, 1]);
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(otherHeight, 0);
-      ctx.stroke();
-
-      ctx.fillStyle = "black";
-      ctx.fillText(p.labelJKL, otherHeight + 3, 3);
-
+      // Label GHI
+      ctx.save();
+      ctx.translate(p.pointX1, 0);
+      ctx.rotate((-p.rotation * Math.PI) / 180); // Cancel the rotation
+      ctx.fillText(p.labelGHI, 0, 0);
       ctx.restore();
     }
 
@@ -5720,7 +5715,6 @@ function updateProblems() {
       const otherLine = Math.sin(angleB) * p.triA1y;
       const otherRotation =
         (90 * Math.PI) / 180 - angleB + (180 * Math.PI) / 180;
-      console.log(otherLine);
 
       ctx.save();
       ctx.setLineDash([2, 2]);
@@ -5730,9 +5724,17 @@ function updateProblems() {
       ctx.moveTo(0, 0);
       ctx.lineTo(0, otherLine);
       ctx.stroke();
+
+      // --- UPRIGHT LABEL MNO ---
       ctx.fillStyle = "red";
-      ctx.fillText(`${p.labelMNO}`, 0 - 5, otherLine + 15);
+      ctx.save();
+      ctx.translate(0 - 5, otherLine + 15);
+      // Cancel BOTH the main rotation AND the otherRotation
+      ctx.rotate(-((p.rotation * Math.PI) / 180 + otherRotation));
+      ctx.fillText(`${p.labelMNO}`, 0, 0);
       ctx.restore();
+
+      ctx.restore(); // restores the otherRotation
 
       // triangle B
       ctx.fillStyle = "orange";
@@ -5745,16 +5747,40 @@ function updateProblems() {
       ctx.lineTo(0, p.triA1y);
       ctx.lineTo(p.triB3x, p.triB3y);
       ctx.closePath();
-      // ctx.fill()
       ctx.stroke();
 
+      // --- UPRIGHT LABELS ABC, DEF, GHI, JKL ---
       ctx.fillStyle = "red";
-      ctx.fillText(p.labelABC, 0 - 13, p.triA1y);
-      ctx.fillText(p.labelDEF, 0 - 13, p.triA2y + 10);
-      ctx.fillText(p.labelGHI, p.triA3x + 5, p.triA3y + 10);
-      ctx.fillText(p.labelJKL, 0 - 10, -3);
 
+      // Label ABC
+      ctx.save();
+      ctx.translate(0 - 13, p.triA1y);
+      ctx.rotate(-(p.rotation * Math.PI) / 180);
+      ctx.fillText(p.labelABC, 0, 0);
       ctx.restore();
+
+      // Label DEF
+      ctx.save();
+      ctx.translate(0 - 13, p.triA2y + 10);
+      ctx.rotate(-(p.rotation * Math.PI) / 180);
+      ctx.fillText(p.labelDEF, 0, 0);
+      ctx.restore();
+
+      // Label GHI
+      ctx.save();
+      ctx.translate(p.triA3x + 5, p.triA3y + 10);
+      ctx.rotate(-(p.rotation * Math.PI) / 180);
+      ctx.fillText(p.labelGHI, 0, 0);
+      ctx.restore();
+
+      // Label JKL
+      ctx.save();
+      ctx.translate(0 - 10, -3);
+      ctx.rotate(-(p.rotation * Math.PI) / 180);
+      ctx.fillText(p.labelJKL, 0, 0);
+      ctx.restore();
+
+      ctx.restore(); // restores the main triangle rotation
     }
   }
 
