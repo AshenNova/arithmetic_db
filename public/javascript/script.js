@@ -13013,18 +13013,23 @@ function updateProblems() {
         `;
       }
 
-      if (p.question == "quotient") {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          "How many shirts were made?"
-        );
-      }
-      if (p.question == "remainder") {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          "How much cloth was left?"
-        );
-      }
+      // if (p.question == "quotient") {
+      //   displayProblem.insertAdjacentHTML(
+      //     "beforeend",
+      //     "How many shirts were made?"
+      //   );
+      // }
+      // if (p.question == "remainder") {
+      //   displayProblem.insertAdjacentHTML(
+      //     "beforeend",
+      //     "How much cloth was left?"
+      //   );
+      // }
+      displayProblem.insertAdjacentHTML(
+        "beforeend",
+        `a) How many shirts were made.</p> b) How much cloth were left?
+      `
+      );
     }
     // FRACTIONS: NUMERTOR OF A VALUE
     if (setting == 2) {
@@ -23821,22 +23826,23 @@ function handleSubmit(e) {
         const quotient = Math.floor(start / object);
         let remainder = start * p.denominatorTwo - p.numeratorTwo * quotient;
         console.log(start, object, quotient, remainder);
-        if (p.question == "quotient") correctAnswer = quotient;
-        if (p.question == "remainder") {
-          [remainder, p.denominatorTwo] = simplify(remainder, p.denominatorTwo);
-          correctAnswer = `${remainder}/${p.denominatorTwo}`;
-          if (p.type == "simple fractions" || p.type == "mixed fractions") {
-            // change to improper fraction
-            const totalNume = p.whole * p.denominator + p.numerator;
-            const comDeno = commonDeno(p.denominator, p.denominatorTwo);
-            let newNumeOne = totalNume * (comDeno / p.denominator);
-            let newNumeTwo = p.numeratorTwo * (comDeno / p.denominatorTwo);
-            let leftNume = newNumeOne - newNumeTwo * quotient;
-            let leftDeno = comDeno;
-            [leftNume, leftDeno] = simplify(leftNume, leftDeno);
-            correctAnswer = `${leftNume}/${leftDeno}`;
-          }
+        // if (p.question == "quotient") correctAnswer = quotient;
+        // if (p.question == "remainder") {
+        [remainder, p.denominatorTwo] = simplify(remainder, p.denominatorTwo);
+        let left = `${remainder}/${p.denominatorTwo}`;
+        if (p.type == "simple fractions" || p.type == "mixed fractions") {
+          // change to improper fraction
+          const totalNume = p.whole * p.denominator + p.numerator;
+          const comDeno = commonDeno(p.denominator, p.denominatorTwo);
+          let newNumeOne = totalNume * (comDeno / p.denominator);
+          let newNumeTwo = p.numeratorTwo * (comDeno / p.denominatorTwo);
+          let leftNume = newNumeOne - newNumeTwo * quotient;
+          let leftDeno = comDeno;
+          [leftNume, leftDeno] = simplify(leftNume, leftDeno);
+          left = `${leftNume}/${leftDeno}`;
         }
+        // }
+        correctAnswer = `${quotient}, ${left}`;
       }
 
       // FRACTIONS: NUMERTOR OF A VALUE
