@@ -788,7 +788,7 @@ export function helpList(level) {
     "3.19",
     "4.02",
     "4.05",
-    "4.06",
+    // "4.06",
     "4.11",
     "4.13",
     "4.26",
@@ -915,13 +915,7 @@ export function helpMeFunc(level, state, setting) {
       ctx.fillText("Insufficient", -55, -60);
     }
   }
-  if (
-    level == 3.04 ||
-    level == 3.05 ||
-    level == 3.06 ||
-    level == 4.06 ||
-    level == 4.11
-  ) {
+  if (level == 3.04 || level == 3.05 || level == 3.06 || level == 4.11) {
     if (p.firstUnit == "$" || p.unitMeasurement == "$") {
       helpMe.textContent = `$1 = 100¢`;
     } else if (p.firstUnit == "m" || p.unitMeasurement == "m") {
