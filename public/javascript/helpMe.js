@@ -788,7 +788,7 @@ export function helpList(level) {
     "3.19",
     "4.02",
     "4.05",
-    // "4.06",
+    "4.06",
     "4.11",
     "4.13",
     "4.26",
@@ -992,6 +992,60 @@ export function helpMeFunc(level, state, setting) {
       ${displaySimpleFraction(1, p.deno)} -> ${p.value} ÷ ${p.deno} = ___ </br>
       ${displaySimpleFraction(p.nume, p.deno)} -> ____ x ${p.nume} = _____
       `;
+    }
+  }
+  if (level == 4.06) {
+    if (p.rollTypeClue == "11") {
+      if (p.rollTypeQnSyn == "isof") {
+        if (p.rollTypeQn11 == "1T") {
+          helpMe.innerHTML = `${displaySimpleFraction(
+            p.objectOne,
+            `${p.objectOne} + ${p.objectTwo}`
+          )}`;
+        } else {
+          helpMe.innerHTML = `${displaySimpleFraction(
+            `${p.objectOne} + ${objectTwo}`,
+            p.objectOne
+          )}
+            `;
+        }
+      } else {
+        if (p.rollTypeQn11 == "1T") {
+          helpMe.innerHTML = `${displaySimpleFraction(
+            `${p.objectOne} + ${p.objectTwo}`,
+            p.objectOne
+          )}
+            `;
+        } else {
+          helpMe.innerHTML = `${displaySimpleFraction(
+            `${p.objectOne} + ${p.objectTwo}`,
+            p.objectOne
+          )}
+            `;
+        }
+      }
+    } else {
+      if (p.rollTypeQnSyn == "isof") {
+        if (p.rollTypeQn1T == "AB") {
+          helpMe.innerHTML = `${displaySimpleFraction(
+            p.objectOne,
+            p.objectTwo
+          )}`;
+        } else {
+          helpMe.innerHTML = `${displaySimpleFraction(
+            p.objectTwo,
+            p.objectOne
+          )}`;
+        }
+      } else {
+        if (p.rollTypeQn1T == "AB") {
+          helpMe.innerHTML = `
+          ${displaySimpleFraction(p.objectTwo, p.objectOne)}`;
+        } else {
+          helpMe.innerHTML = `
+          ${displaySimpleFraction(p.objectOne, p.objectTwo)}`;
+        }
+      }
     }
   }
   if (level == 4.13) {
